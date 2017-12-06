@@ -2,12 +2,11 @@ package com.nowfloats.Store;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Store.Adapters.ActivePlansRvAdapter;
 import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.Model.AllPackage;
 import com.nowfloats.Store.Model.PackageDetails;
@@ -41,10 +39,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -281,7 +277,7 @@ public class NewPricingPlansActivity extends AppCompatActivity implements Active
                     StringBuilder featuresBuilder = new StringBuilder("");
                     if(activePackage.getWidgetPacks()!=null) {
                         for (WidgetPacks widget : activePackage.getWidgetPacks()) {
-                            featuresBuilder.append("• " + widget.Name + "\n");
+                            featuresBuilder.append("• " + (widget.Name == null?"NA":widget.Name )+ "\n");
                             featuresCount++;
                             if (featuresCount >= NUM_OF_FEATURES) {
                                 break;

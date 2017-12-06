@@ -1,6 +1,7 @@
 package com.nowfloats.RiaFCM;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -20,12 +21,10 @@ import com.freshdesk.hotline.Hotline;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
-import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -69,7 +68,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         } else {
             if ((message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG))
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
-                MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
+                /*MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
                 pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, true).apply();
                 if (Methods.hasOverlayPerm(this)) {
@@ -77,14 +76,14 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
                         startService(bubbleIntent);
                     }
-                }
+                }*/
             } else {
 
                 deepLinkUrl = message.get("url");
                 if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
                     return;
                 }
-                if(Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
+                if (Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
                     MixPanelController.track("$campaign_received", null);
                 }
                 String title = message.get("title");
@@ -137,13 +136,21 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
                 NotificationManager notificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
-                    FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
-                    if(data.getId() != null) {
-                        notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                NotificationChannel channel = null;
+                if (notificationManager != null) {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        channel = new NotificationChannel("0001", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
+                        notificationManager.createNotificationChannel(channel);
                     }
-                } else {
-                    notificationManager.notify(0, notificationBuilder.build());
+
+                    if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
+                        FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
+                        if (data.getId() != null) {
+                            notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                        }
+                    } else {
+                        notificationManager.notify(0, notificationBuilder.build());
+                    }
                 }
             }
         }

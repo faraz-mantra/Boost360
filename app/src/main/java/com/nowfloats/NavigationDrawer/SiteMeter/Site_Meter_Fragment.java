@@ -17,15 +17,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,14 +39,13 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
-import com.nowfloats.Store.Model.StoreEvent;
-import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
-import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -60,13 +53,10 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.ProgressBarAnimation;
 import com.nowfloats.util.Utils;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -75,7 +65,7 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class Site_Meter_Fragment extends Fragment {
+public class Site_Meter_Fragment extends Fragment implements DomainApiService.DomainCallback{
     private static int businessNameWeight = 5;
     private static int businessDescriptionWeight = 10;
     private static int businessCategoryWeight = 5;
@@ -105,30 +95,18 @@ public class Site_Meter_Fragment extends Fragment {
     private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
     private SharedPreferences mSharedPreferences, pref;
     private DomainApiService domainApiService;
-    private Bus mBus;
+
     private ProgressDialog progressDialog;
-    private int domainYears = 0;
-    private boolean isAlreadyCalled = false;
+    private boolean isAlreadyCalled = false, isDomainDetailsAvali;
     //private ScaleInAnimationAdapter scaleAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBus = BusProvider.getInstance().getBus();
         activity = getActivity();
         Methods.isOnline(activity);
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //siteData = loadData();
-                //adapter = new SiteMeterAdapter(activity,Site_Meter_Fragment.this,siteData);
-            }
-        }).start();
-        initializePrices();
     }
-
-    HashMap<String, Integer> hmPrices = new HashMap<String, Integer>();
 
     private void showLoader(final String message) {
 
@@ -160,18 +138,10 @@ public class Site_Meter_Fragment extends Fragment {
     }
 
 
-    private void initializePrices() {
-        hmPrices.put(".COM", 680);
-        hmPrices.put(".NET", 865);
-        hmPrices.put(".CO.IN", 375);
-        hmPrices.put(".IN", 490);
-        hmPrices.put(".ORG", 500);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        domainApiService = new DomainApiService(mBus);
+        domainApiService = new DomainApiService(this);
         return inflater.inflate(R.layout.fragment_site__meter, container, false);
     }
 
@@ -655,7 +625,8 @@ public class Site_Meter_Fragment extends Fragment {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, NewPricingPlansActivity.class);
+                        Intent intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }
@@ -677,12 +648,12 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mBus.register(this);
+
     }
 
     @Override
     public void onStop() {
-        mBus.unregister(this);
+
         super.onStop();
     }
 
@@ -692,20 +663,6 @@ public class Site_Meter_Fragment extends Fragment {
     private HashMap<String, String> getDomainDetailsParam() {
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("clientId", Constants.clientId);
-        return offersParam;
-    }
-
-    private HashMap<String, String> getDomainAvailabilityParam(String domainType) {
-        HashMap<String, String> offersParam = new HashMap<>();
-        offersParam.put("clientId", Constants.clientId);
-        offersParam.put("domainType", domainType);
-        return offersParam;
-    }
-
-    private HashMap<String, String> getLinkDomainParam() {
-        HashMap<String, String> offersParam = new HashMap<>();
-        offersParam.put("authClientId", Constants.clientId);
-        offersParam.put("fpTag", session.getFpTag());
         return offersParam;
     }
 
@@ -733,7 +690,7 @@ public class Site_Meter_Fragment extends Fragment {
      *
      */
 
-    @Subscribe
+    @Override
     public void getDomainDetails(DomainDetails domainDetails) {
 //        domainDetails = null;
         hideLoader();
@@ -744,7 +701,7 @@ public class Site_Meter_Fragment extends Fragment {
             if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
                 Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
             } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
-
+                isDomainDetailsAvali = true;
                 if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                     showCustomDialog(getString(R.string.domain_booking_failed),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
@@ -777,53 +734,78 @@ public class Site_Meter_Fragment extends Fragment {
 
     }
 
-    @Subscribe
-    public void getStoreList(StoreEvent response) {
-        ArrayList<StoreModel> allModels = response.model.AllPackages;
-        ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
-        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
-        if (allModels != null && activeIdArray != null) {
-            long storeExpiryDays = 0;
-            for (StoreModel storeModel : activeIdArray) {
-                float validity = storeModel.TotalMonthsValidity;
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-                cal.setTimeInMillis(Long.parseLong(storeModel.ToBeActivatedOn.replace("/Date(", "").replace(")/", "")));
-                cal.add(Calendar.MONTH, (int) validity);
-                cal.add(Calendar.DATE, (int) ((validity - Math.floor((double) validity)) * 30));
+    @Override
+    public void emailBookingStatus(ArrayList<EmailBookingModel.EmailBookingStatus> bookingStatuses) {
 
-                long tempExpiryDays = cal.getTimeInMillis();
-                if (tempExpiryDays > storeExpiryDays) {
-                    storeExpiryDays = tempExpiryDays;
-                    domainYears = 0;
-                    if(cal.get(Calendar.YEAR)>= year){
-                        domainYears = cal.get(Calendar.YEAR)-year;
-                        if(cal.get(Calendar.MONTH)>month){
-                            domainYears+=1;
-                        }else if(cal.get(Calendar.MONTH) == month){
-                            if(cal.get(Calendar.DAY_OF_MONTH)>day){
-                                domainYears+=1;
-                            }
-                        }
-                    }
-                }
-            }
-            domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
-
-        } else {
-            hideLoader();
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
-        }
     }
+
+    @Override
+    public void getEmailBookingList(ArrayList<String> ids, String error) {
+
+    }
+
+    @Override
+    public void getDomainSupportedTypes(ArrayList<String> arrExtensions) {
+
+    }
+
+    @Override
+    public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
+
+    }
+
+    @Override
+    public void domainBookStatus(String response) {
+
+    }
+
+    /* @Subscribe
+     public void getStoreList(StoreEvent response) {
+         ArrayList<StoreModel> allModels = response.model.AllPackages;
+         ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
+         ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
+         if (allModels != null && activeIdArray != null) {
+             long storeExpiryDays = 0;
+             for (StoreModel storeModel : activeIdArray) {
+                 float validity = storeModel.TotalMonthsValidity;
+                 Calendar cal = Calendar.getInstance();
+                 int year = cal.get(Calendar.YEAR);
+                 int month = cal.get(Calendar.MONTH);
+                 int day = cal.get(Calendar.DAY_OF_MONTH);
+                 cal.setTimeInMillis(Long.parseLong(storeModel.ToBeActivatedOn.replace("/Date(", "").replace(")/", "")));
+                 cal.add(Calendar.MONTH, (int) validity);
+                 cal.add(Calendar.DATE, (int) ((validity - Math.floor((double) validity)) * 30));
+
+                 long tempExpiryDays = cal.getTimeInMillis();
+                 if (tempExpiryDays > storeExpiryDays) {
+                     storeExpiryDays = tempExpiryDays;
+                     domainYears = 0;
+                     if(cal.get(Calendar.YEAR)>= year){
+                         domainYears = cal.get(Calendar.YEAR)-year;
+                         if(cal.get(Calendar.MONTH)>month){
+                             domainYears+=1;
+                         }else if(cal.get(Calendar.MONTH) == month){
+                             if(cal.get(Calendar.DAY_OF_MONTH)>day){
+                                 domainYears+=1;
+                             }
+                         }
+                     }
+                 }
+             }
+             domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+
+         } else {
+             hideLoader();
+             Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
+         }
+     }*/
     private static final String PAYMENT_STATE_SUCCESS = "1";
     private static final String ROOT_ALIAS_URI = "nowfloats";
     private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
     private Get_FP_Details_Model get_fp_details_model;
 
-    @Subscribe
-    public void setFpDetails(Get_FP_Details_Model get_fp_details_model) {
+    @Override
+    public void getFpDetails(Get_FP_Details_Model get_fp_details_model) {
         hideLoader();
         this.get_fp_details_model = get_fp_details_model;
         if (TextUtils.isEmpty(get_fp_details_model.response)) {
@@ -831,8 +813,10 @@ public class Site_Meter_Fragment extends Fragment {
             /*if (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
                     && get_fp_details_model.getFPWebWidgets() != null
                     && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {*/
-
-            if (TextUtils.isEmpty(get_fp_details_model.getEmail())
+            if (isDomainDetailsAvali){
+                showDomainDetails();
+            }
+            else if (TextUtils.isEmpty(get_fp_details_model.getEmail())
                     || get_fp_details_model.getContacts() == null) {
                 showCustomDialog(getString(R.string.domain_detail_required),
                         Methods.fromHtml("Insufficient data to book domain. Please update your Email Address.").toString(),
@@ -875,269 +859,6 @@ public class Site_Meter_Fragment extends Fragment {
         startActivity(domainIntent);
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
-    private void chooseDomain() {
-
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-//                .title(getString(R.string.link_a_domain_nf))
-                .customView(R.layout.dialog_choose_domain, false)
-                .positiveColorRes(R.color.primaryColor);
-
-        if (!activity.isFinishing()) {
-            final MaterialDialog materialDialog = builder.show();
-
-            materialDialog.getCustomView().findViewById(R.id.btnBookDomain)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            materialDialog.dismiss();
-                            showLoader(getString(R.string.please_wait));
-                            domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
-                        }
-                    });
-            materialDialog.getCustomView().findViewById(R.id.btnLinkDomain)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            materialDialog.dismiss();
-                            linkDomain();
-                        }
-                    });
-
-            View maView = materialDialog.getCustomView();
-            TextView tvDomainConfig = (TextView) maView.findViewById(R.id.tvDomainConfig);
-            tvDomainConfig.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Methods.showSnackBarPositive(getActivity(), getString(R.string.domain_book_nowfloats_package));
-                }
-            });
-        }
-
-
-    }
-
-    private ArrayList<String> arrDomainExtensions;
-
-    @Subscribe
-    public void getDomainSupportedTypes(ArrayList<String> arrExtensions) {
-        hideLoader();
-        if (arrExtensions != null && arrExtensions.size() > 0) {
-//            arrDomainExtensions = new ArrayList<String>(Arrays.asList(domainSupportedTypes.domainExtension.split(",")));
-           /*
-               remove below domains as per Rachit
-            */
-            this.arrDomainExtensions = arrExtensions;
-
-            if (arrDomainExtensions.contains(".IN")) {
-                arrDomainExtensions.remove(".IN");
-                //String firstIndexValue = arrDomainExtensions.get(0);
-                arrDomainExtensions.add(0, ".IN");
-            }
-
-
-            arrDomainExtensions.remove(".CA");
-            arrDomainExtensions.remove(".CO.ZA");
-            bookDomain();
-        } else {
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.domain_details_getting_error));
-        }
-
-    }
-
-
-    private MaterialDialog domainBookDialog = null;
-
-    private void bookDomain() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                //.title(getString(R.string.book_a_new_domain))
-                .customView(R.layout.dialog_book_a_domain, false)
-                .positiveColorRes(R.color.primaryColor);
-
-
-        if (!activity.isFinishing()) {
-            domainBookDialog = builder.show();
-            View maView = domainBookDialog.getCustomView();
-            final EditText edtDomainName = (EditText) maView.findViewById(R.id.edtDomainName);
-            final Spinner spDomainTypes = (Spinner) maView.findViewById(R.id.spDomainTypes);
-            final Spinner spDomainYears = (Spinner) maView.findViewById(R.id.spDomainYears);
-            TextView tvCompanyName = (TextView) maView.findViewById(R.id.tvCompanyName);
-            TextView tvTag = (TextView) maView.findViewById(R.id.tvTag);
-            TextView tvAddress = (TextView) maView.findViewById(R.id.tvAddress);
-            TextView tvCity = (TextView) maView.findViewById(R.id.tvCity);
-            final EditText edtZip = (EditText) maView.findViewById(R.id.edtZip);
-            TextView tvCountryCode = (TextView) maView.findViewById(R.id.tvCountryCode);
-            TextView tvISDCode = (TextView) maView.findViewById(R.id.tvISDCode);
-            TextView tvCountry = (TextView) maView.findViewById(R.id.tvCountry);
-            TextView tvEmail = (TextView) maView.findViewById(R.id.tvEmail);
-            TextView tvPrimaryNumber = (TextView) maView.findViewById(R.id.tvPrimaryNumber);
-            final TextView tvPrice = (TextView) maView.findViewById(R.id.tvPrice);
-            final TextView tvPriceDef = (TextView) maView.findViewById(R.id.tvPriceDef);
-            Button btnActivateDomain = (Button) maView.findViewById(R.id.btnActivateDomain);
-            Button btnBack = (Button) maView.findViewById(R.id.btnBack);
-//            btnActivateDomain.setEnabled(false);
-//            btnActivateDomain.setClickable(false);
-            tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(0)));
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arrDomainExtensions);
-            spDomainTypes.setAdapter(arrayAdapter);
-
-            if(domainYears > 0){
-                Integer[] array = new Integer[domainYears];
-                for (int i=1;i<=domainYears;i++){
-                    array[i-1] = i;
-                }
-                ArrayAdapter<Integer> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,array);
-                spDomainYears.setAdapter(adapter);
-            }
-
-            spDomainTypes.setSelection(0);
-            if (get_fp_details_model == null) {
-                get_fp_details_model = new Get_FP_Details_Model();
-            }
-
-            tvTag.setText(get_fp_details_model.getAliasTag());
-            tvCompanyName.setText(get_fp_details_model.getTag());
-            tvAddress.setText(get_fp_details_model.getAddress());
-            tvCity.setText(get_fp_details_model.getCity());
-            if (!TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
-                edtZip.setText(get_fp_details_model.getPinCode());
-                edtZip.setBackgroundDrawable(null);
-                edtZip.setClickable(false);
-                edtZip.setEnabled(false);
-            }
-            tvCountryCode.setText(get_fp_details_model.getLanguageCode());
-            tvISDCode.setText(get_fp_details_model.getCountryPhoneCode());
-            tvCountry.setText(get_fp_details_model.getCountry());
-            tvEmail.setText(get_fp_details_model.getEmail());
-            tvPrimaryNumber.setText(get_fp_details_model.getPrimaryNumber());
-
-            btnActivateDomain
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Methods.hideKeyboard(getActivity());
-                            String domainName = edtDomainName.getText().toString();
-                            if (TextUtils.isEmpty(domainName)) {
-                                Methods.showSnackBarNegative(getActivity(),
-                                        getString(R.string.enter_domain_name));
-                            } else if (TextUtils.isEmpty(edtZip.getText().toString())) {
-                                Methods.showSnackBarNegative(getActivity(),
-                                        getString(R.string.enter_zip_code));
-                            } else {
-                                showLoader(getString(R.string.please_wait));
-                                get_fp_details_model.setDomainName(domainName);
-                                get_fp_details_model.setDomainValidityInYears(String.valueOf(spDomainYears.getSelectedItemPosition()+1));
-                                get_fp_details_model.setDomainType(spDomainTypes.getSelectedItem().toString());
-                                get_fp_details_model.setPinCode(edtZip.getText().toString());
-                                domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()), DomainApiService.DomainAPI.CHECK_DOMAIN);
-                            }
-                        }
-                    });
-
-            btnBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    domainBookDialog.dismiss();
-                    chooseDomain();
-                }
-            });
-
-            spDomainTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
-                    if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position))+ "*");
-                    } else {
-                        tvPrice.setText("");
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-        }
-    }
-
-    @Subscribe
-    public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
-        hideLoader();
-        if (domainAPI == DomainApiService.DomainAPI.CHECK_DOMAIN) {
-            Methods.showSnackBarPositive(getActivity(), "Domain is available");
-            showCustomDialog(getString(R.string.book_a_new_domain),
-                    getString(R.string.are_you_sure_do_you_want_to_book_domain),
-                    getString(R.string.yes), getString(R.string.no), DialogFrom.DOMAIN_AVAILABLE);
-        } else if (domainAPI == DomainApiService.DomainAPI.LINK_DOMAIN) {
-            Methods.showSnackBarPositive(getActivity(), "domain link available");
-        } else {
-
-           /* showCustomDialog(getString(R.string.domain_not_available),
-                    null,
-                    getString(R.string.ok), null, DialogFrom.DEFAULT);*/
-            if (domainBookDialog != null)
-                Methods.showSnackBar(domainBookDialog.getView(), getString(R.string.domain_not_available), Color.RED);
-            else {
-                Methods.showSnackBarNegative(getActivity(), getString(R.string.link_domain_not_available));
-            }
-
-        }
-    }
-
-    private void linkDomain() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                //.title(getString(R.string.have_an_existing_domain))
-                .customView(R.layout.dialog_link_domain, false)
-                .positiveColorRes(R.color.primaryColor);
-        if (!activity.isFinishing()) {
-            final MaterialDialog materialDialog = builder.show();
-            View maView = materialDialog.getCustomView();
-            final RadioButton rbPointExisting = (RadioButton) maView.findViewById(R.id.rbPointExisting);
-            final RadioButton rbPointNFWeb = (RadioButton) maView.findViewById(R.id.rbPointNFWeb);
-            final EditText edtComments = (EditText) maView.findViewById(R.id.edtComments);
-            Button btnBack = (Button) maView.findViewById(R.id.btnBack);
-            Button btnSubmitRequest = (Button) maView.findViewById(R.id.btnSubmitRequest);
-            edtComments.setText(String.format(getString(R.string.link_comments), session.getFpTag()));
-            edtComments.setSelection(edtComments.getText().toString().length());
-            btnSubmitRequest.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String subject = "";
-                    if (rbPointNFWeb.isChecked()) {
-                        subject = rbPointNFWeb.getText().toString();
-                    } else if (rbPointExisting.isChecked()) {
-                        subject = rbPointExisting.getText().toString();
-                    }
-
-                    if (TextUtils.isEmpty(subject)) {
-                        Methods.showSnackBarNegative(getActivity(),
-                                getString(R.string.please_select_subject));
-                    } else if (TextUtils.isEmpty(edtComments.getText().toString())) {
-                        Methods.showSnackBarNegative(getActivity(),
-                                getString(R.string.please_enter_message));
-                    } else {
-
-                        MixPanelController.track(MixPanelController.LINK_DOMAIN, null);
-                        materialDialog.dismiss();
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
-                        hashMap.put("Subject", subject);
-                        hashMap.put("Mesg", edtComments.getText().toString());
-                        domainApiService.linkDomain(hashMap, getLinkDomainParam());
-                    }
-                }
-            });
-            btnBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    materialDialog.dismiss();
-                    chooseDomain();
-                }
-            });
-
-        }
-    }
 
 
     private enum DialogFrom {
@@ -1164,9 +885,6 @@ public class Site_Meter_Fragment extends Fragment {
                         super.onPositive(dialog);
                         switch (dialogFrom) {
 
-                            case DOMAIN_AVAILABLE:
-                                prepareAndPublishDomain();
-                                break;
                             case CONTACTS_AND_EMAIL_REQUIRED:
                                 ((SidePanelFragment.OnItemClickListener) activity).
                                         onClick(getResources().getString(R.string.contact__info));
@@ -1209,58 +927,5 @@ public class Site_Meter_Fragment extends Fragment {
 
         TextView tvMessage = (TextView) maView.findViewById(R.id.toast_message_to_contact);
         tvMessage.setText(message);
-    }
-
-    private void prepareAndPublishDomain() {
-        MixPanelController.track(MixPanelController.BOOK_DOMAIN, null);
-        HashMap<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("clientId", Constants.clientId);
-        hashMap.put("domainName", get_fp_details_model.getDomainName());
-        hashMap.put("domainType", get_fp_details_model.getDomainType());
-        hashMap.put("existingFPTag", session.getFpTag());
-        hashMap.put("addressLine1", get_fp_details_model.getAddress());
-        hashMap.put("city", get_fp_details_model.getCity());
-        hashMap.put("companyName", get_fp_details_model.getTag());
-        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
-                session.getFpTag() : get_fp_details_model.getContactName());
-        hashMap.put("country", get_fp_details_model.getCountry());
-        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
-        hashMap.put("email", get_fp_details_model.getEmail());
-        hashMap.put("lat", get_fp_details_model.getLat());
-        hashMap.put("lng", get_fp_details_model.getLng());
-        hashMap.put("validityInYears",get_fp_details_model.getDomainValidityInYears());
-        hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
-        if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
-            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0).getKey());
-        else
-            hashMap.put("primaryCategory", "");
-        hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());
-        hashMap.put("regService", "");
-        hashMap.put("state", get_fp_details_model.getPaymentState());
-        hashMap.put("zip", get_fp_details_model.getPinCode());
-        domainApiService.buyDomain(hashMap);
-    }
-
-    @Subscribe
-    public void domainBookStatus(String response) {
-        if (domainBookDialog != null && domainBookDialog.isShowing())
-            domainBookDialog.dismiss();
-
-        if (!TextUtils.isEmpty(response) &&
-                response.equalsIgnoreCase(getString(R.string.domain_booking_process_message))) {
-
-            showCustomDialog(getString(R.string.domain_booking_process),
-                    getString(R.string.domain_booking_process_message),
-                    getString(R.string.ok), null, DialogFrom.DEFAULT);
-
-        } else {
-
-            if (TextUtils.isEmpty(response)) {
-                response = getString(R.string.domain_booking_failed);
-            }
-            showCustomDialog(getString(R.string.book_a_new_domain),
-                    response,
-                    getString(R.string.ok), null, DialogFrom.DEFAULT);
-        }
     }
 }

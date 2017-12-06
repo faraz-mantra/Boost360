@@ -1,9 +1,9 @@
 package com.nowfloats.Analytics_Screen.Graph;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment;
@@ -46,7 +45,7 @@ import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAM
 import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER3;
 import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER4;
 
-public class AnalyticsActivity extends AppCompatActivity implements MonthFragment.OnYearDataClickListener{
+public class AnalyticsActivity extends AppCompatActivity implements MonthFragment.OnYearDataClickListener {
 
     public String[] tabs;
     int[] months;
@@ -60,7 +59,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     public int yearData,monthData,weekData;
     private String startDate="01-01-2016",endDate ;
     ContentLoadingProgressBar progressBar;
-    PagerSlidingTabStrip pagerSlidingTabStrip;
+
     Toolbar toolbar;
     private int tableName;
     private UserSessionManager session;
@@ -204,10 +203,12 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         }
         pager = (ViewPager) findViewById(R.id.viewpager_main);
         tabs=getResources().getStringArray(R.array.tabs);
-        pagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.vpagertabstrip_main);
-        pagerSlidingTabStrip.setTextColor(Color.WHITE);
-        pagerSlidingTabStrip.setDividerColor(Color.WHITE);
+
+
         progressBar= (ContentLoadingProgressBar) findViewById(R.id.progressBar_analytic);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(pager);
+
         setProgressVisible();
     }
     private int addArray(int[] array){
@@ -440,7 +441,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         setProgressHide();
         analyticsAdapter = new AnalyticsAdapter(getSupportFragmentManager());
         pager.setAdapter(analyticsAdapter);
-        pagerSlidingTabStrip.setViewPager(pager);
+
     }
 
     private class AnalyticsAdapter extends FragmentStatePagerAdapter {

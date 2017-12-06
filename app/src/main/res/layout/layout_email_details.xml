@@ -12,20 +12,6 @@
         android:alpha=".6"
         android:layout_marginRight="5dp"
         android:background="@color/light_gray"/>
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Coming Soon"
-        android:background="@color/light_gray"
-        android:textColor="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingBottom="5dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:visibility="gone"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="right"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,6 +46,8 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
+                android:textSize="12sp"
+                android:visibility="gone"
                 android:paddingBottom="5dp"
                 android:background="@color/light_gray"
                 android:textColor="@color/white"/>
@@ -68,9 +56,70 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choose your email address through which your customers can contact you. You can select upto 3 email address with you domain."
+                android:text="Choose your email address through which your customers can contact you. You can select upto 3 email address with your domain."
                 android:textSize="12sp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_email_expired"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/tv_email_booked"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:visibility="gone"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/ll_email_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:visibility="gone"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_email_running"
+            android:layout_width="match_parent"
+            android:overScrollMode="never"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_add_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:background="?android:selectableItemBackground"
+            android:text="Add email"/>
+        <TextView
+            android:id="@+id/tv_confirm_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textSize="13sp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Confirm Request"
+            android:visibility="gone"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
+            android:background="@drawable/ria_positive_btn"/>
+        <TextView
+            android:id="@+id/tv_note_message"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="12sp"
+            android:autoLink="all"
+            android:layout_height="wrap_content"
+            android:text="@string/email_180_message"/>
+    </LinearLayout>
+
 </LinearLayout>

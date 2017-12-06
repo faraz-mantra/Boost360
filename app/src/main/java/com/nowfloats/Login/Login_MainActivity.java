@@ -155,7 +155,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                     progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
                     progressDialog.setCancelable(true);
                     API_Login apiLogin = new API_Login(Login_MainActivity.this,session,bus);
-                    apiLogin.authenticate(userName.getText().toString(), password.getText().toString(), Specific.clientId2);
+                    apiLogin.authenticate(userName.getText().toString().toLowerCase(), password.getText().toString(), Specific.clientId2);
                 } else {
                     YoYo.with(Techniques.Shake).playOn(userName);
                     YoYo.with(Techniques.Shake).playOn(password);
@@ -401,10 +401,8 @@ public class Login_MainActivity extends AppCompatActivity implements
 
         if(id==android.R.id.home){
             //NavUtils.navigateUpFromSameTask(this);
-
-//
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

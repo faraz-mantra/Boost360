@@ -36,31 +36,30 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
-import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.Utils;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class Business_Profile_Fragment_V2 extends Fragment {
+public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
     TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
             tvCustomPages, tvPhotoGallery, tvSiteAppearance, tvDomainDetails;
     public static ImageView businessProfileImageView;
@@ -74,7 +73,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     private Activity activity;
     private DomainApiService domainApiService;
     private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
-    private Bus mBus;
+
 
     private ProgressDialog progressDialog;
 
@@ -82,7 +81,6 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        mBus = BusProvider.getInstance().getBus();
     }
 
     @Override
@@ -93,7 +91,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-        domainApiService = new DomainApiService(mBus);
+        domainApiService = new DomainApiService(this);
         return mainView;
     }
 
@@ -325,7 +323,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
                                             session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
                                         showExpiryDialog(DEMO_EXPIRED);
-                                    } else if (Utils.isNetworkConnected(getActivity())) {
+                                    } else if (Methods.isOnline(getActivity())) {
                                         showLoader(getString(R.string.please_wait));
                                         domainApiService.getDomainDetails(activity,session.getFpTag(), getDomainDetailsParam());
                                     } else {
@@ -432,12 +430,12 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mBus.register(this);
+
     }
 
     @Override
     public void onStop() {
-        mBus.unregister(this);
+
         super.onStop();
     }
 
@@ -483,7 +481,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
     private static final String DOMAIN_SUCCESS_STATUS = "17";
 
-    @Subscribe
+    @Override
     public void getDomainDetails(DomainDetails domainDetails) {
 //        domainDetails = null;
         hideLoader();
@@ -492,7 +490,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
             if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
                 Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
             } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
-
+                isDomainDetailsAvali = true;
                 if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                     showCustomDialog(getString(R.string.domain_booking_failed),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
@@ -526,40 +524,69 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
     }
 
+    @Override
+    public void emailBookingStatus(ArrayList<EmailBookingModel.EmailBookingStatus> bookingStatuses) {
+
+    }
+
+    @Override
+    public void getEmailBookingList(ArrayList<String> ids, String error) {
+
+    }
+
+    @Override
+    public void getDomainSupportedTypes(ArrayList<String> arrExtensions) {
+
+    }
+
+    @Override
+    public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
+
+    }
+
+    @Override
+    public void domainBookStatus(String response) {
+
+    }
+
     private static final String PAYMENT_STATE_SUCCESS = "1";
     private static final String ROOT_ALIAS_URI = "nowfloats";
     private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
     private Get_FP_Details_Model get_fp_details_model;
     private boolean isAlreadyCalled = false;
+    private boolean isDomainDetailsAvali = false;
 
-    @Subscribe
-    public void setFpDetails(Get_FP_Details_Model get_fp_details_model) {
+    @Override
+    public void getFpDetails(Get_FP_Details_Model get_fp_details_model) {
         hideLoader();
         this.get_fp_details_model = get_fp_details_model;
         if (TextUtils.isEmpty(get_fp_details_model.response)) {
 
-                if (TextUtils.isEmpty(get_fp_details_model.getEmail())
-                        || get_fp_details_model.getContacts() == null) {
-                    showCustomDialog(getString(R.string.domain_detail_required),
-                            Methods.fromHtml("Insufficient data to book domain. Please update your Email Address.").toString(),
-                            "Update Email Address", null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
+            if (isDomainDetailsAvali){
+                showDomainDetails();
+            }
+            else if (TextUtils.isEmpty(get_fp_details_model.getEmail())
+                    || get_fp_details_model.getContacts() == null) {
+                showCustomDialog(getString(R.string.domain_detail_required),
+                        Methods.fromHtml("Insufficient data to book domain. Please update your Email Address.").toString(),
+                        "Update Email Address", null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
-                } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
-                    showCustomDialog(getString(R.string.domain_detail_required),
-                            Methods.fromHtml("Insufficient data to book domain. Please update your Business Category.").toString(),
-                            "Update Business Category", null, DialogFrom.CATEGORY_REQUIRED);
-                } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
-                        || TextUtils.isEmpty(get_fp_details_model.getLat())
-                        || TextUtils.isEmpty(get_fp_details_model.getLng())
-                        || get_fp_details_model.getLat().equalsIgnoreCase("0")
-                        || get_fp_details_model.getLng().equalsIgnoreCase("0")
-                        ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
-                    showCustomDialog(getString(R.string.domain_detail_required),
-                            Methods.fromHtml("Insufficient data to book domain. Please update you Business Address.").toString(),
-                            "Update Business Address", null, DialogFrom.ADDRESS_REQUIRED);
-                } else {
-                    showDomainDetails();
-                }
+            } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
+                showCustomDialog(getString(R.string.domain_detail_required),
+                        Methods.fromHtml("Insufficient data to book domain. Please update your Business Category.").toString(),
+                        "Update Business Category", null, DialogFrom.CATEGORY_REQUIRED);
+            } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
+                    || TextUtils.isEmpty(get_fp_details_model.getLat())
+                    || TextUtils.isEmpty(get_fp_details_model.getLng())
+                    || get_fp_details_model.getLat().equalsIgnoreCase("0")
+                    || get_fp_details_model.getLng().equalsIgnoreCase("0")
+                    ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
+                showCustomDialog(getString(R.string.domain_detail_required),
+                        Methods.fromHtml("Insufficient data to book domain. Please update you Business Address.").toString(),
+                        "Update Business Address", null, DialogFrom.ADDRESS_REQUIRED);
+            } else {
+                showDomainDetails();
+            }
 
         } else {
             Methods.showSnackBarNegative(getActivity(), get_fp_details_model.response);
@@ -727,7 +754,8 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, NewPricingPlansActivity.class);
+                        Intent intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }

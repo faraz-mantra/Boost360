@@ -2,14 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="#FAFAFA"
+    android:clickable="true"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/tv_message"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -20,27 +24,32 @@
             android:layout_weight="1"/>
         <ImageView
             android:id="@+id/btn_cancel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="8dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:background="?android:selectableItemBackground"
             android:src="@drawable/gallery_cancel"
             android:tint="@color/gray"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
         android:layout_width="match_parent"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/rounded_yellow_selector_bg"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/yellow_btn_bg"
         android:gravity="center"
         android:padding="12dp"
-        android:text="Add Products (4)"
-        android:textColor="@color/primary" />
+        android:text="Add Products"
+        android:textColor="@drawable/yellow_btn_text_color" />
 </LinearLayout>

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
-import com.squareup.otto.Bus;
 
 import org.apache.http.HttpStatus;
 
@@ -24,7 +24,7 @@ import retrofit.client.Response;
  */
 
 public class DomainApiService {
-    Bus mBus;
+    private DomainCallback domainCallback;
 
     public enum DomainAPI {
 
@@ -36,8 +36,26 @@ public class DomainApiService {
         RENEW_NOT_AVAILABLE
     }
 
-    public DomainApiService(Bus bus) {
-        this.mBus = bus;
+    public interface DomainCallback{
+        void getDomainDetails(DomainDetails details);
+        void emailBookingStatus(ArrayList<EmailBookingModel.EmailBookingStatus> bookingStatuses);
+        void  getEmailBookingList(ArrayList<String> ids,String errorMessage);
+        void getDomainSupportedTypes(ArrayList<String> arrExtensions);
+        void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI);
+        void domainBookStatus(String response);
+        void getFpDetails(Get_FP_Details_Model model);
+    }
+    public enum EmailBookingStatus{
+        NOT_INITIATED,
+        VALIDATED,
+        ORDER_COMPLETED,
+        USERADD_COMPLETED ,
+        DNSFETCH_COMPLETED,
+        DNSUPDATE_COMPLETED,
+        COMPLETED;
+    }
+    public DomainApiService(DomainCallback callback) {
+        domainCallback = callback;
     }
 
     public void getDomainDetails(final Context context, String fpTag, HashMap<String, String> data) {
@@ -86,7 +104,7 @@ public class DomainApiService {
                     domainDetails = new DomainDetails();
                     domainDetails.response = DomainDetails.DOMAIN_RESPONSE.NO_DATA;
                 }
-                mBus.post(domainDetails);
+                domainCallback.getDomainDetails(domainDetails);
             }
 
             @Override
@@ -94,7 +112,7 @@ public class DomainApiService {
                 BoostLog.d("DomainApiService", error.getMessage());
                 DomainDetails domainDetails = new DomainDetails();
                 domainDetails.response = DomainDetails.DOMAIN_RESPONSE.ERROR;
-                mBus.post(domainDetails);
+                domainCallback.getDomainDetails(domainDetails);
             }
         });
 
@@ -105,13 +123,13 @@ public class DomainApiService {
         domainInterface.getDomainSupportedTypes(data, new Callback<List<String>>() {
             @Override
             public void success(List<String> domainSupportedTypes, Response response) {
-                mBus.post((ArrayList<String>) domainSupportedTypes);
+                domainCallback.getDomainSupportedTypes((ArrayList<String>)domainSupportedTypes);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 BoostLog.d("DomainApiService", error.getMessage());
-                mBus.post(new ArrayList<String>());
+                domainCallback.getDomainSupportedTypes(new ArrayList<String>());
             }
         });
 
@@ -124,10 +142,10 @@ public class DomainApiService {
             public void success(Boolean flag, Response response) {
                 switch (domainApi){
                     case RENEW_DOMAIN:
-                        mBus.post(flag ? DomainAPI.RENEW_DOMAIN:DomainAPI.RENEW_NOT_AVAILABLE);
+                        domainCallback.domainAvailabilityStatus(flag ? DomainAPI.RENEW_DOMAIN:DomainAPI.RENEW_NOT_AVAILABLE);
                         break;
                     default:
-                        mBus.post(flag ? DomainAPI.CHECK_DOMAIN:DomainAPI.DOMAIN_NOT_AVAILABLE);
+                        domainCallback.domainAvailabilityStatus(flag ? DomainAPI.CHECK_DOMAIN:DomainAPI.DOMAIN_NOT_AVAILABLE);
                         break;
                 }
             }
@@ -135,27 +153,60 @@ public class DomainApiService {
             @Override
             public void failure(RetrofitError error) {
                 BoostLog.d("DomainApiService", error.getMessage());
-                mBus.post(DomainAPI.ERROR_DOMAIN);
+                domainCallback.domainAvailabilityStatus(DomainAPI.ERROR_DOMAIN);
             }
         });
 
     }
 
+    public void bookEmail(String clientId, EmailBookingModel model){
+        DomainInterface domainInterface = Constants.pluginRestAdapter.create(DomainInterface.class);
+        domainInterface.bookEmails(clientId, model,new Callback<ArrayList<String>>() {
+            @Override
+            public void success(ArrayList<String> emailBookingIds, Response response) {
+
+                domainCallback.getEmailBookingList(emailBookingIds,null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                domainCallback.getEmailBookingList(null,error.getMessage());
+            }
+        });
+    }
+    public void emailsBookingStatus(String clientId, String fpTag){
+        DomainInterface domainInterface = Constants.pluginRestAdapter.create(DomainInterface.class);
+        domainInterface.emailStatus(clientId, fpTag, new Callback<ArrayList<EmailBookingModel.EmailBookingStatus>>() {
+            @Override
+            public void success(ArrayList<EmailBookingModel.EmailBookingStatus> emailBookingStatuses, Response response) {
+                if (emailBookingStatuses != null){
+                    domainCallback.emailBookingStatus(emailBookingStatuses);
+                }else{
+                    domainCallback.emailBookingStatus(new ArrayList<EmailBookingModel.EmailBookingStatus>(0));
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                domainCallback.emailBookingStatus(new ArrayList<EmailBookingModel.EmailBookingStatus>(0));
+            }
+        });
+    }
     public void linkDomain(HashMap<String, String> bodyData, HashMap<String, String> data) {
         DomainInterface domainInterface = Constants.riaRestAdapter.create(DomainInterface.class);
         domainInterface.linkDomain(data, bodyData, new Callback<Boolean>() {
             @Override
             public void success(Boolean flag, Response response) {
                 if (flag)
-                    mBus.post(DomainAPI.LINK_DOMAIN);
+                    domainCallback.domainAvailabilityStatus(DomainAPI.LINK_DOMAIN);
                 else
-                    mBus.post(DomainAPI.DOMAIN_NOT_AVAILABLE);
+                    domainCallback.domainAvailabilityStatus(DomainAPI.DOMAIN_NOT_AVAILABLE);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 BoostLog.d("DomainApiService", error.getMessage());
-                mBus.post(DomainAPI.ERROR_DOMAIN);
+                domainCallback.domainAvailabilityStatus(DomainAPI.ERROR_DOMAIN);
             }
         });
 
@@ -168,16 +219,16 @@ public class DomainApiService {
             public void success(String domainMsg, Response response) {
 
                 if (TextUtils.isEmpty(domainMsg) || response.getStatus() != HttpStatus.SC_OK) {
-                    domainMsg = "Domain book error";
+                    domainMsg = "Something went wrong. Please try again later.";
                 }else{
                     domainMsg = "Your Domain will be activated within 48 hours.";
                 }
-                mBus.post(domainMsg);
+                domainCallback.domainBookStatus(domainMsg);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                mBus.post(error.getMessage());
+                domainCallback.domainBookStatus("Something went wrong. Please try again later.");
             }
         });
 
@@ -189,7 +240,7 @@ public class DomainApiService {
         domainInterface.getFPDetails(fpId, data, new Callback<Get_FP_Details_Model>() {
             @Override
             public void success(Get_FP_Details_Model get_fp_details_model, Response response) {
-                mBus.post(get_fp_details_model);
+                domainCallback.getFpDetails(get_fp_details_model);
             }
 
             @Override
@@ -197,7 +248,7 @@ public class DomainApiService {
                 BoostLog.d("DomainApiService", error.getMessage());
                 Get_FP_Details_Model get_fp_details_model = new Get_FP_Details_Model();
                 get_fp_details_model.response = "Unable to connect with server";
-                mBus.post(get_fp_details_model);
+                domainCallback.getFpDetails(get_fp_details_model);
             }
         });
 

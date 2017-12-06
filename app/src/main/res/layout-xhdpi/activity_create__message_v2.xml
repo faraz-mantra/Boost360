@@ -88,7 +88,7 @@
                     </ImageView>
 
                     <ImageView
-                        android:id="@+id/edit_image"
+                        android:id="@+id/img_edit"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:padding="2dp"
@@ -97,7 +97,7 @@
                         android:src="@drawable/pencil_white" />
 
                     <ImageView
-                        android:id="@+id/delete_image"
+                        android:id="@+id/img_delete"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="end"

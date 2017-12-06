@@ -14,6 +14,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.IdRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -60,6 +63,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     public static EditText yourname, category, buzzname, buzzdescription;
     public static ImageView featuredImage, businessCategoryImage;
     private Toolbar toolbar;
+    private RadioGroup productCategory;
 
     Boolean flag4name = false, flag4category = false, flag4buzzname = false,flag4buzzdescriptn = false,allBoundaryCondtn = true ;
     public static String msgtxt4_name , msgtxt4buzzname ,msgtxt4buzzdescriptn ,msgtxtcategory;
@@ -82,6 +86,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     private final int gallery_req_id = 6;
     private RiaNodeDataModel mRiaNodeDataModel;
     private ArrayList<String> categories;
+    private boolean isChangedProductCategory;
 
 
     @Override
@@ -99,10 +104,18 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         yourname = (EditText)findViewById(R.id.profileName);
         buzzname = (EditText)findViewById(R.id.businessName);
         category = (EditText)findViewById(R.id.businessCategory);
+        productCategory = (RadioGroup) findViewById(R.id.rbgroup);
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
 
         mRiaNodeDataModel = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
+        productCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                isChangedProductCategory = true;
+                saveTextView.setVisibility(View.VISIBLE);
+            }
+        });
 //        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
 //        businessName_textlineTextView = (TextView) findViewById(R.id.businessName_textline);
 //        businessDesciption_textlineTextView = (TextView) findViewById(R.id.businessDesciption_textline);
@@ -158,13 +171,18 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                uploadProfile();
-                if(mRiaNodeDataModel!=null){
-                    RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
-                            mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
-                            mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
-                    mRiaNodeDataModel = null;
+                if (Methods.isOnline(Edit_Profile_Activity.this)){
+                    uploadProfile();
+                    if(mRiaNodeDataModel!=null){
+                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
+                                mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
+                        mRiaNodeDataModel = null;
+                    }
+                }else{
+                    Methods.snackbarNoInternet(Edit_Profile_Activity.this);
                 }
+
                 //UploadProfileAsyncTask upload = new UploadProfileAsyncTask(Edit_Profile_Activity.this,)
             }
         });
@@ -348,10 +366,21 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 
 
-        Initdata();
+        initData();
         //selectCats();
     }
 
+    private String getProductCategory(){
+        int buttonId = productCategory.getCheckedRadioButtonId();
+        switch (buttonId){
+            case R.id.rb_products:
+                return "Products";
+            case R.id.rb_services:
+                return "Services";
+            default:
+                return "";
+        }
+    }
     @Override
     public void onResume(){
         super.onResume();
@@ -427,7 +456,17 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             profilesattr[i] = "NAME";
             i++;
         }
-
+        if(isChangedProductCategory){
+            JSONObject productCategoryObj = new JSONObject();
+            try {
+                productCategoryObj.put("key","PRODUCTCATEGORYVERB");
+                productCategoryObj.put("value",getProductCategory());
+                session.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY, getProductCategory());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            ja.put(productCategoryObj);
+        }
         if (flag4buzzdescriptn) {
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(buzzdescription.getWindowToken(), 0);
@@ -469,55 +508,19 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         }
         //update alert archive
         new AlertArchive(Constants.alertInterface,"PROFILE",session.getFPID());
-
-//        MixPanelController.setProperties(EventKeysWL.SELF_NAME,msgtxt4buzzname);
-//        MixPanelController.setProperties(EventKeysWL.SITE_SCORE_Businesss_CATEGORY,msgtxtcategory);
-
-        // upa = new UploadPictureMessageAsyncTask(this, path, offerObj,
-        // postUser, postPage);
-        // upa.execute();
-
     }
 
-
-    public void loadCats() {
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        String url = Constants.NOW_FLOATS_API_URL
-//                + "/Discover/v1/floatingPoint/categories";
-//        JsonArrayRequest jsObjRequest = new JsonArrayRequest(url,
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        cat = new String[response.length()];
-//                        for (int i = 0; i < response.length(); i++) {
-//                            try {
-//                                cat[i] = (String) response.get(i);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        // selectCats();
-//                    }
-//                }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//                System.out.print(error.toString());
-//            }
-//        });
-//
-//        queue.add(jsObjRequest);
-    }
-
-
-    private void Initdata(){
+    private void initData(){
 
         buzzdescription.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
         buzzname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         yourname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
-
+        if(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY).equals("Services")){
+            productCategory.check(R.id.rb_services);
+        }else{
+            productCategory.check(R.id.rb_products);
+        }
        // String baseNameProfileImage = "https://api.withfloats.com/"+ Constants.storePrimaryImage;
         /*if(!Constants.IMAGEURIUPLOADED)
         {*/
@@ -738,44 +741,5 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         //Picasso.with(Edit_Profile_Activity.this).load(path).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
         uploadIMAGEURI uploadAsyncTask = new uploadIMAGEURI(Edit_Profile_Activity.this, path,session.getFPID());
         uploadAsyncTask.execute();
-
-
-
-//        UUID uuid;
-//
-//        uuid = UUID.randomUUID();
-//        String s_uuid = uuid.toString();
-//        s_uuid = s_uuid.replace("-", "");
-//
-//
-//       // ImageUpload_Interface service = ServiceGenerator.createService(ImageUpload_Interface.class, ImageUpload_Interface.BASE_URL);
-//        //TypedFile typedFile = new TypedFile("binary/octet-stream", new File(path));
-//
-//        File file = new File(path);
-//        ImageUpload_Interface service = Constants.restAdapter.create(ImageUpload_Interface.class);
-//
-//        String mimeType = "image/png";
-//        TypedFile fileToSend = new TypedFile(mimeType, file);
-//       // ImageUpload_Interface service = restAdapter.create(FileWebService.class);
-//        //fileWebService.upload(fileToSend);
-//
-//        service.put_uploadIMAGEURI(Constants.clientId, session.getFPID(), s_uuid, fileToSend, new Callback<String>() {
-//            @Override
-//            public void success(String s, Response response) {
-//
-//                Log.e("Upload", "success : "+s);
-//
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//
-//            }
-//
-//        });
-
-//        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Edit_Profile_Activity.this, path, true,false,session.getFPID());
-//        upa.execute();
     }
-
 }

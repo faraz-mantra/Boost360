@@ -10,7 +10,7 @@ public class DbConstants {
         String serverId = "server_id";
         String imageUrl = "image_url";
         String updateText = "update_text";
-        String date = "date";
+        String date = "DATE";
         String type = "type";
         String url = "url";
         String synced = "synced";
@@ -124,7 +124,7 @@ public class DbConstants {
         String tableName = "search_queries";
         String ID = "_ID";
         String SearchQueries = "queries";
-        String date = "date";
+        String date = "DATE";
 
         String CREATE_SEARCH_QUERIES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + SearchQueries +
                 " TEXT, " + date + " TEXT)";

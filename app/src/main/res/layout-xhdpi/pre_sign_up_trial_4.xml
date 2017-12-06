@@ -18,7 +18,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/primary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/MyCustomToolBarTheme">
+            app:theme="@style/CustomToolbarTheme">
             <include
                 android:id="@+id/layout_ria"
                 android:layout_height="match_parent"
@@ -136,6 +136,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:maxLines="1"
+                        android:drawableRight="@drawable/dropselect"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
@@ -163,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:drawableRight="@drawable/dropselect"
+                        android:inputType="none"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />

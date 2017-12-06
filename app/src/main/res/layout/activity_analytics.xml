@@ -11,21 +11,24 @@
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
-    <com.astuetz.PagerSlidingTabStrip
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@color/primary"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="4dp"
+        app:tabGravity="fill"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/white"
         android:layout_below="@+id/toolbar"
-        android:id="@+id/vpagertabstrip_main"
-        android:gravity="top"
-        android:background="@color/primaryColor"
-        app:pstsIndicatorColor="@android:color/white"
-        app:pstsShouldExpand="true"
-        app:pstsTextAllCaps="true"
-        android:layout_height="48dp"/>
+        app:tabMode="fixed" />
     <android.support.v4.view.ViewPager
         android:layout_width="wrap_content"
-        android:layout_below="@+id/vpagertabstrip_main"
+        android:layout_below="@+id/sliding_tabs"
         android:id="@+id/viewpager_main"
         android:layout_height="match_parent">
+
     </android.support.v4.view.ViewPager>
     <android.support.v4.widget.ContentLoadingProgressBar
         style="?android:attr/progressBarStyleLarge"

@@ -64,6 +64,7 @@ import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.riachatsdk.activities.ChatWebViewActivity;
 import com.nowfloats.riachatsdk.utils.NFGeoCoder;
 import com.nowfloats.signup.UI.API.API_Layer;
@@ -94,6 +95,7 @@ import com.nowfloats.util.SmsVerifyModel;
 import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -120,17 +122,17 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+
 public class PreSignUpActivityRia extends AppCompatActivity implements
         PreSignUpDialog.Dialog_Activity_Interface,
         API_Layer_Signup.SignUp_Interface, View.OnClickListener,
         LoadCountryData.LoadCountryData_Interface,
         Valid_Email.Valid_Email_Interface
         , GoogleApiClient.OnConnectionFailedListener, DomainAvailabilityCheck.CallBack {
-    static UserSessionManager sessionManager;
+    UserSessionManager sessionManager;
     private static final String TAG = "PreSignUp";
     public String[] cat = null;
     ListView l;
-    // static List<String> countries;
     HeaderText title;
     ImageView ivWebsiteStatus, ivPhoneStatus;
     Bus bus;
@@ -191,7 +193,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private LinearLayout verify_button;
     private DomainAvailabilityCheck mDomainAvailabilityCheck;
     private DataBase dataBase;
-
+    private String citytext = "";
     public ProgressDialog pd;
 
     @Override
@@ -248,10 +250,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         businessCategoryEditText.setFocusable(false);
         businessCategoryEditText.setFocusableInTouchMode(false);
 
-        countryEditText.setFocusable(false);
-        countryEditText.setFocusableInTouchMode(false);
-
-
         CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY SITE' you agree to our " +
                 "<a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
@@ -290,6 +288,12 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         verify_button.setOnClickListener(this);
 
+        cityEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                cityEditText.setText(citytext);
+            }
+        });
         cityEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -325,7 +329,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                                 AutocompletePredictionBuffer a = result.await();
                                 //Log.v("ggg","ok");
                                 citys.clear();
-                                runOnUiThread(new Runnable() {
+                                cityEditText.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         adapter.notifyDataSetChanged();
@@ -340,7 +344,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
                                 a.release();
 
-                                runOnUiThread(new Runnable() {
+                                cityEditText.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         adapter = new ArrayAdapter<>(PreSignUpActivityRia.this,
@@ -377,6 +381,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 cityEditText.setTag(false);
                 cityEditText.setText(city);
                 cityEditText.setTag(true);
+                citytext = city;
                 updateCountry();
 
                 //Log.v("ggg",country_code);
@@ -403,7 +408,16 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 facebookPageURL = extras.getString("facebook_page_url");
             }
         }
+        countryEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    Methods.showSnackBarNegative(PreSignUpActivityRia.this,"Please select city with suggested country");
+                }
+                return true;
 
+            }
+        });
         emailEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -426,15 +440,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 }
             }
         });
-
-        countryEditText.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showCountryDialog(signUpCountryList);
-            }
-        });
-
 
         businessCategoryEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -530,6 +535,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             String country_code = Country_CodeMap.get(selectedCountry);
             if (Code_PhoneMap.containsKey(country_code))
                 data_country_code = Code_PhoneMap.get(country_code);
+        }
+        if (phoneEditText.getText().toString().trim().length() != 0) {
+            phoneEditText.setText("");
+            ivPhoneStatus.setBackgroundResource(R.drawable.warning);
         }
     }
 
@@ -673,9 +682,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             ClickableSpan clickableSpan = new ClickableSpan() {
                 public void onClick(View view) {
                     Log.e("urlSpan", urlSpan.getURL());
-
-                    Intent intent = new Intent(PreSignUpActivityRia.this, ChatWebViewActivity.class);
-                    intent.putExtra(ChatWebViewActivity.KEY_URL, urlSpan.getURL());
+                    Intent intent;
+                    if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+                        intent = new Intent(PreSignUpActivityRia.this, ChatWebViewActivity.class);
+                        intent.putExtra(ChatWebViewActivity.KEY_URL, urlSpan.getURL());
+                    }else{
+                        intent = new Intent(PreSignUpActivityRia.this, Mobile_Site_Activity.class);
+                        intent.putExtra("WEBSITE_NAME",urlSpan.getURL());
+                    }
                     startActivity(intent);
 
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -768,7 +782,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
             if (!TextUtils.isEmpty(mBundle.getString(Save_City))) {
                 cityEditText.setText(mBundle.getString(Save_City, ""));
-
+                citytext = cityEditText.getText().toString().trim();
             }
             if (!TextUtils.isEmpty(mBundle.getString(Save_Email))) {
                 emailEditText.setText(mBundle.getString(Save_Email, ""));
@@ -917,11 +931,11 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private boolean getEditTextData() {
         try {
             MixPanelController.track("EnterDetailsNext", null);
-            data_businessName = businessNameEditText.getText().toString();
-            data_businessCategory = businessCategoryEditText.getText().toString();
-            data_city = cityEditText.getText().toString();
-            data_country = countryEditText.getText().toString();
-            data_email = emailEditText.getText().toString();
+            data_businessName = businessNameEditText.getText().toString().trim();
+            data_businessCategory = businessCategoryEditText.getText().toString().trim();
+            data_city = cityEditText.getText().toString().trim();
+            data_country = countryEditText.getText().toString().trim();
+            data_email = emailEditText.getText().toString().trim();
 //            data_phone = phoneEditText.getText().toString();
 //            data_country_code = countryPhoneCode.getText().toString();
             allFieldsValid = true;
@@ -937,7 +951,11 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(cityEditText);
                 Methods.showSnackBarNegative(activity, getString(R.string.enter_city));
-            } else if (data_country.trim().length() == 0) {
+            }else if(!citytext.trim().equals(data_city)){
+                allFieldsValid = false;
+                YoYo.with(Techniques.Shake).playOn(cityEditText);
+                Methods.showSnackBarNegative(activity, "Enter valid city");
+            }else if (data_country.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(countryEditText);
                 Methods.showSnackBarNegative(activity, getString(R.string.select_country));

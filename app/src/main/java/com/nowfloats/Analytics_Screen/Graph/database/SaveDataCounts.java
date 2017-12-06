@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class SaveDataCounts {
 
     private static final String DATE_ID = "id";
-    private static final String DATE = "date";
+    private static final String DATE = "DATE";
     private static final String DATA_COUNT = "dataCount";
     private static final String YEAR = "year";
     private static final String MONTH = "month";

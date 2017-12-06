@@ -143,7 +143,7 @@
                             android:id="@+id/et_pincode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:maxLength="6"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 

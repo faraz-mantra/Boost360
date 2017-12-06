@@ -24,9 +24,9 @@ public class PricingPlansActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_appearance);
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
+        toolbar = findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);
-        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        headerText = toolbar.findViewById(R.id.titleTextView);
         headerText.setText(getResources().getString(R.string.store));
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -49,7 +49,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -181,9 +180,9 @@ public class CustomerAssistantService extends Service {
 
                     @Override
                     public void onBubbleClick(BubbleLayout bubble) {
-                        Intent intent = new Intent(CustomerAssistantService.this, CustomerAssistantActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
+//                        Intent intent = new Intent(CustomerAssistantService.this, CustomerAssistantActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                        startActivity(intent);
                     }
                 });
 

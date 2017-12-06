@@ -92,9 +92,19 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="0dp"
                                 android:text="900"
+                                android:layout_weight="1"
                                 android:textColor="@color/product_price"
                                 android:textSize="10sp"
                                 tools:ignore="MissingPrefix" />
+                            <ImageView
+                                android:id="@+id/share_img"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:padding="5dp"
+                                android:background="?android:selectableItemBackground"
+                                android:layout_marginEnd="5dp"
+                                android:src="@drawable/share_grey"
+                                android:layout_marginRight="5dp" />
 
                         </LinearLayout>
                     </LinearLayout>

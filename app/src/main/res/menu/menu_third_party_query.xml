@@ -4,13 +4,15 @@
 
     <item android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white"
-        android:title="@string/filter_orders"
+        android:title="@string/search"
+        android:visible="@bool/godel_debuggable"
         app:showAsAction="always" />
     <item android:id="@+id/action_filter"
         android:icon="@drawable/ic_filter_button"
-        android:title="@string/filter_orders"
+        android:title="@string/filter_by"
         app:showAsAction="always" />
     <item android:id="@+id/action_menu"
         android:title="@string/hello"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>

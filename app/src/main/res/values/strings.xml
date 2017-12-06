@@ -15,6 +15,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="hotline_file_provider_authority">com.biz2.nowfloats.provider</string>
     <string name="title_activity_business_profile__home">Business Profile</string>
     <string name="business__address">Business Address</string>
     <string name="contact__info">Contact Information</string>
@@ -45,7 +46,7 @@
     <string name="ps_sc6_lbl2">Opportunities</string>
     <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
     <string name="ps_sc8_lbl1">Premium features in</string>
-    <string name="ps_sc8_lbl2">NOWFLOATS</string>
+    <string name="ps_sc8_lbl2">NowFloats</string>
     <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
     <string name="ps_sc8_lbl4">Store</string>
     <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
@@ -128,7 +129,7 @@
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
-    <string name="side_panel_row_domain_details">Domain Details</string>
+    <string name="side_panel_row_domain_details">Domain And Email Details</string>
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
@@ -463,6 +464,31 @@
         <item>Facebook</item>
         <item>Quikr</item>
     </string-array>
+    <string-array name="wildfire_parent_0">
+        <item>WildFire is the fastest way to get your potential customers to notice your brand, product or services. It is an inorganic boost provided to the organic website, in form of targeted digital advertising that ensures customer calls and website visits.</item>
+    </string-array>
+    <string-array name="wildfire_parent_1">
+        <item>If you already have a NowFloats LightHouse plan (organic SEO), you can simply activate WildFire for your category (prices vary because of difference in supply &amp; demand for keywords by category).</item>
+        <item>A mix of advertising tools, such as Google AdWords, Facebook Ads, etc. are used to automatically create the most optimised ads &amp; targeting for your website. Which ensure people searching for what’s being advertised end up calling your business number or on your website first.</item>
+        <item><![CDATA[<b>Note:</b> A minimum of three messages are required on your website for the WildFire plan to start.]]></item>
+    </string-array>
+    <string-array name="wildfire_parent_2">
+        <item><![CDATA[NowFloats WildFire is NowFloats LightHouse with Targeted online marketing that spurs leads and calls from potential customers from the get go. Advertising vehicles like Google Adwords<sup><small>TM</small></sup> or Facebook<sup><small>TM</small></sup> ads, etc. are used to target your potential customers. The content of these ads are created using the keywords and messages updated from the NowFloats Business Website.]]></item>
+    </string-array>
+    <string-array name="dictate_parent_0">
+        <item>A dedicated NowFloats representative gets in touch with you regularly, to know your business properly and updates your website 2&#8211;3 times a week on your behalf, thereby saving your time.</item>
+    </string-array>
+    <string-array name="dictate_parent_1">
+        <item><![CDATA[Our representative will first understand your business so that the updates are highly relevant. More so because we fine-tune the messages to search trends yielding higher traffic per message.<br />Then the dedicated NowFloats Dictate representative will be provided access to your website through the Manage Portal to update it regularly.]]></item>
+    </string-array>
+    <string-array name="dictate_parent_2">
+        <item><![CDATA[<b>For which plans can the NowFloats Dictate be used?</b><br />NowFloats Dictate can be used for Boost Lite customers.]]></item>
+    </string-array>
+    <string-array name="wildfire_parents">
+        <item>OVERVIEW</item>
+        <item>HOW IT WORKS</item>
+        <item>FAQs</item>
+    </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="enquiries_title">Enquiries</string>
     <string name="payment_setting">Payment Settings</string>
@@ -706,8 +732,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="ignore_in_capital">IGNORE</string>
     <string name="buy_light_house_plan">Buy Boost plan to get all the features</string>
     <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
-    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Boost plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website but some of the main features will be deactivated.]]></Data></string>
+    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Boost plan will expire in <b>%s days</b>. Even though your customers will be able to see your website but some of the main features will be deactivated.]]></Data></string>
 
     <string name="wildfire_will_expire">Wildfire plan will expire in</string>
     <string name="days">days</string>
@@ -782,7 +808,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_lookup">Domain LookUp</string>
     <string name="enter_domain_nmae_to_continue">Enter domain name to continue</string>
     <string name="domain_is_available">Domain is available..</string>
-    <string name="domain_not_available">Domain not available. Please try another name.</string>
+    <string name="domain_not_available">Domain is not available. Please try another name.</string>
     <string name="link_domain_not_available">Domain link failure. Please try again.</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
     <string name="domain_configuration">Domain Configuration</string>
@@ -1014,7 +1040,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_domain">Renew domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
     <string name="enjoying_feature">Is this helpful in managing your leads? </string>
-    <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
+    <string name="tap_a_star_to_rate_it">Tap to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>
     <string name="already_have_a_domain2"><u>Already have a domain?</u></string>
@@ -1099,7 +1125,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enable_bubble_msg">Open WhatsApp to share products with your potential customers.</string>
     <string name="enable_customer_assistant_msg">Open Customer Assistant to view your potential customers.</string>
     <string name="already_included_in_your_package">*Already included in your package</string>
-    <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
+    <string name="link_comments">I would like to map my existing domain to my NowFloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
         If you have an existing domain, we strongly recommend that you use it for your NowFloats Website.
         Online discovery will be faster as search engines already recognize your domain.
@@ -1384,6 +1410,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="you_can_see_your_page_analytics">analytics->social analytics->\nfacebook analytics</string>
     <string name="control">Connect</string>
     <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
+    <string name="email_character">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
     <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
     <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
     <string name="sign_up_with_ria">Sign up with ria</string>
@@ -1510,7 +1537,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="manage_website_customers">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
     <string name="manage_social_customers">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
 </string>
-    <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
+    <string name="manage_multichannel_customers">Interact with your customers and reply to their enquiries from across platforms through a single interface. We read through your SMS data to fetch relevant enquiries.</string>
     <string name="deeplink_manage_customer">managecustomer</string>
     <string name="pp_business_category">Business Category:</string>
     <string name="text_dictate"><![CDATA[<b>DICTATE</b> - WEBSITE CONTENT SERVICE]]></string>
@@ -1520,5 +1547,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
+    <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860&#8211;123&#8211;1233.</string>
+    <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
+    <string name="dictate_definition">To get maximum value from your NowFloats business website, we advise businesses to update content, in form of business updates, offers or product catalogs, 2&#8211;3 times a week regularly. When you opt for the NowFloats Dictate, a service by which, a NowFloats representative gets in touch with you and understands your business well enough, and then regularly contacts you or designated associate to get the latest updates.</string>
+    <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
 
 </resources>

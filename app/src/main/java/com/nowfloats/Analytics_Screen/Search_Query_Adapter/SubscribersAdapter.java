@@ -22,9 +22,8 @@ import java.util.ArrayList;
 
 public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.MyHolder> {
 
-    int pos = -1;
-    ArrayList<SubscriberModel> mSubscriberList;
-    Context mContext;
+    private ArrayList<SubscriberModel> mSubscriberList;
+    private Context mContext;
     public SubscribersAdapter(Context context,ArrayList<SubscriberModel> subscriberModelList){
         mContext= context;
         mSubscriberList = subscriberModelList;
@@ -40,7 +39,7 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         if (holder == null){
             return;
         }
-        holder.mLinearLayout.setBackgroundColor(pos == position ?ContextCompat.getColor(mContext,R.color.gray_transparent) :ContextCompat.getColor(mContext,R.color.white));
+        holder.mLinearLayout.setBackgroundColor(ContextCompat.getColor(mContext,R.color.white));
         holder.emailTextView.setText(mSubscriberList.get(position).getUserMobile());
         try {
             int status = Integer.parseInt(mSubscriberList.get(position).getSubscriptionStatus());

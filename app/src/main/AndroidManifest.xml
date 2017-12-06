@@ -146,7 +146,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="com.riasdk.skip"
+                    android:host="${applicationId}.riasdk.skip"
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
@@ -194,13 +194,23 @@
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
         </activity>
 
-        <service android:name="com.nowfloats.bubble.BubblesService" />
+       <!-- <service android:name="com.nowfloats.bubble.BubblesService" />
         <service
             android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
             android:exported="true"
-            android:stopWithTask="false" />
+            android:stopWithTask="false" />-->
+        <!--<provider
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:authorities="${applicationId}.provider">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                tools:replace="android:resource"
+                android:resource="@xml/hotline_provider_paths"/>
 
+        </provider>-->
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
@@ -278,7 +288,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="com.riasdk.login"
+                    android:host="${applicationId}.riasdk.login"
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
@@ -297,7 +307,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="com.riasdk.presignup"
+                    android:host="${applicationId}.riasdk.presignup"
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
@@ -357,7 +367,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity">
+        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -377,13 +388,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <receiver
-            android:name="com.nowfloats.Analytics_Screen.receiver.SmsVerifyReceiver"
-            android:exported="true">
-            <intent-filter android:priority="0">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
         <!--
         <receiver
             android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
@@ -496,12 +500,18 @@
             android:name="com.nowfloats.Analytics_Screen.ShowVmnCallActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.customerassistant.ThirdPartyQueriesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.Analytics_Screen.VmnCallCardsActivity"
             android:screenOrientation="portrait" />
 
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
-            android:authorities="${applicationId}.provider" />
+            android:authorities="${applicationId}.boost.provider" />
         <provider
             android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
             android:authorities="${applicationId}.riachatsdk.provider" />
@@ -534,12 +544,12 @@
         <activity
             android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"
             android:launchMode="singleInstance" />
-        <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
+
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />
         <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity" />
 
-        <service
+      <!--  <service
             android:name="com.nowfloats.accessbility.DataAccessibilityServiceV8"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter android:priority="2147483647">
@@ -549,76 +559,76 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service" />
-        </service>
+        </service>-->
 
-        <activity
-            android:name="com.nowfloats.accessbility.BubbleDialog"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.custom"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.accessbility.BubbleInAppDialog"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.bubbleInApp"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.accessbility.WhatsAppBubbleCloseDialog"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.bubbleInApp"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.accessbility.WhatsAppDialog"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.custom"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.customerassistant.CustomerAssistantActivity"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Transparent"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.accessbility.OverlayDialog"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.custom"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.accessbility.TempDisplayDialog"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
-            android:theme="@style/Theme.custom"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.customerassistant.SuggestionsActivity"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.custom"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <!--<activity-->
+            <!--android:name="com.nowfloats.accessbility.BubbleDialog"-->
+            <!--android:autoRemoveFromRecents="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:noHistory="true"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.custom"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+        <!--<activity-->
+            <!--android:name="com.nowfloats.accessbility.BubbleInAppDialog"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.bubbleInApp"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+        <!--<activity-->
+            <!--android:name="com.nowfloats.accessbility.WhatsAppBubbleCloseDialog"-->
+            <!--android:autoRemoveFromRecents="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:noHistory="true"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.bubbleInApp"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+        <!--<activity-->
+            <!--android:name="com.nowfloats.accessbility.WhatsAppDialog"-->
+            <!--android:autoRemoveFromRecents="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:noHistory="true"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.custom"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+        <!--<activity-->
+            <!--android:name="com.nowfloats.customerassistant.CustomerAssistantActivity"-->
+            <!--android:autoRemoveFromRecents="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:noHistory="true"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Transparent"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+        <!--<activity-->
+            <!--android:name="com.nowfloats.accessbility.OverlayDialog"-->
+            <!--android:autoRemoveFromRecents="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:noHistory="true"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.custom"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+        <!--<activity-->
+            <!--android:name="com.nowfloats.accessbility.TempDisplayDialog"-->
+            <!--android:autoRemoveFromRecents="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:noHistory="true"-->
+            <!--android:theme="@style/Theme.custom"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+        <!--<activity-->
+            <!--android:name="com.nowfloats.customerassistant.SuggestionsActivity"-->
+            <!--android:autoRemoveFromRecents="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:noHistory="true"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.custom"-->
+            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
@@ -636,7 +646,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.nowfloats.Store.NewPricingPlansActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

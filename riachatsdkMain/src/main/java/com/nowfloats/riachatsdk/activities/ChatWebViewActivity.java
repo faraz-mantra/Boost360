@@ -50,7 +50,7 @@ public class ChatWebViewActivity extends Activity {
             }
         });
 
-        if (mBundle.containsKey(KEY_URL)) {
+        if (mBundle != null && mBundle.containsKey(KEY_URL)) {
             mWebView.loadUrl(getIntent().getExtras().getString(KEY_URL));
         }
 

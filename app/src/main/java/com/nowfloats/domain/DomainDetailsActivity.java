@@ -5,16 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -32,28 +43,28 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
-import com.nowfloats.Store.Model.ActivePackage;
-import com.nowfloats.Store.Model.AllPackage;
-import com.nowfloats.Store.Model.PricingPlansModel;
+import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
-import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 
-public class DomainDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class DomainDetailsActivity extends AppCompatActivity implements View.OnClickListener,DomainApiService.DomainCallback {
 
     private Toolbar toolbar;
 
@@ -63,14 +74,11 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
 
     private DomainApiService domainApiService;
 
-    private Bus mBus;
-
     private ProgressDialog progressDialog;
-
 
     private static final int DOMAIN_EXPIRY_GRACE_PERIOD = 30;
 
-    private static final int PLAN_EXPIRY_GRACE_PERIOD = 90;
+    private static final int EMAIL_BOOKING_NUM = 3;
     private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
 
     private int domainExpiryDays = 0, planExpiryDays = 0;
@@ -84,17 +92,35 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private String domainType = "", domainExpiryDate = "", domainCreatedDate = "",domainName="";
 
     private Get_FP_Details_Model get_fp_details_model;
-    int processingStatus = -1;
+    int processingStatus = -1, totalBookedEmails, totalFailedEmails;
     SharedPreferences pref;
-    private int domainYears = 0, bookedYears = 0;
+    EmailBookingModel bookingModelList;
+    EmailAdapter emailAdapter;
+    private ArrayList<EmailBookingModel.AddEmailModel> emailBookedList = new ArrayList<>();
     private boolean isDomainBookFailed = false;
-    TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv,expireMsgTv;
+    TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv,expireMsgTv, bookedEmailTv;
     CardView domainDetailsCard, emailDetailsCard;
     LinearLayout chooseDomainLayout, expiredLayout,emptyLayout;
-    TextView proceedBtn;
-    RadioButton chooseBtn, linkBtn;
+    TextView proceedBtn, confirmRequestTv, addEmail;
+    RadioButton chooseBtn;
     private MaterialDialog domainBookDialog;
+    public enum EmailType{
+        ADDED,IN_PROCESS,FAILED,ADD_EMAIL;
 
+        public static EmailType getEmailType(int x) {
+            switch(x) {
+                case 0:
+                    return ADDED;
+                case 1:
+                    return IN_PROCESS;
+                case 2:
+                    return FAILED;
+                case 3:
+                    return ADD_EMAIL;
+            }
+            return null;
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,12 +134,11 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         get_fp_details_model = (Get_FP_Details_Model) getIntent().getExtras().get("get_fp_details_model");
 
         initializeControls();
-        bindListeners();
         loadData();
     }
 
     private void initializeControls() {
-        mBus = BusProvider.getInstance().getBus();
+
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
 
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -128,10 +153,14 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         emptyLayout = (LinearLayout) findViewById(R.id.ll_empty_view);
         expiredLayout = (LinearLayout) findViewById(R.id.ll_plan_expired);
         expireMsgTv = (TextView) expiredLayout.findViewById(R.id.tv_expire_msg);
+        bookedEmailTv = (TextView) emailDetailsCard.findViewById(R.id.tv_email_booked);
         proceedBtn = (TextView) findViewById(R.id.btn_proceed);
+        ((TextView)emailDetailsCard.findViewById(R.id.tv_note_message)).setText(Methods.fromHtml(getString(R.string.email_180_message)));
         chooseBtn = (RadioButton) findViewById(R.id.rb_book_a_domain);
         chooseBtn.setText(Methods.fromHtml("Book new domain <i>(included in your package)</i>"));
-        linkBtn = (RadioButton) findViewById(R.id.rb_link_a_domain);
+        addEmail = emailDetailsCard.findViewById(R.id.tv_add_email);
+        addEmail.setPaintFlags(addEmail.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        confirmRequestTv = emailDetailsCard.findViewById(R.id.tv_confirm_request);
         setSupportActionBar(toolbar);
         headerText.setText(getResources().getString(R.string.side_panel_row_domain_details));
 
@@ -140,9 +169,22 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         session = new UserSessionManager(this, this);
-        domainApiService = new DomainApiService(mBus);
+        domainApiService = new DomainApiService(this);
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        proceedBtn.setOnClickListener(this);
 
+//        RecyclerView emailRunningRv = findViewById(R.id.rv_email_running);
+//        emailRunningRv.setLayoutManager(new LinearLayoutManager(this));
+//        final EmailAdapter adapter = new EmailAdapter(new ArrayList<EmailBookingModel.EmailDomainName>());
+//        emailRunningRv.setAdapter(adapter);
+//        emailRunningRv.setNestedScrollingEnabled(false);
+//        addEmailTv.setPaintFlags(addEmailTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        addEmailTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                enterEmailDialog();
+//            }
+//        });
     }
 
     private void initializePrices() {
@@ -153,11 +195,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         hmPrices.put(".ORG", 500);
     }
 
-    private void bindListeners() {
-
-        proceedBtn.setOnClickListener(this);
-
-    }
     private void linkDomain() {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(DomainDetailsActivity.this)
                 //.title(getString(R.string.have_an_existing_domain))
@@ -224,7 +261,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         return offersParam;
     }
 
-    @Subscribe
+    @Override
     public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
         hideLoader();
         if (domainAPI == DomainApiService.DomainAPI.RENEW_DOMAIN){
@@ -236,16 +273,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }else if(domainAPI == DomainApiService.DomainAPI.RENEW_NOT_AVAILABLE){
             showCustomDialog(getString(R.string.domain_booking_failed),getString(R.string.drop_us_on_email_or_call) ,
                     getString(R.string.ok), null, DialogFrom.FAILED);
-            /*expireMsgTv.setText(String.format(getString(R.string.renew_domain_not_available_message),domainNameTv.getText().toString(),session.getFpTag()+getString(R.string.nowfloats_com)));
-            expiredLayout.findViewById(R.id.btn_renew_domain).setVisibility(View.GONE);
-            expiredLayout.findViewById(R.id.btn_book_domain).setVisibility(View.VISIBLE);
-            expiredLayout.findViewById(R.id.btn_book_domain).setOnClickListener(this);*/
-
-            /*if (domainBookDialog != null)
-                 Methods.showSnackBarNegative(domainBookDialog.getView(), getString(R.string.domain_not_available));
-            else{
-                Methods.showSnackBarNegative(this, getString(R.string.domain_not_available));
-            }*/
 
         } else if (domainAPI == DomainApiService.DomainAPI.CHECK_DOMAIN) {
             Methods.showSnackBarPositive(DomainDetailsActivity.this, "Domain is available");
@@ -284,67 +311,20 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         domainApiService.getDomainDetails(DomainDetailsActivity.this,session.getFpTag(), getDomainDetailsParam());
     }
 
-    @Subscribe
-    public void getDomainSupportedTypes(ArrayList<String> arrExtensions) {
-        hideLoader();
-        if (arrExtensions != null && arrExtensions.size() > 0) {
-//            arrDomainExtensions = new ArrayList<String>(Arrays.asList(domainSupportedTypes.domainExtension.split(",")));
-           /*
-               remove below domains as per Rachit
-            */
-            this.arrDomainExtensions = arrExtensions;
 
-            if (arrDomainExtensions.contains(".IN")) {
-                arrDomainExtensions.remove(".IN");
-                //String firstIndexValue = arrDomainExtensions.get(0);
-                arrDomainExtensions.add(0, ".IN");
-            }
-
-
-            arrDomainExtensions.remove(".CA");
-            arrDomainExtensions.remove(".CO.ZA");
-            bookDomain(null,null, DomainApiService.DomainAPI.CHECK_DOMAIN);
-            /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(DomainDetailsActivity.this,
-                    android.R.layout.simple_spinner_item, arrDomainExtensions);
-            spDomainTypes.setAdapter(arrayAdapter);*/
-
-            /*if(btnBookDomain.getVisibility() == View.VISIBLE || btnRenewDomain.getVisibility() == View.VISIBLE){
-                setDomainYearsAdapter(domainYears);
-                btnLinkDomain.setVisibility(View.VISIBLE);
-            }else{
-                setBookedDomainYears(bookedYears);
-                spDomainYears.setSelection(0);
-                spDomainYears.setEnabled(false);
-                spDomainYears.setClickable(false);
-            }
-            if (!TextUtils.isEmpty(domainType)) {
-                if (arrDomainExtensions.contains(domainType)) {
-                    spDomainTypes.setSelection(arrDomainExtensions.indexOf(domainType));
-
-                }
-                spDomainTypes.setEnabled(false);
-                spDomainTypes.setClickable(false);
-            } else {
-                spDomainTypes.setSelection(0);
-            }*/
-
-        } else {
-            Methods.showSnackBarNegative(DomainDetailsActivity.this, getString(R.string.domain_details_getting_error));
-        }
-
-    }
-
-   /* private void setBookedDomainYears(int years){
-        Integer[] array = new Integer[1];
-        array[0] =years;
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(DomainDetailsActivity.this,android.R.layout.simple_spinner_item,array);
-        spDomainYears.setAdapter(adapter);
-    }*/
-    @Subscribe
+    @Override
     public void getDomainDetails(DomainDetails domainDetails) {
-        hideLoader();
+
         if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
             Methods.showSnackBarNegative(this,getString(R.string.something_went_wrong));
+            hideLoader();
+        }else if(domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.NO_DATA){
+            if(!TextUtils.isEmpty(get_fp_details_model.getExpiryDate())) {
+                setPricingPlansDays(Long.valueOf(get_fp_details_model.getExpiryDate().replace("/Date(", "").replace(")/", "")));
+            }else{
+                applyDomainLogic();
+            }
+            hideLoader();
         } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
 
             if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus())){
@@ -375,58 +355,141 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 //error domain failed
                 isDomainBookFailed = true;
             }
-
-        }else if (!Methods.isOnline(this)){
-            Methods.snackbarNoInternet(this);
-            return;
+          /*  if(!TextUtils.isEmpty(get_fp_details_model.getExpiryDate())) {
+                setPricingPlansDays(Long.valueOf(get_fp_details_model.getExpiryDate().replace("/Date(", "").replace(")/", "")));
+            }else{
+                applyDomainLogic();
+            }*/
+            domainApiService.emailsBookingStatus(Constants.clientId,session.getFpTag());
+//            ArrayList<EmailBookingModel.EmailBookingStatus> bookingStatus = new ArrayList<EmailBookingModel.EmailBookingStatus>(4);
+//            for (int i =0; i<4;i++){
+//                EmailBookingModel.EmailBookingStatus model = new EmailBookingModel.EmailBookingStatus();
+//                model.setEmail("hello@nowfloats.com");
+//
+//                if (i ==0){
+//                    model.setBookingStatus(DomainApiService.EmailBookingStatus.COMPLETED.ordinal());
+//                    model.setIsBooked(false);
+//                    bookingStatus.add(model);
+//                }else if(i == 1){
+//                    model.setBookingStatus(DomainApiService.EmailBookingStatus.DNSFETCH_COMPLETED.ordinal());
+//                    model.setIsBooked(false);
+//                    bookingStatus.add(model);
+//                }
+//                else if (i == 2){
+//                    model.setBookingStatus(DomainApiService.EmailBookingStatus.COMPLETED.ordinal());
+//                    model.setIsBooked(true);
+//                    bookingStatus.add(model);
+//                }else{
+//                    model.setEmail("");
+//                    model.setIsBooked(true);
+//                    bookingStatus.add(model);
+//                }
+//            }
+//            emailBookingStatus(bookingStatus);
         }
+        else if (!Methods.isOnline(this)){
+            hideLoader();
+            Methods.snackbarNoInternet(this);
+        }
+
+    }
+
+    @Override
+    public void emailBookingStatus(ArrayList<EmailBookingModel.EmailBookingStatus> bookingStatuses){
+        hideLoader();
+
+        for (EmailBookingModel.EmailBookingStatus emailBookingStatus : bookingStatuses) {
+            if (TextUtils.isEmpty(emailBookingStatus.getEmail()) && emailBookingStatus.getIsBooked()){
+                totalBookedEmails++;
+            }else if (emailBookingStatus.getIsBooked()){
+                emailBookedList.add(new EmailBookingModel.AddEmailModel(emailBookingStatus.getEmail(),
+                        EmailType.getEmailType(EmailType.ADDED.ordinal())));
+
+            }else if (emailBookingStatus.getBookingStatus()< DomainApiService.EmailBookingStatus.COMPLETED.ordinal()){
+                emailBookedList.add(new EmailBookingModel.AddEmailModel(emailBookingStatus.getEmail(),
+                        EmailType.getEmailType(EmailType.IN_PROCESS.ordinal())));
+            }else{
+                emailBookedList.add(new EmailBookingModel.AddEmailModel(emailBookingStatus.getEmail(),
+                        EmailType.getEmailType(EmailType.FAILED.ordinal())));
+                totalFailedEmails++;
+            }
+
+        }
+        Collections.sort(emailBookedList);
+
+        if(totalBookedEmails>0) {
+            bookedEmailTv.setVisibility(View.VISIBLE);
+            bookedEmailTv.setText(String.format(Locale.ENGLISH, "You already have booked %s %s from other sources.", totalBookedEmails,totalBookedEmails > 1?"emailIds":"emailId"));
+        }
+
         if(!TextUtils.isEmpty(get_fp_details_model.getExpiryDate())) {
             setPricingPlansDays(Long.valueOf(get_fp_details_model.getExpiryDate().replace("/Date(", "").replace(")/", "")));
         }else{
             applyDomainLogic();
         }
-       /* new API_Service(DomainDetailsActivity.this, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), mBus);*/
     }
+    @Override
+    public void getEmailBookingList(ArrayList<String> ids, String error){
+        hideLoader();
+        JSONObject json = new JSONObject();
 
-   /* private void setDomainYearsAdapter(int length){
-        if(length == 0){
-            return;
-        }
-        Integer[] array = new Integer[length];
-        for (int i=1;i<=length;i++){
-            array[i-1] = i;
-        }
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(DomainDetailsActivity.this,android.R.layout.simple_spinner_item,array);
-        spDomainYears.setAdapter(adapter);
-    }*/
-
-
-    @Subscribe
-    public void getStoreList(PricingPlansModel response) {
-
-        List<AllPackage> allModels = response.allPackages;
-        List<ActivePackage> activeIdArray = response.activePackages;
-        if (allModels != null && activeIdArray != null) {
-            long storeExpiryDays = 0;
-            for (ActivePackage storeModel : activeIdArray) {
-                Double validity = storeModel.getTotalMonthsValidity();
-                Calendar cal = Calendar.getInstance();
-                cal.setTimeInMillis(Long.parseLong(storeModel.getToBeActivatedOn().replace("/Date(", "").replace(")/", "")));
-                cal.add(Calendar.MONTH, (int)Math.floor(validity));
-                cal.add(Calendar.DATE, (int) ((validity-Math.floor(validity))*30));
-
-                long tempExpiryDays = cal.getTimeInMillis();
-                if (tempExpiryDays > storeExpiryDays) {
-                    storeExpiryDays = tempExpiryDays;
-                }
+        if (!TextUtils.isEmpty(error)){
+            Methods.showSnackBarNegative(this,error);
+            try {
+                json.put("value","serverError");
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-            setPricingPlansDays(storeExpiryDays);
-            //domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
-        } else {
-            Methods.showSnackBarNegative(DomainDetailsActivity.this, getString(R.string.something_went_wrong));
         }
+        else if (ids != null){
+            try {
+                json.put("value","booked");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            confirmRequestTv.setVisibility(View.GONE);
+            for (EmailBookingModel.AddEmailModel model : emailBookedList){
+                model.setType(EmailType.IN_PROCESS);
+            }
+            Collections.sort(emailBookedList);
+            if (emailAdapter != null)
+                emailAdapter.notifyDataSetChanged();
+            showCustomDialog("Submit Email Request","We are processing your requests, It may take too long.","Ok","",DialogFrom.NO_CLOSE);
+        }else{
+            try {
+                json.put("value","error");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Methods.showSnackBarNegative(this,getString(R.string.something_went_wrong_try_again));
+        }
+        MixPanelController.track(MixPanelController.DOMAIN_EMAIL_BOOK,json);
+    }
+    @Override
+    public void getDomainSupportedTypes(ArrayList<String> arrExtensions) {
+        hideLoader();
+        if (arrExtensions != null && arrExtensions.size() > 0) {
+//            arrDomainExtensions = new ArrayList<String>(Arrays.asList(domainSupportedTypes.domainExtension.split(",")));
+           /*
+               remove below domains as per Rachit
+            */
+            this.arrDomainExtensions = arrExtensions;
+
+            if (arrDomainExtensions.contains(".IN")) {
+                arrDomainExtensions.remove(".IN");
+                //String firstIndexValue = arrDomainExtensions.get(0);
+                arrDomainExtensions.add(0, ".IN");
+            }
+
+            arrDomainExtensions.remove(".CA");
+            arrDomainExtensions.remove(".CO.ZA");
+            bookDomain(null,null, DomainApiService.DomainAPI.CHECK_DOMAIN);
+
+        } else {
+            Methods.showSnackBarNegative(DomainDetailsActivity.this, getString(R.string.domain_details_getting_error));
+        }
+
     }
 
     private void setPricingPlansDays(long storeExpiryDays) {
@@ -434,6 +497,197 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         applyDomainLogic();
     }
 
+    private void enterEmailDialog(final String emailId){
+        final ArrayList<EmailBookingModel.EmailDomainName> emailDomainNames = (ArrayList<EmailBookingModel.EmailDomainName>) bookingModelList.getEmailDomainNames();
+        class EmailInfo {
+            private TextInputLayout usernameLayout, passwordLayout,rePasswordLayout, firstNameLayout, lastNameLayout;
+            private TextInputEditText username, password,rePassword, firstName, lastName;
+            private MaterialDialog dialog;
+            private EmailBookingModel.EmailDomainName editModel;
+            TextView userSuggestionEmail;
+            void addDialog(MaterialDialog dialog){
+                this.dialog = dialog;
+                View view = dialog.getCustomView();
+                if (view == null){
+                     return;
+                }
+                usernameLayout = view.findViewById(R.id.til_username);
+                passwordLayout = view.findViewById(R.id.til_password);
+                rePasswordLayout = view.findViewById(R.id.til_re_password);
+                firstNameLayout = view.findViewById(R.id.til_firstname);
+                lastNameLayout = view.findViewById(R.id.til_lastname);
+
+                username = view.findViewById(R.id.et_username);
+                password = view.findViewById(R.id.et_password);
+                rePassword = view.findViewById(R.id.et_repassword);
+                firstName = view.findViewById(R.id.et_firstname);
+                lastName = view.findViewById(R.id.et_lastname);
+                password.setTransformationMethod(new PasswordTransformationMethod());
+                rePassword.setTransformationMethod(new PasswordTransformationMethod());
+                userSuggestionEmail = view.findViewById(R.id.email_tv);
+
+                if (!TextUtils.isEmpty(emailId)){
+                    for (EmailBookingModel.EmailDomainName emailData : emailDomainNames){
+                        if(emailId.equalsIgnoreCase(emailData.getUsername()+"@"+domainNameTv.getText().toString().trim())){
+                            editModel = emailData;
+                            username.setText(emailData.getUsername());
+                            password.setText(emailData.getPassword());
+                            rePassword.setText(emailData.getPassword());
+                            firstName.setText(emailData.getFirstName());
+                            lastName.setText(emailData.getLastName());
+                            break;
+                        }
+                    }
+                }
+                username.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (userSuggestionEmail.getVisibility() ==View.GONE){
+                            userSuggestionEmail.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        userSuggestionEmail.setText(editable.toString()+"@"+domainNameTv.getText().toString());
+                        if (editable.toString().length() == 0){
+                            userSuggestionEmail.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+
+            private boolean validateUser(){
+                //check username list contain this string
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()+"@"+domainNameTv.getText().toString()).matches()) {
+                    usernameLayout.setError("Add valid username");
+                    return false;
+                }
+                else if (TextUtils.isEmpty(emailId) ||
+                        !emailId.equalsIgnoreCase(username.getText().toString().trim()+"@"+domainNameTv.getText().toString().trim())){
+                    for (EmailBookingModel.AddEmailModel domainData: emailBookedList){
+
+                        if (domainData.getType() != EmailType.FAILED && domainData.getEmailId()
+                                .equalsIgnoreCase(username.getText().toString().trim()+"@"+domainNameTv.getText().toString().trim())){
+                            usernameLayout.setError("Username already used in previous emailId");
+                            return false;
+                        }
+                    }
+                }
+
+                usernameLayout.setErrorEnabled(false);
+                return true;
+            }
+
+            private boolean validatePassword(){
+                if (password.getText().toString().equalsIgnoreCase(username.getText().toString().trim())){
+                    passwordLayout.setError("Password can't be same as username");
+                    return false;
+                }else if(password.getText().toString().equalsIgnoreCase(domainName)){
+                    passwordLayout.setError("Password can't be same as domain");
+                    return false;
+                }else if (password.getText().toString().length()<8) {
+                    passwordLayout.setError("Field should has at least 8 character");
+                    return false;
+                }else{
+                    passwordLayout.setErrorEnabled(false);
+                    return true;
+                }
+            }
+            private boolean validateRePassword(){
+
+                if (!rePassword.getText().toString().equals(password.getText().toString())) {
+                    rePasswordLayout.setError("Password is not matching");
+                    return false;
+                }else{
+                    rePasswordLayout.setErrorEnabled(false);
+                    return true;
+                }
+            }
+            private boolean validateFirstName(){
+                if (firstName.getText().toString().trim().length()==0 ) {
+                    firstNameLayout.setError("Field can't be empty");
+                    return false;
+                }
+                else{
+                    firstNameLayout.setErrorEnabled(false);
+                    return true;
+                }
+            }
+
+            private boolean validateLastName(){
+                if (lastName.getText().toString().trim().length()==0 ) {
+                    lastNameLayout.setError("Field can't be empty");
+                    return false;
+                } else{
+                    lastNameLayout.setErrorEnabled(false);
+                    return true;
+                }
+            }
+
+            void validateInfo() {
+
+                if(validateUser() && validatePassword() && validateRePassword() && validateFirstName() && validateLastName()){
+                    if (editModel == null) {
+                        editModel = new EmailBookingModel.EmailDomainName();
+                        emailBookedList.add(new EmailBookingModel.AddEmailModel(username.getText().toString().trim()+"@"+domainNameTv.getText().toString().trim(),EmailType.ADD_EMAIL));
+
+                    }else{
+                        for (EmailBookingModel.AddEmailModel domainData: emailBookedList){
+                            if (domainData.getType() == EmailType.ADD_EMAIL && domainData.getEmailId().equalsIgnoreCase(emailId)){
+                                domainData.setEmailId(username.getText().toString().trim()+"@"+domainNameTv.getText().toString().trim());
+                            }
+                        }
+                    }
+                    editModel.setFirstName(firstName.getText().toString().trim());
+                    editModel.setLastName(lastName.getText().toString().trim());
+                    editModel.setPassword(password.getText().toString().trim());
+                    editModel.setUsername(username.getText().toString().trim());
+                    if (!emailDomainNames.contains(editModel)){
+                        emailDomainNames.add(editModel);
+                    }
+                    emailAdapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                   if ((emailBookedList.size()+totalBookedEmails-totalFailedEmails)>=EMAIL_BOOKING_NUM){
+                        addEmail.setVisibility(View.GONE);
+                   }
+                   if(bookingModelList.getEmailDomainNames().size()>0){
+                       confirmRequestTv.setVisibility(View.VISIBLE);
+                   }
+                }
+            }
+        }
+
+        final EmailInfo info = new EmailInfo();
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(R.layout.dialog_email_user_info,false)
+                .positiveColorRes(R.color.primary_color)
+                .negativeColorRes(R.color.light_gray)
+                .positiveText("Add")
+                .negativeText("Cancel")
+                .autoDismiss(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        info.validateInfo();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+        info.addDialog(dialog);
+
+    }
 
     private void applyDomainLogic() {
         if (planExpiryDays <= 0) {
@@ -463,7 +717,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         } else if(TextUtils.isEmpty(domainType)){
              // first domain purchase widget exist
             if(planExpiryDays <=90){
-                showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
+                showExpiryDialog(LIGHT_HOUSE_DAYS_LEFT, planExpiryDays);
             }
             if(get_fp_details_model.getFPWebWidgets() != null && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)){
                 chooseDomainLayout.setVisibility(View.VISIBLE);
@@ -480,7 +734,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
              // renew button
              //first check domain purchase widget exist
              if(planExpiryDays <=90){
-                 showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
+                 showExpiryDialog(LIGHT_HOUSE_DAYS_LEFT, planExpiryDays);
              }
              if(get_fp_details_model.getFPWebWidgets() != null && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {
                  setDomainDetailsCard(false,"Domain Expired");
@@ -512,6 +766,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
 
     private void setDomainDetailsCard(boolean active,String statusMessage){
+
         domainDetailsCard.setVisibility(View.VISIBLE);
         emailDetailsCard.setVisibility(View.VISIBLE);
         ImageView domainImg = (ImageView) domainDetailsCard.findViewById(R.id.img_domain);
@@ -540,7 +795,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         if(active){
             domainMessageTv.setVisibility(View.VISIBLE);
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            emailImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
+            emailImg.setColorFilter(ContextCompat.getColor(this, R.color.primary_color));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             int margins = Methods.dpToPx(15, this);
@@ -554,6 +809,54 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 domainDetailsCard.setElevation(3);
                 emailDetailsCard.setElevation(3);
             }
+
+            RecyclerView emailRunningRv = emailDetailsCard.findViewById(R.id.rv_email_running);
+            emailDetailsCard.findViewById(R.id.ll_email_active).setVisibility(View.VISIBLE);
+            emailRunningRv.setVisibility(View.VISIBLE);
+            emailRunningRv.setLayoutManager(new LinearLayoutManager(this));
+            emailRunningRv.setNestedScrollingEnabled(false);
+            emailAdapter = new EmailAdapter(emailBookedList,active);
+            emailRunningRv.setAdapter(emailAdapter);
+
+            confirmRequestTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (emailBookedList.size()+totalBookedEmails-totalFailedEmails<EMAIL_BOOKING_NUM) {
+                        if (!Methods.isOnline(DomainDetailsActivity.this)) {
+                            Methods.snackbarNoInternet(DomainDetailsActivity.this);
+                        } else if (bookingModelList.getEmailDomainNames().size() > 0) {
+                            showLoader(getString(R.string.please_wait));
+                                MixPanelController.track(MixPanelController.DOMAIN_EMAIL_REQUEST,null);
+                            domainApiService.bookEmail(Constants.clientId, bookingModelList);
+                        } else {
+                            Toast.makeText(DomainDetailsActivity.this, "Please add emails", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(DomainDetailsActivity.this, "Email max limit achieved", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            addEmail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enterEmailDialog(null);
+                }
+            });
+
+            if (totalBookedEmails+emailBookedList.size()-totalFailedEmails>=EMAIL_BOOKING_NUM ||domainExpiryDays < 180){
+                addEmail.setVisibility(View.GONE);
+                confirmRequestTv.setVisibility(View.GONE);
+            }/*else if (domainExpiryDays < 180){
+//                TextView note = emailDetailsCard.findViewById(R.id.tv_note_message);
+//                note.setVisibility(View.VISIBLE);
+                //note.setText(Methods.fromHtml(getString(R.string.email_180_message)));
+                addEmail.setVisibility(View.GONE);
+                confirmRequestTv.setVisibility(View.GONE);
+            }*/ else{
+                bookingModelList = new EmailBookingModel();
+                bookingModelList.setFpTag(session.getFpTag());
+                bookingModelList.setEmailDomainNames(new ArrayList<EmailBookingModel.EmailDomainName>(EMAIL_BOOKING_NUM));
+            }
         }else{
             domainMessageTv.setVisibility(View.GONE);
 
@@ -562,12 +865,19 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 emailDetailsCard.setElevation(0);
             }
             domainDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
-            //emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
-            emailDetailsCard.findViewById(R.id.view_divider).setVisibility(View.VISIBLE);
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
+
+            emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
+            emailDetailsCard.findViewById(R.id.view_divider).setVisibility(View.VISIBLE);
             emailImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
+            emailDetailsCard.findViewById(R.id.tv_domain_created_date).setVisibility(emailBookedList.size() == 0 ? View.VISIBLE : View.GONE);
+            RecyclerView emailExpiredRv = emailDetailsCard.findViewById(R.id.rv_email_expired);
+            emailExpiredRv.setVisibility(View.VISIBLE);
+            emailExpiredRv.setLayoutManager(new LinearLayoutManager(this));
+            emailExpiredRv.setHasFixedSize(true);
+            emailExpiredRv.setAdapter(new EmailAdapter(emailBookedList,active));
         }
-        emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
+
         if (!TextUtils.isEmpty(statusMessage)){
             statusTv.setVisibility(View.VISIBLE);
             domainDetailsCard.setContentPadding(0,Methods.dpToPx(5,this),0,0);
@@ -648,7 +958,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
+                        Intent intent = new Intent(DomainDetailsActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         dialog.dismiss();
@@ -672,14 +983,14 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onStart() {
-        mBus.register(this);
+
         super.onStart();
 
     }
 
     @Override
     public void onStop() {
-        mBus.unregister(this);
+
         super.onStop();
     }
 
@@ -742,7 +1053,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 linkDomain();
                 break;
             case R.id.btn_plan_expired:
-                Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
+                Intent intent = new Intent(DomainDetailsActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
@@ -874,7 +1186,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         CATEGORY_REQUIRED,
         ADDRESS_REQUIRED,
         DEFAULT,
-        FAILED
+        FAILED,
+        NO_CLOSE
     }
 
     private void showCustomDialog(String title, String message, String postiveBtn, String negativeBtn,
@@ -900,6 +1213,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                                 break;
                             case DEFAULT:
                                 finish();
+                                break;
+                            case NO_CLOSE:
                                 break;
                         }
                     }
@@ -944,7 +1259,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
                 session.getFpTag() : get_fp_details_model.getContactName());
         hashMap.put("country", get_fp_details_model.getCountry());
-        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
+        hashMap.put("countryCode", get_fp_details_model.getCountryPhoneCode());
         hashMap.put("email", get_fp_details_model.getEmail());
         hashMap.put("lat", get_fp_details_model.getLat());
         hashMap.put("lng", get_fp_details_model.getLng());
@@ -958,10 +1273,10 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         hashMap.put("regService", "");
         hashMap.put("state", get_fp_details_model.getPaymentState());
         hashMap.put("zip", get_fp_details_model.getPinCode());
-       domainApiService.buyDomain(hashMap);
+        domainApiService.buyDomain(hashMap);
     }
 
-    @Subscribe
+    @Override
     public void domainBookStatus(String response) {
 
         if (!TextUtils.isEmpty(response) &&
@@ -981,4 +1296,165 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                     getString(R.string.ok), null, DialogFrom.DEFAULT);
         }
     }
+
+    @Override
+    public void getFpDetails(Get_FP_Details_Model model) {
+
+    }
+
+    private class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.MyWorkingEmailHolder>{
+
+        ArrayList<EmailBookingModel.AddEmailModel> list;
+        boolean isDomainActive;
+        EmailAdapter(ArrayList<EmailBookingModel.AddEmailModel> list, boolean isDomainActive){
+            this.list = list;
+            this.isDomainActive = isDomainActive;
+        }
+        @Override
+        public MyWorkingEmailHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            EmailType type = EmailType.getEmailType(viewType);
+            if (type == null){
+                return null;
+            }
+          /*  switch (type){
+                case ADD_EMAIL:
+                    v = LayoutInflater.from(DomainDetailsActivity.this).inflate(R.layout.layout_email_item,parent,false);
+                    break;
+                case ADDED:
+
+                    break;
+            }*/
+            View v = LayoutInflater.from(DomainDetailsActivity.this).inflate(R.layout.layout_email_item,parent,false);
+            return new MyWorkingEmailHolder(v,type);
+        }
+
+
+        @Override
+        public void onBindViewHolder(MyWorkingEmailHolder holder, int position) {
+            switch (holder.type){
+                case ADD_EMAIL:
+                    //holder.titleTv.setVisibility(View.GONE);
+                    holder.delete.setVisibility(View.VISIBLE);
+                    holder.edit.setVisibility(View.VISIBLE);
+                    holder.status.setVisibility(View.GONE);
+                    holder.titleTv.setText("Request not submit");
+                    break;
+                case ADDED:
+                    //holder.titleTv.setVisibility(View.VISIBLE);
+                    holder.status.setVisibility(isDomainActive?View.VISIBLE:View.GONE);
+                    holder.status.setImageResource(R.drawable.domain_available);
+                    holder.delete.setVisibility(View.GONE);
+                    holder.edit.setVisibility(View.GONE);
+                    holder.titleTv.setText(String.format(Locale.ENGLISH,"Email Address %d:",position+1));
+                    break;
+                case FAILED:
+                    //holder.titleTv.setVisibility(View.GONE);
+                    holder.delete.setVisibility(View.GONE);
+                    holder.edit.setVisibility(View.GONE);
+                    holder.status.setVisibility(isDomainActive?View.VISIBLE:View.GONE);
+                    holder.status.setImageResource(R.drawable.domain_not_available);
+                    holder.titleTv.setText("Request failed");
+                    break;
+                case IN_PROCESS:
+                    //holder.titleTv.setVisibility(View.GONE);
+                    holder.delete.setVisibility(View.GONE);
+                    holder.edit.setVisibility(View.GONE);
+                    holder.status.setVisibility(isDomainActive?View.VISIBLE:View.GONE);
+                    holder.status.setImageResource(R.drawable.domain_check);
+                    holder.titleTv.setText("Request pending");
+                    break;
+
+            }
+
+            holder.domainTv.setText(list.get(position).getEmailId());
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return list.get(position).getType().ordinal();
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class MyWorkingEmailHolder extends RecyclerView.ViewHolder{
+
+            TextView titleTv, domainTv;
+            EmailType type;
+            ImageView delete, edit,status;
+            public MyWorkingEmailHolder(View itemView, EmailType type) {
+                super(itemView);
+                titleTv = itemView.findViewById(R.id.tv_email_title);
+                domainTv = itemView.findViewById(R.id.tv_email_domain);
+                edit = itemView.findViewById(R.id.img_edit);
+                delete = itemView.findViewById(R.id.img_delete);
+                status = itemView.findViewById(R.id.img_email_status);
+                this.type = type;
+                status.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (emailBookedList.get(getAdapterPosition()).getType()){
+                            case FAILED:
+                                Toast.makeText(DomainDetailsActivity.this, "Request failed", Toast.LENGTH_SHORT).show();
+                                break;
+                            case ADDED:
+                                Toast.makeText(DomainDetailsActivity.this, "Request successful", Toast.LENGTH_SHORT).show();
+                                break;
+                            case IN_PROCESS:
+                                Toast.makeText(DomainDetailsActivity.this, "Request is pending", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                });
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MaterialDialog dialog = new MaterialDialog.Builder(DomainDetailsActivity.this)
+                                .content("Do you want to delete this email?")
+                                .positiveColorRes(R.color.primaryColor)
+                                .negativeColorRes(R.color.primaryColor)
+                                .positiveText("Cancel")
+                                .negativeText("Delete")
+                                .autoDismiss(true)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                        for (EmailBookingModel.EmailDomainName emailData : bookingModelList.getEmailDomainNames()){
+                                            if (emailBookedList.get(getAdapterPosition()).getEmailId()
+                                                    .equalsIgnoreCase(emailData.getUsername()+"@"+domainNameTv.getText().toString().trim())){
+                                                emailBookedList.remove(getAdapterPosition());
+                                                bookingModelList.getEmailDomainNames().remove(emailData);
+                                                notifyDataSetChanged();
+                                                break;
+                                            }
+                                        }
+                                        if ((emailBookedList.size()+totalBookedEmails - totalFailedEmails)<EMAIL_BOOKING_NUM){
+                                            addEmail.setVisibility(View.VISIBLE);
+                                        }
+
+                                        confirmRequestTv.setVisibility(bookingModelList.getEmailDomainNames().size()>0?View.VISIBLE:View.GONE);
+                                    }
+                                }).show();
+
+                    }
+                });
+                edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        enterEmailDialog(emailBookedList.get(getAdapterPosition()).getEmailId());
+                    }
+                });
+            }
+        }
+    }
+
 }

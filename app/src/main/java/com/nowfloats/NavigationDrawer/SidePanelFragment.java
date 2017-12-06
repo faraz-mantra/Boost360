@@ -17,7 +17,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -88,7 +86,7 @@ public class SidePanelFragment extends Fragment {
     TextView StoreTextView;
     TextView cspTextView;
     //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText, tvBoostBubble, analyticsText /*tvSiteAppearance*/;
+    TextView settingsText, chatText, callText, shareText, wildFireText,dictateText,tvBoostBubble, analyticsText /*tvSiteAppearance*/;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -111,7 +109,7 @@ public class SidePanelFragment extends Fragment {
 
     LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
             imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout,
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, wildFireLayout,dictateLayout,
             llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout, analyticsLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -129,7 +127,7 @@ public class SidePanelFragment extends Fragment {
     private Button newButton;
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
-            settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,
+            settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,wildFireImg,dictateImg,
             imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/, manageCustomerImageView,
             socialImageView,manageInventoryImageView, analyticsImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
@@ -365,6 +363,8 @@ public class SidePanelFragment extends Fragment {
         callLayout = (LinearLayout) card.findViewById(R.id.seventhRow_Layout);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
         llGetInTouch = (LinearLayout) card.findViewById(R.id.ll_get_in_touch);
+        wildFireLayout = (LinearLayout) card.findViewById(R.id.wildfire_layout);
+        dictateLayout =  card.findViewById(R.id.dictate_layout);
         bubbleLayout = (LinearLayout) card.findViewById(R.id.ninethRow_Layout);
         analyticsLayout = (LinearLayout) card.findViewById(R.id.analytics_row_Layout);
         //llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
@@ -378,6 +378,8 @@ public class SidePanelFragment extends Fragment {
         if (session.getISEnterprise().equals("true")) {
             profileLayout.setVisibility(View.GONE);
             cspLayout.setVisibility(View.GONE);
+            wildFireLayout.setVisibility(View.GONE);
+            dictateLayout.setVisibility(View.GONE);
             imageGalleryLayout.setVisibility(View.GONE);
             businessAppsLayout.setVisibility(View.GONE);
             chatLayout.setVisibility(View.GONE);
@@ -404,44 +406,46 @@ public class SidePanelFragment extends Fragment {
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
+        wildFireText = (TextView) wildFireLayout.findViewById(R.id.wildfire_text);
+        dictateText = (TextView) dictateLayout.findViewById(R.id.dictate_text);
         tvBoostBubble = (TextView) bubbleLayout.findViewById(R.id.ninethRow_TextView);
         bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
         //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
 
-        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
-//            if(session.isBoostBubbleEnabled()){
-//                session.setBubbleTime(-1);
-//                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+//        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
+////            if(session.isBoostBubbleEnabled()){
+////                session.setBubbleTime(-1);
+////                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+////            }
+//            session.setBubbleStatus(false);
+//        }
+//
+//        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+//
+//        bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (!isChecked) {
+//                    session.setBubbleStatus(isChecked);
+//                } else {
+//
+//                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+//                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+//
+////                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
+////                            showAlertMaterialDialog();
+////                            bubbleSwitch.setChecked(false);
+////                        } else {
+//                        session.setBubbleTime(-1);
+//                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+////                        }
+//                    } else {
+//                        session.setBubbleStatus(isChecked);
+//                    }
+//
+//                }
 //            }
-            session.setBubbleStatus(false);
-        }
-
-        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
-
-        bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
-                    session.setBubbleStatus(isChecked);
-                } else {
-
-                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
-                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
-
-//                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
-//                            showAlertMaterialDialog();
-//                            bubbleSwitch.setChecked(false);
-//                        } else {
-                        session.setBubbleTime(-1);
-                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
-//                        }
-                    } else {
-                        session.setBubbleStatus(isChecked);
-                    }
-
-                }
-            }
-        });
+//        });
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
         businessLockImage = (ImageView) businessAppsLayout.findViewById(R.id.business_lock_widget);
@@ -493,6 +497,8 @@ public class SidePanelFragment extends Fragment {
         chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
+        wildFireImg = (ImageView) wildFireLayout.findViewById(R.id.wildfire_img);
+        dictateImg = (ImageView) dictateLayout.findViewById(R.id.dictate_img);
         analyticsImageView = (ImageView) analyticsLayout.findViewById(R.id.analytics_row_ImageView);
         //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
@@ -526,7 +532,22 @@ public class SidePanelFragment extends Fragment {
                 MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
             }
         });
-
+        wildFireText.setTypeface(robotoMedium);
+        wildFireLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick("wildfire");
+                onclickColorChange(wildFireImg, wildFireText, wildFireLayout);
+            }
+        });
+        dictateText.setTypeface(robotoMedium);
+        dictateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick("dictate");
+                onclickColorChange(dictateImg, dictateText, dictateLayout);
+            }
+        });
         /*tvSiteAppearance.setTypeface(robotoMedium);
         llSiteAppearance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -805,7 +826,7 @@ public class SidePanelFragment extends Fragment {
 //                        Constants.showStoreScreen = true ;
 //                        getActivity().getSupportFragmentManager().popBackStack();
                         if (!getString(R.string.goto_store).equalsIgnoreCase("ok"))//this condition added for flavor check
-                            ((OnItemClickListener) mainActivity).onClick("store");
+                            ((OnItemClickListener) mainActivity).onClick("Store");
 
                         dialog.dismiss();
                     }
@@ -1296,7 +1317,7 @@ public class SidePanelFragment extends Fragment {
             chatLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
         }
-        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+       // bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
         // mDrawerLayout.openDrawer(Gravity.LEFT);
     }
@@ -1426,6 +1447,8 @@ public class SidePanelFragment extends Fragment {
         tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
         analyticsText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        wildFireText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        dictateText.setTextColor(getResources().getColor(R.color.cell_text_color));
         //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
         shareImageView.setColorFilter(defaultLabelFilter);
@@ -1443,6 +1466,8 @@ public class SidePanelFragment extends Fragment {
         socialImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
         analyticsImageView.setColorFilter(defaultLabelFilter);
+        wildFireImg.setColorFilter(defaultLabelFilter);
+        dictateImg.setColorFilter(defaultLabelFilter);
         //ivSiteAppearance.setColorFilter(defaultLabelFilter);
 
 
@@ -1465,6 +1490,8 @@ public class SidePanelFragment extends Fragment {
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         llGetInTouch.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        wildFireLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        dictateLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
         if (tv != null) {

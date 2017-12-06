@@ -23,11 +23,13 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.manageinventory.models.APIResponseModel;
 import com.nowfloats.manageinventory.models.CountModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.io.IOException;
@@ -351,12 +353,14 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 startActivity(baActivity);
                 break;
             case R.id.ll_subscription_status:
-                Intent ppActivity = new Intent(getActivity(), NewPricingPlansActivity.class);
+
+                Intent ppActivity = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                 startActivity(ppActivity);
                 break;
             case R.id.ll_custom_domain:
                 Intent siteMeterFragment = new Intent(getActivity(), HomeActivity.class);
-                siteMeterFragment.putExtra("url", "sitemeter");
+                siteMeterFragment.putExtra("url", getString(R.string.site__meter));
                 startActivity(siteMeterFragment);
                 break;
             case R.id.ll_site_appearance:

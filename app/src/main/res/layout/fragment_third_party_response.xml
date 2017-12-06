@@ -8,9 +8,9 @@
         android:layout_height="wrap_content"
         android:background="@color/primary"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="25dp">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="15dp">
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="match_parent"
@@ -19,6 +19,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
+            android:maxLines="2"
+            android:ellipsize="marquee"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -26,7 +28,15 @@
             />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp">
+            <ImageView
+                android:id="@+id/img_source"
+                android:layout_gravity="center_vertical"
+                android:layout_width="15dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="15dp" />
+
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="0dp"
@@ -34,8 +44,8 @@
                 android:text="Today, 02:23 PM"
                 android:fontFamily="sans-serif"
                 android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:textSize="11sp"
+                android:textSize="12sp"
+                android:layout_gravity="center_vertical"
                 android:textColor="@color/white"
                 android:layout_weight="1"/>
 
@@ -60,8 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="35dp"
-        android:paddingRight="35dp"
+        android:paddingLeft="45dp"
+        android:paddingRight="45dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -73,16 +83,17 @@
             android:id="@+id/et_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dear Shahjad, Thanks for getting in touch with us. Regarding your query, below are few options which you might like."
+            android:text="Hi, Thanks for getting in touch with us. Regarding your query, below are few options which you might like."
             android:fontFamily="sans-serif"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbarSize="5dp"
+            android:inputType="textCapSentences|textMultiLine"
             android:textColor="#676767"
+            android:maxLines="6"
             android:background="@null"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_suggestions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,6 +110,7 @@
                 android:drawablePadding="10dp"
                 android:textStyle="bold"
                 android:textSize="12sp"
+                android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:text="PRODUCTS"/>
             <TextView
@@ -111,21 +123,28 @@
                 android:padding="8dp"
                 android:drawablePadding="10dp"
                 android:textStyle="bold"
-                android:layout_marginLeft="20dp"
+
                 android:textSize="12sp"
                 android:gravity="center"
                 android:text="UPDATES"/>
         </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView
         android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_yellow_selector_bg"
-        android:textColor="@color/primary"
+        android:background="@drawable/yellow_btn_bg"
+        android:textColor="@drawable/yellow_btn_text_color"
         android:gravity="center"
         android:padding="12dp"
         android:textAllCaps="true"
-        android:layout_margin="20dp"
-        android:text="SEND TO MAN"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:text="SEND"/>
 </LinearLayout>

@@ -1,7 +1,9 @@
 package com.nowfloats.Product_Gallery;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
@@ -25,14 +28,58 @@ import java.util.ArrayList;
 
 public class ProductGalleryAdapter extends BaseAdapter {
 
-    public static class ViewHolder {
-        public ImageView ProductImageView;
+    public class ViewHolder {
+        public ImageView ProductImageView, shareImage;
         public TextView Product_Name;
         public TextView Currency_Type;
         public TextView OriginalPrice;
         public FrameLayout flMain;
         public FrameLayout flOverlay;
         public View vwOverlay;
+        private int position = -1;
+
+
+        ViewHolder(View vi){
+            ProductImageView = (ImageView) vi.findViewById(R.id.proudct_image_view);
+            Product_Name = (TextView) vi.findViewById(R.id.product_name);
+            OriginalPrice = (TextView) vi.findViewById(R.id.product_price);
+            Currency_Type = (TextView) vi.findViewById(R.id.product_currency);
+            flMain = (FrameLayout) vi.findViewById(R.id.flMain);
+            flOverlay = (FrameLayout) vi.findViewById(R.id.flOverlay);
+            vwOverlay = (View) vi.findViewById(R.id.vwOverlay);
+            shareImage = vi.findViewById(R.id.share_img);
+            shareImage.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    UserSessionManager session = new UserSessionManager(activity,activity);
+                    ProductListModel productListModel = productItemModelList.get(position);
+                    String message = null;
+                    try {
+
+                        if (!TextUtils.isEmpty(session.getRootAliasURI())) {
+                            message = session.getRootAliasURI() + "/";
+                        } else {
+                            message = "https://" + session.getFpTag() + ".nowfloats.com/";
+                        }
+//                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8").replace("+","") + "/p" + productListModel.ProductIndex;
+                        message = message + productListModel.Name.replaceAll("[^a-zA-Z0-9]+", "-") + "/p" + productListModel.ProductIndex;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                    sendIntent.setType("text/plain");
+                    sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activity.startActivity(sendIntent);
+                }
+            });
+        }
+        void setPosition(int position){
+            this.position = position;
+        }
     }
 
     private ViewHolder viewHolder;
@@ -84,19 +131,11 @@ public class ProductGalleryAdapter extends BaseAdapter {
                 LayoutInflater inflater = LayoutInflater.from(activity);
                 vi = inflater.inflate(R.layout.product_grid_view_design, null);
 
-                viewHolder = new ViewHolder();
-                viewHolder.ProductImageView = (ImageView) vi.findViewById(R.id.proudct_image_view);
-                viewHolder.Product_Name = (TextView) vi.findViewById(R.id.product_name);
-                viewHolder.OriginalPrice = (TextView) vi.findViewById(R.id.product_price);
-                viewHolder.Currency_Type = (TextView) vi.findViewById(R.id.product_currency);
-                viewHolder.flMain = (FrameLayout) vi.findViewById(R.id.flMain);
-                viewHolder.flOverlay = (FrameLayout) vi.findViewById(R.id.flOverlay);
-                viewHolder.vwOverlay = (View) vi.findViewById(R.id.vwOverlay);
-
+                viewHolder = new ViewHolder(vi);
                 vi.setTag(viewHolder);
             }
             viewHolder = (ViewHolder) vi.getTag();
-
+            viewHolder.setPosition(position);
 
             final ProductListModel productItemModel = (ProductListModel) getItem(position);
             vi.setTag(R.string.key_details, productItemModel);
@@ -147,6 +186,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
         } catch (Exception exp) {
             exp.printStackTrace();
         }
+
         return vi;
     }
 

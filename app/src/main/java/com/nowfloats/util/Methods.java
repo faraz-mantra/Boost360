@@ -12,7 +12,9 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -25,8 +27,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Layout;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.LeadingMarginSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -41,8 +45,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.io.ByteArrayOutputStream;
@@ -199,6 +205,30 @@ public class Methods {
         }
         return false;
     }
+
+    public static boolean isMyActivityAtTop(Context mContext){
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if(taskInfo != null && taskInfo.size()>0) {
+            //Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+            return  mContext.getClass().getName().equalsIgnoreCase(taskInfo.get(0).topActivity.getClassName());
+//            return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+        }
+        return false;
+    }
+
+    public static boolean isMyActivityInStack(Context mContext){
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if(taskInfo != null && taskInfo.size()>0) {
+            //Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName())
+            for (ActivityManager.RunningTaskInfo info :taskInfo)
+            return  mContext.getClass().getName().equalsIgnoreCase(info.topActivity.getClassName());
+//            return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+        }
+        return false;
+    }
+
     public static void showSnackBar(View view, String message, int color) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         snackbar.getView().setBackgroundColor(color);
@@ -259,7 +289,8 @@ public class Methods {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        context.startActivity(new Intent(context, NewPricingPlansActivity.class));
+                        context.startActivity(new Intent(context, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                                ?NewPricingPlansActivity.class: PricingPlansActivity.class));
                     }
                 }).show();
     }
@@ -415,6 +446,47 @@ public class Methods {
         return value;
     }
 
+    public static class MyLeadingMarginSpan2 implements LeadingMarginSpan.LeadingMarginSpan2 {
+        private int margin;
+        private int lines;
+
+        public MyLeadingMarginSpan2(int lines, int margin) {
+            this.margin = margin;
+            this.lines = lines;
+        }
+
+        /* Возвращает значение, на которе должен быть добавлен отступ */
+        @Override
+        public int getLeadingMargin(boolean first) {
+            if (first) {
+            /*
+             * Данный отступ будет применен к количеству строк
+             * возвращаемых getLeadingMarginLineCount()
+             */
+                return margin;
+            } else {
+                // Отступ для всех остальных строк
+                return 0;
+            }
+        }
+
+        @Override
+        public void drawLeadingMargin(Canvas c, Paint p, int x, int dir,
+                                      int top, int baseline, int bottom, CharSequence text,
+                                      int start, int end, boolean first, Layout layout) {}
+
+        /*
+         * Возвращает количество строк, к которым должен быть
+         * применен отступ возвращаемый методом getLeadingMargin(true)
+         * Замечание:
+         * Отступ применяется только к N строкам первого параграфа.
+         */
+        @Override
+        public int getLeadingMarginLineCount() {
+            return lines;
+        }
+    }
+
     public static boolean compareDate(Date one, Date cur_date) {
         try {
 //            Date purchaseDate = dateFormatDefault.parse(one);
@@ -430,6 +502,22 @@ public class Methods {
         return false;
     }
 
+    public static String getFormattedDate(String date, String format){
+        String formatted = "", dateTime = "";
+        if (TextUtils.isEmpty(date)) {
+            return "";
+        }
+        if (date.contains("/Date")) {
+            date = date.replace("/Date(", "").replace(")/", "");
+        }
+        return getFormattedDate(Long.valueOf(date),format);
+    }
+    public static String getFormattedDate(long epochTime, String format){
+        Date date1 = new Date(epochTime);
+        DateFormat format1 = new SimpleDateFormat(format, Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        format1.setTimeZone(TimeZone.getDefault());
+        return format1.format(date1);
+    }
     public static String getFormattedDate(String Sdate) {
         String formatted = "", dateTime = "";
         if (TextUtils.isEmpty(Sdate)) {
@@ -633,9 +721,23 @@ public class Methods {
     }
 
     public static void makeCall(Context mContext,String number) {
-        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:" + number));
-        mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
+        try {
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:" + number));
+            mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
+        }catch(Exception e){
+            Toast.makeText(mContext, "Unable to make call", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public static void sendEmail( Context context, String email){
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" + email));
+            context.startActivity(Intent.createChooser(shareIntent,"Email by:"));
+        }catch(Exception e){
+            Toast.makeText(context, "Unable to send email", Toast.LENGTH_SHORT).show();
+        }
+
     }
     public static String getFormattedDate(long milliseconds) {
 

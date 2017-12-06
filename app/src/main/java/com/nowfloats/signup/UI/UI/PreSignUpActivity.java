@@ -66,7 +66,6 @@ public class PreSignUpActivity extends FragmentActivity {
                 Intent intent = new Intent(PreSignUpActivity.this, Login_MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
 
             }
         });
@@ -80,6 +79,7 @@ public class PreSignUpActivity extends FragmentActivity {
                 if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                     signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
                     startActivity(signUpIntent);
+                    finish();
                 }else{
                     signUpIntent = new Intent(PreSignUpActivity.this,PreSignUpActivityRia.class);
                     Bundle bundle = new Bundle();
@@ -89,7 +89,6 @@ public class PreSignUpActivity extends FragmentActivity {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
 
-                finish();
             }
         });
     }

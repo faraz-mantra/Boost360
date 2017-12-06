@@ -215,7 +215,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                                 finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
                                         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                                         shareIntent.setType("image/*");
-
+                                        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                                             appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);

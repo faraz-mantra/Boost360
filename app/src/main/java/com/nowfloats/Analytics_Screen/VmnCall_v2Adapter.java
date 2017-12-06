@@ -116,8 +116,8 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
         }
     }
     private String getDate(String date) {
-      /*  int comaIndex = date.indexOf(",");
-        String subYear = date.substring(comaIndex,date.lastIndexOf(" at"));*/
+      /*  int comaIndex = DATE.indexOf(",");
+        String subYear = DATE.substring(comaIndex,DATE.lastIndexOf(" at"));*/
         return date.replaceAll(",.*?at", /*"'"+subYear.substring(subYear.length()-2)*/ "");
     }
     @Override
