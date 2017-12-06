@@ -61,6 +61,8 @@ public class MixPanelController {
     public static final String THIRD_PARTY_DATA_DETAIL = "ThirdPartyDataDetail";
     public static final String THIRD_PARTY_ACTION_CALL = "ThirdPartyActionCall";
     public static final String THIRD_PARTY_ACTION_SHARE = "ThirdPartyActionShare";
+    public static final String DOMAIN_EMAIL_BOOK = "EmailBook";
+    public static final String DOMAIN_EMAIL_REQUEST = "EmailRequest";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

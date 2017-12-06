@@ -388,13 +388,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <receiver
-            android:name="com.nowfloats.Analytics_Screen.receiver.SmsVerifyReceiver"
-            android:exported="true">
-            <intent-filter android:priority="0">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
         <!--
         <receiver
             android:name="com.mixpanel.android.mpmetrics.GCMReceiver"

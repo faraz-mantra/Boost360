@@ -53,7 +53,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.nowfloats.util.MixPanelController.THIRD_PARTY_RATING;
 
 /**
  * Created by admin on 10/4/2017.
@@ -239,7 +238,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("fpId", sessionManager.getFPID());
         offersParam.put("rating", rating + "");
-        MixPanelController.track(THIRD_PARTY_RATING,null);
+        MixPanelController.track(MixPanelController.THIRD_PARTY_RATING,null);
         customerApis.updateRating(offersParam);
     }
 

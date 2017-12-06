@@ -47,9 +47,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nowfloats.util.MixPanelController.THIRD_PARTY_ACTION_CALL;
-import static com.nowfloats.util.MixPanelController.THIRD_PARTY_ACTION_SHARE;
-import static com.nowfloats.util.MixPanelController.THIRD_PARTY_DATA_DETAIL;
 
 /**
  * Created by Admin on 10-10-2017.
@@ -105,7 +102,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         }*/
         init();
         addFragments(SHOW_MESSAGE);
-        MixPanelController.track(THIRD_PARTY_DATA_DETAIL,null);
+        MixPanelController.track(MixPanelController.THIRD_PARTY_DATA_DETAIL,null);
     }
 
     private void init() {
@@ -202,7 +199,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        MixPanelController.track(THIRD_PARTY_ACTION_SHARE,json);
+        MixPanelController.track(MixPanelController.THIRD_PARTY_ACTION_SHARE,json);
         if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
             prepareMessageForShare(CallToActionFragment.SHARE_VIA.SMS);
         } else if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_EMAIL)) {
@@ -390,11 +387,11 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                MixPanelController.track(THIRD_PARTY_ACTION_CALL,json);
+
                 if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
                     if (!TextUtils.isEmpty(mSuggestionDO.getValue())) {
                         FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, mSuggestionDO.getFpId(), appVersion);
-                        MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
+                        MixPanelController.track(MixPanelController.THIRD_PARTY_ACTION_CALL,json);
 
                         pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
 
@@ -409,8 +406,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 {
                     if(!TextUtils.isEmpty(mSuggestionDO.getValue())) {
                         FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, mSuggestionDO.getFpId(), appVersion);
-                        MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
-
+                        MixPanelController.track(MixPanelController.THIRD_PARTY_ACTION_CALL,json);
                         pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
 
                         mSuggestionDO.setStatus(1);

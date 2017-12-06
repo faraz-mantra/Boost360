@@ -53,6 +53,9 @@ import com.nowfloats.util.MixPanelController;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -428,11 +431,23 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void getEmailBookingList(ArrayList<String> ids, String error){
         hideLoader();
+        JSONObject json = new JSONObject();
+
         if (!TextUtils.isEmpty(error)){
             Methods.showSnackBarNegative(this,error);
+            try {
+                json.put("value","serverError");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
         else if (ids != null){
-
+            try {
+                json.put("value","booked");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             confirmRequestTv.setVisibility(View.GONE);
             for (EmailBookingModel.AddEmailModel model : emailBookedList){
                 model.setType(EmailType.IN_PROCESS);
@@ -442,8 +457,14 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 emailAdapter.notifyDataSetChanged();
             showCustomDialog("Submit Email Request","We are processing your requests, It may take too long.","Ok","",DialogFrom.NO_CLOSE);
         }else{
+            try {
+                json.put("value","error");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             Methods.showSnackBarNegative(this,getString(R.string.something_went_wrong_try_again));
         }
+        MixPanelController.track(MixPanelController.DOMAIN_EMAIL_BOOK,json);
     }
     @Override
     public void getDomainSupportedTypes(ArrayList<String> arrExtensions) {
@@ -800,14 +821,18 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             confirmRequestTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!Methods.isOnline(DomainDetailsActivity.this)){
-                        Methods.snackbarNoInternet(DomainDetailsActivity.this);
-                    }
-                    else if (bookingModelList.getEmailDomainNames().size()>0) {
-                        showLoader(getString(R.string.please_wait));
-                        domainApiService.bookEmail(Constants.clientId, bookingModelList);
+                    if (emailBookedList.size()+totalBookedEmails-totalFailedEmails<EMAIL_BOOKING_NUM) {
+                        if (!Methods.isOnline(DomainDetailsActivity.this)) {
+                            Methods.snackbarNoInternet(DomainDetailsActivity.this);
+                        } else if (bookingModelList.getEmailDomainNames().size() > 0) {
+                            showLoader(getString(R.string.please_wait));
+                                MixPanelController.track(MixPanelController.DOMAIN_EMAIL_REQUEST,null);
+                            domainApiService.bookEmail(Constants.clientId, bookingModelList);
+                        } else {
+                            Toast.makeText(DomainDetailsActivity.this, "Please add emails", Toast.LENGTH_SHORT).show();
+                        }
                     }else{
-                        Toast.makeText(DomainDetailsActivity.this,"Please add emails", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DomainDetailsActivity.this, "Email max limit achieved", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
