@@ -740,7 +740,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     }
 
     @Override
-    public void getEmailBookingList(ArrayList<String> ids) {
+    public void getEmailBookingList(ArrayList<String> ids, String error) {
 
     }
 

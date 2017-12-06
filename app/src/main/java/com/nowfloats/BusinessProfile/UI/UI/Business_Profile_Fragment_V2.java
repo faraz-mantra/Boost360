@@ -49,7 +49,6 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
@@ -324,7 +323,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                     }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
                                             session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
                                         showExpiryDialog(DEMO_EXPIRED);
-                                    } else if (Utils.isNetworkConnected(getActivity())) {
+                                    } else if (Methods.isOnline(getActivity())) {
                                         showLoader(getString(R.string.please_wait));
                                         domainApiService.getDomainDetails(activity,session.getFpTag(), getDomainDetailsParam());
                                     } else {
@@ -531,7 +530,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     }
 
     @Override
-    public void getEmailBookingList(ArrayList<String> ids) {
+    public void getEmailBookingList(ArrayList<String> ids, String error) {
 
     }
 

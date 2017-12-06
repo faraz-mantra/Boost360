@@ -39,7 +39,7 @@ public class DomainApiService {
     public interface DomainCallback{
         void getDomainDetails(DomainDetails details);
         void emailBookingStatus(ArrayList<EmailBookingModel.EmailBookingStatus> bookingStatuses);
-        void  getEmailBookingList(ArrayList<String> ids);
+        void  getEmailBookingList(ArrayList<String> ids,String errorMessage);
         void getDomainSupportedTypes(ArrayList<String> arrExtensions);
         void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI);
         void domainBookStatus(String response);
@@ -165,12 +165,12 @@ public class DomainApiService {
             @Override
             public void success(ArrayList<String> emailBookingIds, Response response) {
 
-                domainCallback.getEmailBookingList(emailBookingIds);
+                domainCallback.getEmailBookingList(emailBookingIds,null);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                domainCallback.getEmailBookingList(null);
+                domainCallback.getEmailBookingList(null,error.getMessage());
             }
         });
     }

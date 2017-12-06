@@ -67,11 +67,13 @@
         </LinearLayout>
     </LinearLayout>
     <TextView
-        android:layout_marginTop="7dp"
         android:id="@+id/tv_email_booked"
         android:layout_width="match_parent"
         android:textStyle="bold"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
         android:visibility="gone"
+        android:layout_marginBottom="5dp"
         android:layout_height="wrap_content" />
     <LinearLayout
         android:id="@+id/ll_email_active"
@@ -117,7 +119,7 @@
             android:textSize="12sp"
             android:autoLink="all"
             android:layout_height="wrap_content"
-            android:text="If you require more email address you can reach out to us at erp@nowfloats.com"/>
+            android:text="@string/email_180_message"/>
     </LinearLayout>
 
 </LinearLayout>

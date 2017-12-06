@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingTop="5dp"
-    android:paddingBottom="7dp"
+    android:paddingTop="7dp"
+    android:paddingBottom="5dp"
     android:layout_height="wrap_content">
 
     <TextView
@@ -33,40 +33,38 @@
 
     <ImageView
         android:id="@+id/img_edit"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="?android:selectableItemBackground"
-        android:padding="6dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="?android:selectableItemBackground"
+        android:padding="9dp"
         android:src="@drawable/pencil_grey"
-        android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/img_email_status"
-        app:layout_constraintTop_toTopOf="@+id/tv_email_domain" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_email_domain"
+        app:layout_constraintEnd_toStartOf="@+id/img_email_status" />
 
     <ImageView
         android:id="@+id/img_delete"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="end"
-        android:layout_marginEnd="20dp"
         android:background="?android:selectableItemBackground"
         android:backgroundTint="@color/light_gray"
-        android:padding="3dp"
-        android:visibility="visible"
+        android:padding="6dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_edit"
-        app:srcCompat="@drawable/ic_delete_black_24dp"
-        android:layout_marginRight="20dp" />
+        app:srcCompat="@drawable/ic_delete_black_24dp" />
 
     <ImageView
         android:id="@+id/img_email_status"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:padding="5dp"
-        android:visibility="gone"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="?android:selectableItemBackground"
-        android:layout_marginRight="20dp"
+        android:padding="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/img_edit"
         app:layout_constraintEnd_toStartOf="@+id/img_delete"
-        app:layout_constraintTop_toTopOf="@+id/img_edit"
         app:srcCompat="@drawable/domain_available" />
 </android.support.constraint.ConstraintLayout>

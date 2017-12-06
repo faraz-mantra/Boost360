@@ -129,7 +129,7 @@
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
-    <string name="side_panel_row_domain_details">Domain Details</string>
+    <string name="side_panel_row_domain_details">Domain And Email Details</string>
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
@@ -1410,6 +1410,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="you_can_see_your_page_analytics">analytics->social analytics->\nfacebook analytics</string>
     <string name="control">Connect</string>
     <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
+    <string name="email_character">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
     <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
     <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
     <string name="sign_up_with_ria">Sign up with ria</string>
@@ -1549,5 +1550,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860&#8211;123&#8211;1233.</string>
     <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
     <string name="dictate_definition">To get maximum value from your NowFloats business website, we advise businesses to update content, in form of business updates, offers or product catalogs, 2&#8211;3 times a week regularly. When you opt for the NowFloats Dictate, a service by which, a NowFloats representative gets in touch with you and understands your business well enough, and then regularly contacts you or designated associate to get the latest updates.</string>
+    <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
 
 </resources>

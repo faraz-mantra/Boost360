@@ -1,4 +1,5 @@
 package com.nowfloats.NavigationDrawer.model;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
@@ -158,7 +159,7 @@ public class EmailBookingModel {
 
     }
 
-    public static class AddEmailModel{
+    public static class AddEmailModel implements Comparable{
         private String emailId;
         private DomainDetailsActivity.EmailType type = DomainDetailsActivity.EmailType.ADDED;
         public AddEmailModel(String emailId, DomainDetailsActivity.EmailType type){
@@ -179,6 +180,15 @@ public class EmailBookingModel {
 
         public void setEmailId(String emailId) {
             this.emailId = emailId;
+        }
+
+        @Override
+        public int compareTo(@NonNull Object o) {
+            if (!(o instanceof AddEmailModel)){
+                return -1;
+            }else{
+                return type.compareTo(((AddEmailModel) o).getType());
+            }
         }
     }
     public static class EmailBookingIds{
