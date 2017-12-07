@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     private final int FROM_FB_PAGE = 0;
 
 
-    private ProgressDialog pd;
+    private ProgressDialog progressDialog;
     private int mNewPosition = -1,status;
     private Context mContext;
     FacebookHandler facebookHandler;
@@ -142,12 +142,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmName(userName);
         requestClient.connectNfx();
         if(isAdded()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    pd = ProgressDialog.show(getActivity(), "", "Wait While Subscribing...");
-                }
-            });
+            showLoader(getString(R.string.wait_while_subscribing));
         }
 
         //BoostLog.d("ggg", session.getFPID());
@@ -194,7 +189,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                         .setmCallType(PAGE_NO_FOUND)
                         .setmName("");
                 requestClient.nfxNoPageFound();
-                pd = ProgressDialog.show(mContext, "", getString(R.string.please_wait));
+               showLoader(getString(R.string.please_wait));
             }else if (items.size() > 0)
             {
                     //final String[] array = items.toArray(new String[items.size()]);
@@ -258,7 +253,32 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
             e1.printStackTrace();
         }
     }
+    private void showLoader(final String message) {
 
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog == null) {
+                    progressDialog = new ProgressDialog(mContext);
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.setMessage(message);
+                progressDialog.show();
+            }
+        });
+    }
+
+    private void hideLoader() {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            }
+        });
+    }
     public void pageSeleted(int id, final String pageName, String pageID, String pageAccessToken) {
         //Log.v("ggg",pageName+"page");
         String s = "";
@@ -278,7 +298,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmName(pageName);
         requestClient.connectNfx();
         if(isAdded())
-            pd = ProgressDialog.show(mContext, "", getString(R.string.wait_while_subscribing));
+            showLoader(getString(R.string.wait_while_subscribing));
 
         DataBase dataBase = new DataBase(getActivity());
         dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
@@ -341,9 +361,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
 
     @Override
     public void nfxCallBack(String response, int callType, String name) {
-        if (pd != null && pd.isShowing()) {
-            pd.dismiss();
-        }
+        hideLoader();
         if (response.equals("error")) {
             Toast.makeText(mContext, "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
             return;

@@ -94,14 +94,13 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
     private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
     private CheckBox facebookautopost;
-    private TextView headerText;
     ArrayList<String> items;
     private int numberOfUpdates = 0;
     private boolean numberOfUpdatesSelected = false;
     private Activity activity;
 
     private SharedPreferences mSharedPreferences = null;
-    private ProgressDialog pd = null;
+    private ProgressDialog progressDialog = null;
     private int mNewPosition = -1;
 
 
@@ -248,7 +247,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                             .setmName("");
                     requestClient.connectNfx();
 
-                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.wait_while_unsubscribing));
+                   showLoader(getString(R.string.wait_while_unsubscribing));
                 }
             }
         });
@@ -290,7 +289,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                             .setmCallType(FB_PAGE_DEACTIVATION)
                             .setmName("");
                     pageRequestClient.connectNfx();
-                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.wait_while_unsubscribing));
+                    showLoader(getString(R.string.wait_while_unsubscribing));
 
                 }
             }
@@ -360,7 +359,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                             .setmCallType(TWITTER_DEACTIVATION)
                             .setmName("");
                     requestClient1.connectNfx();
-                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.wait_while_unsubscribing));
+                   showLoader(getString(R.string.wait_while_unsubscribing));
 
                 }
             }
@@ -699,7 +698,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                             .setmCallType(PAGE_NO_FOUND)
                                             .setmName("");
                                     requestClient.nfxNoPageFound();
-                                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.please_wait));
+                                    showLoader(getString(R.string.please_wait));
                                 }
                             }
                         }
@@ -728,7 +727,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 .setmName(pageName);
         requestClient.connectNfx();
 
-        pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
+        showLoader(getString(R.string.wait_while_subscribing));
 
         DataBase dataBase = new DataBase(activity);
         dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
@@ -808,8 +807,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
     public void fbData(final int from) {
         //AccessToken.getCurrentAccessToken()
-        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging");
-        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
+        List<String> readPermissions = Arrays.asList(Constants.FACEBOOK_READ_PERMISSIONS);
+        final List<String> publishPermissions = Arrays.asList(Constants.FACEBOOK_PUBLISH_PERMISSIONS);
         final LoginManager loginManager = LoginManager.getInstance();
 
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -850,7 +849,32 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         });
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
+    private void showLoader(final String message) {
 
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog == null) {
+                    progressDialog = new ProgressDialog(activity);
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.setMessage(message);
+                progressDialog.show();
+            }
+        });
+    }
+
+    private void hideLoader() {
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            }
+        });
+    }
     private void getFacebookProfile(final AccessToken accessToken, final int from) {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email");
@@ -890,12 +914,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 .setmCallType(FBTYPE)
                 .setmName(userName);
         requestClient.connectNfx();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Subscribing...");
-            }
-        });
+        showLoader(getString(R.string.wait_while_subscribing));
 
         BoostLog.d("FPID: ", session.getFPID());
         session.storeFacebookName(userName);
@@ -1067,7 +1086,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                         .setmName(username);
                 requestClient.connectNfx();
 
-                pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
+               showLoader(getString(R.string.wait_while_subscribing));
 
                 SharedPreferences.Editor e = mSharedPreferences.edit();
                 e.putString(TwitterConnection.PREF_KEY_OAUTH_TOKEN, twitterSession.getAuthToken().token);
@@ -1169,9 +1188,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
      */
     @Override
     public void nfxCallBack(String response, int callType, String name) {
-        if (pd != null && pd.isShowing()) {
-            pd.dismiss();
-        }
+        hideLoader();
         if (response.equals("error")) {
             Toast.makeText(this, "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
             return;
@@ -1307,7 +1324,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             fpURI = normalURI;
         }
 
-        pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.please_wait));
+        showLoader(getString(R.string.please_wait));
 
         NfxRequestClient requestClient = new
                 NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)

@@ -82,7 +82,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -430,11 +429,6 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void initRiaCard() {
-        RestAdapter riaCardAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)
-                /*.setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("Retrofit Response"))*/
-                .build();
-
         Map<String, String> query = new HashMap<>();
         query.put("fpTag", session.getFpTag());
         try {
@@ -454,7 +448,7 @@ public class Analytics_Fragment extends Fragment {
         query.put("screenHeight", DeviceDetails.getScreenHeight(getActivity()) + "");
 
 
-        RiaNetworkInterface networkInterface = riaCardAdapter.create(RiaNetworkInterface.class);
+        RiaNetworkInterface networkInterface = Constants.riaMemoryRestAdapter.create(RiaNetworkInterface.class);
         networkInterface.getRiaCards(query, new Callback<ArrayList<RiaCardModel>>() {
             @Override
             public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {

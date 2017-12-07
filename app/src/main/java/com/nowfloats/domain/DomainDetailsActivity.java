@@ -843,7 +843,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 }
             });
 
-            if (totalBookedEmails+emailBookedList.size()-totalFailedEmails>=EMAIL_BOOKING_NUM ||domainExpiryDays < 180){
+            if (planExpiryDays<=0 || totalBookedEmails+emailBookedList.size()-totalFailedEmails>=EMAIL_BOOKING_NUM ||domainExpiryDays < 180){
                 addEmail.setVisibility(View.GONE);
                 confirmRequestTv.setVisibility(View.GONE);
             }/*else if (domainExpiryDays < 180){

@@ -304,7 +304,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     } else {
                         Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                         startActivity(i);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
             }
         });
@@ -389,7 +389,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     } else {
                         Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                         startActivity(i);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
 
             }
@@ -419,7 +419,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     } else {
                         Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                         startActivity(i);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
 
             }
@@ -495,7 +495,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 }
             }
         }
-
+        //showUpdateKeywords();
         ivSpeakUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -503,6 +503,36 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
     }
+
+//    private void showUpdateKeywords(){
+//
+//        Constants.riaMemoryRestAdapter
+//                .create(RiaUpdateApis.class)
+//                .getUpdateKeywordSuggestions(session.getFpTag(), new Callback<ArrayList<String>>() {
+//                    @Override
+//                    public void success(ArrayList<String> strings, Response response) {
+//                        if (strings != null && strings.size()>0){
+//                            CardView keywordCard = findViewById(R.id.cv_keyword_suggestions);
+//                            keywordCard.setVisibility(View.VISIBLE);
+//                            Collections.shuffle(strings);
+//                            LinearLayout keywordRv = findViewById(R.id.layout_keyword_suggestion);
+//                            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                            param.setMargins(10,10,10,10);
+//                            for (String s:strings.subList(0,6)){
+//                                TextView text = new TextView(Create_Message_Activity.this);
+//                                text.setText(s);
+//                                text.setLayoutParams(param);
+//                                keywordRv.addView(text);
+//                            }
+//                            //keywordRv.setAdapter(new ArrayAdapter<String>(Create_Message_Activity.this,android.R.layout.simple_list_item_1, strings.subList(0,6)));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void failure(RetrofitError error) {
+//                    }
+//                });
+//    }
 
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
