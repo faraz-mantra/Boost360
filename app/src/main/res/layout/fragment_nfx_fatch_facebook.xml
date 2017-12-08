@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:id="@+id/boost_app_icon"
-        android:src="@drawable/boost_with_facebook"
+        app:srcCompat="@drawable/boost_with_facebook"
         />
 
     <TextView

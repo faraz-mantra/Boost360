@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_tick_mark" />
+                    app:srcCompat="@drawable/ic_tick_mark" />
             </FrameLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>

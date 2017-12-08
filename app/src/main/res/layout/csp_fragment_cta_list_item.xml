@@ -118,21 +118,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_call_black" />
+                app:srcCompat="@drawable/ic_call_black" />
 
             <ImageView
                 android:id="@+id/ivSms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/sms_bg" />
+                app:srcCompat="@drawable/sms_bg" />
 
             <ImageView
                 android:id="@+id/ivShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_share" />
+                app:srcCompat="@drawable/ic_share" />
 
         </LinearLayout>
     </LinearLayout>

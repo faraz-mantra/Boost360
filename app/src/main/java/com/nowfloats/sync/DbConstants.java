@@ -10,7 +10,7 @@ public class DbConstants {
         String serverId = "server_id";
         String imageUrl = "image_url";
         String updateText = "update_text";
-        String date = "DATE";
+        String date = "date";
         String type = "type";
         String url = "url";
         String synced = "synced";
@@ -19,7 +19,7 @@ public class DbConstants {
         String CREATE_UPDATES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + serverId + " TEXT NOT NULL UNIQUE, " + imageUrl +
                 " TEXT, " + updateText + " TEXT, " + date + " TEXT , " + tileImageUrl + " TEXT, " + type + " TEXT, " + url + " TEXT, " + localImagePath + " TEXT, " + synced + " INTEGER)";
 
-        String DROP_UPDATES_TABLE = "DROP TABLE " + tableName;
+        String DROP_UPDATES_TABLE = "DROP TABLE IF EXISTS " + tableName;
     }
 
     public interface Ialerts {
@@ -39,7 +39,7 @@ public class DbConstants {
                 " TEXT, " + createdOn + " TEXT, " + imageUrl + " TEXT, " + message + " TEXT, " + notificationImageUrl + " TEXT, " + notificationStatus + " TEXT, " + notificationType +
                 " TEXT, " + sendOn + " TEXT, " + isRead + " TEXT, " + isTargetAchieved + " TEXT)";
 
-        String DROP_ALERT_TABLE = "DROP TABLE " + tableName;
+        String DROP_ALERT_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
         public interface IalertData {
             String tableDataName = "alert_data";
@@ -48,7 +48,7 @@ public class DbConstants {
             String key = "key";
             String value = "value";
             String CREATE_ALERT_DATA_TABLE = "CREATE TABLE " + tableDataName + " ( " + id + " INTEGER PRIMARY KEY AUTOINCREMENT, " + serverId + " TEXT, " + key + " TEXT, " + value + " TEXT)";
-            String DROP_ALERT_DATA_TABLE = "DROP TABLE " + tableDataName;
+            String DROP_ALERT_DATA_TABLE = "DROP TABLE IF EXISTS " + tableDataName;
         }
     }
 
@@ -62,7 +62,7 @@ public class DbConstants {
 
         String CREATE_CUSTOM_PAGES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + pageName +
                 " TEXT, " + dateStamp + " TEXT, " + pageContent + " TEXT)";
-        String DROP_CUSTOM_PAGES_TABLE = "DROP TABLE " + tableName;
+        String DROP_CUSTOM_PAGES_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -81,7 +81,7 @@ public class DbConstants {
         String synced = "synced";
         String CREATE_PHOTO_GALLERY_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " + serverId + " TEXT, " + imageName +
                 " TEXT, " + imageTag + " TEXT, " + imageUrl + " TEXT, " + localImageUrl + " TEXT, " + tileImageUrl + " TEXT, " + synced + " INTEGER)";
-        String DROP_PHOTO_GALLERY_TABLE = "DROP TABLE " + tableName;
+        String DROP_PHOTO_GALLERY_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -116,7 +116,7 @@ public class DbConstants {
                 externalSourceId + " TEXT, " + isArchived + " TEXT, " + isAvailable + " TEXT, " + priority + " INTEGER, " + shipmentDuration + " INTEGER, " + applicationId + " TEXT, " +
                 customWidgets + " TEXT, " + fpTag + " TEXT, " + images + " TEXT, " + merchantName + " TEXT, " + tileImageUri + " TEXT, " + gpId + " TEXT, " + totalQueries + " INTEGER, " +
                 createdOn + " TEXT, " + updatedOn + " TEXT )";
-        String DROP_PRODUCT_GALLERY_TABLE = "DROP TABLE " + tableName;
+        String DROP_PRODUCT_GALLERY_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -128,7 +128,7 @@ public class DbConstants {
 
         String CREATE_SEARCH_QUERIES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + SearchQueries +
                 " TEXT, " + date + " TEXT)";
-        String DROP_SEARCH_QUERIES_TABLE  = "DROP TABLE " + tableName;
+        String DROP_SEARCH_QUERIES_TABLE  = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -141,7 +141,7 @@ public class DbConstants {
 
         String CREATE_ACTIVE_PLANS_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + planName +
                 " TEXT, " + planDescr + " TEXT, " + price + " REAL)";
-        String DROP_ACTIVE_PLANS_TABLE  = "DROP TABLE " + tableName;
+        String DROP_ACTIVE_PLANS_TABLE  = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -152,7 +152,7 @@ public class DbConstants {
         String imageUrl = "image_url";
         String CREATE_STORE_IMAGES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + foreignIdPlanName +
                 " TEXT, " + imageUrl + " TEXT)";
-        String DROP_STORE_IMAGES_TABLE  = "DROP TABLE " + tableName;
+        String DROP_STORE_IMAGES_TABLE  = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -162,7 +162,7 @@ public class DbConstants {
         String SUGGESTIONS = "suggestions";
         String CREATE_SAM_BUBBLE_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + SUGGESTIONS + " TEXT)";
-        String DROP_SAM_BUBBLE_TABLE  = "DROP TABLE " + tableName;
+        String DROP_SAM_BUBBLE_TABLE  = "DROP TABLE IF EXISTS " + tableName;
 
     }
 

@@ -44,6 +44,7 @@ public class DbController implements IdbController {
     public List<Updates> getAllUpdates(int offset) {
         Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), null, null, null, DbConstants.Iupdates.date + " DESC LIMIT " + offset + ", 10");
         List<Updates> updatesList = new ArrayList<>();
+        if (c == null) return updatesList;
         if (c.moveToFirst()) {
             do {
                 Updates update = new Updates();
@@ -67,6 +68,7 @@ public class DbController implements IdbController {
     public ArrayList<Updates> getAllUnSyncedUpdates() {
         Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), null, DbConstants.Iupdates.synced + "='" + 0 + "'", null, DbConstants.Iupdates.date + " DESC");
         ArrayList<Updates> updatesList = new ArrayList<>();
+        if (c == null) return updatesList;
         if (c.moveToFirst()) {
             do {
                 Updates update = new Updates();
@@ -93,6 +95,7 @@ public class DbController implements IdbController {
     public Updates getUpdatesById(String id) {
         Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), null, DbConstants.Iupdates.ID, new String[]{id}, DbConstants.Iupdates.ID + " ASC");
         Updates update = new Updates();
+        if (c == null) return update;
         if (c.moveToFirst()) {
             update.setId(c.getInt(c.getColumnIndex(DbConstants.Iupdates.ID)));
             update.setServerId(c.getString(c.getColumnIndex(DbConstants.Iupdates.serverId)));
@@ -153,6 +156,7 @@ public class DbController implements IdbController {
     public ArrayList<Alerts> getAllAlerts(int offset) {
         Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Ialerts.tableName), null, null, null, DbConstants.Ialerts.createdOn + " DESC LIMIT " + offset + ", 10");
         ArrayList<Alerts> alertsList = new ArrayList<>();
+        if (c == null) return alertsList;
         if (c.moveToFirst()) {
             do {
                 String id = c.getString(c.getColumnIndex(DbConstants.Ialerts.ID));

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:gravity="center_vertical"
@@ -22,7 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="9943272863"
-                android:maxLines="1"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit ="marquee_forever"
                 android:focusable="true"
@@ -45,13 +45,13 @@
             android:layout_marginRight="15dp"
             android:layout_marginLeft="10dp"
             android:padding="5dp"
-            android:src="@drawable/ic_pause_gray"/>
+            app:srcCompat="@drawable/ic_pause_gray"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/download"
             android:padding="5dp"
-            android:src="@drawable/ic_download"/>
+            app:srcCompat="@drawable/ic_download"/>
     </LinearLayout>
     <SeekBar
         android:id="@+id/seekBar"

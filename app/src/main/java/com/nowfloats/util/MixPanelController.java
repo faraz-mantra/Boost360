@@ -63,6 +63,7 @@ public class MixPanelController {
     public static final String THIRD_PARTY_ACTION_SHARE = "ThirdPartyActionShare";
     public static final String DOMAIN_EMAIL_BOOK = "EmailBook";
     public static final String DOMAIN_EMAIL_REQUEST = "EmailRequest";
+    public static final String UPDATE_DB_CRASH = "updateDbCrash";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

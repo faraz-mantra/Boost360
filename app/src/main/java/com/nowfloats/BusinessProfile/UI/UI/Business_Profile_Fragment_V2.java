@@ -56,6 +56,8 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.nowfloats.NavigationDrawer.HomeActivity.shareButton;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
@@ -105,9 +107,9 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         final LinearLayout profileLayout = (LinearLayout) mainView.findViewById(R.id.business_profile_layout);
         profileLayout.setVisibility(View.INVISIBLE);
         progressLayout.setVisibility(View.VISIBLE);
-        if (HomeActivity.shareButton != null) {
-            HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
-            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+        if (shareButton != null) {
+            shareButton.setImageResource(R.drawable.share_with_apps);
+            shareButton.setColorFilter(whiteLabelFilter_pop_ip);
         }
 
         new Thread(new Runnable() {
@@ -128,27 +130,28 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
                             websiteTextView.setTypeface(robotoMedium);
                             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                            HomeActivity.shareButton.setVisibility(View.VISIBLE);
-                            HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
+                            if (shareButton != null) {
+                                shareButton.setVisibility(View.VISIBLE);
+                                shareButton.setOnClickListener(new View.OnClickListener() {
 
-                                @Override
-                                public void onClick(View v) {
-                                    String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                                    if (!Util.isNullOrEmpty(url)) {
-                                        String eol = System.getProperty("line.separator");
-                                        url = getResources().getString(R.string.visit_to_new_website)
-                                                + eol + url.toLowerCase();
-                                    } else {
-                                        String eol = System.getProperty("line.separator");
-                                        url = getResources().getString(R.string.visit_to_new_website)
-                                                + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                                                + activity.getResources().getString(R.string.tag_for_partners);
+                                    @Override
+                                    public void onClick(View v) {
+                                        String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                                        if (!Util.isNullOrEmpty(url)) {
+                                            String eol = System.getProperty("line.separator");
+                                            url = getResources().getString(R.string.visit_to_new_website)
+                                                    + eol + url.toLowerCase();
+                                        } else {
+                                            String eol = System.getProperty("line.separator");
+                                            url = getResources().getString(R.string.visit_to_new_website)
+                                                    + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                                                    + activity.getResources().getString(R.string.tag_for_partners);
+                                        }
+
+                                        shareWebsite(url);
                                     }
-
-                                    shareWebsite(url);
-                                }
-                            });
-
+                                });
+                            }
                             businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
                             //if (Constants.IMAGEURIUPLOADED == false) {
                             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);

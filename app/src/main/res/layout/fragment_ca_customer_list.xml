@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/margin_20"
-            android:src="@drawable/ic_sort_icon" />
+            app:srcCompat="@drawable/ic_sort_icon" />
     </LinearLayout>
 
     <LinearLayout

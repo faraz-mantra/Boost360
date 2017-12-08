@@ -19,7 +19,6 @@ import android.widget.ImageView;
 
 import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -31,6 +30,8 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * Created by guru on 24/07/2015.
@@ -57,7 +58,8 @@ public class ChatFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        HomeActivity.headerText.setText("PRO CHAT");
+        if (headerText != null)
+        headerText.setText("PRO CHAT");
         ChatFragmentPage = "";
         if (chatModels.size()>0)
             if(chatRecyclerView!=null)

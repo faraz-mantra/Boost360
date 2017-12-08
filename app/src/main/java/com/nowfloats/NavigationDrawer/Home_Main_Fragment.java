@@ -422,9 +422,20 @@ public class Home_Main_Fragment extends Fragment implements
             recyclerView.setAdapter(cAdapter);
             Constants.createMsg = false;
         }
-
-        List<Updates> updates = mDbController.getAllUpdates(skip);
-        if(updates.isEmpty()){
+        List<Updates> updates = null;
+        try {
+            updates = mDbController.getAllUpdates(skip);
+        }catch (Exception e){
+            MixPanelController.track(MixPanelController.UPDATE_DB_CRASH,null);
+            mPref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED,false).apply();
+            mDbController.deleteDataBase();
+            startSync();
+            return true;
+        }
+        if(updates == null || updates.isEmpty()){
+            if (skip == 0){
+                startSync();
+            }
             return false;
         }
         if(emptyMsgLayout.getVisibility()==View.VISIBLE){

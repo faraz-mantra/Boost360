@@ -562,7 +562,7 @@
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_help_and_support"
+                app:srcCompat="@drawable/ic_help_and_support"
                 android:tint="#808080" />
 
             <TextView

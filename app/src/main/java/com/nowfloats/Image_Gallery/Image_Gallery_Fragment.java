@@ -50,6 +50,8 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
@@ -90,8 +92,10 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        HomeActivity.plusAddButton.setVisibility(View.GONE);
-        HomeActivity.headerText.setText("Photo Gallery");
+        if (HomeActivity.plusAddButton != null)
+            HomeActivity.plusAddButton.setVisibility(View.GONE);
+        if (headerText != null)
+            headerText.setText("Photo Gallery");
         if (gvImages != null)
             gvImages.invalidate();
         if (otherImagesAdapter != null)

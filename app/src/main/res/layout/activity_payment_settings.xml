@@ -196,7 +196,7 @@
                             android:background="?android:selectableItemBackground"
                             android:layout_marginRight="15dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_create_black_24dp"/>
+                            app:srcCompat="@drawable/ic_create_black_24dp"/>
                     </LinearLayout>
 
                     <LinearLayout
