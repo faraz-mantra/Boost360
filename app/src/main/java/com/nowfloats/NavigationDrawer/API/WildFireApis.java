@@ -16,11 +16,16 @@ import retrofit.http.Query;
  */
 
 public interface WildFireApis {
-    String WILD_FIRE_END_POINT = "http://wmt.withfloats.com";
+    String WILD_FIRE_END_POINT = "http://wmt.withfloats.com/wildfire/api";
     RestAdapter adapter = new RestAdapter.Builder().setEndpoint(WILD_FIRE_END_POINT).build();
-    @GET("/wildfire/api/v1/account/keywordstats")
-    void getKeyWordsStats(@Query("clientId") String clientId, @Query("accountId") String accountId, Callback<ArrayList<WildFireKeyStatsModel>> response);
+    @GET("/v1/account/keywordstats")
+    void getGoogleStats(@Query("clientId") String clientId, @Query("accountId") String accountId, Callback<ArrayList<WildFireKeyStatsModel>> response);
 
     @GET("/WildFire/v1/account/detailswithexternalsourceid/{sourceId}")
     void getWildFireData(@Path("sourceId") String sourceId, @Query("clientId") String clientId, Callback<WildFireDataModel> response);
+
+    @GET("/v1/account/wildfirechanneltype")
+    void getWildFireChannels(@Query("clientId") String clientId, @Query("wfId") String accountId, Callback<ArrayList<String>> response);
+    @GET("/v2/account/facebookadStats")
+    void getFacebookStats(@Query("clientId") String clientId, @Query("accountId") String accountId, Callback<ArrayList<WildFireKeyStatsModel>> response);
 }

@@ -3,7 +3,6 @@ package com.nowfloats.BusinessProfile.UI.API;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
@@ -16,11 +15,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -82,7 +77,7 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
                     try {
                         Methods.showSnackBarPositive(appContext, "Image updated successfully");
                         Constants.LOGOUPLOADED = true ;
-                        Bitmap bmp = Util.getBitmap(path, appContext);
+                        Bitmap bmp = Methods.decodeSampledBitmap(path, 720,720);
                         bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
                         Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
                     } catch (Exception e) {
@@ -114,48 +109,6 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
 
     public void uploadImage(String imagePath){
         try {
-            FileInputStream fileInputStream = null;
-            File img = new File(imagePath);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            byte[] buf = new byte[1024];
-            File f = new File(img.getAbsolutePath() + File.separator);
-            try {
-                f.createNewFile();
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-            if(f.length()>imageSize){
-                throw new Exception("Large File Size");
-            }
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            Bitmap bmp = BitmapFactory.decodeFile(imagePath, options);
-            /*if ((f.length() / 1024) > 100) {
-                bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
-            } else {*/
-                bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            //}
-
-            byte[] bitmapdata = bos.toByteArray();
-
-            try {
-                if (!Util.isNullOrEmpty(imagePath)) {
-                    fileInputStream = new FileInputStream(img);
-                }
-
-                int bytesAvailable = fileInputStream.available();
-
-            } catch (Exception e) {
-
-
-            } finally {
-                try {
-                    fileInputStream.close();
-                } catch (Exception e) {
-                }
-            }
-
             UUID uuid;
 
             uuid = UUID.randomUUID();
@@ -171,7 +124,7 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
                     s_uuid + "&";
 
             String temp = uri + "totalChunks=1&currentChunkNumber=1";
-            sendDataToServer(temp, bitmapdata);
+            sendDataToServer(temp, Methods.compressToByte(imagePath,appContext));
         }catch(Exception e){
             Methods.showSnackBarNegative(appContext, e.getMessage());
             e.printStackTrace();

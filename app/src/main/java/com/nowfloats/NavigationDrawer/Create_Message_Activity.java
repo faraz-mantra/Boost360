@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -612,6 +611,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
         ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+        header.setText("Upload Image");
         cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
         galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
 
@@ -644,51 +644,11 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
     }
 
-    public void choosePictureOptionDilog() {
-        Typeface robotoMedium = Typeface.createFromAsset(Create_Message_Activity.this.getAssets(),"Roboto-Medium.ttf");
-        Typeface robotoLight = Typeface.createFromAsset(Create_Message_Activity.this.getAssets(),"Roboto-Light.ttf");
-
-        final MaterialDialog dialog = new MaterialDialog.Builder(Create_Message_Activity.this)
-                .customView(R.layout.featuredimage_popup,true)
-                .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-
-        View view = dialog.getCustomView();
-        TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        header.setTypeface(robotoMedium);
-        header.setText("Upload Photo");
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        TextView cameraTextView = (TextView) view.findViewById(R.id.alert_message_text);
-        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
-
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
-
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
-    }
-
     public void galleryIntent() {
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                    PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         gallery_req_id);
             }
             else {
@@ -714,15 +674,19 @@ public class Create_Message_Activity extends AppCompatActivity {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
+            }else{
+                Toast.makeText(activity, "Please give storage and camera permission", Toast.LENGTH_SHORT).show();
             }
 
         }
         else if(requestCode==gallery_req_id)
         {
             if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
 
+            }else{
+                Toast.makeText(activity, "Please give read storage permission", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -731,10 +695,11 @@ public class Create_Message_Activity extends AppCompatActivity {
         try {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
+
             }
             else {
                 mIsImagePicking = true;

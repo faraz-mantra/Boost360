@@ -1064,7 +1064,8 @@ public class SidePanelFragment extends Fragment {
             public void onDrawerClosed(View drawerView) {
 
                 super.onDrawerClosed(drawerView);
-                getActivity().invalidateOptionsMenu();
+                if (getActivity() != null)
+                    getActivity().invalidateOptionsMenu();
             }
 
             @Override

@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import org.json.JSONArray;
@@ -59,12 +63,13 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     SharedPreferences.Editor prefsEditor;
 
     UserSessionManager session;
-
+    private static final int FB_PAGE_CREATION = 101;
     private final int FBTYPE = 0;
     private final int FBPAGETYPE = 1;
     private final int FROM_FB_PAGE = 0;
-
-
+    private String fpPageName;
+    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
+    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private ProgressDialog progressDialog;
     private int mNewPosition = -1,status;
     private Context mContext;
@@ -385,10 +390,173 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 ((OpenNextScreen)mContext).onNextScreen();
                 break;
             case PAGE_NO_FOUND:
-                Methods.materialDialog(getActivity(), "Alert", getString(R.string.look_like_no_facebook_page));
+                MixPanelController.track(MixPanelController.FACEBOOK_PAGE_NOT_FOUND, null);
+                if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                    Methods.materialDialog(getActivity(), "Alert", getString(R.string.look_like_no_facebook_page));
+                } else {
+                    final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                    final MaterialDialog builder = new MaterialDialog.Builder(getActivity())
+                            .customView(R.layout.dialog_no_facebook_page, false).build();
+                    ((Button) builder.getCustomView().findViewById(R.id.create_page))
+                            .setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    builder.dismiss();
+                                    if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+                                        createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    }else{
+                                        Methods.materialDialog(getActivity(), "Alert","This feature is available to paid customers only.");
+                                    }
+                                }
+                            });
+                    if (!getActivity().isFinishing())
+                        builder.show();
+                }
+                break;
+            case FB_PAGE_CREATION:
+
+                switch (response) {
+                    case "success_fbDefaultImage":
+                        pageCreatedDialog(true);
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_CREATED_WITH_DEFAULT_IMAGE, null);
+                        break;
+                    case "success_logoImage":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_CREATED_WITH_LOGO, null);
+                        pageCreatedDialog(false);
+                        break;
+                    case "profile_incomplete":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_PROFILE_INCOMPLETE, null);
+                        showDialog("Site Health Should Be 80%", getString(R.string.business_profile_incomplete));
+                        break;
+                    case "error_creating_page":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_ERROR_IN_CREATE, null);
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
+                        break;
+                    case "invalid_name":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_INVALID_NAME, null);
+                        pageSuggestionDialog();
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
                 break;
             default:
                 break;
+        }
+    }
+    private void createFBPage(String fpName) {
+        MixPanelController.track(MixPanelController.CREATE_FACEBOOK_PAGE, null);
+        fpPageName = fpName;
+        String businessDesciption = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION);
+
+        String businessCategory = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY);
+
+        String mobileNumber = session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM);
+
+        String fpURI = "";
+        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                + getResources().getString(R.string.tag_for_partners);
+        if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
+            fpURI = rootAlisasURI;
+        } else {
+            fpURI = normalURI;
+        }
+
+        showLoader(getString(R.string.please_wait));
+
+        NfxRequestClient requestClient = new
+                NfxRequestClient(this)
+                .setmFpId(session.getFPID())
+                .setmCallType(FB_PAGE_CREATION);
+
+        requestClient.createFBPage(fpName, businessDesciption, businessCategory,
+                mobileNumber, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI),
+                fpURI, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
+
+    }
+
+    private void pageSuggestionDialog() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_fb_page_edit, null);
+        final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .customView(view, false)
+                .build();
+        final EditText pageName = (EditText) view.findViewById(R.id.et_page_name);
+        pageName.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) + " " + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+        pageName.requestFocus();
+        Button proceed = (Button) view.findViewById(R.id.btn_proceed);
+        proceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String page = pageName.getText().toString().trim();
+                if (page.length() > 0) {
+                    dialog.dismiss();
+                    createFBPage(page);
+                } else {
+                    Toast.makeText(getActivity(), "Page name can't be empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        if (!getActivity().isFinishing()) {
+            dialog.show();
+        }
+
+    }
+
+    private void pageCreatedDialog(boolean showDefaultImageMessage) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_fb_page_created, null);
+        final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .customView(view, false)
+                .canceledOnTouchOutside(false)
+                .build();
+        Button connect = (Button) view.findViewById(R.id.btn_connect);
+        TextView pageName = (TextView) view.findViewById(R.id.tv_fb_page_name);
+        view.findViewById(R.id.llayout_message).setVisibility(showDefaultImageMessage ? View.VISIBLE : View.GONE);
+        pageName.setText(fpPageName);
+        ImageView logoImage = (ImageView) view.findViewById(R.id.img_logo);
+        ImageView featureImage = (ImageView) view.findViewById(R.id.img_feature);
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Picasso.with(getActivity())
+                .load(FB_PAGE_COVER_PHOTO)
+                .resize(0, 200)
+                .placeholder(R.drawable.general_services_background_img)
+                .into(featureImage);
+
+        String logoURI;
+        if (showDefaultImageMessage) {
+            logoURI = FB_PAGE_DEFAULT_LOGO;
+        } else {
+            logoURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+            if (!logoURI.contains("http")) {
+                logoURI = "https://" + logoURI;
+            }
+        }
+
+        Picasso.with(getActivity())
+                .load(logoURI)
+                .resize(0, 75)
+                .placeholder(R.drawable.facebook_page2)
+                .into(logoImage);
+
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+              facebookHandler.getFacebookPermissions(LoginFragment.this,readPermissions,publishPermissions);
+            }
+        });
+
+        if (!getActivity().isFinishing()) {
+            dialog.show();
         }
     }
 

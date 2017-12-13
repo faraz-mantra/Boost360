@@ -808,7 +808,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                     + "&requestType=sequential&requestId=" + Constants.deviceId
                     + "&totalChunks=1&currentChunkNumber=1&productId=" + productId;
             String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" + valuesStr;
-            byte[] imageBytes = Methods.compressTobyte(path, activity);
+            byte[] imageBytes = Methods.compressToByte(path, activity);
             new ProductImageUploadV45(url, imageBytes, Product_Detail_Activity_V45.this).execute();
         } catch (Exception e) {
             e.printStackTrace();

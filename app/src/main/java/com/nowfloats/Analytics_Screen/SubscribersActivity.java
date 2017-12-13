@@ -332,6 +332,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             case android.R.id.home:
                 if(searchEditText.getVisibility() == View.VISIBLE){
                     searchEditText.clearFocus();
+                    searchEditText.setText("");
                     searchEditText.setVisibility(View.GONE);
                     deleteImage.setVisibility(View.VISIBLE);
                     titleTextView.setVisibility(View.VISIBLE);

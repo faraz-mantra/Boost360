@@ -63,6 +63,7 @@ import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
+import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
@@ -70,6 +71,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
+import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
@@ -426,9 +428,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Constants.deepLinkAnalytics = true;
                 homeFragment.setFragmentTab(1);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, businessFragment)
-                        .commit();
+                Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
+                startActivity(queries);
             } else if (url.contains("store") || url.contains(getResources().getString(R.string.deeplink_store)) ||
                     url.contains(getResources().getString(R.string.deeplink_propack)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreseo)) ||
@@ -486,14 +487,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizhours)) || url.contains("hours")) {
-                Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
+                Intent queries = new Intent(HomeActivity.this, BusinessHoursActivity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo)) || url.contains("logo")) {
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo)) || url.contains("bookdomain")) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, businessEnquiriesFragment)
+                ft.replace(R.id.mainFrame, businessFragment)
                         .commit();
             } else if (url.contains("sitemeter")) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -1390,9 +1391,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .addToBackStack(null)
                             .commit();
                 }else if(nextScreen.equals("wildfire")){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new WildFireFragment(),"WildFireFrag")
-                            .addToBackStack(null)
-                            .commit();
+                   startActivity(new Intent(activity,WildFireActivity.class));
                 }
                 else if(nextScreen.equals("dictate")){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new DictateFragment(),"DictateFrag")

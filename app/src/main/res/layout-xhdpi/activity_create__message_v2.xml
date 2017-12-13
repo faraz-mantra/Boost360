@@ -196,7 +196,7 @@
                             android:id="@+id/create_mee_activity_facebokhome_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/create_message_camera_inactive"
+                            app:srcCompat="@drawable/create_message_camera_inactive"
                             android:padding="5dp"
                             />
                     </LinearLayout>
@@ -256,7 +256,7 @@
                             android:id="@+id/create_message_activity_facebokhome_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/facebook_icon_inactive" />
+                            app:srcCompat="@drawable/facebook_icon_inactive" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -271,7 +271,7 @@
                             android:id="@+id/create_message_activity_facebokpage_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/facebookpage_icon_inactive" />
+                            app:srcCompat="@drawable/facebookpage_icon_inactive" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -286,7 +286,7 @@
                             android:id="@+id/create_message_activity_twitter_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/twitter_icon_inactive" />
+                            app:srcCompat="@drawable/twitter_icon_inactive" />
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/float_a_picture_share_quikr_parent"
@@ -301,7 +301,7 @@
                             android:id="@+id/create_message_activity_quikr_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/quikr_icon_deactivate" />
+                            app:srcCompat="@drawable/quikr_icon_deactivate" />
                     </LinearLayout>
                 </LinearLayout>
 

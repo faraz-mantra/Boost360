@@ -488,7 +488,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     if (TextUtils.isEmpty(countryEditText.getText().toString())) {
-                        Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select country");
+                        Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select city with suggested country");
                     } else{
                         showOtpDialog();
                     }

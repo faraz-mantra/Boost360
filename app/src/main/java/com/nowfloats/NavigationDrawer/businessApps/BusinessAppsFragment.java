@@ -157,7 +157,7 @@ public class BusinessAppsFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 4;
+            return BusinessAppScreenOneFragment.circleImages.length;
         }
     }
 

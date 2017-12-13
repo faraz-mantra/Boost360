@@ -600,7 +600,7 @@ public class Methods {
         return formatted;
     }
 
-    public static byte[] compressTobyte(String path, Activity act) {
+    public static byte[] compressToByte(String path, Activity act) {
         File img = new File(path);
         File f = new File(img.getAbsolutePath() + File.separator);
         try {

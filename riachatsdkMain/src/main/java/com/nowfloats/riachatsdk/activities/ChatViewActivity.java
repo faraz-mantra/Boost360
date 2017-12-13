@@ -157,7 +157,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private Button mCurrButton, mDefaultButton;
 
-    private List<RiaCardModel> mAllNodes = null;
+    private List<RiaCardModel> mAllNodes = new ArrayList<>(0);
 
     private Map<String, String> mDataMap = new HashMap<>();
 

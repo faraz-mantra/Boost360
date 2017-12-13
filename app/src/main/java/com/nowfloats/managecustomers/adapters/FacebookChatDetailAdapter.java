@@ -93,6 +93,7 @@ public class FacebookChatDetailAdapter extends RecyclerView.Adapter<RecyclerView
             }
             Glide.with(mContext)
                     .load(chatList.get(position).getMessage().getData().getUrl())
+                    .asGif()
                     .placeholder(R.drawable.default_product_image)
                     .into(imageHolder.imgMessage);
             mainViewHolder = imageHolder;

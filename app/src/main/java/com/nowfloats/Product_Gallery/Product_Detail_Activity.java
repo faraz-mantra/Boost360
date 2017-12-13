@@ -775,7 +775,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                     +"&requestType=sequential&requestId="+Constants.deviceId
                     +"&totalChunks=1&currentChunkNumber=1&productId="+productId;
             String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" +valuesStr;
-            byte[] imageBytes = Methods.compressTobyte(path,activity);
+            byte[] imageBytes = Methods.compressToByte(path,activity);
             new ProductImageUpload(url,imageBytes,Product_Detail_Activity.this).execute();*/
             pd = ProgressDialog.show(this, "", getString(R.string.wait_while_deleting_image));
             for(Image image: mProductImageList){
@@ -800,7 +800,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                         +"&requestType=sequential&requestId="+Constants.deviceId
                         +"&totalChunks=1&currentChunkNumber=1&productId="+productId+"&imageFileName="+oldUrl.replace("/tile/", "/actual/");
                 String url = Constants.NOW_FLOATS_API_URL/*"http://api.withfloats.org"*/ + "/Product/v2/ReplaceImage?" +valuesStr;
-                byte[] imageBytes = Methods.compressTobyte(path,activity);
+                byte[] imageBytes = Methods.compressToByte(path,activity);
                 new ProductImageReplace(url,imageBytes,Product_Detail_Activity.this).execute();
             }else {
                 uploadProductImage(productId);

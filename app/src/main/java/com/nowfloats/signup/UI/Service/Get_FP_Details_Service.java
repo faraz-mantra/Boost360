@@ -48,51 +48,59 @@ public class Get_FP_Details_Service {
         getFPDetails.post_getFPDetails(fpID, map, new Callback<Get_FP_Details_Model>() {
             @Override
             public void success(Get_FP_Details_Model get_fp_details_model, final Response response) {
-                if (get_fp_details_model != null) {
-                    ProcessFPDetails.storeFPDetails(activity, get_fp_details_model);
-                    bus.post(new Get_FP_Details_Event(get_fp_details_model));
-                } else {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(activity == null || activity.isFinishing()){
-                                return;
-                            }
-                            Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
-                            if (WebSiteAddressActivity.pd != null) {
-                                WebSiteAddressActivity.pd.dismiss();
-                            }
-                            if (SplashScreen_Activity.pd != null) {
-                                SplashScreen_Activity.pd.dismiss();
-                            }
+                try{
+                    if (get_fp_details_model != null) {
+                        ProcessFPDetails.storeFPDetails(activity, get_fp_details_model);
+                        bus.post(new Get_FP_Details_Event(get_fp_details_model));
+                    } else {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (activity == null || activity.isFinishing()) {
+                                    return;
+                                }
+                                Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+                                if (WebSiteAddressActivity.pd != null) {
+                                    WebSiteAddressActivity.pd.dismiss();
+                                }
+                                if (SplashScreen_Activity.pd != null) {
+                                    SplashScreen_Activity.pd.dismiss();
+                                }
 
-                        }
-                    });
-                    bus.post(response);
+                            }
+                        });
+                        bus.post(response);
+                    }
+                }catch(Exception e){
+
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d("", "" + error.getMessage());
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
-                        if (WebSiteAddressActivity.pd != null) {
-                            WebSiteAddressActivity.pd.dismiss();
-                        }
-                        if (SplashScreen_Activity.pd != null) {
-                            try {
-                                SplashScreen_Activity.pd.dismiss();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                try {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+                            if (WebSiteAddressActivity.pd != null) {
+                                WebSiteAddressActivity.pd.dismiss();
+                            }
+                            if (SplashScreen_Activity.pd != null) {
+                                try {
+                                    SplashScreen_Activity.pd.dismiss();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    }
-                });
+                    });
 
-                bus.post(error);
+                    bus.post(error);
+                }catch (Exception e){
+
+                }
 
             }
         });
@@ -156,25 +164,29 @@ public class Get_FP_Details_Service {
             @Override
             public void failure(RetrofitError error) {
                 Log.d("", "" + error.getMessage());
-                bus.post(new NfxGetTokensResponse());
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
-                        if (WebSiteAddressActivity.pd != null) {
-                            WebSiteAddressActivity.pd.dismiss();
-                        }
-                        if (SplashScreen_Activity.pd != null) {
-                            bus.post(new NfxGetTokensResponse());
-                            try {
-                                SplashScreen_Activity.pd.dismiss();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                try {
+                    bus.post(new NfxGetTokensResponse());
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+                            if (WebSiteAddressActivity.pd != null) {
+                                WebSiteAddressActivity.pd.dismiss();
                             }
-                        }
+                            if (SplashScreen_Activity.pd != null) {
+                                bus.post(new NfxGetTokensResponse());
+                                try {
+                                    SplashScreen_Activity.pd.dismiss();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
-                    }
-                });
+                        }
+                    });
+                }catch (Exception e){
+
+                }
             }
         });
     }

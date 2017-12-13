@@ -237,5 +237,6 @@ public class FacebookHandler{
         void onLoginSuccess(LoginResult result);
         void onProfilePages(JSONArray pages, ArrayList<String> pagesName);
         void onProfileConnected(JSONObject profile,AccessToken token);
+
     }
 }
