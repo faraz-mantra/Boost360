@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
         <include
             layout="@layout/toolbar"
@@ -18,16 +18,17 @@
             android:id="@+id/parent_layout"
             android:orientation="vertical"
             android:gravity="center">
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/subscriber_email"
                 android:textSize="22sp"
                 android:gravity="center"
+                app:textAllCaps="false"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:text="@string/email"/>
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/subcriber_date"
@@ -36,7 +37,7 @@
                 android:text="@string/date"/>
         </LinearLayout>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/call_subscriber"
@@ -46,23 +47,19 @@
         android:drawablePadding="20dp"
         android:textSize="18sp"
         android:background="@color/white"
-        android:text="Call Subscriber"
-        android:drawableStart="@drawable/ic_phone_in_talk_black_24dp"
-        android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"/>
+        android:text="Call Subscriber"/>
     <View android:layout_height="1dp"
         android:layout_width="match_parent"
         android:id="@+id/divider1"
         android:visibility="gone"
         android:background="@color/black_translucent"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/message_subscriber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:drawableLeft="@drawable/ic_markunread_black_24dp"
         android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_markunread_black_24dp"
         android:gravity="center_vertical"
         android:padding="20dp"
         android:text="Send Message"
@@ -71,17 +68,15 @@
     <View android:layout_height="1dp"
         android:layout_width="match_parent"
         android:background="@color/black_translucent"/>
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/unsubscribe"
-        android:drawableStart="@drawable/ic_delete_black_24dp"
         android:gravity="center_vertical"
         android:padding="20dp"
         android:visibility="visible"
         android:drawablePadding="20dp"
         android:textSize="18sp"
         android:background="@color/white"
-        android:text="Unsubscribe"
-        android:drawableLeft="@drawable/ic_delete_black_24dp"/>
+        android:text="Unsubscribe"/>
 </LinearLayout>

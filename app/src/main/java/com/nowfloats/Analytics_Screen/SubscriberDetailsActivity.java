@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -36,12 +38,14 @@ import retrofit.client.Response;
  */
 
 public class SubscriberDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView subscriberEmailId,subscriberDate,subscriberCall,subscriberMessage,unSubscribe;
+    AppCompatTextView subscriberEmailId,subscriberDate,subscriberCall,subscriberMessage,unSubscribe;
     private SubscriberModel mSubscriberData;
     LinearLayout layout;
     String fpTag;
     ProgressDialog mProgressBar;
-
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,16 +68,18 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
         mProgressBar.setIndeterminate(false);
         mProgressBar.setMessage(getString(R.string.please_wait));
         mProgressBar.setCanceledOnTouchOutside(false);
-        subscriberEmailId = (TextView) findViewById(R.id.subscriber_email);
-        subscriberDate = (TextView) findViewById(R.id.subcriber_date);
-        subscriberCall = (TextView) findViewById(R.id.call_subscriber);
-        subscriberMessage = (TextView) findViewById(R.id.message_subscriber);
-        unSubscribe = (TextView) findViewById(R.id.unsubscribe);
+        subscriberEmailId = findViewById(R.id.subscriber_email);
+        subscriberDate =  findViewById(R.id.subcriber_date);
+        subscriberCall =  findViewById(R.id.call_subscriber);
+        subscriberMessage =  findViewById(R.id.message_subscriber);
+        unSubscribe =  findViewById(R.id.unsubscribe);
         layout = (LinearLayout) findViewById(R.id.parent_layout);
         subscriberCall.setOnClickListener(this);
         subscriberMessage.setOnClickListener(this);
         unSubscribe.setOnClickListener(this);
-
+        unSubscribe.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_delete_black_24dp),null,null,null);
+        subscriberMessage.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_markunread_black_24dp),null,null,null);
+        subscriberCall.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_phone_in_talk_black_24dp),null,null,null);
         subscriberEmailId.setText(mSubscriberData.getUserMobile());
         if(!mSubscriberData.getUserMobile().toLowerCase().contains("@")) {
             subscriberEmailId.setText("+"+mSubscriberData.getUserCountryCode()+" -"+mSubscriberData.getUserMobile());

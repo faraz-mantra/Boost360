@@ -239,6 +239,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
 
         if (bundle != null && bundle.containsKey("Username")) {
+
         } else {
             createView();
         }

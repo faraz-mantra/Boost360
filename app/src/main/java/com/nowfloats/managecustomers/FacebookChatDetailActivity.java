@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -71,7 +72,9 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     private String userId;
     private SharedPreferences pref;
     public static final String INTENT_FILTER = "nfx.facebook.messages";
-
+    static{
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     }
 
     private void init(){
+
         getWindow().setBackgroundDrawable(new BitmapDrawable(getResources(),Methods.decodeSampledBitmap(getResources(),R.drawable.facebook_chat_bg1,720,720)));//ContextCompat.getDrawable(this, R.drawable.facebook_chat_bg2));
         Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         setSupportActionBar(toolbar);

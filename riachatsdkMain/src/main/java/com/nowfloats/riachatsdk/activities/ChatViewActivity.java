@@ -1226,7 +1226,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mHandler.removeCallbacksAndMessages(null);
 
         Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("nowfloats://com.biz2.nowfloats.riasdk.skip/riachat"));
+                Uri.parse("com.biz2.nowfloats://com.riasdk.login/riachat"));
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setAction(Intent.ACTION_VIEW);
 

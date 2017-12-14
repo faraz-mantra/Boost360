@@ -40,7 +40,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_consultant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,13 +54,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_help_avatar" />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_contact_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:autoLink="phone"
-                android:drawableStart="@drawable/ic_call"
                 android:drawableTint="@color/light_gray"
                 android:gravity="center"
                 android:paddingBottom="8dp"
@@ -71,17 +70,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_member_description"
-                android:drawableLeft="@drawable/ic_call" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_member_description" />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_consultant_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:autoLink="email"
                 android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_email"
                 android:drawableTint="@color/light_gray"
                 android:gravity="center"
                 android:linksClickable="true"
@@ -94,10 +91,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_contact_number"
-                android:drawableLeft="@drawable/ic_email" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_contact_number" />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_member_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,7 +107,7 @@
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_next_member"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -121,7 +117,7 @@
         android:elevation="1dp"
         android:padding="15dp"
         android:text="Instant Web Support"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/primary_color"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="1.0"
@@ -148,7 +144,7 @@
         app:layout_constraintGuide_percent="0.9"
         android:layout_marginRight="50dp" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_faq"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -157,14 +153,14 @@
         android:elevation="1dp"
         android:padding="15dp"
         android:text="FAQs"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/primary_color"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_next_member" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_ria_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

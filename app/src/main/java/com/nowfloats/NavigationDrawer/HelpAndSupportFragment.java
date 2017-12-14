@@ -10,12 +10,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
@@ -42,7 +43,7 @@ import static com.nowfloats.NavigationDrawer.HelpAndSupportFragment.MemberType.W
 
 public class HelpAndSupportFragment extends Fragment implements View.OnClickListener {
 
-    TextView tvConsultantName, tvConsultantNumber, tvEmail, tvNextMember,tvFaq,
+    AppCompatTextView tvConsultantName,tvConsultantNumber, tvEmail, tvNextMember,tvFaq,
             tvTextRia, tvConsultantDes;
     ImageView ivHelpAvatar;
     ProgressDialog pd;
@@ -56,7 +57,6 @@ public class HelpAndSupportFragment extends Fragment implements View.OnClickList
 
     private static final String CHAT_INTENT_URI = "com.biz2.nowfloats://com.riachat.start";
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +66,20 @@ public class HelpAndSupportFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_help_and_support, container, false);
-        tvConsultantName = (TextView) view.findViewById(R.id.tv_consultant_name);
-        tvConsultantNumber = (TextView) view.findViewById(R.id.tv_contact_number);
+        tvConsultantName =  view.findViewById(R.id.tv_consultant_name);
+        tvConsultantNumber = view.findViewById(R.id.tv_contact_number);
         tvConsultantDes = view.findViewById(R.id.tv_member_description);
-        tvEmail = (TextView) view.findViewById(R.id.tv_consultant_email);
-        tvTextRia = (TextView) view.findViewById(R.id.tv_ria_text);
-        tvFaq = (TextView) view.findViewById(R.id.tv_faq);
-        tvNextMember = (TextView) view.findViewById(R.id.tv_next_member);
+        tvEmail =  view.findViewById(R.id.tv_consultant_email);
+        tvTextRia =  view.findViewById(R.id.tv_ria_text);
+        tvFaq =  view.findViewById(R.id.tv_faq);
+        tvNextMember =  view.findViewById(R.id.tv_next_member);
         ivHelpAvatar = (ImageView) view.findViewById(R.id.iv_help_avatar);
         tvNextMember.setOnClickListener(this);
         tvFaq.setOnClickListener(this);
         sessionManager = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
         tvConsultantNumber.setPaintFlags(tvConsultantNumber.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-
+        tvConsultantNumber.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(mContext,R.drawable.ic_call),null, null, null );
+        tvEmail.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(mContext,R.drawable.ic_email),null, null, null );
         final RiaNetworkInterface riaNetworkInterface = Constants.riaRestAdapter.create(RiaNetworkInterface.class);
         Map<String, String> param = new HashMap<>();
         param.put("clientId", Constants.clientId);

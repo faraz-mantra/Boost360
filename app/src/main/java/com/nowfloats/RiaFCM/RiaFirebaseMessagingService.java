@@ -77,84 +77,82 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         startService(bubbleIntent);
                     }
                 }*/
+                message.put("url","thirdPartyQueries");
+                message.put("mp_message","You have new enquires from Third Party, check now.");
+            }
+
+            deepLinkUrl = message.get("url");
+            if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
+                return;
+            }
+            if (Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
+                MixPanelController.track("$campaign_received", null);
+            }
+            String title = message.get("title");
+            Intent intent = null;
+            if (!Util.isNullOrEmpty(deepLinkUrl)) {
+                final PackageManager manager = getPackageManager();
+                intent = manager.getLaunchIntentForPackage(getPackageName());
+                if (intent == null) return;
+                intent.putExtra("from", "notification");
+                intent.putExtra("url", deepLinkUrl);
+                if (deepLinkUrl.contains(getString(R.string.facebook_chat))) {
+                    SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+                    pref.edit().putBoolean("IsNewFacebookMessage", true).apply();
+                    intent.putExtra("user_data", message.get("user_data"));
+                    Intent messageIntent = new Intent(FacebookChatDetailActivity.INTENT_FILTER);
+                    messageIntent.putExtra("user_data", message.get("user_data"));
+                    messageIntent.putExtra("message", message.get("message"));
+                    if (LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent)) {
+                        if (!TextUtils.isEmpty(pref.getString("facebookChatUser", "")) &&
+                                message.get("user_data").contains(pref.getString("facebookChatUser", ""))) {
+                            return;
+                        }
+                    }
+
+                }
+
+            }
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.app_launcher2)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
+                    .setContentText(message.get("mp_message"))
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setColor(ContextCompat.getColor(this, R.color.primaryColor))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("mp_message")))
+                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+            if (!Util.isNullOrEmpty(title)) {
+                notificationBuilder.setContentTitle(title);
             } else {
+                notificationBuilder.setContentTitle(getResources().getString(R.string.app_name));
+            }
+            if (pendingIntent != null) {
+                notificationBuilder.setContentIntent(pendingIntent);
+            }
 
-                deepLinkUrl = message.get("url");
-                if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
-                    return;
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel channel = null;
+            if (notificationManager != null) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    channel = new NotificationChannel("0001", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
+                    notificationManager.createNotificationChannel(channel);
                 }
-                if (Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
-                    MixPanelController.track("$campaign_received", null);
-                }
-                String title = message.get("title");
-                Intent intent = null;
-                if (!Util.isNullOrEmpty(deepLinkUrl)) {
-                    final PackageManager manager = getPackageManager();
-                    intent = manager.getLaunchIntentForPackage(getPackageName());
-                    intent.putExtra("from", "notification");
-                    intent.putExtra("url", deepLinkUrl);
-                    if (deepLinkUrl.contains(getString(R.string.facebook_chat))) {
-                        SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
-                        pref.edit().putBoolean("IsNewFacebookMessage", true).apply();
-                        intent.putExtra("user_data", message.get("user_data"));
-                        Intent messageIntent = new Intent(FacebookChatDetailActivity.INTENT_FILTER);
-                        messageIntent.putExtra("user_data", message.get("user_data"));
-                        messageIntent.putExtra("message", message.get("message"));
-                        if (LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent)) {
-                            if (!TextUtils.isEmpty(pref.getString("facebookChatUser", "")) &&
-                                    message.get("user_data").contains(pref.getString("facebookChatUser", ""))) {
-                                return;
-                            }
-                        }
 
+                if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
+                    FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
+                    if (data.getId() != null) {
+                        notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
                     }
-
-                }
-                PendingIntent pendingIntent = null;
-                if (intent != null) {
-                    pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-                }
-
-                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.app_launcher2)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
-                        .setContentText(message.get("mp_message"))
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        .setColor(ContextCompat.getColor(this, R.color.primaryColor))
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("mp_message")))
-                        .setPriority(NotificationCompat.PRIORITY_HIGH);
-                if (!Util.isNullOrEmpty(title)) {
-                    notificationBuilder.setContentTitle(title);
                 } else {
-                    notificationBuilder.setContentTitle(getResources().getString(R.string.app_name));
-                }
-                if (pendingIntent != null) {
-                    notificationBuilder.setContentIntent(pendingIntent);
-                }
-
-                NotificationManager notificationManager =
-                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationChannel channel = null;
-                if (notificationManager != null) {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        channel = new NotificationChannel("0001", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
-                        notificationManager.createNotificationChannel(channel);
-                    }
-
-                    if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
-                        FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
-                        if (data.getId() != null) {
-                            notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
-                        }
-                    } else {
-                        notificationManager.notify(0, notificationBuilder.build());
-                    }
+                    notificationManager.notify(0, notificationBuilder.build());
                 }
             }
         }
-
 
     }
 }

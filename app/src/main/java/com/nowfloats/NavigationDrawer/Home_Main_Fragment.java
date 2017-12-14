@@ -77,6 +77,7 @@ public class Home_Main_Fragment extends Fragment implements
     static View.OnClickListener myOnClickListener;
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
+    private int maxSyncCall = 2;
 
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
@@ -433,7 +434,8 @@ public class Home_Main_Fragment extends Fragment implements
             return true;
         }
         if(updates == null || updates.isEmpty()){
-            if (skip == 0){
+            if (skip == 0 && maxSyncCall>0){
+                maxSyncCall--;
                 startSync();
             }
             return false;
