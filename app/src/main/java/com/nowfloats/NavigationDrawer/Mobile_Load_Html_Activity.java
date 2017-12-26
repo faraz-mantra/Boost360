@@ -26,9 +26,7 @@ public class Mobile_Load_Html_Activity extends AppCompatActivity{
         Methods.isOnline(this);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
         String data;
-        if (getIntent().hasExtra("TITLE")){
-            setTitle(getIntent().getStringExtra("TITLE"));
-        }
+
         if (getIntent().hasExtra("WEBSITE_DATA")) {
             data = getIntent().getStringExtra("WEBSITE_DATA");
         }else{
@@ -49,5 +47,6 @@ public class Mobile_Load_Html_Activity extends AppCompatActivity{
         //        startWebView(url);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadData(data, "text/html", null);
+        Toast.makeText(this, "Loading data...", Toast.LENGTH_LONG).show();
     }
 }

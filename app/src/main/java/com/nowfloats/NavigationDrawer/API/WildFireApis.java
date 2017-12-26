@@ -9,7 +9,6 @@ import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -21,7 +20,7 @@ import retrofit.http.QueryMap;
 
 public interface WildFireApis {
     String WILD_FIRE_END_POINT = "http://wmt.withfloats.com/wildfire/api";
-    RestAdapter adapter = new RestAdapter.Builder().setEndpoint(WILD_FIRE_END_POINT).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    RestAdapter adapter = new RestAdapter.Builder().setEndpoint(WILD_FIRE_END_POINT)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
 
     @GET("/v1/account/keywordstats")// google keywords data
     void getGoogleStats(@QueryMap Map map, Callback<ArrayList<WildFireKeyStatsModel>> response);

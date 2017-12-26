@@ -95,7 +95,7 @@
             android:id="@+id/image1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/dictate_gray" />
+            app:srcCompat="@drawable/wild_fire_expire" />
 
     </android.support.v7.widget.CardView>
 

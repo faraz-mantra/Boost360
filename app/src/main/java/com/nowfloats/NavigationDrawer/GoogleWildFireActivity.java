@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,22 +70,31 @@ public class GoogleWildFireActivity extends AppCompatActivity implements WildFir
 
     @Override
     public void onFilterOptionSelect() {
-
-        getSupportFragmentManager()
-                .beginTransaction()
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount()>0){
+            manager.popBackStack();
+        }
+        Fragment frag = manager.findFragmentByTag("calendarFrag");
+        if (frag == null){
+            frag = new WildFireCalenderFragment();
+        }
+        manager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                .replace(R.id.layout_fragment,new WildFireCalenderFragment())
+                .replace(R.id.layout_fragment,frag,"calendarFrag")
+                .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void onDateSelected(String start_end) {
-        if (filterByMonth != WildFireFilterFragment.DATE_SELECT) {
+        String[] dates = start_end.split("_");
+        String newDatePeriod = String.format(Locale.ENGLISH,"%s_%s",
+                calendarFormatter.format(Long.valueOf(dates[0])),calendarFormatter.format(Long.valueOf(dates[1])));
+        if(TextUtils.isEmpty(dateSelectedPeriod) || !dateSelectedPeriod.equals(newDatePeriod))  {
             filterByMonth = WildFireFilterFragment.DATE_SELECT;
-            String[] dates = start_end.split("_");
             map.put("endDate", formatter.format(Long.valueOf(dates[1])));
             map.put("startDate", formatter.format(Long.valueOf(dates[0])));
-            dateSelectedPeriod = String.format(Locale.ENGLISH,"%s To %s",calendarFormatter.format(Long.valueOf(dates[0])),calendarFormatter.format(Long.valueOf(dates[1])));
+            dateSelectedPeriod = newDatePeriod;
             wildFireList.clear();
             adapter.notifyDataSetChanged();
             getKeyWordStats(map);
@@ -257,7 +268,6 @@ public class GoogleWildFireActivity extends AppCompatActivity implements WildFir
                 switch (sortType){
                     case ALPHABETIC:
                        return o1.getKeyword().replace("+","").compareToIgnoreCase(o2.getKeyword().replace("+",""));
-                    case DATE:
                     case CLICKS:
                     default:
                         int o1_click = Integer.valueOf(o1.getClicks());

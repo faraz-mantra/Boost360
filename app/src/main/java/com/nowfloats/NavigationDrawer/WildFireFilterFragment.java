@@ -57,9 +57,12 @@ public class WildFireFilterFragment extends Fragment implements View.OnClickList
         mRadioGroup = view.findViewById(R.id.radioGroup);
 
         if (!TextUtils.isEmpty(datePeriod)){
-            TextView datePeriodTv = view.findViewById(R.id.tv_date_period);
-            datePeriodTv.setVisibility(View.VISIBLE);
-            datePeriodTv.setText(datePeriod);
+            view.findViewById(R.id.llayout_date_period).setVisibility(View.VISIBLE);
+            TextView startDateTv = view.findViewById(R.id.tv_start_date);
+            TextView endDateTv = view.findViewById(R.id.tv_end_date);
+            String[] datePeriods = datePeriod.split("_");
+            startDateTv.setText(datePeriods[0]);
+            endDateTv.setText(datePeriods[1]);
         }
         view.findViewById(R.id.rb_select_time).setOnClickListener(this);
         switch (monthSelected){
@@ -111,9 +114,7 @@ public class WildFireFilterFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case R.id.rb_select_time:
-                if (mRadioGroup.getCheckedRadioButtonId() != R.id.rb_select_time) {
-                    ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onFilterOptionSelect();
-                }
+                ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onFilterOptionSelect();
                 break;
             default:
                 break;

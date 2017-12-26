@@ -42,12 +42,14 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
 
     public final static String TYPE="wildfire_type",VALUE = "value";
     private GoogleWildFireAdapter.ChannelType channelType;
-    int[] googleAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_avg_position,R.drawable.ic_first_page_cost,R.drawable.ic_top_page_cost};
-    int[] googleAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_avg_position_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_top_page_cost_gray};
-    int[] facebookAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_first_page_cost,R.drawable.ic_wildfire_reach};
-    int[] facebookAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_wildfire_reach_gray};
-    String[] googleAdAnalyticsTitles = {"Impressions","Avg. Position","First Page CPC","Top Page CPC"};
-    String[] facebookAdAnalyticsTitles = {"Impressions","CTR","Reach"};
+    private int[] googleAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_avg_position,R.drawable.ic_first_page_cost,R.drawable.ic_top_page_cost};
+    private int[] googleAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_avg_position_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_top_page_cost_gray};
+    private int[] facebookAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_first_page_cost,R.drawable.ic_wildfire_reach};
+    private int[] facebookAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_wildfire_reach_gray};
+    private String[] googleAdAnalyticsTitles = {"Impressions","Avg. Position","First Page CPC","Top Page CPC"};
+    private String[] facebookAdAnalyticsTitles = {"Impressions","CTR","Reach"};
+    private String[] facebookContents={"Number of times your ad was shown","Click through rate","Number of people who saw your ad"};
+    private String[] googleContents ={"Number of times your ad was shown","Average position of ad on Google","First page click per cost","Top page click per cost"};
     private WildFireKeyStatsModel googleModel;
     private FacebookWildFireDataModel facebookModel;
 
@@ -89,9 +91,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                 break;
             case FACEBOOK:
                 facebookModel = new Gson().fromJson(value,FacebookWildFireDataModel.class);
-                channelImage.setImageResource(R.drawable.facebook_round);
-                int padding = Methods.dpToPx(10,WildFireAnalyticsActivity.this);
-                channelImage.setPadding(0,padding,0,padding);
+                channelImage.setImageResource(R.drawable.ic_facebook_app_logo);
                 title.setText("Ad Analytics");
                 if (TextUtils.isDigitsOnly(facebookModel.getClicks())) {
                     clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(facebookModel.getClicks())));
@@ -108,7 +108,6 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         // show image preview businessapp
                         Intent i = new Intent(WildFireAnalyticsActivity.this,Mobile_Load_Html_Activity.class);
-                        i.putExtra("TITLE","Ad Preview");
                         i.putExtra("WEBSITE_DATA",facebookModel.getPreviewAd());
                         startActivity(i);
                     }
@@ -235,10 +234,10 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     switch (channelType){
                         case GOOGLE:
-                            showDialog(googleAdAnalyticsImagesGray[getAdapterPosition()],googleAdAnalyticsTitles[getAdapterPosition()],"hello");
+                            showDialog(googleAdAnalyticsImagesGray[getAdapterPosition()],googleAdAnalyticsTitles[getAdapterPosition()],googleContents[getAdapterPosition()]);
                             break;
                         case FACEBOOK:
-                            showDialog(facebookAdAnalyticsImagesGray[getAdapterPosition()],facebookAdAnalyticsTitles[getAdapterPosition()],"hello");
+                            showDialog(facebookAdAnalyticsImagesGray[getAdapterPosition()],facebookAdAnalyticsTitles[getAdapterPosition()],facebookContents[getAdapterPosition()]);
                             break;
                     }
                 }
@@ -263,7 +262,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        //contentTv.setText(Methods.fromHtml(content));
+        contentTv.setText(Methods.fromHtml(content));
         titleTv.setText(Methods.fromHtml(title));
         contentImg.setImageResource(imgId);
         dialog.show();
