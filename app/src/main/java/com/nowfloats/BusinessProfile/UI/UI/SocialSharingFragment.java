@@ -93,12 +93,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
     private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
     private CheckBox facebookautopost;
-    private TextView headerText;
     ArrayList<String> items;
     private int numberOfUpdates = 0;
     private boolean numberOfUpdatesSelected = false;
 
-    private SharedPreferences mSharedPreferences = null;
+    private SharedPreferences mTwitterPreferences = null;
     private ProgressDialog progressDialog = null;
     private int mNewPosition = -1;
 
@@ -143,14 +142,14 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         Methods.isOnline(getActivity());
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         prefsEditor = pref.edit();
-        mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
+        mTwitterPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
         return mainView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        //super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
 
 
@@ -217,7 +216,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             @Override
             public void onClick(View v) {
                 if (facebookPageCheckBox.isChecked()) {
-                    //Toast.makeText(Social_Sharing_getActivity().this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
+
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -226,8 +225,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             fbData(FROM_FB_PAGE);
                         }
                     }, 200);
-                    //startgetActivity()(new Intent(Social_Sharing_getActivity().this,LinkedinWebView.class));
-                    //createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
                 } else {
                     NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
@@ -255,7 +252,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            //Do something after 100ms
+                            //Do something after 200ms
                             fbData(FROM_FB_PAGE);
                         }
                     }, 200);
@@ -366,15 +363,15 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 showDialog("Tip!", message, "Done");
             }
         });
+    }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
         InitShareResources();
         setStatus();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     private void showDialog1(int showDialog, float days) {
 
@@ -630,6 +627,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                             .items(array)
                                             .widgetColorRes(R.color.primaryColor)
                                             .cancelable(false)
+                                            .autoDismiss(false)
                                             .positiveText("Ok")
                                             .negativeText("Cancel")
                                             .negativeColorRes(R.color.light_gray)
@@ -907,14 +905,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         prefsEditor.apply();
     }
 
-    void onFBError() {
-        Constants.fbShareEnabled = false;
-        prefsEditor.putBoolean("fbShareEnabled", false);
-        prefsEditor.apply();
-        facebookHomeCheckBox.setChecked(false);
-        facebookProfileConnected(false);
-    }
-
     void onFBPageError(int from) {
         //Log.v("ggg","fbpage error");
         if (from == FROM_AUTOPOST) {
@@ -937,7 +927,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 //        Constants.FACEBOOK_PAGE_ID 			= pref.getString("fbPageId", "");
         Constants.FACEBOOK_PAGE_ACCESS_ID = pref.getString("fbPageAccessId", "");
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
-        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
+        Constants.twitterShareEnabled = mTwitterPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
         Constants.FbFeedPullAutoPublish = pref.getBoolean("FBFeedPullAutoPublish", false);
         Constants.fbPageFullUrl = pref.getString("fbPageFullUrl", "");
         Constants.fbFromWhichPage = pref.getString("fbFromWhichPage", "");
@@ -982,7 +972,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     private void twitterProfileConnect(boolean isConnect) {
         if (isConnect) {
-            String twitterName = mSharedPreferences.getString(TwitterConnection.PREF_USER_NAME, "");
+            String twitterName = mTwitterPreferences.getString(TwitterConnection.PREF_USER_NAME, "");
             twitterStatus.setVisibility(View.VISIBLE);
             twitterStatus.setText("@" + twitterName);
             twitter.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.twitter_icon_active));
@@ -1041,9 +1031,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         Constants.fbPageShareEnabled = isConnect;
     }
 
-    //check about aleady authenticated
+    //check about already authenticated
     protected boolean isAuthenticated() {
-        return mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
+        return mTwitterPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
     }
 
     private void saveTwitterInformation(TwitterSession twitterSession) {
@@ -1066,7 +1056,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 showLoader(getString(R.string.wait_while_subscribing));
 
-                SharedPreferences.Editor e = mSharedPreferences.edit();
+                SharedPreferences.Editor e = mTwitterPreferences.edit();
                 e.putString(TwitterConnection.PREF_KEY_OAUTH_TOKEN, twitterSession.getAuthToken().token);
                 e.putString(TwitterConnection.PREF_KEY_OAUTH_SECRET, twitterSession.getAuthToken().secret);
                 //e.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, true);
@@ -1081,7 +1071,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     public void logoutFromTwitter() {
-        SharedPreferences.Editor e = mSharedPreferences.edit();
+        SharedPreferences.Editor e = mTwitterPreferences.edit();
         e.remove(TwitterConnection.PREF_KEY_OAUTH_TOKEN);
         e.remove(TwitterConnection.PREF_KEY_OAUTH_SECRET);
         e.remove(TwitterConnection.PREF_KEY_TWITTER_LOGIN);
@@ -1187,7 +1177,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 break;
             case TWITTERTYPE:
                 Constants.twitterShareEnabled = true;
-                SharedPreferences.Editor e = mSharedPreferences.edit();
+                SharedPreferences.Editor e = mTwitterPreferences.edit();
                 e.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, true).apply();
                 e.putString(TwitterConnection.PREF_USER_NAME, name).apply();
                 twitterProfileConnect(true);
@@ -1220,7 +1210,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             case TWITTER_DEACTIVATION:
                 twitterProfileConnect(false);
                 logoutFromTwitter();
-                SharedPreferences.Editor twitterPrefEditor = mSharedPreferences.edit();
+                SharedPreferences.Editor twitterPrefEditor = mTwitterPreferences.edit();
                 twitterPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
                 twitterPrefEditor.apply();
                 Constants.twitterShareEnabled = false;

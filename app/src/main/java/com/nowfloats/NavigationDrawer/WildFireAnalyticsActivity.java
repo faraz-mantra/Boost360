@@ -1,9 +1,13 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +22,17 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+import com.nowfloats.NavigationDrawer.Adapter.GoogleWildFireAdapter;
+import com.nowfloats.NavigationDrawer.model.FacebookWildFireDataModel;
 import com.nowfloats.NavigationDrawer.model.WildFireKeyStatsModel;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import static com.nowfloats.NavigationDrawer.Adapter.GoogleWildFireAdapter.ChannelType.GOOGLE;
+import static com.nowfloats.NavigationDrawer.WildFireAnalyticsActivity.MyGoogleViewHolder.id1;
 
 /**
  * Created by Admin on 11-12-2017.
@@ -32,53 +41,85 @@ import java.util.Locale;
 public class WildFireAnalyticsActivity extends AppCompatActivity {
 
     public final static String TYPE="wildfire_type",VALUE = "value";
-    public enum WildFireType{
-        GOOGLE,FACEBOOK;
-    }
+    private GoogleWildFireAdapter.ChannelType channelType;
     int[] googleAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_avg_position,R.drawable.ic_first_page_cost,R.drawable.ic_top_page_cost};
+    int[] googleAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_avg_position_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_top_page_cost_gray};
+    int[] facebookAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_first_page_cost,R.drawable.ic_wildfire_reach};
+    int[] facebookAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_wildfire_reach_gray};
     String[] googleAdAnalyticsTitles = {"Impressions","Avg. Position","First Page CPC","Top Page CPC"};
-    private WildFireKeyStatsModel model;
-    private String type;
+    String[] facebookAdAnalyticsTitles = {"Impressions","CTR","Reach"};
+    private WildFireKeyStatsModel googleModel;
+    private FacebookWildFireDataModel facebookModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wildfire_analytics);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Keyword Analytics");
-        if (getSupportActionBar() != null){
+        TextView title = toolbar.findViewById(R.id.text1);
+        ImageView channelImage = toolbar.findViewById(R.id.image1);
+        ((AppCompatImageView)toolbar.findViewById(R.id.image1)).setImageResource(R.drawable.ic_google_glass_logo);
 
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        type = getIntent().getStringExtra(TYPE);
+        channelType = GoogleWildFireAdapter.ChannelType.valueOf(getIntent().getStringExtra(TYPE));
         String value = getIntent().getStringExtra(VALUE);
-
-        if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(value)){
-
-            switch ( WildFireType.valueOf(type)){
-                case GOOGLE:
-                    model = new Gson().fromJson(value,WildFireKeyStatsModel.class);
-                    break;
-                case FACEBOOK:
-                    break;
-                default:
-                   return;
-            }
-        }
-        if (model == null){
-            return;
-        }
         TextView cpcTv = findViewById(R.id.tv_cpc);
         TextView clickTv = findViewById(R.id.tv_clicks);
         TextView keywordTv = findViewById(R.id.tv_keyword);
-        keywordTv.setText(model.getKeyword().replace("+",""));
-        if (TextUtils.isDigitsOnly(model.getClicks())) {
-            clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(model.getClicks())));
-        }else{
-            clickTv.setText(model.getClicks());
+        AppCompatTextView adCostTv = findViewById(R.id.tv_ad_cost);
+        adCostTv.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(WildFireAnalyticsActivity.this,R.drawable.ic_stack_cost),null,null,null);
+        switch (channelType){
+            case GOOGLE:
+                channelImage.setImageResource(R.drawable.ic_google_glass_logo);
+                title.setText("Keyword Analytics");
+                googleModel = new Gson().fromJson(value,WildFireKeyStatsModel.class);
+                if (TextUtils.isDigitsOnly(googleModel.getClicks())) {
+                    clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(googleModel.getClicks())));
+                }else{
+                    clickTv.setText(googleModel.getClicks());
+                }
+                keywordTv.setText(googleModel.getKeyword().replace("+",""));
+                cpcTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(googleModel.getAvgCPC())/1000000)));
+
+                break;
+            case FACEBOOK:
+                facebookModel = new Gson().fromJson(value,FacebookWildFireDataModel.class);
+                channelImage.setImageResource(R.drawable.facebook_round);
+                int padding = Methods.dpToPx(10,WildFireAnalyticsActivity.this);
+                channelImage.setPadding(0,padding,0,padding);
+                title.setText("Ad Analytics");
+                if (TextUtils.isDigitsOnly(facebookModel.getClicks())) {
+                    clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(facebookModel.getClicks())));
+                }else{
+                    clickTv.setText(facebookModel.getClicks());
+                }
+                keywordTv.setText(facebookModel.getAdName());
+                cpcTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(facebookModel.getCpc()))));
+
+                TextView previewTv = findViewById(R.id.tv_preview);
+                previewTv.setVisibility(View.VISIBLE);
+                previewTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // show image preview businessapp
+                        Intent i = new Intent(WildFireAnalyticsActivity.this,Mobile_Load_Html_Activity.class);
+                        i.putExtra("TITLE","Ad Preview");
+                        i.putExtra("WEBSITE_DATA",facebookModel.getPreviewAd());
+                        startActivity(i);
+                    }
+                });
+                break;
+            default:
+               return;
         }
-        cpcTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(model.getAvgCPC())/1000000)));
+
+        adCostTv.setText(Methods.fromHtml(String.format(Locale.ENGLISH,getString(R.string.wildfire_ad_cost_text)
+                ,channelType == GOOGLE ? Double.valueOf(googleModel.getCost())/1000000:facebookModel.getCpm())));
         RecyclerView mRecyclerView = findViewById(R.id.recyclerview1);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.hasFixedSize();
@@ -88,19 +129,13 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
 
     private class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-//        Adapter( String[]titles, int[] images){
-//
-//        }
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v;
-            switch (WildFireType.valueOf(type)){
-                case GOOGLE:
-                   v = LayoutInflater.from(WildFireAnalyticsActivity.this).inflate(MyGoogleViewHolder.id,parent,false);
+            switch (viewType){
+                case id1:
+                   v = LayoutInflater.from(WildFireAnalyticsActivity.this).inflate(id1,parent,false);
                    return new MyGoogleViewHolder(v);
-                case FACEBOOK:
-                    v = LayoutInflater.from(WildFireAnalyticsActivity.this).inflate(MyGoogleViewHolder.id,parent,false);
-                    return new MyGoogleViewHolder(v);
                 default:
                     return null;
             }
@@ -110,40 +145,63 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof MyGoogleViewHolder){
                 MyGoogleViewHolder myGoogleViewHolder  = (MyGoogleViewHolder) holder;
-                myGoogleViewHolder.titleTv.setText(googleAdAnalyticsTitles[position]);
-                myGoogleViewHolder.image.setImageResource(googleAdAnalyticsImages[position]);
-                switch (position){
-                    case 0:
-                        myGoogleViewHolder.countTv.setText(NumberFormat.getInstance(Locale.US).format(Long.valueOf(model.getImpressions())));
+                switch (channelType){
+                    case GOOGLE:
+                        myGoogleViewHolder.titleTv.setText(googleAdAnalyticsTitles[position]);
+                        myGoogleViewHolder.image.setImageResource(googleAdAnalyticsImages[position]);
+                        switch (position){
+                            case 0:
+                                myGoogleViewHolder.countTv.setText(NumberFormat.getInstance(Locale.US).format(Long.valueOf(googleModel.getImpressions())));
+                                break;
+                            case 1:
+                                myGoogleViewHolder.countTv.setText(googleModel.getAvgPosition());
+                                break;
+                            case 2:
+                                myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(googleModel.getFirstPageCpc())/1000000)));
+                                break;
+                            case 3:
+                                myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getInstance().format(Double.valueOf(googleModel.getTopPageCPC())/1000000)));
+                                break;
+                            case 4:
+                                break;
+                        }
                         break;
-
-                    case 1:
-                        myGoogleViewHolder.countTv.setText(model.getAvgPosition());
-                        break;
-
-                    case 2:
-                        myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(model.getFirstPageCpc())/1000000)));
-                        break;
-
-                    case 3:
-                        myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getInstance().format(Double.valueOf(model.getTopPageCPC())/1000000)));
-                        break;
-                    case 4:
+                    case FACEBOOK:
+                        myGoogleViewHolder.titleTv.setText(facebookAdAnalyticsTitles[position]);
+                        myGoogleViewHolder.image.setImageResource(facebookAdAnalyticsImages[position]);
+                        switch (position){
+                            case 0:
+                                myGoogleViewHolder.countTv.setText(NumberFormat.getInstance(Locale.US).format(Long.valueOf(facebookModel.getImpressions())));
+                                break;
+                            case 1:
+                                myGoogleViewHolder.countTv.setText(facebookModel.getCtr());
+                                break;
+                            case 2:
+                                myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(facebookModel.getReach()))));
+                                break;
+                            case 3:
+                                break;
+                        }
                         break;
                 }
-            }else{
 
             }
         }
 
         @Override
         public int getItemCount() {
-            return 4;
+            return channelType == GOOGLE?
+                    googleAdAnalyticsTitles.length:facebookAdAnalyticsTitles.length;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+           return id1;
         }
     }
 
     class MyGoogleViewHolder extends RecyclerView.ViewHolder{
-        public final static int id = R.layout.adapter_wildfire_google_analytics;
+        public final static int id1 = R.layout.adapter_wildfire_google_analytics;
         TextView titleTv,countTv;
         ImageView image, infoImage;
         public MyGoogleViewHolder(View itemView) {
@@ -175,12 +233,12 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
             infoImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    switch (WildFireType.valueOf(type)){
+                    switch (channelType){
                         case GOOGLE:
-                            showDialog(googleAdAnalyticsImages[getAdapterPosition()],googleAdAnalyticsTitles[getAdapterPosition()],"hello");
+                            showDialog(googleAdAnalyticsImagesGray[getAdapterPosition()],googleAdAnalyticsTitles[getAdapterPosition()],"hello");
                             break;
                         case FACEBOOK:
-
+                            showDialog(facebookAdAnalyticsImagesGray[getAdapterPosition()],facebookAdAnalyticsTitles[getAdapterPosition()],"hello");
                             break;
                     }
                 }
@@ -199,7 +257,6 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
         TextView contentTv = v.findViewById(R.id.tv_content);
         TextView titleTv = v.findViewById(R.id.tv_title);
         ImageView contentImg = v.findViewById(R.id.img_content);
-        contentImg.setColorFilter(ContextCompat.getColor(WildFireAnalyticsActivity.this, R.color.light_gray));
         v.findViewById(R.id.img_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

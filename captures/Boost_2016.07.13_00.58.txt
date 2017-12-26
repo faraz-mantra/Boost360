@@ -482,7 +482,7 @@ ACTIVITY MANAGER BROADCAST STATE (dumpsys activity broadcasts)
   #40: BroadcastRecord{1f58595 u0 com.google.android.gms.common.receiver.LOG_CORE_ANALYTICS}
     act=com.google.android.gms.common.receiver.LOG_CORE_ANALYTICS flg=0x14 (has extras)
     targetComp: {com.google.android.gms/com.google.android.gms.common.receiver.InternalBroadcastReceiver}
-    extras: Bundle[{type=system_health, post_install_checkin_stage=0, event_code=10, android.intent.extra.ALARM_COUNT=1}]
+    extras: Bundle[{channelType=system_health, post_install_checkin_stage=0, event_code=10, android.intent.extra.ALARM_COUNT=1}]
   #41: BroadcastRecord{a7b76aa u0 com.google.android.apps.photos.scheduler.ACTION_ALARM}
     act=com.google.android.apps.photos.scheduler.ACTION_ALARM flg=0x14 (has extras)
     extras: Bundle[{android.intent.extra.ALARM_COUNT=1}]

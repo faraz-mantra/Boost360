@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="@string/filter_by"
+        app:showAsAction="always"/>
     <item
         android:title="sort"
         android:id="@+id/item_sort"
-        android:icon="@drawable/ic_sort_icon"
-        android:iconTint="@color/white"
-        app:showAsAction="ifRoom"/>
-
+        android:icon="@drawable/ic_sort_white"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/item_search"
         android:title="@string/search"

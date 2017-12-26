@@ -223,7 +223,7 @@ public class Get_FP_Details_Service {
                 editorFb.apply();
             } else if (model.getType().equalsIgnoreCase("facebookpage")) {
                 SharedPreferences.Editor editorFbPage = pref.edit();
-                if (!"null".equalsIgnoreCase(model.getStatus()))
+                if (TextUtils.isDigitsOnly(model.getStatus()))
                     editorFbPage.putInt("fbPageStatus", Integer.parseInt(model.getStatus()));
                 session.storeFacebookPage(model.getUserAccountName());
                 if (!Util.isNullOrEmpty(session.getFacebookPage())) {

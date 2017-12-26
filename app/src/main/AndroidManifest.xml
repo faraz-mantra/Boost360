@@ -186,19 +186,10 @@
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.NavigationDrawer.WildFireActivity"
-            android:label="WildFire"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nowfloats.NavigationDrawer.WildFireActivity" />
-
-        </activity>
 
         <activity
             android:name="com.nowfloats.NavigationDrawer.WildFireAnalyticsActivity"
-            android:label="WildFire"
+            android:label=""
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -665,6 +656,9 @@
         <activity
             android:name="com.nowfloats.Store.NewPricingPlansActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.NavigationDrawer.FacebookWildFireActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.GoogleWildFireActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity" />
     </application>
 
 </manifest>

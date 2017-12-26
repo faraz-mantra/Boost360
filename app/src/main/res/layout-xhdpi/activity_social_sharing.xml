@@ -108,7 +108,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:ellipsize="end"
+                                android:maxLines="2"
                                 android:text="@string/disconnected"
                                 android:textSize="10sp"
                                 android:visibility="gone" />
@@ -185,8 +185,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:ellipsize="end"
-                                android:maxLines="1"
+                                android:maxLines="2"
                                 android:text="@string/disconnected"
                                 android:textSize="10sp"
                                 android:visibility="gone" />

@@ -27,6 +27,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -476,6 +477,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
+//                startActivity(new Intent(activity, Social_Sharing_Activity.class));
             } else if (url.contains("notification")) {
                 homeFragment.setFragmentTab(2);
             } else if (url.contains(getResources().getString(R.string.deeplink_profile))) {
@@ -1392,12 +1394,24 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .addToBackStack(null)
                             .commit();
                 }else if(nextScreen.equals("wildfire")){
-                   startActivity(new Intent(activity,WildFireActivity.class));
-                }
-                else if(nextScreen.equals("dictate")){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new DictateFragment(),"DictateFrag")
+                    FragmentManager manager = getSupportFragmentManager();
+                    Fragment frag = manager.findFragmentByTag("wildfireFrag");
+                    if (frag == null){
+                        frag = new WildFireFragment();
+                    }
+                    manager.beginTransaction().replace(R.id.mainFrame,frag,"wildfireFrag")
                             .addToBackStack(null)
                             .commit();
+                }
+                else if(nextScreen.equals("dictate")){
+                    FragmentManager manager = getSupportFragmentManager();
+                    Fragment frag = manager.findFragmentByTag("DictateFrag");
+                    if (frag == null){
+                        frag = new DictateFragment();
+                    }
+                    manager.beginTransaction().replace(R.id.mainFrame,frag,"DictateFrag")
+                    .addToBackStack(null)
+                    .commit();
                 }
                 else if (nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
                     startBusinessApp();

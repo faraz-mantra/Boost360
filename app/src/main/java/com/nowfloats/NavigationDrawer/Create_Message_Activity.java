@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
@@ -46,7 +47,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
+import com.nowfloats.CustomWidget.CustomTagLayout;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.API.RiaUpdateApis;
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
@@ -65,8 +68,13 @@ import com.thinksity.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class Create_Message_Activity extends AppCompatActivity {
@@ -494,7 +502,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 }
             }
         }
-        //showUpdateKeywords();
+        showUpdateKeywords();
         ivSpeakUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -503,36 +511,44 @@ public class Create_Message_Activity extends AppCompatActivity {
         });
     }
 
-//    private void showUpdateKeywords(){
-//
-//        Constants.riaMemoryRestAdapter
-//                .create(RiaUpdateApis.class)
-//                .getUpdateKeywordSuggestions(session.getFpTag(), new Callback<ArrayList<String>>() {
-//                    @Override
-//                    public void success(ArrayList<String> strings, Response response) {
-//                        if (strings != null && strings.size()>0){
-//                            CardView keywordCard = findViewById(R.id.cv_keyword_suggestions);
-//                            keywordCard.setVisibility(View.VISIBLE);
-//                            Collections.shuffle(strings);
-//                            LinearLayout keywordRv = findViewById(R.id.layout_keyword_suggestion);
-//                            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                            param.setMargins(10,10,10,10);
-//                            for (String s:strings.subList(0,6)){
-//                                TextView text = new TextView(Create_Message_Activity.this);
-//                                text.setText(s);
-//                                text.setLayoutParams(param);
-//                                keywordRv.addView(text);
-//                            }
-//                            //keywordRv.setAdapter(new ArrayAdapter<String>(Create_Message_Activity.this,android.R.layout.simple_list_item_1, strings.subList(0,6)));
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                    }
-//                });
-//    }
+    private void showUpdateKeywords(){
 
+        Constants.riaMemoryRestAdapter
+                .create(RiaUpdateApis.class)
+                .getUpdateKeywordSuggestions(session.getFpTag(), new Callback<ArrayList<String>>() {
+                    @Override
+                    public void success(ArrayList<String> strings, Response response) {
+                        if (strings != null && strings.size()>0){
+                            CustomTagLayout customTagLayout = findViewById(R.id.tag_layout);
+                            customTagLayout.setVisibility(View.VISIBLE);
+                            Collections.shuffle(strings);
+                            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            param.setMargins(10,10,10,10);
+                            for (String s:strings.subList(0,6)){
+                                TextView text = new TextView(Create_Message_Activity.this);
+                                text.setOnClickListener(tagListener);
+                                text.setText(s);
+                                text.setPadding(10,10,10,10);
+                                text.setTextColor(ContextCompat.getColor(Create_Message_Activity.this,R.color.white));
+                                text.setBackgroundResource(R.drawable.text_tag_bg);
+                                text.setLayoutParams(param);
+                                customTagLayout.addView(text);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                    }
+                });
+    }
+    private View.OnClickListener tagListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            TextView tagText = (TextView) view;
+            msg.append(tagText.getText());
+        }
+    };
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

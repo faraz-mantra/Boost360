@@ -3,13 +3,17 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.NavigationDrawer.Adapter.TextExpandableAdapter;
@@ -33,7 +37,7 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_wildfire,container,false);
+        return inflater.inflate(R.layout.layout_wildfire_dictate,container,false);
     }
 
     @Override
@@ -58,6 +62,12 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
     private void showDefaultPage(View view){
         TextView wildfireDefinitionTv = view.findViewById(R.id.wildfire_definition);
         TextView titleTv = view.findViewById(R.id.title_tv);
+        ImageView image1 = view.findViewById(R.id.image1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            image1.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(mContext,R.color.primaryColor)));
+        }
+        image1.setImageResource(R.drawable.dictate_gray);
+        //image1.setColorFilter(new PorterDuffColorFilter(R.color.primaryColor, PorterDuff.Mode.ADD));
         titleTv.setText("Why choose Dictate plan?");
        /* SpannableString ss =new SpannableString(Methods.fromHtml(getString(R.string.dictate_definition)));
         Drawable dIcon = getResources().getDrawable(R.drawable.wild_fire_expire);
@@ -67,7 +77,9 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
         ss.setSpan(new Methods.MyLeadingMarginSpan2(3,leftMargin), 0, ss.length(), 0);*/
 
         wildfireDefinitionTv.setText(Methods.fromHtml(getString(R.string.dictate_definition)));
-        view.findViewById(R.id.tv_wildfire).setOnClickListener(this);
+        TextView dictateTv = view.findViewById(R.id.tv_wildfire);
+        dictateTv.setText("Start Dictate");
+        dictateTv.setOnClickListener(this);
         view.findViewById(R.id.tv_know_more).setOnClickListener(this);
         ArrayList<ArrayList<String>> childList = new ArrayList<>(3);
         ArrayList<String> parentList =new ArrayList<>(Arrays.asList( mContext.getResources().getStringArray(R.array.wildfire_parents)));
@@ -96,7 +108,6 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
             headerText.setText("Dictate");
         }
     }
-
 
     @Override
     public void onClick(View view) {

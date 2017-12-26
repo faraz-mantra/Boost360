@@ -929,14 +929,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         prefsEditor.apply();
     }
 
-    void onFBError() {
-        Constants.fbShareEnabled = false;
-        prefsEditor.putBoolean("fbShareEnabled", false);
-        prefsEditor.apply();
-        facebookHomeCheckBox.setChecked(false);
-        facebookProfileConnected(false);
-    }
-
     void onFBPageError(int from) {
         //Log.v("ggg","fbpage error");
         if (from == FROM_AUTOPOST) {

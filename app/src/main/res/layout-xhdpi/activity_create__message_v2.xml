@@ -64,6 +64,12 @@
                     android:layout_height="wrap_content" />
 
             </android.support.v7.widget.CardView>
+            <com.nowfloats.CustomWidget.CustomTagLayout
+                android:id="@+id/tag_layout"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
            <!-- <android.support.v7.widget.CardView
                 android:id="@+id/cv_keyword_suggestions"
                 android:layout_width="match_parent"
@@ -79,7 +85,7 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>-->
             <LinearLayout
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -135,8 +141,6 @@
                     android:layout_gravity="right"
                     app:srcCompat="@drawable/ic_keyboard_voice_black_24dp"/>
             </LinearLayout>
-
-
 
         </LinearLayout>
 

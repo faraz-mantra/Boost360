@@ -204,6 +204,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                         .widgetColorRes(R.color.primaryColor)
                         .cancelable(false)
                         .positiveText("Ok")
+                        .autoDismiss(false)
                         .negativeText("Cancel")
                         .negativeColorRes(R.color.light_gray)
                         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
@@ -382,6 +383,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 MixPanelController.track(EventKeysWL.FACEBOOK_ANAYTICS,null);
                 break;
             case FBPAGETYPE://not put in pref
+                session.storeFacebookPage(name);
                 Constants.fbPageShareEnabled = true;
                 prefsEditor.putBoolean("fbPageShareEnabled",true);
                 prefsEditor.putInt("fbPageStatus",1);

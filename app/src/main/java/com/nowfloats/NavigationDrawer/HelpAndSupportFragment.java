@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
@@ -216,8 +217,8 @@ public class HelpAndSupportFragment extends Fragment implements View.OnClickList
 
                     break;
                 case R.id.tv_faq:
-                    Intent i = new Intent(getActivity(), Mobile_Site_Activity.class);
-                    i.putExtra("WEBSITE_NAME",getString(R.string.faqs_url));
+                    Intent i = new Intent(getActivity(), FAQMainAcivity.class);
+                    i.putExtra("array", getResources().getStringArray(R.array.faqmain));
                     startActivity(i);
                     break;
             }
