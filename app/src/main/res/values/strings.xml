@@ -468,12 +468,12 @@
         <item>WildFire is the fastest way to get your potential customers to notice your brand, product or services. It is an inorganic boost provided to the organic website, in form of targeted digital advertising that ensures customer calls and website visits.</item>
     </string-array>
     <string-array name="wildfire_parent_1">
-        <item>If you already have a NowFloats LightHouse plan (organic SEO), you can simply activate WildFire for your category (prices vary because of difference in supply &amp; demand for keywords by category).</item>
+        <item>If you already have a Boost plan (organic SEO), you can simply activate WildFire for your category (prices vary because of difference in supply &amp; demand for keywords by category).</item>
         <item>A mix of advertising tools, such as Google AdWords, Facebook Ads, etc. are used to automatically create the most optimised ads &amp; targeting for your website. Which ensure people searching for what’s being advertised end up calling your business number or on your website first.</item>
         <item><![CDATA[<b>Note:</b> A minimum of three messages are required on your website for the WildFire plan to start.]]></item>
     </string-array>
     <string-array name="wildfire_parent_2">
-        <item><![CDATA[NowFloats WildFire is NowFloats LightHouse with Targeted online marketing that spurs leads and calls from potential customers from the get go. Advertising vehicles like Google Adwords<sup><small>TM</small></sup> or Facebook<sup><small>TM</small></sup> ads, etc. are used to target your potential customers. The content of these ads are created using the keywords and messages updated from the NowFloats Business Website.]]></item>
+        <item><![CDATA[WildFire is NowFloats plan with Targeted online marketing that spurs leads and calls from potential customers from the get go. Advertising vehicles like Google Adwords<sup><small>TM</small></sup> or Facebook<sup><small>TM</small></sup> ads, etc. are used to target your potential customers. The content of these ads are created using the keywords and messages updated from the NowFloats Business Website.]]></item>
     </string-array>
     <string-array name="dictate_parent_0">
         <item>A dedicated NowFloats representative gets in touch with you regularly, to know your business properly and updates your website 2&#8211;3 times a week on your behalf, thereby saving your time.</item>
@@ -1533,7 +1533,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="disable_customer_assistant">Disable Customer Assistant</string>
     <string name="enable_customer_assistant">Enable Customer Assistant</string>
-
     <string name="manage_website_customers">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
     <string name="manage_social_customers">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
 </string>
@@ -1547,10 +1546,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
-    <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860&#8211;123&#8211;1233.</string>
+    <string name="contact_us_message">If your query is still unanswered, please check <b>FAQs</b> or please contact us at <b>ria@nowfloats.com</b> or call our toll-free number <b>1860&#8211;123&#8211;1233</b>.</string>
     <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
-    <string name="wildfire_ad_cost_text"><![CDATA[Total cost incurred for the keyword: <b>INR %s</b>]]></string>
-    <string name="dictate_definition">To get maximum value from your NowFloats business website, we advise businesses to update content, in form of business updates, offers or product catalogs, 2&#8211;3 times a week regularly. When you opt for the NowFloats Dictate, a service by which, a NowFloats representative gets in touch with you and understands your business well enough, and then regularly contacts you or designated associate to get the latest updates.</string>
+    <string name="wildfire_ad_cost_text"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
+    <string name="dictate_definition"><![CDATA[NowFloats Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
     <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
 
 </resources>

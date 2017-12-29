@@ -17,13 +17,17 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.WildFireApis;
 import com.nowfloats.NavigationDrawer.Adapter.TextExpandableAdapter;
 import com.nowfloats.NavigationDrawer.model.WildFireDataModel;
+import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -120,8 +124,8 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
         ConstraintLayout defaultLayout = view.findViewById(R.id.constraintLayout_wildfire);
         defaultLayout.setVisibility(View.VISIBLE);
         TextView wildfireDefinitionTv = view.findViewById(R.id.wildfire_definition);
-        view.findViewById(R.id.tv_wildfire).setOnClickListener(this);
-        view.findViewById(R.id.tv_know_more).setOnClickListener(this);
+        view.findViewById(R.id.llayout_wildfire).setOnClickListener(this);
+        view.findViewById(R.id.llayout_know_more).setOnClickListener(this);
         wildfireDefinitionTv.setText(Methods.fromHtml(getString(R.string.wildfire_definition)));
         ArrayList<ArrayList<String>> childList = new ArrayList<>(3);
         ArrayList<String> parentList =new ArrayList<>(Arrays.asList( getResources().getStringArray(R.array.wildfire_parents)));
@@ -131,6 +135,7 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
 
         ExpandableListView expandableListView = view.findViewById(R.id.info_exlv);
         expandableListView.setAdapter(new TextExpandableAdapter(mContext,childList,parentList));
+        expandableListView.expandGroup(0);
         hideProgress();
     }
 
@@ -177,12 +182,45 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tv_wildfire:
+            case R.id.llayout_wildfire:
                 startActivity(new Intent(mContext, NewPricingPlansActivity.class));
+                break;
+            case R.id.llayout_know_more:
+                sendEmailForWildFire();
                 break;
         }
     }
+    private void sendEmailForWildFire(){
+        showProgress();
+        MixPanelController.track(MixPanelController.REQUEST_FOR_WILDFIRE_PLAN,null);
+        UserSessionManager manager = new UserSessionManager(mContext,getActivity());
+        ArrayList<String> emailsList = new ArrayList<String>(2);
+        emailsList.add("pranav.venuturumilli@nowfloats.com");
+        emailsList.add("wildfire.team@nowfloats.com");
+        MailModel model = new MailModel(Constants.clientId,
+               "Hi, <br>The client with FP Tag <b>\" "+manager.getFpTag()+" \"</b> has requested a meeting to understand the WildFire plan. Please take it up on priority.",
+                 "Important: WildFire meeting is requested by"+manager.getFpTag(),
+                 emailsList);
+        StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
+        anInterface.mail(model, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                hideProgress();
+                if (response.getStatus() == 200 && !TextUtils.isEmpty(s)){
+                    Methods.materialDialog(getActivity(),"Request For WildFire Plan","Your meeting request has been sent successfully.");
+                }else{
+                    Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
+                }
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                hideProgress();
+                Methods.showSnackBarNegative(getActivity(),"Server error");
+            }
+        });
+
+    }
     private class WildFireChannelAdapter extends RecyclerView.Adapter<WildFireChannelAdapter.ChannelViewHolder> {
 
         ArrayList<String> actives, unActives;
@@ -229,12 +267,15 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
 
             }else{
                 //unactive
+                String mainText = "";
                 switch (unActives.get(position-actives.size())){
                     case "google":
+                       // mainText = getString(R.string.wildfire_facebook_text);
                         holder.nameTv.setText("Google Adwords");
                         holder.channelImage.setImageResource(R.drawable.ic_google_gray);
                         break;
                     case "facebook":
+                        //mainText = getString(R.string.wildfire_google_text);
                         holder.nameTv.setText("Facebook Ads");
                         holder.channelImage.setImageResource(R.drawable.ic_facebook_logo);
                         break;
@@ -243,10 +284,42 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
                 holder.descriptionTv.setText("Inactive");
                 holder.arrowImage.setVisibility(View.GONE);
                 holder.parentView.setAlpha(.8f);
+                final String finalMainText = mainText;
+                holder.parentView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        //showDialog(finalMainText);
+                    }
+                });
             }
 
         }
 
+        private void showDialog(String mainText){
+            final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                    .customView(R.layout.dialog_help_support,true)
+                    .build();
+            View view = dialog.getCustomView();
+            if (view == null){
+               return;
+            }
+            dialog.show();
+            view.findViewById(R.id.img_cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            ((TextView)view.findViewById(R.id.tv_main_content)).setText(mainText);
+            view.findViewById(R.id.tv_cta).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.call));
+                }
+            });
+
+        }
         @Override
         public int getItemCount() {
             return actives.size()+unActives.size();

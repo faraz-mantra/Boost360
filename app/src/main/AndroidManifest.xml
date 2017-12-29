@@ -209,17 +209,16 @@
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false" />-->
-        <!--<provider
-            android:name="android.support.v4.content.FileProvider"
+        <provider
+            android:name="com.nowfloats.NavigationDrawer.HotlineFileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             android:authorities="${applicationId}.provider">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                tools:replace="android:resource"
                 android:resource="@xml/hotline_provider_paths"/>
 
-        </provider>-->
+        </provider>
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"

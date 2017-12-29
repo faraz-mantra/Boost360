@@ -114,7 +114,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
         public MyProductsViewHolder(View itemView) {
             super(itemView);
             this.viewType = getItemViewType();
-            productName = (TextView) itemView.findViewById(R.id.tv_name);
+            productName = (TextView) itemView.findViewById(R.id.tv_person_name);
             productPrice = (TextView) itemView.findViewById(R.id.tv_price);
             productImage = (ImageView) itemView.findViewById(R.id.img_product);
             frameLayout = (FrameLayout) itemView.findViewById(R.id.ll_selected);
@@ -146,7 +146,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
         public MyUpdatesViewHolder(View itemView) {
             super(itemView);
             this.viewType = getItemViewType();
-            updateName = (TextView) itemView.findViewById(R.id.tv_name);
+            updateName = (TextView) itemView.findViewById(R.id.tv_person_name);
             frameLayout = (FrameLayout) itemView.findViewById(R.id.ll_selected);
             updateImage = (ImageView) itemView.findViewById(R.id.imageView);
             selectedImg = (ImageView) itemView.findViewById(R.id.img_selected);

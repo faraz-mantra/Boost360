@@ -94,7 +94,7 @@ public class ThirdPartySharedItemAdapter extends RecyclerView.Adapter<ThirdParty
             super(itemView);
             this.viewType = getItemViewType();
             cancelImage = (ImageView) itemView.findViewById(R.id.img_cancel);
-            nameText = (TextView) itemView.findViewById(R.id.tv_name);
+            nameText = (TextView) itemView.findViewById(R.id.tv_person_name);
             cancelImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

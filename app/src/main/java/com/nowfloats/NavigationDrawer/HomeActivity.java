@@ -267,7 +267,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         HotlineConfig hlConfig = new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb", "a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
 
         hlConfig.setVoiceMessagingEnabled(true);
-        hlConfig.setCameraCaptureEnabled(true);
+        hlConfig.setCameraCaptureEnabled(false);
         hlConfig.setPictureMessagingEnabled(true);
 
         Hotline.getInstance(this).init(hlConfig);
@@ -379,7 +379,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 startActivity(intent);
             }else if (url.contains(getString(R.string.deeplink_manage_customer))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
-                        .addToBackStack(null)
                         .commit();
             } else if (url.contains(getString(R.string.feedback_chat))) {
                 MixPanelController.track("ChatFeedback", null);
@@ -424,7 +423,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, homeFragment)
-                        .addToBackStack(null)
                         .commit();
                 getSupportFragmentManager().executePendingTransactions();
                 Constants.deepLinkAnalytics = true;
@@ -515,7 +513,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();
             } else if(url.contains("assuredPurchase")){
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
-                        .addToBackStack(null)
                         .commit();
             }
             else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
@@ -1379,7 +1376,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     shareButton.setVisibility(View.VISIBLE);
                     plusAddButton.setVisibility(View.GONE);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessFragment, "Profile")
-                            .addToBackStack(null)
                             .commit();
                     // getSupportFragmentManager().beginTransaction().
                     //        replace(R.id.mainFrame, businessFragment).commit();
@@ -1391,7 +1387,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                    .commit();
                 } else if (nextScreen.equals(getString(R.string.manage_customers))) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
-                            .addToBackStack(null)
                             .commit();
                 }else if(nextScreen.equals("wildfire")){
                     FragmentManager manager = getSupportFragmentManager();
@@ -1400,7 +1395,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         frag = new WildFireFragment();
                     }
                     manager.beginTransaction().replace(R.id.mainFrame,frag,"wildfireFrag")
-                            .addToBackStack(null)
                             .commit();
                 }
                 else if(nextScreen.equals("dictate")){
@@ -1410,7 +1404,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         frag = new DictateFragment();
                     }
                     manager.beginTransaction().replace(R.id.mainFrame,frag,"DictateFrag")
-                    .addToBackStack(null)
                     .commit();
                 }
                 else if (nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
@@ -1431,7 +1424,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.site__meter))) {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home))) {
@@ -1451,7 +1444,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainFrame, homeFragment, "homeFragment")
-                            .addToBackStack(null)
                             .commit();
                     getSupportFragmentManager().executePendingTransactions();
                     homeFragment.setFragmentTab(0);
@@ -1462,7 +1454,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 } else if (nextScreen.equals(getString(R.string.chat))) {
-                    //Hotline.showConversations(HomeActivity.this);
+                    Hotline.showConversations(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
                     if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
@@ -1510,7 +1502,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     MixPanelController.track(EventKeysWL.MANAGE_INVENTORY, null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
-                            .addToBackStack(null)
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);

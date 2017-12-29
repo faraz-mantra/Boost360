@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/item_filter"
-        android:icon="@drawable/ic_filter"
+        android:icon="@drawable/ic_filter_hole"
         android:title="@string/filter_by"
         app:showAsAction="always"/>
     <item
         android:title="sort"
         android:id="@+id/item_sort"
-        android:icon="@drawable/ic_sort_white"
+        android:icon="@drawable/icon_sort_white"
         app:showAsAction="always"/>
     <item
         android:id="@+id/item_search"
         android:title="@string/search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/icon_search_white"
         app:showAsAction="always|collapseActionView"/>
 
 </menu>

@@ -64,6 +64,8 @@ public class MixPanelController {
     public static final String DOMAIN_EMAIL_BOOK = "EmailBook";
     public static final String DOMAIN_EMAIL_REQUEST = "EmailRequest";
     public static final String UPDATE_DB_CRASH = "updateDbCrash";
+    public static final String REQUEST_FOR_DICTATE_PLAN = "DictateRequest";
+    public static final String REQUEST_FOR_WILDFIRE_PLAN = "WildFireRequest";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

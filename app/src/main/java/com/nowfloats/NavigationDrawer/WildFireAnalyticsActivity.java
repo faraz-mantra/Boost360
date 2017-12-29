@@ -1,12 +1,13 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,8 +61,10 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         TextView title = toolbar.findViewById(R.id.text1);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        title.setPaintFlags(title.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
+        title.setTypeface(tf);
         ImageView channelImage = toolbar.findViewById(R.id.image1);
-        ((AppCompatImageView)toolbar.findViewById(R.id.image1)).setImageResource(R.drawable.ic_google_glass_logo);
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -86,7 +89,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                     clickTv.setText(googleModel.getClicks());
                 }
                 keywordTv.setText(googleModel.getKeyword().replace("+",""));
-                cpcTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(googleModel.getAvgCPC())/1000000)));
+                cpcTv.setText(String.format(Locale.ENGLISH,"INR %.2f",Double.valueOf(googleModel.getAvgCPC())/1000000));
 
                 break;
             case FACEBOOK:
@@ -99,7 +102,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                     clickTv.setText(facebookModel.getClicks());
                 }
                 keywordTv.setText(facebookModel.getAdName());
-                cpcTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(facebookModel.getCpc()))));
+                cpcTv.setText(String.format(Locale.ENGLISH,"INR %.2f",Double.valueOf(facebookModel.getCpc())));
 
                 TextView previewTv = findViewById(R.id.tv_preview);
                 previewTv.setVisibility(View.VISIBLE);
@@ -118,7 +121,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
         }
 
         adCostTv.setText(Methods.fromHtml(String.format(Locale.ENGLISH,getString(R.string.wildfire_ad_cost_text)
-                ,channelType == GOOGLE ? Double.valueOf(googleModel.getCost())/1000000:facebookModel.getCpm())));
+                ,channelType == GOOGLE ? Double.valueOf(googleModel.getCost())/1000000:Double.valueOf(facebookModel.getCpm()))));
         RecyclerView mRecyclerView = findViewById(R.id.recyclerview1);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.hasFixedSize();
@@ -156,10 +159,10 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                                 myGoogleViewHolder.countTv.setText(googleModel.getAvgPosition());
                                 break;
                             case 2:
-                                myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(googleModel.getFirstPageCpc())/1000000)));
+                                myGoogleViewHolder.countTv.setText(String.format(Locale.ENGLISH,"INR %.2f",Double.valueOf(googleModel.getFirstPageCpc())/1000000));
                                 break;
                             case 3:
-                                myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getInstance().format(Double.valueOf(googleModel.getTopPageCPC())/1000000)));
+                                myGoogleViewHolder.countTv.setText(String.format(Locale.ENGLISH,"INR %.2f",Double.valueOf(googleModel.getTopPageCPC())/1000000));
                                 break;
                             case 4:
                                 break;
@@ -173,10 +176,10 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                                 myGoogleViewHolder.countTv.setText(NumberFormat.getInstance(Locale.US).format(Long.valueOf(facebookModel.getImpressions())));
                                 break;
                             case 1:
-                                myGoogleViewHolder.countTv.setText(facebookModel.getCtr());
+                                myGoogleViewHolder.countTv.setText(String.format(Locale.ENGLISH,"%.2f %s",Double.valueOf(facebookModel.getCtr()),"%"));
                                 break;
                             case 2:
-                                myGoogleViewHolder.countTv.setText(String.format("INR %s",NumberFormat.getNumberInstance().format(Double.valueOf(facebookModel.getReach()))));
+                                myGoogleViewHolder.countTv.setText(String.format("%s",NumberFormat.getNumberInstance().format(Double.valueOf(facebookModel.getReach()))));
                                 break;
                             case 3:
                                 break;

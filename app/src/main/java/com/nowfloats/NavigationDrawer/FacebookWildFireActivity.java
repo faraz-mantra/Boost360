@@ -2,6 +2,8 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nowfloats.NavigationDrawer.API.WildFireApis;
 import com.nowfloats.NavigationDrawer.Adapter.GoogleWildFireAdapter;
@@ -52,13 +56,14 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
     private final int PROCESS_ITEMS = 10;
     private FrameLayout fragLayout;
     private String pattern = "yyyy-MM-dd",calendarPattern = "d MMMM yyyy";
-    SimpleDateFormat formatter = new SimpleDateFormat(pattern, Locale.ENGLISH);
-    SimpleDateFormat calendarFormatter = new SimpleDateFormat(calendarPattern, Locale.ENGLISH);
+    private SimpleDateFormat formatter = new SimpleDateFormat(pattern, Locale.ENGLISH);
+    private SimpleDateFormat calendarFormatter = new SimpleDateFormat(calendarPattern, Locale.ENGLISH);
     private HashMap<String,Object> map = new HashMap<>();
     private WildFireDialogFragment.SortType currentSortType = WildFireDialogFragment.SortType.ALPHABETIC;
     private boolean isMenuVisible;
     private String dateSelectedPeriod;
     private int filterByMonth = WildFireFilterFragment.ALL_SELECTED;
+    private TextView title;
 
     @Override
     public void onSortOptionSelect(WildFireDialogFragment.SortType type) {
@@ -139,11 +144,16 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
-
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        setTitle("Facebook Ads");
+        title = toolbar.findViewById(R.id.text1);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        title.setPaintFlags(title.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
+        title.setTypeface(tf);
+        ((ImageView)toolbar.findViewById(R.id.image1)).setImageResource(R.drawable.ic_facebook_app_logo);
+        title.setText("Ads");
         String wildFireId = getIntent().getStringExtra("WILDFIRE_ID");
         map.put("count",PROCESS_ITEMS);
         map.put("clientId",Constants.clientId);
@@ -194,7 +204,7 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
                 hideProgress();
                 if (wildFireKeyStatsModels == null){
                     Methods.showSnackBarNegative(FacebookWildFireActivity.this,getString(R.string.something_went_wrong));
-                    setTitle(wildFireList.size() == 0?"Facebook Ads":"Ads ("+wildFireList.size()+")");
+                    title.setText(wildFireList.size() == 0?"Ads":"Ads ("+wildFireList.size()+")");
                     return;
                 }
                 if (!isMenuVisible){
@@ -205,13 +215,13 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
                 if (wildFireKeyStatsModels.size()==PROCESS_ITEMS){
                     stop = false;
                 }
-                setTitle(wildFireList.size() == 0?"Facebook Ads":"Ads ("+wildFireList.size()+")");
+                title.setText(wildFireList.size() == 0?"Ads":"Ads ("+wildFireList.size()+")");
             }
 
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
-                setTitle(wildFireList.size() == 0?"Facebook Ads":"Ads ("+wildFireList.size()+")");
+                title.setText(wildFireList.size() == 0?"Ads":"Ads ("+wildFireList.size()+")");
             }
         });
     }
@@ -249,13 +259,13 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tv_wildfire:
+            case R.id.llayout_wildfire:
                 startActivity(new Intent(FacebookWildFireActivity.this, NewPricingPlansActivity.class));
                 break;
             case R.id.layout_fragment:
                 onBackPressed();
                 break;
-            case R.id.tv_know_more:
+            case R.id.llayout_know_more:
                 // email
                 break;
         }
@@ -272,7 +282,7 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
                     default:
                         int o1_click = Integer.valueOf(o1.getClicks());
                         int o2_click = Integer.valueOf(o2.getClicks());
-                        if (o1_click>o2_click){
+                        if (o1_click<o2_click){
                             return 1;
                         }else if(o1_click == o2_click){
                             return 0;

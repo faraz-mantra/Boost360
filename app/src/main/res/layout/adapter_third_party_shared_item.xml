@@ -8,7 +8,7 @@
     android:layout_marginBottom="3dp"
     android:background="@drawable/rounded_corner_boundary">
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_person_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

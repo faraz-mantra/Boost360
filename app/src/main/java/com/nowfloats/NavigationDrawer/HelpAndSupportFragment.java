@@ -53,7 +53,7 @@ public class HelpAndSupportFragment extends Fragment implements View.OnClickList
     private Context mContext;
     private MemberType nextMember = CHC;
     enum MemberType{
-       CHC,WEB;
+       CHC,WEB,DEFAULT;
     }
 
     private static final String CHAT_INTENT_URI = "com.biz2.nowfloats://com.riachat.start";

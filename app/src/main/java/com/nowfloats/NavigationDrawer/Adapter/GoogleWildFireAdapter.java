@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.nowfloats.NavigationDrawer.WildFireAnalyticsActivity;
 import com.nowfloats.NavigationDrawer.model.FacebookWildFireDataModel;
 import com.nowfloats.NavigationDrawer.model.WildFireKeyStatsModel;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.text.NumberFormat;
@@ -62,6 +63,8 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
     public void onBindViewHolder(MyViewHolder holder, int position) {
         switch (dataChannelType){
             case GOOGLE:
+                int padding1 = Methods.dpToPx(10,mContext);
+                holder.parentView.setPadding(padding1,padding1,padding1,padding1);
                 holder.keywordTv.setText(modelList.get(position).getKeyword().replace("+",""));
                 if (TextUtils.isDigitsOnly(modelList.get(position).getClicks())) {
                     holder.clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(modelList.get(position).getClicks())));
@@ -77,6 +80,8 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
                 break;
 
             case FACEBOOK:
+                int padding2 = Methods.dpToPx(15,mContext);
+                holder.parentView.setPadding(padding2,padding2,padding2,padding2);
                 holder.keywordTv.setText(facebookModelList.get(position).getAdName());
                 holder.clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(facebookModelList.get(position).getClicks())));
                 holder.statusTv.setVisibility(View.GONE);
@@ -181,7 +186,7 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
         final static int layout_id = R.layout.adapter_wildfire_item;
         ImageView arrowImage;
         TextView keywordTv,clickTv,statusTv;
-        View view;
+        View parentView;
         MyViewHolder(View itemView) {
             super(itemView);
 
@@ -189,7 +194,7 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
             keywordTv = (TextView) itemView.findViewById(R.id.tv_keyword);
             clickTv = (TextView) itemView.findViewById(R.id.tv_clicks);
             statusTv = (TextView) itemView.findViewById(R.id.tv_status);
-            view = itemView.findViewById(R.id.divider);
+            parentView = itemView;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

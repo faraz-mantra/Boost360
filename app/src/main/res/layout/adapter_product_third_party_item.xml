@@ -17,7 +17,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/default_product_image"/>
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_person_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/primary"
