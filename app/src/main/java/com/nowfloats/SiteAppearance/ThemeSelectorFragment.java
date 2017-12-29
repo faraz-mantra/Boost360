@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -107,7 +108,8 @@ public class ThemeSelectorFragment extends Fragment{
         ((TextView)view.findViewById(R.id.tv_theme_message)).setText(themeMessages[pos]);
         view.findViewById(R.id.tv_theme_description).setVisibility(pos == 0 ?View.VISIBLE:View.GONE);
         Glide.with(this).load(imageIds[pos])
-                .placeholder(imageIds[1])
+                .apply(new RequestOptions()
+                        .placeholder(imageIds[1]))
                 .into(imageview);
     }
 

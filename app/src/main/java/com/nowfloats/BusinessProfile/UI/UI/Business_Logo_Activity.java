@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
@@ -92,13 +93,13 @@ public class Business_Logo_Activity extends AppCompatActivity {
             if(iconUrl!=null && iconUrl.length()>0 && !iconUrl.contains("http")) {
                 //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                 BoostLog.d("Logo Url:", iconUrl);
-                Glide.with(this).load(iconUrl).asGif().placeholder(R.drawable.logo_default_image).into(logoimageView);
+                Glide.with(this).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
             }else{
                 if(iconUrl!=null && iconUrl.length()>0) {
                     BoostLog.d("Logo Url:", iconUrl);
-                    Glide.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                    Glide.with(this).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                 }else{
-                    Glide.with(this).load(R.drawable.logo_default_image).asGif().into(logoimageView);
+                    Glide.with(this).asGif().load(R.drawable.logo_default_image).into(logoimageView);
                 }
             }
         }catch(Exception e){e.printStackTrace();System.gc();}

@@ -17,6 +17,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.anachat.chatsdk.AnaCore;
 import com.freshdesk.hotline.Hotline;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -48,8 +49,15 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (Hotline.isHotlineNotification(remoteMessage)) {
             Hotline.getInstance(this).handleFcmMessage(remoteMessage);
         } else {
-            sendNotification(remoteMessage.getData());
-            Constants.GCM_Msg = true;
+            Map<String,String> mapResult = remoteMessage.getData();
+            if (mapResult.containsKey("payload")) {
+                AnaCore.handlePush(this, mapResult.get("payload"));
+            }else{
+
+                sendNotification(mapResult);
+                Constants.GCM_Msg = true;
+            }
+
         }
         Log.v("Message", "received bubble");
     }

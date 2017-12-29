@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.riachatsdk.utils.Utils;
 import com.nowfloats.util.Methods;
@@ -92,9 +93,10 @@ public class FacebookChatDetailAdapter extends RecyclerView.Adapter<RecyclerView
                 imageHolder.captionText.setVisibility(View.GONE);
             }
             Glide.with(mContext)
-                    .load(chatList.get(position).getMessage().getData().getUrl())
                     .asGif()
-                    .placeholder(R.drawable.default_product_image)
+                    .load(chatList.get(position).getMessage().getData().getUrl())
+                   .apply(new RequestOptions()
+                           .placeholder(R.drawable.default_product_image))
                     .into(imageHolder.imgMessage);
             mainViewHolder = imageHolder;
         }

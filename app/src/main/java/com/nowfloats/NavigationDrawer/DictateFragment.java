@@ -91,8 +91,8 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
         childList.add(new ArrayList<>(Arrays.asList(mContext.getResources().getStringArray(R.array.dictate_parent_2))));
 
         ExpandableListView expandableListView = view.findViewById(R.id.info_exlv);
-        expandableListView.expandGroup(0);
         expandableListView.setAdapter(new TextExpandableAdapter(mContext,childList,parentList));
+        expandableListView.expandGroup(0);
     }
 //    private void showProgress(){
 //        if (!progressDialog.isShowing()){

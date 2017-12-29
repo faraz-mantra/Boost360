@@ -299,3 +299,8 @@
 -dontwarn com.jayway.jsonpath.**
 -dontwarn javax.xml.stream.events.**
 -dontwarn com.fasterxml.jackson.databind.**
+
+
+-dontwarn com.j256.ormlite.android.**
+-dontwarn com.j256.ormlite.logger.**
+-dontwarn com.j256.ormlite.misc.**

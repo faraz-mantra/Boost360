@@ -167,14 +167,6 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 }
             });
         } else {
-            String mainFpUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-            if (!Util.isNullOrEmpty(mainFpUrl)) {
-                mainFpUrl = mainFpUrl.toLowerCase();
-            }else{
-                mainFpUrl = "http://"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                        + appContext.getResources().getString(R.string.tag_for_partners);
-            }
-            final String finalFpUrl = mainFpUrl;
             final TextView textView1 = holder.textView ;
             TextView dateText = holder.dateText ;
             ImageView imageView = holder.imageView;
@@ -213,7 +205,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                         BoostLog.d("Path is:", path);
                                         Uri uri = Uri.parse(path);
                                         shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                                finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
+                                                HomeActivity.StorebizFloats.get(position).url);
                                         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                                         shareIntent.setType("image/*");
 
@@ -258,7 +250,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         pd.dismiss();
                         shareIntent.setType("text/plain");
                         shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
+                               HomeActivity.StorebizFloats.get(position).url);
                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                             appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                         } else {

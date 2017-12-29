@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -781,8 +782,9 @@ public class Analytics_Fragment extends Fragment {
         iv.setLayoutParams(lp);
         Glide.with(getActivity())
                 .load(widget.getUrl())
-                .centerCrop()
-                .placeholder(R.drawable.default_product_image)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.default_product_image))
                 .into(iv);
         //Glide.with(getActivity()).load(widget.getUrl()).placeholder(R.drawable.image_placeholder).into(iv);
         llRiaCardSections.addView(iv);

@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,7 +37,7 @@ import retrofit.client.Response;
 
 public class NewHelpAndSupportFragment extends Fragment {
     private Context mContext;
-    private List<RiaSupportModel> mRiaSupportModelList = new ArrayList<>(2);
+    private List<RiaSupportModel> mRiaSupportModelList;
     private ProgressDialog dialog;
     enum MemberType{
         CHC,WEB,DEFAULT;
@@ -77,6 +78,7 @@ public class NewHelpAndSupportFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
+        mRiaSupportModelList = new ArrayList<>(2);
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
         HashMap<String, String> param = new HashMap<>();
         param.put("clientId", Constants.clientId);
@@ -154,6 +156,11 @@ public class NewHelpAndSupportFragment extends Fragment {
         @Override
         public int getCount() {
             return mRiaSupportModelList.size();
+        }
+
+        @Override
+        public void restoreState(Parcelable state, ClassLoader loader) {
+
         }
     }
 

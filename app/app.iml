@@ -135,13 +135,13 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/merged-not-compiled-resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard-rules" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res_stripped" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/splits-support" />
@@ -149,7 +149,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
@@ -165,6 +164,7 @@
     <orderEntry type="library" name="com.google.firebase:firebase-auth-10.2.1" level="project" />
     <orderEntry type="library" name="com.twitter.sdk.android:twitter-core-3.0.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-location-10.2.1" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.1@jar" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:runtime-1.0.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-drive-10.2.1" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-26.1.0" level="project" />
@@ -199,6 +199,7 @@
     <orderEntry type="library" name="com.android.support:design-26.1.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-core-10.2.1" level="project" />
     <orderEntry type="library" name="com.github.clans:fab-1.6.4" level="project" />
+    <orderEntry type="library" name="com.github.bumptech.glide:disklrucache:4.1.1@jar" level="project" />
     <orderEntry type="library" name="com.android.support:customtabs-23.4.0" level="project" />
     <orderEntry type="library" name="com.facebook.android:facebook-android-sdk-4.16.1" level="project" />
     <orderEntry type="library" name="com.melnykov:floatingactionbutton-1.1.0" level="project" />
@@ -221,6 +222,7 @@
     <orderEntry type="library" name="com.parse.bolts:bolts-android:1.4.0@jar" level="project" />
     <orderEntry type="library" name="net.alhazmy13.MediaPicker:libary-2.3.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-v4-26.1.0" level="project" />
+    <orderEntry type="library" name="com.j256.ormlite:ormlite-android:5.0@jar" level="project" />
     <orderEntry type="library" name="com.makeramen:roundedimageview-1.5.0" level="project" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-26.1.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-awareness-10.2.1" level="project" />
@@ -230,7 +232,6 @@
     <orderEntry type="library" name="uk.co.chrisjenx:calligraphy-2.2.0" level="project" />
     <orderEntry type="library" name="com.android.support:multidex-1.0.2" level="project" />
     <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.7.0@jar" level="project" />
-    <orderEntry type="library" name="com.google.code.gson:gson:2.8.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-media-compat-26.1.0" level="project" />
     <orderEntry type="library" name="com.android.support:support-v13-25.3.0" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:common:1.0.0@jar" level="project" />
@@ -248,6 +249,7 @@
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-instantapps-10.2.1" level="project" />
+    <orderEntry type="library" name="com.kitsune:anachatsdk-1.9" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-26.1.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-tasks-10.2.1" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-analytics-impl-10.2.1" level="project" />
@@ -255,8 +257,10 @@
     <orderEntry type="library" name="com.webengage:android-sdk-2.7.1" level="project" />
     <orderEntry type="library" name="android.arch.core:common:1.0.0@jar" level="project" />
     <orderEntry type="library" name="in.juspay:godel-osd-0.6.14" level="project" />
+    <orderEntry type="library" name="com.j256.ormlite:ormlite-core:5.0@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-10.2.1" level="project" />
     <orderEntry type="library" name="com.android.support:transition-26.1.0" level="project" />
+    <orderEntry type="library" name="com.github.bumptech.glide:gifdecoder:4.1.1@jar" level="project" />
     <orderEntry type="library" name="com.github.ozodrukh:CircularReveal-2.0.1" level="project" />
     <orderEntry type="library" name="com.romandanylyk:pageindicatorview-0.2.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-clearcut-10.2.1" level="project" />
@@ -276,8 +280,10 @@
     <orderEntry type="library" name="com.google.firebase:firebase-config-10.2.1" level="project" />
     <orderEntry type="library" name="com.github.freshdesk:hotline-android-1.2.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-iid-10.2.1" level="project" />
+    <orderEntry type="library" name="com.github.bumptech.glide:glide:4.1.1@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-tagmanager-api-10.2.1" level="project" />
     <orderEntry type="library" name="com.mixpanel.android:mixpanel-android-5.2.2" level="project" />
+    <orderEntry type="library" name="com.github.bumptech.glide:annotations:4.1.1@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-nearby-10.2.1" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-safetynet-10.2.1" level="project" />
     <orderEntry type="library" name="com.github.ybq:Android-SpinKit-1.1.0" level="project" />
@@ -286,7 +292,6 @@
     <orderEntry type="library" name="com.squareup.okhttp:okhttp:2.3.0@jar" level="project" />
     <orderEntry type="library" name="com.squareup.okio:okio:1.12.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:cardview-v7-26.1.0" level="project" />
-    <orderEntry type="library" name="com.github.bumptech.glide:glide:3.7.0@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-maps-10.2.1" level="project" />
     <orderEntry type="module" module-name="instamojoLib" />
     <orderEntry type="module" module-name="riachatsdkMain" />

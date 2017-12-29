@@ -44,12 +44,12 @@ import static com.nowfloats.NavigationDrawer.HelpAndSupportFragment.MemberType.W
 
 public class HelpAndSupportFragment extends Fragment implements View.OnClickListener {
 
-    AppCompatTextView tvConsultantName,tvConsultantNumber, tvEmail, tvNextMember,tvFaq,
+    private AppCompatTextView tvConsultantName,tvConsultantNumber, tvEmail, tvNextMember,tvFaq,
             tvTextRia, tvConsultantDes;
-    ImageView ivHelpAvatar;
-    ProgressDialog pd;
-    UserSessionManager sessionManager;
-    List<RiaSupportModel> mRiaSupportModelList;
+    private ImageView ivHelpAvatar;
+    private ProgressDialog pd;
+    private UserSessionManager sessionManager;
+    private List<RiaSupportModel> mRiaSupportModelList;
     private Context mContext;
     private MemberType nextMember = CHC;
     enum MemberType{

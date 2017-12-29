@@ -26,6 +26,7 @@ public class ProductListModel implements Parcelable {
     public String ApplicationId;
     public String FPTag;
     public String ImageUri;
+    public String ProductUrl;
     public ArrayList<ImageListModel> Images;
     public String MerchantName;
     public String TileImageUri;
@@ -52,6 +53,7 @@ public class ProductListModel implements Parcelable {
         parcel.writeString(DiscountAmount);
         parcel.writeString(ExternalSourceId);
         parcel.writeString(IsArchived);
+        parcel.writeString(ProductUrl);
         parcel.writeString(IsAvailable);
         parcel.writeString(IsFreeShipmentAvailable);
         parcel.writeString(Name);
@@ -84,6 +86,7 @@ public class ProductListModel implements Parcelable {
         this.IsFreeShipmentAvailable = in.readString();
         this.Name = in.readString();
         this.Price = in.readString();
+        this.ProductUrl = in.readString();
         this.Priority = in.readString();
         this.ShipmentDuration = in.readString();
         this._keywords = in.readArrayList(ProductListModel.this.getClass().getClassLoader());
