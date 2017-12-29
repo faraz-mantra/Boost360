@@ -22,6 +22,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     ArrayList<String> mainText = new ArrayList<>();
     ArrayList<String> dateText = new ArrayList<>();
     ArrayList<String> messageIds = new ArrayList<>();
+    ArrayList<String> updateUrls = new ArrayList<>();
     final List<FloatsMessageModel> messages;
 
     public PageAdapter(FragmentManager fm, List<FloatsMessageModel> messages,  Context context) {
@@ -40,7 +41,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                         mainText.add(i, data.message);
                         dateText.add(i, Methods.getFormattedDate(data.createdOn));
                         images.add(i, data.tileImageUri);
-                        messageIds.add(i,HomeActivity.StorebizFloats.get(i)._id);
+                        messageIds.add(i,data._id);
+                        updateUrls.add(i,data.url);
                     }
                 } catch (Exception e) {
                 }
@@ -60,6 +62,7 @@ public class PageAdapter extends FragmentPagerAdapter {
         bundle.putString(Card_Full_View_Fragment.DateTextKey,dateText.size()>position ? dateText.get(position):"");
         bundle.putString(Card_Full_View_Fragment.ImageKey,images.size()> position?images.get(position):"");
         bundle.putString(Card_Full_View_Fragment.MessageIdKey,messageIds.size()>position? messageIds.get(position):"");
+        bundle.putString(Card_Full_View_Fragment.UrlKey,updateUrls.size()>position? updateUrls.get(position):"");
 
         Card_Full_View_Fragment cardFragment = new Card_Full_View_Fragment();
         cardFragment.setArguments(bundle);
