@@ -28,14 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="3dp"
-        app:contentPadding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="20dp">
 
             <LinearLayout
                 android:id="@+id/llayout_know_more"

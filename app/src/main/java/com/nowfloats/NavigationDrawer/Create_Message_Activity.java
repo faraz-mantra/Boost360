@@ -524,7 +524,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                             Collections.shuffle(strings);
                             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             param.setMargins(10,10,10,10);
-                            for (String s:strings.subList(0,6)){
+                            for (String s:strings.subList(0,strings.size()>=6?6:strings.size())){
                                 TextView text = new TextView(Create_Message_Activity.this);
                                 text.setOnClickListener(tagListener);
                                 text.setText(s);
