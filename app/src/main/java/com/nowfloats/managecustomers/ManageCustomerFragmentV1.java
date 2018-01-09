@@ -141,13 +141,6 @@ public class ManageCustomerFragmentV1 extends Fragment {
             headerText.setText(getResources().getString(R.string.manage_customers));
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (headerText != null)
-        headerText.setText(Constants.StoreName);
-    }
-
     private class ManageCustomerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override

@@ -8,9 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -36,7 +34,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -140,8 +137,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -180,7 +175,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     SiteAppearanceFragment mSiteAppearanceFragement;
     ChatFragment chatFragment;
     SocialSharingFragment socialSharingFragment;
-    NewHelpAndSupportFragment helpAndSupportFragment;
+    HelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
@@ -424,6 +419,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
+                headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, homeFragment)
                         .commit();
@@ -1740,7 +1737,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         int days;
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-        prefsEditor.commit();
+        prefsEditor.apply();
         boolean dialogShowFlag = true;
         switch (expireAccount) {
             case LIGHT_HOUSE_EXPIRE:
@@ -1802,7 +1799,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             mExpireDailog.dismiss();
                             prefsEditor = pref.edit();
                             prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                            prefsEditor.commit();
+                            prefsEditor.apply();
                         }
 
                         @Override
@@ -1812,7 +1809,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             prefsEditor = pref.edit();
                             prefsEditor.putBoolean("EXPIRE_DIALOG", true);
                             prefsEditor.putBoolean("IGNORE_CLICKED", true);
-                            prefsEditor.commit();
+                            prefsEditor.apply();
                         }
                     }).show();
 
@@ -2020,27 +2017,27 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
-        helpAndSupportFragment = new NewHelpAndSupportFragment();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
-                            PackageManager.GET_SIGNATURES);
-                    for (Signature signature : info.signatures) {
-                        MessageDigest md = MessageDigest.getInstance("SHA");
-                        md.update(signature.toByteArray());
-                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-
-                } catch (NoSuchAlgorithmException e) {
-
-                }
-
-            }
-        }).start();
+        helpAndSupportFragment = new HelpAndSupportFragment();
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
+//                            PackageManager.GET_SIGNATURES);
+//                    for (Signature signature : info.signatures) {
+//                        MessageDigest md = MessageDigest.getInstance("SHA");
+//                        md.update(signature.toByteArray());
+//                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//                    }
+//                } catch (PackageManager.NameNotFoundException e) {
+//
+//                } catch (NoSuchAlgorithmException e) {
+//
+//                }
+//
+//            }
+//        }).start();
 
 
         new Thread(new Runnable() {

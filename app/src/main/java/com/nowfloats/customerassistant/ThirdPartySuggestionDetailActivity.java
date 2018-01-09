@@ -416,7 +416,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
 
                         mSuggestionDO.setStatus(1);
                         //updateActionsToServer(mSuggestionDO);
-                        Methods.sendEmail(ThirdPartySuggestionDetailActivity.this, mSuggestionDO.getValue());
+                        Methods.sendEmail(ThirdPartySuggestionDetailActivity.this, new String []{mSuggestionDO.getValue()});
                     }
                     else{
                         Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this,"Email is not valid");

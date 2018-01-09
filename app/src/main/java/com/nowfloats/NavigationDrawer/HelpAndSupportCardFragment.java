@@ -106,7 +106,7 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
                 }
                 break;
             case R.id.tv_person_email:
-                Methods.sendEmail(mContext,riaSupportModel.getEmail());
+                Methods.sendEmail(mContext,new String[]{riaSupportModel.getEmail()});
                 break;
             case R.id.tv_person_number:
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());

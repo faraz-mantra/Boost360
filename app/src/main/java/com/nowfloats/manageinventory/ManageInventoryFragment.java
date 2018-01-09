@@ -214,11 +214,4 @@ public class ManageInventoryFragment extends Fragment {
             headerText.setText(getResources().getString(R.string.manage_inventory));
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (headerText != null)
-        headerText.setText(Constants.StoreName);
-    }
-
 }

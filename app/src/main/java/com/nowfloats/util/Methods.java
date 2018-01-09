@@ -730,13 +730,16 @@ public class Methods {
         }
 
     }
-    public static void sendEmail( Context context, String email){
-        try {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" + email));
-            context.startActivity(Intent.createChooser(shareIntent,"Email by:"));
-        }catch(Exception e){
+    public static void sendEmail( Context context, String[] email){
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, email);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        }else {
             Toast.makeText(context, "Unable to send email", Toast.LENGTH_SHORT).show();
         }
+
 
     }
     public static String getFormattedDate(long milliseconds) {
