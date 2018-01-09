@@ -55,9 +55,7 @@ public class Settings_Fragment extends Fragment {
     private String versionName;
     public Activity activity;
     //facebook page constant
-    public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static String FACEBOOK_PAGE_ID = "nowfloats";
-    public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
     private Context mContext;
     //facebook page constant
 

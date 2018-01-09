@@ -545,6 +545,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private View.OnClickListener tagListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            MixPanelController.track(MixPanelController.UPDATE_TIPS_CLICK,null);
             TextView tagText = (TextView) view;
             msg.append(tagText.getText());
         }

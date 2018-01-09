@@ -63,6 +63,8 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
         TextView descriptionTv = view.findViewById(R.id.tv_person_description);
         TextView callActionBtn = view.findViewById(R.id.btn_call_action);
         callActionBtn.setOnClickListener(this);
+        emailTv.setOnClickListener(this);
+        numberTv.setOnClickListener(this);
         TextView requestActionBtn = view.findViewById(R.id.btn_request_callback);
         requestActionBtn.setOnClickListener(this);
 
@@ -104,8 +106,14 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
                     Hotline.showConversations(mContext);
                 }
                 break;
+            case R.id.tv_person_email:
+                Methods.sendEmail(mContext,riaSupportModel.getEmail());
+                break;
+            case R.id.tv_person_number:
+                Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
+                break;
             case R.id.btn_request_callback:
-                // send email
+                Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;
         }
     }

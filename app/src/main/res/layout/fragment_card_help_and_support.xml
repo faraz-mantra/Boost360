@@ -91,7 +91,7 @@
             android:background="@color/gray"
             android:gravity="center"
             android:padding="15dp"
-            android:text="REQUEST CALLBACK"
+            android:text="Call Now"
             android:textColor="@color/white"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_call_action"

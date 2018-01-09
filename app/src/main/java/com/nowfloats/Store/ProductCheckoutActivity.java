@@ -352,7 +352,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
-            if(materialProgress!=null){
+            if(materialProgress!=null && !materialProgress.isShowing()){
                 materialProgress.show();
             }
             if(updateDraftInvoiceModel==null){
@@ -364,7 +364,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
                     if(receiveDraftInvoice!=null){
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         if(receiveDraftInvoice.getError().getErrorList()==null || receiveDraftInvoice.getStatusCode()==200) {
@@ -383,7 +383,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                             //layout.setError(;
                         }
                     }else {
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -393,7 +393,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(materialProgress!=null){
+                    if(materialProgress!=null && materialProgress.isShowing()){
                         materialProgress.dismiss();
                     }
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -401,7 +401,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             });
         }catch (Exception e){
             e.printStackTrace();
-            if(materialProgress!=null){
+            if(materialProgress!=null && materialProgress.isShowing()){
                 materialProgress.dismiss();
             }
             Toast.makeText(this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
@@ -447,7 +447,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                     method = paymentMethod;
                 }
             }
-            if (materialProgress!=null){
+            if(materialProgress!=null && !materialProgress.isShowing()){
                 materialProgress.show();
             }
             storeInterface.initiatePaymentProcess(params, method, new Callback<PaymentTokenResult>() {
@@ -463,7 +463,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                         startActivityForResult(i, OPC_REQUEST_CODE);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }else {
-                        if (materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
@@ -472,7 +472,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if (materialProgress!=null){
+                    if(materialProgress!=null && materialProgress.isShowing()){
                         materialProgress.dismiss();
                     }
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
@@ -532,7 +532,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
-            if(materialProgress!=null){
+            if(materialProgress!=null && !materialProgress.isShowing()){
                 materialProgress.show();
             }
             StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
@@ -540,13 +540,13 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
                     if(receiveDraftInvoice!=null && receiveDraftInvoice.getStatusCode()==200){
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         initializeVal(receiveDraftInvoice.getResult(), false);
                         mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
                     }else {
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -556,7 +556,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(materialProgress!=null){
+                    if(materialProgress!=null && materialProgress.isShowing()){
                         materialProgress.dismiss();
                     }
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -564,7 +564,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             });
         }catch (Exception e){
             e.printStackTrace();
-            if(materialProgress!=null){
+            if(materialProgress!=null && materialProgress.isShowing()){
                 materialProgress.dismiss();
             }
             Toast.makeText(ProductCheckoutActivity.this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();

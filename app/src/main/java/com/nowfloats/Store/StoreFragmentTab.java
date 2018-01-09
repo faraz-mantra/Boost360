@@ -76,13 +76,9 @@ public class StoreFragmentTab extends Fragment {
         if (getArguments() != null){
             mIsFromWildFireMiniDialog = getArguments().getBoolean(IS_FROM_WILD_FIRE_MINI);
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(activity==null){activity = getActivity();}
-                tabPagerAdapter = new StorePagerAdapter(getChildFragmentManager(), activity, mIsFromWildFireMiniDialog);
-            }
-        }).start();
+
+        if(activity==null){activity = getActivity();}
+        tabPagerAdapter = new StorePagerAdapter(getChildFragmentManager(), activity, mIsFromWildFireMiniDialog);
 
     }
 

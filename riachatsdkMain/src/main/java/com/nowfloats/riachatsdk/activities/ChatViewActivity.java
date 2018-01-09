@@ -1,6 +1,7 @@
 package com.nowfloats.riachatsdk.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -279,7 +280,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             chatType = (ChatManager.ChatType) getIntent().getExtras().get(Constants.CHAT_TYPE);
             pref = getSharedPreferences(NF_PREF_NAME, Context.MODE_PRIVATE);
         }
-
+        if (chatType == null) finish();
         switch (chatType) {
             case CREATE_WEBSITE:
                 setContentView(R.layout.activity_chat_view);
@@ -2308,8 +2309,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
          *
          * @param handler
          */
+        @SuppressLint("RestrictedApi")
         public FileUploadResultReceiver(Handler handler) {
             super(handler);
+
         }
 
         @Override

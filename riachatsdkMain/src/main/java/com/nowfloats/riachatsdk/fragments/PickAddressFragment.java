@@ -370,7 +370,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 @Override
                 public void afterTextChanged(Editable s) {
 
-                    if (etCity.getTag() != null && !(boolean) etCity.getTag()) {
+                    if (getActivity() == null || (etCity.getTag() != null && !(boolean) etCity.getTag())) {
 
                     } else {
                         try {

@@ -66,6 +66,7 @@ public class MixPanelController {
     public static final String UPDATE_DB_CRASH = "updateDbCrash";
     public static final String REQUEST_FOR_DICTATE_PLAN = "DictateRequest";
     public static final String REQUEST_FOR_WILDFIRE_PLAN = "WildFireRequest";
+    public static final String UPDATE_TIPS_CLICK = "UpdateTipsClick";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

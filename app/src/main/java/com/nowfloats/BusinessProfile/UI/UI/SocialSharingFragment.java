@@ -585,7 +585,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     private void processGraphResponse(final GraphResponse response, final int from) {
-
+        if (getActivity() == null) return;
         new Thread(new Runnable() {
             @Override
             public void run() {

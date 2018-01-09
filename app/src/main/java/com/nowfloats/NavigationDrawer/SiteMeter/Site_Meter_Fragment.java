@@ -110,7 +110,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 
     private void showLoader(final String message) {
 
-        if (!isAdded()) return;
+        if (getActivity() == null) return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -126,7 +126,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     }
 
     private void hideLoader() {
-
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

@@ -260,7 +260,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
         }
     }
     private void showLoader(final String message) {
-
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -275,7 +275,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     }
 
     private void hideLoader() {
-
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

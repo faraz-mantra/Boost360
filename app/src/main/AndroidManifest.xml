@@ -376,7 +376,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -547,15 +548,21 @@
         <activity
             android:name="com.nowfloats.Image_Gallery.ImageGalleryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
-        <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
-        <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />
-        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity" />
+        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"
+            android:screenOrientation="portrait"/>
 
       <!--  <service
             android:name="com.nowfloats.accessbility.DataAccessibilityServiceV8"
@@ -655,9 +662,12 @@
         <activity
             android:name="com.nowfloats.Store.NewPricingPlansActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.FacebookWildFireActivity" />
-        <activity android:name="com.nowfloats.NavigationDrawer.GoogleWildFireActivity" />
-        <activity android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.FacebookWildFireActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.NavigationDrawer.GoogleWildFireActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -75,7 +75,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
                             }
                         });
 
-                final MaterialDialog materialDialog = builder.show();
+               builder.show();
 
             }
         });

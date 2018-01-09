@@ -454,7 +454,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
     private void showLoader(final String message) {
 
-        if (!isAdded()) return;
+        if (getActivity() == null) return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -470,7 +470,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     }
 
     private void hideLoader() {
-
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
