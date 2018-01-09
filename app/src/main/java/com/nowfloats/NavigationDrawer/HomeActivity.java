@@ -51,6 +51,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.anachat.chatsdk.AnaChatBuilder;
+import com.anachat.chatsdk.AnaCore;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.freshdesk.hotline.Hotline;
@@ -178,7 +180,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     SiteAppearanceFragment mSiteAppearanceFragement;
     ChatFragment chatFragment;
     SocialSharingFragment socialSharingFragment;
-    HelpAndSupportFragment helpAndSupportFragment;
+    NewHelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
@@ -232,6 +234,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
         setHotlineUser();
+        AnaCore.updateToken(this, FirebaseInstanceId.getInstance().getToken(), Constants.ANA_CHAT_API_URL,Constants.ANA_BUSINESS_ID);
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey("url")) {
@@ -1454,7 +1457,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 } else if (nextScreen.equals(getString(R.string.chat))) {
-                    Hotline.showConversations(HomeActivity.this);
+                    new AnaChatBuilder(activity)
+                            .setBusinessId(Constants.ANA_BUSINESS_ID)
+                            .setBaseUrl(Constants.ANA_CHAT_API_URL)
+                            .setThemeColor(R.color.primary)
+                            .setToolBarDescription("hello")
+                            .setToolBarTittle("Ria Chat")
+                            .setToolBarLogo(R.drawable.ria_circle_image)
+                            .start();
+                    //Hotline.showConversations(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
                     if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
@@ -2009,7 +2020,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
-        helpAndSupportFragment = new HelpAndSupportFragment();
+        helpAndSupportFragment = new NewHelpAndSupportFragment();
 
         new Thread(new Runnable() {
             @Override

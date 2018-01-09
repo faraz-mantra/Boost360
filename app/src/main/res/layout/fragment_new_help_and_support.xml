@@ -20,7 +20,7 @@
         attrs:layout_constraintRight_toRightOf="parent"
         attrs:layout_constraintStart_toStartOf="parent"
         attrs:piv_animationType="slide"
-        attrs:piv_count="2"
+        attrs:piv_count="0"
         attrs:piv_radius="3dp"
         attrs:piv_selectedColor="@color/primary_color"
         attrs:piv_unselectedColor="@color/business_button_gray"

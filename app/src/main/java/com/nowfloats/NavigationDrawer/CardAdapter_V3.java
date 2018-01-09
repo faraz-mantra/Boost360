@@ -64,7 +64,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     static ProgressDialog pd ;
 
     public interface Permission{
-        void getPermission();
+         void getPermission();
     }
 
     public CardAdapter_V3(Activity appContext, UserSessionManager session)
@@ -90,7 +90,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             if (Home_Main_Fragment.emptyMsgLayout!=null)
                 Home_Main_Fragment.emptyMsgLayout.setVisibility(View.GONE);
 
-            return welcomeViewHolder ;
+              return welcomeViewHolder ;
         }
         else
         {

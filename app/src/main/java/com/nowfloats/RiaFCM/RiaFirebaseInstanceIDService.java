@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.anachat.chatsdk.AnaCore;
 import com.freshdesk.hotline.Hotline;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.util.Constants;
 import com.webengage.sdk.android.WebEngage;
 
 /**
@@ -28,6 +30,7 @@ public class RiaFirebaseInstanceIDService extends FirebaseInstanceIdService{
         saveTokenToPreferenceAndUpload(refreshedToken);
         if(refreshedToken != null) {
             Hotline.getInstance(this).updateGcmRegistrationToken(refreshedToken);
+            AnaCore.updateToken(this, refreshedToken, Constants.ANA_CHAT_API_URL,Constants.ANA_BUSINESS_ID);
             WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         }
     }

@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.freshdesk.hotline.Hotline;
 import com.google.gson.Gson;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Methods;
@@ -103,7 +102,7 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
                 if (NewHelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == NewHelpAndSupportFragment.MemberType.CHC){
                     Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 }else{
-                    Hotline.showConversations(mContext);
+                    ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 }
                 break;
             case R.id.tv_person_email:

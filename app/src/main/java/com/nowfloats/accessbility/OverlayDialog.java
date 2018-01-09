@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.thinksity.R;
 
 /**
@@ -35,8 +34,7 @@ public class OverlayDialog extends AppCompatActivity {
         TextView screenOverlay = (TextView) view.findViewById(R.id.overlay_title);
         screenOverlay.setVisibility(View.GONE);
         try {
-            GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
-            Glide.with(this).load(R.drawable.overlay_gif).into(target);
+            Glide.with(this).asGif().load(R.drawable.overlay_gif).into(image);
         }catch(Exception e){
             e.printStackTrace();
         }

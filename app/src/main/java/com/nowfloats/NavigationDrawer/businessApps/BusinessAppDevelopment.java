@@ -99,8 +99,8 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
 
         //Animation animation = AnimationUtils.loadAnimation(context,R.anim.progressbar_anim);
         Glide.with(context)
-                .load(R.drawable.progress_bar)
                 .asGif()
+                .load(R.drawable.progress_bar)
                 .into(back);
 
         String logo = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
