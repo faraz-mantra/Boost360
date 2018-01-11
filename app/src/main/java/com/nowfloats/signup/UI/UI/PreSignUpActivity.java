@@ -64,6 +64,7 @@ public class PreSignUpActivity extends FragmentActivity {
 
                 MixPanelController.track(EventKeysWL.LOGIN_BUTTON, null);
                 Intent intent = new Intent(PreSignUpActivity.this, Login_MainActivity.class);
+                intent.putExtras(getIntent());
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

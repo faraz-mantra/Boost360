@@ -355,6 +355,10 @@
             android:name="com.nowfloats.NavigationDrawer.Create_Message_Activity"
             android:label="@string/title_activity_create__message_"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="create_update"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.NavigationDrawer.HomeActivity" />
@@ -371,7 +375,6 @@
             <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="create_update"
+        android:enabled="true"
+        android:icon="@drawable/ria_circle_image"
+        android:shortcutShortLabel="@string/update"
+        android:shortcutLongLabel="@string/post_update"
+        android:shortcutDisabledMessage="@string/renew_light_house_plan">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.biz2.nowfloats"
+            android:targetClass="com.nowfloats.NavigationDrawer.HomeActivity" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.biz2.nowfloats"
+            android:targetClass="com.nowfloats.NavigationDrawer.Create_Message_Activity" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+    </shortcut>
+</shortcuts>

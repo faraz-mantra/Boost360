@@ -123,6 +123,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private CardView image_card,title_card,message_card;
     private ImageView deleteButton,editButton, ivSpeakUpdate;
     private boolean isMsgChanged = false,isImageChanged = false;
+    public static final String SHORTCUT_ID = "create_update";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

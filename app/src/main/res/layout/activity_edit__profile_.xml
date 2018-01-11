@@ -242,8 +242,7 @@
                         android:layout_height="wrap_content"
                         fontPath="Roboto-Light.ttf"
                         android:hint="@string/business_description"
-                        android:text=""
-                        android:inputType="textCapSentences"
+                        android:inputType="textCapSentences|textMultiLine"
                         android:maxLines="3"
                         tools:ignore="MissingPrefix" />
                     <!--<TextView`

@@ -43,7 +43,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -72,7 +71,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
-import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageAdapter;
@@ -97,7 +95,6 @@ import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
-import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.Model.StoreEvent;
@@ -162,24 +159,20 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private Toolbar toolbar;
     private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
-    private Fragment fragmentNavigationDrawer;
     SidePanelFragment drawerFragment;
-    private LinearLayout leftPanelLayout;
     Home_Fragment_Tab homeFragment;
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragmentV1 manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
     Site_Meter_Fragment siteMeterFragment;
     Settings_Fragment settingsFragment;
-    Business_Enquiries_Fragment businessEnquiriesFragment;
-    SiteAppearanceFragment mSiteAppearanceFragement;
     ChatFragment chatFragment;
     SocialSharingFragment socialSharingFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
-    MaterialDialog mExpireDailog;
+    MaterialDialog mExpireDialog;
     public static TextView headerText;
     public static ImageView plusAddButton;
     public static ImageView shareButton;
@@ -232,6 +225,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         AnaCore.updateToken(this, FirebaseInstanceId.getInstance().getToken(), Constants.ANA_CHAT_API_URL,Constants.ANA_BUSINESS_ID);
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();
+
         if (bundle != null && bundle.containsKey("url")) {
             mDeepLinkUrl = bundle.getString("url");
             //DeepLinkPage(mDeepLinkUrl, false);
@@ -1648,8 +1642,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private void openStore() {
-        if (mExpireDailog != null && !mExpireDailog.isCancelled()) {
-            mExpireDailog.dismiss();
+        if (mExpireDialog != null && !mExpireDialog.isCancelled()) {
+            mExpireDialog.dismiss();
         }
         try {
             Intent intent;
@@ -1685,7 +1679,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private void printPlan(ArrayList<StoreModel> allModels) {
         //Log.v("ggg","plans");
         for (int i = 0; i < allModels.size(); i++) {
-            if (mExpireDailog != null && mExpireDailog.isShowing()) {
+            if (mExpireDialog != null && mExpireDialog.isShowing()) {
                 break;
             }
             String temp = allModels.get(i).Name;
@@ -1786,7 +1780,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
 
         if (dialogShowFlag) {
-            mExpireDailog = new MaterialDialog.Builder(this)
+            mExpireDialog = new MaterialDialog.Builder(this)
                     .customView(R.layout.pop_up_restrict_post_message, false)
                     .backgroundColorRes(R.color.white)
                     .positiveText(callUsButtonText)
@@ -1813,8 +1807,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         }
                     }).show();
 
-            mExpireDailog.setCancelable(true);
-            View view = mExpireDailog.getCustomView();
+            mExpireDialog.setCancelable(true);
+            View view = mExpireDialog.getCustomView();
 
             roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
             title.setText(dialogTitle);
@@ -2011,8 +2005,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         manageCustomerFragment = new ManageCustomerFragmentV1();
         manageInventoryFragment = new ManageInventoryFragment();
         settingsFragment = new Settings_Fragment();
-        businessEnquiriesFragment = new Business_Enquiries_Fragment();
-        mSiteAppearanceFragement = new SiteAppearanceFragment();
         chatFragment = new ChatFragment();
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();

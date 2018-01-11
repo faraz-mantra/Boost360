@@ -395,8 +395,6 @@ public class Home_Main_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BoostLog.d("Home_Main_Fragment","onViewCreated");
-        
-
     }
 
     private void startSync() {
