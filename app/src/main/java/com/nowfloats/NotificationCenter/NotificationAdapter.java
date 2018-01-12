@@ -23,7 +23,6 @@ import com.nowfloats.NotificationCenter.Model.AlertModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -183,7 +182,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 if (key.equals("notificationType") || key.equals("Type")) {
                     String alertType = alertData.get(pos).NotificationData.get(i).Value;
                     if (alertType != null && alertType.trim().length() > 0) {
-                        MixPanelController.track("AlertType-" + alertType, null);
                         if (alertType.equals("BLOG")) {
                             blogChk = true;
                         }
@@ -217,7 +215,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         NotificationFragment.getAlertCount(session, alertInterface, bus);
                         //deep linking
                         if (currentUrl != null && currentUrl.trim().length() > 0)
-                            linkInterface.deepLink(currentUrl);
+                            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                                Methods.showFeatureNotAvailDialog(appContext);
+                            }else {
+                                linkInterface.deepLink(currentUrl);
+                            }
                     }
 
                     @Override

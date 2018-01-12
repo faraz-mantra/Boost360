@@ -45,6 +45,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -233,6 +234,10 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     private void selectImage() {
+        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+            Methods.showFeatureNotAvailDialog(getContext());
+            return;
+        }
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
                 .customView(R.layout.featuredimage_popup, true)
                 .show();

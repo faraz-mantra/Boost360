@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -91,9 +92,11 @@ public class ThemeSelectorFragment extends Fragment{
         setLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(setLook.getText().toString().equals("Current look")){
-                    Toast.makeText(mContext, "Your website already has this look", Toast.LENGTH_SHORT).show();
-                }else {
+                if(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(getContext());
+                }else if (setLook.getText().toString().equals("Current look")) {
+                        Toast.makeText(mContext, "Your website already has this look", Toast.LENGTH_SHORT).show();
+                } else {
                     showDialog();
                     if (pos == 0) {
                         setDynamicTheme();

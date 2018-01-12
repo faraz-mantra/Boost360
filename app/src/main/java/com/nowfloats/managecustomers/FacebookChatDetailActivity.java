@@ -38,6 +38,7 @@ import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.managecustomers.models.FacebookMessageModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
@@ -325,11 +326,15 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 chatUserRecycerView.scrollToPosition(chatModelList.size()-1);
                 break;
             case R.id.iv_send_msg:
-                String message = etReply.getText().toString().trim();
-                if(message.length() > 0){
-                    sendData(message);
+                if(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(this);
+                }else {
+                    String message = etReply.getText().toString().trim();
+                    if (message.length() > 0) {
+                        sendData(message);
+                    }
+                    etReply.setText("");
                 }
-                etReply.setText("");
                 break;
             default:
                 break;

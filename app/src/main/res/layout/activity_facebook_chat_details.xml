@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -57,7 +58,8 @@
                 android:paddingLeft="@dimen/margin_8"
                 android:paddingRight="@dimen/margin_12"
                 android:paddingTop="@dimen/margin_8"
-                android:src="@drawable/ic_send_message_btn" />
+                android:src="@drawable/ic_send_message_btn"
+                android:layout_marginLeft="@dimen/margin_10" />
         </LinearLayout>
 
         <ImageView
@@ -70,7 +72,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/scroll_down_shape"
             android:paddingTop="5dp"
-            android:src="@drawable/ic_keyboard_arrow_down_black_40dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_40dp"
             android:tint="@color/white"
             android:visibility="gone" />
 

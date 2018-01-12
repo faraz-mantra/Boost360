@@ -33,7 +33,6 @@ import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
@@ -353,31 +352,8 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                         Intent businessHoursIntent = new Intent(activity, BusinessHoursActivity.class);
                                         startActivity(businessHoursIntent);
                                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    } else {
-                                        new MaterialDialog.Builder(activity)
-                                                .title(getResources().getString(R.string.features_not_available))
-                                                .content(getResources().getString(R.string.check_store_for_upgrade_info))
-                                                .positiveText(getResources().getString(R.string.goto_store))
-                                                .negativeText(getResources().getString(R.string.cancel))
-                                                .positiveColorRes(R.color.primaryColor)
-                                                .negativeColorRes(R.color.light_gray)
-                                                .callback(new MaterialDialog.ButtonCallback() {
-                                                    @Override
-                                                    public void onNegative(MaterialDialog dialog) {
-                                                        super.onNegative(dialog);
-                                                        dialog.dismiss();
-                                                    }
-
-                                                    @Override
-                                                    public void onPositive(MaterialDialog dialog) {
-                                                        super.onPositive(dialog);
-//                                                    Constants.showStoreScreen = true ;
-                                                        Home_Fragment_Tab.viewPager = null;
-                                                        dialog.dismiss();
-//                                                    activity.getSupportFragmentManager().popBackStack();
-                                                        ((SidePanelFragment.OnItemClickListener) activity).onClick(getResources().getString(R.string.store));
-                                                    }
-                                                }).show();
+                                    } else  if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                                        Methods.showFeatureNotAvailDialog(getContext());
                                     }
                                 }
                             });

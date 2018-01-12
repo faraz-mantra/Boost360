@@ -164,7 +164,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     }
                 });
 
-                holder.fullLayout.setOnLongClickListener(new View.OnLongClickListener() {
+              /*  holder.fullLayout.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 //                        if(prev_view!=null){
@@ -201,7 +201,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //                        Methods.showSnackBarPositive(appContext, "Long press...." + POs);
                         return true;
                     }
-                });
+                });*/
 
                 /*holder.fullLayout.setOnTouchListener(new View.OnTouchListener() {
                     @Override

@@ -980,20 +980,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         message.setText(Methods.fromHtml(dialogMessage));
     }
 
-
-    @Override
-    public void onStart() {
-
-        super.onStart();
-
-    }
-
-    @Override
-    public void onStop() {
-
-        super.onStop();
-    }
-
     private void showLoader(final String message) {
 
         runOnUiThread(new Runnable() {

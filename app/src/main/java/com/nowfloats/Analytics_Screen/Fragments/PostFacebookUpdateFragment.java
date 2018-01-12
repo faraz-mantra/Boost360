@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,11 +79,9 @@ public class PostFacebookUpdateFragment extends Fragment {
         postUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-                if(TextUtils.isEmpty(paymentState) || TextUtils.isEmpty(paymentLevel)){
-
-                }else if(Integer.valueOf(paymentState)>=0){
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(getContext());
+                }else{
                     Intent i = new Intent(context, Create_Message_Activity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

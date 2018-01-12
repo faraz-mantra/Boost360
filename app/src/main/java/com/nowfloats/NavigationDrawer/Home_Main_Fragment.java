@@ -377,7 +377,7 @@ public class Home_Main_Fragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    mCallback.onRenewPlanSelected();
+                   Methods.showFeatureNotAvailDialog(getContext());
                 }
                 else {
                     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);

@@ -172,85 +172,93 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mRiaNodedata!=null) {
-                    RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
-                            mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
-                            mRiaNodedata.getButtonLabel(),
-                            RiaEventLogger.EventStatus.COMPLETED.getValue());
-                    mRiaNodedata = null;
-                }
-                boolean flag = true;
-                final String name = titleTxt.getText().toString(),html = mHtmlFormat;
-                if (!(titleTxt.getText().toString().trim().length()>0)){
-                    flag = false;
-                    Methods.showSnackBarNegative(activity,getString(R.string.enter_the_title));
-                }else if(!(html.trim().length()>0)){
-                    flag = false;
-                    Methods.showSnackBarNegative(activity,getString(R.string.enter_the_description));
-                }
-                CustomPageInterface anInterface = Constants.restAdapter.create(CustomPageInterface.class);
-                if (flag){
-                    final MaterialDialog materialProgress = new MaterialDialog.Builder(activity)
-                            .widgetColorRes(R.color.accentColor)
-                            .content(getString(R.string.loading))
-                            .progress(true, 0)
-                            .show();
-                    materialProgress.setCancelable(false);
-                    try {
-                        if (!editCheck) {
-                            CreatePageModel pageModel = new CreatePageModel(name, html,
-                                    session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId);
-                            anInterface.createPage(pageModel, new Callback<String>() {
-                                @Override
-                                public void success(String s, Response response) {
-                                    materialProgress.dismiss();
-                                    if (s!=null &&s.toString().trim().length()>0){
-                                        //Log.d("Create page success", "");
-                                        MixPanelController.track("CreateCustomPage", null);
-                                        long time = System.currentTimeMillis();
-                                        CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                                        Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
-                                        finish();
-                                    }else{
-                                        Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                                        //Log.d("Create page Fail", "");
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(CreateCustomPageActivity.this);
+                }else {
+                    if (mRiaNodedata != null) {
+                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                                mRiaNodedata.getButtonLabel(),
+                                RiaEventLogger.EventStatus.COMPLETED.getValue());
+                        mRiaNodedata = null;
+                    }
+                    boolean flag = true;
+                    final String name = titleTxt.getText().toString(), html = mHtmlFormat;
+                    if (!(titleTxt.getText().toString().trim().length() > 0)) {
+                        flag = false;
+                        Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
+                    } else if (!(html.trim().length() > 0)) {
+                        flag = false;
+                        Methods.showSnackBarNegative(activity, getString(R.string.enter_the_description));
+                    }
+                    CustomPageInterface anInterface = Constants.restAdapter.create(CustomPageInterface.class);
+                    if (flag) {
+                        final MaterialDialog materialProgress = new MaterialDialog.Builder(activity)
+                                .widgetColorRes(R.color.accentColor)
+                                .content(getString(R.string.loading))
+                                .progress(true, 0)
+                                .show();
+                        materialProgress.setCancelable(false);
+                        try {
+                            if (!editCheck) {
+                                CreatePageModel pageModel = new CreatePageModel(name, html,
+                                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId);
+                                anInterface.createPage(pageModel, new Callback<String>() {
+                                    @Override
+                                    public void success(String s, Response response) {
+                                        materialProgress.dismiss();
+                                        if (s != null && s.toString().trim().length() > 0) {
+                                            //Log.d("Create page success", "");
+                                            MixPanelController.track("CreateCustomPage", null);
+                                            long time = System.currentTimeMillis();
+                                            CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                                            Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
+                                            finish();
+                                        } else {
+                                            Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
+                                            //Log.d("Create page Fail", "");
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    materialProgress.dismiss();
-                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                    //Log.d("Create page Fail", "" + error.getMessage());
-                                }
-                            });
-                        } else {
-                            HashMap<String, String> map = new HashMap<String, String>();
-                            map.put("DisplayName", name);
-                            map.put("HtmlCode", html);
-                            map.put("PageId", "" + curPageid);
-                            map.put("Tag", "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-                            map.put("clientId", Constants.clientId);
-                            anInterface.updatePage(map, new Callback<String>() {
-                                @Override
-                                public void success(String s, Response response) {
-                                    materialProgress.dismiss();
-                                    MixPanelController.track("UpdateCustomPage", null);
-                                    //Log.d("Update page success", "");
-                                    CustomPageFragment.dataModel.get(curPos).DisplayName = name;
-                                    Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
-                                    finish();
-                                }
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        materialProgress.dismiss();
+                                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        //Log.d("Create page Fail", "" + error.getMessage());
+                                    }
+                                });
+                            } else {
+                                HashMap<String, String> map = new HashMap<String, String>();
+                                map.put("DisplayName", name);
+                                map.put("HtmlCode", html);
+                                map.put("PageId", "" + curPageid);
+                                map.put("Tag", "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                                map.put("clientId", Constants.clientId);
+                                anInterface.updatePage(map, new Callback<String>() {
+                                    @Override
+                                    public void success(String s, Response response) {
+                                        materialProgress.dismiss();
+                                        MixPanelController.track("UpdateCustomPage", null);
+                                        //Log.d("Update page success", "");
+                                        CustomPageFragment.dataModel.get(curPos).DisplayName = name;
+                                        Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
+                                        finish();
+                                    }
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    materialProgress.dismiss();
-                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                    //Log.d("Update page Fail", "" + error.getMessage());
-                                }
-                            });
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        materialProgress.dismiss();
+                                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        //Log.d("Update page Fail", "" + error.getMessage());
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                            materialProgress.dismiss();
                         }
-                    }catch(Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again)); materialProgress.dismiss();}
+                    }
                 }
             }
         });

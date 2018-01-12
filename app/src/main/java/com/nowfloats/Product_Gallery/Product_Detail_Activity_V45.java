@@ -339,80 +339,84 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                     save.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATE, null);
-                            try {
-                                if (mIsApEnabled && (TextUtils.isEmpty(etNetAmount.getText().toString().trim()) ||
-                                        TextUtils.isEmpty(etShippingCharge.getText().toString().trim()) ||
-                                        TextUtils.isEmpty(etTransactionCharge.getText().toString().trim()))) {
-                                    Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "Please enter the shipping metrices");
-                                    return;
-                                } else if (mIsApEnabled && Double.parseDouble(etNetAmount.getText().toString().trim())
-                                        < Double.parseDouble(etShippingCharge.getText().toString().trim())
-                                        ) {
-                                    Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "NetAmount can't be less than Shipping charge");
-                                    return;
-                                }
-                                materialProgress = new MaterialDialog.Builder(activity)
-                                        .widgetColorRes(R.color.accentColor)
-                                        .content(getString(R.string.updating))
-                                        .progress(true, 0).show();
-                                materialProgress.setCancelable(false);
-                                values = new HashMap<String, String>();
-                                boolean flag = ValidateFields(true);
-                                ArrayList<UpdateValue> updates = new ArrayList<UpdateValue>();
-                                for (Map.Entry<String, String> entry : values.entrySet()) {
-                                    //String key = .toUpperCase();
-                                    //BoostLog.d(Product_Detail_Activity.class.getName(), key);
-                                    updates.add(new UpdateValue(entry.getKey(), entry.getValue()));
-                                }
+                            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                                Methods.showFeatureNotAvailDialog(Product_Detail_Activity_V45.this);
+                            }else {
+                                MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATE, null);
+                                try {
+                                    if (mIsApEnabled && (TextUtils.isEmpty(etNetAmount.getText().toString().trim()) ||
+                                            TextUtils.isEmpty(etShippingCharge.getText().toString().trim()) ||
+                                            TextUtils.isEmpty(etTransactionCharge.getText().toString().trim()))) {
+                                        Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "Please enter the shipping metrices");
+                                        return;
+                                    } else if (mIsApEnabled && Double.parseDouble(etNetAmount.getText().toString().trim())
+                                            < Double.parseDouble(etShippingCharge.getText().toString().trim())
+                                            ) {
+                                        Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "NetAmount can't be less than Shipping charge");
+                                        return;
+                                    }
+                                    materialProgress = new MaterialDialog.Builder(activity)
+                                            .widgetColorRes(R.color.accentColor)
+                                            .content(getString(R.string.updating))
+                                            .progress(true, 0).show();
+                                    materialProgress.setCancelable(false);
+                                    values = new HashMap<String, String>();
+                                    boolean flag = ValidateFields(true);
+                                    ArrayList<UpdateValue> updates = new ArrayList<UpdateValue>();
+                                    for (Map.Entry<String, String> entry : values.entrySet()) {
+                                        //String key = .toUpperCase();
+                                        //BoostLog.d(Product_Detail_Activity.class.getName(), key);
+                                        updates.add(new UpdateValue(entry.getKey(), entry.getValue()));
+                                    }
 
-                                if (flag) {
-                                    BoostLog.d("Product_Detail_Activity", updates.toString());
-                                    Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId, product_data._id, updates);
-                                    //BoostLog.d()
-                                    productInterface.put_UpdateGalleryUpdate(model, new Callback<ArrayList<String>>() {
-                                        @Override
-                                        public void success(ArrayList<String> strings, Response response) {
-                                            Log.d("UPdate success-Response", "" + response);
-                                            Log.d("UPdate success-", "" + strings.size());
-                                            new Thread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    try {
-                                                        Thread.sleep(3000);
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            materialProgress.dismiss();
-                                                            invokeGetProductList();
-                                                            Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
+                                    if (flag) {
+                                        BoostLog.d("Product_Detail_Activity", updates.toString());
+                                        Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId, product_data._id, updates);
+                                        //BoostLog.d()
+                                        productInterface.put_UpdateGalleryUpdate(model, new Callback<ArrayList<String>>() {
+                                            @Override
+                                            public void success(ArrayList<String> strings, Response response) {
+                                                Log.d("UPdate success-Response", "" + response);
+                                                Log.d("UPdate success-", "" + strings.size());
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        try {
+                                                            Thread.sleep(3000);
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
                                                         }
-                                                    });
-                                                }
-                                            }).start();
-                                        }
+                                                        runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                materialProgress.dismiss();
+                                                                invokeGetProductList();
+                                                                Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
+                                                            }
+                                                        });
+                                                    }
+                                                }).start();
+                                            }
 
-                                        @Override
-                                        public void failure(RetrofitError error) {
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    materialProgress.dismiss();
-                                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                                }
-                                            });
-                                        }
-                                    });
-                                } else {
+                                            @Override
+                                            public void failure(RetrofitError error) {
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        materialProgress.dismiss();
+                                                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        materialProgress.dismiss();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                     materialProgress.dismiss();
+                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                materialProgress.dismiss();
-                                Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                             }
                         }
                     });

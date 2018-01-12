@@ -181,16 +181,19 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(getContext());
+                }else {
+                    MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_ADD, null);
+                    Intent intent;
 
-                MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_ADD, null);
-                Intent intent;
+                    intent = new Intent(activity, Product_Detail_Activity_V45.class);
+                    intent.putExtra("new", "");
+                    intent.putExtra("isApEnabled", mIsApEnabled);
 
-                intent = new Intent(activity, Product_Detail_Activity_V45.class);
-                intent.putExtra("new", "");
-                intent.putExtra("isApEnabled", mIsApEnabled);
-
-                startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
 
