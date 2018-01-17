@@ -84,10 +84,15 @@ public class ReadMessages extends Service {
                         .build();
                 FirebaseApp secondApp = null;
                 try {
-                    secondApp = FirebaseApp.getInstance("second app");
-                } catch (Exception e) {
-                    secondApp = FirebaseApp.initializeApp(getApplicationContext(), options, "second app");
+                    secondApp = FirebaseApp.initializeApp(ReadMessages.this, options, "second app");
+                }catch(Exception e) {
+                    try {
+                        secondApp = FirebaseApp.getInstance("second app");
+                    }catch(Exception e1){
+                        e1.printStackTrace();
+                    }
                 }
+                if(secondApp == null) return;
                 FirebaseDatabase secondDatabase = FirebaseDatabase.getInstance(secondApp);
                 DatabaseReference mDatabase = secondDatabase.getReference();
                 readMessage(mDatabase);

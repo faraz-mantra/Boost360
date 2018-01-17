@@ -77,7 +77,7 @@ public class MonthFragment extends Fragment {
             visitsThisWhat=titleMain;
             weeks = getResources().getStringArray(R.array.weeks);
             shortArray=Arrays.copyOfRange(weeks, 0, data.length);
-            getWeeksAcordingToMonth(getArguments().getInt(MONTH_PARAMETER));
+            getWeeksAccordingToMonth(getArguments().getInt(MONTH_PARAMETER));
         }
         else {
             title=getString(R.string.Month);
@@ -199,7 +199,7 @@ public class MonthFragment extends Fragment {
     public interface OnYearDataClickListener{
         public void onYearDataClicked(int month);
     }
-   public void getWeeksAcordingToMonth(int month){
+   public void getWeeksAccordingToMonth(int month){
        Calendar currentCalendar = Calendar.getInstance();
 
        int end =-1;

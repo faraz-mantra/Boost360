@@ -72,7 +72,6 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         if (!isAdded())  return;
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
         if (Methods.isOnline(getActivity())){

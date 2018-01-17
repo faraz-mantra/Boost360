@@ -1551,5 +1551,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="wildfire_ad_cost_text"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
     <string name="dictate_definition"><![CDATA[NowFloats Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
     <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
+    <string name="Year">year</string>
 
 </resources>

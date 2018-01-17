@@ -83,7 +83,8 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
                 descriptionTv.setText("Your Account Manager");
                 break;
             case DEFAULT:
-                callActionBtn.setText("CHAT NOW");
+                callActionBtn.setText("CALL NOW");
+                requestActionBtn.setVisibility(View.GONE);
                 personImage.setImageResource(R.drawable.ria_circle_image);
                 descriptionTv.setText("Customer Support");
             default:
@@ -99,10 +100,10 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_call_action:
-                if (NewHelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == NewHelpAndSupportFragment.MemberType.CHC){
-                    Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
-                }else{
+                if (NewHelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == NewHelpAndSupportFragment.MemberType.WEB){
                     ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
+                }else{
+                    Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 }
                 break;
             case R.id.tv_person_email:
