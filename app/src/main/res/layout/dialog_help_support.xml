@@ -12,7 +12,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="24dp"
         android:layout_marginLeft="24dp"
-        android:text="demonstrate us how can we bold, italic or underline TextView text programmatically at run time in java file. setTypeface() method allow us to set the typeface and style in which the text should be displayed in a widget. all Typeface"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/tv_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

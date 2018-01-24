@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.anachat.chatsdk.AnaCore;
 import com.facebook.login.LoginManager;
-import com.freshdesk.hotline.Hotline;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -827,47 +827,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         // Clearing all user data from Shared Preferences
         unsubscribeRIA(getFPID(), activity);
 
-
-
-//        AppController.getInstance().clearApplicationData();
-//
-//        Date DATE = new Date(System.currentTimeMillis());
-//        String dateString = DATE.toString();
-//
-//        MixPanelController.setProperties("LastLogoutDate", dateString);
-//
-//        // After logout redirect user to Login Activity
-//
-//        Constants.clearStore();
-//        Constants.StorebizQueries 		= new ArrayList<>();
-//        Constants.storeSecondaryImages = null ;
-//        Constants.StoreUserSearch		= new DataMap();
-//        Constants.StorebizEnterpriseQueries 		= new ArrayList<Entity_model>();
-//        Constants.StorePackageIds = new ArrayList<>();
-//        Constants.widgets	=	new HashSet<String>();
-//        Constants.StoreWidgets = new ArrayList<>();
-//
-//        Constants.ImageGalleryWidget = false ;
-//        Constants.BusinessTimingsWidget = false ;
-//        Constants.BusinessEnquiryWidget = false ;
-//        HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
-//        Analytics_Fragment.subscriberCount.setText("0");
-//        Analytics_Fragment.visitCount.setText("0");
-//        Constants.visitorsCount = "0" ;
-//        Constants.subscribersCount = "0";
-//        System.gc();
-//
-//        Intent i = new Intent(_context, Login_MainActivity.class);
-//        // Closing all the Activities
-//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//        // Add new Flag to start new Activity
-//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//        // Staring Login Activity
-//        _context.startActivity(i);
-//
-//        activity.finish();
     }
 
     public void unsubscribeRIA(String fpID, final Activity activity)
@@ -887,6 +846,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if(pd.isShowing())
                 pd.dismiss();
+                AnaCore.logoutUser(activity);
                 DataBase db = new DataBase(activity);
                 DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
                 db.deleteLoginStatus();
@@ -926,9 +886,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 //Analytics_Fragment.visitCount.setText("0");
                 _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 //Mobihelp.clearUserData(activity.getApplicationContext());
-                if(Hotline.getInstance(activity)!=null) {
-                    Hotline.clearUserData(activity);
-                }
+
                 MixPanelController.track("LogoutSuccess", null);
                 //activity.finish();
                 Intent i = new Intent(activity, SplashScreen_Activity.class);

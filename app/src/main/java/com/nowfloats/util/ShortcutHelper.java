@@ -23,7 +23,9 @@ public class ShortcutHelper {
 
     private Context mContext;
     private ShortcutManager shortcutManager;
-
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")) {
+            ShortcutHelper.get(this).publishShortcuts();
+        }*/
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     private  ShortcutHelper(Context context){
         mContext = context;

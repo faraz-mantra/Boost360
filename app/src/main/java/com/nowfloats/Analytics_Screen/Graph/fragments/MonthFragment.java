@@ -201,10 +201,10 @@ public class MonthFragment extends Fragment {
     }
    public void getWeeksAccordingToMonth(int month){
        Calendar currentCalendar = Calendar.getInstance();
-
+       currentCalendar.setFirstDayOfWeek(Calendar.MONDAY);
        int end =-1;
        Calendar calendar = Calendar.getInstance();
-       calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+       calendar.setFirstDayOfWeek(Calendar.MONDAY);
        calendar.set(Calendar.MONTH,month-1);
        calendar.set(Calendar.DATE,1);
        int currMonth = calendar.get(Calendar.MONTH);
@@ -223,8 +223,7 @@ public class MonthFragment extends Fragment {
 
            }else if(end == -1){
 
-               if(currentCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
-                       currentCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)){
+               if(currentCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) && currentCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)){
                    lastDay = calendar.get(Calendar.DAY_OF_MONTH);
                    break;
 

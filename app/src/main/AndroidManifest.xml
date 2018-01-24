@@ -209,16 +209,6 @@
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false" />-->
-        <provider
-            android:name="com.nowfloats.NavigationDrawer.HotlineFileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            android:authorities="${applicationId}.provider">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/hotline_provider_paths"/>
-
-        </provider>
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
@@ -507,7 +497,8 @@
 
         <activity
             android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name="com.nowfloats.Analytics_Screen.ShowVmnCallActivity"
             android:screenOrientation="portrait" />
@@ -670,6 +661,8 @@
         <activity android:name="com.nowfloats.NavigationDrawer.GoogleWildFireActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.Analytics_Screen.Graph.SiteViewAnalytics"
             android:screenOrientation="portrait"/>
     </application>
 

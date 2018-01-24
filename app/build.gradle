@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2018010002
+        versionCode 2018010023
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -100,7 +100,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.8.9"
+            versionName "4.9.0"
             applicationId "com.biz2.nowfloats"
             dimension "default"
         }
@@ -145,7 +145,7 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.google.android.gms:play-services:10.2.1'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
-    compile 'com.kitsune:anachatsdk:1.9@aar'
+    compile 'com.kitsune:anachatsdk:1.16@aar'
     compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.github.bumptech.glide:glide:4.1.1'
@@ -174,7 +174,6 @@ dependencies {
     compile 'me.biubiubiu.justifytext:library:1.1'
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
-    compile 'com.github.freshdesk:hotline-android:1.2.0'
     compile 'com.mixpanel.android:mixpanel-android:5.+'
     compile 'com.android.support:gridlayout-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'

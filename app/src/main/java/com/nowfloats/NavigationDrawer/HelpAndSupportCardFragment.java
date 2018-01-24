@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 /**
@@ -74,13 +75,13 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
                 view.findViewById(R.id.tv_email).setVisibility(View.GONE);
                 callActionBtn.setText("CALL NOW");
                 requestActionBtn.setVisibility(View.GONE);
-                descriptionTv.setText("Your Field Consultant");
+                descriptionTv.setText("Your Local City Consultant");
                 personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_consultant_female:R.drawable.ic_consultant_male);
                 break;
             case WEB:
                 callActionBtn.setText("CHAT NOW");
                 personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_support_female:R.drawable.ic_support_male);
-                descriptionTv.setText("Your Account Manager");
+                descriptionTv.setText("Your Web Consultant");
                 break;
             case DEFAULT:
                 callActionBtn.setText("CALL NOW");
@@ -104,15 +105,19 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
                     ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 }else{
                     Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
+                    MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 }
                 break;
             case R.id.tv_person_email:
+                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_EMAIL,null);
                 Methods.sendEmail(mContext,new String[]{riaSupportModel.getEmail()});
                 break;
             case R.id.tv_person_number:
+                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;
             case R.id.btn_request_callback:
+                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;
         }

@@ -30,6 +30,7 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 import static com.nowfloats.bubble.BubblesService.ACTION_KILL_DIALOG;
 
 /**
@@ -60,7 +61,9 @@ public class Home_Fragment_Tab extends Fragment {
     public void onResume() {
         super.onResume();
         bus.register(this);
-
+        if (headerText != null){
+            headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        }
         if (viewPager != null) {
             if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);

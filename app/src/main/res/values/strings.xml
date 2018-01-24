@@ -1199,14 +1199,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
     <string-array name="tabs">
         <item>Week</item>
-        <item>Month
-        </item>
+        <item>Month</item>
         <item>Year</item>
     </string-array>
     <string-array name="days">
         <item>Sun</item>
         <item>Mon</item>
-        <item>Tues</item>
+        <item>Tue</item>
         <item>Wed</item>
         <item>Thu</item>
         <item>Fri</item>
@@ -1546,7 +1545,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
-    <string name="contact_us_message">If your query is still unanswered, please contact us at <b>ria@nowfloats.com</b> or call our toll-free number <b>1860&#8211;123&#8211;1233</b>.</string>
+    <string name="contact_us_message">If your query is still unanswered, please check <b>FAQs</b> or contact us at <b>ria@nowfloats.com</b> or call our toll-free number <b>1860&#8211;123&#8211;1233</b>.</string>
     <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
     <string name="wildfire_ad_cost_text"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
     <string name="dictate_definition"><![CDATA[NowFloats Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>

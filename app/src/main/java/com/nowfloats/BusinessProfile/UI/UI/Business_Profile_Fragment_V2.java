@@ -187,15 +187,22 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
 
                             TextView editTextView = (TextView) mainView.findViewById(R.id.tv_edit_profile);
-                            editTextView.setOnClickListener(new View.OnClickListener() {
+//                            editTextView.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
+//                                    startActivity(businessAddress);
+//                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                }
+//                            });
+                            mainView.findViewById(R.id.cv_edit_profile).setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View v) {
+                                public void onClick(View view) {
                                     Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
                                     startActivity(businessAddress);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
                             });
-
 
                             View businessProfileList = mainView.findViewById(R.id.businessProfile_List_ProfileV2);
 
@@ -832,8 +839,6 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     @Override
     public void onDetach() {
         super.onDetach();
-        if(HomeActivity.headerText != null)
-         HomeActivity.headerText.setText(Constants.StoreName);
     }
 
 

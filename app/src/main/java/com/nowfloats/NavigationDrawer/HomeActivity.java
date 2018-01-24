@@ -49,9 +49,6 @@ import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.AnaCore;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.freshdesk.hotline.Hotline;
-import com.freshdesk.hotline.HotlineConfig;
-import com.freshdesk.hotline.HotlineUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
@@ -164,7 +161,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Settings_Fragment settingsFragment;
     ChatFragment chatFragment;
     SocialSharingFragment socialSharingFragment;
-    HelpAndSupportFragment helpAndSupportFragment;
+    NewHelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
@@ -217,8 +214,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Methods.isOnline(HomeActivity.this);
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
-        setHotlineUser();
-        AnaCore.updateToken(this, FirebaseInstanceId.getInstance().getToken(), Constants.ANA_CHAT_API_URL,Constants.ANA_BUSINESS_ID);
+        //setHotlineUser();
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();
 
@@ -251,23 +247,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private void setHotlineUser() {
-        HotlineConfig hlConfig = new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb", "a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
-
-        hlConfig.setVoiceMessagingEnabled(true);
-        hlConfig.setCameraCaptureEnabled(false);
-        hlConfig.setPictureMessagingEnabled(true);
-
-        Hotline.getInstance(this).init(hlConfig);
-
-        HotlineUser hlUser = Hotline.getInstance(this).getUser();
-        hlUser.setName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        hlUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        hlUser.setPhone(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-        Hotline.getInstance(this).updateUser(hlUser);
-
-    }
+//    private void setHotlineUser() {
+//        HotlineConfig hlConfig = new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb", "a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
+//
+//        hlConfig.setVoiceMessagingEnabled(true);
+//        hlConfig.setCameraCaptureEnabled(false);
+//        hlConfig.setPictureMessagingEnabled(true);
+//
+//        Hotline.getInstance(this).init(hlConfig);
+//
+//        HotlineUser hlUser = Hotline.getInstance(this).getUser();
+//        hlUser.setName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+//        hlUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+//        hlUser.setPhone(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE),
+//                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+//        Hotline.getInstance(this).updateUser(hlUser);
+//
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -1163,14 +1159,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 } else if (nextScreen.equals(getString(R.string.chat))) {
-                    new AnaChatBuilder(activity)
-                            .setBusinessId(Constants.ANA_BUSINESS_ID)
-                            .setBaseUrl(Constants.ANA_CHAT_API_URL)
-                            .setThemeColor(R.color.primary)
-                            .setToolBarDescription("hello")
-                            .setToolBarTittle("Ria Chat")
-                            .setToolBarLogo(R.drawable.ria_circle_image)
-                            .start();
+                    if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT,null);
+                        new AnaChatBuilder(activity)
+                                .setBusinessId(Constants.ANA_BUSINESS_ID)
+                                .setBaseUrl(Constants.ANA_CHAT_API_URL)
+                                .setThemeColor(R.color.primary)
+                                .setToolBarDescription("Available")
+                                .setToolBarTittle("Ria Chat")
+                                .setToolBarLogo(R.drawable.ria_circle_image)
+                                .start();
+                    }
                     //Hotline.showConversations(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
                     if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
@@ -1497,6 +1496,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
 
         setContentView(R.layout.activity_home_v3);
+        if (FirebaseInstanceId.getInstance().getToken() != null) {
+            AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().getToken());
+            AnaCore.registerUser(this, session.getFpTag(),  Constants.ANA_BUSINESS_ID,Constants.ANA_CHAT_API_URL);
+        }
         getNfxTokenData();
         BoostLog.d(TAG, "In on CreateView");
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
@@ -1514,7 +1517,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
-        helpAndSupportFragment = new HelpAndSupportFragment();
+        helpAndSupportFragment = new NewHelpAndSupportFragment();
 //
 //        new Thread(new Runnable() {
 //            @Override

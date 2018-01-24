@@ -54,7 +54,8 @@
 -keep class org.lucasr.twowayview.** { *; }
 -dontwarn okio.**
 -dontwarn retrofit.**
--dontwarn com.freshdesk.hotline.**
+-dontwarn com.bumptech.glide.**
+-dontwarn com.anachat.chatsdk.**
 -dontwarn uk.co.chrishenx.calligraphy.**
 -keep class retrofit.** { *; }
 -keepattributes Signature

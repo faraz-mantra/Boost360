@@ -827,29 +827,19 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     private void showLoader(final String message) {
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setCanceledOnTouchOutside(false);
-                }
-                progressDialog.setMessage(message);
-                progressDialog.show();
-            }
-        });
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.setMessage(message);
+        progressDialog.show();
     }
 
     private void hideLoader() {
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-            }
-        });
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
     private void getFacebookProfile(final AccessToken accessToken, final int from) {
         Bundle parameters = new Bundle();

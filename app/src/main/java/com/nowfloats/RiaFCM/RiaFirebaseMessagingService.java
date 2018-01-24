@@ -18,7 +18,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
-import com.freshdesk.hotline.Hotline;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
@@ -46,19 +45,16 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        if (Hotline.isHotlineNotification(remoteMessage)) {
-            Hotline.getInstance(this).handleFcmMessage(remoteMessage);
-        } else {
-            Map<String,String> mapResult = remoteMessage.getData();
-            if (mapResult.containsKey("payload")) {
-                AnaCore.handlePush(this, mapResult.get("payload"));
-            }else{
+        Map<String,String> mapResult = remoteMessage.getData();
+        if (mapResult.containsKey("payload")) {
+            AnaCore.handlePush(this, mapResult.get("payload"));
+        }else{
 
-                sendNotification(mapResult);
-                Constants.GCM_Msg = true;
-            }
-
+            sendNotification(mapResult);
+            Constants.GCM_Msg = true;
         }
+
+
         Log.v("Message", "received bubble");
     }
 

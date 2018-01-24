@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +25,24 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Admin on 17-01-2018.
@@ -44,9 +54,10 @@ public class UniqueVisitorsFragment extends Fragment {
     private  String dataType;
     private  BarChart graph;
     private String tabType;
+    private UserSessionManager manager;
     private  ProgressBar progressBar;
     private TextView visitsTitle,visitsCount;
-    private String[] labels;
+    private ArrayList<String> labels = new ArrayList<>(12);
     public static String pattern = "yyyy/MM/dd";
     private VisitsModel currVisitsModel;
     private BatchType batchType;
@@ -57,7 +68,7 @@ public class UniqueVisitorsFragment extends Fragment {
         mm(2),
         yy(3);
 
-        int val;
+        public int val;
         BatchType(int v){
             val = v;
         }
@@ -83,20 +94,17 @@ public class UniqueVisitorsFragment extends Fragment {
             case 0:
                 dataType = getString(R.string.day);
                 tabType = getString(R.string.week);
-                labels = getResources().getStringArray(R.array.days);
                 batchType = BatchType.dy;
                 break;
             case 1:
                 dataType = getString(R.string.week);
                 tabType = getString(R.string.Month);
                 batchType = BatchType.ww;
-                labels = getResources().getStringArray(R.array.weeks);
                 break;
             case 2:
                 dataType = getString(R.string.Month);
                 tabType =  getString(R.string.Year);
                 batchType = BatchType.mm;
-                labels = getResources().getStringArray(R.array.months);
                 break;
         }
     }
@@ -110,6 +118,7 @@ public class UniqueVisitorsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (!isAdded()) return;
+        manager = new UserSessionManager(mContext,getActivity());
         visitsCount= (TextView) view.findViewById(R.id.tv_visit_count);
         visitsTitle= (TextView) view.findViewById(R.id.tv_visits_title);
         progressBar = view.findViewById(R.id.progress_bar);
@@ -121,9 +130,10 @@ public class UniqueVisitorsFragment extends Fragment {
 //        graph.setDragEnabled(true);
         graph.setScaleXEnabled(true);
         graph.setScaleYEnabled(false);
-        graph.setDoubleTapToZoomEnabled(false);
+        graph.setDoubleTapToZoomEnabled(true);
         graph.getAxisLeft().setAxisMinValue(0);
         graph.getAxisLeft().setSpaceBottom(0);
+
         XAxis xaxis = graph.getXAxis();
         YAxis leftAxis = graph.getAxisLeft();
         YAxis rightAxis = graph.getAxisRight();
@@ -147,10 +157,26 @@ public class UniqueVisitorsFragment extends Fragment {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
                 BoostLog.d("Clicked index:", " "+ e.getXIndex());
+                if (e.getVal()<=0){
+                    // do not show for 0 data
+                    return;
+                }
                 HashMap<String,String> map = new HashMap<String, String>();
-                map.put("batchType",batchType.name());
-                map.put("startDate", Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getStartDate(),pattern));
-                map.put("endDate",Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getEndDate(),pattern));
+                switch (batchType){
+                    case mm:
+                        map.put("batchType",BatchType.ww.name());
+                        break;
+                    case ww:
+                        map.put("batchType",BatchType.dy.name());
+                        break;
+                    case dy:
+                    case yy:
+                    default:
+                        return;
+                }
+
+                map.put("startDate", getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getStartDate(),pattern));
+                map.put("endDate",getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getEndDate(),pattern));
                 ((ViewCallback)mContext).onPressChartBar(map);
             }
 
@@ -166,44 +192,30 @@ public class UniqueVisitorsFragment extends Fragment {
             if (map == null) return;
             map.put("batchType",batchType.name());
             progressBar.setVisibility(View.VISIBLE);
-            ((ViewCallback)mContext).callDataApi(map,pos);
+            getFragmentData(map);
         }
     }
 
-    private void addDataToGraph(){
-        switch (batchType){
-            case dy:
-                break;
-            case yy:
-                break;
-            case ww:
-                break;
-            case mm:
-                break;
+    private String getFormattedDate(String date, String pattern) {
+        if (TextUtils.isEmpty(date)) {
+            return "";
         }
-        BarData data = new BarData(labels, getDataSet());
+        return Methods.getFormattedDate(getMilliseconds(date),pattern);
+    }
+    private long getMilliseconds(String date){
+        if (date.contains("/Date")) {
+            date = date.replace("/Date(", "").replace("+0000)/", "");
+        }
+        return Long.valueOf(date);
+    }
+    private void addDataToGraph( List<IBarDataSet> dataSet){
+        BarData data = new BarData(labels, dataSet);
         data.setValueFormatter(new MyYAxisValueFormatter());
         data.setValueTextSize(10);
         graph.setData(data);
         graph.notifyDataSetChanged();
+        graph.animateXY(1000, 1000);
         graph.invalidate();
-    }
-    private List<IBarDataSet> getDataSet() {
-        List<IBarDataSet> dataSets = null;
-
-        List<BarEntry> valueSet1 = new ArrayList<>();
-        List<VisitsModel.UniqueVisitsList> data = currVisitsModel.getUniqueVisitsList();
-        for(int i=0;i<data.size();i++)
-        {
-
-            valueSet1.add(new BarEntry(data.get(i).getDataCount(),i));
-        }
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, dataType);
-        barDataSet1.setColor(Color.GRAY);
-
-        dataSets = new ArrayList<>();
-        dataSets.add(barDataSet1);
-        return dataSets;
     }
 
     public class MyYAxisValueFormatter implements ValueFormatter
@@ -220,16 +232,91 @@ public class UniqueVisitorsFragment extends Fragment {
     }
     public void updateData(VisitsModel visitsModel) {
         progressBar.setVisibility(View.GONE);
+        currVisitsModel = visitsModel;
         if (visitsModel == null){
             Toast.makeText(mContext, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            return;
         }
-        currVisitsModel = visitsModel;
-        addDataToGraph();
+        addDataToGraph(getGraphDataSet());
         // update data here
     }
 
+    private void onYearSelected(int yearSelected){
+        graph.clear();
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("batchType",batchType.name());
+        map.put("startDate",String.format(Locale.ENGLISH,"%s/%s",year,"01/01"));
+        if (yearSelected == year){
+            map.put("endDate", Methods.getFormattedDate(c.getTimeInMillis(),pattern));
+        }else{
+            map.put("endDate",String.format(Locale.ENGLISH,"%s/%s",year,"12/31"));
+        }
+        getFragmentData(map);
+    }
+    private List<IBarDataSet> getGraphDataSet() {
+        List<IBarDataSet> dataSets = null;
+
+        List<BarEntry> valueSet1 = new ArrayList<>();
+        List<VisitsModel.UniqueVisitsList> data = currVisitsModel.getUniqueVisitsList();
+        long totalCount = 0;
+        Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        String[] months = getResources().getStringArray(R.array.months);
+//        for (int i =0;i<12;i++){
+//            valueSet1.add(new BarEntry(2000000000,i));
+//            labels.add(months[i]);
+//        }
+        for(int i=0;i<data.size();i++)
+        {
+            valueSet1.add(new BarEntry(data.get(i).getDataCount(),i));
+            totalCount+=data.get(i).getDataCount();
+            c.setTimeInMillis(getMilliseconds(data.get(i).getStartDate()));
+            switch (batchType){
+                case ww:
+                    int month = c.get(Calendar.MONTH);
+                    int startDate = c.get(Calendar.DAY_OF_MONTH);
+                    c.setTimeInMillis(getMilliseconds(data.get(i).getEndDate()));
+                    labels.add(String.format(Locale.ENGLISH,"%s(%d-%d)",months[month],startDate,c.get(Calendar.DAY_OF_MONTH)));
+                    break;
+                case mm:
+                    labels.add(months[c.get(Calendar.MONTH)]);
+                    break;
+                case dy:
+
+                    int day = c.get(Calendar.DAY_OF_WEEK);
+                    labels.add(getResources().getStringArray(R.array.days)[day-1]);
+                    break;
+            }
+        }
+        visitsCount.setText(String.valueOf(totalCount));
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, dataType);
+        barDataSet1.setColor(Color.GRAY);
+
+        dataSets = new ArrayList<>();
+        dataSets.add(barDataSet1);
+        return dataSets;
+    }
+
+    private void getFragmentData(final HashMap<String,String> map){
+
+        map.put("clientId", Constants.clientId);
+        map.put("scope",manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
+        Constants.testRestAdapter.create(AnalyticsFetch.FetchDetails.class)
+                .getUniqueVisits(manager.getFpTag(), map, new Callback<VisitsModel>() {
+                    @Override
+                    public void success(VisitsModel visitsModel, Response response) {
+                       updateData(visitsModel);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        updateData(null);
+                    }
+                });
+    }
     public interface ViewCallback{
-        void callDataApi(HashMap<String,String> map, int pos);
         void onPressChartBar(HashMap<String,String> map);
     }
 }

@@ -3,7 +3,6 @@ package com.nowfloats.PreSignUp;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -26,7 +25,6 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.ShortcutHelper;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -49,9 +47,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         setContentView(R.layout.activity_splash_screen_);
         Methods.isOnline(SplashScreen_Activity.this);
         Log.d("Splash Screen", "Splash Screen");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            ShortcutHelper.get(this).publishShortcuts();
-        }
+
        /* try {
             Constants.restAdapter = Methods.createAdapter(this,Constants.NOW_FLOATS_API_URL);
             Constants.validEmailAdapter = Methods.createAdapter(this,"https://bpi.briteverify.com");

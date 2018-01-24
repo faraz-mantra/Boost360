@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * Created by Admin on 28-12-2017.
@@ -84,6 +87,36 @@ public class NewHelpAndSupportFragment extends Fragment {
         param.put("clientId", Constants.clientId);
         param.put("fpTag", manager.getFpTag());
         getRiaMembers(param,view);
+
+//        CharSequence charSequence = Methods.fromHtml("If your query is still unanswered, please contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +
+//                "or call at <a href=\"tel:"+ getString(R.string.contact_us_number)+"\">"+getString(R.string.contact_us_number)+"</a>."+
+//                "or <a href=\"" + CHAT_INTENT_URI + "\"><u>CHAT</u></a>.");
+//
+//        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
+//        makeLinkClickable(spannableStringBuilder, charSequence);
+//        tvTextRia.setText(spannableStringBuilder);
+//        tvTextRia.setMovementMethod(LinkMovementMethod.getInstance());
+
+    }
+    protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
+
+//        URLSpan[] spans = sp.getSpans(0, charSequence.length(), URLSpan.class);
+//
+//        for (final URLSpan urlSpan : spans) {
+//
+//            if (urlSpan.getURL().equalsIgnoreCase(FAQ_INTENT_URI)) {
+//
+//                ClickableSpan clickableSpan = new ClickableSpan() {
+//                    public void onClick(View view) {
+//
+//                    }
+//                };
+//                sp.setSpan(clickableSpan, sp.getSpanStart(urlSpan),
+//                        sp.getSpanEnd(urlSpan), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+//            }
+//
+//        }
+        //Linkify.add
     }
     private void getRiaMembers(HashMap<String,String> map, final View view){
         showProgress();
@@ -98,9 +131,9 @@ public class NewHelpAndSupportFragment extends Fragment {
                     for (RiaSupportModel model : list){
                         if (TextUtils.isEmpty(model.getType())){
                             model.setType(MemberType.WEB.toString());
-                            mRiaSupportModelList.add(0,model);
-                        }else{
                             mRiaSupportModelList.add(model);
+                        }else if( MemberType.CHC.name().equals(model.getType())){
+                            mRiaSupportModelList.add(0,model);
                         }
                     }
 
@@ -117,13 +150,22 @@ public class NewHelpAndSupportFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (headerText != null){
+            headerText.setText("Help and Support");
+        }
+    }
+
     private void setAdapterWithPager(View view){
         hideProgress();
         ViewPager mPager = view.findViewById(R.id.ps_pager);
         mPager.setClipToPadding(false);
         // set padding manually, the more you set the padding the more you see of prev & next page
-        int padding = Methods.dpToPx(35,mContext);
-        mPager.setPadding(padding,padding,padding,padding);
+        int padding = Methods.dpToPx(20,mContext);
+        mPager.setPadding(padding,padding,padding,padding/3);
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
         mPager.setPageMargin(padding/3);
         mPager.setAdapter(new viewPagerAdapter(getChildFragmentManager()));

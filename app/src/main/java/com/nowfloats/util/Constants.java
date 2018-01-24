@@ -91,8 +91,8 @@ public class Constants {
     public final static String SUGGESTIONS_API_URL = "http://boostapi.withfloats.com";
     public final static String SUGGESTIONS_TEXT_API_URL = "http://boosttest.nowfloatsdev.com";
     public final static String WA_BASE_URL = "https://api.kitsune.tools/WebAction/v1/";
-    public final static String ANA_CHAT_API_URL = "https://chat-alpha.withfloats.com";
-    public final static String ANA_BUSINESS_ID = "boost-agent-chat";
+    public final static String ANA_CHAT_API_URL = /*"http://chat-dev.nowfloatsdev.com";//*/"https://gateway.api.ana.chat";
+    public final static String ANA_BUSINESS_ID = /*"Boost-Web";//*/"boost-agent-chat";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
     public final static String HTTP_POST = "POST";

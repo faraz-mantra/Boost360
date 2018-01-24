@@ -269,12 +269,12 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
                 String mainText = "";
                 switch (unActives.get(position-actives.size())){
                     case "google":
-                       // mainText = getString(R.string.wildfire_facebook_text);
+                       mainText = "To enable Google WildFire with us";
                         holder.nameTv.setText("Google Adwords");
                         holder.channelImage.setImageResource(R.drawable.ic_google_gray);
                         break;
                     case "facebook":
-                        //mainText = getString(R.string.wildfire_google_text);
+                        mainText = "To enable Facebook WildFire with us";
                         holder.nameTv.setText("Facebook Ads");
                         holder.channelImage.setImageResource(R.drawable.ic_facebook_logo);
                         break;
@@ -288,7 +288,7 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
 
-                        //showDialog(finalMainText);
+                        showDialog(finalMainText);
                     }
                 });
             }

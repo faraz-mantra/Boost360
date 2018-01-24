@@ -106,6 +106,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                 String date = modelResponse.getDate();
                 rowExist = true;
                 Calendar dbCalender = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
+
                 startDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date(Long.valueOf(date)));
                 dbCalender.setTimeInMillis(Long.valueOf(date));
 
@@ -389,7 +390,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(') + 1,
                             list.getCreatedDate().indexOf(')') - 5);
                     Calendar c = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
-
                     c.setTimeInMillis(Long.valueOf(s));
                     int year = c.get(Calendar.YEAR);
                     int weekOfMonth = c.get(Calendar.WEEK_OF_MONTH);
