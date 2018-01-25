@@ -67,6 +67,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -1020,8 +1021,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
             Glide.with(ChatViewActivity.this)
                     .load(getParsedPrefixPostfixText(url))
+                    .apply(new RequestOptions()
                     .fitCenter()
-                    .placeholder(R.drawable.site_sc_default)
+                    .placeholder(R.drawable.site_sc_default))
                     .into(ivContent);
         } else {
 

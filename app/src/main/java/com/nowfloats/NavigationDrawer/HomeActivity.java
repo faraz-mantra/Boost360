@@ -1172,14 +1172,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     }
                     //Hotline.showConversations(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
-                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-                        Intent call = new Intent(Intent.ACTION_DIAL);
-                        String callString = "tel:" + getString(R.string.contact_us_number);
-                        call.setData(Uri.parse(callString));
-                        startActivity(call);
-                    } else {
+//                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//                        Intent call = new Intent(Intent.ACTION_DIAL);
+//                        String callString = "tel:" + getString(R.string.contact_us_number);
+//                        call.setData(Uri.parse(callString));
+//                        startActivity(call);
+//                    } else {
                         getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
-                    }
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
                 } else if (nextScreen.equals("Settings")) {

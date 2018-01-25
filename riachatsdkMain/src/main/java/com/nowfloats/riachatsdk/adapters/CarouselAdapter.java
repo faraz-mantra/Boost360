@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.models.Items;
 
@@ -72,8 +73,9 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         carouselItemHolder.ivLogo.setImageResource(R.drawable.site_sc_default);
         Glide.with(mContext)
                 .load(getParsedPrefixPostfixText(imageURL))
-                .centerCrop()
-                .placeholder(R.drawable.site_sc_default)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.site_sc_default))
                 .into(carouselItemHolder.ivLogo);
 
         carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position ? R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);

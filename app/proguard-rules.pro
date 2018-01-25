@@ -16,7 +16,7 @@
 #   public *;
 #}
 -keep class twitter4j.** { *; }
-
+-dontwarn com.darsh.multipleimageselect.adapters.**
 -dontwarn twitter4j.**
 
 -dontwarn org.apache.commons.codec.binary.Base64
@@ -26,12 +26,6 @@
 #-dontwarn com.demach.konotor.service.model.GetAllConversationResponse
 -dontwarn com.viewpagerindicator.LinePageIndicator
 -dontwarn jp.wasabeef.recyclerview.animators.BaseItemAnimator
-
-# Demach GSON files
--keep class com.google.gson.demach.** {
-    <fields>;
-    <methods>;
-}
 
 #-keep class com.demach.konotor.** { *; }
 
@@ -54,8 +48,6 @@
 -keep class org.lucasr.twowayview.** { *; }
 -dontwarn okio.**
 -dontwarn retrofit.**
--dontwarn com.bumptech.glide.**
--dontwarn com.anachat.chatsdk.**
 -dontwarn uk.co.chrishenx.calligraphy.**
 -keep class retrofit.** { *; }
 -keepattributes Signature
@@ -84,10 +76,10 @@
 -keep class sun.misc.Unsafe { *; }
 -keepattributes Signature
 
--keep class com.google.gson.demach.** {
-    <fields>;
-    <methods>;
-}
+#-keep class com.google.gson.demach.** {
+#    <fields>;
+#    <methods>;
+#}
 
 # Demach model
 -keep class com.demach.** {
@@ -301,7 +293,73 @@
 -dontwarn javax.xml.stream.events.**
 -dontwarn com.fasterxml.jackson.databind.**
 
+##----------AnaChat sdk rules--------------##
+-keep class com.j256.**
+-keepclassmembers class com.j256.** { *; }
+-keep enum com.j256.**
+-keepclassmembers enum com.j256.** { *; }
+-keep interface com.j256.**
+-keepclassmembers interface com.j256.** { *; }
+-keepclassmembers class * {
+  public <init>(android.content.Context);
+}
+
+-keepclassmembers class com.anachat.chatsdk.internal.model.** {
+   @com.j256.ormlite.field.DatabaseField <fields>;
+   @com.j256.ormlite.field.ForeignCollectionField <fields>;
+}
+-keepclassmembers class com.anachat.chatsdk.internal.model.inputdata.** {
+   @com.j256.ormlite.field.DatabaseField <fields>;
+   @com.j256.ormlite.field.ForeignCollectionField <fields>;
+}
+-dontwarn org.slf4j.**
+-dontwarn org.apache.log4j.**
+-dontwarn org.apache.commons.logging.**
+-dontwarn org.apache.commons.codec.binary.**
+-dontwarn javax.persistence.**
+-dontwarn javax.lang.**
+-dontwarn javax.annotation.**
+-dontwarn javax.tools.**
 
 -dontwarn com.j256.ormlite.android.**
 -dontwarn com.j256.ormlite.logger.**
 -dontwarn com.j256.ormlite.misc.**
+
+
+
+#Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-dontwarn sun.misc.**
+#-keep class com.google.gson.stream.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.examples.android.model.** { *; }
+
+# Prevent proguard from stripping interface information from TypeAdapterFactory,
+# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
+##---------------End: proguard configuration for Gson  ----------
+
+-keepnames class com.anachat.chatsdk.internal.model.** { *; }
+-keepnames class com.anachat.chatsdk.internal.model.inputdata.** { *; }
+-keepnames class com.anachat.chatsdk.** { *; }
+-dontwarn com.anachat.chatsdk.uimodule.**
+-keepclassmembers class com.anachat.chatsdk.** { *; }

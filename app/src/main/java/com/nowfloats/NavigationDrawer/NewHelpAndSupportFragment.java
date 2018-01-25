@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -11,11 +12,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
@@ -87,7 +92,8 @@ public class NewHelpAndSupportFragment extends Fragment {
         param.put("clientId", Constants.clientId);
         param.put("fpTag", manager.getFpTag());
         getRiaMembers(param,view);
-
+        TextView queryMessageText = view.findViewById(R.id.textView9);
+        makeLinkClickable(queryMessageText);
 //        CharSequence charSequence = Methods.fromHtml("If your query is still unanswered, please contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +
 //                "or call at <a href=\"tel:"+ getString(R.string.contact_us_number)+"\">"+getString(R.string.contact_us_number)+"</a>."+
 //                "or <a href=\"" + CHAT_INTENT_URI + "\"><u>CHAT</u></a>.");
@@ -98,25 +104,22 @@ public class NewHelpAndSupportFragment extends Fragment {
 //        tvTextRia.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
-    protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
+    protected void makeLinkClickable(TextView view) {
 
-//        URLSpan[] spans = sp.getSpans(0, charSequence.length(), URLSpan.class);
-//
-//        for (final URLSpan urlSpan : spans) {
-//
-//            if (urlSpan.getURL().equalsIgnoreCase(FAQ_INTENT_URI)) {
-//
-//                ClickableSpan clickableSpan = new ClickableSpan() {
-//                    public void onClick(View view) {
-//
-//                    }
-//                };
-//                sp.setSpan(clickableSpan, sp.getSpanStart(urlSpan),
-//                        sp.getSpanEnd(urlSpan), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-//            }
-//
-//        }
-        //Linkify.add
+        SpannableStringBuilder spanTxt = new SpannableStringBuilder("If your query is still unanswered, please check ");
+        spanTxt.append(Methods.fromHtml("<u><b>FAQs</b></u>"));
+        spanTxt.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Intent i = new Intent(getActivity(), FAQMainAcivity.class);
+                i.putExtra("array", getResources().getStringArray(R.array.faqmain));
+                startActivity(i);
+            }
+        }, spanTxt.length() - Methods.fromHtml("<u><b>FAQs</b></u>").length(), spanTxt.length(), 0);
+        spanTxt.append(" ");
+        spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>"+getString(R.string.settings_feedback_link) +"</b></a> or call our toll-free number <a href=\"tel:"+ getString(R.string.contact_us_number)+"\"><b>"+getString(R.string.contact_us_number)+"</b></a>."));
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }
     private void getRiaMembers(HashMap<String,String> map, final View view){
         showProgress();
@@ -136,7 +139,6 @@ public class NewHelpAndSupportFragment extends Fragment {
                             mRiaSupportModelList.add(0,model);
                         }
                     }
-
                 }
                 setAdapterWithPager(view);
             }
@@ -164,10 +166,10 @@ public class NewHelpAndSupportFragment extends Fragment {
         ViewPager mPager = view.findViewById(R.id.ps_pager);
         mPager.setClipToPadding(false);
         // set padding manually, the more you set the padding the more you see of prev & next page
-        int padding = Methods.dpToPx(20,mContext);
-        mPager.setPadding(padding,padding,padding,padding/3);
+        int padding = Methods.dpToPx(25,mContext);
+        mPager.setPadding(padding,padding,padding,padding);
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
-        mPager.setPageMargin(padding/3);
+        mPager.setPageMargin(padding/2);
         mPager.setAdapter(new viewPagerAdapter(getChildFragmentManager()));
         PageIndicatorView pageIndicatorView = view.findViewById(R.id.ps_indicator);
         pageIndicatorView.setCount(mRiaSupportModelList.size());
@@ -175,7 +177,7 @@ public class NewHelpAndSupportFragment extends Fragment {
     }
     private void addDefaultRiaData(){
         RiaSupportModel model = new RiaSupportModel();
-        model.setName("Ria");
+        model.setName(getString(R.string.support_name));
         model.setGender(1);
         model.setEmail(getString(R.string.settings_feedback_link));
         model.setType(MemberType.DEFAULT.toString());
