@@ -62,7 +62,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable true
             signingConfig signingConfigs.config
             proguardFile 'C:/NFSource/nowfloats/boost/app/proguard-rules.pro'
         }
