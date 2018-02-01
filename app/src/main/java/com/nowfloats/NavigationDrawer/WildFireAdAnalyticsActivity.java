@@ -33,13 +33,13 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import static com.nowfloats.NavigationDrawer.Adapter.GoogleWildFireAdapter.ChannelType.GOOGLE;
-import static com.nowfloats.NavigationDrawer.WildFireAnalyticsActivity.MyGoogleViewHolder.id1;
+import static com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity.MyGoogleViewHolder.id1;
 
 /**
  * Created by Admin on 11-12-2017.
  */
 
-public class WildFireAnalyticsActivity extends AppCompatActivity {
+public class WildFireAdAnalyticsActivity extends AppCompatActivity {
 
     public final static String TYPE="wildfire_type",VALUE = "value";
     private GoogleWildFireAdapter.ChannelType channelType;
@@ -77,7 +77,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
         TextView clickTv = findViewById(R.id.tv_clicks);
         TextView keywordTv = findViewById(R.id.tv_keyword);
         AppCompatTextView adCostTv = findViewById(R.id.tv_ad_cost);
-        adCostTv.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(WildFireAnalyticsActivity.this,R.drawable.ic_stack_cost),null,null,null);
+        adCostTv.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(WildFireAdAnalyticsActivity.this,R.drawable.ic_stack_cost),null,null,null);
         switch (channelType){
             case GOOGLE:
                 channelImage.setImageResource(R.drawable.ic_google_glass_logo);
@@ -110,7 +110,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         // show image preview businessapp
-                        Intent i = new Intent(WildFireAnalyticsActivity.this,Mobile_Load_Html_Activity.class);
+                        Intent i = new Intent(WildFireAdAnalyticsActivity.this,Mobile_Load_Html_Activity.class);
                         i.putExtra("WEBSITE_DATA",facebookModel.getPreviewAd());
                         startActivity(i);
                     }
@@ -136,7 +136,7 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
             View v;
             switch (viewType){
                 case id1:
-                   v = LayoutInflater.from(WildFireAnalyticsActivity.this).inflate(id1,parent,false);
+                   v = LayoutInflater.from(WildFireAdAnalyticsActivity.this).inflate(id1,parent,false);
                    return new MyGoogleViewHolder(v);
                 default:
                     return null;
@@ -217,14 +217,14 @@ public class WildFireAnalyticsActivity extends AppCompatActivity {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            infoImage.setColorFilter(ContextCompat.getColor(WildFireAnalyticsActivity.this, R.color.light_gray));
+                            infoImage.setColorFilter(ContextCompat.getColor(WildFireAdAnalyticsActivity.this, R.color.light_gray));
                             break;
                         case MotionEvent.ACTION_UP:
-                            infoImage.setColorFilter(ContextCompat.getColor(WildFireAnalyticsActivity.this, R.color.gray));
+                            infoImage.setColorFilter(ContextCompat.getColor(WildFireAdAnalyticsActivity.this, R.color.gray));
                             v.performClick();
                             break;
                         case MotionEvent.ACTION_MOVE:
-                            infoImage.setColorFilter(ContextCompat.getColor(WildFireAnalyticsActivity.this, R.color.gray));
+                            infoImage.setColorFilter(ContextCompat.getColor(WildFireAdAnalyticsActivity.this, R.color.gray));
                             break;
                         default:
                             break;

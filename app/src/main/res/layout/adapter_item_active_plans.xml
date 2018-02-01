@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="2dp"
+    android:layout_margin="15dp"
+    app:cardElevation="3dp"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_plan"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/boost_lite_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_plan"
+            android:background="@color/light_gray"/>
+        <TextView
+            android:id="@+id/tv_validity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Validity:"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_plan" />
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Invoice Number:"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_validity"
+            app:layout_constraintStart_toStartOf="@+id/tv_validity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_validity" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Activated on:"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_validity"
+            app:layout_constraintStart_toStartOf="@+id/tv_validity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_number" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Status:"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_validity"
+            app:layout_constraintStart_toStartOf="@+id/tv_validity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Show Plan Details"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_validity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status" />
+
+        <TextView
+            android:id="@+id/tv_top_up"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ria_positive_btn"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Add Top-Up"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_renew_upgrade"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="@+id/tv_validity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_visible_details" />
+
+        <TextView
+            android:id="@+id/tv_renew_upgrade"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:background="@drawable/rounded_corner_boundary"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="7dp"
+            android:text="Renew"
+            android:textSize="13sp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_top_up"
+            app:layout_constraintEnd_toEndOf="@+id/tv_validity"
+            app:layout_constraintStart_toEndOf="@+id/tv_top_up"
+            app:layout_constraintTop_toTopOf="@+id/tv_top_up" />
+
+        <TextView
+            android:id="@+id/tv_visible_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/tv_validity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_details" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

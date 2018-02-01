@@ -188,12 +188,12 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.nowfloats.NavigationDrawer.WildFireAnalyticsActivity"
+            android:name="com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity"
             android:label=""
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nowfloats.NavigationDrawer.WildFireAnalyticsActivity" />
+                android:value="com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity" />
         </activity>
         <activity
             android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
@@ -318,7 +318,7 @@
             android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity"
+            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
@@ -663,6 +663,12 @@
         <activity android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity"
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.Analytics_Screen.Graph.SiteViewAnalytics"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.NavigationDrawer.WildFireAdsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.Store.YourPurchasedPlansActivity"
             android:screenOrientation="portrait"/>
     </application>
 

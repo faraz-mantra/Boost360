@@ -1033,7 +1033,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.btn_renew_domain:
                 bookDomain(domainName, domainType, DomainApiService.DomainAPI.RENEW_DOMAIN);
-
                 break;
             case R.id.btn_link_domain:
                 linkDomain();

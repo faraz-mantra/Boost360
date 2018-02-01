@@ -84,7 +84,7 @@ import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
-import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
@@ -94,6 +94,7 @@ import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
@@ -157,6 +158,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragmentV1 manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
+    UpgradesFragment upgradesFragment;
+    AboutFragment aboutFragment;
+    ManageContentFragment manageContentFragment;
+    AccountSettingsFragment accountSettingsFragment;
     Site_Meter_Fragment siteMeterFragment;
     Settings_Fragment settingsFragment;
     ChatFragment chatFragment;
@@ -1132,7 +1137,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
-                } else if (nextScreen.equals(getString(R.string.home))) {
+                } else if (nextScreen.equals(getString(R.string.home)) ||nextScreen.equals(getString(R.string.update))) {
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     plusAddButton.setVisibility(View.GONE);
@@ -1171,13 +1176,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                                 .start();
                     }
                     //Hotline.showConversations(HomeActivity.this);
-                } else if (nextScreen.equals(getString(R.string.call))) {
+                } else if (nextScreen.equals(getString(R.string.help_and_support))) {
 //                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
 //                        Intent call = new Intent(Intent.ACTION_DIAL);
 //                        String callString = "tel:" + getString(R.string.contact_us_number);
 //                        call.setData(Uri.parse(callString));
 //                        startActivity(call);
 //                    } else {
+                        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK,null);
                         getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
@@ -1220,6 +1226,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
+                }else if (nextScreen.equals(getString(R.string.upgrades))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, upgradesFragment, "upgradesFragment")
+                            .commit();
+                }else if (nextScreen.equals(getString(R.string.about))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ABOUT, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, aboutFragment, "aboutFragment")
+                            .commit();
+                }else if (nextScreen.equals(getString(R.string.manage_content))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_CONTENT, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageContentFragment, "manageContentFragment")
+                            .commit();
+                }else if (nextScreen.equals(getString(R.string.account_settings))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
+                            .commit();
                 }
             }
         }, 200);
@@ -1234,7 +1256,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if (businessAppStatus == BIZ_APP_PAID) {
                 pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO_REMOVE).apply();
             }
-            Intent i = new Intent(this, BusinessAppsActivity.class);
+            Intent i = new Intent(this, BusinessAppsDetailsActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
@@ -1511,6 +1533,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         businessFragment = new Business_Profile_Fragment_V2();
         manageCustomerFragment = new ManageCustomerFragmentV1();
         manageInventoryFragment = new ManageInventoryFragment();
+        upgradesFragment = new UpgradesFragment();
+        aboutFragment = new AboutFragment();
+        manageContentFragment = new ManageContentFragment();
+        accountSettingsFragment = new AccountSettingsFragment();
         settingsFragment = new Settings_Fragment();
         chatFragment = new ChatFragment();
         socialSharingFragment = new SocialSharingFragment();

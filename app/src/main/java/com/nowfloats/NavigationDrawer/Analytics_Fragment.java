@@ -284,6 +284,16 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
+        CardView wildfireAnalytics = rootView.findViewById(R.id.card_view_wildfire);
+        wildfireAnalytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), WildFireAdsActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
 
         cvRiaCard = (CardView) rootView.findViewById(R.id.cvRiaCard);
         btnRiaCardLeft = (Button) rootView.findViewById(R.id.btnRiaResponse1);
@@ -300,6 +310,7 @@ public class Analytics_Fragment extends Fragment {
         ImageView vmnCallBack = (ImageView) rootView.findViewById(R.id.pop_up_vmn_call_img);
         ImageView visitorsBack = (ImageView) rootView.findViewById(R.id.visitors_image_bg);
         ImageView searchRankBack = (ImageView) rootView.findViewById(R.id.pop_up_search_ranking_img);
+        ImageView wildfireBack = (ImageView) rootView.findViewById(R.id.img_wildfire_back);
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
@@ -310,6 +321,7 @@ public class Analytics_Fragment extends Fragment {
         vmnCallBack.setColorFilter(porterDuffColorFilter);
         visitorsBack.setColorFilter(porterDuffColorFilter);
         searchRankBack.setColorFilter(porterDuffColorFilter);
+        wildfireBack.setColorFilter(porterDuffColorFilter);
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
         visitorsCount = (TextView) rootView.findViewById(R.id.visitors_count);

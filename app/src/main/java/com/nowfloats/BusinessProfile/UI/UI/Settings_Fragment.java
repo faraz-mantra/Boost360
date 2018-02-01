@@ -26,16 +26,12 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
-import com.nowfloats.Store.FlavourFivePlansActivity;
-import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -46,7 +42,7 @@ import org.json.JSONObject;
  */
 public class Settings_Fragment extends Fragment {
     FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, chatfeedback_Layout, likeusFacebookLayout, aboutUsLayout,
-            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy, flPricingPlans;
+            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy;
     private EditText old_pwd, new_pwd, confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
@@ -115,7 +111,6 @@ public class Settings_Fragment extends Fragment {
         flFollowTwitter = (FrameLayout) view.findViewById(R.id.follow_us_twitter_Layout);
         flTermsOfUse = (FrameLayout) view.findViewById(R.id.terms_of_use_Layout);
         flPrivacyPolicy = (FrameLayout) view.findViewById(R.id.privacy_policy_Layout);
-        flPricingPlans = (FrameLayout) view.findViewById(R.id.flPricingPlans);
         String Sdate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
         if (Sdate.contains("/Date")) {
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
@@ -154,20 +149,6 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, SiteAppearanceActivity.class);
-                activity.startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-        flPricingPlans.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.capture")) {
-                    intent = new Intent(activity, FlavourFivePlansActivity.class);
-                }else {
-                    intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                            ?NewPricingPlansActivity.class: PricingPlansActivity.class);
-                }
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -291,7 +272,7 @@ public class Settings_Fragment extends Fragment {
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);
                 activity.startActivity(showWebSiteIntent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-                rateUsPlayStore(getActivity().getApplicationContext());
+                rateUsPlayStore();
             }
         });
         faqLayout.setOnClickListener(new View.OnClickListener() {
@@ -458,7 +439,7 @@ public class Settings_Fragment extends Fragment {
         });
     }
 
-    private void rateUsPlayStore(Context context) {
+    private void rateUsPlayStore() {
         Uri uri = Uri.parse("market://details?id=" + Constants.PACKAGE_NAME);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,

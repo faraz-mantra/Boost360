@@ -1,8 +1,8 @@
 package com.nowfloats.signup.UI.Places;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.util.AttributeSet;
-import android.widget.AutoCompleteTextView;
 
 import com.nowfloats.signup.UI.Model.PlacesModel;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /** Customizing AutoCompleteTextView to return Place Description   
  *  corresponding to the selected item
  */
-public class CustomAutoCompleteTextView extends AutoCompleteTextView {
+public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
     ArrayList<PlacesModel> Places = new ArrayList<>();
 	public CustomAutoCompleteTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);

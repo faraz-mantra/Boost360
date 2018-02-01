@@ -56,9 +56,9 @@ public class PricingDetailsFragment extends Fragment {
         ivPackageLogo = (ImageView) pricingView.findViewById(R.id.iv_package_logo);
         if (mBasePackage == null) return pricingView;
         Picasso.with(getActivity()).load(mBasePackage.getPrimaryImageUri()).into(ivPackageLogo);
+        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>());
         prepareBasePackageDetails();
 
-        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>());
         rvAllPlanDetails.setAdapter(mRvAdapter);
         rvAllPlanDetails.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return pricingView;

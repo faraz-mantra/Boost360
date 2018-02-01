@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.nowfloats.NavigationDrawer.WildFireAnalyticsActivity;
+import com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity;
 import com.nowfloats.NavigationDrawer.model.FacebookWildFireDataModel;
 import com.nowfloats.NavigationDrawer.model.WildFireKeyStatsModel;
 import com.nowfloats.util.Methods;
@@ -198,9 +198,9 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, WildFireAnalyticsActivity.class);
-                    intent.putExtra(WildFireAnalyticsActivity.TYPE,dataChannelType.name());
-                    intent.putExtra(WildFireAnalyticsActivity.VALUE,
+                    Intent intent = new Intent(mContext, WildFireAdAnalyticsActivity.class);
+                    intent.putExtra(WildFireAdAnalyticsActivity.TYPE,dataChannelType.name());
+                    intent.putExtra(WildFireAdAnalyticsActivity.VALUE,
                             new Gson().toJson(dataChannelType == ChannelType.GOOGLE?modelList.get(getAdapterPosition())
                                     :facebookModelList.get(getAdapterPosition())));
                     mContext.startActivity(intent);

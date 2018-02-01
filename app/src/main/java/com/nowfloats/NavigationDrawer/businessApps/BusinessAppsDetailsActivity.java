@@ -20,7 +20,7 @@ import com.thinksity.R;
  * Created by Abhi on 12/12/2016.
  */
 
-public class BusinessAppsActivity extends AppCompatActivity {
+public class BusinessAppsDetailsActivity extends AppCompatActivity {
 
     public final static int SHOW_PREVIEW=0,SHOW_ABOUT_APP=1,SHOW_SITE_HEALTH = 2;
     private UserSessionManager session;
@@ -54,7 +54,7 @@ public class BusinessAppsActivity extends AppCompatActivity {
                         super.onPositive(dialog);
                         finish();
                         dialog.dismiss();
-                        Intent i = new Intent(BusinessAppsActivity.this, Business_Logo_Activity.class);
+                        Intent i = new Intent(BusinessAppsDetailsActivity.this, Business_Logo_Activity.class);
                         startActivity(i);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

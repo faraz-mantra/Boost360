@@ -64,7 +64,7 @@ public class BusinessAppsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if( HomeActivity.headerText!=null)
+        if( context instanceof HomeActivity && HomeActivity.headerText!=null)
         HomeActivity.headerText.setText(getString(R.string.my_business_apps));
     }
 
@@ -130,11 +130,11 @@ public class BusinessAppsFragment extends Fragment {
                 }else if(Methods.isOnline(getActivity()))
                 {
                     if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)<=BIZ_APP_PAID) {
-                        Intent i = new Intent(context, BusinessAppsActivity.class);
+                        Intent i = new Intent(context, BusinessAppsDetailsActivity.class);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }else{
-                        BusinessAppsActivity activity = ((BusinessAppsActivity)context);
+                        BusinessAppsDetailsActivity activity = ((BusinessAppsDetailsActivity)context);
                         if(activity != null){
                             activity.onBackPressed();
                         }
@@ -175,7 +175,7 @@ public class BusinessAppsFragment extends Fragment {
         {
             case R.id.skip:
                 if(Methods.isOnline(getActivity())) {
-                    Intent i = new Intent(context, BusinessAppsActivity.class);
+                    Intent i = new Intent(context, BusinessAppsDetailsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

@@ -200,7 +200,7 @@ public class BusinessAppPreview extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             MaterialProgressBar.dismissProgressBar();
-                            Methods.showSnackBarNegative((BusinessAppsActivity)context,getResources().getString(R.string.something_went_wrong_try_again));
+                            Methods.showSnackBarNegative((BusinessAppsDetailsActivity)context,getResources().getString(R.string.something_went_wrong_try_again));
                             addAndroidFragment(SHOW_DEVELOPMENT,"",false);
                         }
                     });

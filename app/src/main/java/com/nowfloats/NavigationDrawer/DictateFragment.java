@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.nowfloats.NavigationDrawer.Adapter.TextExpandableAdapter;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
         if (!isAdded()){
             return;
         }
+        MixPanelController.track(MixPanelController.DICTATE_CLICK,null);
         progressDialog = new ProgressDialog(mContext);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setIndeterminate(true);
@@ -108,7 +110,7 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        if (headerText != null){
+        if (mContext instanceof HomeActivity && headerText != null){
             headerText.setText("Dictate");
         }
     }
@@ -125,33 +127,4 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    /*private void sendEmailForDictate(){
-        showProgress();
-        MixPanelController.track(MixPanelController.REQUEST_FOR_DICTATE_PLAN,null);
-        UserSessionManager manager = new UserSessionManager(mContext,getActivity());
-        ArrayList<String> emailsList = new ArrayList<String>(2);
-        emailsList.add("pranav.venuturumilli@nowfloats.com");
-        emailsList.add("wildfire.team@nowfloats.com");
-        MailModel model = new MailModel(Constants.clientId,"Important: Dictate meeting is requested by"+manager.getFpTag()
-        , TextUtils.htmlEncode("Hi, <br>The client with FP Tag <b>\" "+manager.getFpTag()+" \"</b> has requested a meeting to understand the Dictate plan. Please take it up on priority."),
-                emailsList);
-        StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
-        anInterface.mail(model, new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                hideProgress();
-                if (response.getStatus() == 200){
-                    Methods.materialDialog(getActivity(),"Request For Dictate Plan","your meeting request has been sent successfully.");
-                }else{
-                    Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                hideProgress();
-                Methods.showSnackBarNegative(getActivity(),"Server error");
-            }
-        });
-    }*/
 }

@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
@@ -24,7 +24,7 @@ import com.thinksity.R;
  */
 
 public class PostFacebookUpdateFragment extends Fragment {
-    Button postUpdate;
+    TextView postUpdate;
     Context context;
     String mType;
 
@@ -46,7 +46,7 @@ public class PostFacebookUpdateFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root =inflater.inflate(R.layout.fragment_facebook_create_update,container,false);
+        View root =inflater.inflate(R.layout.layout_empty_img_text_button_screen,container,false);
         return root;
     }
 
@@ -60,8 +60,10 @@ public class PostFacebookUpdateFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        postUpdate= (Button) view.findViewById(R.id.create_update_button);
-        TextView message = (TextView) view.findViewById(R.id.message);
+        postUpdate= view.findViewById(R.id.btn_action);
+        ImageView image = view.findViewById(R.id.image1);
+        image.setImageResource(R.drawable.no_updates);
+        TextView message = (TextView) view.findViewById(R.id.message_text2);
         String socialTypeText1 = null,socialTypeText2 = null;
         if(SocialAnalytics.FACEBOOK.equals(mType)){
             socialTypeText2 = "Facebook Page";

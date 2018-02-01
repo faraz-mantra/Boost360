@@ -35,14 +35,6 @@ allprojects {
 }
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'nfmanage'
-            keyPassword 'NowFloatsManage2013'
-            storeFile file('C:/NFSource/nowfloats/boost/keystore/boost/my-release-key.keystore')
-            storePassword 'NowFloatsManage2013'
-        }
-    }
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy'
@@ -52,7 +44,7 @@ android {
     defaultConfig {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 2018010025
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -62,7 +54,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
             proguardFile 'C:/NFSource/nowfloats/boost/app/proguard-rules.pro'
         }
     }
@@ -110,8 +101,6 @@ android {
             versionName "4.9.0"
             applicationId "com.biz2.nowfloats"
             dimension "default"
-            proguardFile 'C:/NFSource/nowfloats/boost/app/proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
     }
     packagingOptions {

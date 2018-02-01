@@ -2,6 +2,7 @@ package com.nowfloats.CustomWidget;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,7 +13,7 @@ import android.widget.TextView;
  * Created by NowFloats on 04-02-2017.
  */
 
-public class VerticalTextView extends TextView {
+public class VerticalTextView extends AppCompatTextView {
     final boolean topDown;
 
     public VerticalTextView(Context context, AttributeSet attrs){

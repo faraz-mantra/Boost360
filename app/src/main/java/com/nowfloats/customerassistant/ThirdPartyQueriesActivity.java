@@ -433,9 +433,6 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         {
                 popup.showAsDropDown(image,0,10);
         }
-
-
-
     }
 
     @Override

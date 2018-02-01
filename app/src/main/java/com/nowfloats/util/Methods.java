@@ -469,13 +469,13 @@ public class Methods {
         }
     }
 
-    public static boolean compareDate(Date one, Date cur_date) {
+    public static boolean compareDate(Date next, Date prev) {
         try {
 //            Date purchaseDate = dateFormatDefault.parse(one);
 //            Date expiryDate = dateFormatDefault.parse(two);
 
-            if (one.after(cur_date)) return true;
-            else if (one.equals(cur_date)) return true;
+            if (next.after(prev)) return true;
+            else if (next.equals(prev)) return true;
             else return false;
 
         } catch (Exception e) {

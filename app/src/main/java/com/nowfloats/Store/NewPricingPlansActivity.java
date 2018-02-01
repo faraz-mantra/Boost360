@@ -19,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.Model.AllPackage;
 import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.PricingPlansModel;
@@ -30,7 +29,6 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -38,9 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,20 +45,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class NewPricingPlansActivity extends AppCompatActivity implements ActivePlansFragment.ActivePlansCallback {
+public class NewPricingPlansActivity extends AppCompatActivity{
 
     TextView tvCategory, tvToolBarTitle;
     UserSessionManager mSession;
-    private ActivePlansFragment mActivePlansFragment;
     private AllPlansFragment mAllPlansFragment;
     Toolbar toolbar;
     ImageView ivHistory;
-    private boolean isHistoryShowing;
-
     List<PackageDetails> mBasePackages;
     List<PackageDetails>  mTopUps;
-    private boolean shouldHistoryVisible = false;
-
     private static final int NUM_OF_FEATURES = 5;
     private final int DIRECT_REQUEST_CODE = 2013;
 
@@ -89,40 +80,12 @@ public class NewPricingPlansActivity extends AppCompatActivity implements Active
         tvCategory = (TextView) findViewById(R.id.tv_category);
         tvCategory.setText(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
 
-        mActivePlansFragment = new ActivePlansFragment();
         mAllPlansFragment = new AllPlansFragment();
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_pricing_plans, mActivePlansFragment)
-                .commit();
-
-        ivHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isHistoryShowing){
-                    isHistoryShowing = false;
-                    mActivePlansFragment.showActivePlans();
-                    ivHistory.setImageResource(R.drawable.ic_history_black_24dp);
-                } else {
-                    isHistoryShowing = true;
-                    mActivePlansFragment.showExpiredPlans();
-                    ivHistory.setImageResource(R.drawable.ic_av_timer_black_24dp);
-                }
-            }
-        });
-
-        materialProgress = new MaterialDialog.Builder(this)
-                .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
-
         getPricingPlanDetails();
     }
 
     private void getPricingPlanDetails() {
-
+        showDialog();
         String accId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
         String appId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
         String country = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
@@ -142,30 +105,55 @@ public class NewPricingPlansActivity extends AppCompatActivity implements Active
             public void success(PricingPlansModel storeMainModel, Response response) {
                 if(storeMainModel != null){
                     preProcessAndDispatchPlans(storeMainModel);
+                }else{
+                   hideDialog();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
+                hideDialog();
                 Log.d("Test", error.getMessage());
             }
         });
 
     }
 
+    private void showBasePlans(){
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fl_pricing_plans, mAllPlansFragment)
+                .commit();
+    }
+    private void hideDialog(){
+        if (materialProgress.isShowing())
+            materialProgress.dismiss();
+    }
+
+    private void showDialog(){
+        if (materialProgress == null){
+            materialProgress = new MaterialDialog.Builder(this)
+                    .widgetColorRes(R.color.accentColor)
+                    .content("Please Wait...")
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .build();
+
+        }
+        if (!materialProgress.isShowing()) {
+            materialProgress.show();
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
             onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        if(shouldHistoryVisible) {
-            ivHistory.setVisibility(View.VISIBLE);
-        }
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
@@ -270,27 +258,7 @@ public class NewPricingPlansActivity extends AppCompatActivity implements Active
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<ActivePackage> activePlans = new ArrayList<>();
-                final List<ActivePackage> expiredPlans = new ArrayList<>();
-                for(ActivePackage activePackage : storeMainModel.activePackages){
-                    int featuresCount = 0;
-                    StringBuilder featuresBuilder = new StringBuilder("");
-                    if(activePackage.getWidgetPacks()!=null) {
-                        for (WidgetPacks widget : activePackage.getWidgetPacks()) {
-                            featuresBuilder.append("• " + (widget.Name == null?"NA":widget.Name )+ "\n");
-                            featuresCount++;
-                            if (featuresCount >= NUM_OF_FEATURES) {
-                                break;
-                            }
-                        }
-                    }
-                    activePackage.setFeatures(featuresBuilder.toString());
-                    if(!isPackageExpired(activePackage)){
-                        activePlans.add(activePackage);
-                    }else {
-                        expiredPlans.add(activePackage);
-                    }
-                }
+
                 for(AllPackage allPackage : storeMainModel.allPackages){
                     if(allPackage.getKey().equals("TopUp")){
                         mTopUps = allPackage.getValue();
@@ -329,16 +297,7 @@ public class NewPricingPlansActivity extends AppCompatActivity implements Active
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        mActivePlansFragment.setActivePlans(activePlans);
-                        mActivePlansFragment.showActivePlans();
-                        if(expiredPlans!=null && expiredPlans.size()>0) {
-                            mActivePlansFragment.setExpiredPlans(expiredPlans);
-                            ivHistory.setVisibility(View.VISIBLE);
-                            shouldHistoryVisible = true;
-                        }else {
-                            ivHistory.setVisibility(View.INVISIBLE);
-                            shouldHistoryVisible = false;
-                        }
+
                         if(mBasePackages == null && mTopUps == null){
                             return;
                         }
@@ -352,34 +311,11 @@ public class NewPricingPlansActivity extends AppCompatActivity implements Active
                         Collections.sort(mTopUps);
                         mAllPlansFragment.setBasePlans(mBasePackages);
                         mAllPlansFragment.setTopUps(mTopUps);
-                        mActivePlansFragment.setTopUps(mTopUps);
+                        hideDialog();
+                        showBasePlans();
                     }
                 });
             }
         }).start();
-    }
-
-    private boolean isPackageExpired(ActivePackage activePackage){
-        long time = Long.parseLong(activePackage.getToBeActivatedOn().replaceAll("[^\\d]", ""));
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(time);
-        double totalMonthsValidity = activePackage.getTotalMonthsValidity();
-        calendar.add(Calendar.MONTH, (int)Math.floor(totalMonthsValidity));
-        calendar.add(Calendar.DATE, (int) ((totalMonthsValidity-Math.floor(totalMonthsValidity))*30));
-        return calendar.getTime().before(new Date());
-    }
-
-
-    @Override
-    public void onRenewOrUpdate() {
-        if(mBasePackages==null || mBasePackages.size() == 0){
-            Methods.showSnackBarNegative(this, "Renew/Update is not available");
-            return;
-        }
-        ivHistory.setVisibility(View.INVISIBLE);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_pricing_plans, mAllPlansFragment)
-                .addToBackStack(null)
-                .commit();
     }
 }

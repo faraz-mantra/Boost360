@@ -9,13 +9,6 @@
         android:id="@+id/constraintLayout_wildfire"
         layout="@layout/layout_wildfire_dictate"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="match_parent"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_channels"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
 
 </FrameLayout>

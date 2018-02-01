@@ -1552,5 +1552,40 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
     <string name="Year">year</string>
     <string name="support_name">Support</string>
+    <string name="wildfire_analytics">Wildfire Analytics</string>
+    <string name="manage_content">Manage Content</string>
+    <string name="account_settings">Account Settinngs</string>
+    <string name="about">About</string>
+    <string name="upgrades">Upgrades</string>
+    <string-array name="upgrade_tab_items">
+        <item>Pricing plans</item>
+        <item>WildFire</item>
+        <item>Dictate</item>
+        <item>My Business APP</item>
+    </string-array>
+    <string-array name="about_tab_items">
+        <item>About NowFloats</item>
+        <item>FAQs</item>
+        <item>Feedback</item>
+        <item>Like us on Facebook</item>
+        <item>Follow us on Twitter</item>
+        <item>Rate us on Play Store</item>
+        <item>Terms of Use</item>
+        <item>Privacy Policy</item>
+    </string-array>
 
+    <string-array name="manage_content_tab_items">
+        <item>Updates</item>
+        <item>Image Gallery</item>
+        <item>Custom Pages</item>
+    </string-array>
+    <string-array name="account_setting_tab_items">
+        <item>My Business Profile</item>
+        <item>Site Appearance</item>
+        <item>Domain and Email</item>
+        <item>Payment Setting</item>
+        <item>Your Plans</item>
+        <item>Change Password</item>
+        <item>Log out</item>
+    </string-array>
 </resources>

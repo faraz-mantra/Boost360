@@ -142,7 +142,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.site_health:
-                ((BusinessAppsActivity)context).addFragments(BusinessAppsActivity.SHOW_SITE_HEALTH);
+                ((BusinessAppsDetailsActivity)context).addFragments(BusinessAppsDetailsActivity.SHOW_SITE_HEALTH);
                 break;
             default:
                 break;
@@ -161,7 +161,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
                 frag.showScreenShots();
                 return true;
             case R.id.about:
-                ((BusinessAppsActivity)context).addFragments(BusinessAppsActivity.SHOW_ABOUT_APP);
+                ((BusinessAppsDetailsActivity)context).addFragments(BusinessAppsDetailsActivity.SHOW_ABOUT_APP);
                 return true;
             default:
                 break;

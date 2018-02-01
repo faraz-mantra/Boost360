@@ -32,7 +32,7 @@ import retrofit.client.Response;
 public class VmnNumberRequestActivity extends AppCompatActivity {
 
     SharedPreferences pref;
-    Button mButton;
+    TextView mButton;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +50,9 @@ public class VmnNumberRequestActivity extends AppCompatActivity {
         UserSessionManager manager = new UserSessionManager(this,this);
         final String fpTag = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         ImageView imageView = (ImageView) findViewById(R.id.create_update_img);
-        TextView mMainText  = (TextView) findViewById(R.id.create_update_text_bold);
+        TextView mMainText  = (TextView) findViewById(R.id.main_text1);
         TextView mDescriptionText  = (TextView) findViewById(R.id.message);
-        mButton = (Button) findViewById(R.id.create_update_button);
+        mButton = findViewById(R.id.btn_action);
         if(pref.getBoolean("Call_tracker_requested",false)){
             mButton.setText("Requested");
             mButton.setBackgroundResource(R.drawable.gray_round_corner);

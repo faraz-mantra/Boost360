@@ -33,7 +33,7 @@ import com.thinksity.R;
 
 import java.util.List;
 
-import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity.SHOW_ABOUT_APP;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity.SHOW_ABOUT_APP;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 
@@ -209,7 +209,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
                 Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
                 return true;
             case R.id.about:
-                ((BusinessAppsActivity)context).addFragments(SHOW_ABOUT_APP);
+                ((BusinessAppsDetailsActivity)context).addFragments(SHOW_ABOUT_APP);
                 return true;
             default:
                 break;

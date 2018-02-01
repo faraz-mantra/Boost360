@@ -16,11 +16,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -54,8 +51,6 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static com.nowfloats.NavigationDrawer.HomeActivity.shareButton;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -106,10 +101,10 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         final LinearLayout profileLayout = (LinearLayout) mainView.findViewById(R.id.business_profile_layout);
         profileLayout.setVisibility(View.INVISIBLE);
         progressLayout.setVisibility(View.VISIBLE);
-        if (shareButton != null) {
-            shareButton.setImageResource(R.drawable.share_with_apps);
-            shareButton.setColorFilter(whiteLabelFilter_pop_ip);
-        }
+//        if (shareButton != null) {
+//            shareButton.setImageResource(R.drawable.share_with_apps);
+//            shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+//        }
 
         new Thread(new Runnable() {
             @Override
@@ -129,28 +124,28 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
                             websiteTextView.setTypeface(robotoMedium);
                             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                            if (shareButton != null) {
-                                shareButton.setVisibility(View.VISIBLE);
-                                shareButton.setOnClickListener(new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-                                        String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                                        if (!Util.isNullOrEmpty(url)) {
-                                            String eol = System.getProperty("line.separator");
-                                            url = getResources().getString(R.string.visit_to_new_website)
-                                                    + eol + url.toLowerCase();
-                                        } else {
-                                            String eol = System.getProperty("line.separator");
-                                            url = getResources().getString(R.string.visit_to_new_website)
-                                                    + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                                                    + activity.getResources().getString(R.string.tag_for_partners);
-                                        }
-
-                                        shareWebsite(url);
-                                    }
-                                });
-                            }
+//                            if (shareButton != null) {
+//                                shareButton.setVisibility(View.VISIBLE);
+//                                shareButton.setOnClickListener(new View.OnClickListener() {
+//
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+//                                        if (!Util.isNullOrEmpty(url)) {
+//                                            String eol = System.getProperty("line.separator");
+//                                            url = getResources().getString(R.string.visit_to_new_website)
+//                                                    + eol + url.toLowerCase();
+//                                        } else {
+//                                            String eol = System.getProperty("line.separator");
+//                                            url = getResources().getString(R.string.visit_to_new_website)
+//                                                    + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+//                                                    + activity.getResources().getString(R.string.tag_for_partners);
+//                                        }
+//
+//                                        shareWebsite(url);
+//                                    }
+//                                });
+//                            }
                             businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
                             //if (Constants.IMAGEURIUPLOADED == false) {
                             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
@@ -595,97 +590,6 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         DEFAULT
     }
 
-    private void chooseDomain() {
-
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-//                .title(getString(R.string.link_a_domain_nf))
-                .customView(R.layout.dialog_choose_domain, false)
-                .positiveColorRes(R.color.primaryColor);
-
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            final MaterialDialog materialDialog = builder.show();
-
-            materialDialog.getCustomView().findViewById(R.id.btnBookDomain)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            materialDialog.dismiss();
-                            showLoader(getString(R.string.please_wait));
-                            domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
-                        }
-                    });
-            materialDialog.getCustomView().findViewById(R.id.btnLinkDomain)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            materialDialog.dismiss();
-                            linkDomain();
-                        }
-                    });
-
-            View maView = materialDialog.getCustomView();
-            TextView tvDomainConfig = (TextView) maView.findViewById(R.id.tvDomainConfig);
-            tvDomainConfig.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Methods.showSnackBarPositive(getActivity(), getString(R.string.domain_book_nowfloats_package));
-                }
-            });
-        }
-
-
-    }
-    private void linkDomain() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-                //.title(getString(R.string.have_an_existing_domain))
-                .customView(R.layout.dialog_link_domain, false)
-                .positiveColorRes(R.color.primaryColor);
-
-        final MaterialDialog materialDialog = builder.show();
-        View maView = materialDialog.getCustomView();
-        final RadioButton rbPointExisting = (RadioButton) maView.findViewById(R.id.rbPointExisting);
-        final RadioButton rbPointNFWeb = (RadioButton) maView.findViewById(R.id.rbPointNFWeb);
-        final EditText edtComments = (EditText) maView.findViewById(R.id.edtComments);
-        Button btnBack = (Button) maView.findViewById(R.id.btnBack);
-        Button btnSubmitRequest = (Button) maView.findViewById(R.id.btnSubmitRequest);
-        edtComments.setText(String.format(getString(R.string.link_comments), session.getFpTag()));
-        edtComments.setSelection(edtComments.getText().toString().length());
-        btnSubmitRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String subject = "";
-                if (rbPointNFWeb.isChecked()) {
-                    subject = rbPointNFWeb.getText().toString();
-                } else if (rbPointExisting.isChecked()) {
-                    subject = rbPointExisting.getText().toString();
-                }
-
-                if (TextUtils.isEmpty(subject)) {
-                    Methods.showSnackBarNegative(getActivity(),
-                            getString(R.string.please_select_subject));
-                } else if (TextUtils.isEmpty(edtComments.getText().toString())) {
-                    Methods.showSnackBarNegative(getActivity(),
-                            getString(R.string.please_enter_message));
-                } else {
-
-                    MixPanelController.track(MixPanelController.LINK_DOMAIN, null);
-                    materialDialog.dismiss();
-                    HashMap<String, String> hashMap = new HashMap<String, String>();
-                    hashMap.put("Subject", subject);
-                    hashMap.put("Mesg", edtComments.getText().toString());
-                    domainApiService.linkDomain(hashMap, getLinkDomainParam());
-                }
-            }
-        });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                materialDialog.dismiss();
-            }
-        });
-
-    }
     private HashMap<String, String> getLinkDomainParam() {
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("authClientId", Constants.clientId);
@@ -823,7 +727,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText != null)
+        if (activity instanceof HomeActivity && HomeActivity.headerText != null)
             HomeActivity.headerText.setText(getResources().getString(R.string.manage_website));
         if (websiteTextView != null)
             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
