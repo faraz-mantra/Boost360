@@ -200,6 +200,7 @@ public class WildFireAdsActivity extends AppCompatActivity{
                     public void onClick(View view) {
                         finalIntent.putExtra("WILDFIRE_ID",wildfireId);
                         startActivity(finalIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                     }
                 });
@@ -296,5 +297,11 @@ public class WildFireAdsActivity extends AppCompatActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

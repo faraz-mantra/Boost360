@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,9 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.DictateFragment;
+import com.nowfloats.NavigationDrawer.WildFireFragment;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.Store.Model.AllPackage;
 import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.PricingPlansModel;
@@ -49,7 +53,6 @@ public class NewPricingPlansActivity extends AppCompatActivity{
 
     TextView tvCategory, tvToolBarTitle;
     UserSessionManager mSession;
-    private AllPlansFragment mAllPlansFragment;
     Toolbar toolbar;
     ImageView ivHistory;
     List<PackageDetails> mBasePackages;
@@ -80,7 +83,6 @@ public class NewPricingPlansActivity extends AppCompatActivity{
         tvCategory = (TextView) findViewById(R.id.tv_category);
         tvCategory.setText(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
 
-        mAllPlansFragment = new AllPlansFragment();
         getPricingPlanDetails();
     }
 
@@ -119,9 +121,32 @@ public class NewPricingPlansActivity extends AppCompatActivity{
 
     }
 
-    private void showBasePlans(){
+    private void showPlanFragments(){
+        hideDialog();
+        Fragment frag;
+        String fragmentName = getIntent().getStringExtra("fragmentName");
+        if (fragmentName == null) fragmentName = "";
+        switch (fragmentName){
+            case "Dictate":
+                frag = new DictateFragment();
+                break;
+            case "Wildfire":
+                frag = new WildFireFragment();
+                break;
+            case "Biz APP":
+                frag = new BusinessAppsFragment();
+                break;
+            case "BasePlans":
+            default:
+                AllPlansFragment allFrag = new AllPlansFragment();
+                allFrag.setBasePlans(mBasePackages);
+                allFrag.setTopUps(mTopUps);
+                frag = allFrag;
+                break;
+                //empty screen
+        }
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_pricing_plans, mAllPlansFragment)
+                .add(R.id.fl_pricing_plans, frag)
                 .commit();
     }
     private void hideDialog(){
@@ -309,10 +334,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                         }
                         Collections.sort(mBasePackages);
                         Collections.sort(mTopUps);
-                        mAllPlansFragment.setBasePlans(mBasePackages);
-                        mAllPlansFragment.setTopUps(mTopUps);
-                        hideDialog();
-                        showBasePlans();
+                        showPlanFragments();
                     }
                 });
             }

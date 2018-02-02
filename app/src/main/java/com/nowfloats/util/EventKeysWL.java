@@ -26,8 +26,8 @@ public interface EventKeysWL
     String HOME_SCREEN = "Home";
     //String CONTENT_CREATION_BUTTON = "";
     String ANALYTICS_FRAGMENT = "Analytics";
-    //String ANALYTICS_FRAGMENT_SEARCH_QUERIES = "SearchQueries";
-    String SEARCH_QUERIES = "SearchQueries";
+    //String ANALYTICS_FRAGMENT_SEARCH_QUERIES = "SearchQueriesActivity";
+    String SEARCH_QUERIES = "SearchQueriesActivity";
     String STORE_FRAGMENT = "Store";
     String CREATE_MESSAGE_ACTIVITY = "PostAnUpdate";
     //String CREATE_MESSAGE_ACTIVITY_TEXT = "PostAnUpdateScreenT";

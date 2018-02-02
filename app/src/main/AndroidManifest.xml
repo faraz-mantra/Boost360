@@ -174,7 +174,7 @@
                 android:value="com.nowfloats.signup.UI.UI.PreSignUpActivity" />
         </activity>
         <activity
-            android:name="com.nowfloats.Analytics_Screen.SearchQueries"
+            android:name="com.nowfloats.Analytics_Screen.SearchQueriesActivity"
             android:label=""
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -662,7 +662,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.Analytics_Screen.Graph.SiteViewAnalytics"
+        <activity android:name="com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.NavigationDrawer.WildFireAdsActivity"
             android:screenOrientation="portrait"/>

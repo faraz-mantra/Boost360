@@ -62,7 +62,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                adapter.setPlansList(activePlans);
                break;
            case PROCESS_PLANS:
-               throw  new RuntimeException("You can use PROCESS_PLANS type of ENUM");
+               throw  new RuntimeException("You can not use PROCESS_PLANS type of ENUM");
            case TO_BE_ACTIVATED_PLANS:
                adapter.setPlansList(toBeActivatedPlans);
                break;
@@ -297,6 +297,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

@@ -2,7 +2,6 @@ package com.nowfloats.Store;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,14 +13,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.PricingPlansPagerAdapter;
 import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

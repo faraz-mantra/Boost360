@@ -313,7 +313,7 @@ action#monthDetails
 ADDED from AndroidManifest.xml:112:17
 	android:name
 		ADDED from AndroidManifest.xml:112:25
-activity#com.nowfloats.Analytics_Screen.SearchQueries
+activity#com.nowfloats.Analytics_Screen.SearchQueriesActivity
 ADDED from AndroidManifest.xml:117:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:120:13

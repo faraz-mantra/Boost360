@@ -54,7 +54,7 @@ import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
-import com.nowfloats.Analytics_Screen.SearchQueries;
+import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
@@ -431,7 +431,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                startActivity(i);
             } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
-                Intent queries = new Intent(HomeActivity.this, SearchQueries.class);
+                Intent queries = new Intent(HomeActivity.this, SearchQueriesActivity.class);
                 startActivity(queries);
             } else if (url.contains("blog")) {
 
@@ -498,6 +498,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_ProductGallery))) {
                 Intent i = new Intent(this, ProductGalleryActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             } else if (url.contains("chatWindow")) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();

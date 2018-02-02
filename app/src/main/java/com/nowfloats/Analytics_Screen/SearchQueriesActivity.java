@@ -36,7 +36,7 @@ import retrofit.client.Response;
 /**
  * Created by Kamal on 17-02-2015.
  */
-public class SearchQueries extends AppCompatActivity {
+public class SearchQueriesActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
     private static RecyclerView.Adapter adapter;
@@ -59,7 +59,7 @@ public class SearchQueries extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        session = new UserSessionManager(getApplicationContext(),SearchQueries.this);
+        session = new UserSessionManager(getApplicationContext(),SearchQueriesActivity.this);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.search_queries));
 
@@ -70,7 +70,7 @@ public class SearchQueries extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new SearchQueryAdapter(SearchQueries.this,mSearchArrayList);
+        adapter = new SearchQueryAdapter(SearchQueriesActivity.this,mSearchArrayList);
         new AlertArchive(Constants.alertInterface,"SEARCHQUERIES",session.getFPID());
         recyclerView.setAdapter(adapter);
         createObj();
@@ -126,7 +126,7 @@ public class SearchQueries extends AppCompatActivity {
                 }
                 stop = false;
                 progressBar.setVisibility(View.GONE);
-                Methods.showSnackBarNegative(SearchQueries.this,getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(SearchQueriesActivity.this,getString(R.string.something_went_wrong_try_again));
             }
         });
     }
@@ -151,8 +151,7 @@ public class SearchQueries extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id==android.R.id.home ){
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
             return true;
             //getSupportFragmentManager().popBackStack();
             //  NavUtils.navigateUpFromSameTask(this);
@@ -161,4 +160,9 @@ public class SearchQueries extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
 }

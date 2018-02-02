@@ -270,4 +270,11 @@ public class WildFireAdAnalyticsActivity extends AppCompatActivity {
         contentImg.setImageResource(imgId);
         dialog.show();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
 }

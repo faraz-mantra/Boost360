@@ -157,6 +157,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         return;
                 }
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         adapter.setItems(adapterImages,adapterTexts);
@@ -581,6 +582,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
         domainIntent.putExtra("get_fp_details_model", get_fp_details_model);
         startActivity(domainIntent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private enum DialogFrom {

@@ -177,7 +177,7 @@ public class UniqueVisitorsFragment extends Fragment {
 
                 map.put("startDate", getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getStartDate(),pattern));
                 map.put("endDate",getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getEndDate(),pattern));
-                ((ViewCallback)mContext).onPressChartBar(map);
+                ((ViewCallback)mContext).onChartBarClicked(map);
             }
 
             @Override
@@ -317,6 +317,6 @@ public class UniqueVisitorsFragment extends Fragment {
                 });
     }
     public interface ViewCallback{
-        void onPressChartBar(HashMap<String,String> map);
+        void onChartBarClicked(HashMap<String,String> map);
     }
 }

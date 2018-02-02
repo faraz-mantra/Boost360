@@ -64,7 +64,7 @@ public class ActivePackage {
     @SerializedName("isActive")
     @Expose
     private Boolean isActive;
-    private String activeStatus;
+    private String activeStatus="";
     private boolean isExpanded;
 
     private String features;

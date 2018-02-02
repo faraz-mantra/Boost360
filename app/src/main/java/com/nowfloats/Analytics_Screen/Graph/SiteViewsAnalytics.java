@@ -25,7 +25,7 @@ import static com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragm
  * Created by Admin on 17-01-2018.
  */
 
-public class SiteViewAnalytics extends AppCompatActivity implements UniqueVisitorsFragment.ViewCallback {
+public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisitorsFragment.ViewCallback {
 
     String[] tabs;
     PagerAdapter pagerAdapter;
@@ -112,7 +112,7 @@ public class SiteViewAnalytics extends AppCompatActivity implements UniqueVisito
     }
 
     @Override
-    public void onPressChartBar(HashMap<String, String> map) {
+    public void onChartBarClicked(HashMap<String, String> map) {
         FragmentManager manager = getSupportFragmentManager();
         Bundle b = new Bundle();
         b.putInt("pos", UniqueVisitorsFragment.BatchType.valueOf(map.get("batchType")).val);

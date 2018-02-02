@@ -48,7 +48,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
-import com.nowfloats.Analytics_Screen.SearchQueries;
+import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -208,7 +208,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("SearchQueriesDetailedView", null);
-                Intent q = new Intent(getActivity(), SearchQueries.class);
+                Intent q = new Intent(getActivity(), SearchQueriesActivity.class);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

@@ -63,6 +63,7 @@ public class ManageContentFragment extends Fragment{
                         return;
                 }
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         adapter.setItems(adapterImages,adapterTexts);
