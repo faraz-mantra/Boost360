@@ -48,6 +48,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
+import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
@@ -124,7 +125,7 @@ public class Analytics_Fragment extends Fragment {
     public void onResume() {
 
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
-//        getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
+        //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
@@ -240,7 +241,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("UniqueVisitsDetailedView", null);
-                Intent q = new Intent(getActivity(), AnalyticsActivity.class);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra("table_name", Constants.VISITORS_TABLE);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

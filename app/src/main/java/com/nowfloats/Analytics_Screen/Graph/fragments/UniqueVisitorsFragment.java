@@ -122,7 +122,7 @@ public class UniqueVisitorsFragment extends Fragment {
         visitsCount= (TextView) view.findViewById(R.id.tv_visit_count);
         visitsTitle= (TextView) view.findViewById(R.id.tv_visits_title);
         progressBar = view.findViewById(R.id.progress_bar);
-        visitsTitle.setText(String.format("Visits this %s",tabType));
+        visitsTitle.setText(String.format("unique visits this %s",tabType));
         graph = (BarChart) view.findViewById(R.id.graph);
         graph.setDrawGridBackground(false);
 //        graph.getLegend().setEnabled(false);
@@ -213,6 +213,7 @@ public class UniqueVisitorsFragment extends Fragment {
         data.setValueFormatter(new MyYAxisValueFormatter());
         data.setValueTextSize(10);
         graph.setData(data);
+        graph.setVisibleXRangeMaximum(5.2f);
         graph.notifyDataSetChanged();
         graph.animateXY(1000, 1000);
         graph.invalidate();
@@ -231,6 +232,8 @@ public class UniqueVisitorsFragment extends Fragment {
         }
     }
     public void updateData(VisitsModel visitsModel) {
+        if(isDetached())
+            return;
         progressBar.setVisibility(View.GONE);
         currVisitsModel = visitsModel;
         if (visitsModel == null){
