@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -135,15 +134,6 @@ public class Settings_Fragment extends Fragment {
             }
         }).start();
 
-        accountLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MixPanelController.track("AccountInfo", null);
-                Intent intent = new Intent(activity, AccountInfoActivity.class);
-                startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
 
         flSiteAppearance.setOnClickListener(new View.OnClickListener() {
             @Override

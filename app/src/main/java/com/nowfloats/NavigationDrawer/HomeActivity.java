@@ -52,7 +52,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
-import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -449,9 +448,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 startActivity(subscribers);
             } else if (url.contains("share")) {
                 shareWebsite();
-            } else if (url.contains("accountstatus")) {
-                Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
-                startActivity(accountInfo);
             } else if (url.contains("visits") || url.contains("viewgraph")) {
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITS_TABLE);

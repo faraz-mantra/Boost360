@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
+import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.thinksity.R;
 
@@ -45,7 +46,7 @@ public class ManageContentFragment extends Fragment{
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new SimpleImageTextListAdapter.onItemClickCallback() {
+        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.thinksity.R;
 
 /**
@@ -19,9 +20,9 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
     private Context mContext;
     private String[] myTextStrings;
     private int[] myImagesIds;
-    private onItemClickCallback onItemClickCallback;
+    private OnItemClickCallback onItemClickCallback;
 
-    public SimpleImageTextListAdapter(Context context, onItemClickCallback itemClickCallback){
+    public SimpleImageTextListAdapter(Context context, OnItemClickCallback itemClickCallback){
         mContext = context;
         onItemClickCallback = itemClickCallback;
     }
@@ -66,9 +67,5 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
                 }
             });
         }
-    }
-
-    public interface onItemClickCallback{
-        void onItemClick(int pos);
     }
 }

@@ -85,7 +85,7 @@ public class NewHelpAndSupportFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!isAdded()) return;
+        if (!isAdded() || isDetached()) return;
         mRiaSupportModelList = new ArrayList<>(2);
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
         HashMap<String, String> param = new HashMap<>();

@@ -1,26 +1,32 @@
 package com.nowfloats.Analytics_Screen.Graph;
 
-import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import static com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment.pattern;
@@ -33,6 +39,8 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
 
 
     private TextView tvMonth, tvWeek, tvYear;
+    private UniqueVisitorsFragment.BatchType currentTabType;
+    private PopupWindow popup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +48,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         setContentView(R.layout.activity_analytics);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) {
+        if(getSupportActionBar()!=null){
             setTitle("Unique Visitors");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -54,63 +62,82 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         tvWeek.setOnClickListener(this);
         tvYear.setOnClickListener(this);
 
-        Bundle b = new Bundle();
-        Calendar c = Calendar.getInstance();
-        c.setFirstDayOfWeek(Calendar.MONDAY);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("endDate", Methods.getFormattedDate(c.getTimeInMillis(),pattern));
-
-        int weekDay = c.get(Calendar.DAY_OF_WEEK);
-        int month = c.get(Calendar.MONTH);
-        c.add(Calendar.DAY_OF_MONTH,-((weekDay-c.getFirstDayOfWeek()+7)%7));
-        if (month == c.get(Calendar.MONTH)){
-            map.put("startDate",String.format(Locale.ENGLISH,"%s/%02d/%02d",c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,c.get(Calendar.DAY_OF_MONTH)));
-        }else{
-            map.put("startDate",String.format(Locale.ENGLISH,"%s/%02d/%s",c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,"01"));
-        }
-        b.putInt("pos",0);
-        b.putSerializable("hashmap",map);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b))
-                .commit();
+        changeTab(UniqueVisitorsFragment.BatchType.dy);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_week_tab:
-                changeTab("week");
+                changeTab(UniqueVisitorsFragment.BatchType.dy);
                 break;
             case R.id.tv_month_tab:
-                changeTab("month");
+                changeTab(UniqueVisitorsFragment.BatchType.ww);
                 break;
             case R.id.tv_year_tab:
-                changeTab("year");
+                initiatePopupWindow(view);
+                changeTab(UniqueVisitorsFragment.BatchType.mm);
                 break;
         }
     }
+    private void initiatePopupWindow(final View image) {
 
-    @TargetApi(21)
-    private void changeTab(String viewType) {
-        tvWeek.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.white));
-        tvMonth.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.white));
-        tvYear.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.white));
+        if (popup == null) {
+            try {
+                UserSessionManager manager = new UserSessionManager(this,this);
+                String createdDate = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
+                if (createdDate.contains("/Date")) {
+                    createdDate = createdDate.replace("/Date(", "").replace(")/", "");
+                }
+                Calendar c = Calendar.getInstance();
+                int currentYear = c.get(Calendar.YEAR);
+                c.setTimeInMillis(Long.valueOf(createdDate));
+                int createdYear = c.get(Calendar.YEAR);
+                final List<String> yearsList = new ArrayList<>(currentYear-createdYear+1);
+                for (int i=currentYear ;i>=createdYear;i--){
+                    yearsList.add(String.valueOf(i));
+                }
+                popup = new PopupWindow(this);
+                View layout = LayoutInflater.from(this).inflate(R.layout.layout_drop_down_list, null);
+                popup.setContentView(layout);
 
-        tvWeek.setTextColor(ContextCompat.getColor(this, R.color.dark_grey));
-        tvMonth.setTextColor(ContextCompat.getColor(this, R.color.dark_grey));
-        tvYear.setTextColor(ContextCompat.getColor(this, R.color.dark_grey));
+                popup.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.white_round_corner));
+                popup.setOutsideTouchable(true);
+                ListView mListView = layout.findViewById(R.id.list_view);
+                mListView.setAdapter(new ArrayAdapter<String>(this,R.layout.simple_text_center_item1,yearsList));
+                popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+                popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        initiatePopupWindow(image);
+                        onYearSelected(Integer.valueOf(yearsList.get(i)));
+                    }
+                });
+                popup.setFocusable(true);
+                popup.showAsDropDown(image, 0, 5);
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if (popup.isShowing()){
+            popup.dismiss();
+        }else
+        {
+            popup.showAsDropDown(image,0,5);
+        }
+    }
+
+    private void changeTab(UniqueVisitorsFragment.BatchType viewType) {
+        if (currentTabType == viewType) return;
+        changeTabColors(viewType);
         Bundle b = new Bundle();
         Calendar c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.MONDAY);
         HashMap<String, String> map = new HashMap<>();
         map.put("endDate", Methods.getFormattedDate(c.getTimeInMillis(),pattern));
-        int position = 0;
         switch (viewType) {
-            case "week":
-                position = 0;
-                tvWeek.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.dark_grey));
-                tvWeek.setTextColor(ContextCompat.getColor(this, R.color.white));
+            case dy:
                 int weekDay = c.get(Calendar.DAY_OF_WEEK);
                 int month = c.get(Calendar.MONTH);
                 c.add(Calendar.DAY_OF_MONTH,-((weekDay-c.getFirstDayOfWeek()+7)%7));
@@ -120,26 +147,63 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
                     map.put("startDate",String.format(Locale.ENGLISH,"%s/%02d/%s",c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,"01"));
                 }
                 break;
-            case "month":
-                position = 1;
-                tvMonth.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.dark_grey));
-                tvMonth.setTextColor(ContextCompat.getColor(this, R.color.white));
+            case ww:
                 map.put("startDate",String.format(Locale.ENGLISH,"%s/%02d/%s",c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,"01"));
                 break;
-            case "year":
-                position = 2;
-                tvYear.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.dark_grey));
-                tvYear.setTextColor(ContextCompat.getColor(this, R.color.white));
+            case mm:
                 map.put("startDate",String.format(Locale.ENGLISH,"%s/%s/%s",c.get(Calendar.YEAR),"01","01"));
                 break;
         }
-        b.putInt("pos",position);
+        b.putInt("pos",viewType.val);
         b.putSerializable("hashmap",map);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b))
                 .commit();
     }
 
+    private void changeTabColors(UniqueVisitorsFragment.BatchType viewType){
+        currentTabType = viewType;
+        tvWeek.setBackgroundColor(ContextCompat.getColor(this, R.color.fafafa));
+        tvMonth.setBackgroundColor(ContextCompat.getColor(this, R.color.fafafa));
+        tvYear.setBackgroundColor(ContextCompat.getColor(this, R.color.fafafa));
+
+        tvWeek.setTextColor(ContextCompat.getColor(this, R.color.dark_grey));
+        tvMonth.setTextColor(ContextCompat.getColor(this, R.color.dark_grey));
+        tvYear.setTextColor(ContextCompat.getColor(this, R.color.dark_grey));
+
+        switch (viewType) {
+            case dy:
+                tvWeek.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_grey));
+                tvWeek.setTextColor(ContextCompat.getColor(this, R.color.fafafa));
+                break;
+            case ww:
+                tvMonth.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_grey));
+                tvMonth.setTextColor(ContextCompat.getColor(this, R.color.fafafa));
+                break;
+            case mm:
+                tvYear.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_grey));
+                tvYear.setTextColor(ContextCompat.getColor(this, R.color.fafafa));
+                break;
+        }
+    }
+    private void onYearSelected(int yearSelected){
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("batchType", UniqueVisitorsFragment.BatchType.mm.name());
+        map.put("startDate",String.format(Locale.ENGLISH,"%s/%s",yearSelected,"01/01"));
+        if (yearSelected == year){
+            map.put("endDate", Methods.getFormattedDate(c.getTimeInMillis(),pattern));
+        }else{
+            map.put("endDate",String.format(Locale.ENGLISH,"%s/%s",yearSelected,"12/31"));
+        }
+        Bundle b = new Bundle();
+        b.putInt("pos", UniqueVisitorsFragment.BatchType.mm.val);
+        b.putSerializable("hashmap",map);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b))
+                .commit();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -152,16 +216,43 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
     }
 
     @Override
-    public void onChartBarClicked(HashMap<String, String> map) {
+    public void onChartBarClicked(HashMap<String, String> map,int views) {
         FragmentManager manager = getSupportFragmentManager();
         Bundle b = new Bundle();
+        changeTabColors( UniqueVisitorsFragment.BatchType.valueOf(map.get("batchType")));
         b.putInt("pos", UniqueVisitorsFragment.BatchType.valueOf(map.get("batchType")).val);
+        b.putInt("totalViews",views);
         b.putSerializable("hashmap",map);
         manager.beginTransaction()
-                .add(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b),map.get("batchType"))
-                .addToBackStack(null)
+                .replace(R.id.fl_analytics_fragment,UniqueVisitorsFragment.getInstance(b) , map.get("batchType"))
+                .addToBackStack(map.get("batchType"))
                 .commit();
     }
 
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        int fragmentCount = manager.getBackStackEntryCount();
+        if (fragmentCount>0){
+            FragmentManager.BackStackEntry backEntry = manager.getBackStackEntryAt(fragmentCount-1);
+            String tag = backEntry.getName();
+            Fragment fragment = manager.findFragmentByTag(tag);
+            if (fragment instanceof UniqueVisitorsFragment){
+                switch (((UniqueVisitorsFragment)fragment).batchType){
+                    case dy:
+                        changeTabColors(UniqueVisitorsFragment.BatchType.ww);
+                        break;
+                    case ww:
+                        changeTabColors(UniqueVisitorsFragment.BatchType.mm);
+                        break;
+                    case mm:
+                        break;
+                }
+
+            }
+        }
+
+        super.onBackPressed();
+    }
 }

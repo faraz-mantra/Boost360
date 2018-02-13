@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -48,9 +49,8 @@ import retrofit.client.Response;
  * Created by Admin on 17-01-2018.
  */
 
-public class UniqueVisitorsFragment extends Fragment {
+public class UniqueVisitorsFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
-    private int pos = -1;
     private  String dataType;
     private  BarChart graph;
     private String tabType;
@@ -60,7 +60,46 @@ public class UniqueVisitorsFragment extends Fragment {
     private ArrayList<String> labels = new ArrayList<>(12);
     public static String pattern = "yyyy/MM/dd";
     private VisitsModel currVisitsModel;
-    private BatchType batchType;
+    int totalVisits = -1;
+    public BatchType batchType;
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.img_info:
+                showInfoDialog();
+                break;
+        }
+    }
+
+    private void showInfoDialog() {
+        String title="", content="";
+        switch (batchType){
+            case dy:
+                title = "Unique Visitors in a week";
+                content = "The graph depicts unique visitors in the particular week. Note that a " +
+                        "visitor might visit on multiple days in the week and still, will be counted as a unique visitor only once for the entire week";
+                break;
+            case mm:
+                content = "The graph depicts unique visitors in the particular year. Note that a " +
+                        "visitor might visit on multiple days in the year and still, will be counted as a unique visitor only once for the entire month";
+                title = "Unique Visitors in a year";
+                break;
+            case ww:
+                content = "The graph depicts unique visitors in the particular month. Note that a " +
+                        "visitor might visit on multiple days in the month and still, will be counted as a unique visitor only once for the entire month";
+                title = "Unique Visitors in a month";
+                break;
+        }
+
+        new MaterialDialog.Builder(mContext)
+                .title(title)
+                .content(content)
+                .iconRes(R.drawable.icon_info)
+                .maxIconSize(Methods.dpToPx(15,mContext))
+                .show();
+    }
+
     public enum BatchType
     {
         dy(0),
@@ -89,7 +128,8 @@ public class UniqueVisitorsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() ==null) return;
-        pos = getArguments().getInt("pos");
+        int pos = getArguments().getInt("pos");
+        totalVisits = getArguments().getInt("totalViews");
         switch (pos){
             case 0:
                 dataType = getString(R.string.day);
@@ -117,12 +157,19 @@ public class UniqueVisitorsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (!isAdded()) return;
+        if (!isAdded() || isDetached()) return;
         manager = new UserSessionManager(mContext,getActivity());
         visitsCount= (TextView) view.findViewById(R.id.tv_visit_count);
         visitsTitle= (TextView) view.findViewById(R.id.tv_visits_title);
         progressBar = view.findViewById(R.id.progress_bar);
+        view.findViewById(R.id.img_info).setOnClickListener(this);
         visitsTitle.setText(String.format("unique visits this %s",tabType));
+        if (totalVisits != 0){
+            visitsCount.setText(String.valueOf(totalVisits));
+        }else if(getArguments().containsKey("hashmap")){
+                HashMap<String,String> map = (HashMap<String, String>) getArguments().getSerializable("hashmap");
+                fetchTotalViews((HashMap<String, String>) map.clone());
+        }
         graph = (BarChart) view.findViewById(R.id.graph);
         graph.setDrawGridBackground(false);
 //        graph.getLegend().setEnabled(false);
@@ -174,10 +221,9 @@ public class UniqueVisitorsFragment extends Fragment {
                     default:
                         return;
                 }
-
                 map.put("startDate", getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getStartDate(),pattern));
                 map.put("endDate",getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getEndDate(),pattern));
-                ((ViewCallback)mContext).onChartBarClicked(map);
+                ((ViewCallback)mContext).onChartBarClicked(map,(int)e.getVal());
             }
 
             @Override
@@ -194,6 +240,44 @@ public class UniqueVisitorsFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
             getFragmentData(map);
         }
+    }
+
+    private void fetchTotalViews(HashMap<String, String> map) {
+        switch (batchType){
+            case mm:
+                map.put("batchType",BatchType.yy.name());
+                break;
+            case ww:
+                map.put("batchType",BatchType.mm.name());
+                break;
+            case dy:
+                map.put("batchType",BatchType.ww.name());
+                break;
+            case yy:
+            default:
+                return;
+        }
+        map.put("clientId", Constants.clientId);
+        map.put("scope",manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
+        Constants.testRestAdapter.create(AnalyticsFetch.FetchDetails.class)
+                .getUniqueVisits(manager.getFpTag(), map, new Callback<VisitsModel>() {
+                    @Override
+                    public void success(VisitsModel visitsModel, Response response) {
+                        int totalCount = 0;
+                        if (visitsModel != null){
+                            for (VisitsModel.UniqueVisitsList data:visitsModel.getUniqueVisitsList()){
+                                totalCount+=data.getDataCount();
+                            }
+                        }
+                        visitsCount.setText(String.valueOf(totalCount));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        visitsCount.setText("0");
+                        Toast.makeText(mContext, "unable to fetch total unique visits", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private String getFormattedDate(String date, String pattern) {
@@ -244,25 +328,12 @@ public class UniqueVisitorsFragment extends Fragment {
         // update data here
     }
 
-    private void onYearSelected(int yearSelected){
-        graph.clear();
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("batchType",batchType.name());
-        map.put("startDate",String.format(Locale.ENGLISH,"%s/%s",year,"01/01"));
-        if (yearSelected == year){
-            map.put("endDate", Methods.getFormattedDate(c.getTimeInMillis(),pattern));
-        }else{
-            map.put("endDate",String.format(Locale.ENGLISH,"%s/%s",year,"12/31"));
-        }
-        getFragmentData(map);
-    }
     private List<IBarDataSet> getGraphDataSet() {
         List<IBarDataSet> dataSets = null;
 
         List<BarEntry> valueSet1 = new ArrayList<>();
         List<VisitsModel.UniqueVisitsList> data = currVisitsModel.getUniqueVisitsList();
+        labels.clear();
         long totalCount = 0;
         Calendar c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.MONDAY);
@@ -281,19 +352,17 @@ public class UniqueVisitorsFragment extends Fragment {
                     int month = c.get(Calendar.MONTH);
                     int startDate = c.get(Calendar.DAY_OF_MONTH);
                     c.setTimeInMillis(getMilliseconds(data.get(i).getEndDate()));
-                    labels.add(String.format(Locale.ENGLISH,"%s(%d-%d)",months[month],startDate,c.get(Calendar.DAY_OF_MONTH)));
+                    labels.add(String.format(Locale.ENGLISH,"%d-%d %s'%d",startDate,c.get(Calendar.DAY_OF_MONTH),months[month],c.get(Calendar.YEAR)%100));
                     break;
                 case mm:
-                    labels.add(months[c.get(Calendar.MONTH)]);
+                    labels.add(String.format(Locale.ENGLISH,"%s %d",months[c.get(Calendar.MONTH)],c.get(Calendar.YEAR)));
                     break;
                 case dy:
-
-                    int day = c.get(Calendar.DAY_OF_WEEK);
-                    labels.add(getResources().getStringArray(R.array.days)[day-1]);
+                    labels.add(String.format(Locale.ENGLISH,"%d %s'%s",c.get(Calendar.DAY_OF_MONTH),months[c.get(Calendar.MONTH)],c.get(Calendar.YEAR)%100));
                     break;
             }
         }
-        visitsCount.setText(String.valueOf(totalCount));
+        //visitsCount.setText(String.valueOf(totalCount));
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, dataType);
         barDataSet1.setColor(Color.GRAY);
 
@@ -320,6 +389,6 @@ public class UniqueVisitorsFragment extends Fragment {
                 });
     }
     public interface ViewCallback{
-        void onChartBarClicked(HashMap<String,String> map);
+        void onChartBarClicked(HashMap<String,String> map,int val);
     }
 }

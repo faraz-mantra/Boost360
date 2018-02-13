@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,21 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity;
-import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
+import com.nowfloats.Store.Adapters.UpgradeAdapter;
+import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
-
-import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
-import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
-import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 
 /**
  * Created by Admin on 29-01-2018.
  */
 
-public class UpgradesFragment extends Fragment {
+public class UpgradesFragment extends Fragment implements OnItemClickCallback{
 
     private Context mContext;
     private SharedPreferences pref;
@@ -53,55 +47,19 @@ public class UpgradesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded() || isDetached()) return;
 
-        String[] adapterTexts = getResources().getStringArray(R.array.upgrade_tab_items);
-        int[] adapterImages = {R.drawable.sidepanel_store, R.drawable.wildfire_gray, R.drawable.dictate_gray, R.drawable.new_business_app};
+//        String[] adapterTexts = getResources().getStringArray(R.array.upgrade_tab_items);
+//        int[] adapterImages = {R.drawable.sidepanel_store, R.drawable.wildfire_gray, R.drawable.dictate_gray, R.drawable.new_business_app};
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new SimpleImageTextListAdapter.onItemClickCallback() {
-            @Override
-            public void onItemClick(int pos) {
-                Intent intent = null;
-                switch(pos){
-                    case 0:
-                        intent = new Intent(mContext, NewPricingPlansActivity.class);
-                        break;
-                    case 1:
-                        intent = new Intent(mContext,FragmentsFactoryActivity.class);
-                        intent.putExtra("fragmentName","WildFireFragment");
-                        break;
-                    case 2:
-                        intent = new Intent(mContext,FragmentsFactoryActivity.class);
-                        intent.putExtra("fragmentName","DictateFragment");
-                        break;
-                    case 3:
-                        startBusinessApp();
-                        return;
-                    default:
-                        return;
-                }
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-        adapter.setItems(adapterImages,adapterTexts);
+//        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
+//            @Override
+//            public void onItemClick(int pos) {
+//
+//            }
+//        });
+//        adapter.setItems(adapterImages,adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.setAdapter(adapter);
-    }
-    private void startBusinessApp() {
-        Intent i;
-        int businessAppStatus = pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO);
-        if (businessAppStatus == BIZ_APP_DEMO) {
-           i = new Intent(mContext, FragmentsFactoryActivity.class);
-            i.putExtra("fragmentName","BusinessAppsFragment");
-        } else {
-            if (businessAppStatus == BIZ_APP_PAID) {
-                pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO_REMOVE).apply();
-            }
-            i = new Intent(mContext, BusinessAppsDetailsActivity.class);
-        }
-        startActivity(i);
-        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        mRecyclerView.setAdapter(new UpgradeAdapter(this));
     }
 
     @Override
@@ -111,5 +69,22 @@ public class UpgradesFragment extends Fragment {
         {
             HomeActivity.headerText.setText(getString(R.string.upgrades));
         }
+    }
+
+    @Override
+    public void onItemClick(int pos) {
+        Intent intent = null;
+        switch(pos){
+            case 0:
+                intent = new Intent(mContext, NewPricingPlansActivity.class);
+                break;
+            case 1:
+                intent = new Intent(mContext, TopUpPlansActivity.class);
+                break;
+            default:
+                return;
+        }
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

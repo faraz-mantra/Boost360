@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.SlidingTabLayout;
@@ -29,11 +28,6 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Map;
-
-import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.QueryMap;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -226,9 +220,5 @@ public class StoreFragmentTab extends Fragment {
             BoostLog.d("Additional WidgetSize:", additionalWidgetModels.size() + "");
             BoostLog.d("Active WidgetSize:", activeWidgetModels.size() + "");
         }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));}
-    }
-    public interface AccInfoInterface{
-        @GET("/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP")
-        public void getAccDetails(@QueryMap Map<String,String> map, Callback<ArrayList<AccountDetailModel>> callback);
     }
 }

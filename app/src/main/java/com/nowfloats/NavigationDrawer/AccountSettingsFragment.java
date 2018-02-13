@@ -33,6 +33,7 @@ import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
+import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
@@ -98,7 +99,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new SimpleImageTextListAdapter.onItemClickCallback() {
+        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;

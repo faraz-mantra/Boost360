@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
+import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.util.Constants;
@@ -54,7 +55,7 @@ public class AboutFragment extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new SimpleImageTextListAdapter.onItemClickCallback() {
+        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;

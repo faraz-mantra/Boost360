@@ -16,6 +16,7 @@
         android:id="@+id/ll_wmy_wrapper"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:background="@drawable/rounded_corner_dark_gray_padded"
         android:layout_below="@id/toolbar"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
@@ -26,19 +27,20 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/week"
+            android:background="#fafafa"
             android:gravity="center"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/dark_grey"
-            android:background="@drawable/dark_grey_left_rounded_border"/>
+            android:textColor="@color/dark_grey"/>
         <TextView
             android:id="@+id/tv_month_tab"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:text="@string/Month"
+            android:background="#fafafa"
             android:gravity="center"
-            android:textColor="@color/dark_grey"
-            android:background="@drawable/dark_grey_border"/>
+            android:textColor="@color/dark_grey"/>
         <TextView
             android:id="@+id/tv_year_tab"
             android:layout_width="0dp"
@@ -46,8 +48,11 @@
             android:layout_weight="1"
             android:text="@string/Year"
             android:gravity="center"
-            android:textColor="@color/dark_grey"
-            android:background="@drawable/dark_grey_right_rounded_border"/>
+            android:paddingRight="7dp"
+            android:background="@color/dark_grey"
+            android:drawableEnd="@drawable/ic_drop_down_white"
+            android:textColor="#fafafa"
+            android:drawableRight="@drawable/ic_drop_down_white" />
     </LinearLayout>
 
     <FrameLayout

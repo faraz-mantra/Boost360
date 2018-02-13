@@ -670,6 +670,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.Store.YourPurchasedPlansActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.Store.TopUpPlansActivity" />
     </application>
 
 </manifest>

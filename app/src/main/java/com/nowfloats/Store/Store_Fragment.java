@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,12 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.AccountDetails.AccountInfoAdapter;
-import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Store.Adapters.StoreAdapter;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.util.BusProvider;
-import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -32,18 +28,11 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.http.GET;
-import retrofit.http.QueryMap;
 
 public class Store_Fragment extends Fragment {
     private RecyclerView recyclerView;
@@ -160,30 +149,6 @@ public class Store_Fragment extends Fragment {
         }
     }
 
-
-    private void LoadActivePlans(final Activity activity) {
-        try {
-            AccInfoInterface infoInterface = Constants.restAdapter.create(AccInfoInterface.class);
-            HashMap<String,String> values = new HashMap<>();
-            values.put("clientId", Constants.clientId);
-            values.put("fpId",session.getFPID());
-            infoInterface.getAccDetails(values,new Callback<ArrayList<AccountDetailModel>>() {
-                @Override
-                public void success(ArrayList<AccountDetailModel> accountDetailModels, Response response) {
-                    AccountInfoAdapter adapter = new AccountInfoAdapter(activity,accountDetailModels);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    progress_storelayout.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    progress_storelayout.setVisibility(View.GONE);
-                }
-            });
-        }catch (Exception e){e.printStackTrace(); progress_storelayout.setVisibility(View.GONE);}
-    }
-
     @Subscribe
     public void getStoreList(StoreEvent response){
         List<StoreModel> storeModel = (ArrayList<StoreModel>)response.model.AllPackages;
@@ -215,14 +180,6 @@ public class Store_Fragment extends Fragment {
         }else{
             emptystorelayout.setVisibility(View.VISIBLE);
         }
-    }
-
-    public interface AccInfoInterface{
-        //https://api.withfloats.com/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?clientId={clientId}&fpId={fpId}
-        // https://api.withfloats.com/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?
-        // clientId=""&fpId=""
-        @GET("/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP")
-        public void getAccDetails(@QueryMap Map<String,String> map, Callback<ArrayList<AccountDetailModel>> callback);
     }
 
     private ArrayList<StoreModel> filterData(ArrayList<StoreModel> storeModel) {
