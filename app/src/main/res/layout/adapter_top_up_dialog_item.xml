@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <RadioButton
+        android:id="@+id/rb_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/tv_plan_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_plan_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INR 5,000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/rb_plan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rb_plan" />
+
+    <TextView
+        android:id="@+id/tv_plan_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/rb_plan"
+        app:layout_constraintEnd_toStartOf="@+id/tv_plan_price"
+        app:layout_constraintStart_toEndOf="@+id/rb_plan"
+        app:layout_constraintTop_toTopOf="@+id/rb_plan"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp" />
+</android.support.constraint.ConstraintLayout>

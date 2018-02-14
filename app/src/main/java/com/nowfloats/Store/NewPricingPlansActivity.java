@@ -208,7 +208,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                             "The Payment ID for your transaction is " + paymentId +". Your package will be activated within 24 hours. \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
                     showDialog(status, msg);*/
-                    pollServerforStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn);
+                    pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn);
                 }
             }else {
                 if(status.equals("Pending")){
@@ -237,7 +237,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
         builder.create().show();
     }
 
-    private void pollServerforStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn) {
+    private void pollServerForStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn) {
         if(!materialProgress.isShowing()) {
             materialProgress.show();
         }
@@ -259,7 +259,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                         getPricingPlanDetails();
 
                     }else {
-                        pollServerforStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn);
+                        pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn);
                     }
                 }catch (JSONException e){
                     e.printStackTrace();

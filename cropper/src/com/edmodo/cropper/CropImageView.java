@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.edmodo.cropper.cropwindow.CropOverlayView;
 import com.edmodo.cropper.cropwindow.edge.Edge;
@@ -478,14 +479,16 @@ public class CropImageView extends FrameLayout {
      * @param degrees Integer specifying the number of degrees to rotate.
      */
     public void rotateImage(int degrees) {
+        if (mBitmap!= null){
+            Matrix matrix = new Matrix();
+            matrix.postRotate(degrees);
+            mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+            setImageBitmap(mBitmap);
 
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degrees);
-        mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
-        setImageBitmap(mBitmap);
+            mDegreesRotated += degrees;
+            mDegreesRotated = mDegreesRotated % 360;
+        }
 
-        mDegreesRotated += degrees;
-        mDegreesRotated = mDegreesRotated % 360;
     }
 
     // Private Methods /////////////////////////////////////////////////////////

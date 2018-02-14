@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.TopUpPlansActivity;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -156,8 +157,7 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
         }
 
         private void showTopUps() {
-            Intent i = new Intent(mContext, NewPricingPlansActivity.class);
-            i.putExtra("fragmentName","Wildfire");
+            Intent i = new Intent(mContext, TopUpPlansActivity.class);
             mContext.startActivity(i);
         }
     }
