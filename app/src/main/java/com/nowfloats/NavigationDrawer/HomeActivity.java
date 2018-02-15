@@ -247,23 +247,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-//    private void setHotlineUser() {
-//        HotlineConfig hlConfig = new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb", "a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
-//
-//        hlConfig.setVoiceMessagingEnabled(true);
-//        hlConfig.setCameraCaptureEnabled(false);
-//        hlConfig.setPictureMessagingEnabled(true);
-//
-//        Hotline.getInstance(this).init(hlConfig);
-//
-//        HotlineUser hlUser = Hotline.getInstance(this).getUser();
-//        hlUser.setName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-//        hlUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-//        hlUser.setPhone(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE),
-//                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-//        Hotline.getInstance(this).updateUser(hlUser);
-//
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -1164,13 +1147,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         new AnaChatBuilder(activity)
                                 .setBusinessId(Constants.ANA_BUSINESS_ID)
                                 .setBaseUrl(Constants.ANA_CHAT_API_URL)
+                                .setFlowId(session.getFpTag())
                                 .setThemeColor(R.color.primary)
                                 .setToolBarDescription("Available")
                                 .setToolBarTittle("Ria Chat")
                                 .setToolBarLogo(R.drawable.ria_circle_image)
                                 .start();
                     }
-                    //Hotline.showConversations(HomeActivity.this);
+
                 } else if (nextScreen.equals(getString(R.string.call))) {
 //                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
 //                        Intent call = new Intent(Intent.ACTION_DIAL);
