@@ -13,8 +13,6 @@ import com.facebook.login.LoginManager;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
-import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
-import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
 import com.nowfloats.Volley.AppController;
@@ -880,7 +878,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Constants.BusinessEnquiryWidget = false ;
                 HomeActivity.StorebizFloats.clear();
                 HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
-                ChatFragment.chatModels = new ArrayList<ChatModel>();
                 LoginManager.getInstance().logOut();
                 //Analytics_Fragment.subscriberCount.setText("0");
                 //Analytics_Fragment.visitCount.setText("0");

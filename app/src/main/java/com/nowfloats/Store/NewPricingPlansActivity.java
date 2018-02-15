@@ -1,6 +1,5 @@
 package com.nowfloats.Store;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +32,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -215,27 +215,18 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                     String msg = "Alert! \n" +
                             "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment ID for your transaction is " + paymentId +" . \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                    showDialog(status, msg);
+                    Methods.showDialog(NewPricingPlansActivity.this,status, msg);
                 }else if (status.equals("Failure")){
                     String msg = "Sorry! \n" +
                             "This transaction failed. To retry, please go to the Store and pay again. \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                    showDialog(status, msg);
+                    Methods.showDialog(NewPricingPlansActivity.this,status, msg);
                 }
             }
         }
     }
 
-    private void showDialog(String title, String msg){
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
-    }
+
 
     private void pollServerForStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn) {
         if(!materialProgress.isShowing()) {
@@ -254,7 +245,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                             String msg = "Thank you! \n" +
                                     "The Payment ID for your transaction is " + paymentid + ". Your package will be activated within 24 hours. \n" +
                                     "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                            showDialog(status, msg);
+                            Methods.showDialog(NewPricingPlansActivity.this,status, msg);
                         }
                         getPricingPlanDetails();
 
@@ -273,7 +264,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
             public void onErrorResponse(VolleyError error) {
                 String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
                 materialProgress.dismiss();
-                showDialog(status, msg);
+                Methods.showDialog(NewPricingPlansActivity.this,status, msg);
             }
         });
         AppController.getInstance().addToRequstQueue(request);

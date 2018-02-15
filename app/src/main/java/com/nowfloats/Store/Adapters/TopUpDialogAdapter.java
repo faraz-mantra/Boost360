@@ -1,4 +1,4 @@
-package com.nowfloats.Store;
+package com.nowfloats.Store.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import java.util.Locale;
  * Created by Admin on 14-02-2018.
  */
 
-class TopUpDialogAdapter extends RecyclerView.Adapter<TopUpDialogAdapter.MyTopUpDialogHolder> {
+public class TopUpDialogAdapter extends RecyclerView.Adapter<TopUpDialogAdapter.MyTopUpDialogHolder> {
 
     private List<PackageDetails> packages;
     private int selectedPos = 0;
@@ -78,7 +78,7 @@ class TopUpDialogAdapter extends RecyclerView.Adapter<TopUpDialogAdapter.MyTopUp
 
         }
     }
-    interface onItemClickListener{
+    public interface onItemClickListener{
         void onItemClick(String id);
     }
 }

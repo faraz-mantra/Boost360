@@ -7,6 +7,7 @@ import android.app.AppOpsManager;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -204,6 +205,17 @@ public class Methods {
             return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
         }
         return false;
+    }
+
+    public static void showDialog(Context mContext, String title, String msg){
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     public static boolean isMyActivityAtTop(Context mContext){

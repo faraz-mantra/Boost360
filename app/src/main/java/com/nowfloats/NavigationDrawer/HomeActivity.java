@@ -81,7 +81,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
@@ -163,7 +162,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     AccountSettingsFragment accountSettingsFragment;
     Site_Meter_Fragment siteMeterFragment;
     Settings_Fragment settingsFragment;
-    ChatFragment chatFragment;
     SocialSharingFragment socialSharingFragment;
     NewHelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
@@ -495,10 +493,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent i = new Intent(this, ProductGalleryActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (url.contains("chatWindow")) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();
-            } else if(url.contains("assuredPurchase")){
+            }else if(url.contains("assuredPurchase")){
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                         .commit();
             }
@@ -1535,7 +1530,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         manageContentFragment = new ManageContentFragment();
         accountSettingsFragment = new AccountSettingsFragment();
         settingsFragment = new Settings_Fragment();
-        chatFragment = new ChatFragment();
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
