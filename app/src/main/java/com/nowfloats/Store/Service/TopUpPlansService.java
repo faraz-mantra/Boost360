@@ -53,8 +53,10 @@ public class TopUpPlansService{
         for (AllPackage allPackage : storeMainModel.allPackages) {
             if (allPackage.getKey().equals("TopUp")) {
                 listener.onDataReceived(allPackage.getValue());
+                return;
             }
         }
+        listener.onDataReceived(null);
     }
 
     public interface ServiceCallbackListener{

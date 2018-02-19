@@ -85,6 +85,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_Subcribers_Count = "subcribersCount";
     private String KEY_Search_Count = "SearchQueryCount";
     private String KEY_Enq_Count = "EnquiryCount";
+    private String KEY_Call_Count = "VmnCallCount";
     private String KEY_LATEST_ENQ_COUNT = "LatestEnquiryCount";
     private String KEY_LS = "local_store";
     private String KEY_website = "website_share";
@@ -177,10 +178,10 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
     public String getVisitsCount()
     {
-        return pref.getString(KEY_Visit_Count,null);
+        return pref.getString(KEY_Visit_Count,"");
     }public String getVisitorsCount()
     {
-        return pref.getString(KEY_Visitors_Count,null);
+        return pref.getString(KEY_Visitors_Count,"");
     }
 
     public void setSubcribersCount(String cnt)
@@ -193,7 +194,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public String getSubcribersCount()
     {
 
-        return pref.getString(KEY_Subcribers_Count,null);
+        return pref.getString(KEY_Subcribers_Count,"");
     }
 
     public void setSearchCount(String cnt)
@@ -203,7 +204,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
     public String getSearchCount()
     {
-        return pref.getString(KEY_Search_Count,null);
+        return pref.getString(KEY_Search_Count,"");
     }
 
     public void setEnquiryCount(String count){
@@ -212,7 +213,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     public String getEnquiryCount(){
-        return pref.getString(KEY_Enq_Count,null);
+        return pref.getString(KEY_Enq_Count,"");
+    }
+ public void setVmnCallsCount(String count){
+        editor.putString(KEY_Call_Count , count);
+        editor.commit();
+    }
+
+    public String getVmnCallsCount(){
+        return pref.getString(KEY_Call_Count,"");
     }
 
     public void setLatestEnqCount(String count){
@@ -832,11 +841,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         final ProgressDialog pd ;
         pd = ProgressDialog.show(activity, "", activity.getString(R.string.logging_out));
         pd.setCancelable(false);
-
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
         params.put("fpId",fpID);
-        WebEngage.get().user().logout();
         Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
         api_login_request.logoutUnsubcribeRIA(params,new Callback<String>() {
             @Override
@@ -844,6 +851,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if(pd.isShowing())
                 pd.dismiss();
+                WebEngage.get().user().logout();
                 AnaCore.logoutUser(activity);
                 DataBase db = new DataBase(activity);
                 DbController.getDbController(activity.getApplicationContext()).deleteDataBase();

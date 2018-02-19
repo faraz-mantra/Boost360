@@ -420,7 +420,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //onclickColorChange(manageInventoryImageView, tvManageInventory, manageInventoryLayout);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.product_gallery));
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
             }
         });
 
@@ -457,7 +457,7 @@ public class SidePanelFragment extends Fragment {
             }
         });
 
-
+        onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);
     }
 
     private void showMailDetailDilaog() {

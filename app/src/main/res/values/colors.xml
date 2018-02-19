@@ -173,5 +173,6 @@
     <color name="sam_title_color_1">#5a6b7d</color>
     <color name="sam_title_color_2">#84888C</color>
     <color name="sam_title_color_3">#3B4954</color>
+    <color name="f3f3f3">#F3F3F3</color>
 
 </resources>

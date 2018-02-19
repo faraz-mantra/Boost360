@@ -154,6 +154,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="com.kitsune:anachatsdk-1.18.11" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-wearable-10.2.1" level="project" />
     <orderEntry type="library" name="com.squareup.okhttp:okhttp-urlconnection:2.3.0@jar" level="project" />
     <orderEntry type="library" name="com.github.darsh2:MultipleImageSelect-v0.0.4" level="project" />
@@ -163,7 +164,6 @@
     <orderEntry type="library" name="com.google.android.gms:play-services-fitness-10.2.1" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-impl-10.2.1" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-auth-10.2.1" level="project" />
-    <orderEntry type="library" name="com.kitsune:anachatsdk-1.16" level="project" />
     <orderEntry type="library" name="com.twitter.sdk.android:twitter-core-3.0.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-location-10.2.1" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.1@jar" level="project" />

@@ -834,11 +834,8 @@ public class Analytics_Fragment extends Fragment {
                 if(jsonObject.has("TotalCalls")) {
                     vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
                     vmnTotalCallCount.setText(vmnTotalCalls);
+                    session.setVmnCallsCount(vmnTotalCalls);
                 }
-                if(jsonObject.has("MissedCalls"))
-                    vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
-                if (jsonObject.has("ReceivedCalls"))
-                    vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
             }
 
             @Override

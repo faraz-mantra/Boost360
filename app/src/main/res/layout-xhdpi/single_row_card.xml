@@ -26,9 +26,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="12dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/sidepanel_dashboard" />
+                app:srcCompat="@drawable/ic_dashboard" />
 
             <TextView
                 android:id="@+id/firstrow_TextView"
@@ -87,10 +87,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:tint="#808080"
-                android:padding="5dp"
+                android:padding="12dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/manage_customers" />
+                app:srcCompat="@drawable/ic_customers" />
 
             <TextView
                 android:id="@+id/tvManageCustomers"
@@ -116,10 +115,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:tint="#808080"
-                android:padding="5dp"
+                android:padding="12dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/manage_customers" />
+                app:srcCompat="@drawable/ic_manage_content" />
 
             <TextView
                 android:id="@+id/tvManageContent"
@@ -144,10 +142,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:tint="#808080"
-                android:padding="5dp"
+                android:padding="11dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/manage_inventory" />
+                app:srcCompat="@drawable/ic_product_gallery" />
 
             <TextView
                 android:id="@+id/tvManageInventory"
@@ -178,7 +175,6 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/manage_third_party" />
@@ -491,9 +487,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="12dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/sidepanel_settings" />
+                app:srcCompat="@drawable/ic_account_settings" />
 
             <TextView
                 android:id="@+id/fifthRow_TextView"
@@ -519,9 +515,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="12dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/sidepanel_business" />
+                app:srcCompat="@drawable/ic_upgrade" />
 
             <TextView
                 android:id="@+id/secondRow_TextView"
@@ -641,10 +637,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="10dp"
+                android:padding="12dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_help_and_support"
-                android:tint="#808080" />
+                app:srcCompat="@drawable/ic_help_and_support"/>
 
             <TextView
                 android:id="@+id/seventhRow_TextView"
@@ -669,9 +664,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="12dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/sidepanel_share" />
+                app:srcCompat="@drawable/ic_about" />
 
             <TextView
                 android:id="@+id/tv_about"
@@ -697,7 +692,7 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="7dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_share" />
 

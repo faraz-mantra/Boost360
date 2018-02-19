@@ -53,6 +53,9 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
     private String selectedPackage;
     private ProgressDialog progressDialog;
 
+    public enum TopUpType{
+        WildFire,Dictate,App;
+    }
     public TopUpDialog(Activity activity){
         this.activity = activity;
         mContext = activity;
@@ -94,7 +97,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
             }
         }
         if (visiblePackages.size() == 0){
-            Toast.makeText(mContext, "Your account can't have App packages.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Your account can't activate this TopUp packages", Toast.LENGTH_SHORT).show();
             return;
         }
         if (topUpDialog == null) {
@@ -136,6 +139,10 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
     }
     @Override
     public void onDataReceived(List<PackageDetails> packages) {
+        if (packages == null || packages.size() == 0){
+            Toast.makeText(mContext, "Your account can't activate any TopUp packages.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mTopUps = packages;
         showTopUpDialog();
     }

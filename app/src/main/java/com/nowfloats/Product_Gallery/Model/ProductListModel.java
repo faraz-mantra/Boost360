@@ -22,6 +22,7 @@ public class ProductListModel implements Parcelable {
     public String Price;
     public String Priority;
     public String ShipmentDuration;
+    public int availableUnits;
     public ArrayList<String> _keywords;
     public String ApplicationId;
     public String FPTag;
@@ -73,6 +74,7 @@ public class ProductListModel implements Parcelable {
         parcel.writeString(CreatedOn);
         parcel.writeString(UpdatedOn);
         parcel.writeString(ProductIndex);
+        parcel.writeInt(availableUnits);
     }
 
     public ProductListModel(Parcel in) {
@@ -103,6 +105,7 @@ public class ProductListModel implements Parcelable {
         this.CreatedOn = in.readString();
         this.UpdatedOn = in.readString();
         this.ProductIndex = in.readString();
+        this.availableUnits = in.readInt();
     }
 
     public static final Parcelable.Creator<ProductListModel> CREATOR = new Parcelable.Creator<ProductListModel>() {

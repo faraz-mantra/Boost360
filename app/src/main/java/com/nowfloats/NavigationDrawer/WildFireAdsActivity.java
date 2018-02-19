@@ -75,8 +75,9 @@ public class WildFireAdsActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WildFireAdsActivity.this,FragmentsFactoryActivity.class);
-                intent.putExtra("fragmentName",WildFireFragment.class.getName());
+                intent.putExtra("fragmentName","WildFireFragment");
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 

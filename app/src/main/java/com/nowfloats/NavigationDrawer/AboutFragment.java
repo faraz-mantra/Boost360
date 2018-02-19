@@ -49,9 +49,9 @@ public class AboutFragment extends Fragment {
         if (!isAdded()) return;
 
         String[] adapterTexts = getResources().getStringArray(R.array.about_tab_items);
-        int[] adapterImages = {R.drawable.icon_info, R.drawable.faq, R.drawable.ic_feedback_chat,
-                R.drawable.icon_fb,R.drawable.icon_tweet,R.drawable.icon_rateus,R.drawable.terms_of_use
-        ,R.drawable.privacy_policy};
+        int[] adapterImages = {R.drawable.ic_nowfloats_gray, R.drawable.ic_faq, R.drawable.ic_feedback,
+                R.drawable.ic_facebook_circle,R.drawable.ic_twitter_circle,R.drawable.ic_rate_us,R.drawable.ic_term_cond
+        ,R.drawable.ic_privacy};
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));

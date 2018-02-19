@@ -2,7 +2,6 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nowfloats.NavigationDrawer.Adapter.TextExpandableAdapter;
-import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.TopUpDialog;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -35,6 +34,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 public class DictateFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
     private ProgressDialog progressDialog;
+    private TopUpDialog mTopUpDialog;
 
     @Nullable
     @Override
@@ -119,7 +119,10 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.llayout_wildfire:
-                startActivity(new Intent(mContext, NewPricingPlansActivity.class));
+                if (getActivity() != null && mTopUpDialog == null) {
+                    mTopUpDialog = new TopUpDialog(getActivity());
+                }
+                mTopUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());
                 break;
             case R.id.llayout_know_more:
 

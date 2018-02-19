@@ -316,7 +316,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         }
     }
     public void updateData(VisitsModel visitsModel) {
-        if(isDetached())
+        if(!isAdded() || isDetached())
             return;
         progressBar.setVisibility(View.GONE);
         currVisitsModel = visitsModel;
@@ -334,7 +334,6 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         List<BarEntry> valueSet1 = new ArrayList<>();
         List<VisitsModel.UniqueVisitsList> data = currVisitsModel.getUniqueVisitsList();
         labels.clear();
-        long totalCount = 0;
         Calendar c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.MONDAY);
         String[] months = getResources().getStringArray(R.array.months);
@@ -345,7 +344,6 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         for(int i=0;i<data.size();i++)
         {
             valueSet1.add(new BarEntry(data.get(i).getDataCount(),i));
-            totalCount+=data.get(i).getDataCount();
             c.setTimeInMillis(getMilliseconds(data.get(i).getStartDate()));
             switch (batchType){
                 case ww:

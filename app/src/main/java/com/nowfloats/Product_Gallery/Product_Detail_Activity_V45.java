@@ -89,7 +89,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     public ImageView save;
     public ProductListModel product_data;
     MaterialEditText productName, productDesc, productCurrency, productPrice, productDiscount, productLink, etShipmentDuration,
-            etPriority, etShippingCharge, etTransactionCharge, etNetAmount;
+            etPriority, etShippingCharge, etTransactionCharge, etAvailableUnits, etNetAmount;
     TextView tvApEnabledText;
     ImageView productImage;
     Switch switchView, svFreeShipment;
@@ -162,6 +162,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         etPriority = (MaterialEditText) findViewById(R.id.product_priority);
         etShippingCharge = (MaterialEditText) findViewById(R.id.et_shipping_charge);
         etTransactionCharge = (MaterialEditText) findViewById(R.id.et_transaction_charge);
+        etAvailableUnits = (MaterialEditText) findViewById(R.id.et_available_unit);
         etNetAmount = (MaterialEditText) findViewById(R.id.et_net_amount);
 
         tvApEnabledText = (TextView) findViewById(R.id.tv_is_ap_enabled);
@@ -310,6 +311,12 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                     if (shipmentDuration != null && shipmentDuration.trim().length() > 0 && !shipmentDuration.equals("0"))
                         etShipmentDuration.setText(shipmentDuration);
                     textEditListener(etShipmentDuration);
+
+                    int availableUnit = product_data.availableUnits;
+                    if (availableUnit != -1)
+                        etAvailableUnits.setText(String.valueOf(availableUnit));
+
+                    textEditListener(etAvailableUnits);
                     //Currency Code
                     String currencyCode = product_data.CurrencyCode;
                     if (currencyCode != null && currencyCode.trim().length() > 0 && !currencyCode.equals("0"))
@@ -350,8 +357,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                                         Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "Please enter the shipping metrices");
                                         return;
                                     } else if (mIsApEnabled && Double.parseDouble(etNetAmount.getText().toString().trim())
-                                            < Double.parseDouble(etShippingCharge.getText().toString().trim())
-                                            ) {
+                                            < Double.parseDouble(etShippingCharge.getText().toString().trim())) {
                                         Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "NetAmount can't be less than Shipping charge");
                                         return;
                                     }
@@ -694,7 +700,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
 
     private boolean ValidateFields(boolean keyCheck) {
         boolean flag = true;
-        String desc = "description", disc = "discountAmount", link = "buyOnlineLink", name = "name", price = "price", currency = "currencyCode", avail = "isAvailable", ship = "shipmentDuration", freeShipment = "isFreeShipmentAvailable", priority = "priority";
+        String desc = "description", disc = "discountAmount", link = "buyOnlineLink", name = "name",
+                price = "price", currency = "currencyCode", avail = "isAvailable", ship = "shipmentDuration",
+                freeShipment = "isFreeShipmentAvailable", priority = "priority",availableUnits ="availableUnits";
         if (keyCheck) {
             desc = desc.toUpperCase();
             disc = "DISCOUNTPRICE";
@@ -704,8 +712,6 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             currency = currency.toUpperCase();
             avail = "ISAVAIALABLE";
             ship = ship.toUpperCase();
-        }
-        if (keyCheck) {
             freeShipment = "FREESHIPMENT";
         }
 
@@ -734,6 +740,17 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             values.put(ship, null);
         }
 
+        if (etAvailableUnits != null && etAvailableUnits.getText().toString().trim().length() > 0) {
+            values.put(availableUnits, etAvailableUnits.getText().toString());
+        } else {
+            values.put(availableUnits, "-1");
+            if (!keyCheck) {
+                YoYo.with(Techniques.Shake).playOn(etAvailableUnits);
+                Methods.showSnackBarNegative(activity, "Please enter product available units");
+                flag = false;
+            }
+        }
+
         if (productDiscount != null && productDiscount.getText().toString().trim().length() > 0) {
             values.put(disc, productDiscount.getText().toString().trim());
         } else {
@@ -754,6 +771,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             Methods.showSnackBarNegative(activity, getString(R.string.enter_product_name));
             flag = false;
         }
+
         if (flag) {
             if (productPrice != null && productPrice.getText().toString().trim().length() > 0) {
                 values.put(price, productPrice.getText().toString().trim());

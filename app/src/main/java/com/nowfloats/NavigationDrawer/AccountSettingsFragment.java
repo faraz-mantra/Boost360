@@ -94,8 +94,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
         String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
-        int[] adapterImages = {R.drawable.sidepanel_business,R.drawable.site_appearance, R.drawable.ic_domain_details
-        ,R.drawable.payment_setting,R.drawable.pricing_plans, R.drawable.icon_change_password,R.drawable.icon_logout};
+        int[] adapterImages = {R.drawable.ic_manage_business,R.drawable.ic_site_apperance, R.drawable.ic_domain_enad_emails
+        ,R.drawable.ic_payment_setting,R.drawable.ic_your_plan, R.drawable.icon_change_password,R.drawable.icon_logout};
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));

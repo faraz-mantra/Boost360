@@ -1552,9 +1552,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
     <string name="Year">Year</string>
     <string name="support_name">Support</string>
-    <string name="wildfire_analytics">Wildfire Analytics</string>
+    <string name="wildfire_analytics">WildFire Analytics</string>
     <string name="manage_content">Manage Content</string>
-    <string name="account_settings">Account Settinngs</string>
+    <string name="account_settings">Account Settings</string>
     <string name="about">About</string>
     <string name="upgrades">Upgrades</string>
     <string-array name="upgrade_tab_items">

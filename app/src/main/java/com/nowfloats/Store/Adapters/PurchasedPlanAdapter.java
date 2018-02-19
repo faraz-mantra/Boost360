@@ -63,14 +63,15 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
 
     class MyPurchasePlansHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView validityTv,visibleDetails, detailsTv, numberTv, statusTv, dateTv;
-        private ImageView planImV;
+        private TextView validityTv,visibleDetails, detailsTv, numberTv, statusTv, dateTv, renewTv,topUpTv;
+        private ImageView planImV, topUpImV;
         private ActivePackage activePlan;
         private View mImagDivider;
         MyPurchasePlansHolder(View itemView) {
             super(itemView);
             mImagDivider = itemView.findViewById(R.id.view_divider);
             planImV = itemView.findViewById(R.id.img_plan);
+            topUpImV = itemView.findViewById(R.id.img_top_up);
             validityTv = itemView.findViewById(R.id.tv_validity);
             detailsTv = itemView.findViewById(R.id.tv_details);
             numberTv = itemView.findViewById(R.id.tv_number);
@@ -79,20 +80,35 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
             visibleDetails = itemView.findViewById(R.id.tv_visible_details);
             detailsTv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG | detailsTv.getPaintFlags());
             detailsTv.setOnClickListener(this);
-            itemView.findViewById(R.id.tv_renew_upgrade).setOnClickListener(this);
-            itemView.findViewById(R.id.tv_top_up).setOnClickListener(this);
+            renewTv = itemView.findViewById(R.id.tv_renew_upgrade);
+            renewTv.setOnClickListener(this);
+            topUpTv = itemView.findViewById(R.id.tv_top_up);
+            topUpTv.setOnClickListener(this);
         }
 
         void setActiveOrExpiredHolder(ActivePackage activePlan){
             this.activePlan = activePlan;
+            renewTv.setVisibility(View.VISIBLE);
             if(activePlan.getProductClassification().getPackType() == 1){
                 planImV.setVisibility(View.GONE);
                 mImagDivider.setVisibility(View.GONE);
                 validityTv.setText(Methods.fromHtml(String.format("<b><font color=%s>%s</font></b>",
                         ContextCompat.getColor(mContext,R.color.gray), activePlan.getName())));
+                topUpImV.setVisibility(View.VISIBLE);
+                topUpTv.setVisibility(View.INVISIBLE);
             }else{
+                topUpTv.setVisibility(View.VISIBLE);
+                if (activePlan.getName().toLowerCase().contains("lite")){
+                    planImV.setImageResource(R.drawable.boost_lite_logo);
+                }else if (activePlan.getName().toLowerCase().contains("pro")){
+                    planImV.setImageResource(R.drawable.boost_pro_logo);
+                }else if (activePlan.getName().toLowerCase().contains("light")){
+                    planImV.setImageResource(R.drawable.lighthouse);
+                    renewTv.setVisibility(View.INVISIBLE);
+                }
                 mImagDivider.setVisibility(View.VISIBLE);
                 planImV.setVisibility(View.VISIBLE);
+                topUpImV.setVisibility(View.GONE);
                 validityTv.setText(Methods.fromHtml(String.format("Validity: <b><font color=%s>%s</font></b>",
                         ContextCompat.getColor(mContext,R.color.gray),activePlan.getTotalMonthsValidity()+" Months")));
             }

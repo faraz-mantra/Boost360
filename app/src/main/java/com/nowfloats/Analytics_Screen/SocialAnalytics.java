@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
-import com.nowfloats.Analytics_Screen.Fragments.FetchFacebookDataFragment;
+import com.nowfloats.Analytics_Screen.Fragments.ProcessFacebookDataFragment;
 import com.nowfloats.Analytics_Screen.Fragments.LoginFragment;
 import com.nowfloats.Analytics_Screen.Fragments.PostFacebookUpdateFragment;
 import com.nowfloats.Analytics_Screen.model.GetFacebookAnalyticsData;
@@ -271,7 +271,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
         switch(i){
             case FETCH_DATA:
 
-                frag = FetchFacebookDataFragment.getInstance(b);
+                frag = ProcessFacebookDataFragment.getInstance(b);
                 transaction.replace(R.id.linearlayout,frag,"FetchFacebookData").commit();
                 break;
             case POST_UPDATE:

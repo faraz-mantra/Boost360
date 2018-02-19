@@ -2,7 +2,6 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,8 +15,8 @@ import android.widget.TextView;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Adapter.TextExpandableAdapter;
 import com.nowfloats.Store.Model.MailModel;
-import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.Service.StoreInterface;
+import com.nowfloats.Store.TopUpDialog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -40,6 +39,7 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private ProgressDialog progressDialog;
+    private TopUpDialog mTopUpDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +108,10 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.llayout_wildfire:
-                startActivity(new Intent(mContext, NewPricingPlansActivity.class));
+                if (getActivity() != null && mTopUpDialog == null) {
+                    mTopUpDialog = new TopUpDialog(getActivity());
+                }
+                mTopUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
                 break;
             case R.id.llayout_know_more:
                 sendEmailForWildFire();

@@ -62,7 +62,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
@@ -76,7 +75,6 @@ import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
 import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
-import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
@@ -96,7 +94,7 @@ import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
-import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
+import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
@@ -154,14 +152,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     SidePanelFragment drawerFragment;
     Home_Fragment_Tab homeFragment;
     Business_Profile_Fragment_V2 businessFragment;
-    ManageCustomerFragmentV1 manageCustomerFragment;
+    ManageCustomerFragment manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
     UpgradesFragment upgradesFragment;
     AboutFragment aboutFragment;
     ManageContentFragment manageContentFragment;
     AccountSettingsFragment accountSettingsFragment;
     Site_Meter_Fragment siteMeterFragment;
-    Settings_Fragment settingsFragment;
     SocialSharingFragment socialSharingFragment;
     NewHelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
@@ -175,8 +172,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     public static ArrayList<FloatsMessageModel> StorebizFloats = new ArrayList<FloatsMessageModel>();
     private boolean showLookupDomain = false;
     private int clickCnt = 0;
-    public static Activity activity;
-    public String FPID;
     public CustomPageFragment customPageActivity;
     private boolean backChk = false;
     private final int LIGHT_HOUSE_EXPIRE = 0;
@@ -209,7 +204,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         BoostLog.d("HomeActivity ONcreate", "onCreate");
         bus = BusProvider.getInstance().getBus();
-        activity = HomeActivity.this;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 //        GCMIntentService.setHomeActivity(HomeActivity.this);
@@ -282,15 +276,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
-
-    public static void setGCMId(String id) {
-        new Ria_Register(activity, Constants.clientId, "ANDROID", id);
-        //registerChat(FPID,id);
-        /*SdkConfig config = new SdkConfig();
-        config.setGcmSenderId(id);
-        config.setAnalyticsTrackingAllowedState(true);
-        config.setDebuggingStateAllowed(true);*/
     }
 
     public static void registerChat(String userId) {
@@ -424,7 +409,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     url.contains(getResources().getString(R.string.deeplink_nfstorebiztiming)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage))) {
-                Intent i = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                Intent i = new Intent(this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
                         ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                startActivity(i);
             } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
@@ -450,10 +435,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITS_TABLE);
                 startActivity(accountInfo);
-            } else if (url.contains(getResources().getString(R.string.deeplink_setings))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, settingsFragment)
-                        .commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_business_app))) {
                 startBusinessApp();
             } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
@@ -1118,7 +1099,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     // startActivity(imageGalleryIntent);
                     Intent i = new Intent(HomeActivity.this, ImageGalleryActivity.class);
                     startActivity(i);
-                } else if (nextScreen.equals(getString(R.string.product_gallery))) {
+                } else if (nextScreen.equals(getString(R.string.manage_inventory)) || nextScreen.equals(getString(R.string.product_gallery))) {
 
                     Intent i = new Intent(HomeActivity.this, ProductGalleryActivity.class);
                     startActivity(i);
@@ -1158,9 +1139,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.chat))) {
                     if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT,null);
-                        new AnaChatBuilder(activity)
+                        new AnaChatBuilder(HomeActivity.this)
                                 .setBusinessId(Constants.ANA_BUSINESS_ID)
                                 .setBaseUrl(Constants.ANA_CHAT_API_URL)
+                                .setFlowId(session.getFpTag())
                                 .setThemeColor(R.color.primary)
                                 .setToolBarDescription("Available")
                                 .setToolBarTittle("Ria Chat")
@@ -1179,15 +1161,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
-                } else if (nextScreen.equals("Settings")) {
-                    //ft.replace(R.id.homeTabViewpager, settingsFragment);
-                    //ft.commit();
-                    plusAddButton.setVisibility(View.GONE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, settingsFragment).commit();
                 } else if (nextScreen.equalsIgnoreCase("Store")) {
                     shareButton.setVisibility(View.GONE);
                     plusAddButton.setVisibility(View.GONE);
-                    Intent i = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                    Intent i = new Intent(HomeActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
                             ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                     startActivity(i);
 
@@ -1375,13 +1352,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         try {
             Intent intent;
             if(BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.capture")) {
-                intent = new Intent(activity, FlavourFivePlansActivity.class);
+                intent = new Intent(this, FlavourFivePlansActivity.class);
             }else {
-                intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                intent = new Intent(this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
                         ?NewPricingPlansActivity.class: PricingPlansActivity.class);
             }
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1523,13 +1500,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         homeFragment = new Home_Fragment_Tab();
         businessFragment = new Business_Profile_Fragment_V2();
-        manageCustomerFragment = new ManageCustomerFragmentV1();
+        manageCustomerFragment = new ManageCustomerFragment();
         manageInventoryFragment = new ManageInventoryFragment();
         upgradesFragment = new UpgradesFragment();
         aboutFragment = new AboutFragment();
         manageContentFragment = new ManageContentFragment();
         accountSettingsFragment = new AccountSettingsFragment();
-        settingsFragment = new Settings_Fragment();
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();

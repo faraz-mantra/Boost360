@@ -1,44 +1,50 @@
 package com.nowfloats.managecustomers;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Analytics_Screen.VmnNumberRequestActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
-import com.nowfloats.Image_Gallery.FullScreenImage;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
+import com.nowfloats.manageinventory.SellerAnalyticsActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
+import io.codetail.animation.ViewAnimationUtils;
+import io.codetail.widget.RevealFrameLayout;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ManageCustomerFragment extends Fragment {
-    TextView tvBusinessEnquires, tvSubscribers, tvFacebookChat, tvBubbleInfo;
-    Typeface robotoLight;
+public class ManageCustomerFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences pref = null;
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
-    private Switch bubbleSwitch, customerAssistantSwitch;
-    private TextView tvLearnMore;
+    private RevealFrameLayout overLayout1, overLayout2;
+    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,165 +64,165 @@ public class ManageCustomerFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
         super.onViewCreated(mainView, savedInstanceState);
-        if (!isAdded()) return;
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
-                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+        if (!isAdded()|| isDetached()) return;
+        if (getActivity() != null) {
+            getActivity().setTitle(getString(R.string.manage_customers));
+        }
+        mainView.findViewById(R.id.img_info1).setOnClickListener(this);
+        mainView.findViewById(R.id.img_info2).setOnClickListener(this);
+        String subscriberCount = session.getSubcribersCount();
+        String enquiryCount = session.getEnquiryCount();
+        String callCount = session.getVmnCallsCount();
+        overLayout1 = mainView.findViewById(R.id.rfl_overlay1);
+        overLayout2 = mainView.findViewById(R.id.rfl_overlay2);
+        ((TextView)mainView.findViewById(R.id.tv_subscriber_count)).setText(subscriberCount);
+        ((TextView)mainView.findViewById(R.id.tv_enquiries_count)).setText(enquiryCount);
+        ((TextView)mainView.findViewById(R.id.tv_calls_count)).setText(callCount);
+        mainView.findViewById(R.id.ll_order).setOnClickListener(this);
+        mainView.findViewById(R.id.ll_enquiry).setOnClickListener(this);
+        mainView.findViewById(R.id.ll_calls).setOnClickListener(this);
+        mainView.findViewById(R.id.ll_subscriber).setOnClickListener(this);
+        mainView.findViewById(R.id.ll_facebook_chat).setOnClickListener(this);
+        mainView.findViewById(R.id.ll_third_party_query).setOnClickListener(this);
+    }
 
 
-        try {
-
-
-            Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
-            robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
-            bubbleSwitch = (Switch) mainView.findViewById(R.id.ninethRow_Switch);
-            customerAssistantSwitch = (Switch) mainView.findViewById(R.id.swCustomerAssistant);
-            tvBusinessEnquires = (TextView) mainView.findViewById(R.id.tvBusinessEnquires);
-            if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
-                mainView.findViewById(R.id.layout_customer_assistance).setVisibility(View.VISIBLE);
+    private void showOverlay(final RevealFrameLayout overLayout,String title, String msg) {
+        RelativeLayout revealLayout = overLayout.findViewById(R.id.ll_reveal_layout);
+        revealLayout.findViewById(R.id.ivClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeOverlay(overLayout);
             }
-            tvBubbleInfo = (TextView) mainView.findViewById(R.id.tvBubbleInfo);
-            tvBusinessEnquires.setTypeface(robotoMedium);
+        });
+        ((TextView)revealLayout.findViewById(R.id.tvInfoTitle)).setText(title);
+        ((TextView)revealLayout.findViewById(R.id.tvInfo)).setText(msg);
 
-            tvSubscribers = (TextView) mainView.findViewById(R.id.tvSubscribers);
-            tvFacebookChat = (TextView) mainView.findViewById(R.id.tvFacebookChat);
-            tvLearnMore = (TextView) mainView.findViewById(R.id.tvLearnMore);
-            tvSubscribers.setTypeface(robotoMedium);
-            tvLearnMore.setTypeface(robotoMedium);
-            tvFacebookChat.setTypeface(robotoMedium);
+        int cx = (revealLayout.getLeft() + revealLayout.getRight());
+        int cy = revealLayout.getTop();
+        int radius = Math.max(revealLayout.getWidth(), revealLayout.getHeight());
 
-            tvLearnMore.setVisibility(View.GONE);
-            CharSequence charSequence = Methods.fromHtml("<u><i>Learn More</i></u>");
-            tvLearnMore.setText(charSequence);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Animator animator =
+                    ViewAnimationUtils.createCircularReveal(revealLayout, cx, cy, 0, radius);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(700);
 
-            tvLearnMore.setOnClickListener(new View.OnClickListener() {
+            revealLayout.setVisibility(View.VISIBLE);
+            animator.start();
+        } else {
+            Animator anim = android.view.ViewAnimationUtils.
+                    createCircularReveal(revealLayout, cx, cy, 0, radius);
+            revealLayout.setVisibility(View.VISIBLE);
+            anim.start();
+        }
+    }
+
+    private void closeOverlay(final RevealFrameLayout overLayout) {
+
+        final RelativeLayout revealLayout = overLayout.findViewById(R.id.ll_reveal_layout);
+        int cx = (revealLayout.getLeft() + revealLayout.getRight());
+        int cy = revealLayout.getTop();
+        int radius = Math.max(revealLayout.getWidth(), revealLayout.getHeight());
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+            Animator anim = ViewAnimationUtils.
+                    createCircularReveal(revealLayout, cx, cy, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
                 @Override
-                public void onClick(View v) {
-                    showGif();
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    revealLayout.setVisibility(View.INVISIBLE);
                 }
             });
+            anim.start();
 
-            tvBusinessEnquires.setOnClickListener(new View.OnClickListener() {
+        } else {
+            Animator anim = android.view.ViewAnimationUtils.
+                    createCircularReveal(revealLayout, cx, cy, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
                 @Override
-                public void onClick(View v) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
-                    Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    revealLayout.setVisibility(View.INVISIBLE);
                 }
             });
-            tvSubscribers.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
-                    Intent i = new Intent(getActivity(), SubscribersActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            });
-            tvFacebookChat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), FacebookChatActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            });
-//            bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
-//            customerAssistantSwitch.setChecked(pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false));
+            anim.start();
 
-//            customerAssistantSwitch.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT, null);
-//                    if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-//                        customerAssistantSwitch.setChecked(false);
-//                        Toast.makeText(activity, "This feature is not available for you.", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        if (customerAssistantSwitch.isChecked()) {
-//                            if (!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)) {
-//                                activity.startService(new Intent(activity, CustomerAssistantService.class));
-//                            }
-//                        } else {
-//                            MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
-//                            activity.stopService(new Intent(activity, CustomerAssistantService.class));
-//                        }
-//                    }
-//                }
-//            });
-
-            tvBubbleInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                            .title("Bubble For WhatsApp")
-                            .content("Share updates & products to your customers directly on WhatsApp. \n" +
-                                    "Just grant Boost app, Accessibility Permission from your phone settings.")
-                            .positiveText(getString(R.string.ok))
-                            .positiveColorRes(R.color.primaryColor)
-                            .callback(new MaterialDialog.ButtonCallback() {
-                                @Override
-                                public void onPositive(MaterialDialog dialog) {
-                                    super.onPositive(dialog);
-                                }
-
-                            });
-                    if (!activity.isFinishing()) {
-                        builder.show();
-                    }
-                }
-            });
-
-//            bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//                    MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
-//
-//                    if (!isChecked) {
-//                        session.setBubbleStatus(isChecked);
-//                    } else {
-//
-//                        if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
-//                                || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
-//                            session.setBubbleTime(-1);
-//                        } else {
-//                            session.setBubbleStatus(isChecked);
-//                        }
-//
-//                    }
-//                }
-//            });
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }
 
 
+    private void openCallLog() {
+
+        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
+        final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+
+        if (isVmnEnable) {
+            Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+            startActivity(i);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+            Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
+            startActivity(i);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else {
+            Methods.showFeatureNotAvailDialog(getActivity());
+            // show first buy lighthouse
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        if (headerText != null)
-            headerText.setText(getResources().getString(R.string.manage_customers));
+        if (HomeActivity.headerText != null && mContext instanceof HomeActivity){
+            HomeActivity.headerText.setText(getString(R.string.manage_customers));
+        }
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        if (headerText != null)
-        headerText.setText(Constants.StoreName);
-    }
-
-    private void showGif() {
-
-        Intent fullImage = new Intent(activity, FullScreenImage.class);
-        fullImage.putExtra("currentPositon", 0);
-        startActivity(fullImage);
-        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.img_info1:
+               showOverlay(overLayout1,getString(R.string.website_customers),getString(R.string.manage_website_customers));
+                return;
+            case R.id.img_info2:
+                showOverlay(overLayout2,getString(R.string.cross_platform),getString(R.string.manage_multichannel_customers));
+                return;
+            case R.id.ll_calls:
+                openCallLog();
+                return;
+            case R.id.ll_subscriber:
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
+                startActivity(new Intent(getActivity(), SubscribersActivity.class));
+                break;
+            case R.id.ll_enquiry:
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
+                startActivity(new Intent(getActivity(), BusinessEnquiryActivity.class));
+                break;
+            case R.id.ll_facebook_chat:
+                startActivity( new Intent(getActivity(), FacebookChatActivity.class));
+                break;
+            case R.id.ll_third_party_query:
+                startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
+                break;
+            case R.id.ll_order:
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
+                startActivity(new Intent(getActivity(), SellerAnalyticsActivity.class));
+                break;
+        }
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

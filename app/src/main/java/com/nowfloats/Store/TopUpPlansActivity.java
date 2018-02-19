@@ -86,10 +86,10 @@ public class TopUpPlansActivity extends AppCompatActivity{
                     holder.setCardHolderData(R.drawable.wild_fire_expire,"Wildfire",getString(R.string.wildfire_definition));
                     break;
                 case 1:
-                    holder.setCardHolderData(R.drawable.dictate_gray,"Dictate",getString(R.string.dictate_definition));
+                    holder.setCardHolderData(R.drawable.ic_dictate_plan,"Dictate",getString(R.string.dictate_definition));
                     break;
                 case 2:
-                    holder.setCardHolderData(R.drawable.dictate_gray,"My Business App",getString(R.string.dictate_definition));
+                    holder.setCardHolderData(R.drawable.ic_business_apps,"My Business App",getString(R.string.dictate_definition));
                     break;
             }
         }
@@ -168,13 +168,13 @@ public class TopUpPlansActivity extends AppCompatActivity{
 
                         switch (getAdapterPosition()){
                             case 0:
-                                topUpDialog.getTopUpPricing("WildFire");
+                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
                                 break;
                             case 1:
-                                topUpDialog.getTopUpPricing("Dictate");
+                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());
                                 break;
                             case 2:
-                                topUpDialog.getTopUpPricing("App");
+                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.App.name());
                                 break;
                         }
                         break;

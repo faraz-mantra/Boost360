@@ -531,9 +531,6 @@
             android:name="com.nowfloats.Product_Gallery.ProductGalleryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.manageinventory.ManageInventoryActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.nowfloats.CustomPage.CustomPageActivity"
             android:screenOrientation="portrait" />
         <activity

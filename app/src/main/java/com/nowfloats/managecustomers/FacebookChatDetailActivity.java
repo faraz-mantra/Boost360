@@ -94,6 +94,8 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         TextView title = (TextView) findViewById(R.id.tv_chat_user);
         TextView description = (TextView) findViewById(R.id.tv_chat_user_description);
         Typeface face= Typeface.createFromAsset(getAssets(), "Roboto-MediumItalic.ttf");
+        Typeface robotoMedium= Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        title.setTypeface(robotoMedium);
         description.setTypeface(face);
         description.setText("facebook user");
         scrollButton = (ImageView) findViewById(R.id.iv_scroll_down);

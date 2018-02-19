@@ -42,7 +42,7 @@ public class ManageContentFragment extends Fragment{
         if (!isAdded()) return;
 
         String[] adapterTexts = getResources().getStringArray(R.array.manage_content_tab_items);
-        int[] adapterImages = {R.drawable.icon_info,R.drawable.sidepanel_gallery, R.drawable.custom_page_icon};
+        int[] adapterImages = {R.drawable.ic_about,R.drawable.ic_image_gallery, R.drawable.ic_custom_pages};
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));

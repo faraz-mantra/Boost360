@@ -60,7 +60,6 @@
                 android:ellipsize="marquee"
                 android:singleLine="true"
                 android:gravity="end"
-                android:textStyle="bold"
                 android:text="" />
             <TextView
                 android:id="@+id/tv_chat_user_description"

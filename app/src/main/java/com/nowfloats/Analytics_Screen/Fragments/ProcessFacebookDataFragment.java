@@ -18,11 +18,11 @@ import com.thinksity.R;
  * Created by Abhi on 11/28/2016.
  */
 
-public class FetchFacebookDataFragment extends Fragment {
+public class ProcessFacebookDataFragment extends Fragment {
 
     String mType;
     public static Fragment getInstance(Bundle b){
-        Fragment frag =new FetchFacebookDataFragment();
+        Fragment frag =new ProcessFacebookDataFragment();
         frag.setArguments(b);
         return frag;
     }
