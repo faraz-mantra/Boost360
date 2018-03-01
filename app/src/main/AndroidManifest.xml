@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
     android:versionCode="2017090018"
-    android:versionName="4.8.1">
+    android:versionName="4.8.1"
+    android:sharedUserId="com.nowfloats.kb.boostapp.sharedkey"
+    android:sharedUserLabel="@string/shared_user_label">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"

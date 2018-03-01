@@ -1557,6 +1557,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="account_settings">Account Settings</string>
     <string name="about">About</string>
     <string name="upgrades">Upgrades</string>
+    <string name="shared_user_label">NowFloatsBoost</string>
     <string-array name="upgrade_tab_items">
         <item>Pricing plans</item>
         <item>WildFire</item>

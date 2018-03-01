@@ -203,6 +203,12 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b))
                 .commit();
+        //remove all stack fragment
+        int stackCount = getSupportFragmentManager().getBackStackEntryCount();
+        for (int i = 0;i<stackCount;i++){
+            getSupportFragmentManager().popBackStack();
+        }
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
