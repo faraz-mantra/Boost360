@@ -93,7 +93,6 @@ import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
@@ -405,8 +404,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     url.contains(getResources().getString(R.string.deeplink_nfstorebiztiming)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage))) {
-                Intent i = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                Intent i = new Intent(activity,NewPricingPlansActivity.class);
                startActivity(i);
             } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
                 Intent queries = new Intent(HomeActivity.this, SearchQueries.class);
@@ -1173,8 +1171,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equalsIgnoreCase("Store")) {
                     shareButton.setVisibility(View.GONE);
                     plusAddButton.setVisibility(View.GONE);
-                    Intent i = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                            ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                    Intent i = new Intent(activity,NewPricingPlansActivity.class);
                     startActivity(i);
 
                 } else if (nextScreen.equals("csp")) {
@@ -1347,8 +1344,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if(BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.capture")) {
                 intent = new Intent(activity, FlavourFivePlansActivity.class);
             }else {
-                intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                intent = new Intent(activity, NewPricingPlansActivity.class);
             }
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

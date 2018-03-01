@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -424,18 +424,6 @@
             android:label="@string/title_activity_mobile__site_"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.Store.StoreDataActivity"
-            android:label="@string/title_activity_card__full__view__main"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.Store.ScreenshotZoomActivity"
-            android:parentActivityName="com.nowfloats.Store.StoreDataActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nowfloats.Store.StoreDataActivity" />
-        </activity>
-        <activity
             android:name="com.nowfloats.Store.DomainLookup"
             android:screenOrientation="portrait" />
         <activity
@@ -535,9 +523,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.CustomPage.CustomPageActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.Store.PricingPlansActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Image_Gallery.ImageGalleryActivity"

@@ -11,7 +11,8 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import net.minidev.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -115,9 +116,13 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
     private void deleteSelectedImage(int pos) {
         String url = Constants.deleteGalleryImgs;
         JSONObject obj = new JSONObject();
-        obj.put("fpId", session.getFPID());
-        obj.put("secondaryImageFilename", Constants.storeSecondaryImages.get(pos).replace("/FP/Tile/", ""));
-        obj.put("clientId", Constants.clientId);
+        try {
+            obj.put("fpId", session.getFPID());
+            obj.put("secondaryImageFilename", Constants.storeSecondaryImages.get(pos).replace("/FP/Tile/", ""));
+            obj.put("clientId", Constants.clientId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Log.d("DeleteGalleryImages", "Path : " + url + " , " + obj.toString());
         status = Util.deleteWithBody(url, obj.toString());
         Log.d("DeleteGalleryImages", "Status : " + status);

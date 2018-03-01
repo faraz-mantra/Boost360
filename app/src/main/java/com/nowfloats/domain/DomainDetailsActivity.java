@@ -45,12 +45,10 @@ import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -958,8 +956,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(DomainDetailsActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                        Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         dialog.dismiss();
@@ -1039,8 +1036,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 linkDomain();
                 break;
             case R.id.btn_plan_expired:
-                Intent intent = new Intent(DomainDetailsActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;

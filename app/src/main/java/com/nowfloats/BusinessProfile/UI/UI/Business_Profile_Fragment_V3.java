@@ -29,7 +29,6 @@ import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -144,8 +143,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
                 callDomainDetails();
                 break;
             case R.id.cv_pricing_plans:
-                intent = new Intent(mContext, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                intent = new Intent(mContext,NewPricingPlansActivity.class);
                 startActivity(intent);
                 break;
             case R.id.img_edit:
@@ -436,8 +434,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(mContext, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                        Intent intent = new Intent(mContext,NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }
