@@ -121,7 +121,7 @@
         <Key
             android:codes="-2003"
             android:keyLabel="ABC"
-            android:keyWidth="13.15%p" />
+            android:keyWidth="13.85%p" />
         <Key
             android:codes="44"
             android:keyLabel="," />
@@ -137,10 +137,10 @@
             android:isRepeatable="true"
             android:keyLabel="SPACE"
             android:keyIcon="@drawable/round_414141"
-            android:keyWidth="40%p" />
+            android:keyWidth="38.6%p" />
         <Key
             android:codes="46"
             android:keyLabel="." />
-        <Key android:codes="-2006" android:keyLabel="Next" android:keyWidth="13.15%p" android:keyEdgeFlags="right" />
+        <Key android:codes="-2006" android:keyLabel="Next" android:keyWidth="13.85%p" android:keyEdgeFlags="right" />
     </Row>
 </Keyboard>

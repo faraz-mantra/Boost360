@@ -153,6 +153,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private DrawerLayout mDrawerLayout;
     SidePanelFragment drawerFragment;
     Home_Fragment_Tab homeFragment;
+    KeyboardFragment keyboardFragment;
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragmentV1 manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
@@ -330,6 +331,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if(!isFromRia)
             {
                 MixPanelController.track("$app_open",null);
+            }
+            if (url.contains(getString(R.string.keyboard))){
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                        .commit();
             }
             if (url.contains(getString(R.string.facebook_chat))) {
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
@@ -1054,7 +1059,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (nextScreen.equals(getString(R.string.business_profile))) {
+                if (nextScreen.equals(getString(R.string.keyboard))){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                            .commit();
+                }
+                else if (nextScreen.equals(getString(R.string.business_profile))) {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)
                     // ;
@@ -1489,6 +1498,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         homeFragment = new Home_Fragment_Tab();
         businessFragment = new Business_Profile_Fragment_V2();
+        keyboardFragment = new KeyboardFragment();
         manageCustomerFragment = new ManageCustomerFragmentV1();
         manageInventoryFragment = new ManageInventoryFragment();
         settingsFragment = new Settings_Fragment();

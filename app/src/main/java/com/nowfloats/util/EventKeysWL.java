@@ -116,6 +116,10 @@ public interface EventKeysWL
     String BUY_NOW_STORE_CLICKED = "InitiatePayment";
     String PAYMENT_SUCCESSFULL  = "PaymentSuccess";
     String NOTIFICATION_CLICKED = "NotificationClicked";
+    String SIDE_PANEL_KEYBOARD = "BoostKeyboard";
+    String KEYBOARD_SWITCH_CLICKED = "KeyboardSwitchClicked";
+    String STORAGE_SWITCH_CLICKED = "StoragePermissionSwitchClicked";
+    String MICROPHONE_SWITCH_CLICKED = "MicrophonePermissionSwitchClicked";
 
     // PRODUCT_GALLERY_
 

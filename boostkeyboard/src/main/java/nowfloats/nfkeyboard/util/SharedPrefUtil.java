@@ -47,4 +47,10 @@ public class SharedPrefUtil {
         }
         return null;
     }
+    public boolean isLoggedIn(){
+        if(sBoostPref != null) {
+            return sBoostPref.getBoolean("IsUserLoggedIn", false);
+        }
+        return false;
+    }
 }

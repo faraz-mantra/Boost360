@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.UUID;
 
 import nowfloats.nfkeyboard.R;
+import nowfloats.nfkeyboard.adapter.BaseAdapterManager;
 import nowfloats.nfkeyboard.interface_contracts.CandidateToPresenterInterface;
 import nowfloats.nfkeyboard.interface_contracts.ImeToPresenterInterface;
 import nowfloats.nfkeyboard.interface_contracts.ItemClickListener;
@@ -80,8 +81,10 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
 
     @Override
     public void onSpeechResult(String speech) {
-        if (!TextUtils.isEmpty(speech))
-            imeListener.getImeCurrentInputConnection().commitText(speech,1);
+        if (!TextUtils.isEmpty(speech)) {
+            imeListener.getImeCurrentInputConnection().commitText(speech, 1);
+
+        }
         if (mTabType != TabType.KEYBOARD) {
             mTabType = TabType.KEYBOARD;
             manageKeyboardView.showKeyboardLayout();
@@ -152,6 +155,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
     private void initializeValues() {
         updatesList = null; productList = null;
         mTabType = TabType.KEYBOARD;
+        mShiftType = ShiftType.CAPITAL;
     }
 
     private void setImeOptions(Resources res, int options) {
@@ -338,7 +342,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
-            MethodUtils.getPermissions(mContext);
+            //MethodUtils.getPermissions(mContext);
             return;
         }
         if (model == null) {
@@ -380,14 +384,39 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
         }else if(view.getId() ==  R.id.tv_updates) {
             if (mTabType != TabType.UPDATES) {
                 mTabType = TabType.UPDATES;
-                manageKeyboardView.showShareLayout(updatesList == null ?
-                        createModelList(TabType.UPDATES) : updatesList);
+                if ( SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
+                    manageKeyboardView.showShareLayout(updatesList == null ?
+                            createModelList(TabType.UPDATES) : updatesList);
+                }else{
+
+                    AllSuggestionModel model = new AllSuggestionModel("Please Login",null);
+                    model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Login);
+                    if (updatesList == null){
+                        updatesList = new ArrayList<>();
+                    }
+                    updatesList.clear();
+                    updatesList.add(model);
+                    manageKeyboardView.showShareLayout(updatesList);
+                }
+
             }
         }else if(view.getId() ==  R.id.tv_products) {
             if (mTabType != TabType.PRODUCTS) {
                 mTabType = TabType.PRODUCTS;
-                manageKeyboardView.showShareLayout(productList == null ?
-                        createModelList(TabType.PRODUCTS) : productList);
+                if (SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()) {
+                    manageKeyboardView.showShareLayout(productList == null ?
+                            createModelList(TabType.PRODUCTS) : productList);
+                }else{
+
+                    AllSuggestionModel model = new AllSuggestionModel("Please Login",null);
+                    model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Login);
+                    if (productList == null){
+                        productList = new ArrayList<>();
+                    }
+                    productList.clear();
+                    productList.add(model);
+                    manageKeyboardView.showShareLayout(productList);
+                }
             }
         }else if(view.getId() ==  R.id.img_settings) {
             if (mTabType != TabType.SETTINGS) {
@@ -405,8 +434,14 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                     0, "SINGLE", new CallBack<List<Product>>() {
                     @Override
                     public void onSuccess(List<Product> data) {
-                        for(Product product : data) {
-                            productList.add(product.toAllSuggestion());
+                        if (data != null && data.size()>0) {
+                            for (Product product : data) {
+                                productList.add(product.toAllSuggestion());
+                            }
+                        }else{
+                            AllSuggestionModel model = new AllSuggestionModel("No Products Found",null);
+                            model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                            productList.add(model);
                         }
                         if (mTabType == TabType.PRODUCTS) {
                             manageKeyboardView.onSetSuggestions(productList);
@@ -415,7 +450,12 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
 
                     @Override
                     public void onError(Throwable t) {
-
+                        AllSuggestionModel model = new AllSuggestionModel("No Updates Found",null);
+                        model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                        productList.add(model);
+                        if (mTabType == TabType.PRODUCTS) {
+                            manageKeyboardView.onSetSuggestions(productList);
+                        }
                     }
                 });
             return productList;
@@ -427,8 +467,14 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                     0, 0, new CallBack<Updates>() {
                         @Override
                         public void onSuccess(Updates data) {
-                            for(Float update : data.getFloats()) {
-                                updatesList.add(update.toAllSuggestion());
+                            if (data != null && data.getFloats()!= null && data.getFloats().size()>0) {
+                                for (Float update : data.getFloats()) {
+                                    updatesList.add(update.toAllSuggestion());
+                                }
+                            }else{
+                                AllSuggestionModel model = new AllSuggestionModel("No Updates Found",null);
+                                model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                                updatesList.add(model);
                             }
                             if(mTabType == TabType.UPDATES) {
                                 manageKeyboardView.onSetSuggestions(updatesList);
@@ -437,7 +483,12 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
 
                         @Override
                         public void onError(Throwable t) {
-
+                            AllSuggestionModel model = new AllSuggestionModel("No Updates Found",null);
+                            model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                            updatesList.add(model);
+                            if (mTabType == TabType.UPDATES) {
+                                manageKeyboardView.onSetSuggestions(updatesList);
+                            }
                         }
                     });
             return updatesList;
@@ -454,22 +505,22 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
         return false;
     }
     class KeyboardListener extends AbstractKeyboardListener {
+        private static final int PEVIEW = 0, ON_KEY = 1,RELEASE = 2;
         PopUpView mPopUpView;
         KeyboardListener(){
-            mPopUpView = new PopUpView(mContext);
+            //mPopUpView = new PopUpView(mContext);
         }
 
         @Override
         public void onPress(int primaryCode) {
             mKeyboardView.setPreviewEnabled(primaryCode>=0);
-
             //mPopUpView.showAtLocation(mCurrentKeyboard.getKeys().get(15),mKeyboardView);
         }
 
         @Override
         public void onRelease(int primaryCode) {
             //mPopUpView.onRelease();
-            mKeyboardView.setPreviewEnabled(false);
+            //mKeyboardView.setPreviewEnabled(false);
         }
 
         @Override
@@ -517,7 +568,6 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                 mShiftType = ShiftType.NORMAL;
                 mKeyboardView.setShifted(false);
             }
-
         }
 
         protected void playClick(int keyCode) {
@@ -548,7 +598,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                     // if true show keyboard language change button by calling  switchToNextInputMethod()
                     boolean isLanguageVisible = mInputMethodManager.shouldOfferSwitchingToNextInputMethod(getToken());
                     if (isLanguageVisible){
-                        mInputMethodManager.showInputMethodPicker();
+                        mInputMethodManager.switchToLastInputMethod(getToken());
                     }else{
                         Toast.makeText(mContext, "Unable to show other language", Toast.LENGTH_SHORT).show();
                     }

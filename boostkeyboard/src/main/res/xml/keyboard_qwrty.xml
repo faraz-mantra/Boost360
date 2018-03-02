@@ -38,11 +38,11 @@
         <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace_arrow" android:isRepeatable="true"  android:keyWidth="13.85%p" android:keyEdgeFlags="right"/>
     </Row>
     <Row android:rowEdgeFlags="bottom">
-        <Key android:codes="-2001" android:keyLabel="\?123" android:keyWidth="13.15%p" android:keyEdgeFlags="left" />
+        <Key android:codes="-2001" android:keyLabel="\?123" android:keyWidth="13.85%p" android:keyEdgeFlags="left" />
         <Key android:codes="-2005" android:keyIcon="@drawable/emoji_happiness"/>
         <Key android:codes="-2004" android:keyIcon="@drawable/ic_language_change" />
-        <Key android:codes="-2007" android:keyLabel="SPACE" android:keyWidth="40%p" android:isRepeatable="true"/>
+        <Key android:codes="-2007" android:keyLabel="SPACE" android:keyWidth="38.6%p" android:isRepeatable="true"/>
         <Key android:codes="46" android:keyLabel="." />
-        <Key android:codes="-2006" android:keyLabel="Next" android:keyWidth="13.15%p" android:keyEdgeFlags="right"/>
+        <Key android:codes="-2006" android:keyLabel="Next" android:keyWidth="13.85%p" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>
