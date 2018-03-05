@@ -1,7 +1,6 @@
 package nowfloats.nfkeyboard.keyboards;
 
 import android.inputmethodservice.InputMethodService;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,12 +38,6 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     @Override
     public void setCandidatesViewShown(boolean shown) {
         super.setCandidatesViewShown(shown);
-    }
-
-    @Override
-    public boolean onKeyMultiple(int keyCode, int count, KeyEvent event) {
-        Log.v("ggg",""+keyCode+" "+count+" "+event.getAction());
-        return super.onKeyMultiple(keyCode, count, event);
     }
 
     @Override

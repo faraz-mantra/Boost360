@@ -16,7 +16,7 @@ import nowfloats.nfkeyboard.models.AllSuggestionModel;
 public class BaseAdapterManager {
     public enum SectionTypeEnum {
 
-        ImageAndText(0), Text(1), Product(2);
+        ImageAndText(0), Text(1), Product(2),EmptyList(3), Login(4);
 
         private final int val;
 
@@ -50,5 +50,7 @@ public class BaseAdapterManager {
         adapterList.add(new ImageAdapter(context, listener));
         adapterList.add(new TextAdapter(context, listener));
         adapterList.add(new ProductAdapter(context, listener));
+        adapterList.add(new EmptyListAdapter(context, listener));
+        adapterList.add(new LoginAdapter(context, listener));
     }
 }

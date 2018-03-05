@@ -38,6 +38,9 @@ public class SpeechRecognitionManager implements RecognitionListener {
             recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
             recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
         }
+        if (isListening){
+            stopListening();
+        }
         isListening = true;
         speechRecognizer.startListening(recognizerIntent);
     }
@@ -46,8 +49,15 @@ public class SpeechRecognitionManager implements RecognitionListener {
         return isListening;
     }
     public void stopListening(){
+        if (isListening){
+            speechRecognizer.stopListening();
+        }
         isListening = false;
-        speechRecognizer.stopListening();
+
+    }
+    public void onCancel(){
+        isListening = false;
+        speechRecognizer.destroy();
     }
     @Override
     public void onReadyForSpeech(Bundle bundle) {

@@ -60,6 +60,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     private SpeechRecognitionManager mSpeechRecognitionManager;
     private CandidateToPresenterInterface presenterListener;
     private TextView mSpeechMessageTv;
+    private ConstraintLayout speechLayout, shareLayout;
 
     private ViewPager emojisPager;
     private PagerAdapter mEmojisAdapter;
@@ -91,13 +92,14 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         init();
     }
     private void init(){
-        mSpeechMessageTv = findViewById(R.id.speech_layout).findViewById(R.id.tv_message);
+        speechLayout= findViewById(R.id.speech_layout);
+        shareLayout= findViewById(R.id.sharelayout);
+        mSpeechMessageTv = findViewById(R.id.tv_message);
     }
     public void showShareLayout(ArrayList<AllSuggestionModel> models){
         mKeyboardView.setVisibility(INVISIBLE);
         findViewById(R.id.emoji_layout).setVisibility(GONE);
         stopListening();
-        ConstraintLayout shareLayout = findViewById(R.id.sharelayout);
         shareLayout.setVisibility(VISIBLE);
         if (mRecyclerView == null) {
             mRecyclerView = shareLayout.findViewById(R.id.rv_list);
@@ -113,12 +115,13 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             shareAdapter.notifyDataSetChanged();
         }
     }
+
     public void onSetSuggestions(ArrayList<AllSuggestionModel> models){
         shareAdapter.setSuggestionModels(models);
         shareAdapter.notifyDataSetChanged();
     }
     public void showKeyboardLayout(){
-        findViewById(R.id.sharelayout).setVisibility(GONE);
+        shareLayout.setVisibility(GONE);
         findViewById(R.id.emoji_layout).setVisibility(GONE);
         mKeyboardView.setVisibility(VISIBLE);
         stopListening();
@@ -128,17 +131,17 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         if (mSpeechRecognitionManager == null) {
             mSpeechRecognitionManager = new SpeechRecognitionManager(mContext,this);
         }
-        findViewById(R.id.sharelayout).setVisibility(GONE);
         findViewById(R.id.emoji_layout).setVisibility(GONE);
+        shareLayout.setVisibility(GONE);
         mKeyboardView.setVisibility(INVISIBLE);
-        mSpeechMessageTv.setText("Listening...");
-        findViewById(R.id.speech_layout).setVisibility(VISIBLE);
+        mSpeechMessageTv.setText("Connecting...");
+        speechLayout.setVisibility(VISIBLE);
         mSpeechRecognitionManager.startListening();
     }
 
     public void stopListening(){
-        findViewById(R.id.speech_layout).setVisibility(GONE);
-        if (mSpeechRecognitionManager != null && mSpeechRecognitionManager.isListening()){
+        speechLayout.setVisibility(GONE);
+        if (mSpeechRecognitionManager != null){
             mSpeechRecognitionManager.stopListening();
         }
 
@@ -149,11 +152,9 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
 
     @Override
     public void onItemClick(AllSuggestionModel model) {
-        Toast.makeText(mContext, model.getText(), Toast.LENGTH_SHORT).show();
         if (presenterListener!= null){
             presenterListener.onItemClick(model);
         }
-
     }
 
     @Override
@@ -161,20 +162,18 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         ArrayList<String> matches = b.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         if (matches == null) return;
         Toast.makeText(mContext, matches.size()>0?matches.get(0):"null", Toast.LENGTH_SHORT).show();
-        StringBuilder result= new StringBuilder();
 //        for (String speech : matches){
 //            result.append(speech+"\n");
 //        }
-        result.append(matches.get(0));
         //result.delete(result.lastIndexOf("\n"),result.length());
-        presenterListener.onSpeechResult(result.toString());
+        presenterListener.onSpeechResult(matches.get(0));
 
     }
 
     @Override
     public void onReadyToSpeech(Bundle b) {
         mSpeechMessageTv.setText("Listening...");
-        Toast.makeText(mContext, "ready to speech", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, "ready to speech", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -189,7 +188,8 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 break;
             case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
                 message = "Insufficient permissions";
-                break;
+                mSpeechMessageTv.setText(message);
+                return;
             case SpeechRecognizer.ERROR_NETWORK:
                 message = "Network error";
                 break;
@@ -198,23 +198,22 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 break;
             case SpeechRecognizer.ERROR_NO_MATCH:
                 message = "No match";
+                if(speechLayout.getVisibility() == VISIBLE) {
+                    presenterListener.onSpeechResult(null);
+                }
                 break;
             case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
             case SpeechRecognizer.ERROR_SERVER:
             case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                mSpeechRecognitionManager.startListening();
-                mSpeechMessageTv.setText("Connecting...");
-                message = "Listening...";
+                message = "Recognizer Busy";
+                //mSpeechRecognitionManager.startListening();
                 break;
             default:
                 message = "Didn't understand, please try again.";
                 break;
         }
-        if(findViewById(R.id.speech_layout).getVisibility() == VISIBLE) {
-            presenterListener.onSpeechResult(null);
-        }
         mSpeechMessageTv.setText(message);
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
     }
 
     public void showEmojiLayout() {

@@ -159,6 +159,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
+    public  void setUserLogin(boolean val){
+        editor.putBoolean(IS_USER_LOGIN, val).apply();
+    }
     public void storeFpWebTempalteType(String type){
         editor.putString(KEY_WEB_TEMPLATE_TYPE, type);
         editor.commit();
@@ -729,6 +732,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 String isEnterprise = cursor.getString(8);
                 if (LoginStatus.equals("true")){
                     isLogin = true;
+
                     storeFPID(fpid);
                     storePageAccessToken(facebookpageToken);
                     storeIsRestricted(isRestricted);
@@ -749,6 +753,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
             }
         }
+        setUserLogin(isLogin);
         return isLogin;
     }
 
@@ -827,6 +832,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         // Clearing all user data from Shared Preferences
         unsubscribeRIA(getFPID(), activity);
 
+
     }
 
     public void unsubscribeRIA(String fpID, final Activity activity)
@@ -846,6 +852,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if(pd.isShowing())
                 pd.dismiss();
+                setUserLogin(false);
                 AnaCore.logoutUser(activity);
                 DataBase db = new DataBase(activity);
                 DbController.getDbController(activity.getApplicationContext()).deleteDataBase();

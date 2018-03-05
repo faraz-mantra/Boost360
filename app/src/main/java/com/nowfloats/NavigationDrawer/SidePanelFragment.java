@@ -79,7 +79,7 @@ public class SidePanelFragment extends Fragment {
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
     TextView dashBoardTextView, tvManageCustomers,tvSocialSharing,tvManageInventory;
-    TextView businessProfileTextView;
+    TextView businessProfileTextView, keyboardTextView;
     TextView customerQueries;
     TextView imageGalleryTextView, businessAppTextview;
     TextView productGalleryTextView;
@@ -107,7 +107,7 @@ public class SidePanelFragment extends Fragment {
     private Switch bubbleSwitch;
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
+    LinearLayout homeLayout, profileLayout,keyboardLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
             imageGalleryLayout, cspLayout,
             productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, wildFireLayout,dictateLayout,
             llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout, analyticsLayout;
@@ -126,12 +126,11 @@ public class SidePanelFragment extends Fragment {
             lockWidgetImageView_CSP;
     private Button newButton;
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
-    private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
+    private ImageView shareImageView, businessProfileImageView, keyboardImageView,dasbBoardImageView, callImageView, cspImageView,
             settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,wildFireImg,dictateImg,
             imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/, manageCustomerImageView,
             socialImageView,manageInventoryImageView, analyticsImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
-    private ImageView businessLockImage;
     SharedPreferences pref, mSharedPreferences;
 
 
@@ -352,6 +351,7 @@ public class SidePanelFragment extends Fragment {
         socialLayout = (LinearLayout) card.findViewById(R.id.eleventh_Layout);
         manageInventoryLayout = (LinearLayout) card.findViewById(R.id.twelveth_Layout);
         profileLayout = (LinearLayout) card.findViewById(R.id.secondRow_Layout);
+        keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
         cspLayout = (LinearLayout) card.findViewById(R.id.csp_Layout);
         //customerQueriesLayout = (LinearLayout) card.findViewById(R.id.thirdRow_Layout);
         businessAppsLayout = (LinearLayout) card.findViewById(R.id.customer_app_Layout);
@@ -401,6 +401,7 @@ public class SidePanelFragment extends Fragment {
         settingsText = (TextView) settingsLayout.findViewById(R.id.fifthRow_TextView);
         analyticsText = (TextView) analyticsLayout.findViewById(R.id.analytics_row_TextView);
         businessProfileTextView = (TextView) profileLayout.findViewById(R.id.secondRow_TextView);
+        keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
         cspTextView = (TextView) cspLayout.findViewById(R.id.csp_TextView);
         businessAppTextview = (TextView) businessAppsLayout.findViewById(R.id.customer_app_TextView);
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
@@ -448,7 +449,6 @@ public class SidePanelFragment extends Fragment {
 //        });
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
-        businessLockImage = (ImageView) businessAppsLayout.findViewById(R.id.business_lock_widget);
         lockWidget_ProductGallery = (ImageView) productGalleryLayout.findViewById(R.id.lock_product_gal);
         //lockWidgetImageView_BusinessEnq = (ImageView) customerQueriesLayout.findViewById(R.id.lock_widget_business_enquiries);
         lockWidgetImageView_CSP = (ImageView) cspLayout.findViewById(R.id.lock_widget_csp);
@@ -484,6 +484,7 @@ public class SidePanelFragment extends Fragment {
 
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
         businessProfileImageView = (ImageView) profileLayout.findViewById(R.id.secondRow_ImageView);
+        keyboardImageView = (ImageView) keyboardLayout.findViewById(R.id.keyboard_ImageView);
         //customerQueriesImageView = (ImageView) customerQueriesLayout.findViewById(R.id.thirdRow_ImageView);
         businessappImageView = (ImageView) businessAppsLayout.findViewById(R.id.customer_app_ImageView);
         imageGalleryImageView = (ImageView) imageGalleryLayout.findViewById(R.id.fourthRow_ImageView);
@@ -494,7 +495,6 @@ public class SidePanelFragment extends Fragment {
         StoreImageView = (ImageView) Store_Layout.findViewById(R.id.storeRow_ImageView);
         cspImageView = (ImageView) cspLayout.findViewById(R.id.csp_ImageView);
         settingsImageView = (ImageView) settingsLayout.findViewById(R.id.fifthRow_ImageView);
-        chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
         wildFireImg = (ImageView) wildFireLayout.findViewById(R.id.wildfire_img);
@@ -520,6 +520,14 @@ public class SidePanelFragment extends Fragment {
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_profile));
                 onclickColorChange(businessProfileImageView, businessProfileTextView, profileLayout);
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
+            }
+        });
+        keyboardTextView.setTypeface(robotoMedium);
+        keyboardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
+                onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
             }
         });
 
@@ -1432,6 +1440,7 @@ public class SidePanelFragment extends Fragment {
 
     private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        keyboardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         //customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
         imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -1456,6 +1465,7 @@ public class SidePanelFragment extends Fragment {
         dasbBoardImageView.setColorFilter(defaultLabelFilter);
         businessappImageView.setColorFilter(defaultLabelFilter);
         businessProfileImageView.setColorFilter(defaultLabelFilter);
+        keyboardImageView.setColorFilter(defaultLabelFilter);
         //customerQueriesImageView.setColorFilter(defaultLabelFilter);
         imageGalleryImageView.setColorFilter(defaultLabelFilter);
         productGalleryImageView.setColorFilter(defaultLabelFilter);
@@ -1474,6 +1484,7 @@ public class SidePanelFragment extends Fragment {
 
         homeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         profileLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        keyboardLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         //analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         //storeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         //customerQueriesLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));

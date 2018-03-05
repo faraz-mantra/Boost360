@@ -20,7 +20,7 @@ public abstract class BaseAdapter <T extends AllSuggestionModel> {
     final Context mContext;
     final DisplayMetrics metrics;
     private ItemClickListener mItemClickListener;
-    private LinearLayout.LayoutParams linLayoutParams;
+    LinearLayout.LayoutParams linLayoutParams;
     BaseAdapter(Context context){
         mContext = context;
         metrics = mContext.getResources().getDisplayMetrics();
@@ -36,7 +36,6 @@ public abstract class BaseAdapter <T extends AllSuggestionModel> {
         mItemClickListener = listener;
     }
     public void setViewLayoutSize(View itemView){
-        itemView.setLayoutParams(linLayoutParams);
         linLayoutParams.setMargins(leftSpace, topSpace, leftSpace, topSpace);
         itemView.setLayoutParams(linLayoutParams);
         itemView.setPadding(padding, paddingTop, padding, padding);

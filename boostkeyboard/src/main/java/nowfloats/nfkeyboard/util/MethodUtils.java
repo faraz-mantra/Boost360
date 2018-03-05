@@ -18,7 +18,6 @@ import com.bumptech.glide.request.transition.Transition;
 
 import java.io.ByteArrayOutputStream;
 
-import nowfloats.nfkeyboard.activity.MainActivity;
 import nowfloats.nfkeyboard.interface_contracts.UrlToBitmapInterface;
 
 /**
@@ -66,7 +65,7 @@ public class MethodUtils {
             Intent LaunchIntent = packageManager.getLaunchIntentForPackage("com.biz2.nowfloats");
             mContext.startActivity(LaunchIntent);
         }catch(Exception e){
-            Toast.makeText(mContext, "App is not", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Unable to open Boost App ", Toast.LENGTH_SHORT).show();
         }
     }
     private static boolean isPackageInstalled(String packagename, PackageManager manager) {
@@ -76,9 +75,5 @@ public class MethodUtils {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
-    }
-
-    public static void getPermissions(Context mContext){
-        mContext.startActivity(new Intent(mContext, MainActivity.class));
     }
 }
