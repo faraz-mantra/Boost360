@@ -11,5 +11,5 @@ public interface ImeToPresenterInterface {
 
     View getCandidateView();
     View onCreateInputView();
-    void onStartInput(EditorInfo attribute, boolean restarting);
+    void onStartInputView(EditorInfo attribute, boolean restarting);
 }

@@ -30,12 +30,6 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     }
 
     @Override
-    public void onStartInput(EditorInfo attribute, boolean restarting) {
-        super.onStartInput(attribute, restarting);
-        mPresenter.onStartInput(attribute,restarting);
-    }
-
-    @Override
     public void setCandidatesViewShown(boolean shown) {
         super.setCandidatesViewShown(shown);
     }
@@ -62,7 +56,7 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     @Override
     public void onStartInputView(EditorInfo info, boolean restarting) {
         super.onStartInputView(info, restarting);
-        mPresenter.setCurrentKeyboard();
+        mPresenter.onStartInputView(info,restarting);
         //mPresenter.setSuggestions(KeyboardUtils.CandidateType.TEXT_LIST,modelArrayList);
         //setExtractViewShown(true);
     }
@@ -92,4 +86,10 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
 //        ei.imeOptions = EditorInfo.IME_FLAG_NO_FULLSCREEN;
 //    }
 
+
+    @Override
+    public void onDestroy() {
+        mPresenter.onDestroy();
+        super.onDestroy();
+    }
 }

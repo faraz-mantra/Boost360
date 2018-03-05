@@ -33,10 +33,14 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 import nowfloats.nfkeyboard.R;
 import nowfloats.nfkeyboard.adapter.BaseAdapterManager;
 import nowfloats.nfkeyboard.interface_contracts.CandidateToPresenterInterface;
@@ -60,12 +64,16 @@ import timber.log.Timber;
  * Created by Admin on 26-02-2018.
  */
 
-public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterface,CandidateToPresenterInterface, View.OnClickListener, UrlToBitmapInterface {
+public class ImePresenterImpl implements ItemClickListener,
+        ImeToPresenterInterface,
+        CandidateToPresenterInterface,
+        View.OnClickListener,
+        UrlToBitmapInterface {
     private CandidateViewBaseImpl mCandidateView;
     private KeyboardViewBaseImpl mKeyboardView;
     private ManageKeyboardView manageKeyboardView;
-    public final static int KEY_EMOJI = -2005,KEY_IME_OPTION = -2006, KEY_SPACE = -2007, KEY_NUMBER = -2000, KEY_SYM = -2001, KEY_SYM_SHIFT = -2002, KEY_QWRTY = -2003
-            ,KEY_LANGUAGE_CHANGE= -2004;
+    public final static int KEY_EMOJI = -2005,KEY_IME_OPTION = -2006, KEY_SPACE = -2007, KEY_NUMBER = -2000,
+            KEY_SYM = -2001, KEY_SYM_SHIFT = -2002, KEY_QWRTY = -2003, KEY_LANGUAGE_CHANGE= -2004;
     private Context mContext;
     private KeyboardUtils.CandidateType currentCandidateType = KeyboardUtils.CandidateType.BOOST_SHARE;
     private KeyboardUtils.KeyboardType mKeyboardTypeCurrent = KeyboardUtils.KeyboardType.QWERTY_LETTERS;
@@ -78,23 +86,28 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
     private AudioManager mAudioManager;
     private TabType mTabType;
     private ShiftType mShiftType = ShiftType.CAPITAL;
-    private KeyAction KeyActionType;
 
     @Override
     public void onSpeechResult(String speech) {
         if (!TextUtils.isEmpty(speech)) {
             imeListener.getImeCurrentInputConnection().commitText(speech, 1);
-
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SPEECH_RESULT,null);
         }
         if (mTabType != TabType.KEYBOARD) {
             mTabType = TabType.KEYBOARD;
             manageKeyboardView.showKeyboardLayout();
-            mCandidateView.addCandidateTypeView(currentCandidateType);
+            mCandidateView.addCandidateTypeView(currentCandidateType,TabType.KEYBOARD);
         }
     }
 
-    private enum KeyAction{
-        KEY_DOWN, KEY_UP;
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+        imeListener.getImeCurrentInputConnection().commitText(emojicon.getEmoji(), 1);
+    }
+
+    @Override
+    public void onEmojiconBackspaceClicked(View v) {
+        sendKeyEvent(KeyEvent.KEYCODE_DEL);
     }
 
     @Override
@@ -110,7 +123,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
     }
 
     public enum TabType {
-        PRODUCTS, UPDATES,KEYBOARD,SETTINGS;
+        PRODUCTS, UPDATES,KEYBOARD,SETTINGS, NO_TAB;
     }
     private enum ShiftType{
         LOCKED,CAPITAL,NORMAL;
@@ -118,6 +131,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
 
     ImePresenterImpl(Context context, PresenterToImeInterface imeListener){
         mCandidateView = new CandidateViewBaseImpl(context);
+        MixPanelUtils.getInstance().setMixPanel(context);
         mCandidateView.setItemClickListener(this);
         mContext = context;
         mInputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -135,8 +149,8 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
         return manageKeyboardView;
     }
 
-    @Override
-    public void onStartInput(EditorInfo attribute, boolean restarting) {
+    public void onStartInputView(EditorInfo attribute, boolean restarting) {
+        MixPanelUtils.getInstance().createUser(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag());
         switch (attribute.inputType & InputType.TYPE_MASK_CLASS){
             case InputType.TYPE_CLASS_NUMBER:
             case InputType.TYPE_CLASS_DATETIME:
@@ -154,6 +168,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                 setKeyboardType(KeyboardUtils.KeyboardType.QWERTY_LETTERS);
         }
         imeOptionId = attribute.imeOptions;
+        setCurrentKeyboard();
     }
 
     private void initializeValues() {
@@ -174,29 +189,24 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
         }
         switch (options & (EditorInfo.IME_MASK_ACTION | EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
             case EditorInfo.IME_ACTION_GO:
-                KeyActionType = KeyAction.KEY_UP;
                 mEnterKey.iconPreview = null;
                 mEnterKey.icon = null;
                 mEnterKey.label = "Go";
                 break;
             case EditorInfo.IME_ACTION_NEXT:
-                KeyActionType = KeyAction.KEY_UP;
                 mEnterKey.icon = res.getDrawable(R.drawable.ic_next);
                 mEnterKey.label = null;
                 break;
             case EditorInfo.IME_ACTION_SEARCH:
-                KeyActionType = KeyAction.KEY_DOWN;
                 mEnterKey.icon = res.getDrawable(R.drawable.ic_search);
                 mEnterKey.label = null;
                 break;
             case EditorInfo.IME_ACTION_SEND:
-                KeyActionType = KeyAction.KEY_DOWN;
                 mEnterKey.iconPreview = null;
                 mEnterKey.icon = null;
                 mEnterKey.label = "send";
                 break;
             default:
-                KeyActionType = KeyAction.KEY_DOWN;
                 mEnterKey.icon = res.getDrawable(R.drawable.ic_enter_arrow);
                 mEnterKey.label = null;
                 break;
@@ -211,7 +221,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
     public void setCurrentKeyboard(){
         initializeValues();
         setCurrentKeyboard(mKeyboardTypeCurrent);
-        addCandidateTypeView(currentCandidateType);
+        addCandidateTypeView(currentCandidateType,mTabType);
     }
 
     public void setCurrentKeyboard(KeyboardUtils.KeyboardType type){
@@ -237,8 +247,11 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
         return window.getAttributes().token;
     }
 
-    private void addCandidateTypeView(KeyboardUtils.CandidateType type){
-        imeListener.setCandidatesViewShown(mCandidateView.addCandidateTypeView(type));
+    public void onDestroy(){
+        MixPanelUtils.getInstance().flush();
+    }
+    private void addCandidateTypeView(KeyboardUtils.CandidateType type, TabType tabType){
+        imeListener.setCandidatesViewShown(mCandidateView.addCandidateTypeView(type, tabType));
     }
 
     private boolean isCommitContentSupported(
@@ -339,7 +352,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                     imeListener.getImeCurrentInputConnection(),
                     imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
                     flag, null);
-        }else{
+        }else if(mimeType.equalsIgnoreCase("image/png")){
             Toast.makeText(mContext, "Image not supported", Toast.LENGTH_SHORT).show();
         }
 
@@ -359,16 +372,26 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
             return;
         }
 
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id",model.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         switch (model.getTypeEnum()) {
 
             case ImageAndText:
-                MethodUtils.onGlideBitmapReady(this, model.getText()+"\nUrl: "+model.getUrl(), model.getImageUrl(), model.getId());
+
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE,object);
+                MethodUtils.onGlideBitmapReady(this, model.getText()+",\nUrl: "+model.getUrl(), model.getImageUrl(), model.getId());
                 break;
             case Product:
-                MethodUtils.onGlideBitmapReady(this, "Name: " + model.getText()+"\nUrl: "+model.getUrl(), model.getImageUrl(), model.getId());
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE,object);
+                MethodUtils.onGlideBitmapReady(this, "Name: " + model.getText()+",\nUrl: "+model.getUrl(), model.getImageUrl(), model.getId());
                 break;
             case Text:
-                doCommitContent(model.getText()+"\nUrl: "+model.getUrl(), "text/plain", null);
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE,object);
+                doCommitContent(model.getText()+",\nUrl: "+model.getUrl(), "text/plain", null);
                 break;
             default:
                 break;
@@ -398,7 +421,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                             createModelList(TabType.UPDATES) : updatesList);
                 }else{
 
-                    AllSuggestionModel model = new AllSuggestionModel("Please Login",null);
+                    AllSuggestionModel model = new AllSuggestionModel("Login",null);
                     model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Login);
                     if (updatesList == null){
                         updatesList = new ArrayList<>();
@@ -417,7 +440,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                     manageKeyboardView.showShareLayout(productList == null ?
                             createModelList(TabType.PRODUCTS) : productList);
                 }else{
-                    AllSuggestionModel model = new AllSuggestionModel("Please Login",null);
+                    AllSuggestionModel model = new AllSuggestionModel("Login",null);
                     model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Login);
                     if (productList == null){
                         productList = new ArrayList<>();
@@ -454,7 +477,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                                 productList.add(product.toAllSuggestion());
                             }
                         }else{
-                            AllSuggestionModel model = new AllSuggestionModel("No Products Found",null);
+                            AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
                             model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
                             productList.add(model);
                         }
@@ -465,7 +488,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
 
                     @Override
                     public void onError(Throwable t) {
-                        AllSuggestionModel model = new AllSuggestionModel("No Products Found",null);
+                        AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
                         model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
                         productList.clear();
                         productList.add(model);
@@ -492,7 +515,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                                     updatesList.add(update.toAllSuggestion());
                                 }
                             }else{
-                                AllSuggestionModel model = new AllSuggestionModel("No Updates Found",null);
+                                AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
                                 model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
                                 updatesList.add(model);
                             }
@@ -503,7 +526,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
 
                         @Override
                         public void onError(Throwable t) {
-                            AllSuggestionModel model = new AllSuggestionModel("No Updates Found",null);
+                            AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
                             model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
                             updatesList.clear();
                             updatesList.add(model);
@@ -516,6 +539,14 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
         }
       return null;
     }
+
+    private void sendKeyEvent(int keyEventCode) {
+        imeListener.getImeCurrentInputConnection().sendKeyEvent(
+                new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
+        imeListener.getImeCurrentInputConnection().sendKeyEvent(
+                new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
+    }
+
     public boolean onKeyLongPress(int keyCode, KeyEvent event){
         switch (keyCode){
             case KEY_SYM_SHIFT:
@@ -549,21 +580,25 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
         public void onKey(int primaryCode, int[] keys) {
             InputConnection inputConnection = imeListener.getImeCurrentInputConnection();
             playClick(primaryCode);
+
             switch(primaryCode){
                 case Keyboard.KEYCODE_DELETE :
-                    inputConnection.deleteSurroundingText(1, 0);
+                    sendKeyEvent(KeyEvent.KEYCODE_DEL);
+                    //inputConnection.deleteSurroundingText(1, 0);
                     break;
                 case Keyboard.KEYCODE_SHIFT:
                     onShiftPressed();
                     break;
                 case KEY_IME_OPTION:
-                    inputConnection.sendKeyEvent(new KeyEvent(KeyActionType == KeyAction.KEY_DOWN ? KeyEvent.ACTION_DOWN : KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER));
+                    sendKeyEvent(KeyEvent.KEYCODE_ENTER);
                     break;
                 case KEY_NUMBER:
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.NUMBERS);
                     break;
                 case KEY_EMOJI:
-                    //setCurrentKeyboard(KeyboardUtils.KeyboardType.EMOJIS);
+                    mTabType = TabType.NO_TAB;
+                    addCandidateTypeView(KeyboardUtils.CandidateType.BOOST_SHARE,TabType.NO_TAB);
+                    manageKeyboardView.showEmojiLayout();
                     break;
                 case KEY_QWRTY:
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.QWERTY_LETTERS);
@@ -615,23 +650,24 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
             }
         }
         private void showLanguageMethods() {
+            boolean isLanguageVisible = false;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 if (mInputMethodManager != null) {
                     // if true show keyboard language change button by calling  switchToNextInputMethod()
-                    boolean isLanguageVisible = mInputMethodManager.shouldOfferSwitchingToNextInputMethod(getToken());
-                    if (isLanguageVisible){
-                        mInputMethodManager.switchToLastInputMethod(getToken());
-                    }else{
-                        Toast.makeText(mContext, "Unable to show other language", Toast.LENGTH_SHORT).show();
-                    }
+                    isLanguageVisible = mInputMethodManager.shouldOfferSwitchingToNextInputMethod(getToken());
                 }
+            }
+            if (isLanguageVisible){
+                mInputMethodManager.switchToLastInputMethod(getToken());
+            }else{
+                Toast.makeText(mContext, "Unable to show other language", Toast.LENGTH_SHORT).show();
             }
         }
 
         private void onShiftPressed() {
             mShiftType = mShiftType == ShiftType.NORMAL ? ShiftType.CAPITAL : ShiftType.NORMAL;
             caps = !caps;
-            mCurrentKeyboard.setShifted(mShiftType != ShiftType.NORMAL);
+            mKeyboardView.setShifted(mShiftType != ShiftType.NORMAL);
             mKeyboardView.invalidateAllKeys();
         }
         @Override

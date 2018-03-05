@@ -47,6 +47,12 @@ public class SharedPrefUtil {
         }
         return null;
     }
+    public String getProductVerb() {
+        if(sBoostPref != null) {
+            return sBoostPref.getString("GET_PRODUCT_CATEGORY_VERB", null);
+        }
+        return null;
+    }
     public boolean isLoggedIn(){
         if(sBoostPref != null) {
             return sBoostPref.getBoolean("IsUserLoggedIn", false);

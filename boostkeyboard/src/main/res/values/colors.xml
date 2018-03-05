@@ -7,5 +7,6 @@
     <color name="color_212121">#212121</color>
     <color name="kbd_key_color">#424242</color>
     <color name="light_gray">#CACACA</color>
+    <color name="yellow">#ffb900</color>
     <color name="gray">#AAAAAA</color>
 </resources>

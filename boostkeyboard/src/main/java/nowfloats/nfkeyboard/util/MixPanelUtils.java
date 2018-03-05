@@ -16,6 +16,10 @@ public class MixPanelUtils {
     public static final String KEYBOARD_SHOW_UPDATES = "KeyboardShowUpdates";
     public static final String KEYBOARD_SHOW_PRODUCT = "KeyboardShowProducts";
     public static final String KEYBOARD_VOICE_INPUT = "KeyboardVoiceInput";
+    public static final String KEYBOARD_SPEECH_RESULT = "KeyboardVoiceResult";
+    public static final String KEYBOARD_UPDATE_IMAGE_SHARE = "KeyboardUpdateImageShare";
+    public static final String KEYBOARD_PRODUCT_SHARE = "KeyboardProductShare";
+    public static final String KEYBOARD_UPDATE_SHARE = "KeyboardUpdateShare";
     private static MixPanelUtils mixPanelUtils= new MixPanelUtils();
     private MixpanelAPI mixPanel;
     private MixPanelUtils(){
@@ -23,9 +27,8 @@ public class MixPanelUtils {
     public static MixPanelUtils getInstance(){
         return mixPanelUtils;
     }
-    public void setMixPanel(Context app, String key) {
-        if (mixPanel != null)
-            mixPanel.flush();
+    public void setMixPanel(Context app) {
+        flush();
         /** Boost App **/
         mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");
         //store.put("Tag", SharedPrefUtil.fromBoostPref().getsBoostPref(app).getFpTag());
@@ -52,7 +55,15 @@ public class MixPanelUtils {
             e.printStackTrace();
         }
     }
-    public void setProperties(){
 
+    public void flush(){
+        if (mixPanel != null){
+            mixPanel.flush();
+        }
+    }
+    public void createUser(String fpTag){
+        flush();
+        if (mixPanel != null && mixPanel.getPeople() != null)
+        mixPanel.getPeople().identify(fpTag);
     }
 }

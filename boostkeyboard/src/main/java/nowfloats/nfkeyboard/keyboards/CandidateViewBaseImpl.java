@@ -40,7 +40,7 @@ public class CandidateViewBaseImpl extends FrameLayout implements CandidateViewI
     public void setItemClickListener(OnClickListener listener){
         onClickListener = listener;
     }
-    public boolean addCandidateTypeView(KeyboardUtils.CandidateType type) {
+    public boolean addCandidateTypeView(KeyboardUtils.CandidateType type, ImePresenterImpl.TabType id) {
         View candidateParentLayout =  getCandidateView(type);
         if (candidateParentLayout == null) return false;
         if (candidateParentLayout.getParent() != null){
@@ -50,7 +50,7 @@ public class CandidateViewBaseImpl extends FrameLayout implements CandidateViewI
             case BOOST_SHARE:
                 BoostCandidateView boostView = (BoostCandidateView) candidateParentLayout;
                 boostView.setItemClickListener(this);
-                boostView.addCandidateView(this);
+                boostView.addCandidateView(this,id);
                 break;
         }
         return true;

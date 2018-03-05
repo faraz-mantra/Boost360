@@ -94,8 +94,6 @@ import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
-import com.nowfloats.managecustomers.FacebookChatActivity;
-import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.riachatsdk.ChatManager;
@@ -337,16 +335,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         .commit();
             }
             if (url.contains(getString(R.string.facebook_chat))) {
-                Intent intent = new Intent(this, FacebookChatDetailActivity.class);
-                intent.putExtras(getIntent());
-                startActivity(intent);
+
             }else if(url.contains("thirdPartyQueries")){
                 Intent intent = new Intent(this, ThirdPartyQueriesActivity.class);
                 startActivity(intent);
             }
             else if (url.contains(getString(R.string.facebook_chat_main))) {
-                Intent intent = new Intent(this, FacebookChatActivity.class);
-                startActivity(intent);
+
             }else if (url.contains(getString(R.string.deeplink_manage_customer))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
                         .commit();

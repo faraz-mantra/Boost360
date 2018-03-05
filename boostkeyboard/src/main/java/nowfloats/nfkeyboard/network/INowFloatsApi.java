@@ -13,7 +13,7 @@ import retrofit2.http.QueryMap;
  */
 
 public interface INowFloatsApi {
-    @GET("/Product/v1/GetListingsWithInventorySync")
+    @GET("/Product/v1/GetListings")
     Observable<List<Product>> getAllProducts(@QueryMap Map<String, String> queries);
 
     @GET("/Discover/v3/floatingPoint/bizFloats")

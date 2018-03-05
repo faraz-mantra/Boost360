@@ -37,5 +37,11 @@
         android:layout_gravity="center"
         layout="@layout/layout_speech_layout"
         android:layout_height="wrap_content"/>
+    <include android:id="@+id/emoji_layout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        layout="@layout/emojicons"
+        android:layout_height="wrap_content" />
 
 </nowfloats.nfkeyboard.keyboards.ManageKeyboardView>

@@ -2,18 +2,23 @@ package com.nowfloats.NavigationDrawer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,17 +39,20 @@ import nowfloats.nfkeyboard.keyboards.ImeKeyboardService;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * Created by Admin on 02-03-2018.
  */
 
-public class KeyboardFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
+public class KeyboardFragment extends Fragment implements View.OnTouchListener {
     private static final int STORAGE_CODE = 100, MICROPHONE_CODE = 101;
     private static final int INPUT_METHOD_SETTINGS = 102;
     private Context mContext;
     private SwitchCompat microphoneSwitchTv, storageSwitchTv,keyboardSwitchTv;
     private InputMethodManager imeManager;
+    IntentFilter filter = new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED);
+    InputMethodChangeReceiver mReceiver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +70,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener, 
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        mReceiver = new InputMethodChangeReceiver();;
     }
 
     @Override
@@ -72,20 +81,39 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener, 
         storageSwitchTv = view.findViewById(R.id.storage_switch);
         microphoneSwitchTv = view.findViewById(R.id.microphone_switch);
         keyboardSwitchTv = view.findViewById(R.id.keyboard_switch);
+        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.v("ggg",""+hasFocus+" ");
+            }
+        });
         storageSwitchTv.setOnTouchListener(this);
         keyboardSwitchTv.setOnTouchListener(this);
         microphoneSwitchTv.setOnTouchListener(this);
-        storageSwitchTv.setOnClickListener(this);
-        keyboardSwitchTv.setOnClickListener(this);
-        microphoneSwitchTv.setOnClickListener(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mContext.registerReceiver(mReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mContext.unregisterReceiver(mReceiver);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (headerText != null && mContext instanceof HomeActivity)
+            headerText.setText("Boost keyboard");
+
         storageSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED);
         microphoneSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_DENIED);
         keyboardSwitchTv.setChecked(isInputMethodEnabled());
+        MixPanelController.track(MixPanelController.KEYBOARD_ENABLED,null);
     }
 
     @Override
@@ -93,7 +121,12 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener, 
         if (requestCode == INPUT_METHOD_SETTINGS){
             if (!isInputMethodEnabled()){
                 if (imeManager != null)
-                imeManager.showInputMethodPicker();
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        imeManager.showInputMethodPicker();
+                    }
+                },1000);
             }
         }else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -173,31 +206,6 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.keyboard_switch:
-                MixPanelController.track(EventKeysWL.KEYBOARD_SWITCH_CLICKED,null);
-                if(imeManager == null){
-
-                } else if(!isInputMethodActivated(imeManager)){
-                    startActivityForResult(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS),INPUT_METHOD_SETTINGS);
-                } else {
-                    imeManager.showInputMethodPicker();
-                    keyboardSwitchTv.setChecked(isInputMethodEnabled());
-                }
-                break;
-            case R.id.storage_switch:
-                MixPanelController.track(EventKeysWL.STORAGE_SWITCH_CLICKED,null);
-                getPermission(STORAGE_CODE);
-                break;
-            case R.id.microphone_switch:
-                MixPanelController.track(EventKeysWL.MICROPHONE_SWITCH_CLICKED,null);
-                getPermission(MICROPHONE_CODE);
-                break;
-        }
-    }
-
     private boolean isInputMethodActivated(InputMethodManager manager) {
         List<InputMethodInfo> list = manager.getEnabledInputMethodList();
         ComponentName myInputMethod = new ComponentName(mContext, ImeKeyboardService.class);
@@ -221,7 +229,45 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        v.performClick();
-        return false;
+        if(event.getAction() == MotionEvent.ACTION_UP){
+            switch (v.getId()){
+                case R.id.keyboard_switch:
+                    MixPanelController.track(EventKeysWL.KEYBOARD_SWITCH_CLICKED,null);
+                    if(imeManager == null){
+
+                    } else if(!isInputMethodActivated(imeManager)){
+                        startActivityForResult(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS),INPUT_METHOD_SETTINGS);
+                    } else {
+                        imeManager.showInputMethodPicker();
+                        keyboardSwitchTv.setChecked(isInputMethodEnabled());
+                    }
+                    break;
+                case R.id.storage_switch:
+                    MixPanelController.track(EventKeysWL.STORAGE_SWITCH_CLICKED,null);
+                    getPermission(STORAGE_CODE);
+                    break;
+                case R.id.microphone_switch:
+                    MixPanelController.track(EventKeysWL.MICROPHONE_SWITCH_CLICKED,null);
+                    getPermission(MICROPHONE_CODE);
+                    break;
+            }
+        }
+
+        return true;
+    }
+
+    public class InputMethodChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action != null && action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
+                if (isInputMethodEnabled()){
+                    MixPanelController.track(MixPanelController.KEYBOARD_ACTIVATED,null );
+                }
+                keyboardSwitchTv.setChecked(isInputMethodEnabled());
+
+            /* You can check the package name of current IME here.*/
+            }
+        }
     }
 }

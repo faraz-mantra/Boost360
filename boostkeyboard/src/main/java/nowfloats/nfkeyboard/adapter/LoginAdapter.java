@@ -57,6 +57,8 @@ public class LoginAdapter extends BaseAdapter<AllSuggestionModel> {
         void setModelData(AllSuggestionModel model){
             dataModel = model;
             suggestionTv.setText(model.getText());
+            suggestionTv.setTextSize(16);
+            suggestionTv.setAllCaps(true);
             suggestionTv.setTextColor(ContextCompat.getColor(mContext,R.color.white));
             suggestionTv.setPadding(2*leftSpace,leftSpace,2*leftSpace,leftSpace);
             suggestionTv.setBackgroundResource(R.drawable.yellow_button_bg);
