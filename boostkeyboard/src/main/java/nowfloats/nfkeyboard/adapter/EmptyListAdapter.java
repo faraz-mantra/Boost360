@@ -40,9 +40,8 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
         AllSuggestionModel dataModel;
         public EmptyHolder(View itemView) {
             super(itemView);
-            linLayoutParams.setMargins(leftSpace+leftSpace/2, topSpace, leftSpace, topSpace);
+            linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
             itemView.setLayoutParams(linLayoutParams);
-            itemView.setPadding(padding, paddingTop, padding, padding);
             suggestionTv = itemView.findViewById(R.id.textView);
         }
 

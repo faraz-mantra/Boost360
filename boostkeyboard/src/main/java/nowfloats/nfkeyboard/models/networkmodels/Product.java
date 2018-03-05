@@ -78,7 +78,7 @@ public class Product {
     private Integer productIndex;
     @SerializedName("ProductUrl")
     @Expose
-    private Object productUrl;
+    private String productUrl;
     @SerializedName("ShipmentDuration")
     @Expose
     private Integer shipmentDuration;
@@ -272,11 +272,11 @@ public class Product {
         this.productIndex = productIndex;
     }
 
-    public Object getProductUrl() {
+    public String getProductUrl() {
         return productUrl;
     }
 
-    public void setProductUrl(Object productUrl) {
+    public void setProductUrl(String productUrl) {
         this.productUrl = productUrl;
     }
 
@@ -349,6 +349,7 @@ public class Product {
         model.setDescription(description);
         model.setDiscount(discountAmount);
         model.setPrice(price);
+        model.setUrl(productUrl);
         model.setId(id);
         model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Product);
         return model;

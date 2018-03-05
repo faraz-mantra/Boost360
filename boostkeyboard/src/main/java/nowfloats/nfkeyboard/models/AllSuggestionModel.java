@@ -9,7 +9,7 @@ import nowfloats.nfkeyboard.adapter.BaseAdapterManager;
  */
 
 public class AllSuggestionModel {
-    private String text, imageUrl, id;
+    private String text, imageUrl, id, url;
     private BaseAdapterManager.SectionTypeEnum typeEnum = BaseAdapterManager.SectionTypeEnum.Text;
 
 
@@ -24,6 +24,14 @@ public class AllSuggestionModel {
 
     private AllSuggestionModel() {
 
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getId() {

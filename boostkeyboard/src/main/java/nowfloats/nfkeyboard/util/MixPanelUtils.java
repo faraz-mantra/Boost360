@@ -11,10 +11,17 @@ import org.json.JSONObject;
  */
 
 public class MixPanelUtils {
+    public static final String KEYBOARD_IMAGE_SHARING = "KeyboardImageSharing";
+    public static final String KEYBOARD_ICON_CLICKED = "KeyboardIconClicked";
+    public static final String KEYBOARD_SHOW_UPDATES = "KeyboardShowUpdates";
+    public static final String KEYBOARD_SHOW_PRODUCT = "KeyboardShowProducts";
+    public static final String KEYBOARD_VOICE_INPUT = "KeyboardVoiceInput";
     private static MixPanelUtils mixPanelUtils= new MixPanelUtils();
     private MixpanelAPI mixPanel;
     private MixPanelUtils(){
-
+    }
+    public static MixPanelUtils getInstance(){
+        return mixPanelUtils;
     }
     public void setMixPanel(Context app, String key) {
         if (mixPanel != null)

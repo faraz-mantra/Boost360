@@ -133,6 +133,7 @@ this.url = url;
 
 public AllSuggestionModel toAllSuggestion() {
     AllSuggestionModel model =  new AllSuggestionModel(message, imageUri);
+    model.setUrl(getUrl());
     model.setId(id);
     return model;
 }

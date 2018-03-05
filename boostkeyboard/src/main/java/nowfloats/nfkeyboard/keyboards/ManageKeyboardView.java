@@ -170,6 +170,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             case SpeechRecognizer.ERROR_SERVER:
             case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
                 message = "Recognizer Busy";
+                //showSpeechInput();
                 //mSpeechRecognitionManager.startListening();
                 break;
             default:

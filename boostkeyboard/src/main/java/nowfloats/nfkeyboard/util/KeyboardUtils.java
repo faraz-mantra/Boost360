@@ -8,7 +8,7 @@ import nowfloats.nfkeyboard.R;
 
 public class KeyboardUtils {
     public enum KeyboardType{
-        QWERTY_LETTERS, NUMBERS, SYMBOLS, SYMBOLS_SHIFT, EMOJIS;
+        QWERTY_LETTERS, EMAIL_ADDRESS, NUMBERS, SYMBOLS, SYMBOLS_SHIFT, EMOJIS;
 
         public static int getXml(KeyboardType type){
             switch (type){
@@ -20,6 +20,8 @@ public class KeyboardUtils {
                     return R.xml.keyboard_sym_shift;
                 case EMOJIS:
                     return R.xml.keycodes_emojis;
+                case EMAIL_ADDRESS:
+                    return R.xml.keyboard_email;
                 case QWERTY_LETTERS:
                 default:
                     return  R.xml.keyboard_qwrty;

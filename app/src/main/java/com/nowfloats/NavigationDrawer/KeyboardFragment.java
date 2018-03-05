@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodInfo;
@@ -38,7 +39,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by Admin on 02-03-2018.
  */
 
-public class KeyboardFragment extends Fragment implements View.OnClickListener {
+public class KeyboardFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
     private static final int STORAGE_CODE = 100, MICROPHONE_CODE = 101;
     private static final int INPUT_METHOD_SETTINGS = 102;
     private Context mContext;
@@ -71,6 +72,9 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
         storageSwitchTv = view.findViewById(R.id.storage_switch);
         microphoneSwitchTv = view.findViewById(R.id.microphone_switch);
         keyboardSwitchTv = view.findViewById(R.id.keyboard_switch);
+        storageSwitchTv.setOnTouchListener(this);
+        keyboardSwitchTv.setOnTouchListener(this);
+        microphoneSwitchTv.setOnTouchListener(this);
         storageSwitchTv.setOnClickListener(this);
         keyboardSwitchTv.setOnClickListener(this);
         microphoneSwitchTv.setOnClickListener(this);
@@ -213,5 +217,11 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
         ComponentName myInputMethod = new ComponentName(mContext, ImeKeyboardService.class);
 
         return myInputMethod.equals(defaultInputMethod);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        v.performClick();
+        return false;
     }
 }
