@@ -37,6 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import hani.momanii.supernova_emoji_library.Helper.EmojiconGridView;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconsPopup;
+import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 import nowfloats.nfkeyboard.R;
 import nowfloats.nfkeyboard.interface_contracts.CandidateToPresenterInterface;
 import nowfloats.nfkeyboard.interface_contracts.ImeToPresenterInterface;
@@ -58,7 +61,11 @@ import timber.log.Timber;
  * Created by Admin on 26-02-2018.
  */
 
-public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterface,CandidateToPresenterInterface, View.OnClickListener, UrlToBitmapInterface {
+public class ImePresenterImpl implements ItemClickListener,
+        ImeToPresenterInterface,
+        CandidateToPresenterInterface,
+        View.OnClickListener,
+        UrlToBitmapInterface {
     private CandidateViewBaseImpl mCandidateView;
     private KeyboardViewBaseImpl mKeyboardView;
     private ManageKeyboardView manageKeyboardView;
@@ -87,6 +94,16 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
             manageKeyboardView.showKeyboardLayout();
             mCandidateView.addCandidateTypeView(currentCandidateType);
         }
+    }
+
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+        imeListener.getImeCurrentInputConnection().commitText(emojicon.getEmoji(), 1);
+    }
+
+    @Override
+    public void onEmojiconBackspaceClicked(View v) {
+
     }
 
     private enum KeyAction{
@@ -490,7 +507,7 @@ public class ImePresenterImpl implements ItemClickListener, ImeToPresenterInterf
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.NUMBERS);
                     break;
                 case KEY_EMOJI:
-                    //setCurrentKeyboard(KeyboardUtils.KeyboardType.EMOJIS);
+                    manageKeyboardView.showEmojiLayout();
                     break;
                 case KEY_QWRTY:
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.QWERTY_LETTERS);

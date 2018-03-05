@@ -1,22 +1,45 @@
 package nowfloats.nfkeyboard.keyboards;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconGridView;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconRecents;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconRecentsGridView;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconRecentsManager;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconsPopup;
+import hani.momanii.supernova_emoji_library.emoji.Cars;
+import hani.momanii.supernova_emoji_library.emoji.Electr;
+import hani.momanii.supernova_emoji_library.emoji.Emojicon;
+import hani.momanii.supernova_emoji_library.emoji.Food;
+import hani.momanii.supernova_emoji_library.emoji.Nature;
+import hani.momanii.supernova_emoji_library.emoji.People;
+import hani.momanii.supernova_emoji_library.emoji.Sport;
+import hani.momanii.supernova_emoji_library.emoji.Symbols;
 import nowfloats.nfkeyboard.R;
 import nowfloats.nfkeyboard.activity.SpeechRecognitionManager;
 import nowfloats.nfkeyboard.adapter.MainAdapter;
@@ -37,6 +60,16 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     private SpeechRecognitionManager mSpeechRecognitionManager;
     private CandidateToPresenterInterface presenterListener;
     private TextView mSpeechMessageTv;
+
+    private ViewPager emojisPager;
+    private PagerAdapter mEmojisAdapter;
+    private View[] mEmojiTabs;
+    private EmojiconRecentsManager mRecentsManager;
+    private int mEmojiTabLastSelectedIndex = -1;
+
+    String iconPressedColor="#ffffff";
+    String tabsColor="#212121";
+    String backgroundColor="#212121";
 
     public ManageKeyboardView(@NonNull Context context) {
         super(context);
@@ -62,6 +95,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
     public void showShareLayout(ArrayList<AllSuggestionModel> models){
         mKeyboardView.setVisibility(INVISIBLE);
+        findViewById(R.id.emoji_layout).setVisibility(GONE);
         stopListening();
         ConstraintLayout shareLayout = findViewById(R.id.sharelayout);
         shareLayout.setVisibility(VISIBLE);
@@ -85,6 +119,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
     public void showKeyboardLayout(){
         findViewById(R.id.sharelayout).setVisibility(GONE);
+        findViewById(R.id.emoji_layout).setVisibility(GONE);
         mKeyboardView.setVisibility(VISIBLE);
         stopListening();
     }
@@ -94,6 +129,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             mSpeechRecognitionManager = new SpeechRecognitionManager(mContext,this);
         }
         findViewById(R.id.sharelayout).setVisibility(GONE);
+        findViewById(R.id.emoji_layout).setVisibility(GONE);
         mKeyboardView.setVisibility(INVISIBLE);
         mSpeechMessageTv.setText("Listening...");
         findViewById(R.id.speech_layout).setVisibility(VISIBLE);
@@ -179,5 +215,141 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         }
         mSpeechMessageTv.setText(message);
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showEmojiLayout() {
+        mKeyboardView.setVisibility(INVISIBLE);
+        stopListening();
+        ConstraintLayout shareLayout = findViewById(R.id.sharelayout);
+        shareLayout.setVisibility(GONE);
+        ConstraintLayout speechLayout = findViewById(R.id.speech_layout);
+        speechLayout.setVisibility(GONE);
+        RelativeLayout emojiLayout = findViewById(R.id.emoji_layout);
+        emojiLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mKeyboardView.getMeasuredHeight()));
+        emojisPager = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_pager);
+        LinearLayout tabs = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab);
+
+        ViewPager.OnPageChangeListener pagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if (mEmojiTabLastSelectedIndex == i) {
+                    return;
+                }
+                switch (i) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+
+                        if (mEmojiTabLastSelectedIndex >= 0 && mEmojiTabLastSelectedIndex < mEmojiTabs.length) {
+                            mEmojiTabs[mEmojiTabLastSelectedIndex].setSelected(false);
+                        }
+                        mEmojiTabs[i].setSelected(true);
+                        mEmojiTabLastSelectedIndex = i;
+                        mRecentsManager.setRecentPage(i);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
+
+        emojisPager.setOnPageChangeListener(pagerPageChangeListener);
+
+        EmojiconRecents recents = new EmojiconRecents() {
+            @Override
+            public void addRecentEmoji(Context context, Emojicon emojicon) {
+                EmojiconRecentsGridView fragment = ((EmojiconsPopup.EmojisPagerAdapter)emojisPager.getAdapter()).getRecentFragment();
+                fragment.addRecentEmoji(context, emojicon);
+            }
+        };
+
+
+        mEmojisAdapter = new EmojiconsPopup.EmojisPagerAdapter(
+                Arrays.asList(
+                        new EmojiconRecentsGridView(mContext, null, null, presenterListener,true),
+                        new EmojiconGridView(mContext, People.DATA, recents, presenterListener,true),
+                        new EmojiconGridView(mContext, Nature.DATA, recents, presenterListener,true),
+                        new EmojiconGridView(mContext, Food.DATA, recents, presenterListener,true),
+                        new EmojiconGridView(mContext, Sport.DATA, recents, presenterListener,true),
+                        new EmojiconGridView(mContext, Cars.DATA, recents, presenterListener,true),
+                        new EmojiconGridView(mContext, Electr.DATA, recents, presenterListener,true),
+                        new EmojiconGridView(mContext, Symbols.DATA, recents, presenterListener,true)
+
+                )
+        );
+        emojisPager.setAdapter(mEmojisAdapter);
+        mEmojiTabs = new View[8];
+
+        mEmojiTabs[0] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_0_recents);
+        mEmojiTabs[1] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_1_people);
+        mEmojiTabs[2] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_2_nature);
+        mEmojiTabs[3] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_3_food);
+        mEmojiTabs[4] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_4_sport);
+        mEmojiTabs[5] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_5_cars);
+        mEmojiTabs[6] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_6_elec);
+        mEmojiTabs[7] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_7_sym);
+        for (int i = 0; i < mEmojiTabs.length; i++) {
+            final int position = i;
+            mEmojiTabs[i].setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    emojisPager.setCurrentItem(position);
+                }
+            });
+        }
+
+
+        emojisPager.setBackgroundColor(Color.parseColor(backgroundColor));
+        tabs.setBackgroundColor(Color.parseColor(tabsColor));
+        for(int x=0;x<mEmojiTabs.length;x++)
+        {
+            ImageButton btn=(ImageButton)mEmojiTabs[x];
+            btn.setColorFilter(Color.parseColor(iconPressedColor));
+        }
+
+        ImageButton imgBtn= findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_backspace);
+        imgBtn.setColorFilter(Color.parseColor(iconPressedColor));
+        imgBtn.setBackgroundColor(Color.parseColor(backgroundColor));
+
+
+        findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_backspace).setOnTouchListener(new EmojiconsPopup.RepeatListener(500, 50, new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                /*if(onEmojiconBackspaceClickedListener != null)
+                    onEmojiconBackspaceClickedListener.onEmojiconBackspaceClicked(v);*/
+            }
+        }));
+
+        // get last selected page
+        mRecentsManager = EmojiconRecentsManager.getInstance(getContext());
+        int page = mRecentsManager.getRecentPage();
+        // last page was recents, check if there are recents to use
+        // if none was found, go to page 1
+        if (page == 0 && mRecentsManager.size() == 0) {
+            page = 1;
+        }
+
+        if (page == 0) {
+            pagerPageChangeListener.onPageSelected(page);
+        }
+        else {
+            emojisPager.setCurrentItem(page, false);
+        }
+        emojiLayout.setVisibility(VISIBLE);
     }
 }

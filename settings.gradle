@@ -1,4 +1,4 @@
-include ':app', ':cropper', ':ZoomImageLibrary', ':instamojoLib', ':riachatsdkMain', ':boostkeyboard'
+include ':app', ':cropper', ':ZoomImageLibrary', ':instamojoLib', ':riachatsdkMain', ':boostkeyboard', ':supernova-emoji-library'
 
 include ':messagelibrary'
 
