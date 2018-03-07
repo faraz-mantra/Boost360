@@ -117,9 +117,14 @@ public class ImePresenterImpl implements ItemClickListener,
 
     @Override
     public void onResourcesReady(Bitmap bitmap, String text, String imageId) {
-        doCommitContent(text, "image/png",
-                MethodUtils.getImageUri(mContext,bitmap, TextUtils.isEmpty(imageId)?
-                        UUID.randomUUID().toString():imageId));
+        Uri uri = MethodUtils.getImageUri(mContext,bitmap, TextUtils.isEmpty(imageId)?
+                UUID.randomUUID().toString():imageId);
+        if (uri == null){
+            imeListener.getImeCurrentInputConnection().commitText(text, 1);
+        }else{
+            doCommitContent(text, "image/png", uri);
+        }
+
     }
 
     public enum TabType {

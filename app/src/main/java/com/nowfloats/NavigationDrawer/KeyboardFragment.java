@@ -99,8 +99,8 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         mContext.unregisterReceiver(mReceiver);
     }
 
@@ -119,7 +119,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == INPUT_METHOD_SETTINGS){
-            if (!isInputMethodEnabled()){
+            if (isInputMethodActivated()){
                 if (imeManager != null)
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
@@ -206,8 +206,8 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
         }
     }
 
-    private boolean isInputMethodActivated(InputMethodManager manager) {
-        List<InputMethodInfo> list = manager.getEnabledInputMethodList();
+    private boolean isInputMethodActivated() {
+        List<InputMethodInfo> list = imeManager.getEnabledInputMethodList();
         ComponentName myInputMethod = new ComponentName(mContext, ImeKeyboardService.class);
         for (InputMethodInfo info: list){
             if(myInputMethod.equals(info.getComponent())){
@@ -235,7 +235,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
                     MixPanelController.track(EventKeysWL.KEYBOARD_SWITCH_CLICKED,null);
                     if(imeManager == null){
 
-                    } else if(!isInputMethodActivated(imeManager)){
+                    } else if(!isInputMethodActivated()){
                         startActivityForResult(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS),INPUT_METHOD_SETTINGS);
                     } else {
                         imeManager.showInputMethodPicker();

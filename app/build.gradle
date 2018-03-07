@@ -53,7 +53,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2018030005
+        versionCode 2018030007
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -99,7 +99,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.9.1"
+            versionName "4.9.2"
             applicationId "com.biz2.nowfloats"
             dimension "default"
 //            proguardFile 'D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\ap\\proguard-rules.pro'
@@ -147,7 +147,7 @@ dependencies {
     implementation 'com.kitsune:anachatsdk:1.18.11@aar'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
     implementation 'com.google.code.gson:gson:2.8.1'
-    implementation 'com.github.bumptech.glide:glide:4.1.1'
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'com.melnykov:floatingactionbutton:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     implementation 'com.makeramen:roundedimageview:1.5.0'

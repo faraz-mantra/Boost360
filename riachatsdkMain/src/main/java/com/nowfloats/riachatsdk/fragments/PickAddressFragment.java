@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -395,7 +396,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                                     a.release();
 
-                                    getActivity().runOnUiThread(new Runnable() {
+                                    etCity.post(new Runnable() {
                                         @Override
                                         public void run() {
 
@@ -659,7 +660,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         boolean isAllFieldsValid = true;
         if (etStreetAddr.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
-            etStreetAddr.setSupportBackgroundTintList(errorColorStateList);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                etStreetAddr.setBackgroundTintList(errorColorStateList);
+            }
         }
         if (etCity.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
@@ -671,16 +674,22 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         }
         if (etPin.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
-            etPin.setSupportBackgroundTintList(errorColorStateList);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                etPin.setBackgroundTintList(errorColorStateList);
+            }
         }
         if (etPin.getText().toString().trim().length() > 6) {
             isAllFieldsValid = false;
             Toast.makeText(getActivity(), getString(R.string.pin_code_length_error), Toast.LENGTH_SHORT).show();
-            etPin.setSupportBackgroundTintList(errorColorStateList);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                etPin.setBackgroundTintList(errorColorStateList);
+            }
         }
         if (etHousePlotNum.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
-            etHousePlotNum.setSupportBackgroundTintList(errorColorStateList);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                etHousePlotNum.setBackgroundTintList(errorColorStateList);
+            }
         }
 
         if (!isAllFieldsValid) {
@@ -751,14 +760,14 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     };
 
     private void updateErrorList() {
-        etStreetAddr.setSupportBackgroundTintList(initialColorStateList);
-        etLocality.setSupportBackgroundTintList(initialColorStateList);
-        etLandmark.setSupportBackgroundTintList(initialColorStateList);
-        etPin.setSupportBackgroundTintList(initialColorStateList);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            etStreetAddr.setBackgroundTintList(initialColorStateList);
+            etLocality.setBackgroundTintList(initialColorStateList);
+            etLandmark.setBackgroundTintList(initialColorStateList);
+            etPin.setBackgroundTintList(initialColorStateList);
+            etHousePlotNum.setBackgroundTintList(initialColorStateList);
+        }
         etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.lt_gray), PorterDuff.Mode.SRC_ATOP);
-        etHousePlotNum.setSupportBackgroundTintList(initialColorStateList);
-        etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.lt_gray), PorterDuff.Mode.SRC_ATOP);
-
     }
 
     private void addTextChangeListners() {

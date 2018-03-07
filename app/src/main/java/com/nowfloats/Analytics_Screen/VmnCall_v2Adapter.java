@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -205,8 +206,12 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
             return mediaDialog;
         }
         private void showDialog() {
-            setPlayerDialog();
-            vmnMediaPlayer.setDataUrl(mediaData.getCallRecordingUri());
+            if (!TextUtils.isEmpty(mediaData.getCallRecordingUri())) {
+                setPlayerDialog();
+                vmnMediaPlayer.setDataUrl(mediaData.getCallRecordingUri());
+            }else{
+                Toast.makeText(mContext, "Can't get recording url", Toast.LENGTH_SHORT).show();
+            }
         }
 
 

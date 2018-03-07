@@ -53,7 +53,8 @@ public class ReadMessages extends Service {
         SharedPreferences pref = getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId = pref.getString(Constants.FP_ID, null);
         DAYS_BEFORE = Integer.parseInt(pref.getString(CALL_LOG_TIME_INTERVAL, DAYS_BEFORE + ""));
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
             TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             mobileId = tm.getDeviceId();
         }

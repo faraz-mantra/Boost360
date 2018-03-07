@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +40,9 @@ public class MethodUtils {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId+ ".png", "drawing");
+        if (TextUtils.isEmpty(path)){
+            return null;
+        }
         return Uri.parse(path);
     }
 
