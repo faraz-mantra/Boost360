@@ -73,6 +73,9 @@ public class MixPanelController {
     public static final String HELP_AND_SUPPORT_CALL = "HelpAndSupportCall";
     public static final String HELP_AND_SUPPORT_CLICK = "HelpAndSupportClick";
 
+    public static final String KEYBOARD_ACTIVATED = "KeyboardActivated";
+    public static final String KEYBOARD_ENABLED = "KeyboardEnabled";
+
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",

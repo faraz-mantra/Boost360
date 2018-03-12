@@ -76,7 +76,7 @@ public class SidePanelFragment extends Fragment {
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
     TextView dashBoardTextView, tvManageCustomers,tvSocialSharing,tvManageInventory, tvManageContent,
-            accountSettingsText,upgradeText, helpAndSupportText, shareText,aboutText;
+            accountSettingsText,upgradeText,keyboardTextView, helpAndSupportText, shareText,aboutText;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -93,7 +93,7 @@ public class SidePanelFragment extends Fragment {
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
-    LinearLayout homeLayout, upgradeLayout, accountSettingsLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+    LinearLayout homeLayout, upgradeLayout, accountSettingsLayout,keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
             manageContentLayout, manageCustomersLayout,socialLayout,manageInventoryLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -106,7 +106,7 @@ public class SidePanelFragment extends Fragment {
     private final int gallery_req_id = 6;
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
-    private ImageView shareImageView, upgradeImageView, dasbBoardImageView, helpAndSupportImageView,
+    private ImageView shareImageView,keyboardImageView, upgradeImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView,manageContentImageView,aboutImageView,
             socialImageView,manageInventoryImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
@@ -319,6 +319,7 @@ public class SidePanelFragment extends Fragment {
         manageContentLayout = card.findViewById(R.id.layout_manage_content);
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         socialLayout = card.findViewById(R.id.eleventh_Layout);
+        keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
         accountSettingsLayout =  card.findViewById(R.id.fifthRow_Layout);
         upgradeLayout = card.findViewById(R.id.secondRow_Layout);
         helpAndSupportLayout = card.findViewById(R.id.seventhRow_Layout);
@@ -342,6 +343,7 @@ public class SidePanelFragment extends Fragment {
         upgradeText = (TextView) upgradeLayout.findViewById(R.id.secondRow_TextView);
         helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
         aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
+        keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
 
         dasbBoardImageView = homeLayout.findViewById(R.id.firstrow_ImageView);
@@ -354,6 +356,47 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportImageView = helpAndSupportLayout.findViewById(R.id.seventhRow_ImageView);
         aboutImageView = aboutLayout.findViewById(R.id.img_about);
         shareImageView = shareLayout.findViewById(R.id.eigthRow_ImageView);
+//        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
+////            if(session.isBoostBubbleEnabled()){
+////                session.setBubbleTime(-1);
+////                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+////            }
+//            session.setBubbleStatus(false);
+//        }
+//
+//        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+//
+//        bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (!isChecked) {
+//                    session.setBubbleStatus(isChecked);
+//                } else {
+//
+//                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+//                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+//
+////                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
+////                            showAlertMaterialDialog();
+////                            bubbleSwitch.setChecked(false);
+////                        } else {
+//                        session.setBubbleTime(-1);
+//                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+////                        }
+//                    } else {
+//                        session.setBubbleStatus(isChecked);
+//                    }
+//
+//                }
+//            }
+//        });
+        dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
+        keyboardImageView = (ImageView) keyboardLayout.findViewById(R.id.keyboard_ImageView);
+        manageCustomerImageView = (ImageView) manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
+        socialImageView = (ImageView) socialLayout.findViewById(R.id.eleventh_ImageView);
+        manageInventoryImageView = (ImageView) manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
+        shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
+        //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
         dashBoardTextView.setTypeface(robotoMedium);
         tvManageCustomers.setTypeface(robotoMedium);
@@ -379,6 +422,14 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.upgrades));
                 onclickColorChange(upgradeImageView, upgradeText, upgradeLayout);
+            }
+        });
+        keyboardTextView.setTypeface(robotoMedium);
+        keyboardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
+                onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
             }
         });
 
@@ -419,7 +470,7 @@ public class SidePanelFragment extends Fragment {
         manageInventoryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onclickColorChange(manageInventoryImageView, tvManageInventory, manageInventoryLayout);
+                onclickColorChange(manageInventoryImageView, tvManageInventory, manageInventoryLayout);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
             }
         });
@@ -793,6 +844,7 @@ public class SidePanelFragment extends Fragment {
 
     private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        keyboardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageContent.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -807,6 +859,7 @@ public class SidePanelFragment extends Fragment {
 
         dasbBoardImageView.setColorFilter(defaultLabelFilter);
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
+        keyboardImageView.setColorFilter(defaultLabelFilter);
         manageContentImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
         socialImageView.setColorFilter(defaultLabelFilter);
@@ -819,6 +872,7 @@ public class SidePanelFragment extends Fragment {
 
         homeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageCustomersLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        keyboardLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageContentLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageInventoryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         socialLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));

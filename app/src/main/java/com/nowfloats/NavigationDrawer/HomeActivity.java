@@ -89,11 +89,8 @@ import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
-import com.nowfloats.managecustomers.FacebookChatActivity;
-import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.riachatsdk.ChatManager;
@@ -151,6 +148,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private DrawerLayout mDrawerLayout;
     SidePanelFragment drawerFragment;
     Home_Fragment_Tab homeFragment;
+    KeyboardFragment keyboardFragment;
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragment manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
@@ -243,23 +241,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-//    private void setHotlineUser() {
-//        HotlineConfig hlConfig = new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb", "a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
-//
-//        hlConfig.setVoiceMessagingEnabled(true);
-//        hlConfig.setCameraCaptureEnabled(false);
-//        hlConfig.setPictureMessagingEnabled(true);
-//
-//        Hotline.getInstance(this).init(hlConfig);
-//
-//        HotlineUser hlUser = Hotline.getInstance(this).getUser();
-//        hlUser.setName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-//        hlUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-//        hlUser.setPhone(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE),
-//                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-//        Hotline.getInstance(this).updateUser(hlUser);
-//
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -336,17 +317,18 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             {
                 MixPanelController.track("$app_open",null);
             }
-            if (url.contains(getString(R.string.facebook_chat))) {
-                Intent intent = new Intent(this, FacebookChatDetailActivity.class);
-                intent.putExtras(getIntent());
-                startActivity(intent);
+            if (url.contains(getString(R.string.keyboard))){
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                        .commit();
+            }
+            else if (url.contains(getString(R.string.facebook_chat))) {
+
             }else if(url.contains("thirdPartyQueries")){
                 Intent intent = new Intent(this, ThirdPartyQueriesActivity.class);
                 startActivity(intent);
             }
             else if (url.contains(getString(R.string.facebook_chat_main))) {
-                Intent intent = new Intent(this, FacebookChatActivity.class);
-                startActivity(intent);
+
             }else if (url.contains(getString(R.string.deeplink_manage_customer))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
                         .commit();
@@ -409,8 +391,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     url.contains(getResources().getString(R.string.deeplink_nfstorebiztiming)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage))) {
-                Intent i = new Intent(this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                Intent i = new Intent(this,NewPricingPlansActivity.class);
                startActivity(i);
             } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
                 Intent queries = new Intent(HomeActivity.this, SearchQueriesActivity.class);
@@ -1051,7 +1032,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (nextScreen.equals(getString(R.string.business_profile))) {
+                if (nextScreen.equals(getString(R.string.keyboard))){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                            .commit();
+                } else if (nextScreen.equals(getString(R.string.business_profile))) {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)
                     // ;
@@ -1099,7 +1083,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     // startActivity(imageGalleryIntent);
                     Intent i = new Intent(HomeActivity.this, ImageGalleryActivity.class);
                     startActivity(i);
-                } else if (nextScreen.equals(getString(R.string.manage_inventory)) || nextScreen.equals(getString(R.string.product_gallery))) {
+                } else if (nextScreen.equals(getString(R.string.product_gallery))) {
 
                     Intent i = new Intent(HomeActivity.this, ProductGalleryActivity.class);
                     startActivity(i);
@@ -1111,6 +1095,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home)) ||nextScreen.equals(getString(R.string.update))) {
+
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     plusAddButton.setVisibility(View.GONE);
@@ -1149,8 +1134,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                                 .setToolBarLogo(R.drawable.ria_circle_image)
                                 .start();
                     }
-                    //Hotline.showConversations(HomeActivity.this);
-                } else if (nextScreen.equals(getString(R.string.help_and_support))) {
+
+                } else if (nextScreen.equals(getString(R.string.call)) || nextScreen.equals(getString(R.string.help_and_support))) {
 //                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
 //                        Intent call = new Intent(Intent.ACTION_DIAL);
 //                        String callString = "tel:" + getString(R.string.contact_us_number);
@@ -1164,8 +1149,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equalsIgnoreCase("Store")) {
                     shareButton.setVisibility(View.GONE);
                     plusAddButton.setVisibility(View.GONE);
-                    Intent i = new Intent(HomeActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                            ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                    Intent i = new Intent(HomeActivity.this,NewPricingPlansActivity.class);
                     startActivity(i);
 
                 } else if (nextScreen.equals("csp")) {
@@ -1191,7 +1175,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     MixPanelController.track(EventKeysWL.MANAGE_INVENTORY, null);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
@@ -1354,8 +1338,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if(BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.capture")) {
                 intent = new Intent(this, FlavourFivePlansActivity.class);
             }else {
-                intent = new Intent(this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                intent = new Intent(this, NewPricingPlansActivity.class);
             }
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -1501,6 +1484,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         homeFragment = new Home_Fragment_Tab();
         businessFragment = new Business_Profile_Fragment_V2();
         manageCustomerFragment = new ManageCustomerFragment();
+        keyboardFragment = new KeyboardFragment();
         manageInventoryFragment = new ManageInventoryFragment();
         upgradesFragment = new UpgradesFragment();
         aboutFragment = new AboutFragment();

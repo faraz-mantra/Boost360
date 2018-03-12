@@ -581,7 +581,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public void onResume() {
         super.onResume();
         if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText("Third Party Integrations");
+            HomeActivity.headerText.setText("Social Sharing");
     }
 
     private void processGraphResponse(final GraphResponse response, final int from) {

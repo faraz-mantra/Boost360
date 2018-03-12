@@ -47,7 +47,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
-import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
@@ -86,6 +85,8 @@ import java.util.Map;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -230,8 +231,8 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("OverallVisitsDetailedView", null);
-                Intent q = new Intent(getActivity(), AnalyticsActivity.class);
-                q.putExtra("table_name", Constants.VISITS_TABLE);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -242,7 +243,7 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
                 MixPanelController.track("UniqueVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
-                q.putExtra("table_name", Constants.VISITORS_TABLE);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.UNIQUE);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

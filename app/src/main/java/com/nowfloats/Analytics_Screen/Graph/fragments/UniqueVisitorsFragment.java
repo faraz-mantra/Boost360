@@ -26,6 +26,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -45,6 +46,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
+
 /**
  * Created by Admin on 17-01-2018.
  */
@@ -62,6 +65,9 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     private VisitsModel currVisitsModel;
     int totalVisits = -1;
     public BatchType batchType;
+    public SiteViewsAnalytics.VisitsType mVisitType;
+    private MaterialDialog.Builder materialDialog;
+
 
     @Override
     public void onClick(View view) {
@@ -73,31 +79,22 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     }
 
     private void showInfoDialog() {
-        String title="", content="";
-        switch (batchType){
-            case dy:
-                title = "Unique Visitors in a week";
-                content = "The graph depicts unique visitors in the particular week. Note that a " +
-                        "visitor might visit on multiple days in the week and still, will be counted as a unique visitor only once for the entire week";
-                break;
-            case mm:
-                content = "The graph depicts unique visitors in the particular year. Note that a " +
-                        "visitor might visit on multiple days in the year and still, will be counted as a unique visitor only once for the entire month";
-                title = "Unique Visitors in a year";
-                break;
-            case ww:
-                content = "The graph depicts unique visitors in the particular month. Note that a " +
-                        "visitor might visit on multiple days in the month and still, will be counted as a unique visitor only once for the entire month";
-                title = "Unique Visitors in a month";
-                break;
+
+        String title = String.format("%s in a %s",mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE?
+                "Unique visitors":"Total visits",tabType.toLowerCase());
+
+        String content = String.format(getString(mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE?
+                R.string.unique_visitors_message : R.string.total_visits_message),tabType.toLowerCase());
+
+        if (materialDialog == null) {
+            materialDialog = new MaterialDialog.Builder(mContext)
+                    .iconRes(R.drawable.icon_info)
+                    .maxIconSize(Methods.dpToPx(15, mContext));
         }
 
-        new MaterialDialog.Builder(mContext)
-                .title(title)
-                .content(content)
-                .iconRes(R.drawable.icon_info)
-                .maxIconSize(Methods.dpToPx(15,mContext))
-                .show();
+        materialDialog.title(title);
+        materialDialog.content(content);
+        materialDialog.show();
     }
 
     public enum BatchType
@@ -130,20 +127,21 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         if (getArguments() ==null) return;
         int pos = getArguments().getInt("pos");
         totalVisits = getArguments().getInt("totalViews");
+        mVisitType = (SiteViewsAnalytics.VisitsType) getArguments().getSerializable(VISITS_TYPE);
         switch (pos){
             case 0:
                 dataType = getString(R.string.day);
-                tabType = getString(R.string.week);
+                tabType = getString(R.string.week).toLowerCase();
                 batchType = BatchType.dy;
                 break;
             case 1:
                 dataType = getString(R.string.week);
-                tabType = getString(R.string.Month);
+                tabType = getString(R.string.Month).toLowerCase();
                 batchType = BatchType.ww;
                 break;
             case 2:
                 dataType = getString(R.string.Month);
-                tabType =  getString(R.string.Year);
+                tabType =  getString(R.string.Year).toLowerCase();
                 batchType = BatchType.mm;
                 break;
         }
@@ -163,7 +161,8 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         visitsTitle= (TextView) view.findViewById(R.id.tv_visits_title);
         progressBar = view.findViewById(R.id.progress_bar);
         view.findViewById(R.id.img_info).setOnClickListener(this);
-        visitsTitle.setText(String.format("unique visits this %s",tabType));
+        visitsTitle.setText( String.format("%s in a %s",mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE?
+                "Unique visitors":"Total visits",tabType.toLowerCase()));
         if (totalVisits != 0){
             visitsCount.setText(String.valueOf(totalVisits));
         }else if(getArguments().containsKey("hashmap")){
@@ -238,7 +237,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
             if (map == null) return;
             map.put("batchType",batchType.name());
             progressBar.setVisibility(View.VISIBLE);
-            getFragmentData(map);
+            getVisitsData(map,visitsModelCallback);
         }
     }
 
@@ -257,27 +256,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
             default:
                 return;
         }
-        map.put("clientId", Constants.clientId);
-        map.put("scope",manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
-        Constants.testRestAdapter.create(AnalyticsFetch.FetchDetails.class)
-                .getUniqueVisits(manager.getFpTag(), map, new Callback<VisitsModel>() {
-                    @Override
-                    public void success(VisitsModel visitsModel, Response response) {
-                        int totalCount = 0;
-                        if (visitsModel != null){
-                            for (VisitsModel.UniqueVisitsList data:visitsModel.getUniqueVisitsList()){
-                                totalCount+=data.getDataCount();
-                            }
-                        }
-                        visitsCount.setText(String.valueOf(totalCount));
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        visitsCount.setText("0");
-                        Toast.makeText(mContext, "unable to fetch total unique visits", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        getVisitsData(map,totalVisitsCallback);
     }
 
     private String getFormattedDate(String date, String pattern) {
@@ -369,23 +348,50 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         return dataSets;
     }
 
-    private void getFragmentData(final HashMap<String,String> map){
-
+    private void getVisitsData(HashMap<String, String> map, Callback<VisitsModel> callback){
         map.put("clientId", Constants.clientId);
         map.put("scope",manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
-        Constants.testRestAdapter.create(AnalyticsFetch.FetchDetails.class)
-                .getUniqueVisits(manager.getFpTag(), map, new Callback<VisitsModel>() {
-                    @Override
-                    public void success(VisitsModel visitsModel, Response response) {
-                       updateData(visitsModel);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        updateData(null);
-                    }
-                });
+        AnalyticsFetch.FetchDetails visitsApi = Constants.testRestAdapter.create(AnalyticsFetch.FetchDetails.class);
+        switch (mVisitType){
+            case UNIQUE:
+                visitsApi.getUniqueVisits(manager.getFpTag(), map,callback);
+                break;
+            case TOTAL:
+                visitsApi.getTotalVisits(manager.getFpTag(), map,callback);
+                break;
+        }
     }
+    private Callback<VisitsModel> visitsModelCallback = new Callback<VisitsModel>() {
+        @Override
+        public void success(VisitsModel visitsModel, Response response) {
+            updateData(visitsModel);
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            updateData(null);
+        }
+    };
+
+    private Callback<VisitsModel> totalVisitsCallback = new Callback<VisitsModel>() {
+        @Override
+        public void success(VisitsModel visitsModel, Response response) {
+            int totalCount = 0;
+            if (visitsModel != null){
+                for (VisitsModel.UniqueVisitsList data:visitsModel.getUniqueVisitsList()){
+                    totalCount+=data.getDataCount();
+                }
+            }
+            visitsCount.setText(String.valueOf(totalCount));
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            visitsCount.setText("0");
+            Toast.makeText(mContext, "unable to fetch total unique visits", Toast.LENGTH_SHORT).show();
+        }
+    };
+
     public interface ViewCallback{
         void onChartBarClicked(HashMap<String,String> map,int val);
     }

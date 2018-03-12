@@ -67,7 +67,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_analytics);
+        setContentView(R.layout.activity_analytics_old);
         init();
 
         final Calendar c = Calendar.getInstance();

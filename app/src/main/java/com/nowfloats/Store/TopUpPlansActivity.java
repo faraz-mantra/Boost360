@@ -1,9 +1,11 @@
 package com.nowfloats.Store;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,12 +18,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.CustomWidget.MaterialProgressBar;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
@@ -89,7 +104,7 @@ public class TopUpPlansActivity extends AppCompatActivity{
                     holder.setCardHolderData(R.drawable.ic_dictate_plan,"Dictate",getString(R.string.dictate_definition));
                     break;
                 case 2:
-                    holder.setCardHolderData(R.drawable.ic_business_apps,"My Business App",getString(R.string.dictate_definition));
+                    holder.setCardHolderData(R.drawable.ic_business_apps,"My Business App",getString(R.string.business_app_definition));
                     break;
             }
         }
@@ -156,6 +171,55 @@ public class TopUpPlansActivity extends AppCompatActivity{
              topUpImage.setImageResource(resId);
             }
 
+            private void sendEmailRequestForBizApp(){
+                final SharedPreferences pref = TopUpPlansActivity.this.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+                UserSessionManager session = new UserSessionManager(TopUpPlansActivity.this, TopUpPlansActivity.this);
+                if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
+                    MaterialProgressBar.startProgressBar(TopUpPlansActivity.this, getString(R.string.submiting_request), false);
+
+                    Map<String, String> params = new HashMap<>();
+                    params.put("clientId", session.getSourceClientId());
+                    params.put("planType", "BizApps");
+                    params.put("toEmail", getString(R.string.email_id_to_request_plans));
+                    StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+                    storeInterface.requestWidget(session.getFPID(), params, new Callback<String>() {
+                        @Override
+                        public void success(String s, Response response) {
+                            MaterialProgressBar.dismissProgressBar();
+                            if(response.getStatus() != 200){
+                                Methods.showSnackBarNegative(TopUpPlansActivity.this,getString(R.string.something_went_wrong_try_again));
+                                return;
+                            }
+                            pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,true).apply();
+                            MixPanelController.track(MixPanelController.BUSINESS_APP_INTRESTED,null);
+
+                           showBizAppDialog();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            MaterialProgressBar.dismissProgressBar();
+                            Methods.showSnackBarNegative(TopUpPlansActivity.this,getString(R.string.something_went_wrong_try_again));
+                        }
+                    });
+
+                }else{
+                   showBizAppDialog();
+                }
+            }
+            private void showBizAppDialog(){
+                new MaterialDialog.Builder(TopUpPlansActivity.this)
+                        .title(getString(R.string.thank_you_for_your_interest))
+                        .content(getString(R.string.business_app_requested_success))
+                        .negativeText(getString(R.string.ok))
+                        .negativeColorRes(R.color.primary_color)
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
@@ -174,7 +238,7 @@ public class TopUpPlansActivity extends AppCompatActivity{
                                 topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());
                                 break;
                             case 2:
-                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.App.name());
+                                sendEmailRequestForBizApp();
                                 break;
                         }
                         break;

@@ -64,7 +64,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     private static final int CI_WEBSITE = 0, FB_CHATS = 1,
             MULTI_CHANNEL_CUSTOMERS = 2;
 
-    private int customerList[] = {CI_WEBSITE, FB_CHATS, MULTI_CHANNEL_CUSTOMERS};
+    private int customerList[] = {CI_WEBSITE, MULTI_CHANNEL_CUSTOMERS};
 
     private Bus bus;
 

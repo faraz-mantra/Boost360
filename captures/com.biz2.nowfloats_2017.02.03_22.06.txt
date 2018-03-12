@@ -1,3 +1,0 @@
-Unknown command: com.biz2.nowfloats
-Bad activity command, or no activities match: com.biz2.nowfloats
-Use -h for help.

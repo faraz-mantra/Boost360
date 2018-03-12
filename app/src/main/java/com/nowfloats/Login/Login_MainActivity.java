@@ -222,7 +222,7 @@ public class Login_MainActivity extends AppCompatActivity implements
     public void authenticationStatus(String value) {
         if(value.equals("Success"))
         {
-
+            session.setUserLogin(true);
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("message",new ArrayList<FloatsMessageModel>());
             dashboardIntent.putExtras(bundle);

@@ -41,6 +41,11 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
     private TextView tvMonth, tvWeek, tvYear;
     private UniqueVisitorsFragment.BatchType currentTabType;
     private PopupWindow popup;
+    public static final String VISITS_TYPE = "visits_type";
+    private VisitsType mVisitsType;
+    public enum VisitsType{
+        UNIQUE, TOTAL;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,11 +54,24 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null){
-            setTitle("Unique Visitors");
+
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        mVisitsType = (VisitsType) getIntent().getSerializableExtra(VISITS_TYPE);
+        if (mVisitsType == null) finish();
+
+        switch (mVisitsType){
+            case UNIQUE:
+                setTitle("Unique Visitors");
+                break;
+            case TOTAL:
+                setTitle("Total Visits");
+                break;
+            default:
+                finish();
+        }
         tvMonth = findViewById(R.id.tv_month_tab);
         tvWeek = findViewById(R.id.tv_week_tab);
         tvYear = findViewById(R.id.tv_year_tab);
@@ -156,6 +174,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         }
         b.putInt("pos",viewType.val);
         b.putSerializable("hashmap",map);
+        b.putSerializable(VISITS_TYPE,mVisitsType);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b))
                 .commit();
@@ -200,6 +219,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         Bundle b = new Bundle();
         b.putInt("pos", UniqueVisitorsFragment.BatchType.mm.val);
         b.putSerializable("hashmap",map);
+        b.putSerializable(VISITS_TYPE,mVisitsType);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b))
                 .commit();
@@ -228,6 +248,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         changeTabColors( UniqueVisitorsFragment.BatchType.valueOf(map.get("batchType")));
         b.putInt("pos", UniqueVisitorsFragment.BatchType.valueOf(map.get("batchType")).val);
         b.putInt("totalViews",views);
+        b.putSerializable(VISITS_TYPE,mVisitsType);
         b.putSerializable("hashmap",map);
         manager.beginTransaction()
                 .replace(R.id.fl_analytics_fragment,UniqueVisitorsFragment.getInstance(b) , map.get("batchType"))

@@ -1,5 +1,6 @@
 package com.nowfloats.Store;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,7 +30,7 @@ public class PricingDetailsFragment extends Fragment {
     private PackageDetails mBasePackage;
     private List<PackageDetails> mTopUps;
     private AllPlansRvAdapter mRvAdapter;
-
+    private Context mContext;
     public PricingDetailsFragment() {
     }
 
@@ -39,6 +40,12 @@ public class PricingDetailsFragment extends Fragment {
         fragment.mBasePackage = basePackage;
         fragment.mTopUps = topUps;
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Override

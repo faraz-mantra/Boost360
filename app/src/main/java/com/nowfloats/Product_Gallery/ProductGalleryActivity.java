@@ -114,7 +114,7 @@ public class ProductGalleryActivity extends AppCompatActivity {
 
     public void hideActionDelete() {
         count = 0;
-        headerText.setText(getResources().getString(R.string.manage_inventory));
+        headerText.setText(getResources().getString(R.string.product_gallery));
         ivDelete.setVisibility(View.GONE);
     }
 }

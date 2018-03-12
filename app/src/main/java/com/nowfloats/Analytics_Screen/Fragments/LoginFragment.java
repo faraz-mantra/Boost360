@@ -397,7 +397,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                     Methods.materialDialog(getActivity(), "Alert", getString(R.string.look_like_no_facebook_page));
                 } else {
                     final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    final MaterialDialog builder = new MaterialDialog.Builder(getActivity())
+                    final MaterialDialog builder = new MaterialDialog.Builder(mContext)
                             .customView(R.layout.dialog_no_facebook_page, false).build();
                     ((Button) builder.getCustomView().findViewById(R.id.create_page))
                             .setOnClickListener(new View.OnClickListener() {

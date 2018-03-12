@@ -31,7 +31,7 @@ import retrofit.client.Response;
  */
 
 public class ThemeSelectorFragment extends Fragment{
-    int[] imageIds = new int[]{R.drawable.theme_dynamic,R.drawable.theme_bnb,R.drawable.theme_fml,R.drawable.theme_ttf};
+    public static final int[] imageIds = new int[]{R.drawable.theme_bnb,R.drawable.theme_fml,R.drawable.theme_ttf};
     String[] themeNames,themeMessages;
     String[] themeIds;
     int pos;
@@ -81,11 +81,8 @@ public class ThemeSelectorFragment extends Fragment{
         if(!isAdded()) return;
         ImageView imageview = (ImageView) view.findViewById(R.id.img_theme);
         setLook = (TextView) view.findViewById(R.id.btn_set_look);
-        if(pos == 0){
-            setLook.setText(TextUtils.isEmpty(currentThemeId)? "Current look":"Set this look");
-        }else {
-            setLook.setText(currentThemeId.equals(themeIds[pos-1])? "Current look":"Set this look");
-        }
+        setLook.setText(currentThemeId.equals(themeIds[pos])? "Current look":"Set this look");
+
         if(setLook.getText().toString().equals("Current look")){
             setCurrentThemeButtonBg();
         }
@@ -98,18 +95,14 @@ public class ThemeSelectorFragment extends Fragment{
                         Toast.makeText(mContext, "Your website already has this look", Toast.LENGTH_SHORT).show();
                 } else {
                     showDialog();
-                    if (pos == 0) {
-                        setDynamicTheme();
-                    } else {
-                        setTheme();
-                    }
+                    setTheme();
                 }
             }
         });
 
         ((TextView)view.findViewById(R.id.tv_theme_name)).setText(themeNames[pos]);
         ((TextView)view.findViewById(R.id.tv_theme_message)).setText(themeMessages[pos]);
-        view.findViewById(R.id.tv_theme_description).setVisibility(pos == 0 ?View.VISIBLE:View.GONE);
+        view.findViewById(R.id.tv_theme_description).setVisibility(View.GONE);
         Glide.with(this).load(imageIds[pos])
                 .apply(new RequestOptions()
                         .placeholder(imageIds[1]))
@@ -123,7 +116,7 @@ public class ThemeSelectorFragment extends Fragment{
     private void setTheme(){
         UserSessionManager sessionManager = new UserSessionManager(getActivity(),getActivity());
         ThemeApis api = Constants.restAdapter.create(ThemeApis.class);
-        api.setTheme(Constants.clientId, sessionManager.getFpTag(), themeIds[pos-1], new Callback<String>() {
+        api.setTheme(Constants.clientId, sessionManager.getFpTag(), themeIds[pos], new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 setCurrentLook(response.getStatus() == 200? s:null);
@@ -147,20 +140,20 @@ public class ThemeSelectorFragment extends Fragment{
             dialog.hide();
         }
     }
-    private void setDynamicTheme(){
-        ThemeApis api = Constants.restAdapter.create(ThemeApis.class);
-        api.setDynamicTheme(Constants.clientId, manager.getFpTag(), new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                setCurrentLook(response.getStatus() == 200? s:null);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                setCurrentLook(null);
-            }
-        });
-    }
+//    private void setDynamicTheme(){
+//        ThemeApis api = Constants.restAdapter.create(ThemeApis.class);
+//        api.setDynamicTheme(Constants.clientId, manager.getFpTag(), new Callback<String>() {
+//            @Override
+//            public void success(String s, Response response) {
+//                setCurrentLook(response.getStatus() == 200? s:null);
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                setCurrentLook(null);
+//            }
+//        });
+//    }
     public void setCurrentLook(String s){
         if(!isAdded()) return;
         if(TextUtils.isEmpty(s)){
@@ -168,7 +161,7 @@ public class ThemeSelectorFragment extends Fragment{
         }else if(s.equals("true")){
             setLook.setText("Current look");
             setCurrentThemeButtonBg();
-            manager.storeFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID,pos == 0? "":themeIds[pos-1]);
+            manager.storeFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID,themeIds[pos]);
             ((SiteAppearanceActivity)mContext).notifyDataSetChanged();
             Toast.makeText(mContext, "Changed theme to "+themeNames[pos], Toast.LENGTH_SHORT).show();
         }else if(s.equals("false")){

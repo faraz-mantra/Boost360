@@ -127,6 +127,10 @@ public interface EventKeysWL
     String EVENT_RATE_US_ON_PLAYSTORE = "RateOnPlayStore";
     String EVENT_ABOUT_US = "AboutUsClicked";
     String EVENT_FAQs = "FaqsClicked";
+    String SIDE_PANEL_KEYBOARD = "BoostKeyboard";
+    String KEYBOARD_SWITCH_CLICKED = "KeyboardSwitchClicked";
+    String STORAGE_SWITCH_CLICKED = "StoragePermissionSwitchClicked";
+    String MICROPHONE_SWITCH_CLICKED = "MicrophonePermissionSwitchClicked";
 
     // PRODUCT_GALLERY_
 

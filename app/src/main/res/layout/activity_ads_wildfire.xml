@@ -17,6 +17,7 @@
     <include
         layout="@layout/layout_empty_img_text_button_screen"
         android:id="@+id/empty_screen"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 </LinearLayout>

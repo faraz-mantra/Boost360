@@ -71,6 +71,7 @@ public class CropImageView extends FrameLayout {
     private int mAspectRatioY = DEFAULT_ASPECT_RATIO_Y;
     private int mImageResource = DEFAULT_IMAGE_RESOURCE;
     private Bitmap croppedBitmap = null;
+    private Context mContext;
 
     // Constructors ////////////////////////////////////////////////////////////
 
@@ -235,8 +236,6 @@ public class CropImageView extends FrameLayout {
 
     /**
      * Returns the integer of the imageResource
-     * 
-     * @param int the image resource id
      */
     public int getImageResource() {
         return mImageResource;
@@ -479,22 +478,24 @@ public class CropImageView extends FrameLayout {
      * @param degrees Integer specifying the number of degrees to rotate.
      */
     public void rotateImage(int degrees) {
-        if (mBitmap!= null){
-            Matrix matrix = new Matrix();
-            matrix.postRotate(degrees);
-            mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
-            setImageBitmap(mBitmap);
 
-            mDegreesRotated += degrees;
-            mDegreesRotated = mDegreesRotated % 360;
+        if (mBitmap == null){
+            Toast.makeText(mContext, "This image has some problem in loading", Toast.LENGTH_SHORT).show();
+            return;
         }
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degrees);
+        mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+        setImageBitmap(mBitmap);
 
+        mDegreesRotated += degrees;
+        mDegreesRotated = mDegreesRotated % 360;
     }
 
     // Private Methods /////////////////////////////////////////////////////////
 
     private void init(Context context) {
-
+        mContext = context;
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View v = inflater.inflate(R.layout.crop_image_view, this, true);
 

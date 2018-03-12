@@ -29,17 +29,14 @@ import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
-import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
-import com.nowfloats.manageinventory.PaymentSettingsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -94,8 +91,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
         String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
-        int[] adapterImages = {R.drawable.ic_manage_business,R.drawable.ic_site_apperance, R.drawable.ic_domain_enad_emails
-        ,R.drawable.ic_payment_setting,R.drawable.ic_your_plan, R.drawable.icon_change_password,R.drawable.icon_logout};
+        int[] adapterImages = {R.drawable.ic_site_apperance, R.drawable.ic_domain_enad_emails,
+                R.drawable.ic_your_plan, R.drawable.icon_change_password,R.drawable.icon_logout};
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
@@ -105,13 +102,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 Intent intent = null;
                 switch(pos){
                     case 0:
-                        intent = new Intent(mContext,FragmentsFactoryActivity.class);
-                        intent.putExtra("fragmentName","Business_Profile_Fragment_V2");
-                        break;
-                    case 1:
                         intent = new Intent(mContext, SiteAppearanceActivity.class);
                         break;
-                    case 2:
+                    case 1:
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
                         if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
@@ -142,16 +135,13 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
-                    case 3:
-                        intent = new Intent(getActivity(), PaymentSettingsActivity.class);
-                        break;
-                    case 4:
+                    case 2:
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         break;
-                    case 5:
+                    case 3:
                         changePassword();
                         return;
-                    case 6:
+                    case 4:
                         logoutAlertDialog_Material();
                         return;
                     default:
@@ -448,8 +438,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(mContext, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                        Intent intent = new Intent(mContext, NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }

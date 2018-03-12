@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
+import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.thinksity.R;
@@ -42,7 +43,7 @@ public class ManageContentFragment extends Fragment{
         if (!isAdded()) return;
 
         String[] adapterTexts = getResources().getStringArray(R.array.manage_content_tab_items);
-        int[] adapterImages = {R.drawable.ic_about,R.drawable.ic_image_gallery, R.drawable.ic_custom_pages};
+        int[] adapterImages = {R.drawable.ic_manage_business,R.drawable.ic_about,R.drawable.ic_image_gallery, R.drawable.ic_custom_pages};
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
@@ -52,12 +53,16 @@ public class ManageContentFragment extends Fragment{
                 Intent intent = null;
                 switch(pos){
                     case 0:
+                        intent = new Intent(mContext,FragmentsFactoryActivity.class);
+                        intent.putExtra("fragmentName","Business_Profile_Fragment_V2");
+                        break;
+                    case 1:
                         ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.update));
                         return;
-                    case 1:
+                    case 2:
                         intent = new Intent(mContext, ImageGalleryActivity.class);
                         break;
-                    case 2:
+                    case 3:
                        intent = new Intent(mContext, CustomPageActivity.class);
                         break;
                     default:
