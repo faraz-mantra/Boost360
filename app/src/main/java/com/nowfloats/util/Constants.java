@@ -90,7 +90,7 @@ public class Constants {
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     public final static String SUGGESTIONS_API_URL = "http://boostapi.withfloats.com";
     public final static String SUGGESTIONS_TEXT_API_URL = "http://boosttest.nowfloatsdev.com";
-    public final static String WA_BASE_URL = "https://webactions.kitsune.tools/WebAction/v1/";
+    public final static String WA_BASE_URL = "https://webactions.kitsune.tools/api/v1/";
     public final static String ANA_CHAT_API_URL = /*"http://chat-dev.nowfloatsdev.com";//*/"https://gateway.api.ana.chat";
     public final static String ANA_BUSINESS_ID = /*"Boost-Web";//*/"boost-agent-chat";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";

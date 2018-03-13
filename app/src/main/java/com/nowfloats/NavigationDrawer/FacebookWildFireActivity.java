@@ -192,7 +192,7 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
         getKeyWordStats(map);
     }
 
-    private void getKeyWordStats(HashMap map){
+    private void getKeyWordStats(HashMap<String, Object> map){
         map.put("start",wildFireList.size());
         stop = true;
         showProgress();

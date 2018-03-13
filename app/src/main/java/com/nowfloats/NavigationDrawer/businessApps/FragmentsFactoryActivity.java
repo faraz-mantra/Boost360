@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.NavigationDrawer.DictateFragment;
+import com.nowfloats.NavigationDrawer.HelpAndSupportFragment;
 import com.nowfloats.NavigationDrawer.WildFireFragment;
 import com.thinksity.R;
 
@@ -56,6 +57,10 @@ public class FragmentsFactoryActivity extends AppCompatActivity {
                 case "Business_Profile_Fragment_V2":
                     headerText.setText(getResources().getString(R.string.business_profile));
                     attachedFragment = new Business_Profile_Fragment_V2();
+                    break;
+                case "HelpAndSupportFragment":
+                    headerText.setText(getResources().getString(R.string.help_and_support));
+                    attachedFragment = new HelpAndSupportFragment();
                     break;
                 default:
                     finish();

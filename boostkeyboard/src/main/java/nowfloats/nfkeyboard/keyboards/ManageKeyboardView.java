@@ -107,6 +107,23 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             shareAdapter = new MainAdapter(mContext, this);
             shareAdapter.setSuggestionModels(models);
             mRecyclerView.setAdapter(shareAdapter);
+//            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//
+//                @Override
+//                public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
+//                    Runnable r = new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                            int totalItemCount = linearLayoutManager.getItemCount();
+//                            int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+//                            if (presenterListener != null)
+//                            presenterListener.onScrollItems(totalItemCount, lastVisibleItem, presenterListener.getTabType());
+//                        }
+//                    };
+//                    r.run();
+//                }
+//            });
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
         }else {

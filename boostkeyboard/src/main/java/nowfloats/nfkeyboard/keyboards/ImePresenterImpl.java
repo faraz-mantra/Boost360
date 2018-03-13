@@ -85,8 +85,30 @@ public class ImePresenterImpl implements ItemClickListener,
     private InputMethodManager mInputMethodManager;
     private PresenterToImeInterface imeListener;
     private AudioManager mAudioManager;
-    private TabType mTabType;
+    private TabType mTabType = TabType.NO_TAB;
     private ShiftType mShiftType = ShiftType.CAPITAL;
+
+    @Override
+    public void onScrollItems(int totalItemCount, int lastVisiblePos, TabType type) {
+        if(lastVisiblePos>=totalItemCount-2){
+            switch (type){
+                case PRODUCTS:
+                    if (productList.size()>= 10){
+
+                    }
+                    break;
+                case UPDATES:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public TabType getTabType() {
+        return mTabType;
+    }
 
     @Override
     public void onSpeechResult(String speech) {
@@ -157,6 +179,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
         MixPanelUtils.getInstance().createUser(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag());
+        mShiftType = ShiftType.CAPITAL;
         switch (attribute.inputType & InputType.TYPE_MASK_CLASS){
             case InputType.TYPE_CLASS_NUMBER:
             case InputType.TYPE_CLASS_DATETIME:
@@ -168,6 +191,8 @@ public class ImePresenterImpl implements ItemClickListener,
                 currentCandidateType = KeyboardUtils.CandidateType.NULL;
                 setKeyboardType(KeyboardUtils.KeyboardType.EMAIL_ADDRESS);
                 break;
+            case InputType.TYPE_TEXT_VARIATION_PASSWORD:
+                mShiftType = ShiftType.NORMAL;
             case InputType.TYPE_CLASS_TEXT:
             default:
                 currentCandidateType = KeyboardUtils.CandidateType.BOOST_SHARE;
@@ -181,7 +206,6 @@ public class ImePresenterImpl implements ItemClickListener,
         updatesList = null;
         productList = null;
         mTabType = TabType.KEYBOARD;
-        mShiftType = ShiftType.CAPITAL;
     }
 
     private void setImeOptions(Resources res, int options) {
@@ -441,12 +465,12 @@ public class ImePresenterImpl implements ItemClickListener,
                             createModelList(TabType.UPDATES) : updatesList);
                 }else{
 
-                    AllSuggestionModel model = new AllSuggestionModel("Login",null);
-                    model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Login);
                     if (updatesList == null){
                         updatesList = new ArrayList<>();
+                    }else {
+                        updatesList.clear();
                     }
-                    updatesList.clear();
+                    AllSuggestionModel model = createSuggestionModel("Login",BaseAdapterManager.SectionTypeEnum.Login);
                     updatesList.add(model);
                     manageKeyboardView.showShareLayout(updatesList);
                 }
@@ -460,12 +484,13 @@ public class ImePresenterImpl implements ItemClickListener,
                     manageKeyboardView.showShareLayout(productList == null ?
                             createModelList(TabType.PRODUCTS) : productList);
                 }else{
-                    AllSuggestionModel model = new AllSuggestionModel("Login",null);
-                    model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Login);
+
                     if (productList == null){
                         productList = new ArrayList<>();
+                    }else {
+                        productList.clear();
                     }
-                    productList.clear();
+                    AllSuggestionModel model = createSuggestionModel("Login",BaseAdapterManager.SectionTypeEnum.Login);
                     productList.add(model);
                     manageKeyboardView.showShareLayout(productList);
                 }
@@ -482,8 +507,7 @@ public class ImePresenterImpl implements ItemClickListener,
     public ArrayList<AllSuggestionModel> createModelList(TabType suggestionType) {
         if(suggestionType == TabType.PRODUCTS) {
             productList = new ArrayList<>();
-            AllSuggestionModel model = new AllSuggestionModel("","");
-            model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.loader);
+            AllSuggestionModel model = createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader);
             productList.add(model);
             NetworkAdapter adapter = new NetworkAdapter();
             SharedPrefUtil boostPref = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext);
@@ -497,8 +521,7 @@ public class ImePresenterImpl implements ItemClickListener,
                                 productList.add(product.toAllSuggestion());
                             }
                         }else{
-                            AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
-                            model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                            AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
                             productList.add(model);
                         }
                         if (mTabType == TabType.PRODUCTS) {
@@ -508,8 +531,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
                     @Override
                     public void onError(Throwable t) {
-                        AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
-                        model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                        AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
                         productList.clear();
                         productList.add(model);
                         if (mTabType == TabType.PRODUCTS) {
@@ -520,8 +542,7 @@ public class ImePresenterImpl implements ItemClickListener,
             return productList;
         } else if(suggestionType == TabType.UPDATES) {
             updatesList = new ArrayList<>();
-            AllSuggestionModel model = new AllSuggestionModel("","");
-            model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.loader);
+            AllSuggestionModel model = createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader);
             updatesList.add(model);
             NetworkAdapter adapter = new NetworkAdapter();
             SharedPrefUtil boostPref = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext);
@@ -535,8 +556,7 @@ public class ImePresenterImpl implements ItemClickListener,
                                     updatesList.add(update.toAllSuggestion());
                                 }
                             }else{
-                                AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
-                                model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                                AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
                                 updatesList.add(model);
                             }
                             if(mTabType == TabType.UPDATES) {
@@ -546,8 +566,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
                         @Override
                         public void onError(Throwable t) {
-                            AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
-                            model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.EmptyList);
+                            AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
                             updatesList.clear();
                             updatesList.add(model);
                             if (mTabType == TabType.UPDATES) {
@@ -560,6 +579,11 @@ public class ImePresenterImpl implements ItemClickListener,
       return null;
     }
 
+    private AllSuggestionModel createSuggestionModel(String text, BaseAdapterManager.SectionTypeEnum type){
+        AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
+        model.setTypeEnum(type);
+        return model;
+    }
     private void sendKeyEvent(int keyEventCode) {
         if (imeListener.getImeCurrentInputConnection() != null) {
             imeListener.getImeCurrentInputConnection().sendKeyEvent(

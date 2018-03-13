@@ -26,6 +26,7 @@ import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.rd.PageIndicatorView;
 import com.thinksity.R;
 
@@ -43,7 +44,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * Created by Admin on 28-12-2017.
  */
 
-public class NewHelpAndSupportFragment extends Fragment {
+public class HelpAndSupportFragment extends Fragment {
     private Context mContext;
     private List<RiaSupportModel> mRiaSupportModelList;
     private ProgressDialog dialog;
@@ -86,6 +87,7 @@ public class NewHelpAndSupportFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded() || isDetached()) return;
+        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK,null);
         mRiaSupportModelList = new ArrayList<>(2);
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
         HashMap<String, String> param = new HashMap<>();
@@ -193,8 +195,8 @@ public class NewHelpAndSupportFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             Bundle b = new Bundle();
-            b.putString(HelpAndSupportCardFragment.RIA_MODEL_DATA,new Gson().toJson(mRiaSupportModelList.get(position)));
-            return HelpAndSupportCardFragment.getInstance(b);
+            b.putString(HelpAndSupportCardItemFragment.RIA_MODEL_DATA,new Gson().toJson(mRiaSupportModelList.get(position)));
+            return HelpAndSupportCardItemFragment.getInstance(b);
         }
 
         @Override

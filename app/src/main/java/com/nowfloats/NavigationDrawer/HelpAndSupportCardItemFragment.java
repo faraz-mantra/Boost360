@@ -21,13 +21,13 @@ import com.thinksity.R;
  * Created by Admin on 28-12-2017.
  */
 
-public class HelpAndSupportCardFragment extends Fragment implements View.OnClickListener {
+public class HelpAndSupportCardItemFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private RiaSupportModel riaSupportModel;
     public static String RIA_MODEL_DATA = "ria_model_data";
     public static Fragment getInstance(Bundle b){
-        HelpAndSupportCardFragment frag = new HelpAndSupportCardFragment();
+        HelpAndSupportCardItemFragment frag = new HelpAndSupportCardItemFragment();
         frag.setArguments(b);
         return frag;
     }
@@ -69,7 +69,7 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
         requestActionBtn.setOnClickListener(this);
 
 
-        switch (NewHelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType())){
+        switch (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType())){
             case CHC:
                 emailTv.setVisibility(View.GONE);
                 view.findViewById(R.id.tv_email).setVisibility(View.GONE);
@@ -101,7 +101,7 @@ public class HelpAndSupportCardFragment extends Fragment implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_call_action:
-                if (NewHelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == NewHelpAndSupportFragment.MemberType.WEB){
+                if (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == HelpAndSupportFragment.MemberType.WEB){
                     ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 }else{
                     Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());

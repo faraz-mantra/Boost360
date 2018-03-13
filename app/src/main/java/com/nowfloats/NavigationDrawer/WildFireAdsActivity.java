@@ -239,7 +239,7 @@ public class WildFireAdsActivity extends AppCompatActivity{
 
         private void showDialog(String mainText){
             final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                    .customView(R.layout.dialog_help_support,true)
+                    .customView(R.layout.dialog_help_support,false)
                     .build();
             View view = dialog.getCustomView();
             if (view == null){
@@ -256,7 +256,11 @@ public class WildFireAdsActivity extends AppCompatActivity{
             view.findViewById(R.id.tv_cta).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(WildFireAdsActivity.this,FragmentsFactoryActivity.class);
+                    intent.putExtra("fragmentName","HelpAndSupportFragment");
+                    startActivity(intent);
+                    dialog.dismiss();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
 
@@ -277,13 +281,7 @@ public class WildFireAdsActivity extends AppCompatActivity{
                 descriptionTv = itemView.findViewById(R.id.tv_channel_leads);
                 nameTv = itemView.findViewById(R.id.tv_channel_title);
                 channelImage = itemView.findViewById(R.id.img_channel);
-//                knowMore = itemView.findViewById(R.id.tv_channel_know_more);
-//                knowMore.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        // show about page
-//                    }
-//                });
+
                 arrowImage = itemView.findViewById(R.id.img_channel_arrow);
             }
         }

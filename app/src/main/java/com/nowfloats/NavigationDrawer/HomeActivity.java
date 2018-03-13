@@ -158,7 +158,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     AccountSettingsFragment accountSettingsFragment;
     Site_Meter_Fragment siteMeterFragment;
     SocialSharingFragment socialSharingFragment;
-    NewHelpAndSupportFragment helpAndSupportFragment;
+    HelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
@@ -1142,7 +1142,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                        call.setData(Uri.parse(callString));
 //                        startActivity(call);
 //                    } else {
-                        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK,null);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
@@ -1493,7 +1493,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
-        helpAndSupportFragment = new NewHelpAndSupportFragment();
+        helpAndSupportFragment = new HelpAndSupportFragment();
 //
 //        new Thread(new Runnable() {
 //            @Override

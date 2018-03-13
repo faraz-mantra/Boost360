@@ -71,7 +71,11 @@ public class WildFireAdAnalyticsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        channelType = GoogleWildFireAdapter.ChannelType.valueOf(getIntent().getStringExtra(TYPE));
+        String type = getIntent().getStringExtra(TYPE);
+        if (TextUtils.isEmpty(type)){
+            finish();
+        }
+        channelType = GoogleWildFireAdapter.ChannelType.valueOf(type);
         String value = getIntent().getStringExtra(VALUE);
         TextView cpcTv = findViewById(R.id.tv_cpc);
         TextView clickTv = findViewById(R.id.tv_clicks);
