@@ -53,7 +53,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2018030007
+        versionCode 2018030014
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -99,7 +99,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.9.2"
+            versionName "4.9.3"
             applicationId "com.biz2.nowfloats"
             dimension "default"
 //            proguardFile 'D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\ap\\proguard-rules.pro'

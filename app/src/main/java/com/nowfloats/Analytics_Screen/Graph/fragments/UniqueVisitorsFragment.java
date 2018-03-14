@@ -199,6 +199,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         leftAxis.setTextColor(Color.argb(0,0,0,0));
         rightAxis.setTextColor(Color.argb(0,0,0,0));
         graph.setDescription("");
+
         graph.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
@@ -266,10 +267,26 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         return Methods.getFormattedDate(getMilliseconds(date),pattern);
     }
     private long getMilliseconds(String date){
+        String[]dateTime = null;
+        long dateMilliseconds = 0;
         if (date.contains("/Date")) {
-            date = date.replace("/Date(", "").replace("+0000)/", "");
+            date = date.replace("/Date(", "").replace(")/","");
         }
-        return Long.valueOf(date);
+
+        if(date.contains("+")) {
+            dateTime = date.split("\\+");
+            if (dateTime[1].length() > 1) {
+                dateMilliseconds += Integer.parseInt(dateTime[1].substring(0, 2)) * 60 * 60 * 1000;
+            }
+            if (dateTime[1].length() > 3) {
+                dateMilliseconds += Integer.parseInt(dateTime[1].substring(2, 4)) * 60 * 1000;
+            }
+            dateMilliseconds += Long.valueOf(dateTime[0]);
+        }else{
+            dateMilliseconds += Long.valueOf(date);
+        }
+
+        return dateMilliseconds;
     }
     private void addDataToGraph( List<IBarDataSet> dataSet){
         BarData data = new BarData(labels, dataSet);
@@ -351,7 +368,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     private void getVisitsData(HashMap<String, String> map, Callback<VisitsModel> callback){
         map.put("clientId", Constants.clientId);
         map.put("scope",manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
-        AnalyticsFetch.FetchDetails visitsApi = Constants.testRestAdapter.create(AnalyticsFetch.FetchDetails.class);
+        AnalyticsFetch.FetchDetails visitsApi = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
         switch (mVisitType){
             case UNIQUE:
                 visitsApi.getUniqueVisits(manager.getFpTag(), map,callback);
