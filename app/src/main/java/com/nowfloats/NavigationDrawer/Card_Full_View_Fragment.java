@@ -209,18 +209,19 @@ public class Card_Full_View_Fragment extends Fragment {
         TextView mainTextView = (TextView) mainView.findViewById(R.id.headingTextView);
         TextView dateTextView = (TextView) mainView.findViewById(R.id.dateTextView);
         TextView messageTag = (TextView) mainView.findViewById(R.id.messagetag);
-        if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
-            }else{
-                ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
-            }
-            return;
-        }
         mainView.findViewById(R.id.shareData).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                        Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
+                    }else{
+                        ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
+                    }
+                    return;
+                }
                 MixPanelController.track("SharePost", null);
                 // final Intent shareIntent = null;
                 final ProgressDialog pd = ProgressDialog.show(appContext, "", "Sharing . . .");

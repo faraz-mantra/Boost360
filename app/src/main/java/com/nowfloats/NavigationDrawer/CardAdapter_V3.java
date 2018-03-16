@@ -176,19 +176,20 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             ImageView shareImageView = holder.shareImageView;
 
             final String imageShare = HomeActivity.StorebizFloats.get(position).imageUri;
-            if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
 
-                if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                    Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
-                }else{
-                    ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
-                }
-                return;
-            }
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     MixPanelController.track("SharePost", null);
+                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                            Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
+                        }else{
+                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
+                        }
+                        return;
+                    }
                     // final Intent shareIntent = null;
                     pd = ProgressDialog.show(appContext, "", "Sharing . . .");
 

@@ -792,6 +792,9 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }
 
         if(active){
+            if(isLinkedDomain){
+                emailDetailsCard.setVisibility(View.GONE);
+            }
             domainMessageTv.setVisibility(View.VISIBLE);
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             emailImg.setColorFilter(ContextCompat.getColor(this, R.color.primary_color));
