@@ -1219,8 +1219,9 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         hashMap.put("existingFPTag", session.getFpTag());
         hashMap.put("domainChannelType", session.getISEnterprise().equals("true") ? "2" : "1");
         hashMap.put("validityInYears","1");
-
         hashMap.put("DomainRegService", "0");
+        hashMap.put("DomainOrderType", "0");
+
         domainApiService.buyDomain(hashMap);
     }
 
