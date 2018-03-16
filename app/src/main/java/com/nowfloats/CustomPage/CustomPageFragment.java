@@ -28,6 +28,7 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -124,10 +125,14 @@ public class CustomPageFragment extends Fragment {
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("AddCustomPage", null);
-                Intent intent = new Intent(activity, CreateCustomPageActivity.class);
-                startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(getContext());
+                }else {
+                    MixPanelController.track("AddCustomPage", null);
+                    Intent intent = new Intent(activity, CreateCustomPageActivity.class);
+                    startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
     }

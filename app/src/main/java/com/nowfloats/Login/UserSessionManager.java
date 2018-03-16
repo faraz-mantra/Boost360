@@ -8,13 +8,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.anachat.chatsdk.AnaCore;
 import com.facebook.login.LoginManager;
-import com.freshdesk.hotline.Hotline;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
-import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
-import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
 import com.nowfloats.Volley.AppController;
@@ -87,6 +85,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_Subcribers_Count = "subcribersCount";
     private String KEY_Search_Count = "SearchQueryCount";
     private String KEY_Enq_Count = "EnquiryCount";
+    private String KEY_Call_Count = "VmnCallCount";
     private String KEY_LATEST_ENQ_COUNT = "LatestEnquiryCount";
     private String KEY_LS = "local_store";
     private String KEY_website = "website_share";
@@ -159,6 +158,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
+    public  void setUserLogin(boolean val){
+        editor.putBoolean(IS_USER_LOGIN, val).apply();
+    }
     public void storeFpWebTempalteType(String type){
         editor.putString(KEY_WEB_TEMPLATE_TYPE, type);
         editor.commit();
@@ -179,10 +181,10 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
     public String getVisitsCount()
     {
-        return pref.getString(KEY_Visit_Count,null);
+        return pref.getString(KEY_Visit_Count,"");
     }public String getVisitorsCount()
     {
-        return pref.getString(KEY_Visitors_Count,null);
+        return pref.getString(KEY_Visitors_Count,"");
     }
 
     public void setSubcribersCount(String cnt)
@@ -195,7 +197,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public String getSubcribersCount()
     {
 
-        return pref.getString(KEY_Subcribers_Count,null);
+        return pref.getString(KEY_Subcribers_Count,"");
     }
 
     public void setSearchCount(String cnt)
@@ -205,7 +207,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
     public String getSearchCount()
     {
-        return pref.getString(KEY_Search_Count,null);
+        return pref.getString(KEY_Search_Count,"");
     }
 
     public void setEnquiryCount(String count){
@@ -214,7 +216,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     public String getEnquiryCount(){
-        return pref.getString(KEY_Enq_Count,null);
+        return pref.getString(KEY_Enq_Count,"");
+    }
+ public void setVmnCallsCount(String count){
+        editor.putString(KEY_Call_Count , count);
+        editor.commit();
+    }
+
+    public String getVmnCallsCount(){
+        return pref.getString(KEY_Call_Count,"");
     }
 
     public void setLatestEnqCount(String count){
@@ -729,6 +739,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 String isEnterprise = cursor.getString(8);
                 if (LoginStatus.equals("true")){
                     isLogin = true;
+
                     storeFPID(fpid);
                     storePageAccessToken(facebookpageToken);
                     storeIsRestricted(isRestricted);
@@ -749,6 +760,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
             }
         }
+        setUserLogin(isLogin);
         return isLogin;
     }
 
@@ -828,46 +840,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         unsubscribeRIA(getFPID(), activity);
 
 
-
-//        AppController.getInstance().clearApplicationData();
-//
-//        Date DATE = new Date(System.currentTimeMillis());
-//        String dateString = DATE.toString();
-//
-//        MixPanelController.setProperties("LastLogoutDate", dateString);
-//
-//        // After logout redirect user to Login Activity
-//
-//        Constants.clearStore();
-//        Constants.StorebizQueries 		= new ArrayList<>();
-//        Constants.storeSecondaryImages = null ;
-//        Constants.StoreUserSearch		= new DataMap();
-//        Constants.StorebizEnterpriseQueries 		= new ArrayList<Entity_model>();
-//        Constants.StorePackageIds = new ArrayList<>();
-//        Constants.widgets	=	new HashSet<String>();
-//        Constants.StoreWidgets = new ArrayList<>();
-//
-//        Constants.ImageGalleryWidget = false ;
-//        Constants.BusinessTimingsWidget = false ;
-//        Constants.BusinessEnquiryWidget = false ;
-//        HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
-//        Analytics_Fragment.subscriberCount.setText("0");
-//        Analytics_Fragment.visitCount.setText("0");
-//        Constants.visitorsCount = "0" ;
-//        Constants.subscribersCount = "0";
-//        System.gc();
-//
-//        Intent i = new Intent(_context, Login_MainActivity.class);
-//        // Closing all the Activities
-//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//        // Add new Flag to start new Activity
-//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//        // Staring Login Activity
-//        _context.startActivity(i);
-//
-//        activity.finish();
     }
 
     public void unsubscribeRIA(String fpID, final Activity activity)
@@ -875,11 +847,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         final ProgressDialog pd ;
         pd = ProgressDialog.show(activity, "", activity.getString(R.string.logging_out));
         pd.setCancelable(false);
-
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
         params.put("fpId",fpID);
-        WebEngage.get().user().logout();
         Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
         api_login_request.logoutUnsubcribeRIA(params,new Callback<String>() {
             @Override
@@ -887,6 +857,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if(pd.isShowing())
                 pd.dismiss();
+                WebEngage.get().user().logout();
+                setUserLogin(false);
+                AnaCore.logoutUser(activity);
                 DataBase db = new DataBase(activity);
                 DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
                 db.deleteLoginStatus();
@@ -920,15 +893,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Constants.BusinessEnquiryWidget = false ;
                 HomeActivity.StorebizFloats.clear();
                 HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
-                ChatFragment.chatModels = new ArrayList<ChatModel>();
                 LoginManager.getInstance().logOut();
                 //Analytics_Fragment.subscriberCount.setText("0");
                 //Analytics_Fragment.visitCount.setText("0");
                 _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 //Mobihelp.clearUserData(activity.getApplicationContext());
-                if(Hotline.getInstance(activity)!=null) {
-                    Hotline.clearUserData(activity);
-                }
+
                 MixPanelController.track("LogoutSuccess", null);
                 //activity.finish();
                 Intent i = new Intent(activity, SplashScreen_Activity.class);

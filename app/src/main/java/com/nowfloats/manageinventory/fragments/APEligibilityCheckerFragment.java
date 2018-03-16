@@ -1,8 +1,13 @@
 package com.nowfloats.manageinventory.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,13 +29,12 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.manageinventory.models.APIResponseModel;
 import com.nowfloats.manageinventory.models.CountModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.thinksity.BuildConfig;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.io.IOException;
@@ -51,6 +56,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
     private UserSessionManager mSession;
     private boolean mShouldEnableAP = true;
     private EligibilityCheckCallBack mEligibilityCheckCallBack;
+    private Context mContext;
 
 
     @Override
@@ -114,6 +120,12 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
         }else {
             throw new RuntimeException("Implement EligibilityCheckCallBack");
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Override
@@ -354,8 +366,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 break;
             case R.id.ll_subscription_status:
 
-                Intent ppActivity = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                Intent ppActivity = new Intent(getActivity(),NewPricingPlansActivity.class);
                 startActivity(ppActivity);
                 break;
             case R.id.ll_custom_domain:
@@ -364,8 +375,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 startActivity(siteMeterFragment);
                 break;
             case R.id.ll_site_appearance:
-                Intent saActivity = new Intent(getActivity(), SiteAppearanceActivity.class);
-                startActivity(saActivity);
+                showDialog("SiteAppearance","Your website look must be changed to 'Fresh Milk Lite'","Take Me There");
                 break;
             case R.id.ll_shipping_metrics:
                 Intent productGallery = new Intent(getActivity(), ProductGalleryActivity.class);
@@ -377,7 +387,27 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 fragment.show(getActivity().getFragmentManager(), "PaymentInfoEntryFragment");
         }
     }
+    private void showDialog(String headText, String message, final String actionButton) {
+        AlertDialog dialog = null;
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage(Methods.fromHtml(message));
+        builder.setTitle(headText);
+        builder.setPositiveButton(actionButton, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+                Intent saActivity = new Intent(getActivity(), SiteAppearanceActivity.class);
+                startActivity(saActivity);
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.show();
+        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        Typeface face = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Light.ttf");
+        textView.setTypeface(face);
+        textView.setTextColor(Color.parseColor("#808080"));
+
+    }
     public interface EligibilityCheckCallBack{
          void onEligibiltyChecked(boolean isEligible);
     }

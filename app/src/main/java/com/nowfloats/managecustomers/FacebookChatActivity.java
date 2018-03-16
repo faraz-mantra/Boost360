@@ -89,6 +89,8 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         frameLayout  = (FrameLayout) findViewById(R.id.fragment_layout);
         chatLayout = (LinearLayout) findViewById(R.id.chat_user_layout);
         title = (TextView) findViewById(R.id.tv_chat_user);
+        Typeface robotoMedium= Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        title.setTypeface(robotoMedium);
         findViewById(R.id.facebook_icon).setVisibility(View.VISIBLE);
         description = (TextView) findViewById(R.id.tv_chat_user_description);
         Typeface face= Typeface.createFromAsset(getAssets(), "Roboto-LightItalic.ttf");
@@ -187,7 +189,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                 if(listSwipeLayout.isRefreshing()) {
                     listSwipeLayout.setRefreshing(false);
                 }
-                if(facebookChatUsersModel == null || response.getStatus() != 200){
+                if(facebookChatUsersModel == null || (response.getStatus() < 200 && response.getStatus()>=300)){
                     Methods.showSnackBarNegative(FacebookChatActivity.this,getString(R.string.something_went_wrong_try_again));
                     showEmptyMessages(NO_MESSAGES);
                     return;

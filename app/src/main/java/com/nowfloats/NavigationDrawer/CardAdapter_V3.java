@@ -167,14 +167,6 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 }
             });
         } else {
-            String mainFpUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-            if (!Util.isNullOrEmpty(mainFpUrl)) {
-                mainFpUrl = mainFpUrl.toLowerCase();
-            }else{
-                mainFpUrl = "http://"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                        + appContext.getResources().getString(R.string.tag_for_partners);
-            }
-            final String finalFpUrl = mainFpUrl;
             final TextView textView1 = holder.textView ;
             TextView dateText = holder.dateText ;
             ImageView imageView = holder.imageView;
@@ -189,6 +181,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     pd = ProgressDialog.show(appContext, "", "Sharing . . .");
 
                     final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
                         if (Methods.isOnline(appContext)) {
                             String url;
@@ -197,7 +190,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                             } else {
                                 url = imageShare;
                             }
-                           Target target = new Target(){
+                            Target target = new Target(){
 
 
                                 @Override
@@ -212,10 +205,9 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                         BoostLog.d("Path is:", path);
                                         Uri uri = Uri.parse(path);
                                         shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                                finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
+                                                HomeActivity.StorebizFloats.get(position).url);
                                         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                                         shareIntent.setType("image/*");
-                                        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                                             appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
@@ -258,7 +250,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         pd.dismiss();
                         shareIntent.setType("text/plain");
                         shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
+                                HomeActivity.StorebizFloats.get(position).url);
                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                             appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                         } else {
@@ -347,7 +339,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     intent.setType(type);
                     intent.putExtra(Intent.EXTRA_TEXT, subject);
                     if(uri != null)
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 
                     intent.setPackage(packageName);
                     targetShareIntents.add(intent);
@@ -407,7 +399,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         }
 
     }
-        @Override
+    @Override
     public int getItemViewType(int position) {
         if(Constants.isWelcomScreenToBeShown) {
             return VIEW_TYPE_WELCOME;

@@ -77,6 +77,7 @@ public class Home_Main_Fragment extends Fragment implements
     static View.OnClickListener myOnClickListener;
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
+    private int maxSyncCall = 2;
 
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
@@ -376,7 +377,7 @@ public class Home_Main_Fragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    mCallback.onRenewPlanSelected();
+                   Methods.showFeatureNotAvailDialog(getContext());
                 }
                 else {
                     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
@@ -394,8 +395,6 @@ public class Home_Main_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BoostLog.d("Home_Main_Fragment","onViewCreated");
-        
-
     }
 
     private void startSync() {
@@ -422,9 +421,21 @@ public class Home_Main_Fragment extends Fragment implements
             recyclerView.setAdapter(cAdapter);
             Constants.createMsg = false;
         }
-
-        List<Updates> updates = mDbController.getAllUpdates(skip);
-        if(updates.isEmpty()){
+        List<Updates> updates = null;
+        try {
+            updates = mDbController.getAllUpdates(skip);
+        }catch (Exception e){
+            MixPanelController.track(MixPanelController.UPDATE_DB_CRASH,null);
+            mPref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED,false).apply();
+            mDbController.deleteDataBase();
+            startSync();
+            return true;
+        }
+        if(updates == null || updates.isEmpty()){
+            if (skip == 0 && maxSyncCall>0){
+                maxSyncCall--;
+                startSync();
+            }
             return false;
         }
         if(emptyMsgLayout.getVisibility()==View.VISIBLE){

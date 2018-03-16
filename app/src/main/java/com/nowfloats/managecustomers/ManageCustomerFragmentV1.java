@@ -31,7 +31,6 @@ import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Analytics_Screen.VmnNumberRequestActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -44,6 +43,8 @@ import com.thinksity.R;
 
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
+
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,7 +64,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     private static final int CI_WEBSITE = 0, FB_CHATS = 1,
             MULTI_CHANNEL_CUSTOMERS = 2;
 
-    private int customerList[] = {CI_WEBSITE, FB_CHATS, MULTI_CHANNEL_CUSTOMERS};
+    private int customerList[] = {CI_WEBSITE, MULTI_CHANNEL_CUSTOMERS};
 
     private Bus bus;
 
@@ -136,14 +137,8 @@ public class ManageCustomerFragmentV1 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText(getResources().getString(R.string.manage_customers));
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        HomeActivity.headerText.setText(Constants.StoreName);
+        if (headerText != null)
+            headerText.setText(getResources().getString(R.string.manage_customers));
     }
 
     private class ManageCustomerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -103,7 +103,6 @@
                 android:id="@+id/btn_add_products"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_plus"
                 android:background="@drawable/black_round_corner"
                 android:textColor="@color/white"
                 android:padding="8dp"
@@ -117,13 +116,11 @@
                 android:id="@+id/btn_add_updates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_plus"
                 android:background="@drawable/black_round_corner"
                 android:textColor="@color/white"
                 android:padding="8dp"
                 android:drawablePadding="10dp"
                 android:textStyle="bold"
-
                 android:textSize="12sp"
                 android:gravity="center"
                 android:text="UPDATES"/>

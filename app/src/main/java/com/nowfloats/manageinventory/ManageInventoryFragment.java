@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
@@ -38,6 +37,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -209,14 +210,8 @@ public class ManageInventoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText(getResources().getString(R.string.manage_inventory));
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        HomeActivity.headerText.setText(Constants.StoreName);
+        if (headerText != null)
+            headerText.setText(getResources().getString(R.string.manage_inventory));
     }
 
 }

@@ -75,7 +75,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
                             }
                         });
 
-                final MaterialDialog materialDialog = builder.show();
+               builder.show();
 
             }
         });
@@ -112,7 +112,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
     public void hideActionDelete() {
         count = 0;
-        headerText.setText(getResources().getString(R.string.photo_gallery));
+        headerText.setText(getResources().getString(R.string.image_gallery));
         ivDelete.setVisibility(View.GONE);
     }
 }

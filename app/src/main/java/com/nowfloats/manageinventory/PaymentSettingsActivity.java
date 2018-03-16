@@ -39,7 +39,9 @@ import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.io.IOException;
@@ -82,7 +84,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_settings);
-
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Payment Settings");
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
@@ -94,7 +96,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         rgPaymentMethod = (RadioGroup) findViewById(R.id.rg_payment_method);
         rgDeliveryType = (RadioGroup) findViewById(R.id.rg_delivery_mode);
 
-        tvName = (TextView) findViewById(R.id.tv_name);
+        tvName = (TextView) findViewById(R.id.tv_person_name);
         tvBankName = (TextView) findViewById(R.id.tv_bank_name);
         tvAccNum = (TextView) findViewById(R.id.tv_acc_num);
         tvIfsc = (TextView) findViewById(R.id.tv_ifsc);

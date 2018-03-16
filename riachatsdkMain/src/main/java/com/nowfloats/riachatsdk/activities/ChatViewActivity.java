@@ -1,6 +1,7 @@
 package com.nowfloats.riachatsdk.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -66,6 +67,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -157,7 +159,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private Button mCurrButton, mDefaultButton;
 
-    private List<RiaCardModel> mAllNodes = null;
+    private List<RiaCardModel> mAllNodes = new ArrayList<>(0);
 
     private Map<String, String> mDataMap = new HashMap<>();
 
@@ -279,7 +281,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             chatType = (ChatManager.ChatType) getIntent().getExtras().get(Constants.CHAT_TYPE);
             pref = getSharedPreferences(NF_PREF_NAME, Context.MODE_PRIVATE);
         }
-
+        if (chatType == null) finish();
         switch (chatType) {
             case CREATE_WEBSITE:
                 setContentView(R.layout.activity_chat_view);
@@ -1019,8 +1021,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
             Glide.with(ChatViewActivity.this)
                     .load(getParsedPrefixPostfixText(url))
+                    .apply(new RequestOptions()
                     .fitCenter()
-                    .placeholder(R.drawable.site_sc_default)
+                    .placeholder(R.drawable.site_sc_default))
                     .into(ivContent);
         } else {
 
@@ -1226,7 +1229,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mHandler.removeCallbacksAndMessages(null);
 
         Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("nowfloats://com.biz2.nowfloats.riasdk.skip/riachat"));
+                Uri.parse("com.biz2.nowfloats://com.riasdk.login/riachat"));
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setAction(Intent.ACTION_VIEW);
 
@@ -2308,8 +2311,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
          *
          * @param handler
          */
+        @SuppressLint("RestrictedApi")
         public FileUploadResultReceiver(Handler handler) {
             super(handler);
+
         }
 
         @Override

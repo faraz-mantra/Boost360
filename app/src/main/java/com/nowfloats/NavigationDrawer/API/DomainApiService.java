@@ -59,40 +59,6 @@ public class DomainApiService {
     }
 
     public void getDomainDetails(final Context context, String fpTag, HashMap<String, String> data) {
-        /*new Handler().postDelayed(new Runnable() {
-                                      @Override
-                                      public void run() {
-            DomainDetails domainDetails = null;
-            try {
-                InputStream is = context.getResources().getAssets().open("domain.json");
-                Writer writer = new StringWriter();
-                char[] buffer = new char[1024];
-                try {
-                    Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                    int n;
-                    while ((n = reader.read(buffer)) != -1) {
-                        writer.write(buffer, 0, n);
-                    }
-                } finally {
-                    is.close();
-                }
-
-                String jsonString = writer.toString();
-                domainDetails = new Gson().fromJson(jsonString,DomainDetails.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }finally {
-
-                        if (domainDetails != null) {
-                            domainDetails.response = true;
-                        } else {
-                            domainDetails = new DomainDetails();
-                            domainDetails.response = false;
-                        }
-                        mBus.post(domainDetails);
-                }
-            }
-        },1000);*/
 
         DomainInterface domainInterface = Constants.pluginRestAdapter.create(DomainInterface.class);
         domainInterface.getDomainDetailsForFloatingPoint(fpTag, data, new Callback<DomainDetails>() {

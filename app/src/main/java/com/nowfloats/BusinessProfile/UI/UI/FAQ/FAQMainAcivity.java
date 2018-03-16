@@ -23,7 +23,6 @@ public class FAQMainAcivity extends AppCompatActivity {
     private String[] main_lv_faq_values;
 
     private ArrayAdapter<String> adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

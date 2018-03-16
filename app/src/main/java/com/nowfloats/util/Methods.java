@@ -7,6 +7,7 @@ import android.app.AppOpsManager;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -45,10 +46,8 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.io.ByteArrayOutputStream;
@@ -206,6 +205,17 @@ public class Methods {
         return false;
     }
 
+    public static void showDialog(Context mContext, String title, String msg){
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
     public static boolean isMyActivityAtTop(Context mContext){
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
@@ -263,12 +273,6 @@ public class Methods {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
         snackBar.show();
-        /*SnackbarManager.show(
-                Snackbar.with(context) // context
-                        .text(msg) // text to be displayed
-                        .textColor(Color.WHITE) // change the text color
-                        .color(Color.parseColor("#E02200")) // change the background color
-                ,context); // activity where it is displayed*/
     }
 
     public static void showFeatureNotAvailDialog(final Context context){
@@ -289,8 +293,7 @@ public class Methods {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        context.startActivity(new Intent(context, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                                ?NewPricingPlansActivity.class: PricingPlansActivity.class));
+                        context.startActivity(new Intent(context,NewPricingPlansActivity.class));
                     }
                 }).show();
     }
@@ -298,24 +301,12 @@ public class Methods {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(mView, msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
         snackBar.show();
-        /*SnackbarManager.show(
-                Snackbar.with(context) // context
-                        .text(msg) // text to be displayed
-                        .textColor(Color.WHITE) // change the text color
-                        .color(Color.parseColor("#E02200")) // change the background color
-                ,context); // activity where it is displayed*/
     }
 
     public static void snackbarNoInternet(Activity context) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
         snackBar.show();
-        /*SnackbarManager.show(
-                Snackbar.with(context) // context
-                        .text(context.getString(R.string.noInternet)) // text to be displayed
-                        .textColor(Color.WHITE) // change the text color
-                        .color(Color.parseColor("#E02200")) // change the background color
-                ,context); // activity where it is displayed*/
     }
 
     public static void setListViewHeightBasedOnChildren(ExpandableListView listView) {
@@ -487,13 +478,13 @@ public class Methods {
         }
     }
 
-    public static boolean compareDate(Date one, Date cur_date) {
+    public static boolean compareDate(Date next, Date prev) {
         try {
 //            Date purchaseDate = dateFormatDefault.parse(one);
 //            Date expiryDate = dateFormatDefault.parse(two);
 
-            if (one.after(cur_date)) return true;
-            else if (one.equals(cur_date)) return true;
+            if (next.after(prev)) return true;
+            else if (next.equals(prev)) return true;
             else return false;
 
         } catch (Exception e) {
@@ -600,7 +591,7 @@ public class Methods {
         return formatted;
     }
 
-    public static byte[] compressTobyte(String path, Activity act) {
+    public static byte[] compressToByte(String path, Activity act) {
         File img = new File(path);
         File f = new File(img.getAbsolutePath() + File.separator);
         try {
@@ -730,13 +721,16 @@ public class Methods {
         }
 
     }
-    public static void sendEmail( Context context, String email){
-        try {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" + email));
-            context.startActivity(Intent.createChooser(shareIntent,"Email by:"));
-        }catch(Exception e){
+    public static void sendEmail( Context context, String[] email){
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, email);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        }else {
             Toast.makeText(context, "Unable to send email", Toast.LENGTH_SHORT).show();
         }
+
 
     }
     public static String getFormattedDate(long milliseconds) {

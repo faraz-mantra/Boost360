@@ -72,7 +72,7 @@ public class ProductGalleryActivity extends AppCompatActivity {
                             }
                         });
 
-                final MaterialDialog materialDialog = builder.show();
+               builder.show();
             }
         });
 

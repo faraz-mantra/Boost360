@@ -107,7 +107,7 @@ public class Fetch_Home_Data {
             interfaceInvoke = true;
             ArrayList<FloatsMessageModel> bizData 	= response.floats;
             Constants.moreStorebizFloatsAvailable 	= response.moreFloatsAvailable;
-            if(bizData.size() > 0 ) {
+            if(bizData != null && bizData.size() > 0 ) {
                 sendJson = bizData.get(0);
                 Constants.NumberOfUpdates = HomeActivity.StorebizFloats.size() ;
                 MixPanelController.setProperties("NoOfUpdates", "" + Constants.NumberOfUpdates);

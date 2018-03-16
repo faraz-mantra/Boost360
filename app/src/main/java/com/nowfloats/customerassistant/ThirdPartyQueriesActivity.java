@@ -111,6 +111,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
         progressBar = new ProgressDialog(this);
         progressBar.setMessage(getString(R.string.please_wait));
+        progressBar.setCanceledOnTouchOutside(false);
         progressBar.setIndeterminate(true);
 
         rvList.setHasFixedSize(true);
@@ -432,9 +433,6 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         {
                 popup.showAsDropDown(image,0,10);
         }
-
-
-
     }
 
     @Override

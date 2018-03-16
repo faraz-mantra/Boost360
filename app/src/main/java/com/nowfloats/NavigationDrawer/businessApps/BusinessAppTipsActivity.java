@@ -3,7 +3,6 @@ package com.nowfloats.NavigationDrawer.businessApps;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
-import com.nowfloats.Image_Gallery.Image_Gallery_Fragment;
+import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.thinksity.R;
@@ -88,15 +87,8 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
             case 2:
                 list.setVisibility(View.GONE);
                 parentLayout.setVisibility(View.VISIBLE);
-                FragmentManager manager= getSupportFragmentManager();
-                Fragment imageGallery = manager.findFragmentByTag("imagegallery");
-                if(imageGallery == null){
-                    imageGallery = new Image_Gallery_Fragment();
-                }
-                setTitle(getString(R.string.side_panel_row_four));
-                manager.beginTransaction()
-                        .add(R.id.parent_layout,imageGallery,"imagegallery").addToBackStack(null).setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left).commit();
-                return;
+                intent = new Intent(BusinessAppTipsActivity.this, ImageGalleryActivity.class);
+                break;
             case 3:
                 intent = new Intent(BusinessAppTipsActivity.this, Contact_Info_Activity.class);
                 break;

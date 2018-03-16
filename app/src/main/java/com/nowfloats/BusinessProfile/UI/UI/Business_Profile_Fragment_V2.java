@@ -16,11 +16,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -33,13 +30,11 @@ import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -105,10 +100,10 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         final LinearLayout profileLayout = (LinearLayout) mainView.findViewById(R.id.business_profile_layout);
         profileLayout.setVisibility(View.INVISIBLE);
         progressLayout.setVisibility(View.VISIBLE);
-        if (HomeActivity.shareButton != null) {
-            HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
-            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
-        }
+//        if (shareButton != null) {
+//            shareButton.setImageResource(R.drawable.share_with_apps);
+//            shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+//        }
 
         new Thread(new Runnable() {
             @Override
@@ -128,27 +123,28 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
                             websiteTextView.setTypeface(robotoMedium);
                             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                            HomeActivity.shareButton.setVisibility(View.VISIBLE);
-                            HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
-
-                                @Override
-                                public void onClick(View v) {
-                                    String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                                    if (!Util.isNullOrEmpty(url)) {
-                                        String eol = System.getProperty("line.separator");
-                                        url = getResources().getString(R.string.visit_to_new_website)
-                                                + eol + url.toLowerCase();
-                                    } else {
-                                        String eol = System.getProperty("line.separator");
-                                        url = getResources().getString(R.string.visit_to_new_website)
-                                                + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                                                + activity.getResources().getString(R.string.tag_for_partners);
-                                    }
-
-                                    shareWebsite(url);
-                                }
-                            });
-
+//                            if (shareButton != null) {
+//                                shareButton.setVisibility(View.VISIBLE);
+//                                shareButton.setOnClickListener(new View.OnClickListener() {
+//
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+//                                        if (!Util.isNullOrEmpty(url)) {
+//                                            String eol = System.getProperty("line.separator");
+//                                            url = getResources().getString(R.string.visit_to_new_website)
+//                                                    + eol + url.toLowerCase();
+//                                        } else {
+//                                            String eol = System.getProperty("line.separator");
+//                                            url = getResources().getString(R.string.visit_to_new_website)
+//                                                    + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+//                                                    + activity.getResources().getString(R.string.tag_for_partners);
+//                                        }
+//
+//                                        shareWebsite(url);
+//                                    }
+//                                });
+//                            }
                             businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
                             //if (Constants.IMAGEURIUPLOADED == false) {
                             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
@@ -185,15 +181,22 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
 
                             TextView editTextView = (TextView) mainView.findViewById(R.id.tv_edit_profile);
-                            editTextView.setOnClickListener(new View.OnClickListener() {
+//                            editTextView.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
+//                                    startActivity(businessAddress);
+//                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                }
+//                            });
+                            mainView.findViewById(R.id.cv_edit_profile).setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View v) {
+                                public void onClick(View view) {
                                     Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
                                     startActivity(businessAddress);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
                             });
-
 
                             View businessProfileList = mainView.findViewById(R.id.businessProfile_List_ProfileV2);
 
@@ -350,31 +353,8 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                         Intent businessHoursIntent = new Intent(activity, BusinessHoursActivity.class);
                                         startActivity(businessHoursIntent);
                                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    } else {
-                                        new MaterialDialog.Builder(activity)
-                                                .title(getResources().getString(R.string.features_not_available))
-                                                .content(getResources().getString(R.string.check_store_for_upgrade_info))
-                                                .positiveText(getResources().getString(R.string.goto_store))
-                                                .negativeText(getResources().getString(R.string.cancel))
-                                                .positiveColorRes(R.color.primaryColor)
-                                                .negativeColorRes(R.color.light_gray)
-                                                .callback(new MaterialDialog.ButtonCallback() {
-                                                    @Override
-                                                    public void onNegative(MaterialDialog dialog) {
-                                                        super.onNegative(dialog);
-                                                        dialog.dismiss();
-                                                    }
-
-                                                    @Override
-                                                    public void onPositive(MaterialDialog dialog) {
-                                                        super.onPositive(dialog);
-//                                                    Constants.showStoreScreen = true ;
-                                                        Home_Fragment_Tab.viewPager = null;
-                                                        dialog.dismiss();
-//                                                    activity.getSupportFragmentManager().popBackStack();
-                                                        ((SidePanelFragment.OnItemClickListener) activity).onClick(getResources().getString(R.string.store));
-                                                    }
-                                                }).show();
+                                    } else  if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                                        Methods.showFeatureNotAvailDialog(getContext());
                                     }
                                 }
                             });
@@ -451,7 +431,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
     private void showLoader(final String message) {
 
-        if (!isAdded()) return;
+        if (getActivity() == null) return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -467,7 +447,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     }
 
     private void hideLoader() {
-
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -609,97 +589,6 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         DEFAULT
     }
 
-    private void chooseDomain() {
-
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-//                .title(getString(R.string.link_a_domain_nf))
-                .customView(R.layout.dialog_choose_domain, false)
-                .positiveColorRes(R.color.primaryColor);
-
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            final MaterialDialog materialDialog = builder.show();
-
-            materialDialog.getCustomView().findViewById(R.id.btnBookDomain)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            materialDialog.dismiss();
-                            showLoader(getString(R.string.please_wait));
-                            domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
-                        }
-                    });
-            materialDialog.getCustomView().findViewById(R.id.btnLinkDomain)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            materialDialog.dismiss();
-                            linkDomain();
-                        }
-                    });
-
-            View maView = materialDialog.getCustomView();
-            TextView tvDomainConfig = (TextView) maView.findViewById(R.id.tvDomainConfig);
-            tvDomainConfig.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Methods.showSnackBarPositive(getActivity(), getString(R.string.domain_book_nowfloats_package));
-                }
-            });
-        }
-
-
-    }
-    private void linkDomain() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-                //.title(getString(R.string.have_an_existing_domain))
-                .customView(R.layout.dialog_link_domain, false)
-                .positiveColorRes(R.color.primaryColor);
-
-        final MaterialDialog materialDialog = builder.show();
-        View maView = materialDialog.getCustomView();
-        final RadioButton rbPointExisting = (RadioButton) maView.findViewById(R.id.rbPointExisting);
-        final RadioButton rbPointNFWeb = (RadioButton) maView.findViewById(R.id.rbPointNFWeb);
-        final EditText edtComments = (EditText) maView.findViewById(R.id.edtComments);
-        Button btnBack = (Button) maView.findViewById(R.id.btnBack);
-        Button btnSubmitRequest = (Button) maView.findViewById(R.id.btnSubmitRequest);
-        edtComments.setText(String.format(getString(R.string.link_comments), session.getFpTag()));
-        edtComments.setSelection(edtComments.getText().toString().length());
-        btnSubmitRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String subject = "";
-                if (rbPointNFWeb.isChecked()) {
-                    subject = rbPointNFWeb.getText().toString();
-                } else if (rbPointExisting.isChecked()) {
-                    subject = rbPointExisting.getText().toString();
-                }
-
-                if (TextUtils.isEmpty(subject)) {
-                    Methods.showSnackBarNegative(getActivity(),
-                            getString(R.string.please_select_subject));
-                } else if (TextUtils.isEmpty(edtComments.getText().toString())) {
-                    Methods.showSnackBarNegative(getActivity(),
-                            getString(R.string.please_enter_message));
-                } else {
-
-                    MixPanelController.track(MixPanelController.LINK_DOMAIN, null);
-                    materialDialog.dismiss();
-                    HashMap<String, String> hashMap = new HashMap<String, String>();
-                    hashMap.put("Subject", subject);
-                    hashMap.put("Mesg", edtComments.getText().toString());
-                    domainApiService.linkDomain(hashMap, getLinkDomainParam());
-                }
-            }
-        });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                materialDialog.dismiss();
-            }
-        });
-
-    }
     private HashMap<String, String> getLinkDomainParam() {
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("authClientId", Constants.clientId);
@@ -754,8 +643,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                        Intent intent = new Intent(activity, NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }
@@ -837,7 +725,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText != null)
+        if (activity instanceof HomeActivity && HomeActivity.headerText != null)
             HomeActivity.headerText.setText(getResources().getString(R.string.manage_website));
         if (websiteTextView != null)
             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -853,8 +741,6 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     @Override
     public void onDetach() {
         super.onDetach();
-        if(HomeActivity.headerText != null)
-         HomeActivity.headerText.setText(Constants.StoreName);
     }
 
 

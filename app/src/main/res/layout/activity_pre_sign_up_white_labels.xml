@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
+        android:layout_marginTop="1dp"
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_30"
         android:paddingLeft="@dimen/margin_50"

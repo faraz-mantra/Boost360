@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -87,7 +88,7 @@ public class BoostContentProvider extends ContentProvider {
         }else{
             dbName = "BoostDefault.db";
         }*/
-        boostDatabaseHelper = new BoostDatabaseOpenHelper(context, dbName, null, 2);
+        boostDatabaseHelper = new BoostDatabaseOpenHelper(context, dbName, null, 3);
         return true;
     }
 
@@ -274,7 +275,7 @@ public class BoostContentProvider extends ContentProvider {
     }
 
 
-    protected static final class BoostDatabaseOpenHelper extends SQLiteOpenHelper {
+    protected final class BoostDatabaseOpenHelper extends SQLiteOpenHelper {
 
         public BoostDatabaseOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
@@ -282,34 +283,41 @@ public class BoostContentProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DbConstants.Iupdates.CREATE_UPDATES_TABLE);
-            db.execSQL(DbConstants.Ialerts.CREATE_ALERT_TABLE);
-            db.execSQL(DbConstants.Ialerts.IalertData.CREATE_ALERT_DATA_TABLE);
-            db.execSQL(DbConstants.IproductGallery.CREATE_PRODUCT_GALLERY_TABLE);
-            db.execSQL(DbConstants.IphotoGallery.CREATE_PHOTO_GALLERY_TABLE);
-            db.execSQL(DbConstants.IcustomPages.CREATE_CUSTOM_PAGES_TABLE);
-            db.execSQL(DbConstants.Isearch_queries.CREATE_SEARCH_QUERIES_TABLE);
-            db.execSQL(DbConstants.IstoreActivePlans.CREATE_ACTIVE_PLANS_TABLE);
-            db.execSQL(DbConstants.IstoreImages.CREATE_STORE_IMAGES_TABLE);
-            db.execSQL(DbConstants.IsamBubble.CREATE_SAM_BUBBLE_TABLE);
+            try{
+                db.execSQL(DbConstants.Iupdates.CREATE_UPDATES_TABLE);
+                db.execSQL(DbConstants.Ialerts.CREATE_ALERT_TABLE);
+                db.execSQL(DbConstants.Ialerts.IalertData.CREATE_ALERT_DATA_TABLE);
+                db.execSQL(DbConstants.IproductGallery.CREATE_PRODUCT_GALLERY_TABLE);
+                db.execSQL(DbConstants.IphotoGallery.CREATE_PHOTO_GALLERY_TABLE);
+                db.execSQL(DbConstants.IcustomPages.CREATE_CUSTOM_PAGES_TABLE);
+                db.execSQL(DbConstants.Isearch_queries.CREATE_SEARCH_QUERIES_TABLE);
+                db.execSQL(DbConstants.IstoreActivePlans.CREATE_ACTIVE_PLANS_TABLE);
+                db.execSQL(DbConstants.IstoreImages.CREATE_STORE_IMAGES_TABLE);
+                db.execSQL(DbConstants.IsamBubble.CREATE_SAM_BUBBLE_TABLE);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-            switch (oldVersion) {
-                case 1:
-                    db.execSQL(DbConstants.IsamBubble.CREATE_SAM_BUBBLE_TABLE);
-                    break;
-                case 2:
-                case 3:
-                    break;
-                default:
-                    throw new IllegalStateException(
-                            "onUpgrade() with unknown oldVersion " + oldVersion);
+            try {
+                db.execSQL(DbConstants.Iupdates.DROP_UPDATES_TABLE);
+                db.execSQL(DbConstants.IcustomPages.DROP_CUSTOM_PAGES_TABLE);
+                db.execSQL(DbConstants.Ialerts.DROP_ALERT_TABLE);
+                db.execSQL(DbConstants.Ialerts.IalertData.DROP_ALERT_DATA_TABLE);
+                db.execSQL(DbConstants.IphotoGallery.DROP_PHOTO_GALLERY_TABLE);
+                db.execSQL(DbConstants.IproductGallery.DROP_PRODUCT_GALLERY_TABLE);
+                db.execSQL(DbConstants.IsamBubble.DROP_SAM_BUBBLE_TABLE);
+                db.execSQL(DbConstants.Isearch_queries.DROP_SEARCH_QUERIES_TABLE);
+                db.execSQL(DbConstants.IstoreActivePlans.DROP_ACTIVE_PLANS_TABLE);
+                db.execSQL(DbConstants.IstoreImages.DROP_STORE_IMAGES_TABLE);
+                onCreate(db);
+               SharedPreferences pref =  context.getSharedPreferences(com.nowfloats.util.Constants.PREF_NAME,Context.MODE_PRIVATE);
+                pref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED,false).apply();
+            }catch (SQLException e){
+                e.printStackTrace();
             }
-
-
 
         }
     }

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="15dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter By"
+        android:textColor="@color/gray_light"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:divider="@color/light_gray"
+        android:showDividers="middle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+        <RadioButton
+            android:id="@+id/rb_select_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="All" />
+            <RadioButton
+                android:id="@+id/rb_seven_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last 7 days"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb_ten_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last 10 days"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb_fifteen_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="Last 15 days" />
+            <RadioButton
+                android:id="@+id/rb_thirty_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="Last 30 days" />
+
+            <RadioButton
+                android:id="@+id/rb_select_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="Select Time Span" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/llayout_date_period"
+        android:layout_width="0dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/focused_edittext_bg"
+            android:focusable="false"
+            android:gravity="center"
+            android:textSize="13sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            android:text="To"
+            />
+        <TextView
+            android:id="@+id/tv_end_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/focused_edittext_bg"
+            android:focusable="false"
+            android:gravity="center"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/btn_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ria_positive_btn"
+        android:padding="10dp"
+        android:text="APPLY"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llayout_date_period" />
+
+</android.support.constraint.ConstraintLayout>

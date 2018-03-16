@@ -11,9 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * Created by Dell on 10-02-2015.
@@ -62,10 +65,11 @@ public class FullScreenImageAdapter extends PagerAdapter {
         String baseName = serverImage;
 
         Glide.with(context)
-                .load(serverImage)
                 .asGif()
-                .placeholder(R.drawable.default_product_image)
-                .crossFade()
+                .load(serverImage)
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.default_product_image))
+                .transition(withCrossFade())
                 .into(imageView);
         container.addView(imageView, 0);
         return imageView;

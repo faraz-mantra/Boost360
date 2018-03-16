@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -46,8 +47,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
-import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
-import com.nowfloats.Analytics_Screen.SearchQueries;
+import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
+import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -82,9 +83,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -124,7 +126,7 @@ public class Analytics_Fragment extends Fragment {
     public void onResume() {
 
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
-//        getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
+        //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
@@ -208,7 +210,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("SearchQueriesDetailedView", null);
-                Intent q = new Intent(getActivity(), SearchQueries.class);
+                Intent q = new Intent(getActivity(), SearchQueriesActivity.class);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -229,8 +231,8 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("OverallVisitsDetailedView", null);
-                Intent q = new Intent(getActivity(), AnalyticsActivity.class);
-                q.putExtra("table_name", Constants.VISITS_TABLE);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -240,8 +242,8 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("UniqueVisitsDetailedView", null);
-                Intent q = new Intent(getActivity(), AnalyticsActivity.class);
-                q.putExtra("table_name", Constants.VISITORS_TABLE);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.UNIQUE);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -284,6 +286,16 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
+        CardView wildfireAnalytics = rootView.findViewById(R.id.card_view_wildfire);
+        wildfireAnalytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), WildFireAdsActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
 
         cvRiaCard = (CardView) rootView.findViewById(R.id.cvRiaCard);
         btnRiaCardLeft = (Button) rootView.findViewById(R.id.btnRiaResponse1);
@@ -300,6 +312,7 @@ public class Analytics_Fragment extends Fragment {
         ImageView vmnCallBack = (ImageView) rootView.findViewById(R.id.pop_up_vmn_call_img);
         ImageView visitorsBack = (ImageView) rootView.findViewById(R.id.visitors_image_bg);
         ImageView searchRankBack = (ImageView) rootView.findViewById(R.id.pop_up_search_ranking_img);
+        ImageView wildfireBack = (ImageView) rootView.findViewById(R.id.img_wildfire_back);
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
@@ -310,6 +323,7 @@ public class Analytics_Fragment extends Fragment {
         vmnCallBack.setColorFilter(porterDuffColorFilter);
         visitorsBack.setColorFilter(porterDuffColorFilter);
         searchRankBack.setColorFilter(porterDuffColorFilter);
+        wildfireBack.setColorFilter(porterDuffColorFilter);
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
         visitorsCount = (TextView) rootView.findViewById(R.id.visitors_count);
@@ -430,11 +444,6 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void initRiaCard() {
-        RestAdapter riaCardAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)
-                /*.setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("Retrofit Response"))*/
-                .build();
-
         Map<String, String> query = new HashMap<>();
         query.put("fpTag", session.getFpTag());
         try {
@@ -454,7 +463,7 @@ public class Analytics_Fragment extends Fragment {
         query.put("screenHeight", DeviceDetails.getScreenHeight(getActivity()) + "");
 
 
-        RiaNetworkInterface networkInterface = riaCardAdapter.create(RiaNetworkInterface.class);
+        RiaNetworkInterface networkInterface = Constants.riaMemoryRestAdapter.create(RiaNetworkInterface.class);
         networkInterface.getRiaCards(query, new Callback<ArrayList<RiaCardModel>>() {
             @Override
             public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
@@ -787,8 +796,9 @@ public class Analytics_Fragment extends Fragment {
         iv.setLayoutParams(lp);
         Glide.with(getActivity())
                 .load(widget.getUrl())
-                .centerCrop()
-                .placeholder(R.drawable.default_product_image)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.default_product_image))
                 .into(iv);
         //Glide.with(getActivity()).load(widget.getUrl()).placeholder(R.drawable.image_placeholder).into(iv);
         llRiaCardSections.addView(iv);
@@ -825,11 +835,8 @@ public class Analytics_Fragment extends Fragment {
                 if(jsonObject.has("TotalCalls")) {
                     vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
                     vmnTotalCallCount.setText(vmnTotalCalls);
+                    session.setVmnCallsCount(vmnTotalCalls);
                 }
-                if(jsonObject.has("MissedCalls"))
-                    vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
-                if (jsonObject.has("ReceivedCalls"))
-                    vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
             }
 
             @Override

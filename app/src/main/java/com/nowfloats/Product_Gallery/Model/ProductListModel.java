@@ -22,10 +22,12 @@ public class ProductListModel implements Parcelable {
     public String Price;
     public String Priority;
     public String ShipmentDuration;
+    public int availableUnits;
     public ArrayList<String> _keywords;
     public String ApplicationId;
     public String FPTag;
     public String ImageUri;
+    public String ProductUrl;
     public ArrayList<ImageListModel> Images;
     public String MerchantName;
     public String TileImageUri;
@@ -52,6 +54,7 @@ public class ProductListModel implements Parcelable {
         parcel.writeString(DiscountAmount);
         parcel.writeString(ExternalSourceId);
         parcel.writeString(IsArchived);
+        parcel.writeString(ProductUrl);
         parcel.writeString(IsAvailable);
         parcel.writeString(IsFreeShipmentAvailable);
         parcel.writeString(Name);
@@ -71,6 +74,7 @@ public class ProductListModel implements Parcelable {
         parcel.writeString(CreatedOn);
         parcel.writeString(UpdatedOn);
         parcel.writeString(ProductIndex);
+        parcel.writeInt(availableUnits);
     }
 
     public ProductListModel(Parcel in) {
@@ -84,6 +88,7 @@ public class ProductListModel implements Parcelable {
         this.IsFreeShipmentAvailable = in.readString();
         this.Name = in.readString();
         this.Price = in.readString();
+        this.ProductUrl = in.readString();
         this.Priority = in.readString();
         this.ShipmentDuration = in.readString();
         this._keywords = in.readArrayList(ProductListModel.this.getClass().getClassLoader());
@@ -100,6 +105,7 @@ public class ProductListModel implements Parcelable {
         this.CreatedOn = in.readString();
         this.UpdatedOn = in.readString();
         this.ProductIndex = in.readString();
+        this.availableUnits = in.readInt();
     }
 
     public static final Parcelable.Creator<ProductListModel> CREATOR = new Parcelable.Creator<ProductListModel>() {

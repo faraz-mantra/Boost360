@@ -41,7 +41,6 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -110,7 +109,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 
     private void showLoader(final String message) {
 
-        if (!isAdded()) return;
+        if (getActivity() == null) return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -126,7 +125,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     }
 
     private void hideLoader() {
-
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -625,8 +624,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                        Intent intent = new Intent(activity, NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }

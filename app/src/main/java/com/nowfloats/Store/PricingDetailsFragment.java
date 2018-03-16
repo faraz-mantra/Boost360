@@ -1,22 +1,17 @@
 package com.nowfloats.Store;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.BoolRes;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nowfloats.Store.Adapters.AllPlansRvAdapter;
 import com.nowfloats.Store.Model.PackageDetails;
@@ -35,7 +30,7 @@ public class PricingDetailsFragment extends Fragment {
     private PackageDetails mBasePackage;
     private List<PackageDetails> mTopUps;
     private AllPlansRvAdapter mRvAdapter;
-
+    private Context mContext;
     public PricingDetailsFragment() {
     }
 
@@ -45,6 +40,12 @@ public class PricingDetailsFragment extends Fragment {
         fragment.mBasePackage = basePackage;
         fragment.mTopUps = topUps;
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Override
@@ -60,10 +61,11 @@ public class PricingDetailsFragment extends Fragment {
         View pricingView =  inflater.inflate(R.layout.fragment_pricing_details, container, false);
         rvAllPlanDetails = (RecyclerView) pricingView.findViewById(R.id.rv_all_plan_details);
         ivPackageLogo = (ImageView) pricingView.findViewById(R.id.iv_package_logo);
+        if (mBasePackage == null) return pricingView;
         Picasso.with(getActivity()).load(mBasePackage.getPrimaryImageUri()).into(ivPackageLogo);
+        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>());
         prepareBasePackageDetails();
 
-        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>());
         rvAllPlanDetails.setAdapter(mRvAdapter);
         rvAllPlanDetails.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return pricingView;

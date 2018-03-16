@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -133,15 +134,19 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
             sourceImg.setVisibility(View.GONE);
 
         }
+        TextView productButton = findViewById(R.id.btn_add_products);
+        TextView updateButton = findViewById(R.id.btn_add_updates);
         if (mSuggestionDO.getProducts().size() == 0){
-            findViewById(R.id.btn_add_products).setVisibility(View.GONE);
+            productButton.setVisibility(View.GONE);
         }else{
-            findViewById(R.id.btn_add_products).setOnClickListener(this);
+            productButton.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_plus),null,null,null);
+            productButton.setOnClickListener(this);
         }
         if (mSuggestionDO.getUpdates().size() == 0){
-            findViewById(R.id.btn_add_updates).setVisibility(View.GONE);
+            updateButton.setVisibility(View.GONE);
         }else{
-            findViewById(R.id.btn_add_updates).setOnClickListener(this);
+            updateButton.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_plus),null,null,null);
+            updateButton.setOnClickListener(this);
         }
     }
 
@@ -411,7 +416,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
 
                         mSuggestionDO.setStatus(1);
                         //updateActionsToServer(mSuggestionDO);
-                        Methods.sendEmail(ThirdPartySuggestionDetailActivity.this, mSuggestionDO.getValue());
+                        Methods.sendEmail(ThirdPartySuggestionDetailActivity.this, new String []{mSuggestionDO.getValue()});
                     }
                     else{
                         Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this,"Email is not valid");

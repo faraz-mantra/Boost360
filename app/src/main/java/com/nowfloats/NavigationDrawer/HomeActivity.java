@@ -8,9 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -27,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,42 +34,36 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.anachat.chatsdk.AnaChatBuilder;
+import com.anachat.chatsdk.AnaCore;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.freshdesk.hotline.Hotline;
-import com.freshdesk.hotline.HotlineConfig;
-import com.freshdesk.hotline.HotlineUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
-import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
-import com.nowfloats.Analytics_Screen.SearchQueries;
+import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
+import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
-import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
+import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageAdapter;
@@ -82,30 +75,23 @@ import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
 import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
-import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
-import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
-import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
-import com.nowfloats.Store.Model.StoreEvent;
-import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
-import com.nowfloats.managecustomers.FacebookChatActivity;
-import com.nowfloats.managecustomers.FacebookChatDetailActivity;
-import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
+import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
@@ -135,8 +121,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -162,24 +146,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private Toolbar toolbar;
     private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
-    private Fragment fragmentNavigationDrawer;
     SidePanelFragment drawerFragment;
-    private LinearLayout leftPanelLayout;
     Home_Fragment_Tab homeFragment;
+    KeyboardFragment keyboardFragment;
     Business_Profile_Fragment_V2 businessFragment;
-    ManageCustomerFragmentV1 manageCustomerFragment;
+    ManageCustomerFragment manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
+    UpgradesFragment upgradesFragment;
+    AboutFragment aboutFragment;
+    ManageContentFragment manageContentFragment;
+    AccountSettingsFragment accountSettingsFragment;
     Site_Meter_Fragment siteMeterFragment;
-    Settings_Fragment settingsFragment;
-    Business_Enquiries_Fragment businessEnquiriesFragment;
-    SiteAppearanceFragment mSiteAppearanceFragement;
-    ChatFragment chatFragment;
     SocialSharingFragment socialSharingFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
-    MaterialDialog mExpireDailog;
+    MaterialDialog mExpireDialog;
     public static TextView headerText;
     public static ImageView plusAddButton;
     public static ImageView shareButton;
@@ -187,8 +170,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     public static ArrayList<FloatsMessageModel> StorebizFloats = new ArrayList<FloatsMessageModel>();
     private boolean showLookupDomain = false;
     private int clickCnt = 0;
-    public static Activity activity;
-    public String FPID;
     public CustomPageFragment customPageActivity;
     private boolean backChk = false;
     private final int LIGHT_HOUSE_EXPIRE = 0;
@@ -221,22 +202,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         BoostLog.d("HomeActivity ONcreate", "onCreate");
         bus = BusProvider.getInstance().getBus();
-        activity = HomeActivity.this;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 //        GCMIntentService.setHomeActivity(HomeActivity.this);
         Methods.isOnline(HomeActivity.this);
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
-        setHotlineUser();
+        //setHotlineUser();
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();
+
         if (bundle != null && bundle.containsKey("url")) {
             mDeepLinkUrl = bundle.getString("url");
             //DeepLinkPage(mDeepLinkUrl, false);
         }
 
         if (bundle != null && bundle.containsKey("Username")) {
+
         } else {
             createView();
         }
@@ -259,23 +241,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private void setHotlineUser() {
-        HotlineConfig hlConfig = new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb", "a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
-
-        hlConfig.setVoiceMessagingEnabled(true);
-        hlConfig.setCameraCaptureEnabled(true);
-        hlConfig.setPictureMessagingEnabled(true);
-
-        Hotline.getInstance(this).init(hlConfig);
-
-        HotlineUser hlUser = Hotline.getInstance(this).getUser();
-        hlUser.setName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        hlUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        hlUser.setPhone(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-        Hotline.getInstance(this).updateUser(hlUser);
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -292,15 +257,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
-
-    public static void setGCMId(String id) {
-        new Ria_Register(activity, Constants.clientId, "ANDROID", id);
-        //registerChat(FPID,id);
-        /*SdkConfig config = new SdkConfig();
-        config.setGcmSenderId(id);
-        config.setAnalyticsTrackingAllowedState(true);
-        config.setDebuggingStateAllowed(true);*/
     }
 
     public static void registerChat(String userId) {
@@ -355,27 +311,26 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     public void DeepLinkPage(String url, boolean isFromRia) {
         BoostLog.d("Deep Link URL", "Deep Link URL : " + url);
-
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
             if(!isFromRia)
             {
                 MixPanelController.track("$app_open",null);
             }
-            if (url.contains(getString(R.string.facebook_chat))) {
-                Intent intent = new Intent(this, FacebookChatDetailActivity.class);
-                intent.putExtras(getIntent());
-                startActivity(intent);
+            if (url.contains(getString(R.string.keyboard))){
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                        .commit();
+            }
+            else if (url.contains(getString(R.string.facebook_chat))) {
+
             }else if(url.contains("thirdPartyQueries")){
                 Intent intent = new Intent(this, ThirdPartyQueriesActivity.class);
                 startActivity(intent);
             }
             else if (url.contains(getString(R.string.facebook_chat_main))) {
-                Intent intent = new Intent(this, FacebookChatActivity.class);
-                startActivity(intent);
+
             }else if (url.contains(getString(R.string.deeplink_manage_customer))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
-                        .addToBackStack(null)
                         .commit();
             } else if (url.contains(getString(R.string.feedback_chat))) {
                 MixPanelController.track("ChatFeedback", null);
@@ -418,17 +373,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
+                headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, homeFragment)
-                        .addToBackStack(null)
                         .commit();
                 getSupportFragmentManager().executePendingTransactions();
                 Constants.deepLinkAnalytics = true;
                 homeFragment.setFragmentTab(1);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, businessFragment)
-                        .commit();
+                Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
+                startActivity(queries);
             } else if (url.contains("store") || url.contains(getResources().getString(R.string.deeplink_store)) ||
                     url.contains(getResources().getString(R.string.deeplink_propack)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreseo)) ||
@@ -436,11 +391,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     url.contains(getResources().getString(R.string.deeplink_nfstorebiztiming)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage))) {
-                Intent i = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                Intent i = new Intent(this,NewPricingPlansActivity.class);
                startActivity(i);
             } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
-                Intent queries = new Intent(HomeActivity.this, SearchQueries.class);
+                Intent queries = new Intent(HomeActivity.this, SearchQueriesActivity.class);
                 startActivity(queries);
             } else if (url.contains("blog")) {
 
@@ -458,22 +412,16 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 startActivity(subscribers);
             } else if (url.contains("share")) {
                 shareWebsite();
-            } else if (url.contains("accountstatus")) {
-                Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
-                startActivity(accountInfo);
             } else if (url.contains("visits") || url.contains("viewgraph")) {
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITS_TABLE);
                 startActivity(accountInfo);
-            } else if (url.contains(getResources().getString(R.string.deeplink_setings))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, settingsFragment)
-                        .commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_business_app))) {
                 startBusinessApp();
             } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
+//                startActivity(new Intent(activity, Social_Sharing_Activity.class));
             } else if (url.contains("notification")) {
                 homeFragment.setFragmentTab(2);
             } else if (url.contains(getResources().getString(R.string.deeplink_profile))) {
@@ -486,14 +434,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizhours)) || url.contains("hours")) {
-                Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
+                Intent queries = new Intent(HomeActivity.this, BusinessHoursActivity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo)) || url.contains("logo")) {
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo)) || url.contains("bookdomain")) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, businessEnquiriesFragment)
+                ft.replace(R.id.mainFrame, businessFragment)
                         .commit();
             } else if (url.contains("sitemeter")) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -506,12 +454,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_ProductGallery))) {
                 Intent i = new Intent(this, ProductGalleryActivity.class);
                 startActivity(i);
-            } else if (url.contains("chatWindow")) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();
-            } else if(url.contains("assuredPurchase")){
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }else if(url.contains("assuredPurchase")){
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
-                        .addToBackStack(null)
                         .commit();
             }
             else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
@@ -1018,286 +963,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
     }
-   /* private void checkExpire(){
-        isExpiredCheck = pref.getBoolean("EXPIRE_DIALOG",false);
-        if(!isExpiredCheck) {
-            String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-            String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-            if (paymentState.equals("-1")) {
-                try {
-                    if (Integer.parseInt(paymentLevel) > 10) {
-                        //LH expire
-                        if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
-                            renewKitsune(LIGHT_HOUSE_EXPIRE);
-                        }else {
-                            renewPlanDialog(LIGHT_HOUSE_EXPIRE);
-                        }
-                    } else{
-                        //Demo expire
-
-                        if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
-                            renewKitsune(DEMO_EXPIRE);
-                        }else {
-                            renewPlanDialog(DEMO_EXPIRE);
-                        }
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-            else {
-                // LH is active ,check for wildfire
-                if(!BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
-                    if (checkExpiry() && !session.isSiteAppearanceShown()) {
-                        showSiteVisibilityDialog();
-                    }
-                    new API_Service(activity, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
-                            session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), bus);
-                }
-            }
-        }
-    }
-
-    private void showFacebookReviewDialog(){
-        Calendar calendar = Calendar.getInstance();
-        final Long current = calendar.getTimeInMillis();
-        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-        long prev = pref.getLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,-1);
-        if(!paymentState.equals("1") || (current-prev)/(1000*60*60*24)<=7){
-            return;
-        }
-        new MaterialDialog.Builder(this)
-                .title("Review")
-                .content("How are you liking our product? If you think, we have added value to your business, please rate us!")
-                .negativeText("Later")
-                .negativeColorRes(R.color.primary_color)
-                .positiveColorRes(R.color.primary_color)
-                .positiveText("Review")
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                        pref.edit().putLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,current).apply();
-                    }
-                })
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                        MixPanelController.track(MixPanelController.FACEBOOK_REVIEW,null);
-                        Methods.likeUsFacebook(HomeActivity.this,"");
-                        pref.edit().putLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,Long.MAX_VALUE).apply();
-                    }
-                }).show();
-
-    }
-    private void getAccountDetails(){
-        AccountInfoActivity.AccInfoInterface infoInterface = Constants.restAdapter.create(AccountInfoActivity.AccInfoInterface.class);
-        HashMap<String,String> values = new HashMap<>();
-        values.put("clientId", Constants.clientId);
-        values.put("fpId",session.getFPID());
-        infoInterface.getAccDetails(values,new Callback<ArrayList<AccountDetailModel>>() {
-            @Override
-            public void success(ArrayList<AccountDetailModel> accountDetailModels, Response response) {
-                int count =0;
-                if(accountDetailModels == null){
-                    return;
-                }
-                Collections.sort(accountDetailModels, new Comparator<AccountDetailModel>() {
-                    @Override
-                    public int compare(AccountDetailModel o1, AccountDetailModel o2) {
-                        return o2.ToBeActivatedOn.compareToIgnoreCase(o1.ToBeActivatedOn);
-                    }
-                });
-                Calendar calendar = Calendar.getInstance();
-                Long current = calendar.getTimeInMillis();
-                boolean showWildFire = true,flag = true;
-                long prevShown = pref.getLong("expire_dialog",-1);
-                for (AccountDetailModel model : accountDetailModels){
-                    if(model.purchasedPackageDetails.packType == 0) {
-                        count++;
-
-                        if(flag) {
-                            flag = false;
-                            String Sdate = model.ToBeActivatedOn;
-                            if (Sdate.contains("/Date")) {
-                                Sdate = Sdate.replace("/Date(", "").replace(")/", "");
-                            }
-                            long date = Long.valueOf(Sdate);
-                            calendar.setTimeInMillis(date);
-                            calendar.add(Calendar.MONTH, Integer.parseInt(model.totalMonthsValidity));
-
-                            float days = ((calendar.getTimeInMillis()-current) / (float)(1000 * 60 * 60 * 24));
-
-                            if(days<=0){
-                                showDialog1(LIGHT_HOUSE_EXPIRE, -1);
-                            } else if (days <= 7) {
-                                //seven days dialog ervery day
-                                showDialog1(LIGHT_HOUSE_DAYS_LEFT, days);
-                                showWildFire = false;
-                            } else if (days < 30) {
-                                //once a week
-                                if ((current - prevShown) / (60 * 60 * 24 * 1000) >= 7) {
-                                    showDialog1(LIGHT_HOUSE_DAYS_LEFT, days);
-                                    showWildFire = false;
-                                }
-                            }
-                        }
-                    }
-                }
-
-               *//* if(showWildFire && (current-prevShown)/(60*60*24*1000)>=7) {
-                    showDialog1(WILD_FIRE_EXPIRE,-1);
-                }*//*
-
-                if (count > 1) {
-                   // showFacebookReviewDialog();
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
-    }*/
-/*
-    private void renewKitsune(int expiryType) {
-        String dialogTitle = null;
-        String dialogMessage = null;
-        String callUsButtonText = "";
-        String cancelButtonText = null;
-        int dialogImage = 0;
-        int dialogImageBgColor = 0;
-        int days;
-        prefsEditor = pref.edit();
-        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
-        prefsEditor.apply();
-        boolean dialogShowFlag = true;
-        switch (expiryType) {
-            case LIGHT_HOUSE_EXPIRE:
-                dialogTitle = getString(R.string.kitsune_renew_dialog_title);
-                dialogMessage = getString(R.string.kitsune_renew_dialog_body);
-                dialogImage = R.drawable.androidexpiryxxxhdpi;
-                dialogImageBgColor = Color.parseColor("#ff0010");
-
-                break;
-            case DEMO_EXPIRE:
-                dialogImage = R.drawable.androidexpiryxxxhdpi;
-                dialogImageBgColor = Color.parseColor("#ff0010");
-                dialogTitle = getString(R.string.kitsune_demo_expire_dialog_title);
-                dialogMessage = getString(R.string.kitsune_demo_expire_dialog_body);
-                break;
-            default:
-                callUsButtonText = "";
-                cancelButtonText = "";
-                dialogTitle = "";
-                dialogMessage = "";
-                dialogImage = -1;
-                break;
-        }
-
-        if(dialogShowFlag) {
-            mExpireDailog = new MaterialDialog.Builder(this)
-                    .customView(R.layout.pop_up_restrict_post_message, false)
-                    .backgroundColorRes(R.color.white)
-                    .positiveText("OK")
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog mExpireDailog) {
-                            super.onPositive(mExpireDailog);
-                            //openStore();
-                            mExpireDailog.dismiss();
-                            prefsEditor = pref.edit();
-                            prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                            prefsEditor.apply();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog mExpireDailog) {
-                            super.onNegative(mExpireDailog);
-                            mExpireDailog.dismiss();
-                            prefsEditor = pref.edit();
-                            prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                            prefsEditor.putBoolean("IGNORE_CLICKED", true);
-                            prefsEditor.commit();
-                        }
-                    }).show();
-
-            mExpireDailog.setCancelable(true);
-            View view = mExpireDailog.getCustomView();
-
-            roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
-            title.setText(dialogTitle);
-
-            ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
-            expireImage.setBackgroundColor(dialogImageBgColor);
-            expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
-
-            roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
-            message.setText(dialogMessage);
-        }
-
-    }
-
-    private void showSiteVisibilityDialog() {
-        session.setSiteAppearanceShown(true);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View v = inflater.inflate(R.layout.site_appearance_dialog, null);
-        final Dialog dialog = builder.setView(v).create();
-        v.findViewById(R.id.btn_enable_kitsune).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                enableKitsune();
-            }
-        });
-        v.findViewById(R.id.btn_later_kitsune).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        dialog.show();
-    }*/
-
-    /*private void enableKitsune() {
-        final ProgressDialog pg = ProgressDialog.show(this,"" , getString(R.string.wait_for_new_look));
-        new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
-            @Override
-            public void onResult(String response, boolean isError) {
-                pg.dismiss();
-                if(response.equals("true") && !isError){
-                    Methods.showSnackBarPositive(HomeActivity.this, getString(R.string.your_website_appearance_changed));
-                    session.storeFpWebTempalteType("6");
-                }
-                else {
-                    Methods.showSnackBarNegative(HomeActivity.this, getString(R.string.can_not_change_appearance));
-                }
-            }
-        }).enableKitsune();
-    }
-
-    private boolean checkExpiry() {
-        boolean flag = false;
-        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
-        long expiryTime = -1;
-        try {
-            if (strExpiryTime != null) {
-                expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
-            }
-            if (expiryTime != -1 && ((expiryTime - System.currentTimeMillis()) / 86400000 >= 180) && !session.getWebTemplateType().equals("6")) {
-                flag = true;
-            }
-        }catch (Exception e){
-            flag = false;
-        }
-        return flag;
-    }*/
 
     @Override
     protected void onStart() {
@@ -1367,7 +1032,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (nextScreen.equals(getString(R.string.business_profile))) {
+                if (nextScreen.equals(getString(R.string.keyboard))){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                            .commit();
+                } else if (nextScreen.equals(getString(R.string.business_profile))) {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)
                     // ;
@@ -1375,7 +1043,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     shareButton.setVisibility(View.VISIBLE);
                     plusAddButton.setVisibility(View.GONE);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessFragment, "Profile")
-                            .addToBackStack(null)
                             .commit();
                     // getSupportFragmentManager().beginTransaction().
                     //        replace(R.id.mainFrame, businessFragment).commit();
@@ -1387,17 +1054,24 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                    .commit();
                 } else if (nextScreen.equals(getString(R.string.manage_customers))) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
-                            .addToBackStack(null)
                             .commit();
                 }else if(nextScreen.equals("wildfire")){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new WildFireFragment(),"WildFireFrag")
-                            .addToBackStack(null)
+                    FragmentManager manager = getSupportFragmentManager();
+                    Fragment frag = manager.findFragmentByTag("wildfireFrag");
+                    if (frag == null){
+                        frag = new WildFireFragment();
+                    }
+                    manager.beginTransaction().replace(R.id.mainFrame,frag,"wildfireFrag")
                             .commit();
                 }
                 else if(nextScreen.equals("dictate")){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new DictateFragment(),"DictateFrag")
-                            .addToBackStack(null)
-                            .commit();
+                    FragmentManager manager = getSupportFragmentManager();
+                    Fragment frag = manager.findFragmentByTag("DictateFrag");
+                    if (frag == null){
+                        frag = new DictateFragment();
+                    }
+                    manager.beginTransaction().replace(R.id.mainFrame,frag,"DictateFrag")
+                    .commit();
                 }
                 else if (nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
                     startBusinessApp();
@@ -1417,10 +1091,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.site__meter))) {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
-                } else if (nextScreen.equals(getString(R.string.home))) {
+                } else if (nextScreen.equals(getString(R.string.home)) ||nextScreen.equals(getString(R.string.update))) {
+
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     plusAddButton.setVisibility(View.GONE);
@@ -1437,7 +1112,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainFrame, homeFragment, "homeFragment")
-                            .addToBackStack(null)
                             .commit();
                     getSupportFragmentManager().executePendingTransactions();
                     homeFragment.setFragmentTab(0);
@@ -1448,28 +1122,34 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 } else if (nextScreen.equals(getString(R.string.chat))) {
-                    //Hotline.showConversations(HomeActivity.this);
-                } else if (nextScreen.equals(getString(R.string.call))) {
-                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-                        Intent call = new Intent(Intent.ACTION_DIAL);
-                        String callString = "tel:" + getString(R.string.contact_us_number);
-                        call.setData(Uri.parse(callString));
-                        startActivity(call);
-                    } else {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+                    if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT,null);
+                        new AnaChatBuilder(HomeActivity.this)
+                                .setBusinessId(Constants.ANA_BUSINESS_ID)
+                                .setBaseUrl(Constants.ANA_CHAT_API_URL)
+                                .setFlowId(session.getFpTag())
+                                .setThemeColor(R.color.primary)
+                                .setToolBarDescription("Available")
+                                .setToolBarTittle("Ria Chat")
+                                .setToolBarLogo(R.drawable.ria_circle_image)
+                                .start();
                     }
+
+                } else if (nextScreen.equals(getString(R.string.call)) || nextScreen.equals(getString(R.string.help_and_support))) {
+//                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//                        Intent call = new Intent(Intent.ACTION_DIAL);
+//                        String callString = "tel:" + getString(R.string.contact_us_number);
+//                        call.setData(Uri.parse(callString));
+//                        startActivity(call);
+//                    } else {
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
-                } else if (nextScreen.equals("Settings")) {
-                    //ft.replace(R.id.homeTabViewpager, settingsFragment);
-                    //ft.commit();
-                    plusAddButton.setVisibility(View.GONE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, settingsFragment).commit();
                 } else if (nextScreen.equalsIgnoreCase("Store")) {
                     shareButton.setVisibility(View.GONE);
                     plusAddButton.setVisibility(View.GONE);
-                    Intent i = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                            ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                    Intent i = new Intent(HomeActivity.this,NewPricingPlansActivity.class);
                     startActivity(i);
 
                 } else if (nextScreen.equals("csp")) {
@@ -1495,11 +1175,26 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     MixPanelController.track(EventKeysWL.MANAGE_INVENTORY, null);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
-                            .addToBackStack(null)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
+                }else if (nextScreen.equals(getString(R.string.upgrades))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, upgradesFragment, "upgradesFragment")
+                            .commit();
+                }else if (nextScreen.equals(getString(R.string.about))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ABOUT, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, aboutFragment, "aboutFragment")
+                            .commit();
+                }else if (nextScreen.equals(getString(R.string.manage_content))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_CONTENT, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageContentFragment, "manageContentFragment")
+                            .commit();
+                }else if (nextScreen.equals(getString(R.string.account_settings))){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
+                            .commit();
                 }
             }
         }, 200);
@@ -1514,7 +1209,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if (businessAppStatus == BIZ_APP_PAID) {
                 pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO_REMOVE).apply();
             }
-            Intent i = new Intent(this, BusinessAppsActivity.class);
+            Intent i = new Intent(this, BusinessAppsDetailsActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
@@ -1635,233 +1330,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private void openStore() {
-        if (mExpireDailog != null && !mExpireDailog.isCancelled()) {
-            mExpireDailog.dismiss();
+        if (mExpireDialog != null && !mExpireDialog.isCancelled()) {
+            mExpireDialog.dismiss();
         }
         try {
             Intent intent;
             if(BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.capture")) {
-                intent = new Intent(activity, FlavourFivePlansActivity.class);
+                intent = new Intent(this, FlavourFivePlansActivity.class);
             }else {
-                intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
-                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
+                intent = new Intent(this, NewPricingPlansActivity.class);
             }
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-
-    @Subscribe
-    public void getStoreList(StoreEvent response) {
-        ArrayList<StoreModel> allModels = response.model.AllPackages;
-        ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
-        if (!isShownExpireDialog) {
-            if (allModels != null && activeIdArray != null) {
-                printPlan(activeIdArray);
-                isShownExpireDialog = true;
-            }
-
-            // TODO: 06-06-2016 need to handle multilple wildfire expire cases with support of api team.
-        }
-    }
-
-
-    private void printPlan(ArrayList<StoreModel> allModels) {
-        //Log.v("ggg","plans");
-        for (int i = 0; i < allModels.size(); i++) {
-            if (mExpireDailog != null && mExpireDailog.isShowing()) {
-                break;
-            }
-            String temp = allModels.get(i).Name;
-            if (temp != null && !temp.isEmpty() && (temp.contains("NowFloats WildFire") || temp.contains("NF WildFire"))) {
-
-                String date = allModels.get(i).CreatedOn;
-                float totalMonthsValidity = allModels.get(i).TotalMonthsValidity;
-                int remainingDay = verifyTime(date.substring(date.indexOf("(") + 1, date.indexOf(")")), totalMonthsValidity);
-                if (remainingDay > 0 && remainingDay < 7) {
-                    prefsEditor = pref.edit();
-                    prefsEditor.putInt("Days_remain", remainingDay);
-                    prefsEditor.apply();
-                } else if (remainingDay < 0) {
-                    prefsEditor = pref.edit();
-                    prefsEditor.putInt("Days_remain", -1);
-                    prefsEditor.apply();
-                } else {
-                    return;
-                }
-                //renewPlanDialog(WILD_FIRE_EXPIRE);
-                //showWildFire();
-                return;
-            }
-        }
-        //Log.v("ggg","not showing");
-        //showWildFire();
-    }
-
-    private int verifyTime(String unixtime, float months) {
-        Long createdunixtime = Long.parseLong(unixtime);
-        Calendar cal = Calendar.getInstance();
-        Date currdate = cal.getTime();
-        cal.setTimeInMillis(createdunixtime);
-        cal.add(Calendar.MONTH, (int) months);
-        cal.add(Calendar.DATE, (int) ((months - (int) months) * 30));
-        Date dateaftersixmonths = cal.getTime();
-        long diff = dateaftersixmonths.getTime() - currdate.getTime();
-        int diffInDays = (int) ((diff) / (1000 * 60 * 60 * 24));
-        return diffInDays;
-    }
-
-    private void renewPlanDialog(final int expireAccount) {
-        String dialogTitle = null;
-        String dialogMessage = null;
-        String callUsButtonText = "";
-        String cancelButtonText = null;
-        int dialogImage = 0;
-        int dialogImageBgColor = 0;
-        int days;
-        prefsEditor = pref.edit();
-        prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-        prefsEditor.commit();
-        boolean dialogShowFlag = true;
-        switch (expireAccount) {
-            case LIGHT_HOUSE_EXPIRE:
-                callUsButtonText = getString(R.string.buy_in_capital);
-                cancelButtonText = getString(R.string.later_in_capital);
-                dialogTitle = getString(R.string.renew_light_house_plan);
-                dialogMessage = getString(R.string.light_house_plan_expired_some_features_visible);
-                dialogImage = R.drawable.androidexpiryxxxhdpi;
-                dialogImageBgColor = Color.parseColor("#ff0010");
-                break;
-            case WILD_FIRE_EXPIRE:
-                boolean ignoreclicked = pref.getBoolean("IGNORE_CLICKED", false);
-                BoostLog.d("ILUD Boolean Vals: ", String.valueOf(ignoreclicked) + "   " + String.valueOf(dialogShowFlag));
-                if (!ignoreclicked) {
-                    days = pref.getInt("Days_remain", 0);
-                    if (days <= 0) {
-                        dialogTitle = getString(R.string.renew_wildfire_plan);
-                        dialogMessage = getString(R.string.continue_auto_promoting_on_google);
-                    } else {
-                        dialogTitle = getString(R.string.wildfire_will_expire) + days + getString(R.string.days);
-                        dialogMessage = getString(R.string.continue_auto_promoting_on_google);
-                    }
-                    callUsButtonText = getString(R.string.renew_in_capital);
-                    cancelButtonText = getString(R.string.ignore_in_capital);
-                    dialogImage = R.drawable.wild_fire_expire;
-                    dialogImageBgColor = Color.parseColor("#ffffff");
-                } else {
-                    dialogShowFlag = false;
-                }
-                break;
-            case DEMO_EXPIRE:
-                dialogImage = R.drawable.androidexpiryxxxhdpi;
-                dialogImageBgColor = Color.parseColor("#ff0010");
-                callUsButtonText = getString(R.string.buy_in_capital);
-                cancelButtonText = getString(R.string.later_in_capital);
-                dialogTitle = getString(R.string.buy_light_house_plan);
-                dialogMessage = getString(R.string.demo_plan_expired);
-                break;
-            default:
-                callUsButtonText = "";
-                cancelButtonText = "";
-                dialogTitle = "";
-                dialogMessage = "";
-                dialogImage = -1;
-                break;
-        }
-
-        if (dialogShowFlag) {
-            mExpireDailog = new MaterialDialog.Builder(this)
-                    .customView(R.layout.pop_up_restrict_post_message, false)
-                    .backgroundColorRes(R.color.white)
-                    .positiveText(callUsButtonText)
-                    .negativeText(cancelButtonText)
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog mExpireDailog) {
-                            super.onPositive(mExpireDailog);
-                            openStore();
-                            mExpireDailog.dismiss();
-                            prefsEditor = pref.edit();
-                            prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                            prefsEditor.commit();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog mExpireDailog) {
-                            super.onNegative(mExpireDailog);
-                            mExpireDailog.dismiss();
-                            prefsEditor = pref.edit();
-                            prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                            prefsEditor.putBoolean("IGNORE_CLICKED", true);
-                            prefsEditor.commit();
-                        }
-                    }).show();
-
-            mExpireDailog.setCancelable(true);
-            View view = mExpireDailog.getCustomView();
-
-            roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
-            title.setText(dialogTitle);
-
-            ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
-            expireImage.setBackgroundColor(dialogImageBgColor);
-            expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
-
-            roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
-            message.setText(dialogMessage);
-        }
-    }
-
-    private void showWildFire() {
-
-        Calendar calendar = Calendar.getInstance();
-        long oldTime = pref.getLong("wildFireMinitime", -1);
-        long newTime = calendar.getTimeInMillis();
-        long diff = 7 * 24 * 60 * 60 * 1000;
-        //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
-        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
-            return;
-        }
-        prefsEditor = pref.edit();
-        prefsEditor.putLong("wildFireMinitime", newTime).apply();
-        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-        String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-        if (Integer.valueOf(paymentState) > 0 && Integer.valueOf(paymentLevel) >= 10) {
-            View view = getLayoutInflater().inflate(R.layout.pop_up_restrict_post_message, null);
-            ImageView image = (ImageView) view.findViewById(R.id.img_warning);
-            ViewGroup.LayoutParams lp = image.getLayoutParams();
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            image.setLayoutParams(lp);
-            TextView title = (TextView) view.findViewById(R.id.textView1);
-            TextView description = (TextView) view.findViewById(R.id.pop_up_create_message_body);
-            title.setText("Connect with your customers instantly!");
-            description.setText("The all new WildFire Mini Plan lets you reach out to your customers," +
-                    "track all thier phone calls and get good leads. Start your 45 day plan now!");
-            image.setImageResource(R.drawable.wildfire);
-            new MaterialDialog.Builder(this)
-                    .customView(view, true)
-                    .backgroundColorRes(R.color.white)
-                    .positiveText("BUY")
-                    .negativeText("LATER")
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog mExpireDailog) {
-                            super.onPositive(mExpireDailog);
-                            openStore();
-                            MixPanelController.track(Key_Preferences.EVENT_WILDFIRE_BUY, null);
-                            mExpireDailog.dismiss();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog mExpireDailog) {
-                            super.onNegative(mExpireDailog);
-                            mExpireDailog.dismiss();
-                        }
-                    }).show();
-        }
     }
 
     @Override
@@ -1985,6 +1469,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
 
         setContentView(R.layout.activity_home_v3);
+        if (FirebaseInstanceId.getInstance().getToken() != null) {
+            AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().getToken());
+            AnaCore.registerUser(this, session.getFpTag(),  Constants.ANA_BUSINESS_ID,Constants.ANA_CHAT_API_URL);
+        }
         getNfxTokenData();
         BoostLog.d(TAG, "In on CreateView");
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
@@ -1995,36 +1483,37 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         homeFragment = new Home_Fragment_Tab();
         businessFragment = new Business_Profile_Fragment_V2();
-        manageCustomerFragment = new ManageCustomerFragmentV1();
+        manageCustomerFragment = new ManageCustomerFragment();
+        keyboardFragment = new KeyboardFragment();
         manageInventoryFragment = new ManageInventoryFragment();
-        settingsFragment = new Settings_Fragment();
-        businessEnquiriesFragment = new Business_Enquiries_Fragment();
-        mSiteAppearanceFragement = new SiteAppearanceFragment();
-        chatFragment = new ChatFragment();
+        upgradesFragment = new UpgradesFragment();
+        aboutFragment = new AboutFragment();
+        manageContentFragment = new ManageContentFragment();
+        accountSettingsFragment = new AccountSettingsFragment();
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
         helpAndSupportFragment = new HelpAndSupportFragment();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
-                            PackageManager.GET_SIGNATURES);
-                    for (Signature signature : info.signatures) {
-                        MessageDigest md = MessageDigest.getInstance("SHA");
-                        md.update(signature.toByteArray());
-                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-
-                } catch (NoSuchAlgorithmException e) {
-
-                }
-
-            }
-        }).start();
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
+//                            PackageManager.GET_SIGNATURES);
+//                    for (Signature signature : info.signatures) {
+//                        MessageDigest md = MessageDigest.getInstance("SHA");
+//                        md.update(signature.toByteArray());
+//                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//                    }
+//                } catch (PackageManager.NameNotFoundException e) {
+//
+//                } catch (NoSuchAlgorithmException e) {
+//
+//                }
+//
+//            }
+//        }).start();
 
 
         new Thread(new Runnable() {

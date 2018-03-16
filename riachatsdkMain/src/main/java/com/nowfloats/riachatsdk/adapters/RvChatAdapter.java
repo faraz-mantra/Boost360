@@ -45,6 +45,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
 import com.nowfloats.riachatsdk.CustomWidget.FirstLastItemSpacesDecoration;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
@@ -468,8 +469,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardViewHolder.tvAddrFooter.setText(Html.fromHtml(getParsedPrefixPostfixText(section.getCardModel().getCardFooter())));
             Glide.with(mContext)
                     .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
+                    .apply(new RequestOptions()
                     .placeholder(R.drawable.default_product_image)
-                    .error(R.drawable.default_product_image)
+                    .error(R.drawable.default_product_image))
                     .into(cardViewHolder.ivMap);
             if (section.isShowDate()) {
                 cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
@@ -497,8 +499,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             Glide.with(mContext)
                     .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
-                    .placeholder(R.drawable.default_product_image)
-                    .error(R.drawable.default_product_image)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.default_product_image)
+                            .error(R.drawable.default_product_image))
                     .into(cardViewHolder.ivMap);
             /*if (section.isShowDate()) {
                 cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
@@ -624,8 +627,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 Glide.with(mContext)
                         .load(getParsedPrefixPostfixText(imageURL))
-                        .centerCrop()
-                        .placeholder(R.drawable.site_sc_default)
+                        .apply(new RequestOptions()
+                                .centerCrop()
+                                .placeholder(R.drawable.site_sc_default))
                         .into(imageViewHolder.ivMainImage);
 
             } else {
@@ -727,10 +731,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
             Glide.with(mContext)
-                    .load(section.getUrl())
                     .asGif()
-                    .centerCrop()
-                    .placeholder(R.drawable.default_product_image)
+                    .load(section.getUrl())
+                    .apply(new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.default_product_image))
                     .into(imageViewHolder.ivMainImage);
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());

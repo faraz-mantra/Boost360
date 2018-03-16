@@ -22,18 +22,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,15 +75,8 @@ public class SidePanelFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
-    TextView dashBoardTextView, tvManageCustomers,tvSocialSharing,tvManageInventory;
-    TextView businessProfileTextView;
-    TextView customerQueries;
-    TextView imageGalleryTextView, businessAppTextview;
-    TextView productGalleryTextView;
-    TextView StoreTextView;
-    TextView cspTextView;
-    //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText, wildFireText,dictateText,tvBoostBubble, analyticsText /*tvSiteAppearance*/;
+    TextView dashBoardTextView, tvManageCustomers,tvSocialSharing,tvManageInventory, tvManageContent,
+            accountSettingsText,upgradeText,keyboardTextView, helpAndSupportText, shareText,aboutText;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -99,40 +89,28 @@ public class SidePanelFragment extends Fragment {
     Bitmap CameraBitmap;
     String path = null;
     String imageUrl = "";
-    private TextView titleTextView;
-    ContentValues values;
     Uri imageUri;
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
-    private Switch bubbleSwitch;
-//    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
-            imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, wildFireLayout,dictateLayout,
-            llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout, analyticsLayout;
+    LinearLayout homeLayout, upgradeLayout, accountSettingsLayout,keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+            manageContentLayout, manageCustomersLayout,socialLayout,manageInventoryLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
     private TextView meterValue;
     private boolean fiveUpdatesDone = false;
     private int onUpdate = 4;
-    private String originalSite1;
 
     private final int media_req_id = 5;
     private final int gallery_req_id = 6;
 
-    private ImageView lockWidgetImageView, lockWidget_ProductGallery, /*lockWidgetImageView_BusinessEnq,*/
-            lockWidgetImageView_CSP;
-    private Button newButton;
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
-    private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
-            settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,wildFireImg,dictateImg,
-            imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/, manageCustomerImageView,
-            socialImageView,manageInventoryImageView, analyticsImageView;
+    private ImageView shareImageView,keyboardImageView, upgradeImageView, dasbBoardImageView, helpAndSupportImageView,
+            accountSettingsImageView, manageCustomerImageView,manageContentImageView,aboutImageView,
+            socialImageView,manageInventoryImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
-    private ImageView businessLockImage;
-    SharedPreferences pref, mSharedPreferences;
+    private SharedPreferences pref, mSharedPreferences;
 
 
     public interface OnItemClickListener {
@@ -174,9 +152,6 @@ public class SidePanelFragment extends Fragment {
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
-        final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-        final String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-
         progressbar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterValue = (TextView) view.findViewById(R.id.fragment_side_panel_progress_meter_value);
         containerImage = (ImageView) view.findViewById(R.id.backgroundImage);
@@ -189,8 +164,6 @@ public class SidePanelFragment extends Fragment {
             e.printStackTrace();
         }
         Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
-
-        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
 
         whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
         defaultLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.dark_grey), PorterDuff.Mode.SRC_IN);
@@ -268,12 +241,6 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String url = fpNameTextView.getText().toString().trim();
-               /* if (!Util.isNullOrEmpty(url)) {
-                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                } else {
-                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                            + getActivity().getResources().getString(R.string.tag_for_partners);
-                }*/
 
                 Intent showWebSiteIntent = new Intent(getContext(), Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -347,71 +314,48 @@ public class SidePanelFragment extends Fragment {
 
         View card = view.findViewById(R.id.navigationDrawer_main_leftPane);
 
-        homeLayout = (LinearLayout) card.findViewById(R.id.firstRow_Layout);
-        manageCustomersLayout = (LinearLayout) card.findViewById(R.id.tenth_Layout);
-        socialLayout = (LinearLayout) card.findViewById(R.id.eleventh_Layout);
-        manageInventoryLayout = (LinearLayout) card.findViewById(R.id.twelveth_Layout);
-        profileLayout = (LinearLayout) card.findViewById(R.id.secondRow_Layout);
-        cspLayout = (LinearLayout) card.findViewById(R.id.csp_Layout);
-        //customerQueriesLayout = (LinearLayout) card.findViewById(R.id.thirdRow_Layout);
-        businessAppsLayout = (LinearLayout) card.findViewById(R.id.customer_app_Layout);
-        imageGalleryLayout = (LinearLayout) card.findViewById(R.id.fourthRow_Layout);
-        productGalleryLayout = (LinearLayout) card.findViewById(R.id.product_gal_Layout);
-        Store_Layout = (LinearLayout) card.findViewById(R.id.storeRow_Layout);
-        settingsLayout = (LinearLayout) card.findViewById(R.id.fifthRow_Layout);
-        chatLayout = (LinearLayout) card.findViewById(R.id.sixthRow_Layout);
-        callLayout = (LinearLayout) card.findViewById(R.id.seventhRow_Layout);
+        homeLayout = card.findViewById(R.id.firstRow_Layout);
+        manageCustomersLayout = card.findViewById(R.id.tenth_Layout);
+        manageContentLayout = card.findViewById(R.id.layout_manage_content);
+        manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
+        socialLayout = card.findViewById(R.id.eleventh_Layout);
+        keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
+        accountSettingsLayout =  card.findViewById(R.id.fifthRow_Layout);
+        upgradeLayout = card.findViewById(R.id.secondRow_Layout);
+        helpAndSupportLayout = card.findViewById(R.id.seventhRow_Layout);
+        aboutLayout = card.findViewById(R.id.layout_about);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
-        llGetInTouch = (LinearLayout) card.findViewById(R.id.ll_get_in_touch);
-        wildFireLayout = (LinearLayout) card.findViewById(R.id.wildfire_layout);
-        dictateLayout =  card.findViewById(R.id.dictate_layout);
-        bubbleLayout = (LinearLayout) card.findViewById(R.id.ninethRow_Layout);
-        analyticsLayout = (LinearLayout) card.findViewById(R.id.analytics_row_Layout);
-        //llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
 
-        if (session.getIsThinksity().equals("true")) {
-            chatLayout.setVisibility(View.GONE);
-            callLayout.setVisibility(View.GONE);
-            productGalleryLayout.setVisibility(View.GONE);
-        }
 
         if (session.getISEnterprise().equals("true")) {
-            profileLayout.setVisibility(View.GONE);
-            cspLayout.setVisibility(View.GONE);
-            wildFireLayout.setVisibility(View.GONE);
-            dictateLayout.setVisibility(View.GONE);
-            imageGalleryLayout.setVisibility(View.GONE);
-            businessAppsLayout.setVisibility(View.GONE);
-            chatLayout.setVisibility(View.GONE);
+            upgradeLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
-            callLayout.setVisibility(View.GONE);
+            helpAndSupportLayout.setVisibility(View.GONE);
             shareLayout.setVisibility(View.GONE);
-            productGalleryLayout.setVisibility(View.GONE);
-            Store_Layout.setVisibility(View.GONE);
         }
 
-        //customerQueries = (TextView) customerQueriesLayout.findViewById(R.id.thirdRow_TextView);
-        imageGalleryTextView = (TextView) imageGalleryLayout.findViewById(R.id.fourthRow_TextView);
-        productGalleryTextView = (TextView) productGalleryLayout.findViewById(R.id.Product_Gal_TextView);
-        StoreTextView = (TextView) Store_Layout.findViewById(R.id.storeRow_TextView);
         dashBoardTextView = (TextView) homeLayout.findViewById(R.id.firstrow_TextView);
         tvManageCustomers = (TextView) manageCustomersLayout.findViewById(R.id.tvManageCustomers);
-        tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
+        tvManageContent = (TextView) manageContentLayout.findViewById(R.id.tvManageContent);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
-        settingsText = (TextView) settingsLayout.findViewById(R.id.fifthRow_TextView);
-        analyticsText = (TextView) analyticsLayout.findViewById(R.id.analytics_row_TextView);
-        businessProfileTextView = (TextView) profileLayout.findViewById(R.id.secondRow_TextView);
-        cspTextView = (TextView) cspLayout.findViewById(R.id.csp_TextView);
-        businessAppTextview = (TextView) businessAppsLayout.findViewById(R.id.customer_app_TextView);
-        chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
-        callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
+        tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
+        accountSettingsText = (TextView) accountSettingsLayout.findViewById(R.id.fifthRow_TextView);
+        upgradeText = (TextView) upgradeLayout.findViewById(R.id.secondRow_TextView);
+        helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
+        aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
+        keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
-        wildFireText = (TextView) wildFireLayout.findViewById(R.id.wildfire_text);
-        dictateText = (TextView) dictateLayout.findViewById(R.id.dictate_text);
-        tvBoostBubble = (TextView) bubbleLayout.findViewById(R.id.ninethRow_TextView);
-        bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
-        //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
 
+        dasbBoardImageView = homeLayout.findViewById(R.id.firstrow_ImageView);
+        manageCustomerImageView = manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
+        manageContentImageView = manageContentLayout.findViewById(R.id.img_manage_content);
+        manageInventoryImageView = manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
+        socialImageView = socialLayout.findViewById(R.id.eleventh_ImageView);
+        accountSettingsImageView = accountSettingsLayout.findViewById(R.id.fifthRow_ImageView);
+        upgradeImageView = upgradeLayout.findViewById(R.id.secondRow_ImageView);
+        helpAndSupportImageView = helpAndSupportLayout.findViewById(R.id.seventhRow_ImageView);
+        aboutImageView = aboutLayout.findViewById(R.id.img_about);
+        shareImageView = shareLayout.findViewById(R.id.eigthRow_ImageView);
 //        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
 ////            if(session.isBoostBubbleEnabled()){
 ////                session.setBubbleTime(-1);
@@ -446,323 +390,116 @@ public class SidePanelFragment extends Fragment {
 //                }
 //            }
 //        });
-
-        lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
-        businessLockImage = (ImageView) businessAppsLayout.findViewById(R.id.business_lock_widget);
-        lockWidget_ProductGallery = (ImageView) productGalleryLayout.findViewById(R.id.lock_product_gal);
-        //lockWidgetImageView_BusinessEnq = (ImageView) customerQueriesLayout.findViewById(R.id.lock_widget_business_enquiries);
-        lockWidgetImageView_CSP = (ImageView) cspLayout.findViewById(R.id.lock_widget_csp);
-        //Constants.ImageGalleryWidget = false ;
-        newButton = (Button) businessAppsLayout.findViewById(R.id.new_business_button);
-        // Constants.BusinessEnquiryWidget = true;
-
-        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-            lockWidgetImageView.setVisibility(View.VISIBLE);
-        } else {
-            lockWidgetImageView.setVisibility(View.GONE);
-        }
-//        newButton.setVisibility(View.VISIBLE);
-
-        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
-            lockWidget_ProductGallery.setVisibility(View.VISIBLE);
-        } else {
-            lockWidget_ProductGallery.setVisibility(View.GONE);
-        }
-
-        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
-            //lockWidgetImageView_BusinessEnq.setVisibility(View.VISIBLE);
-
-        } else {
-            //lockWidgetImageView_BusinessEnq.setVisibility(View.GONE);
-        }
-
-        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES")) {
-            lockWidgetImageView_CSP.setVisibility(View.VISIBLE);
-        } else {
-            lockWidgetImageView_CSP.setVisibility(View.GONE);
-        }
-
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
-        businessProfileImageView = (ImageView) profileLayout.findViewById(R.id.secondRow_ImageView);
-        //customerQueriesImageView = (ImageView) customerQueriesLayout.findViewById(R.id.thirdRow_ImageView);
-        businessappImageView = (ImageView) businessAppsLayout.findViewById(R.id.customer_app_ImageView);
-        imageGalleryImageView = (ImageView) imageGalleryLayout.findViewById(R.id.fourthRow_ImageView);
+        keyboardImageView = (ImageView) keyboardLayout.findViewById(R.id.keyboard_ImageView);
         manageCustomerImageView = (ImageView) manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
         socialImageView = (ImageView) socialLayout.findViewById(R.id.eleventh_ImageView);
         manageInventoryImageView = (ImageView) manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
-        productGalleryImageView = (ImageView) productGalleryLayout.findViewById(R.id.Product_Gal_ImageView);
-        StoreImageView = (ImageView) Store_Layout.findViewById(R.id.storeRow_ImageView);
-        cspImageView = (ImageView) cspLayout.findViewById(R.id.csp_ImageView);
-        settingsImageView = (ImageView) settingsLayout.findViewById(R.id.fifthRow_ImageView);
-        chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
-        callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
-        wildFireImg = (ImageView) wildFireLayout.findViewById(R.id.wildfire_img);
-        dictateImg = (ImageView) dictateLayout.findViewById(R.id.dictate_img);
-        analyticsImageView = (ImageView) analyticsLayout.findViewById(R.id.analytics_row_ImageView);
         //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
         dashBoardTextView.setTypeface(robotoMedium);
+        tvManageCustomers.setTypeface(robotoMedium);
+        tvManageContent.setTypeface(robotoMedium);
+        tvManageInventory.setTypeface(robotoMedium);
+        tvSocialSharing.setTypeface(robotoMedium);
+        accountSettingsText.setTypeface(robotoMedium);
+        upgradeText.setTypeface(robotoMedium);
+        helpAndSupportText.setTypeface(robotoMedium);
+        aboutText.setTypeface(robotoMedium);
+        shareText.setTypeface(robotoMedium);
+
         homeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //dashBoardTextView.setTextColor(Color.);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_DASHBOARD, null);
                 onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);
             }
         });
 
-        businessProfileTextView.setTypeface(robotoMedium);
-        profileLayout.setOnClickListener(new View.OnClickListener() {
+        upgradeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_profile));
-                onclickColorChange(businessProfileImageView, businessProfileTextView, profileLayout);
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.upgrades));
+                onclickColorChange(upgradeImageView, upgradeText, upgradeLayout);
+            }
+        });
+        keyboardTextView.setTypeface(robotoMedium);
+        keyboardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
+                onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
             }
         });
 
-        analyticsText.setTypeface(robotoMedium);
-        analyticsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.deeplink_analytics));
-                onclickColorChange(analyticsImageView, analyticsText, analyticsLayout);
-                MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
-            }
-        });
-        wildFireText.setTypeface(robotoMedium);
-        wildFireLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick("wildfire");
-                onclickColorChange(wildFireImg, wildFireText, wildFireLayout);
-            }
-        });
-        dictateText.setTypeface(robotoMedium);
-        dictateLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick("dictate");
-                onclickColorChange(dictateImg, dictateText, dictateLayout);
-            }
-        });
-        /*tvSiteAppearance.setTypeface(robotoMedium);
-        llSiteAppearance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick(getResources().getString(R.string.side_panel_site_appearance));
-                onclickColorChange(ivSiteAppearance, tvSiteAppearance);
-                //MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
-            }
-        });*/
-
-        //customerQueries.setTypeface(robotoMedium);
-        /*customerQueriesLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(enqCount.getVisibility()==View.VISIBLE){
-                    enqCount.setVisibility(View.INVISIBLE);
-                    session.setEnquiryCount(session.getLatestEnqCount());
-                }
-                onclickColorChange(customerQueriesImageView, customerQueries, customerQueriesLayout);
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_enquiries_title));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
-                } else {
-                    showAlertMaterialDialog();
-                }
-            }
-        });*/
-
-        imageGalleryTextView.setTypeface(robotoMedium);
-        imageGalleryLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onclickColorChange(imageGalleryImageView, imageGalleryTextView, imageGalleryLayout);
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.image_gallery));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_IMAGE_GALLERY, null);
-                } else {
-                    showAlertMaterialDialog();
-                }
-            }
-        });
-
-        tvManageCustomers.setTypeface(robotoMedium);
         manageCustomersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onclickColorChange(manageCustomerImageView, tvManageCustomers, manageCustomersLayout);
-//                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customers));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_CUSTOMERS, null);
-//                } else {
-//                    showAlertMaterialDialog();
-//                }
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customers));
             }
         });
 
-        tvSocialSharing.setTypeface(robotoMedium);
+        manageContentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onclickColorChange(manageContentImageView, tvManageContent, manageContentLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_content));
+            }
+        });
+
+
         socialLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onclickColorChange(socialImageView, tvSocialSharing, socialLayout);
-//                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.title_activity_social__sharing_));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_THIRD_PARTY_INTEGRATIONS, null);
-//                } else {
-//                    showAlertMaterialDialog();
-//                }
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.title_activity_social__sharing_));
             }
         });
 
-        tvManageInventory.setTypeface(robotoMedium);
+        aboutLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onclickColorChange(aboutImageView, aboutText, aboutLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.about));
+            }
+        });
+
+
         manageInventoryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onclickColorChange(manageInventoryImageView, tvManageInventory, manageInventoryLayout);
-//                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-
-//                } else {
-//                    showAlertMaterialDialog();
-//                }
             }
         });
 
-        productGalleryTextView.setTypeface(robotoMedium);
-        productGalleryLayout.setOnClickListener(new View.OnClickListener() {
+
+        accountSettingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(productGalleryImageView, productGalleryTextView, productGalleryLayout);
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.product_gallery));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                } else {
-                    showAlertMaterialDialog();
-                }
+                onclickColorChange(accountSettingsImageView, accountSettingsText, accountSettingsLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.account_settings));
             }
         });
 
-        StoreTextView.setTypeface(robotoMedium);
-        Store_Layout.setOnClickListener(new View.OnClickListener() {
+        helpAndSupportLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(StoreImageView, StoreTextView, Store_Layout);
-                ((OnItemClickListener) mainActivity).onClick("Store");
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.help_and_support));
+                onclickColorChange(helpAndSupportImageView, helpAndSupportText, helpAndSupportLayout);
             }
         });
 
-        cspTextView.setTypeface(robotoMedium);
-        cspLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES")) {
-                    onclickColorChange(cspImageView, cspTextView, cspLayout);
-                    ((OnItemClickListener) mainActivity).onClick("csp");
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                } else {
-                    showAlertMaterialDialog();
-                }
-            }
-        });
-
-        settingsText.setTypeface(robotoMedium);
-        callText.setTypeface(robotoMedium);
-        chatText.setTypeface(robotoMedium);
-        shareText.setTypeface(robotoMedium);
-
-        settingsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onclickColorChange(settingsImageView, settingsText, settingsLayout);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.setting));
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_SETTINGS, null);
-            }
-        });
-
-        chatLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onclickColorChange(null, chatText, chatLayout);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.chat));
-                MixPanelController.track("ChatWithRia", null);
-            }
-        });
-
-        callLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MixPanelController.track("ContactUs", null);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.call));
-                onclickColorChange(callImageView, callText, callLayout);
-            }
-        });
-        businessAppTextview.setTypeface(robotoMedium);
-        businessAppsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                MixPanelController.track(MixPanelController.BUSINESS_APP, null);
-                onclickColorChange(businessappImageView, businessAppTextview, businessAppsLayout);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
-
-            }
-        });
         shareLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("ShareFromSidepanel", null);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.share));
-                onclickColorChange(shareImageView, shareText, shareLayout);
+                //onclickColorChange(shareImageView, shareText, shareLayout);
             }
         });
 
-        /*if(checkExpiry()){
-            llSiteAppearance.setVisibility(View.GONE);
-        }*/
-        llGetInTouch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String headerValue = getResources().getString(R.string.settings_feedback_link);     //"create@prostinnovation.com";
-
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", headerValue, null));
-                getActivity().startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
-            }
-        });
-        //enqCount = (TextView)view.findViewById(R.id.enquiry_count_textview);
-        //Log.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
-       /* RequestQueue queue = AppController.getInstance().getRequestQueue();
-        BoostLog.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
-        /*RequestQueue queue = AppController.getInstance().getRequestQueue();
-        StringRequest beCountRequest = new StringRequest(Request.Method.GET, Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(!Util.isNullOrEmpty(session.getEnquiryCount())){
-                    Constants.enqCount = Integer.parseInt(response)-Integer.parseInt(session.getEnquiryCount());
-                    if(*//*Constants.enqCount > 0 && lockWidgetImageView_BusinessEnq.getVisibility()!=View.VISIBLE*//*false){
-                        //enqCount.setVisibility(View.VISIBLE);
-                        //enqCount.setText(Constants.enqCount + "");
-                    }
-                    session.setLatestEnqCount(response+"");
-                }else {
-                    session.setEnquiryCount(response);
-                }
-                BoostLog.d("Response Business Enquiry: ", response + "");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                BoostLog.d("Error Business Enquiry: ", error.getMessage());
-            }
-        });
-        queue.add(beCountRequest);*/
 
         view.findViewById(R.id.tv_write_to_ria_info).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -771,7 +508,7 @@ public class SidePanelFragment extends Fragment {
             }
         });
 
-
+        onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);
     }
 
     private void showMailDetailDilaog() {
@@ -790,227 +527,7 @@ public class SidePanelFragment extends Fragment {
                 }).show();
     }
 
-
-    private boolean checkExpiry() {
-        boolean flag = false;
-        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
-        long expiryTime = -1;
-        if (strExpiryTime != null) {
-            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
-        }
-        if (expiryTime != -1 && ((expiryTime - System.currentTimeMillis()) / 86400000 < 180) && !session.getWebTemplateType().equals("6")) {
-            flag = true;
-        }
-        return flag;
-    }
-
-    private void showAlertMaterialDialog() {
-        new MaterialDialog.Builder(getActivity())
-                .title(getString(R.string.features_not_available))
-                .content(Html.fromHtml(getString(R.string.check_store_for_upgrade_info)))
-                .positiveText(getString(R.string.goto_store))
-                .negativeText(getString(R.string.cancel))
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.light_gray)
-                .callback(new MaterialDialog.ButtonCallback() {
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-//                        Constants.showStoreScreen = true ;
-//                        getActivity().getSupportFragmentManager().popBackStack();
-                        if (!getString(R.string.goto_store).equalsIgnoreCase("ok"))//this condition added for flavor check
-                            ((OnItemClickListener) mainActivity).onClick("Store");
-
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
-
     public static int getCategoryBackgroundImage(String category) {
-//        backgroundImages.put("GENERALSERVICES", R.drawable.general_services_background_img);
-        /*if(category.contains("GENERALSERVICES"))
-        {
-            return R.drawable.general_services_background_img;
-        }else
-//        backgroundImages.put("ARCHITECTURE",R.drawable.architecture_background_img);
-        if(category.contains("ARCHITECTURE"))
-        {
-            return R.drawable.architecture_background_img;
-        }else
-//        backgroundImages.put("AUTOMOTIVE",R.drawable.automotive_background_img);
-        if(category.contains("AUTOMOTIVE"))
-        {
-            return R.drawable.automotive_background_img;
-        }else
-//        backgroundImages.put("BLOGS",R.drawable.blogs_background_img);
-        if(category.contains("BLOGS"))
-        {
-            return R.drawable.blogs_background_img;
-        }else
-//        backgroundImages.put("EDUCATION",R.drawable.education_background_img);
-        if(category.contains("EDUCATION"))
-        {
-            return R.drawable.education_background_img;
-        }else
-//        backgroundImages.put("ELECTRONICS", R.drawable.electronics_background_img);
-        if(category.contains("ELECTRONICS"))
-        {
-            return R.drawable.electronics_background_img;
-        }else
-//        backgroundImages.put("ENTERTAINMENT",R.drawable.entertainment_background_img);
-        if(category.contains("ENTERTAINMENT"))
-        {
-            return R.drawable.entertainment_background_img;
-        }else
-//        backgroundImages.put("EVENTS",R.drawable.events_background_img);
-        if(category.contains("EVENTS"))
-        {
-            return R.drawable.events_background_img;
-        }else
-//        backgroundImages.put("F&B-BAKERY",R.drawable.fb_bakery_background_img);
-        if(category.contains("F&B-BAKERY"))
-        {
-            return R.drawable.fb_bakery_background_img;
-        }else
-//        backgroundImages.put("F&B-BARS",R.drawable.fb_bars_background_img);
-        if(category.contains("F&B-BARS"))
-        {
-            return R.drawable.fb_bars_background_img;
-        }else
-
-//        backgroundImages.put("F&B-CAFE",R.drawable.fb_cafe_background_img);
-        if(category.contains("F&B-CAFE"))
-        {
-            return R.drawable.fb_cafe_background_img;
-        }else
-//        backgroundImages.put("F&B-RESTAURANTS", R.drawable.fb_restaurants_background_img);
-        if(category.contains("F&B-RESTAURANTS"))
-        {
-            return R.drawable.fb_restaurants_background_img;
-        }else
-//        backgroundImages.put("FASHION-APPAREL",R.drawable.fashion_apparel_background_img);
-        if(category.contains("FASHION-APPAREL"))
-        {
-            return R.drawable.fashion_apparel_background_img;
-        }else
-//        backgroundImages.put("FASHION-FOOTWEAR",R.drawable.fashion_footwear_background_img);
-        if(category.contains("FASHION-FOOTWEAR"))
-        {
-            return R.drawable.fashion_footwear_background_img;
-        }else
-//        backgroundImages.put("FLOWERSSHOP",R.drawable.flower_shop_background_img);
-        if(category.contains("FLOWERSSHOP"))
-        {
-            return R.drawable.flower_shop_background_img;
-        }else
-//        backgroundImages.put("FURNITURE",R.drawable.furniture_background_img);
-        if(category.contains("FURNITURE"))
-        {
-            return R.drawable.furniture_background_img;
-        }else
-//        backgroundImages.put("GIFTS&NOVELTIES", R.drawable.gifts_novelties_background_img);
-        if(category.contains("GIFTS&NOVELTIES"))
-        {
-            return R.drawable.gifts_novelties_background_img;
-        }else
-//        backgroundImages.put("HEALTH&FITNESS",R.drawable.health_fitness_background_img);
-        if(category.contains("HEALTH&FITNESS"))
-        {
-            return R.drawable.health_fitness_background_img;
-        }else
-//        backgroundImages.put("HOMEAPPLICANCES",R.drawable.home_appliances_background_img);
-        if(category.contains("HOMEAPPLICANCES"))
-        {
-            return R.drawable.home_appliances_background_img;
-        }else
-//        backgroundImages.put("HOMECARE",R.drawable.home_care_background_img);
-        if(category.contains("HOMECARE"))
-        {
-            return R.drawable.home_care_background_img;
-        }else
-//        backgroundImages.put("HOMEMAINTENANCE",R.drawable.home_maintenance_background_img);
-        if(category.contains("HOMEMAINTENANCE"))
-        {
-            return R.drawable.home_maintenance_background_img;
-        }else
-//        backgroundImages.put("HOTEL&MOTELS",R.drawable.hotel_motels_background_img);
-        if(category.contains("HOTEL&MOTELS"))
-        {
-            return R.drawable.hotel_motels_background_img;
-        }else
-//        backgroundImages.put("INTERIORDESIGN",R.drawable.interior_design_background_img);
-        if(category.contains("INTERIORDESIGN"))
-        {
-            return R.drawable.interior_design_background_img;
-        }else
-//        backgroundImages.put("MEDICAL-DENTAL",R.drawable.medical_dental_background_img);
-        if(category.contains("MEDICAL-DENTAL"))
-        {
-            return R.drawable.medical_dental_background_img;
-        }else
-//        backgroundImages.put("MEDICAL-GENERAL",R.drawable.medical_general_background_img);
-        if(category.contains("MEDICAL-GENERAL"))
-        {
-            return R.drawable.medical_general_background_img;
-        }else
-//        backgroundImages.put("NATAURAL&AYURVEDA",R.drawable.natural_ayurveda_background_img);
-        if(category.contains("NATAURAL&AYURVEDA"))
-        {
-            return R.drawable.natural_ayurveda_background_img;
-        }else
-//        backgroundImages.put("KINDERGARTEN",R.drawable.kinder_garten_background_img);
-        if(category.contains("KINDERGARTEN"))
-        {
-            return R.drawable.kinder_garten_background_img;
-        }else
-//        backgroundImages.put("PETS",R.drawable.pets_background_img);
-        if(category.contains("PETS"))
-        {
-            return R.drawable.pets_background_img;
-        }else
-//        backgroundImages.put("PHOTOGRAPHY", R.drawable.photography_background_img);
-        if(category.contains("PHOTOGRAPHY"))
-        {
-            return R.drawable.photography_background_img;
-        }else
-//        backgroundImages.put("REALESTATE&CONSTRUCTION",R.drawable.real_estate_construction_background_img);
-        if(category.contains("REALESTATE&CONSTRUCTION"))
-        {
-            return R.drawable.real_estate_construction_background_img;
-        }else
-//        backgroundImages.put("SPA",R.drawable.spa_background_img);
-        if(category.contains("SPA"))
-        {
-            return R.drawable.spa_background_img;
-        }else
-//        backgroundImages.put("SPORTS",R.drawable.sports_background_img);
-        if(category.contains("SPORTS"))
-        {
-            return R.drawable.sports_background_img;
-        }else
-//        backgroundImages.put("TOURISM",R.drawable.tourism_background_img);
-        if(category.contains("TOURISM"))
-        {
-            return R.drawable.tourism_background_img;
-        }else
-//        backgroundImages.put("WATCHES&JEWELRY",R.drawable.watches_jewelry_background_img);
-        if(category.contains("WATCHES&JEWELRY"))
-        {
-            return R.drawable.watches_jewelry_background_img;
-        }else
-//        backgroundImages.put("OTHERRETAIL", R.drawable.other_retail_background_img);
-        if(category.contains("OTHERRETAIL"))
-        {
-            return R.drawable.other_retail_background_img;
-        }*/
 
         return R.drawable.general_services_background_img;
     }
@@ -1027,26 +544,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    lockWidgetImageView.setVisibility(View.VISIBLE);
-                } else {
-                    lockWidgetImageView.setVisibility(View.GONE);
-                }
-                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
-                    lockWidget_ProductGallery.setVisibility(View.VISIBLE);
-                } else {
-                    lockWidget_ProductGallery.setVisibility(View.GONE);
-                }
-                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
-                    //lockWidgetImageView_BusinessEnq.setVisibility(View.VISIBLE);
-                } else {
-                    //lockWidgetImageView_BusinessEnq.setVisibility(View.GONE);
-                }
-                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES")) {
-                    lockWidgetImageView_CSP.setVisibility(View.VISIBLE);
-                } else {
-                    lockWidgetImageView_CSP.setVisibility(View.GONE);
-                }
+
                 if (!mUserLearnedDrawer) {
                     mUserLearnedDrawer = true;
                     saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
@@ -1064,7 +562,8 @@ public class SidePanelFragment extends Fragment {
             public void onDrawerClosed(View drawerView) {
 
                 super.onDrawerClosed(drawerView);
-                getActivity().invalidateOptionsMenu();
+                if (getActivity() != null)
+                    getActivity().invalidateOptionsMenu();
             }
 
             @Override
@@ -1093,40 +592,7 @@ public class SidePanelFragment extends Fragment {
             public void run() {
                 if (backgroundImages.size() == 0) {
                     backgroundImages.put("GENERALSERVICES", R.drawable.general_services_background_img);
-                  /*backgroundImages.put("ARCHITECTURE",R.drawable.architecture_background_img);
-                    backgroundImages.put("AUTOMOTIVE",R.drawable.automotive_background_img);
-                    backgroundImages.put("BLOGS",R.drawable.blogs_background_img);
-                    backgroundImages.put("EDUCATION",R.drawable.education_background_img);
-                    backgroundImages.put("ELECTRONICS", R.drawable.electronics_background_img);
-                    backgroundImages.put("ENTERTAINMENT",R.drawable.entertainment_background_img);
-                    backgroundImages.put("EVENTS",R.drawable.events_background_img);
-                    backgroundImages.put("F&B-BAKERY",R.drawable.fb_bakery_background_img);
-                    backgroundImages.put("F&B-BARS",R.drawable.fb_bars_background_img);
-                    backgroundImages.put("F&B-CAFE",R.drawable.fb_cafe_background_img);
-                    backgroundImages.put("F&B-RESTAURANTS", R.drawable.fb_restaurants_background_img);
-                    backgroundImages.put("FASHION-APPAREL",R.drawable.fashion_apparel_background_img);
-                    backgroundImages.put("FASHION-FOOTWEAR",R.drawable.fashion_footwear_background_img);
-                    backgroundImages.put("FLOWERSSHOP",R.drawable.flower_shop_background_img);
-                    backgroundImages.put("FURNITURE",R.drawable.furniture_background_img);
-                    backgroundImages.put("GIFTS&NOVELTIES", R.drawable.gifts_novelties_background_img);
-                    backgroundImages.put("HEALTH&FITNESS",R.drawable.health_fitness_background_img);
-                    backgroundImages.put("HOMEAPPLICANCES",R.drawable.home_appliances_background_img);
-                    backgroundImages.put("HOMECARE",R.drawable.home_care_background_img);
-                    backgroundImages.put("HOMEMAINTENANCE",R.drawable.home_maintenance_background_img);
-                    backgroundImages.put("HOTEL&MOTELS",R.drawable.hotel_motels_background_img);
-                    backgroundImages.put("INTERIORDESIGN",R.drawable.interior_design_background_img);
-                    backgroundImages.put("MEDICAL-DENTAL",R.drawable.medical_dental_background_img);
-                    backgroundImages.put("MEDICAL-GENERAL",R.drawable.medical_general_background_img);
-                    backgroundImages.put("NATAURAL&AYURVEDA",R.drawable.natural_ayurveda_background_img);
-                    backgroundImages.put("KINDERGARTEN",R.drawable.kinder_garten_background_img);
-                    backgroundImages.put("PETS",R.drawable.pets_background_img);
-                    backgroundImages.put("PHOTOGRAPHY", R.drawable.photography_background_img);
-                    backgroundImages.put("REALESTATE&CONSTRUCTION",R.drawable.real_estate_construction_background_img);
-                    backgroundImages.put("SPA",R.drawable.spa_background_img);
-                    backgroundImages.put("SPORTS",R.drawable.sports_background_img);
-                    backgroundImages.put("TOURISM",R.drawable.tourism_background_img);
-                    backgroundImages.put("WATCHES&JEWELRY",R.drawable.watches_jewelry_background_img);
-                    backgroundImages.put("OTHERRETAIL", R.drawable.other_retail_background_img);*/
+
                 }
             }
         }).start();
@@ -1312,64 +778,11 @@ public class SidePanelFragment extends Fragment {
             }
         }
         if (session.getISEnterprise().equals("true")) {
-            profileLayout.setVisibility(View.GONE);
-            imageGalleryLayout.setVisibility(View.GONE);
-            chatLayout.setVisibility(View.GONE);
+            upgradeLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
         }
-       // bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
-
-        // mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
-    /*public void siteMeterCalculation(){
-
-        siteMeterTotalWeight = 0;
-
-        if(HomeActivity.StorebizFloats.size()<5 && fiveUpdatesDone == false)
-        {
-            siteMeterTotalWeight+=onUpdate;
-        }else{
-            fiveUpdatesDone = true;
-            siteMeterTotalWeight+=25;
-        }
-
-        if(!Util.isNullOrEmpty(Constants.StoreName)  ){
-            siteMeterTotalWeight+=businessNameWeight;
-              }
-
-        if(Util.isNullOrEmpty(Constants.FACEBOOK_USER_ID))
-        {
-            siteMeterTotalWeight += twitterWeight;
-        }
-
-        if(!Util.isNullOrEmpty(Constants.StoreDescription)){
-            siteMeterTotalWeight+=businessDescriptionWeight;
-               }
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))){
-            siteMeterTotalWeight+=businessCategoryWeight;
-              }
-        if(Constants.StoreContact != null){
-            siteMeterTotalWeight+=phoneWeight;
-             }
-        if(!Util.isNullOrEmpty(Constants.StoreEmail)){
-            siteMeterTotalWeight+=emailWeight;
-             }
-        if(!Util.isNullOrEmpty(Constants.StoreAddress)){
-            siteMeterTotalWeight+=businessAddressWeight;}
-
-        if(!Util.isNullOrEmpty(Constants.storePrimaryImage)){
-            siteMeterTotalWeight+=featuredImageWeight;
-        }
-
-        if(Constants.websiteShared == true){
-            siteMeterTotalWeight += 5;
-
-        }
-
-        progressbar.setProgress(siteMeterTotalWeight);
-        meterValue.setText(siteMeterTotalWeight+"%");
-    }*/
     public void siteMeterCalculation() {
         Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
@@ -1431,67 +844,43 @@ public class SidePanelFragment extends Fragment {
 
     private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        //customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
-        imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        callText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        tvBoostBubble.setTextColor(getResources().getColor(R.color.cell_text_color));
-        businessAppTextview.setTextColor(getResources().getColor(R.color.cell_text_color));
+        keyboardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
-        tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvManageContent.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
-        analyticsText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        wildFireText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        dictateText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
+        accountSettingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        upgradeText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        helpAndSupportText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        aboutText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
 
-        shareImageView.setColorFilter(defaultLabelFilter);
+
+
         dasbBoardImageView.setColorFilter(defaultLabelFilter);
-        businessappImageView.setColorFilter(defaultLabelFilter);
-        businessProfileImageView.setColorFilter(defaultLabelFilter);
-        //customerQueriesImageView.setColorFilter(defaultLabelFilter);
-        imageGalleryImageView.setColorFilter(defaultLabelFilter);
-        productGalleryImageView.setColorFilter(defaultLabelFilter);
-        StoreImageView.setColorFilter(defaultLabelFilter);
-        cspImageView.setColorFilter(defaultLabelFilter);
-        settingsImageView.setColorFilter(defaultLabelFilter);
-        callImageView.setColorFilter(defaultLabelFilter);
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
-        socialImageView.setColorFilter(defaultLabelFilter);
+        keyboardImageView.setColorFilter(defaultLabelFilter);
+        manageContentImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
-        analyticsImageView.setColorFilter(defaultLabelFilter);
-        wildFireImg.setColorFilter(defaultLabelFilter);
-        dictateImg.setColorFilter(defaultLabelFilter);
-        //ivSiteAppearance.setColorFilter(defaultLabelFilter);
+        socialImageView.setColorFilter(defaultLabelFilter);
+        accountSettingsImageView.setColorFilter(defaultLabelFilter);
+        upgradeImageView.setColorFilter(defaultLabelFilter);
+        helpAndSupportImageView.setColorFilter(defaultLabelFilter);
+        aboutImageView.setColorFilter(defaultLabelFilter);
+        shareImageView.setColorFilter(defaultLabelFilter);
 
 
         homeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        profileLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        //analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        //storeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        //customerQueriesLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        imageGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageCustomersLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        socialLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        keyboardLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        manageContentLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageInventoryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        businessAppsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        cspLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        productGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        Store_Layout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        settingsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        chatLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        callLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        socialLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        accountSettingsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        upgradeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        helpAndSupportLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        aboutLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        llGetInTouch.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        wildFireLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        dictateLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
         if (tv != null) {

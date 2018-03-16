@@ -70,10 +70,11 @@ public class SmsReceiver extends BroadcastReceiver {
                         .build();
                 FirebaseApp secondApp = null;
                 try {
-                    secondApp = FirebaseApp.getInstance("second app");
+                    secondApp = FirebaseApp.initializeApp(context, options, "second app");
+
                 }catch(Exception e) {
                     try {
-                        secondApp = FirebaseApp.initializeApp(context, options, "second app");
+                        secondApp = FirebaseApp.getInstance("second app");
                     }catch(Exception e1){
                         e1.printStackTrace();
                     }

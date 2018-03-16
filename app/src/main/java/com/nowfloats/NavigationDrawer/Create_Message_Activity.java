@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
@@ -47,7 +47,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
+import com.nowfloats.CustomWidget.CustomTagLayout;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.API.RiaUpdateApis;
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
@@ -66,8 +68,13 @@ import com.thinksity.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class Create_Message_Activity extends AppCompatActivity {
@@ -116,6 +123,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private CardView image_card,title_card,message_card;
     private ImageView deleteButton,editButton, ivSpeakUpdate;
     private boolean isMsgChanged = false,isImageChanged = false;
+    public static final String SHORTCUT_ID = "create_update";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -304,7 +312,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     } else {
                         Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                         startActivity(i);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
             }
         });
@@ -389,7 +397,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     } else {
                         Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                         startActivity(i);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
 
             }
@@ -419,7 +427,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     } else {
                         Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                         startActivity(i);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
 
             }
@@ -495,7 +503,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 }
             }
         }
-
+        showUpdateKeywords();
         ivSpeakUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -504,6 +512,45 @@ public class Create_Message_Activity extends AppCompatActivity {
         });
     }
 
+    private void showUpdateKeywords(){
+
+        Constants.riaMemoryRestAdapter
+                .create(RiaUpdateApis.class)
+                .getUpdateKeywordSuggestions(session.getFpTag(), new Callback<ArrayList<String>>() {
+                    @Override
+                    public void success(ArrayList<String> strings, Response response) {
+                        if (strings != null && strings.size()>0){
+                            CustomTagLayout customTagLayout = findViewById(R.id.tag_layout);
+                            customTagLayout.setVisibility(View.VISIBLE);
+                            Collections.shuffle(strings);
+                            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            param.setMargins(10,10,10,10);
+                            for (String s:strings.subList(0,strings.size()>=6?6:strings.size())){
+                                TextView text = new TextView(Create_Message_Activity.this);
+                                text.setOnClickListener(tagListener);
+                                text.setText(s);
+                                text.setPadding(10,10,10,10);
+                                text.setTextColor(ContextCompat.getColor(Create_Message_Activity.this,R.color.white));
+                                text.setBackgroundResource(R.drawable.text_tag_bg);
+                                text.setLayoutParams(param);
+                                customTagLayout.addView(text);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                    }
+                });
+    }
+    private View.OnClickListener tagListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            MixPanelController.track(MixPanelController.UPDATE_TIPS_CLICK,null);
+            TextView tagText = (TextView) view;
+            msg.append(tagText.getText());
+        }
+    };
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -582,6 +629,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
         ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+        header.setText("Upload Image");
         cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
         galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
 
@@ -614,51 +662,11 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
     }
 
-    public void choosePictureOptionDilog() {
-        Typeface robotoMedium = Typeface.createFromAsset(Create_Message_Activity.this.getAssets(),"Roboto-Medium.ttf");
-        Typeface robotoLight = Typeface.createFromAsset(Create_Message_Activity.this.getAssets(),"Roboto-Light.ttf");
-
-        final MaterialDialog dialog = new MaterialDialog.Builder(Create_Message_Activity.this)
-                .customView(R.layout.featuredimage_popup,true)
-                .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-
-        View view = dialog.getCustomView();
-        TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        header.setTypeface(robotoMedium);
-        header.setText("Upload Photo");
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        TextView cameraTextView = (TextView) view.findViewById(R.id.alert_message_text);
-        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
-
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
-
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
-    }
-
     public void galleryIntent() {
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                    PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         gallery_req_id);
             }
             else {
@@ -684,15 +692,19 @@ public class Create_Message_Activity extends AppCompatActivity {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
+            }else{
+                Toast.makeText(activity, "Please give storage and camera permission", Toast.LENGTH_SHORT).show();
             }
 
         }
         else if(requestCode==gallery_req_id)
         {
             if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
 
+            }else{
+                Toast.makeText(activity, "Please give read storage permission", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -701,10 +713,11 @@ public class Create_Message_Activity extends AppCompatActivity {
         try {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
+
             }
             else {
                 mIsImagePicking = true;

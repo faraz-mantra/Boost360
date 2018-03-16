@@ -64,6 +64,8 @@ public class PreSignUpActivity extends FragmentActivity {
 
                 MixPanelController.track(EventKeysWL.LOGIN_BUTTON, null);
                 Intent intent = new Intent(PreSignUpActivity.this, Login_MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtras(getIntent());
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
@@ -78,10 +80,12 @@ public class PreSignUpActivity extends FragmentActivity {
                 Intent signUpIntent = null;
                 if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                     signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
+                    signUpIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(signUpIntent);
                     finish();
                 }else{
                     signUpIntent = new Intent(PreSignUpActivity.this,PreSignUpActivityRia.class);
+                    signUpIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     Bundle bundle = new Bundle();
                     bundle.putBundle("mBundle",new Bundle());
                     signUpIntent.putExtras(bundle);

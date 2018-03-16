@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -52,9 +53,10 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
         try {
             Glide.with(this)
                     .load(url)
+                    .apply(new RequestOptions()
                     .placeholder(R.drawable.default_product_image)
                     .centerCrop()
-                    .error(R.drawable.default_product_image)
+                    .error(R.drawable.default_product_image))
                     .into((ImageView) findViewById(R.id.img_address));
         } catch (Exception e) {
             e.printStackTrace();

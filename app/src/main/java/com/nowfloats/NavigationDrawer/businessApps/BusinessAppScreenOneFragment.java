@@ -21,7 +21,7 @@ import com.thinksity.R;
 
 public class BusinessAppScreenOneFragment extends Fragment {
 
-    int[] circleImages={R.drawable.businessapp_first,R.drawable.businessapp_second,
+    public final static int[] circleImages={R.drawable.businessapp_first,R.drawable.businessapp_second,
             R.drawable.businessapp_third,R.drawable.businessapp_fourth};
     int position=-1;
     private String[] boldTextsArray,smallTextsArray;

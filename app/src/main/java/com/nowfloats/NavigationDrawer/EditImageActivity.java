@@ -52,8 +52,8 @@ public class EditImageActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra("image")){
             try {
-                String picUri = getIntent().getStringExtra("image");
-                cropImageView.setImageBitmap(Util.getBitmap(picUri,EditImageActivity.this));
+                cropImageView.setImageBitmap(Util.getBitmap( getIntent().getStringExtra("image"),EditImageActivity.this));
+                cropImageView.setFixedAspectRatio(getIntent().getBooleanExtra("isFixedAspectRatio",false));
             }catch(OutOfMemoryError error){error.printStackTrace(); System.gc();
             }catch(Exception e){e.printStackTrace();}
         }

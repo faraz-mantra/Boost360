@@ -192,6 +192,21 @@
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/primaryColor"
                 app:met_singleLineEllipsis="true" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_available_unit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_text_color"
+                android:textSize="15sp"
+                android:inputType="number|numberDecimal"
+                fontPath="Roboto-Light.ttf"
+                tools:ignore="MissingPrefix"
+                android:layout_marginBottom="5dp"
+                android:textColorHint="@color/primaryColor"
+                android:hint="Available Units"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/primaryColor"
+                app:met_singleLineEllipsis="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"

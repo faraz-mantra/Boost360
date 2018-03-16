@@ -51,7 +51,9 @@ public class PhoneStates extends BroadcastReceiver {
         fpId = pref.getString(Constants.FP_ID, null);
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            mobileId = tm.getDeviceId();
+            if (tm != null) {
+                mobileId = tm.getDeviceId();
+            }
         }
 
         if (mobileId == null || fpId == null) {

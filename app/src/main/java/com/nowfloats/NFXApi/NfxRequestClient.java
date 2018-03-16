@@ -269,7 +269,7 @@ public class NfxRequestClient {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse response  = error.networkResponse;
-                if(response.statusCode == 400){
+                if(response != null && response.statusCode == 400){
                     JSONObject res = new JSONObject();
                     try {
                         res.put("message","profile_incomplete");
@@ -277,7 +277,7 @@ public class NfxRequestClient {
                         e.printStackTrace();
                     }
                     mCallBackListener.nfxCallBack("profile_incomplete", getmCallType(), getmName());
-                }else if(response.statusCode != 200){
+                }else if(response == null || response.statusCode != 200){
                     mCallBackListener.nfxCallBack("error", getmCallType(), getmName());
                 }
 

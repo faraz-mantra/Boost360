@@ -16,8 +16,6 @@
             android:background="@color/screen_bg"
             android:orientation="vertical"
             android:paddingTop="3dp"
-
-
             >
 
             <ImageView
@@ -79,6 +77,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="5dp"
+                android:visibility="gone"
                 android:scaleType="fitCenter"
                 android:src="@drawable/site_appearance" />
 
@@ -89,6 +88,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="5dp"
+                android:visibility="gone"
                 android:scaleType="fitCenter"
                 android:src="@drawable/sidepanel_gallery" />
 
@@ -99,6 +99,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="5dp"
+                android:visibility="gone"
                 android:scaleType="fitCenter"
                 android:src="@drawable/custom_page_icon" />
 
@@ -109,6 +110,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:scaleType="fitCenter"
                 android:tint="@color/gray"
                 android:src="@drawable/insert_link" />
@@ -229,15 +231,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="288dp"
-                    android:layout_height="1dp"
-                    android:background="#d3d3d3" />
-
                 <TextView
                     android:id="@+id/tvSiteAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textview_height_business_profile"
+                    android:visibility="gone"
                     android:background="?android:selectableItemBackground"
                     android:gravity="center_vertical"
                     android:text="@string/side_panel_site_appearance"
@@ -245,40 +243,27 @@
                     android:textSize="@dimen/cell_text_size" />
             </LinearLayout>
 
-            <View
-                android:layout_width="288dp"
-                android:layout_height="1dp"
-                android:background="#d3d3d3" />
-
             <TextView
                 android:id="@+id/tvPhotoGallery"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/textview_height_business_profile"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:text="@string/side_panel_row_four"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
-
-            <View
-                android:layout_width="288dp"
-                android:layout_height="1dp"
-                android:background="#d3d3d3" />
 
             <TextView
                 android:id="@+id/tvCustomPages"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/textview_height_business_profile"
+                android:visibility="gone"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/side_panel_row_csp"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
-
-            <View
-                android:layout_width="288dp"
-                android:layout_height="1dp"
-                android:background="#d3d3d3" />
 
             <TextView
                 android:id="@+id/tvDomainDetails"
@@ -287,6 +272,7 @@
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/side_panel_row_domain_details"
+                android:visibility="gone"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 

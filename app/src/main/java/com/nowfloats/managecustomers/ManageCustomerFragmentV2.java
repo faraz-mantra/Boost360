@@ -29,7 +29,6 @@ import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Image_Gallery.FullScreenImage;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -40,6 +39,8 @@ import com.thinksity.R;
 
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
+
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -114,14 +115,15 @@ public class ManageCustomerFragmentV2 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText(getResources().getString(R.string.manage_customers));
+        if (headerText != null)
+            headerText.setText(getResources().getString(R.string.manage_customers));
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        HomeActivity.headerText.setText(Constants.StoreName);
+        if (headerText != null)
+        headerText.setText(Constants.StoreName);
     }
 
     private void showGif() {

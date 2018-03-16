@@ -99,14 +99,14 @@ public final class Get_Search_Queries_Async_Task extends AsyncTask<Void, String,
 
                     if(Constants.StoreUserSearch!=null){
                         if(Constants.StoreUserSearch.size() == 0 ){
-                            SearchQueries.emptySearchLayout.setVisibility(View.VISIBLE);
+                            SearchQueriesActivity.emptySearchLayout.setVisibility(View.VISIBLE);
                             //listView.setVisibility(View.GONE);
                         }else {
-                            SearchQueries.emptySearchLayout.setVisibility(View.GONE);
+                            SearchQueriesActivity.emptySearchLayout.setVisibility(View.GONE);
                         }
                     }
                     else{
-                        SearchQueries.emptySearchLayout.setVisibility(View.GONE);
+                        SearchQueriesActivity.emptySearchLayout.setVisibility(View.GONE);
                        // listView.setVisibility(View.GONE);
                     }*/
                 }

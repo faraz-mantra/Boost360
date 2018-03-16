@@ -24,12 +24,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.MessageTag_Async_Task;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
@@ -48,6 +46,7 @@ public class Card_Full_View_Fragment extends Fragment {
     public static final String MainTextKey = "mainText";
     public static final String DateTextKey = "dateText";
     public static final String MessageIdKey = "messageIdTag";
+    public static final String UrlKey = "UrlKey";
 
     static View.OnClickListener mylongOnClickListener;
     private Activity appContext;
@@ -120,10 +119,11 @@ public class Card_Full_View_Fragment extends Fragment {
             String mainText = bundle.getString(MainTextKey);
             String dateText = bundle.getString(DateTextKey);
             String messageid = bundle.getString(MessageIdKey);
+            String urlKey = bundle.getString(UrlKey);
 
             //Log.d("Card Frag", "Card Fragment : "+imagePath+" , "+mainText+ " , "+dateText);
             //Log.d("Card Frag","Main View : "+mainView);
-            setValues(mainView, imagePath, mainText, dateText,messageid);
+            setValues(mainView, imagePath, mainText, dateText,messageid,urlKey);
 
         }
 
@@ -201,21 +201,13 @@ public class Card_Full_View_Fragment extends Fragment {
 
     }
 
-    private void setValues(View mainView, final String imageUri, final String mainText, String dateText, final String msgID) {
+    private void setValues(View mainView, final String imageUri, final String mainText, String dateText, final String msgID, final String updateUrl) {
         //Log.d("Set Values","values  :"+imagePath+" , "+mainText+" , "+dateText);
         ImageView imageView = (ImageView) mainView.findViewById(R.id.mainImageView);
         TextView mainTextView = (TextView) mainView.findViewById(R.id.headingTextView);
         TextView dateTextView = (TextView) mainView.findViewById(R.id.dateTextView);
         TextView messageTag = (TextView) mainView.findViewById(R.id.messagetag);
-        UserSessionManager session = new UserSessionManager(appContext,appContext);
-        String mainFpUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        if (!Util.isNullOrEmpty(mainFpUrl)) {
-            mainFpUrl = mainFpUrl.toLowerCase();
-        }else{
-            mainFpUrl = "http://"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                    + appContext.getResources().getString(R.string.tag_for_partners);
-        }
-        final String finalFpUrl = mainFpUrl;
+
         mainView.findViewById(R.id.shareData).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +216,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 final ProgressDialog pd = ProgressDialog.show(appContext, "", "Sharing . . .");
 
                 final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (!Util.isNullOrEmpty(imageUri) && !imageUri.contains("/Tile/deal.png")) {
                     if (Methods.isOnline(appContext)) {
                         String url;
@@ -245,8 +238,7 @@ public class Card_Full_View_Fragment extends Fragment {
                                             String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
                                             BoostLog.d("Path is:", path);
                                             Uri uri = Uri.parse(path);
-                                            shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +
-                                                    finalFpUrl + "/bizFloat/" + msgID);
+                                            shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +updateUrl);
                                             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                                             shareIntent.setType("image/*");
 
@@ -284,8 +276,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 } else {
                     pd.dismiss();
                     shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +
-                            finalFpUrl + "/bizFloat/" + msgID);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +updateUrl);
                     if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                         appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                     } else {

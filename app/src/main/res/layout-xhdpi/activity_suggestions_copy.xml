@@ -46,7 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:src="@drawable/ic_delete" />
+                app:srcCompat="@drawable/ic_delete" />
 
             <ImageView
                 android:id="@+id/ivViewMore"
@@ -54,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:src="@drawable/ic_more" />
+                app:srcCompat="@drawable/ic_more" />
 
 
             <ImageView
@@ -63,7 +63,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:src="@drawable/ic_remind" />
+                app:srcCompat="@drawable/ic_remind" />
         </LinearLayout>
     </LinearLayout>
 
@@ -98,21 +98,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_call_black_24dp" />
+                app:srcCompat="@drawable/ic_call_black_24dp" />
 
             <ImageView
                 android:id="@+id/ivSms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/sms_bg" />
+                app:srcCompat="@drawable/sms_bg" />
 
             <ImageView
                 android:id="@+id/ivShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_share" />
+                app:srcCompat="@drawable/ic_share" />
         </LinearLayout>
     </LinearLayout>
 

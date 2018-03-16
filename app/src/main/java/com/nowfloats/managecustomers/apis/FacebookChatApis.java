@@ -7,7 +7,6 @@ import com.nowfloats.managecustomers.models.FacebookMessageModel;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -21,7 +20,7 @@ import retrofit.http.Query;
 public class FacebookChatApis {
 
     static String ENDPOINT = "https://nfxmessenger.withfloats.com";
-    static final RestAdapter adapter = new RestAdapter.Builder().setLog(new AndroidLog("ggg")).setLogLevel(RestAdapter.LogLevel.FULL).setEndpoint(ENDPOINT).build();
+    static final RestAdapter adapter = new RestAdapter.Builder()/*.setLog(new AndroidLog("ggg")).setLogLevel(RestAdapter.LogLevel.FULL)*/.setEndpoint(ENDPOINT).build();
     public static FacebookApis getFacebookChatApis(){
         return adapter.create(FacebookApis.class);
     }

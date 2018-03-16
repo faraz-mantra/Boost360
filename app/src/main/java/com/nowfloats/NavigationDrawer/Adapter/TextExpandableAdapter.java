@@ -70,6 +70,8 @@ public class TextExpandableAdapter extends BaseExpandableListAdapter {
             holder.text = view.findViewById(R.id.text1);
             holder.image = view.findViewById(R.id.image1);
             view.setTag(holder);
+            int padding1 = Methods.dpToPx(10,mContext);
+            view.setPadding(padding1,padding1/2,padding1,padding1/2);
         }
 
         holder = (TextExpandableAdapter.MyHolder) view.getTag();
@@ -87,6 +89,9 @@ public class TextExpandableAdapter extends BaseExpandableListAdapter {
             holder = new TextExpandableAdapter.MyHolder();
             holder.text = view.findViewById(R.id.text1);
             view.setTag(holder);
+            view.setBackgroundResource(R.color.white);
+            int padding1 = Methods.dpToPx(5,mContext);
+            view.setPadding(2*padding1,0,2*padding1,0);
         }
 
         holder = (TextExpandableAdapter.MyHolder) view.getTag();

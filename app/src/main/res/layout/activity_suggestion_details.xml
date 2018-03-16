@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:padding="8dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_left_black_24dp"
+            app:srcCompat="@drawable/ic_left_black_24dp"
             android:background="?android:selectableItemBackground"/>
         <TextView
             android:id="@+id/title"

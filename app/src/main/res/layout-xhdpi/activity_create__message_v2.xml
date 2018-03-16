@@ -3,7 +3,8 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/screen_bg">
 
     <include
         android:id="@+id/app_bar"
@@ -63,8 +64,28 @@
                     android:layout_height="wrap_content" />
 
             </android.support.v7.widget.CardView>
+            <com.nowfloats.CustomWidget.CustomTagLayout
+                android:id="@+id/tag_layout"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+           <!-- <android.support.v7.widget.CardView
+                android:id="@+id/cv_keyword_suggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:visibility="gone"
+                custom:cardElevation="3dp">
+                <LinearLayout
+                    android:id="@+id/layout_keyword_suggestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </android.support.v7.widget.CardView>-->
             <LinearLayout
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -118,10 +139,8 @@
                     android:layout_height="40dp"
                     android:tint="@color/white"
                     android:layout_gravity="right"
-                    android:src="@drawable/ic_keyboard_voice_black_24dp"/>
+                    app:srcCompat="@drawable/ic_keyboard_voice_black_24dp"/>
             </LinearLayout>
-
-
 
         </LinearLayout>
 
@@ -181,7 +200,7 @@
                             android:id="@+id/create_mee_activity_facebokhome_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/create_message_camera_inactive"
+                            app:srcCompat="@drawable/create_message_camera_inactive"
                             android:padding="5dp"
                             />
                     </LinearLayout>
@@ -241,7 +260,7 @@
                             android:id="@+id/create_message_activity_facebokhome_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/facebook_icon_inactive" />
+                            app:srcCompat="@drawable/facebook_icon_inactive" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -256,7 +275,7 @@
                             android:id="@+id/create_message_activity_facebokpage_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/facebookpage_icon_inactive" />
+                            app:srcCompat="@drawable/facebookpage_icon_inactive" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -271,7 +290,7 @@
                             android:id="@+id/create_message_activity_twitter_button"
                             android:layout_width="@dimen/content_creation_icon_sizes"
                             android:layout_height="@dimen/content_creation_icon_sizes"
-                            android:src="@drawable/twitter_icon_inactive" />
+                            app:srcCompat="@drawable/twitter_icon_inactive" />
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/float_a_picture_share_quikr_parent"
@@ -286,7 +305,7 @@
                             android:id="@+id/create_message_activity_quikr_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/quikr_icon_deactivate" />
+                            app:srcCompat="@drawable/quikr_icon_deactivate" />
                     </LinearLayout>
                 </LinearLayout>
 

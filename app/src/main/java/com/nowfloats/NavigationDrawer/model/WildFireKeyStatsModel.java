@@ -7,7 +7,7 @@ package com.nowfloats.NavigationDrawer.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WildFireKeyStatsModel {
+public class WildFireKeyStatsModel{
 
     @SerializedName("AvgCPC")
     @Expose

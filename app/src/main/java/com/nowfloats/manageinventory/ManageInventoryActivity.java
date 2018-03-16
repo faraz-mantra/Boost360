@@ -14,8 +14,6 @@ import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import static com.nowfloats.NavigationDrawer.HomeActivity.activity;
-
 /**
  * Created by guru on 08-06-2015.
  */
@@ -37,7 +35,7 @@ public class ManageInventoryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
+        Typeface robotoMedium = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
 
         tvPaymentSetting = (TextView) findViewById(R.id.tvPaymentSetting);
         tvPaymentSetting.setTypeface(robotoMedium);

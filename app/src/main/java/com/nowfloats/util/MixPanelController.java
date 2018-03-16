@@ -63,6 +63,18 @@ public class MixPanelController {
     public static final String THIRD_PARTY_ACTION_SHARE = "ThirdPartyActionShare";
     public static final String DOMAIN_EMAIL_BOOK = "EmailBook";
     public static final String DOMAIN_EMAIL_REQUEST = "EmailRequest";
+    public static final String UPDATE_DB_CRASH = "updateDbCrash";
+    public static final String DICTATE_CLICK = "DictateClick";
+    public static final String WILDFIRE_CLICK = "DictateClick";
+    public static final String REQUEST_FOR_WILDFIRE_PLAN = "WildFireRequest";
+    public static final String UPDATE_TIPS_CLICK = "UpdateTipsClick";
+    public static final String HELP_AND_SUPPORT_CHAT = "HelpAndSupportChat";
+    public static final String HELP_AND_SUPPORT_EMAIL = "HelpAndSupportEmail";
+    public static final String HELP_AND_SUPPORT_CALL = "HelpAndSupportCall";
+    public static final String HELP_AND_SUPPORT_CLICK = "HelpAndSupportClick";
+
+    public static final String KEYBOARD_ACTIVATED = "KeyboardActivated";
+    public static final String KEYBOARD_ENABLED = "KeyboardEnabled";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

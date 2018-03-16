@@ -3,7 +3,6 @@ package com.nowfloats.Product_Gallery;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
@@ -53,24 +51,9 @@ public class ProductGalleryAdapter extends BaseAdapter {
 
                 @Override
                 public void onClick(View view) {
-                    UserSessionManager session = new UserSessionManager(activity,activity);
-                    ProductListModel productListModel = productItemModelList.get(position);
-                    String message = null;
-                    try {
-
-                        if (!TextUtils.isEmpty(session.getRootAliasURI())) {
-                            message = session.getRootAliasURI() + "/";
-                        } else {
-                            message = "https://" + session.getFpTag() + ".nowfloats.com/";
-                        }
-//                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8").replace("+","") + "/p" + productListModel.ProductIndex;
-                        message = message + productListModel.Name.replaceAll("[^a-zA-Z0-9]+", "-") + "/p" + productListModel.ProductIndex;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, productItemModelList.get(position).ProductUrl);
                     sendIntent.setType("text/plain");
                     sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     activity.startActivity(sendIntent);

@@ -92,6 +92,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),Login_MainActivity.this);
         dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
+        dashboardIntent.putExtras(getIntent());
         parent_layout = (LinearLayout) findViewById(R.id.parent_layout);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         termAndPolicyTextView = (TextView) findViewById(R.id.term_and_policy);
@@ -221,7 +222,7 @@ public class Login_MainActivity extends AppCompatActivity implements
     public void authenticationStatus(String value) {
         if(value.equals("Success"))
         {
-
+            session.setUserLogin(true);
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("message",new ArrayList<FloatsMessageModel>());
             dashboardIntent.putExtras(bundle);

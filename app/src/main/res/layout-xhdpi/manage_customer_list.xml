@@ -39,7 +39,7 @@
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_star_gray_24dp" />
+                app:srcCompat="@drawable/ic_star_gray_24dp" />
 
             <ImageView
                 android:id="@+id/thirdrow_ImageView_ProfileV2"
@@ -59,7 +59,7 @@
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="9dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_boost_bubble" />
+                app:srcCompat="@drawable/ic_boost_bubble" />
         </LinearLayout>
 
         <LinearLayout

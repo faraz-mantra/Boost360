@@ -16,7 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
@@ -33,7 +33,7 @@ import com.thinksity.R;
 public class BusinessAppsFragment extends Fragment {
     ViewPager mPager;
     viewPagerAdapter mAdapter;
-    Button mButton;
+    TextView mButton;
     Context context;
     private SharedPreferences pref;
     public static final int BIZ_APP_PAID =0,BIZ_APP_DEMO_REMOVE =1,BIZ_APP_DEMO = -1;
@@ -64,7 +64,7 @@ public class BusinessAppsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if( HomeActivity.headerText!=null)
+        if( context instanceof HomeActivity && HomeActivity.headerText!=null)
         HomeActivity.headerText.setText(getString(R.string.my_business_apps));
     }
 
@@ -76,7 +76,7 @@ public class BusinessAppsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mButton= (Button) view.findViewById(R.id.customer_apps_get_store_link_button);
+        mButton=  view.findViewById(R.id.customer_apps_get_store_link_button);
         mAdapter = new viewPagerAdapter(getChildFragmentManager());
         mPager = (ViewPager) view.findViewById(R.id.ps_pager);
         mPager.setClipToPadding(false);
@@ -130,11 +130,11 @@ public class BusinessAppsFragment extends Fragment {
                 }else if(Methods.isOnline(getActivity()))
                 {
                     if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)<=BIZ_APP_PAID) {
-                        Intent i = new Intent(context, BusinessAppsActivity.class);
+                        Intent i = new Intent(context, BusinessAppsDetailsActivity.class);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }else{
-                        BusinessAppsActivity activity = ((BusinessAppsActivity)context);
+                        BusinessAppsDetailsActivity activity = ((BusinessAppsDetailsActivity)context);
                         if(activity != null){
                             activity.onBackPressed();
                         }
@@ -157,7 +157,7 @@ public class BusinessAppsFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 4;
+            return BusinessAppScreenOneFragment.circleImages.length;
         }
     }
 
@@ -175,7 +175,7 @@ public class BusinessAppsFragment extends Fragment {
         {
             case R.id.skip:
                 if(Methods.isOnline(getActivity())) {
-                    Intent i = new Intent(context, BusinessAppsActivity.class);
+                    Intent i = new Intent(context, BusinessAppsDetailsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

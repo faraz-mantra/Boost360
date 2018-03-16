@@ -148,6 +148,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         } else {
             Intent i = new Intent(SplashScreen_Activity.this, PreSignUpActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtras(getIntent());
             // Staring Login Activity
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

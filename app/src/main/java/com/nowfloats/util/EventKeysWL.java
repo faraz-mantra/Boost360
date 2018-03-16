@@ -26,8 +26,8 @@ public interface EventKeysWL
     String HOME_SCREEN = "Home";
     //String CONTENT_CREATION_BUTTON = "";
     String ANALYTICS_FRAGMENT = "Analytics";
-    //String ANALYTICS_FRAGMENT_SEARCH_QUERIES = "SearchQueries";
-    String SEARCH_QUERIES = "SearchQueries";
+    //String ANALYTICS_FRAGMENT_SEARCH_QUERIES = "SearchQueriesActivity";
+    String SEARCH_QUERIES = "SearchQueriesActivity";
     String STORE_FRAGMENT = "Store";
     String CREATE_MESSAGE_ACTIVITY = "PostAnUpdate";
     //String CREATE_MESSAGE_ACTIVITY_TEXT = "PostAnUpdateScreenT";
@@ -56,6 +56,7 @@ public interface EventKeysWL
     String SIDE_PANEL_IMAGE_GALLERY = "ImageGallery";
     String SIDE_PANEL_MANAGE_CUSTOMERS = "ManageCustomers";
     String SIDE_PANEL_MANAGE_INVENTORY = "ManageInventory";
+    String SIDE_PANEL_UPGRADE = "SidePanelUpgrade";
     String SIDE_PANEL_PRODUCT_GALLERY = "ProductGallery";
     String SIDE_PANEL_SETTINGS = "ic_settings";
     String SIDE_PANEL_CHANGE_BACKGROUND_GALLERY = "ChangeBackgroundGallery";
@@ -116,6 +117,20 @@ public interface EventKeysWL
     String BUY_NOW_STORE_CLICKED = "InitiatePayment";
     String PAYMENT_SUCCESSFULL  = "PaymentSuccess";
     String NOTIFICATION_CLICKED = "NotificationClicked";
+    String SIDE_PANEL_ABOUT = "SidePanelAbout";
+    String SIDE_PANEL_MANAGE_CONTENT = "SidePanelManageContent";
+    String SIDE_PANEL_ACCOUNT_SETTINGS = "SidePanelAccountSettings";
+    String EVENT_PRIVACY_POLICY = "PrivacyPolicyClicked";
+    String EVENT_TERM_OF_USE = "Terms&ConditionClicked";
+    String EVENT_RATE_ON_TWITTER = "RateOnTwitter";
+    String EVENT_RATE_US_ON_FACEBOOK = "RateOnFacebook";
+    String EVENT_RATE_US_ON_PLAYSTORE = "RateOnPlayStore";
+    String EVENT_ABOUT_US = "AboutUsClicked";
+    String EVENT_FAQs = "FaqsClicked";
+    String SIDE_PANEL_KEYBOARD = "BoostKeyboard";
+    String KEYBOARD_SWITCH_CLICKED = "KeyboardSwitchClicked";
+    String STORAGE_SWITCH_CLICKED = "StoragePermissionSwitchClicked";
+    String MICROPHONE_SWITCH_CLICKED = "MicrophonePermissionSwitchClicked";
 
     // PRODUCT_GALLERY_
 

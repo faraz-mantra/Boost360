@@ -44,9 +44,9 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
             "?query={merchant_id: '%s'}" +
             "&skip=0&limit=1&sort={CreatedOn: -1}";
 
-    TextView tvTotalRevenue, tvTotalOrders, tvCurrencyCode, tvSuccessfullOrders, tvReceivedOrders, tvCancelledOrders, tvReturnedPrders, tvAbandonedOrders;
-    ProgressBar pgTotalRevenue, pgTotalOrders, pgSuccessfullOrders, pgReceivedOrders, pgCancelledOrders, pgRefundedOrders, pgAbandonedOrders;
-    Toolbar toolBar;
+    private TextView tvTotalRevenue, tvTotalOrders, tvCurrencyCode, tvSuccessfullOrders, tvReceivedOrders, tvCancelledOrders, tvReturnedPrders, tvAbandonedOrders;
+    private ProgressBar pgTotalRevenue, pgTotalOrders, pgSuccessfullOrders, pgReceivedOrders, pgCancelledOrders, pgRefundedOrders, pgAbandonedOrders;
+    private Toolbar toolBar;
 
     private long mAllOrdersCount = 0, mSuccessfulOrders = 0, mCancelledOrders = 0,
             mReturnedOrders = 0, mReceivedOrders = 0, mAbandonedCarts = 0;

@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,7 @@ import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.managecustomers.models.FacebookMessageModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
@@ -71,7 +73,9 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     private String userId;
     private SharedPreferences pref;
     public static final String INTENT_FILTER = "nfx.facebook.messages";
-
+    static{
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     }
 
     private void init(){
+
         getWindow().setBackgroundDrawable(new BitmapDrawable(getResources(),Methods.decodeSampledBitmap(getResources(),R.drawable.facebook_chat_bg1,720,720)));//ContextCompat.getDrawable(this, R.drawable.facebook_chat_bg2));
         Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         setSupportActionBar(toolbar);
@@ -89,6 +94,8 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         TextView title = (TextView) findViewById(R.id.tv_chat_user);
         TextView description = (TextView) findViewById(R.id.tv_chat_user_description);
         Typeface face= Typeface.createFromAsset(getAssets(), "Roboto-MediumItalic.ttf");
+        Typeface robotoMedium= Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        title.setTypeface(robotoMedium);
         description.setTypeface(face);
         description.setText("facebook user");
         scrollButton = (ImageView) findViewById(R.id.iv_scroll_down);
@@ -321,11 +328,15 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 chatUserRecycerView.scrollToPosition(chatModelList.size()-1);
                 break;
             case R.id.iv_send_msg:
-                String message = etReply.getText().toString().trim();
-                if(message.length() > 0){
-                    sendData(message);
+                if(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(this);
+                }else {
+                    String message = etReply.getText().toString().trim();
+                    if (message.length() > 0) {
+                        sendData(message);
+                    }
+                    etReply.setText("");
                 }
-                etReply.setText("");
                 break;
             default:
                 break;

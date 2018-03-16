@@ -43,6 +43,9 @@ public class ActivePackage {
     @SerializedName("Screenshots")
     @Expose
     private List<Screenshots> screenshots = null;
+    @SerializedName("ProductClassification")
+    @Expose
+    private ProductClassification productClassification;
     @SerializedName("ToBeActivatedOn")
     @Expose
     private String toBeActivatedOn;
@@ -61,10 +64,18 @@ public class ActivePackage {
     @SerializedName("isActive")
     @Expose
     private Boolean isActive;
-
+    private String activeStatus="";
     private boolean isExpanded;
 
     private String features;
+
+    public String getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(String activeStatus) {
+        this.activeStatus = activeStatus;
+    }
 
     public Boolean getActive() {
         return isActive;
@@ -112,6 +123,14 @@ public class ActivePackage {
 
     public void setClientProductId(String clientProductId) {
         this.clientProductId = clientProductId;
+    }
+
+    public ProductClassification getProductClassification() {
+        return productClassification;
+    }
+
+    public void setProductClassification(ProductClassification productClassification) {
+        this.productClassification = productClassification;
     }
 
     public String getCreatedOn() {
@@ -226,4 +245,19 @@ public class ActivePackage {
         this.isActive = isActive;
     }
 
+    public class ProductClassification {
+
+        @SerializedName("packType")
+        @Expose
+        private Integer packType;
+
+        public Integer getPackType() {
+            return packType;
+        }
+
+        public void setPackType(Integer packType) {
+            this.packType = packType;
+        }
+
+    }
 }

@@ -1,10 +1,10 @@
 package com.nowfloats.Analytics_Screen;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -85,8 +84,7 @@ public class SearchRankingActivity extends AppCompatActivity {
         if(!isFinishing() && !pd.isShowing()){
             pd.show();
         }
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL).build();
-        SearchQueryApi queryApi = adapter.create(SearchQueryApi.class);
+        SearchQueryApi queryApi = Constants.riaMemoryRestAdapter.create(SearchQueryApi.class);
         queryApi.getKeyWordRanks(mSession.getFpTag(), new Callback<List<SearchRankModel>>() {
             @Override
             public void success(List<SearchRankModel> searchRankModels, Response response) {

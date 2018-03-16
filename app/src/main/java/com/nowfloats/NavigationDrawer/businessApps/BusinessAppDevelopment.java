@@ -78,7 +78,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if(!isAdded()) return;
+        if(!isAdded() || isDetached()) return;
 
         session = new UserSessionManager(context, getActivity());
         if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO) == BIZ_APP_DEMO){
@@ -99,8 +99,8 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
 
         //Animation animation = AnimationUtils.loadAnimation(context,R.anim.progressbar_anim);
         Glide.with(context)
-                .load(R.drawable.progress_bar)
                 .asGif()
+                .load(R.drawable.progress_bar)
                 .into(back);
 
         String logo = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
@@ -111,14 +111,18 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         if(logo==null || logo.isEmpty()){
             firstCharText.setText(String.valueOf(name.charAt(0)));
             firstCharText.setVisibility(View.VISIBLE);
+            Picasso.with(context)
+                    .load(R.drawable.studio_architecture)
+                    .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
+                    .into(logoImage);
         }
         else if(!logo.contains("http")){
             logo = "https://"+logo;
+            Picasso.with(context)
+                    .load(logo)
+                    .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
+                    .into(logoImage);
         }
-        Picasso.with(context)
-                .load(logo)
-                .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
-                .into(logoImage);
 
         if(type.equalsIgnoreCase("android")){
             androidTextView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_green), null, null, null );
@@ -142,7 +146,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.site_health:
-                ((BusinessAppsActivity)context).addFragments(BusinessAppsActivity.SHOW_SITE_HEALTH);
+                ((BusinessAppsDetailsActivity)context).addFragments(BusinessAppsDetailsActivity.SHOW_SITE_HEALTH);
                 break;
             default:
                 break;
@@ -161,7 +165,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
                 frag.showScreenShots();
                 return true;
             case R.id.about:
-                ((BusinessAppsActivity)context).addFragments(BusinessAppsActivity.SHOW_ABOUT_APP);
+                ((BusinessAppsDetailsActivity)context).addFragments(BusinessAppsDetailsActivity.SHOW_ABOUT_APP);
                 return true;
             default:
                 break;

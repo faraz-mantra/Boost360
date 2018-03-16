@@ -84,7 +84,7 @@ public class SiteAppearanceActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return ThemeSelectorFragment.imageIds.length;
         }
     }
 

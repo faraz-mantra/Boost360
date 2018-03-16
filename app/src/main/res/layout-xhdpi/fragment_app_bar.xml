@@ -23,7 +23,6 @@
             android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:lines="1"
             android:marqueeRepeatLimit="1"
             android:scrollHorizontally="true"
             android:singleLine="true"

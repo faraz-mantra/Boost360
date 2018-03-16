@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
@@ -25,7 +24,7 @@ import com.thinksity.R;
  */
 
 public class PostFacebookUpdateFragment extends Fragment {
-    Button postUpdate;
+    TextView postUpdate;
     Context context;
     String mType;
 
@@ -47,7 +46,7 @@ public class PostFacebookUpdateFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root =inflater.inflate(R.layout.fragment_facebook_create_update,container,false);
+        View root =inflater.inflate(R.layout.layout_empty_img_text_button_screen,container,false);
         return root;
     }
 
@@ -61,8 +60,10 @@ public class PostFacebookUpdateFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        postUpdate= (Button) view.findViewById(R.id.create_update_button);
-        TextView message = (TextView) view.findViewById(R.id.message);
+        postUpdate= view.findViewById(R.id.btn_action);
+        ImageView image = view.findViewById(R.id.image1);
+        image.setImageResource(R.drawable.no_updates);
+        TextView message = (TextView) view.findViewById(R.id.message_text2);
         String socialTypeText1 = null,socialTypeText2 = null;
         if(SocialAnalytics.FACEBOOK.equals(mType)){
             socialTypeText2 = "Facebook Page";
@@ -80,11 +81,9 @@ public class PostFacebookUpdateFragment extends Fragment {
         postUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-                if(TextUtils.isEmpty(paymentState) || TextUtils.isEmpty(paymentLevel)){
-
-                }else if(Integer.valueOf(paymentState)>=0){
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(getContext());
+                }else{
                     Intent i = new Intent(context, Create_Message_Activity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

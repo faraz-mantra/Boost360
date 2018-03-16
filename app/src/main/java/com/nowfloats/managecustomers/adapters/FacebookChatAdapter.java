@@ -33,6 +33,7 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Context mContext;
     final String TEXT = "text", IMAGE = "image";
     final int EMPTY_LAYOUT = -1, MESSAGE_LAYOUT = -2;
+
     public FacebookChatAdapter(Context context, List<FacebookChatUsersModel.Datum> list){
         chatList = list;
         mContext = context;

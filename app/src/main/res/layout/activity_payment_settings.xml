@@ -196,7 +196,7 @@
                             android:background="?android:selectableItemBackground"
                             android:layout_marginRight="15dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_create_black_24dp"/>
+                            app:srcCompat="@drawable/ic_create_black_24dp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -210,7 +210,7 @@
                             android:textStyle="bold"
                             android:text="Name:"/>
                         <TextView
-                            android:id="@+id/tv_name"
+                            android:id="@+id/tv_person_name"
                             android:layout_marginLeft="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

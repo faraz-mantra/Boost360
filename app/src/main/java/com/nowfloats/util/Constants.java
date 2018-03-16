@@ -90,8 +90,9 @@ public class Constants {
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     public final static String SUGGESTIONS_API_URL = "http://boostapi.withfloats.com";
     public final static String SUGGESTIONS_TEXT_API_URL = "http://boosttest.nowfloatsdev.com";
-    public final static String WA_BASE_URL = "https://api.kitsune.tools/WebAction/v1/";
-
+    public final static String WA_BASE_URL = "https://webactions.kitsune.tools/api/v1/";
+    public final static String ANA_CHAT_API_URL = /*"http://chat-dev.nowfloatsdev.com";//*/"https://gateway.api.ana.chat";
+    public final static String ANA_BUSINESS_ID = /*"Boost-Web";//*/"boost-agent-chat";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
     public final static String HTTP_POST = "POST";
@@ -112,13 +113,14 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
 
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter createMessageAdapter = new RestAdapter.Builder().setEndpoint(Constants.CREATE_MESSAGE_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
+    public static final RestAdapter riaMemoryRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response"))*/.build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
@@ -211,7 +213,6 @@ public class Constants {
     public static final String SYNCED = "synced";
 
 
-    public static final String[] FACEBOOK_PERMISSIONS = new String[]{"email", "user_birthday", "user_interests", "publish_actions", "photo_upload", "publish_stream"};
     public static final String REQUEST_URL = "https://api.twitter.com/oauth/request_token";
     public static final String ACCESS_URL = "https://api.twitter.com/oauth/access_token";
     public static final String AUTHORIZE_URL = "https://api.twitter.com/oauth/authorize";

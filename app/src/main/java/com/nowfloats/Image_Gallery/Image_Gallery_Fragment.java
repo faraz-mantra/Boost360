@@ -45,10 +45,13 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+
+import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -90,8 +93,10 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        HomeActivity.plusAddButton.setVisibility(View.GONE);
-        HomeActivity.headerText.setText("Photo Gallery");
+        if (HomeActivity.plusAddButton != null)
+            HomeActivity.plusAddButton.setVisibility(View.GONE);
+        if (headerText != null)
+            headerText.setText("Photo Gallery");
         if (gvImages != null)
             gvImages.invalidate();
         if (otherImagesAdapter != null)
@@ -229,6 +234,10 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     private void selectImage() {
+        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+            Methods.showFeatureNotAvailDialog(getContext());
+            return;
+        }
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
                 .customView(R.layout.featuredimage_popup, true)
                 .show();
@@ -616,5 +625,4 @@ public class Image_Gallery_Fragment extends Fragment implements
         gvImages.invalidate();
         otherImagesAdapter.resetCheckers();
     }
-
 }
