@@ -40,6 +40,7 @@ import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
+import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -249,7 +250,7 @@ public class Home_Main_Fragment extends Fragment implements
         emptyMsgLayout.setVisibility(View.GONE);
 
 
-
+        new OnBoardingManager(getActivity()).startOnBoarding();
 
         ImageView retryPost = (ImageView)mainView.findViewById(R.id.retryPost);
         ImageView cancelPost = (ImageView)mainView.findViewById(R.id.cancelPost);

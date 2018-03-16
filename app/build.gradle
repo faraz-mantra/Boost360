@@ -35,39 +35,40 @@ allprojects {
 }
 
 android {
-//    signingConfigs {
-//        config {
-//            keyAlias 'nfmanage'
-//            keyPassword 'NowFloatsManage2013'
-//            storeFile file('D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\keystore\\boost\\my-release-key.keystore')
-//            storePassword 'NowFloatsManage2013'
-//        }
-//    }
     compileSdkVersion 27
     buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy'
+
     lintOptions {
         abortOnError false
     }
+
     defaultConfig {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2018030014
+        versionCode 2017120006
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
-//        release {
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
-//            proguardFile 'D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\ap\\proguard-rules.pro'
-//        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
+//    signingConfigs {
+//        debug {
+//            storeFile file(System.properties['user.home']+"/.android/custom_debug.keystore")
+//            storePassword ''
+//            keyAlias 'nfmanage'
+//            keyPassword ''
+//        }
+//    }
     flavorDimensions "default"
     productFlavors {
+
         parttwo {
             versionName "4.4.9"
             applicationId "com.sibername"
@@ -83,27 +84,20 @@ android {
             applicationId "com.digitalseoz"
             dimension "default"
         }
-        partfive {
+        partfive{
             versionName "1.0.1"
             applicationId "com.capture"
             dimension "default"
         }
-        partsix {
+        partsix{
             versionName "1.0.0"
             applicationId "com.trivone.assist"
             dimension "default"
         }
-        partseven {
-            versionName "1.0.0"
-            applicationId "com.sukere"
-            dimension "default"
-        }
         partone {
-            versionName "4.9.3"
+            versionName "4.8.6"
             applicationId "com.biz2.nowfloats"
             dimension "default"
-//            proguardFile 'D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\ap\\proguard-rules.pro'
-//            signingConfig signingConfigs.config
         }
     }
     packagingOptions {
@@ -111,6 +105,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/DEPENDENCIES'
     }
+
     dexOptions {
         jumboMode true
         preDexLibraries false

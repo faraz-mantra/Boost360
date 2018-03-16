@@ -1,10 +1,12 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -47,7 +49,7 @@ public class Card_Full_View_Fragment extends Fragment {
     public static final String DateTextKey = "dateText";
     public static final String MessageIdKey = "messageIdTag";
     public static final String UrlKey = "UrlKey";
-
+    private static final int STORAGE_CODE = 120;
     static View.OnClickListener mylongOnClickListener;
     private Activity appContext;
 
@@ -207,7 +209,15 @@ public class Card_Full_View_Fragment extends Fragment {
         TextView mainTextView = (TextView) mainView.findViewById(R.id.headingTextView);
         TextView dateTextView = (TextView) mainView.findViewById(R.id.dateTextView);
         TextView messageTag = (TextView) mainView.findViewById(R.id.messagetag);
+        if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
 
+            if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
+            }else{
+                ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
+            }
+            return;
+        }
         mainView.findViewById(R.id.shareData).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

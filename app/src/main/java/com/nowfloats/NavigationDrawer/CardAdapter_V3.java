@@ -1,10 +1,12 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -49,6 +51,7 @@ import java.util.List;
  */
 public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
+    private static final int STORAGE_CODE = 120;
     private final int VIEW_TYPE_WELCOME 		= 0;
     private final int VIEW_TYPE_IMAGE_TEXT 		= 1;
     String imageUri = "";
@@ -173,6 +176,15 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             ImageView shareImageView = holder.shareImageView;
 
             final String imageShare = HomeActivity.StorebizFloats.get(position).imageUri;
+            if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
+                }else{
+                    ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
+                }
+                return;
+            }
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -216,8 +228,8 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                         }
                                     }catch(OutOfMemoryError e){
                                         Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-                                    } catch (Exception e){
-                                        ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
+                                    } catch (Exception e) {
+
                                     }
                                 }
 
@@ -318,8 +330,6 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     public  void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("MyAdapter", "onActivityResult");
     }
-
-
     private void shareIntentToPackages(String type, String subject, Uri uri) {
         List<Intent> targetShareIntents = new ArrayList<Intent>();
         Intent shareIntent = new Intent();

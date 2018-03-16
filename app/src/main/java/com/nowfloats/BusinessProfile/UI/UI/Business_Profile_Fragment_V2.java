@@ -467,41 +467,22 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         hideLoader();
 
         if(!isAlreadyCalled) {
-            if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
+            if (domainDetails == null){
                 Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
-            } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
-                isDomainDetailsAvali = true;
-                if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
-                    showCustomDialog(getString(R.string.domain_booking_failed),
-                            Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()) && Integer.parseInt(domainDetails.getProcessingStatus())<=16){
-
-                    showCustomDialog(getString(R.string.domain_booking_process),
-                            getString(R.string.domain_booking_process_message),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else
-                {
-                    showLoader(getString(R.string.please_wait));
-                    domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
-                }
-
-            }
-            else if (!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
-                showCustomDialog("Domain Details", "You have linked your domain to " +
-                                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
+            } else if(domainDetails.isFailed()){
+                showCustomDialog(getString(R.string.domain_booking_failed),
+                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
+                                getString(R.string.drop_us_contact):domainDetails.getErrorMessage()).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")) {
-                showExpiryDialog(LIGHT_HOUSE_EXPIRED);
-            }else if (Methods.isOnline(activity)){
-                showLoader(getString(R.string.please_wait));
-                domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+            }else if(domainDetails.isPending()){
+
+                showCustomDialog(getString(R.string.domain_booking_process),
+                        getString(R.string.domain_booking_process_message),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
             }else{
-                Methods.snackbarNoInternet(activity);
+                showDomainDetails();
             }
         }
-
-
     }
 
     @Override
@@ -520,7 +501,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     }
 
     @Override
-    public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
+    public void domainAvailabilityStatus(String domainName, String domainType, DomainApiService.DomainAPI domainAPI) {
 
     }
 
@@ -536,47 +517,9 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     private boolean isAlreadyCalled = false;
     private boolean isDomainDetailsAvali = false;
 
-    @Override
-    public void getFpDetails(Get_FP_Details_Model get_fp_details_model) {
-        hideLoader();
-        this.get_fp_details_model = get_fp_details_model;
-        if (TextUtils.isEmpty(get_fp_details_model.response)) {
-
-            if (isDomainDetailsAvali){
-                showDomainDetails();
-            }
-            else if (TextUtils.isEmpty(get_fp_details_model.getEmail())
-                    || get_fp_details_model.getContacts() == null) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update your Email Address.").toString(),
-                        "Update Email Address", null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
-
-            } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update your Business Category.").toString(),
-                        "Update Business Category", null, DialogFrom.CATEGORY_REQUIRED);
-            } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
-                    || TextUtils.isEmpty(get_fp_details_model.getLat())
-                    || TextUtils.isEmpty(get_fp_details_model.getLng())
-                    || get_fp_details_model.getLat().equalsIgnoreCase("0")
-                    || get_fp_details_model.getLng().equalsIgnoreCase("0")
-                    ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update you Business Address.").toString(),
-                        "Update Business Address", null, DialogFrom.ADDRESS_REQUIRED);
-            } else {
-                showDomainDetails();
-            }
-
-        } else {
-            Methods.showSnackBarNegative(getActivity(), get_fp_details_model.response);
-        }
-    }
-
     private void showDomainDetails() {
         isAlreadyCalled = true;
         Intent domainIntent = new Intent(activity, DomainDetailsActivity.class);
-        domainIntent.putExtra("get_fp_details_model", get_fp_details_model);
         startActivity(domainIntent);
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }

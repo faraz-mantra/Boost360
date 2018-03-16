@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -44,6 +45,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -508,6 +510,27 @@ public class Methods {
         DateFormat format1 = new SimpleDateFormat(format, Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
         format1.setTimeZone(TimeZone.getDefault());
         return format1.format(date1);
+    }
+    public static void showApplicationPermissions(String title, String content, final Context appContext){
+
+            new MaterialDialog.Builder(appContext)
+                    .content(content)
+                    .title(title)
+                    .positiveColorRes(R.color.primaryColor)
+                    .negativeColorRes(R.color.light_gray)
+                    .negativeText("Cancel")
+                    .positiveText("Take Me There")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Intent intent = new Intent();
+                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", appContext.getPackageName(), null);
+                            intent.setData(uri);
+                            appContext.startActivity(intent);
+                        }
+                    })
+                    .build().show();
     }
     public static String getFormattedDate(String Sdate) {
         String formatted = "", dateTime = "";
