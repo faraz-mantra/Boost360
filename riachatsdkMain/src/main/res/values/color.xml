@@ -10,8 +10,5 @@
     <color name="gray">#616161</color>
     <color name="ria_popup_btn">#8A8A8A</color>
     <color name="light_gray">#60616161</color>
-    <color name="send_msg_bg">#007BFF</color>
-    <color name="send_msg_idle">#007BFF</color>
-    <color name="progress_bar">#157EFB</color>
 
 </resources>

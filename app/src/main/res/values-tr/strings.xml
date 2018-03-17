@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
-    <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
 
-    <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Thinksity</string>
-    <string name="hello_world">Selam Dünya!</string>
     <string name="action_settings">Ayarlar</string>
-    <string name="next">Sonraki</string>
-    <string name="hello_blank_fragment">Merhaba boş fragmanı</string>
     <string name="title_activity_web_site_address">İnternet adresi</string>
-    <string name="title_activity_login">Tekrar hoşgeldiniz</string>
     <string name="title_activity_business_profile">İşProfiliEtkinliği</string>
     <string name="title_activity_home">EvEtkinlik</string>
-    <string name="drawer_open">Açık</string>
-    <string name="drawer_close">Kapat</string>
-    <string name="title_activity_business_profile__home">İş Profili</string>
     <string name="business__address">İş adresi</string>
     <string name="contact__info">İletişim bilgileri</string>
     <string name="title_activity_business__hours_">İş saatleri</string>
@@ -23,10 +13,6 @@
     <string name="title_activity_social__sharing_">sosyal Paylaşım</string>
     <string name="title_activity_login__main">Tekrar hoşgeldiniz</string>
     <string name="title_activity_pre_sign_up__main">ÖnÜYE_AnaFaaliyet</string>
-    <string name="ps_create_lbl">YARATMAK</string>
-    <string name="ps_login_lbl">oturum aç</string>
-    <string name="ps_create_lbl_tag">NowFloats ile bir web sitesi</string>
-    <string name="ps_login_lbl_tag">NowFloats web sitesini yönetmek için</string>
     <string name="ps_sc2_lbl1">Anında Web Sitesi</string>
     <string name="ps_sc2_lbl2">Yaratılış</string>
     <string name="ps_sc3_lbl1">Bağlanmak</string>
@@ -41,10 +27,6 @@
     <string name="ps_sc8_lbl1">Premium özellikleri</string>
     <string name="ps_sc8_lbl2">NOWFLOATS</string>
     <string name="ps_sc8_lbl4">mağaza</string>
-    <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
-    <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
-    <string name="ps_create_lbl_tf">HN75Bold.ttf</string>
-    <string name="ps_create_tag_tf">HN56IT.ttf</string>
     <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
     <string name="offer_title">Title:</string>
     <string name="offer_desc">Description:</string>
@@ -56,7 +38,6 @@
     <string name="offers_desc_error">Please enter description for the offer</string>
     <string name="offers_start_date_error">Please choose start date for the offer</string>
     <string name="offers_end_date_error">Please choose end date for the offer</string>
-    <string name="offers_discount_error">Please enter discount for the offer</string>
     <string name="offers_image_error">Choose an image for the offer</string>
     <string name="offer_uri">Offer Url:</string>
     <string name="offer_upload_failure">Error while posting your offer</string>
@@ -68,34 +49,12 @@
     <string name="offers_soon">Create Offers, Now!</string>
     <string name="failed_to_share">Error while sharing offers</string>
     <string name="offer_getting_error">Error while retrieving offers</string>
-    <string name="store_excluding_all_taxes">( Excluding Taxes )</string>
-    <string name="buy_now">Proceed to Buy</string>
-    <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
-    <string name="opc_edit_text_hint">Enter the OPC</string>
     <string name="proceed">Proceed</string>
-    <string name="verify_opc">Verifying OPC...</string>
-    <string name="error_verifying_opc">Error while verifying OPC</string>
     <string name="pay_now">Pay Now</string>
-
-    <string-array name="time_arrays">
-        <item>01:00</item>
-        <item>02:00</item>
-        <item>03:00</item>
-        <item>04:00</item>
-        <item>05:00</item>
-        <item>06:00</item>
-        <item>07:00</item>
-        <item>08:00</item>
-        <item>09:00</item>
-        <item>10:00</item>
-        <item>11:00</item>
-    </string-array>
 
     <string name="facebook_app_id">539836972828386</string>
 
 
-    <string name="title_activity_image__gallery__main">Resim Galerisi</string>
-    <string name="title_activity_home__main">Ev MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="home">Ev</string>
     <string name="title_activity_create__message_">Bir Güncelleştirme yayınla</string>
@@ -103,21 +62,13 @@
     <string name="side_panel_row_two">Profil</string>
     <string name="side_panel_site_appearance">Site Görünümü</string>
     <string name="side_panel_row_csp">özel Sayfalar</string>
-    <string name="side_panel_row_three">Sorular</string>
     <string name="side_panel_row_four">Fotoğraf Galerisi</string>
     <string name="side_panel_row_five">Ayarlar</string>
     <string name="side_panel_row_six">Ria yazın</string>
-    <string name="side_panel_row_seven">Bizimle iletişime geçin</string>
     <string name="side_panel_row_eight">hisse</string>
-    <string name="setting_change_pwd">Şifre değiştir</string>
-    <string name="setting_feedback">geri bildirim</string>
-    <string name="setting_rate_us_on_play_store">Google Play Store\'da bize oy ver</string>
-    <string name="Setting_like_us_on_facebook">Bizim gibi Facebook\'ta</string>
-    <string name="setting_about_us">Hakkımızda</string>
     <string name="setting_logout">Çıkış Yap</string>
     <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
 
-    <string name="save">SAVE</string>
     <!-- Deep Linking URLs  -->
 
     <string name="deeplink_update">update</string>
@@ -127,7 +78,6 @@
     <string name="deeplink_bizenquiry">ttb</string>
     <string name="deeplink_store">nfstore</string>
     <string name="deeplink_searchqueries">searchqueries</string>
-    <string name="deeplink_setings">settings</string>
     <string name="deeplink_socailsharing">social</string>
     <string name="deeplink_profile">profile</string>
     <string name="deeplink_contact">contact</string>
@@ -142,7 +92,6 @@
     <string name="deeplink_nfstoreimage">nfstoreimage</string>
     <string name="deeplink_gplaces">gplaces</string>
     <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
-    <string name="deeplink_nfstorenoads">nfstorenoads</string>
     <string name="deeplink_ProductGallery">ProductGallery</string>
 
     <!-- Deep Linking URLs  -->
@@ -156,35 +105,12 @@
     <string name="businessName_percentage">5</string>
     <string name="businessdescription_percentage">10</string>
     <string name="social_percentage">10</string>
-    <string name="businessCategory">5</string>
     <string name="address_percentage">10</string>
     <string name="email_percentage">5</string>
     <string name="postUpdate_percentage">20</string>
     <string name="share_percentage">5</string>
 
-    <string name="buydomain_text1">kendi kimliğini alın</string>
-    <string name="phoneNumber_text1">Telefon numarası</string>
-    <string name="featuredImage_text1">Özellikli resim</string>
-    <string name="businessName_text1">isim</string>
-    <string name="businessdescription_text1">Profil Açıklama</string>
-    <string name="social_text1">Sosyalleşmek</string>
-    <string name="businessCategory_text1">Kategori</string>
-    <string name="address_text1">Müşterilerinizin sizi bulmasına yardımcı</string>
-    <string name="email_text1">E-posta ekle</string>
-    <string name="postUpdate_text1">Mesaj 5 Güncellemeler</string>
-    <string name="share_text1">hisse</string>
-
     <string name="buydomain_text2">satın almak bir .com</string>
-    <string name="phoneNumber_text2">İşverenler anında ulaşmasını sağlamak</string>
-    <string name="featuredImage_text2">İlgili resim ekleyin</string>
-    <string name="businessName_text2">ad ekle</string>
-    <string name="businessdescription_text2">işinizi açıklayın</string>
-    <string name="social_text2">Facebook / Twitter Bağlan</string>
-    <string name="businessCategory_text2">kategori seçiniz</string>
-    <string name="address_text2">adresi ekleyin</string>
-    <string name="email_text2">E-posta ekle</string>
-    <string name="postUpdate_text2">Mesaj düzenli ve görece</string>
-    <string name="share_text2">Web sitenizi tanıtmak</string>
 
 
     <string-array name="CountryCodes">
@@ -402,49 +328,33 @@
     </string-array>
 
     <string name="business_enquiries_title">İş Sorular</string>
-    <string name="double_quotes"> &quot; </string>
-    <string name="business_profile_title">profil</string>
     <string name="tag_for_partners">.nowfloats.com</string>
     <string name="title_activity_splash_screen_">Thinksity</string>
     <string name="title_activity_edit__profile_">Profil Düzenle Etkinlik</string>
 
-    <string name="pre_signup_screen_three_text">Dize Üç Ekran aittir</string>
-    <string name="pre_signup_screen_four_text">Dize Four Ekran aittir</string>
-    <string name="pre_signup_screen_five_text">Dize Beş Ekran aittir</string>
     <string name="pre_signup_screen_six_text">senin doğrudan bağlantı kurmak için başlangıç, girişimciler ve işverenleri alın</string>
     <string name="pre_signup_screen_seven_text">Özel öğrenci Thinksity deposunda sunar - günlükleri www.thinksity sitesi üzerine.</string>
-    <string name="pre_signup_screen_eight_text">Dize Boy Ekran aittir</string>
     <string name="title_activity_mobile__site_">Mobil Site Etkinliği</string>
-    <string name="title_activity_site__meter__nf">yer metre NF</string>
     <string name="onboarding_screen_1_title">Tebrik ederiz!</string>
     <string name="onboarding_screen_1_desc">Biz yol boyunca size yardımcı olmak için buradayız. İşte bilmeniz gereken iki en temel henüz önemli şeyler</string>
     <string name="onboarding_screen_3_title">Keşif fırsatlara yol açar</string>
-    <string name="onboarding_screen_3_desc">İşverenler yeni yetenekler satın almak bir her zaman uyanık, bu nedenle ilgili ve taze güncellemelerinizi tutun. Bu keşfetti almak için yol ve daha fazla iş imkanı elde edecek</string>
     <string name="onboarding_screen_2_title">içerik kral olduğu</string>
-    <string name="onboarding_screen_2_desc">Haftada iki kez web sitenizi güncelleyin. Sadece alt tarafındaki artı düğmesine basın ve sadece ürün, hizmet ya da ürünleri hakkında müşterilerinize anlatmak</string>
     <string name="feedback">Yardıma mı ihtiyacınız var? Bizimle temasa geçin.</string>
-    <string name="edit_image">düzenlemek için yukarıdaki fotoğrafın üzerine dokunun.</string>
-    <string name="close">Kapat</string>
     <string name="noInternet">İnternet bağlantısı yok</string>
     <string name="inbox_empty">Gelen boş!</string>
    <string name="keep_move">Devam et!</string>
     <string name="dont_shy">Utangaç olmayın!</string>
     <string name="tell_world">Dünyaya anlat!</string>
-   <string name="store_empty">Mağaza ve çalışan kısa bir süre içinde olacak</string>
     <string name="Message_empty">Web sitenizde hiçbir mesaj aşağıda web sitenizi güncellemek için + düğmesine tıklayın vardır</string>
     <string name="pre_signup_screen_one_text">Şimdi oluşturun yönetin ve daha Müşteriler çizer Bir İş web sitesi güncelleme</string>
     <string name="pre_signup_screen_two_text">sürekli bu uygulamayı kullanarak oluşturulan ve kolayca yönetilen bir internet sitesini almak</string>
     <string name="presignup_login_text">Zaten NowFloats hesabınız var mı?</string>
     <string name="settings_feedback_link">ria@nowfloats.com</string>
-    <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
     <string name="settings_about_us_link">http://nowfloats.com/</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
-    <string name="dot">&#8226;</string>
     <string name="interest">Ben ilgileniyorum</string>
     <string name="contact_us_number">18601231233</string>
-    <string name="store_coming_soon">Pek yakında!</string>
     <string name="message_soon">Şimdi, güncelleme başlayın!</string>
-    <string name="title_activity_product_gallery">ÜrünGalerisiEtkinlik</string>
     <string name="store">mağaza</string>
     <string name="empty_alert">Eğer yeni bir uyarı var en kısa sürede biz sizi bilgilendireceğiz</string>
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
@@ -479,15 +389,9 @@
     <string name="expired">SÜRESİ DOLDU</string>
     <string name="feching_search_detail">Arama ayrıntıları getiriliyor&#8230;</string>
     <string name="week">hafta</string>
-    <string name="visits">ziyaretler</string>
-    <string name="no_info_avail">Bilgi bulunmamaktadır!</string>
-    <string name="visit_this_week">ziyaret bu hafta</string>
     <string name="visit_this_month">ziyaret Bu ay</string>
-    <string name="visit_this_year">Ziyaret bu yıl</string>
-    <string name="total_visits">toplam ziyaret</string>
     <string name="search_queries">Arama Sorguları</string>
     <string name="subscribers">aboneler</string>
-    <string name="could_not_find_fb_tag">Fb Etiket bulunamadı</string>
     <string name="check_internet_connection">Ağ Bağlantısını Kontrol Edin</string>
     <string name="email">E-POSTA</string>
     <string name="call">ÇAĞRI</string>
@@ -495,10 +399,8 @@
     <string name="faqs">SSS</string>
     <string name="answer">Cevap</string>
     <string name="ok">tamam</string>
-    <string name="select_business_day">satın almak bir iş günü seçiniz</string>
     <string name="logo">Logo</string>
     <string name="upload_logo_image">Yükle Logo Resmi</string>
-    <string name="setting">Ayarlar</string>
     <string name="device_does_not_support_capturing_image">Hata - Cihazınız görüntüleri yakalamak desteklemiyor!</string>
     <string name="select_image_upload">yüklemek için bir resim seçin</string>
     <string name="visit_to_new_website">Yaşasın! Biz yeni bir web sitesi var. at ziyaret</string>
@@ -521,14 +423,9 @@
     <string name="both_password_not_matched">Her iki şifre eşleşmiyor.</string>
     <string name="min_6char_required">En az 6 karakter gereklidir.</string>
     <string name="wait_while_unsubscribing">Aboneliğinizi iptal ederken bekleyin&#8230;</string>
-    <string name="post_on_facebook">Facebook Sayfa yayınla</string>
-    <string name="problem_with_twitter_try_later">ağ veya twitter ile bazı sorun, bir süre sonra deneyin&#8230;</string>
     <string name="select_page">satın almak bir Sayfa Seç</string>
     <string name="look_like_no_facebook_page">Bu hesapla bağlantılı herhangi bir Facebook sayfası var gibi görünüyor.</string>
     <string name="wait_while_subscribing">abone bekleyin&#8230;</string>
-    <string name="connected">bağlı</string>
-    <string name="subscribe_for_pulling">çekerek abone</string>
-    <string name="update_from">güncellemeler</string>
     <string name="facebook_page"> Facebook Sayfası</string>
     <string name="disconnected">Bağlantı kesildi</string>
     <string name="success">başarı</string>
@@ -537,11 +434,8 @@
     <string name="no_network">Ağ yok</string>
     <string name="enable">etkinleştirme</string>
     <string name="loading">Yükleniyor&#8230;</string>
-    <string name="exception">Exception</string>
-    <string name="redirecting_to_twitter_wait">twitter yönlendiriliyor, lütfen bekleyin&#8230;</string>
     <string name="updating_password">Parolanız güncelleniyor&#8230;</string>
     <string name="custom_page_details">ayrıntılı olarak açıklayınız. girintiler, madde işaretleri ve metni biçimlendirmek için başlık stilleri gibi özel düzen özellikleri kullanın. içerik geliştirmek için görüntü ve bağlantılar ekleyin.</string>
-    <string name="new_page">Yeni sayfa</string>
     <string name="enter_the_title">başlık girin</string>
     <string name="enter_the_description">açıklamasını girin</string>
     <string name="page_successfully_created">Sayfa Başarıyla oluşturulan</string>
@@ -583,16 +477,13 @@
     <string name="no_app_to_share">Hiçbir uygulama paylaşmak için</string>
     <string name="share">hisse</string>
 
-    <string name="ps_sc2_lbl3">Sürekli oluşturulan ve kolayca \nbu uygulamayı kullanarak yönetilen \nbir iş web sitesi olsun.</string>
     <string name="ps_sc3_lbl3">oluşturmak ve anında web sitenizi \ngüncellemek için Facebook sayfası ile giriş yapın. \nŞiddetle tavsiye!</string>
     <string name="ps_sc4_lbl3">Yer-SEO Tabanlı ile <sup> <small> TM </small> </sup>, ilgili \nanahtar kelimeler için keşfedilen ve arama \nmotorlarında sıralamanızı artırmak olsun</string>
-    <string name="ps_sc6_lbl3">Müşterilerin doğrudan iletişim ve \nanında onlara cevap olsun!</string>
     <string name="ps_sc8_lbl3">in-app Store\'dan iş web sitesi için \nek özellikler olsun.</string>
     <string name="business_enquiry_empty">Biz en kısa sürede bir \nsorgu olsun size bir bildirim \ngönderecektir.</string>
     <string name="searchquery_empty">Hiçbir şey şu anda burada görmek. \nMesajı iyi ve gelişmek</string>
     <string name="empty_image_gallery">ürün ve \nhizmetlerin resim eklemek \niçin + düğmesine çarptı. </string>
     <string name="empty_product_gallery">En çok satan ürünler \nbasın + keşfetti alır emin olun ve onları \nburada listelemek için.</string>
-    <string name="store_fragment_no_package_text">Maalesef Şu anda herhangi bir paket için tercih değil. \nDaha fazla özellik almak için yükseltin.</string>
     <string name="auto_update_from_social_network">Sosyal Ağlar \nOtomatik Güncelleme</string>
     <string name="auto_share_to_social_networks">Sosyal Ağlar \niçin Otomatik Paylaş</string>
 
@@ -612,7 +503,6 @@
     <string name="app_update_available">Mevcut uygulama güncellemesi</string>
     <string name="update_nowfloats_app">Sen NowFloats Boost eski bir sürümünü kullanıyorsunuz. Yeni özellikler ve geliştirmeler almak için uygulamayı güncelleyin</string>
     <string name="update">Güncelleştirme</string>
-    <string name="remind_me_later">Bana daha sonra hatırlat</string>
     <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#FFB900\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
     <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#FFB900\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
     <string name="got_it_next">Anladım, Sonraki</string>
@@ -631,8 +521,6 @@
     <string name="ignore_in_capital">ALDIRMAMAK</string>
     <string name="renew_wildfire_plan">Wildfire planı yenilemek</string>
     <string name="continue_auto_promoting_on_google">-Auto tanıtmaya devam Google gibi dijital pazarlama kanallarını kullanarak web sitenize. iş mesajları orman yangını gibi yayıldı emin olmak için planı yenilemek edin.</string>
-    <string name="wildfire_will_expire">Wildfire planı içinde sona erecek</string>
-    <string name="days">günler</string>
     <string name="renew_light_house_plan">tüm özellikleri elde etmek Feneri planını yenilemek</string>
     <string name="light_house_plan_expired_some_features_visible">Sizin Feneri planın süresi doldu ve müşterilerinizin web sitenizi görmek mümkün olacak olsa da, bazı temel özellikleri devre dışı bırakıldı. Bu ürün katalog, iş sorular, ve diğerleri arasında, sitenizi güncellemek için yeteneği dahil</string>
     <string name="share_with">İle paylaş:</string>
@@ -643,7 +531,6 @@
     <string name="business_profile">İş Profili</string>
     <string name="upload_background_image">Arkaplan Resim Yükle</string>
     <string name="image_uploading_failed_try_again">Görüntü yükleme başarısız oldu. Lütfen tekrar deneyin</string>
-    <string name="getting_details">Detaylar alınıyor &#8230;</string>
     <string name="deleting_image">silme görüntü&#8230;.</string>
     <string name="uploading">Yükleme</string>
     <string name="upload_successful">Başarılı yükle</string>
@@ -675,8 +562,6 @@
     <string name="upload_photo">Fotoğraf yükle</string>
     <string name="inr">INR</string>
     <string name="email_validation__failed">E-posta doğrulama başarısız</string>
-    <string name="loading_wait">yükleniyor lütfen bekleyin</string>
-    <string name="connection_time_out">Bağlantı zamanaşımı</string>
     <string name="suggest_tag_failed_try_again">Tekrar Etiket Başarısız deneyin öneririz</string>
     <string name="number_already_registered">Numara zaten kayıtlı</string>
     <string name="number_already_registered_enter_different">Girilen numara zaten bizimle kayıtlı. farklı bir girin.</string>
@@ -692,14 +577,12 @@
     <string name="chosen_website_not_available">Seçilen web sitesi adresi mevcut değildir!</string>
     <string name="error">hata!</string>
     <string name="learn_more_about_version">Yeni sürüm hakkında daha fazla bilgi</string>
-    <string name="renew_to_use_feature">Bu özelliği kullanmak için Yenile Lütfen</string>
     <string name="fill_reasons">nedenlerini doldurunuz</string>
     <string name="check_any_checkbox">CheckBox herhangi kontrol edin</string>
     <string name="wait_while_reverting">geri alma sırasında bekleyin&#8230;</string>
     <string name="upgrade_now">Şimdi Yükselt</string>
     <string name="successfully_revert">başarıyla geri alındı</string>
     <string name="failed_to_revert">Geri döndür için Başarısız</string>
-    <string name="read_more">Daha fazla oku</string>
     <string name="know_more">BİLİYOR DAHA</string>
     <string name="book_domain">Kitap Alan</string>
     <string name="domain_lookup">Domain LookUp</string>
@@ -712,21 +595,8 @@
     <string name="thank_for_booking_domain">sizin etki Rezervasyon için teşekkür ederiz</string>
     <string name="activate_in_24_hours">24 saat içinde aktif hale gelecektir.</string>
     <string name="okay">Tamam</string>
-    <string name="no_screenshot">yok Ekran&#8230;</string>
-    <string name="already_requested">zaten istenen</string>
-    <string name="contact_us">Bizimle iletişime geçin</string>
     <string name="thank_you_for_your_interest">İlginiz için teşekkürler!</string>
-    <string name="our_team_contact_in_48hours">Ekibimiz sizlere fiyatlandırma planları hakkında daha fazla anlatmak için 48 saat içinde sizinle temasa geçecektir.</string>
     <string name="processing_request">İsteğiniz işlenirken</string>
-    <string name="processing_request_we_back_in_48hours">İsteğinizi işliyoruz. Biz en kısa sürede biz olarak bu konuda size geri alacak. Sabrınız için teşekkürler</string>
-    <string name="reach_out_ria">ria@nowfloats.com bize ulaşmak ve hemen geri almak duyarız.</string>
-    <string name="unable_to_process_purchase">Satın alma işlemi yapılamıyor</string>
-    <string name="looks_an_issue_with_app">Uygulama içi faturalandırma kurulumu ile ilgili bir sorun var gibi görünüyor.</string>
-    <string name="pack_is_already_purchased">Bu paket zaten satın alınır.</string>
-    <string name="failed_to_retrive_detail_try">Bu paket zaten ayrıntıları almak için purchased.Failed edilir. Geri dönün ve tekrar deneyin</string>
-    <string name="pay">ödeme</string>
-    <string name="purchase_failed_try">Satın alma başarısız oldu. Lütfen tekrar deneyin</string>
-    <string name="success_pack_is_active">Başarı! Sizin paketi şimdi devreye girer.</string>
     <string name="username">kullanıcı adı</string>
     <string name="plans_in_use">KULLANIM PLANLARI</string>
     <string name="buy">satın almak</string>
@@ -735,9 +605,6 @@
     <string name="expiry_date">Son kullanma tarihi</string>
     <string name="status">durum</string>
     <string name="renew">yenilemek</string>
-    <string name="time_to_upgrade">Zaman yükseltme</string>
-    <string name="you_have_purchased_any_plan">Herhangi bir planı satın almadıysanız. premium özellikler boşuna şimdi satın alın.</string>
-    <string name="open">Açık</string>
     <string name="monday">Pazartesi</string>
     <string name="tuesday">Salı</string>
     <string name="wednesday">Çarşamba</string>
@@ -756,33 +623,10 @@
     <string name="create_website_using">kullanarak web sitesi oluşturmak</string>
     <string name="email_address">E-posta Adres</string>
     <string name="log_in">&#160;oturum aç</string>
-    <string name="complete_task_to_increase_site_score">Siteniz puanı artırmak için aşağıdaki görevi tamamlamak.</string>
-    <string name="high_score_translate_more_traffic">Yüksek puanlar sitenize daha fazla trafik çevirir</string>
-    <string name="get_your_identity">kendi kimliğini alın</string>
-    <string name="buy_a_com_domain">satın almak bir .com</string>
     <string name="phone_number">Telefon numarası</string>
-    <string name="help_customer_reach_you">Yardım müşterilerin anında ulaşmak</string>
-    <string name="featured_image">Özellikli resim</string>
-    <string name="add_relevant_image">ilgili bir resim ekleyin</string>
-    <string name="add_email">e-posta ekle</string>
-    <string name="help_your_customer_to_find_you">Müşterilerinizin sizi bulmasına yardımcı</string>
-    <string name="get_social">Sosyalleşmek</string>
-    <string name="connect_to_facebook_or_twitter">facebook / twitter bağlanın</string>
-    <string name="add_address">Adres ekle</string>
-    <string name="post_5updates">Mesaj 5 Güncellemeler</string>
-    <string name="message_regularly_and_relevantly">Mesaj düzenli ve görece</string>
     <string name="share_website">Share web sitesi</string>
     <string name="tell_world_about_your_business_on_facebook_twitter">facebook ve twitterTell facebook ve twitterTell facebook ve twitterTell facebook ve twitterTell işinizle ilgili dünyanın üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş payı bu konuda dünyanın üzerinde iş payı bu konuda dünyaya anlatmak facebook paylaşmak ve facebook ve twitter üzerinden iş payı hakkında bu dünyayı twitterTell</string>
     <string name="search">Arama</string>
-    <string name="house_number_building_name">Kapı numarası, Bina Adı</string>
-    <string name="pincode">pin Kodu</string>
-    <string name="select_state">İlçe Seçiniz</string>
-    <string name="back_in_capital">ARKA</string>
-    <string name="next_in_capital">SONRAKİ</string>
-    <string name="general_services">Genel Servisler</string>
-    <string name="message">mesaj</string>
-    <string name="today">Bugün</string>
-    <string name="me">Ben mi</string>
     <string name="write_page_title">(Neden Biz Hakkımızda örneğin? Vs.) sayfa başlığını yazın</string>
     <string name="describe_in_detail">ayrıntılı bir şekilde açıklayın</string>
     <string name="about_us">Hakkımızda</string>
@@ -804,20 +648,17 @@
     <string name="overall_visits">Genel Ziyaretler</string>
     <string name="unique_visitors">Genel Ziyaretler</string>
     <string name="address_line">Adres satırı</string>
-    <string name="malleswaram">Malleswaram</string>
     <string name="town_city">İlçe / Şehir</string>
     <string name="pin_area_code">Pim / Alan Kodu</string>
     <string name="state_province">Eyalet / İl</string>
     <string name="country">ülke</string>
     <string name="nowfloats.com">.nowfloats.com</string>
-    <string name="type_message">Bir mesaj yazın</string>
     <string name="add_a_page">Bir Sayfa Ekle</string>
     <string name="use_custom_pages_to_describe_business">detaylı iş teklifleri tanımlamak için özel sayfalar kullanın. Ekleyebilir ve metin, bağlantılar ve resimler biçimi paragraflar olabilir!</string>
     <string name="retry">Tekrar dene</string>
     <string name="new_in_capital">YENİ</string>
     <string name="facebook_analytics">Facebook Analytics</string>
     <string name="facebook_response_error">Error while receiving data from Facebook</string>
-    <string name="session_expired">Please login again your Session has expired</string>
     <string name="powered_by">Tarafından desteklenmektedir </string>
     <string name="nowfloats"> NowFloats</string>
     <string name="version">versiyon</string>
@@ -838,13 +679,9 @@
     <string name="facebook">Facebook</string>
     <string name="twitter">Twitter</string>
     <string name="website">Web sitesi</string>
-    <string name="email_in_small">E-posta</string>
-    <string name="business_contact">İş İletişim</string>
     <string name="donot_like_it_tap_on_card">beğenmedim? değiştirmek için kart üzerine dokunun</string>
     <string name="create_website">CORANI MY WEB SİTESİ</string>
     <string name="by_pressing_above_button_to_agree">düğmesinin üzerinde basarak, Sen kabul eden</string>
-    <string name="policy_terms">Politikası ve Şartlar</string>
-    <string name="text">Metin</string>
     <string name="number_tocall_says">+919535576625 diyor &#8230;</string>
     <string name="sent_on">gönderilen</string>
     <string name="wow_this_is_amazing_offer_is_it_avail_trip">Vay bu inanılmaz bir tekliftir. Ocak ayında mevcut bu gezi mı?</string>
@@ -862,17 +699,12 @@
     <string name="new_password">Yeni Şifre</string>
     <string name="confirmed_password">Şifreyi Onayla</string>
     <string name="search_here">Burada ara</string>
-    <string name="customer">müşteri</string>
-    <string name="lookup_domain">Lookup Domain</string>
     <string name="enter_your_user_name">Kullanıcı adınızı giriniz</string>
     <string name="upload_featured_image">Sunulan Resim Yükle</string>
     <string name="using_camera">kamerayı kullanma</string>
     <string name="from_gallery">galeriden</string>
-    <string name="category_blog">Kategori Bloğu</string>
-    <string name="this_page_contain_info_about_business_contact_social">Bu uzay İş Profili, İletişim Bilgileri, İş Logo ve Sosyal Paylaşımı hakkında bilgi içerir.</string>
     <string name="values">değerler</string>
     <string name="date">tarih</string>
-    <string name="add_logo">Logo ekle</string>
     <string name="choose_your_location">Bulunduğunuz yeri seçin</string>
     <string name="drag_to_map_your_location">senin Store konumuna haritayı sürükleyin.</string>
     <string name="confirm_in_capital">ONAYLAMAK</string>
@@ -882,24 +714,7 @@
     <string name="app_version">versiyon 4.4.6</string>
     <string name="whats_new_done">TAMAMLANDI</string>
     <string name="website_name">Sitenizin Adı</string>
-    <string name="subdomain_name">.nowfloats.com</string>
-    <string name="sub_domain_available_text">Seçilen Alt - Alan Mevcut olan</string>
-    <string name="back_text">ARKA</string>
-    <string name="next_text">SONRAKİ</string>
     <string name="alerts_text">Uyarılar</string>
-    <string name="light_house_price">25000/yıl</string>
-    <string name="read_more_text">Daha fazla oku</string>
-    <string name="know_more_text">BİLİYOR DAHA</string>
-    <string name="store_about_this_plan">Bu plan hakkında</string>
-    <string name="store_screen_shots">Ekran</string>
-    <string name="store_no_screen_shots">Hiçbir ekran kullanılabilir!</string>
-    <string name="features_text">Özellikler</string>
-    <string name="store_no_description">Açıklama yok!</string>
-    <string name="store_inclusive_all_taxes">(Tüm vergiler Dahil)</string>
-    <string name="site_appearance_dalog_title">Sitenize, kesinlikle ücretsiz yeni bir dinamik görünüm iddia!</string>
-    <string name="site_appearance_dialog_body">Eğer beğenmezseniz, her zaman site Görünüm sekmesine girmeden önceki tasarıma geri dönebilirsiniz</string>
-    <string name="text_btn_enable">ETKİN</string>
-    <string name="text_btn_later">SONRA</string>
     <string name="select_action_dialog_title">Sunulan Resim Yükle</string>
     <string name="text_replace_image">Resmi Değiştir</string>
     <string name="text_delete_image">Görüntü silme</string>
@@ -914,33 +729,15 @@
     <string name="product_detail_availability">Ürün bulunabilirliği</string>
     <string name="product_detail_free_shipping">Ücretsiz kargo</string>
     <string name="product_detail_delete_btn_text">ürünü sil</string>
-    <string name="pop_up_create_msg_title">Emin misiniz?</string>
-    <string name="graph_fragment2_title">ziyaretler</string>
-    <string name="graph_custom_visit_page_title">ZİYARETLERİ</string>
     <string name="site_appearance_revert_to_old">Eski sürüme geri dön</string>
     <string name="site_appearance_upgrade_text">Şimdi Yükselt</string>
     <string name="site_meter_body_text">Siteniz sağlığını artırmak için aşağıdaki görevi tamamlamak. Yüksek oranda sitenize daha fazla trafik çevirir.</string>
     <string name="site_meter_more_traffic_text">Yüksek puanlar sitenize daha fazla trafik çevirir.</string>
     <string name="tool_bar_save_text">KAYIT ETMEK</string>
     <string name="single_row_card_upgrade_text">YÜKSELTME</string>
-    <string name="signup_title">Bilgilerinizi girin</string>
-    <string name="sign_up_business_name">iş adı</string>
-    <string name="sign_up_category">Kategori</string>
-    <string name="sign_up_city">Şehir</string>
-    <string name="sign_up_country">ülke</string>
-    <string name="sign_up_email">E-posta Adres</string>
-    <string name="sign_up_phone_number">Telefon numarası</string>
-    <string name="Setting_follow_us_on_twitter">Bizi Twitter\'da takip edin</string>
     <string name="Setting_terms_of_use">Kullanım Şartları</string>
-    <string name="Setting_privacy_policy">Gizlilik Politikası</string>
-    <string name="onboarding_next_btn_next">Anladım, Sonraki</string>
-    <string name="on_boarding_next2_text">Çok teşekkürler</string>
-    <string name="onboarding_popup_one_btn_text">Göster bana!</string>
     <string name="welcome_back">Tekrar hoşgeldiniz</string>
 
-
-
-    <string name="opc_hint_text">Connect with our sales executives to get an Online Payment Code (OPC).</string>
 
     <string-array name="tabs">
         <item>Week</item>
@@ -949,36 +746,15 @@
         <item>Year</item>
     </string-array>
     <string name="visits_this_week">visits this week</string>
-    <string name="visits_this_month">visits this month</string>
     <string name="visits_this_year">visits this year</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="Month">Month</string>
     <string name="day">Day</string>
 
-    <string-array name="calendar">
-        <item>Hafta</item>
-        <item>Ay</item>
-        <item>Yıl</item>
-    </string-array>
-    <string-array name="plans">
-        <item>ADD-ONS</item>
-        <item>CURRENT</item>
-    </string-array>
     <string-array name="priority_list">
         <item>VARSAYILAN</item>
         <item>YÜKSEK</item>
         <item>ORTA</item>
         <item>DÜŞÜK</item>
-    </string-array>
-    <string-array name="num_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
     </string-array>
     <string-array name="weeks">
         <item>Week 1</item>
@@ -987,20 +763,6 @@
         <item>Week 4</item>
         <item>Week 5</item>
         <item>Week 6</item>
-    </string-array>
-    <string-array name="months_with_full_name">
-        <item>ocak</item>
-        <item>şubat</item>
-        <item>mart</item>
-        <item>nisan</item>
-        <item>mayıs</item>
-        <item>haziran</item>
-        <item>temmuz</item>
-        <item>ağustos</item>
-        <item>eylül</item>
-        <item>ekim</item>
-        <item>kasım</item>
-        <item>aralık</item>
     </string-array>
     <string-array name="months">
         <item>ocak</item>
@@ -1046,121 +808,10 @@
         <item>PLANS</item>
         <item>OTHER INFO</item>
     </string-array>
-    <string-array name="questions_0">
-        <item>Why does a small or medium sized business need to be online?</item>
-        <item>I keep hearing SEO all the time. What is SEO?</item>
-        <item>What does a \"location-based-platform\" mean?</item>
-        <item>Why do you need my business\' physical address to create the website?</item>
-        <item>Why is location so important for online?</item>
-    </string-array>
-    <string-array name="answer_0">
-        <item><![CDATA[You might have a small business that does well and have your steady customers, however you possibly couldn\'t have captured all the possible customers - around your business.<br/> And with the advent of mobile browsers, customers now look for businesses on the go. So it has becomes important to be (a) present and (b) relevant to them in order to attract them to your physical business.]]></item>
-        <item><![CDATA[SEO or Search Engine Optimization, is the technique of laying out data on a website in a manner that is ideal for a search engine to pick up. Every popular search engine has defined how it looks at, measures, stacks and stores information from millions of websites around the world. For it to perform its task in the best and most efficient manner, it measures websites on certain criteria. Meeting the criteria - by laying down your content accordingly, is search-engine-optimizing your website.<br/> Whereas this is a somewhat complex task that must be performed consistently, with NowFloats, we reduce to it a bare minimum, if not zero.]]></item>
-        <item><![CDATA[For a business that has retail presence, it is pointless to be on the net and try to attract customers from another city or country. On the NowFloats platform, the physical location of your business is the crux of the solution. By pinning your business to the actual physical location of the business, we ensure that only customers who could drive across, take a bus or walk to your business would be exposed to your website in the search results. Of course, this will work well when consumers are searching for your services/products within a location too.<br/> So for example: people are looking for ice cream cafes in Seattle too. But it\'s pointless if you manage to attract someone from there when your business is actually in Sevilla, Spain.<br/> However if the person from Seattle is going to be in Sevilla and wants to taste the gelato there, he would search \'Ice cream café in Sevilla\' and your business result would show up.]]></item>
-        <item><![CDATA[Well, because we would like to pin your website to a physical location. Why? Because search engines now give more weight to local websites because consumers search like that. To take it a step further, it\'s also where customers can be guided to, when they are searching on the go on their mobile phones.]]></item>
-        <item><![CDATA[Well just think about it... consumers want convenience and they search for whatever they want to purchase - around them! Think about it a little harder: When consumers want to research, they search for products or services. But when consumers have intent to purchase, they search for the products or services in particular locations.<br/> Read a bit more at: <a href="http://blog.nowfloats.com/2014/05/why-should-small-business-care-about.html">http://blog.nowfloats.com/2014/05/why-should-small-business-care-about.html</a>]]></item>
-    </string-array>
-    <string-array name="questions_1">
-        <item>So what does NowFloats do?</item>
-        <item>What is NowFloats?</item>
-        <item>But the NowFloats website, doesn\'t look like a traditional website!</item>
-        <item>How does a \'website\' get more customers for Small and Medium Businesses?</item>
-        <item>So does NowFloats do search-engine optimization (SEO) for my business website?</item>
-    </string-array>
-    <string-array name="answer_1">
-        <item><![CDATA[Simplified, NowFloats works in two parts: (1) It makes the creation of business websites - very, very simple. These websites can be updated with equal amount of ease and speed. It can be done through an app, the web or SMS (only in India). And it is VERY simple.<br/> (2) After you start updating the website (also as easy) with business content, NowFloats\' patent pending technology kicks in, does the keyword extraction (automatically) and ensures that the search engine crawls your website and offers it up relevantly to potential customers searching for businesses like yours.<br/> Simply put, we ensure what you are saying on your website, is read by your potential customers. And as long as that is relevant information, we create opportunities for your customers to get in touch with you.]]></item>
-        <item><![CDATA[NowFloats is a location-based platform that helps smaller and medium-sized businesses grow bigger by getting them online and getting discovered by potential customers around them. <u>All without the need of any technical knowledge.</u>]]></item>
-        <item><![CDATA[Whereas that can be argued, we will go with, \"That might be true.\"<br/> We feel the important thing is that NowFloats tries to bring customers to your website and what you have to say (read: sell) and eventually, and more importantly, to your store\'s doorstep.<br/> The question that must be asked is, \"If it succeeds in getting your business more customers, which would you prefer - UI customization or functional success?\"<br/> Having said this, NowFloats is constantly working ahead and trying to create website templates that keep with the time and technology, if not ahead.]]></item>
-        <item><![CDATA[As mentioned earlier, the NowFloats website is not a regular \"static\" website that isn\'t updated after creation. No. When you start updating your website regularly and relevantly (to your business), the NowFloats technology ensures that when your potential customers do a web-search around your business, your website comes up ahead of others.<br/> When you get discovered first, you have a lead over others in getting this potential customer. Be it through a phone call, a message or simply the customer walking into your business premises.]]></item>
-        <item><![CDATA[Technically speaking, yes. NowFloats takes care of the SEO for the website and the content you create on it. Normally businesses have to fork out money to digital agencies to do the SEO for the website - to maintain it on a monthly or an annual basis.<br/> However with a NowFloats business website, you get the SEO built-in already. So all you need to worry about is what you want to tell the customers about your business.]]></item>
-    </string-array>
-    <string-array name="questions_2">
-        <item>Isn\'t updating a website technical? Do I need to interact with people to get it done?</item>
-        <item>Can NowFloats create the content for me?</item>
-        <item>Why is it so important to update the content on the business website?</item>
-        <item>Fine. But is there a simpler way of creating content for my website?</item>
-        <item>What about the other way around? Can my NowFloats page push content to my Twitter© and Facebook page?</item>
-        <item>What kind of content should I update for my business?</item>
-    </string-array>
-    <string-array name="answer_2">
-        <item><![CDATA[Mostly the answer would be yes. But with NowFloats it\'s a resounding NO! All you need to do is be able to type and press \"update\". We take care of the rest. That means design, SEO, etc.<br/> So say that you have a sale or have an offer or an announcement to make regarding your business, you don\'t need to find a developer or a designer. You simply have to update your website using the app or through the management portal or even a plain old SMS (in India).]]></item>
-        <item><![CDATA[You, as the owner or manager of the business, are the best judge of what your business does and what your customers look for. NowFloats could not possibly do justice to that.<br/> <u>Therefore NowFloats does not create any content for the business</u>. But it highly encourages business to do small updates twice or thrice a week to build the in-coming traffic.]]></item>
-        <item><![CDATA[Well for starters, a fresh website is one that customers trust. It shows the business is engaged online and that the information is fresh. For example a coffee shop that updates it\'s offers every day, a bit like a traditional chalkboard, is more likely to draw customers more regularly because they have interesting offers.<br/> And that\'s not all. Even search engines which crawl websites give sites which are updated regularly with relevant data more importance when it comes to search queries and results.]]></item>
-        <item><![CDATA[Sure! If you already have a Facebook© page, creating a \"full\" website is a cinch. We pull the last 10-15 feeds from your Facebook page and create entries on your NowFloats business website. You can also choose to keep pulling feed from the Facebook page. So that every time you update it, your NowFloats website gets updated too.<br/> The advantage? Your Facebook entries now become discoverable by location.]]></item>
-        <item><![CDATA[Absolutely. You can make one update on your NowFloats business website and ensure the word spreads on your other social media platforms. All automatically. All instantly.<br/> All you need to do is go to the \"Social Settings\" of the NowFloats Boost app and activate the various social options available there.]]></item>
-        <item><![CDATA[What we advise our customers is that they should update what their business does - in long term, and in short term too. The most important thing is that you DO NOT worry about keywords, or anything technical. But rather update messages as if you were in a conversation with an actual customer. Our technology takes care of the rest.<br/> For instance if it is a interior decorator, the long term message - which can also be the \'business description\' too, could be what they specialize in. Eg.: We are specialist in art-deco style interior decoration based in the Bay area.<br/> A short term message/update could be a promotion or an announcement.Eg.: Get high discounts on art-deco wallpapers for the pre-holiday run-up. Eg.: We have now started specializing in Minimalist styled interiors too.]]></item>
-    </string-array>
-    <string-array name="questions_3">
-        <item>Can the potential customer contact the business?</item>
-        <item>How else can I engage the customers?</item>
-        <item>Can I sell through a NowFloats website? Do you provide for e-commerce?</item>
-    </string-array>
-    <string-array name="answer_3">
-        <item><![CDATA[Yes! There are widgets on the website that are meant to increase customer engagement. For instance the \"Make an Enquiry\" widget allows the customers on the website to send a direct business enquiry to you. The enquiry is delivered to your phone or email address, giving you the potential lead.]]></item>
-        <item><![CDATA[NowFloats has a subscription facility, which your customers can use. After subscription, every time the business updates the website, the update is delivered in an email to the customer. So that there is less chance of the customer missing an update.]]></item>
-        <item><![CDATA[At the moment NowFloats provides a product catalogue feature, which promotes your best selling items further by SEO\'ing them. The product catalogue allows for customers to show interest and contact the merchant in regards to a particular product - generating a hot lead.<br/> However the option of e-commerce doesn\'t exist as of now. Having said that, we are working on providing e-commerce on the NowFloats websites soon enough. Stay tuned.]]></item>
-    </string-array>
-    <string-array name="questions_4">
-        <item>So what is NowFloats Boost?</item>
-        <item>How can we make an update through the web?</item>
-        <item>Can I actually make a business website with 4 SMSs through NowFloats?</item>
-    </string-array>
-    <string-array name="answer_4">
-        <item><![CDATA[NowFloats Boost or Boost (as we call it), is the website management app that makes creating, updating, analyzing the website a walk in the park. Highly intuitive, and built on common app logic, Boost will get you going and ensure your website is well maintained by you. You can also update the store information and check the analytics of your website. It is available for iPhone and Android smartphones currently (the Windows Phone version is coming soon). For more information visit <a href="http://nowfloats.com/boost">http://nowfloats.com/boost</a>.]]></item>
-        <item><![CDATA[NowFloats has a web management portal with which you can update your NowFloats business website. You can also manage the store information and check more in-depth analytics of your website. If you have multiple stores, you can manage them all from this one portal.]]></item>
-        <item><![CDATA[Yes, it\'s true. In India, you can send a message to 56767878 with the word \"FLOAT\" and it will trigger three more messages at the end of which, your business website will be ready. Every message you send after that will be an update on your website.<br/> Best thing is, we just made your SMS - search engine optimized for your business.]]></item>
-    </string-array>
-    <string-array name="questions_5">
-        <item>How does the search engine optimization work for my specific business?</item>
-        <item>How long does it take before my SEO improves and my website starts showing up in the results?</item>
-        <item>But what if the business is in a hurry? Does NowFloats also provide \'inorganic\' growth?</item>
-        <item>What is \'organic\' web traffic? How does NowFloats build that for me?</item>
-    </string-array>
-    <string-array name="answer_5">
-        <item><![CDATA[Well the trick is in the language of your business. You don\'t have to worry about anything technological. Just pitch it like you would to your customers. That\'s all. We will do the heavy lifting of finding the right keywords from your language and ensuring the search engines recognize it. This enables relevant and better rankings in search results.]]></item>
-        <item><![CDATA[We\'ll be honest with you: There is no exact answer to this. However we have seen that with 2-3 updates a week, which are relevant and consistent with your business, our customers\' websites start showing up in local searches on popular search engines like Google in 3-4 weeks. This of course is what is called organic web traffic.<br/> Of course this requires you to create content. Think of it like fuel that\'ll make the car run. If you don\'t fill\'er up, the car won\'t take you anywhere.]]></item>
-        <item><![CDATA[We have 2 plans, one that is entirely organic SEO, and the other which is a mix of organic and inorganic SEO. You can always opt for NowFloats Direct which has an \'inorganic\' element to it. We match the keywords from your messages and push them out as advertising to popular advertising networks online and then \"push\" potential customers to your website.<br/> Remember that even this method is exact and not random. People searching for what your business is talking about are the ones brought to your website.]]></item>
-        <item><![CDATA[Organic traffic is people landing up on your site without you having to apply any external stimulus like online advertising or offline advertising for that matter. People land up on your site because of the content that you have written and the search engines pointing at you for a relevant search query.<br/> With your effort of updating your NowFloats website regularly and relevantly, we ensure that you start getting established as someone who is an expert in your business (within the location for maximum impact and thus start rising in the search results. Please note that this DOES NOT happen overnight. It takes time (but no more money : ) and effort to curate the website.]]></item>
-    </string-array>
-    <string-array name="questions_6">
-        <item>How do I know that NowFloats is working for me?</item>
-        <item>If there are two businesses of the same nature and category on your platform within the same area/location, who will you show up first on the search results?</item>
-        <item>How does it compare to let\'s say a business listing site?</item>
-    </string-array>
-    <string-array name="answer_6">
-        <item><![CDATA[The best measure will be more customers over time.<br/> But more instant than that will be the number of people visiting your website. That number upsurges when you are regular with your updates.]]></item>
-        <item><![CDATA[This is a very interesting question and the answer is fairly straightforward:<br/> Whichever business updates its website regularly and more relevantly will show up first.<br/> NowFloats doesn\'t play favourites. We are merely a platform. What the customer does on it, defines what they can make of it. Also, what you must understand is that search engines apply weights to websites by various actions - how often is it updated, how focused it is, what the location is, etc. If you talk relevantly about your business, its products or services, consistently - give advice around it, provide updates, etc., it\'s quite likely that your site will come up first.<br/> Imagine two salesmen trying to sell you an ironing board. One says to you, \"You can iron your clothes on this.\" Whereas the second salesman says, \"This is designed for your maximum comfort, as you stand and iron clothes daily. It also comes in various colours to match your house décor. And I have a great deal for you.\" Who would you go to/purchase from? Yeah, it\'s pretty much like that online too.<br/> So if you want to show up ahead of other similar businesses in the location (both based on NowFloats platform) the trick is to put in a little bit of effort and update your website regularly with messages, images, product/service news, etc. That\'s it.]]></item>
-        <item><![CDATA[NowFloats is not like a listing site in many ways. To begin, you own your website with NowFloats, whereas on a listing site, you are one of the many businesses listed there. Second, on a listing site, you\'re exactly that - a listing. There is little context to your business besides the category you are listed under. With NowFloats you can give your customers context of your business - with content in form of messages, pictures, deals, subscriptions, enquiry forms, point of contacts, etc. Last, the SEO of a listing site, goes to the listing site. With NowFloats, when you write your content, it\'s your website the SEO is going to. You benefit from it first and foremost.]]></item>
-    </string-array>
-    <string-array name="questions_7">
-        <item>I bought a domain name but did nothing with it. Can the NowFloats website be built with it?</item>
-        <item>What if I already have a website? Can NowFloats still help me get more customers?</item>
-    </string-array>
-    <string-array name="answer_7">
-        <item><![CDATA[Yes indeed. In fact, you can build the NowFloats website (almost instantly) and then contact our customer care at <a href="ria@nowfloats.com">ria@nowfloats.com</a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
-        <item><![CDATA[Absolutely! If you already have a website for your business, but it isn\'t updated often enough, chances are it won\'t be doing much for your business. The NowFloats website can plug-in to your existing website as a sub-domain page where you can update your deals, offers, launches or messages. To find out more, download our detailed integration tutorial <a href="http://nowfloats.com/Content/IntegrationTutorial.pdf">PDF here.</a><br/> With regular updates, your page rank begins to rise and the SEO gets added on to your main site too.]]></item>
-    </string-array>
-    <string-array name="questions_8">
-        <item>What are the charges? Does NowFloats have different plans?</item>
-    </string-array>
-    <string-array name="answer_8">
-        <item><![CDATA[We have two plans. NowFloats LightHouse and NowFloats WildFire.<br/> \'LightHouse\', draws in the organic traffic. And depending on the regularity of your updates, it can start drawing in web traffic fast. You can get more information and charges <a href="http://nowfloats.com/#plans-section">here</a>.<br/> The second plan is \'WildFire\' - a combination of garnering inorganic and organic traffic for your website. This plan tends to spread your information faster in your target market. It uses adwords and online advertising to bring in traffic quicker. Depending on your convenience you can choose to pay a fixed amount per month on an annual plan. You can get more information here.<br/> All plans are on an annual basis. Wildfire\'s adwords balance can be topped up whenever the it runs low.]]></item>
-    </string-array>
-    <string-array name="questions_9">
-        <item>Who founded NowFloats? And when?</item>
-        <item>Has NowFloats won any awards?</item>
-        <item>Where can I read up more about NowFloats?</item>
-    </string-array>
-    <string-array name="answer_9">
-        <item><![CDATA[NowFloats was founded by Jasminder Singh Gulati, Ronak Kumar Samantray, Nitin Jain and Neeraj Sabharwal in the year 2012.<br/> Whereas the first three come from a technology background, having worked in corporates like Microsoft, Computer Associates, GE, etc., Neeraj comes from a consumerist background having worked in global advertising agencies like Havas and Saatchi and Saatchi. And if it matters in anyway, they have a combined experience of 62 years. :)]]></item>
-        <item><![CDATA[NowFloats has won many awards over time. You can see them at <a href="http://nowfloats.com/#accolades">http://nowfloats.com/#accolades.</a>]]></item>
-        <item><![CDATA[Get more information about NowFloats at <a href="http://nowfloats.com/#aboutus">http://nowfloats.com/#aboutus</a>.<br/> Get our whitepaper at <a href="http://nowfloats.com/boost/whyonline">http://nowfloats.com/boost/whyonline</a>.]]></item>
-    </string-array>
     <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook page insights</string>
     <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
     <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
     <string name="updates_not_found">Updates not found!</string>
-    <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your facebook page through Boost yet Make sure you select the <b>facebook page option</b> while creating an update</string>
     <string name="Logo_percentage">5</string>
     <string name="business_hours">5</string>
 
@@ -1168,31 +819,13 @@
     <string name="kitsune_pre_signup_text1">Manage and update your</string>
     <string name="kitsune_pre_signup_text2">Kitsune powered website</string>
     <string name="error_invoice">Error while creating invoice</string>
-    <string name="login_status_error">Please Logout and Login again to continue</string>
-    <string name="kitsune_renew_dialog_title">Renew your plan to get all the features</string>
-    <string name="kitsune_renew_dialog_body">Your subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="kitsune_demo_expire_dialog_title">Subscribe now get all the features</string>
-    <string name="opc_card_text">Pay through OPC</string>
-    <string name="opc_main_text">If you have been assisted by a NowFloats Sales Executive, you can enter an Online Payment Code (OPC) here. It will auto-populate the details of your pro-forma invoice and enable you to subscribe to a NowFloats package online. Please connect with our customer support team to know more about it.</string>
-    <string name="opc_title">Pay through OPC</string>
     <string name="help_and_support">Help and Support</string>
     <string name="product_checkout">Product Checkout</string>
-    <string name="not_available_in_ur_country">This feature is currently not available in your country. We will notify you when its available.</string>
-    <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="search_rank">Search Ranking</string>
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
 
     <string name="getlink">Next</string>
 
     <string name="business_apps">Business Apps</string>
-
-    <string name="increse_site_score">Increase site score</string>
-
-    <string name="your_site_meter_too_low">Your site meter score is too low</string>
-
-    <string name="you_can_not_have_app_until_score_90">You can\'t have your app up and running until or unless you update your site\'s health score up to 90%</string>
-
-    <string name="details_will_used_to_create_custoer_app">I agree that these details will be used to create my customer app and can\'t be changed once fixed</string>
 
     <string name="Madman_design_studio">Madman\'s Design Studio</string>
 
@@ -1204,23 +837,13 @@
 
     <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
 
-    <string name="get_android_app">GET YOUR ANDROID\nAPP FOR FREE</string>
-
     <string name="get_ios_app">GET YOUR iOS APP\nFOR INR 6000/-</string>
-
-    <string name="create_push_notification">Create a push notification to your app users</string>
 
     <string name="android_app"> Android App</string>
 
     <string name="ios_app"> iOS App</string>
 
     <string name="increase_our_site_health">increase your site health score</string>
-
-    <string name="more_info">More information</string>
-
-    <string name="edit_details">Edit details</string>
-
-    <string name="on_click_following_field_redirect">On clicking the following fields you will be redirected to the screen where you can make changes</string>
 
     <array name="businessboldtext">
         <item>A mobile app\nfor your customers</item>
@@ -1238,32 +861,24 @@
     </array>
     <string name="alternate_number3">Alternate Number 3</string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
-    <string name="site_appearance_change_to_new_look">In case you didn\'t like the existing look of your website, you  can always choose to change it from here.</string>
     <string name="find_your_subscribers">Find your subscribers</string>
     <string name="title_for_quikrr">Write message title(Quikrr only)</string>
     <string name="guidlines">Guidelines for posting to Quikr</string>
     <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
-    <string name="accessibility_description">Permission required to upload Boost product and grow your business</string>
     <string name="bubble_in_app_message">This will help you to sell products through WhatsApp</string>
     <string name="boost_bubble">Boost Bubble</string>
     <string name="accessibility_message">go ahead &amp; start sharing on WhatsApp</string>
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and start sharing!</string>
-    <string name="bubble_overlay_text">Now share your product on WhatsApp!</string>
-    <string name="boost_overlay_permission">Boost Bubble</string>
     <string name="open_setting">Open Settings</string>
     <string name="take_me_there">Take me there</string>
     <string name="screen_overlay_permission">Screen overlay permission</string>
     <string name="required_overlay_permission">Checkout new feature \"Boost Bubble\", easy to share products</string>
-    <string name="missed_calls">MiSSED CALLS</string>
-    <string name="received_call">RECEIVED CALLS</string>
     <string name="call_tracker">Call Tracker</string>
-    <string name="data_is_empty">Calls are empty</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="website_domain_name">.nowfloats.com</string>
-    <string name="faqs_url" />
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline"><u>PLAY</u></string>
     <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
@@ -1282,7 +897,6 @@
     <string name="push_notif">Send notification</string>
     <string name="app_preview">App preview</string>
     <string name="deeplink_business_app">businessapp</string>
-    <string name="about_app">About app</string>
     <string name="fb_page_creation_message">gather more leads and drive more traffic to your website through Facebook</string>
     <string name="get_facebook_page">Get a Facebook page</string>
     <string name="fb_page_creation_title">Looks like you don’t have a Facebook page</string>
@@ -1291,7 +905,6 @@
     <string name="suggestions_for_page_name">Here\'s a suggestion for an available Page name</string>
     <string name="your_facebook_page_is_created">Your Facebook Page is created</string>
     <string name="connect_page_to_nowfloats">Connect this page to the NowFloats Boost app to automatically share all updates to your page.\\nYou can see all your Facebook Page analytics in</string>
-    <string name="you_can_see_your_page_analytics"><![CDATA[You can see all your Facebook Page\\nanalytics in\\n\\nanalytics->social analytics->\\nfacebook analytics]]></string>
     <string name="control">Connect</string>
     <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
     <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>

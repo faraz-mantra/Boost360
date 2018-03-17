@@ -6,15 +6,8 @@
     <string name="continue_chat">Continue Chat</string>
     <string name="continue_details">Continue</string>
     <string name="skip_login">Skip &amp; Login</string>
-    <string name="take_me_back">Take me back</string>
     <string name="loc_country">Country</string>
     <string name="loc_pincode">PIN Code/ZIP</string>
-    <string name="empty_address_warn">Address can\'t be empty</string>
-    <string name="empty_city_warn">City can\'t be empty</string>
-    <string name="locality_warn">Locality can\'t be empty</string>
-    <string name="house_no_warn">House No can\'t be empty</string>
-    <string name="empty_country_warn">Country can\'t be empty</string>
-    <string name="empty_pin_warn">Pin can\'t be empty</string>
     <string name="pin_code_length_error">pincode length cannot be more than size.Please enter valid pincode</string>
     <string name="chat_agent_name">Ria</string>
     <string name="chat_agent_name_full">(Relationship Intelligence Agent)</string>
@@ -31,20 +24,15 @@
     <string name="webiste_url">WEBSITE URL</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="is_active">Is Active</string>
     <string name="confirm_business_name">Confirm your business name</string>
     <string name="confirmed_business_name">CONFIRMED BUSINESS NAME</string>
-    <string name="confirmed_business_addr">CONFIRMED BUSINESS ADDRESS</string>
     <string name="skip">SKIP</string>
     <string name="done">DONE</string>
-    <string name="create_my_site">CREATE MY SITE</string>
     <string name="create_my_website">CREATE MY WEBSITE</string>
     <string name="locate_on_map">LOCATE ON MAP</string>
 
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
-    <string name="you_can_move_pinch_zoom_map_to_exact_location">"You can move, pinch, zoom the map to exact location."</string>
 
 
     <string name="sure_lets_go">Sure, let\'s go</string>
@@ -62,10 +50,8 @@ so I am going to shift all the information you have shared with me to a manual f
 
     <string name="edit_title">Are you looking to edit this \n information?</string>
 
-    <string name="looking_to_go_back">Looking to go back?</string>
     <string name="alert">Alert</string>
     <string name="you_will_lose_info">You will lose all the information you have entered so far.</string>
-    <string name="sad_to_see_you_go">Sad to see you go :(</string>
     <string name="cant_wait_to_see_your_dashboard">Can\'t wait to see your Dashboard?</string>
     <string name="change_country_code">Unfortunately you cannot change the country code from here.</string>
     <string name="country_code_msg">Skip the step for now, and send us your desired alternate number from “Need Help?” in the app\'s Settings section.</string>
@@ -74,8 +60,6 @@ so I am going to shift all the information you have shared with me to a manual f
     <string name="leave_or_login">Leave or Login?</string>
     <string name="leave">Leave</string>
     <string name="login">Login</string>
-    <string name="all_the_information_you_entered_will_be_lost">The information you have entered so far will be lost if you press the back button.</string>
-    <string name="thats_okay">That\'s okay</string>
     <string name="exit">Exit</string>
     <string name="cancel">Cancel</string>
 

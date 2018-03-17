@@ -32,13 +32,6 @@
         <item name="android:textColorSecondary">#FFFFFF</item>
     </style>
 
-    <style name="MyCustomToolBarEditBoxTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#FFFFFF</item>
-        <item name="android:title">@string/save</item>
-
-    </style>
-
     <style name="SignUp_EditText_Style" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="android:gravity">bottom</item>
@@ -76,5 +69,4 @@
         <item name="android:background">@color/primaryColor</item>
     </style>
 
-    <string name="save">SAVE</string>
 </resources>
