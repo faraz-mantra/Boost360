@@ -1576,6 +1576,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Privacy Policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
+    <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
+    <string name="domain_linking_success">Domain Linking Successful</string>
 
     <string-array name="manage_content_tab_items">
         <item>My Business Profile</item>

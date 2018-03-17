@@ -47,13 +47,13 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2017120006
+        versionCode 2018030017
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -95,7 +95,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.8.6"
+            versionName "4.9.4"
             applicationId "com.biz2.nowfloats"
             dimension "default"
         }

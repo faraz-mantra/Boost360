@@ -463,6 +463,12 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         hideLoader();
 
         if(!isAlreadyCalled) {
+            if(domainDetails == null && sessionManager.getRootAliasURI() != null) {
+                showCustomDialog(getString(R.string.domain_linking_success),
+                        getString(R.string.domain_linked),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
+                return;
+            }
             if (domainDetails == null){
                 Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
             } else if(domainDetails.isFailed()){
@@ -475,7 +481,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 showCustomDialog(getString(R.string.domain_booking_process),
                         getString(R.string.domain_booking_process_message),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else{
+            } else if(!domainDetails.isHasDomain() && sessionManager.getRootAliasURI() != null){
+                showCustomDialog(getString(R.string.domain_linking_success),
+                        getString(R.string.domain_linked),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
+            } else {
                 showDomainDetails();
             }
         }
