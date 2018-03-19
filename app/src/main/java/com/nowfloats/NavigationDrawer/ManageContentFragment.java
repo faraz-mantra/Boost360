@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,8 +43,13 @@ public class ManageContentFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
 
-        String[] adapterTexts = getResources().getStringArray(R.array.manage_content_tab_items);
-        int[] adapterImages = {R.drawable.ic_manage_business,R.drawable.ic_about,R.drawable.ic_image_gallery, R.drawable.ic_custom_pages};
+        final String[] adapterTexts = getResources().getStringArray(R.array.manage_content_tab_items);
+        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.manage_content_sidepanel);
+        int[] adapterImages = new int[adapterTexts.length];
+        for (int i = 0; i<adapterTexts.length;i++){
+            adapterImages[i] = imagesArray.getResourceId(i,-1);
+        }
+        imagesArray.recycle();
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
@@ -51,18 +57,18 @@ public class ManageContentFragment extends Fragment{
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-                switch(pos){
-                    case 0:
+                switch(adapterTexts[pos]){
+                    case "My Business Profile":
                         intent = new Intent(mContext,FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName","Business_Profile_Fragment_V2");
                         break;
-                    case 1:
+                    case "Updates":
                         ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.update));
                         return;
-                    case 2:
+                    case "Image Gallery":
                         intent = new Intent(mContext, ImageGalleryActivity.class);
                         break;
-                    case 3:
+                    case "Custom Pages":
                        intent = new Intent(mContext, CustomPageActivity.class);
                         break;
                     default:

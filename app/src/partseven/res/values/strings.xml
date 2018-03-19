@@ -541,5 +541,25 @@
 
 
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+    <string-array name="about_tab_items">
+        <item>About NowFloats</item>
+        <item>FAQs</item>
+        <item>Like us on Facebook</item>
+        <item>Follow us on Twitter</item>
+        <item>Rate us on Play Store</item>
+        <item>Terms of Use</item>
+        <item>Privacy Policy</item>
+    </string-array>
 
+    <string-array name="manage_content_tab_items">
+        <item>My Business Profile</item>
+        <item>Updates</item>
+        <item>Image Gallery</item>
+        <item>Custom Pages</item>
+    </string-array>
+    <string-array name="account_setting_tab_items">
+        <item>Your Plans</item>
+        <item>Change Password</item>
+        <item>Log out</item>
+    </string-array>
 </resources>

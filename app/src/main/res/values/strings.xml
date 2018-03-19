@@ -1559,12 +1559,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="about">About</string>
     <string name="upgrades">Upgrades</string>
     <string name="shared_user_label">NowFloatsBoost</string>
-    <string-array name="upgrade_tab_items">
-        <item>Pricing plans</item>
-        <item>WildFire</item>
-        <item>Dictate</item>
-        <item>My Business App</item>
-    </string-array>
+
     <string-array name="about_tab_items">
         <item>About NowFloats</item>
         <item>FAQs</item>

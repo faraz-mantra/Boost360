@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -90,9 +91,13 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
-        String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
-        int[] adapterImages = {R.drawable.ic_site_apperance, R.drawable.ic_domain_enad_emails,
-                R.drawable.ic_your_plan, R.drawable.icon_change_password,R.drawable.icon_logout};
+        final String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
+        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.account_settings);
+        int[] adapterImages = new int[adapterTexts.length];
+        for (int i = 0; i<adapterTexts.length;i++){
+            adapterImages[i] = imagesArray.getResourceId(i,-1);
+        }
+        imagesArray.recycle();
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
@@ -100,11 +105,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-                switch(pos){
-                    case 0:
+                switch(adapterTexts[pos]){
+                    case "Site Appearance":
                         intent = new Intent(mContext, SiteAppearanceActivity.class);
                         break;
-                    case 1:
+                    case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
                         if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
@@ -135,13 +140,13 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
-                    case 2:
+                    case "Your Plans":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         break;
-                    case 3:
+                    case "Change Password":
                         changePassword();
                         return;
-                    case 4:
+                    case "Log out":
                         logoutAlertDialog_Material();
                         return;
                     default:

@@ -28,6 +28,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.rd.PageIndicatorView;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class HelpAndSupportFragment extends Fragment {
             dialog.show();
     }
     private void hideProgress(){
-        if (dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()){
             dialog.dismiss();
         }
     }
@@ -90,10 +91,15 @@ public class HelpAndSupportFragment extends Fragment {
         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK,null);
         mRiaSupportModelList = new ArrayList<>(2);
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
-        HashMap<String, String> param = new HashMap<>();
-        param.put("clientId", Constants.clientId);
-        param.put("fpTag", manager.getFpTag());
-        getRiaMembers(param,view);
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.us.nowfloats")) {
+            HashMap<String, String> param = new HashMap<>();
+            param.put("clientId", Constants.clientId);
+            param.put("fpTag", manager.getFpTag());
+            getRiaMembers(param, view);
+        }else{
+            addDefaultRiaData();
+            setAdapterWithPager(view);
+        }
         TextView queryMessageText = view.findViewById(R.id.textView9);
         makeLinkClickable(queryMessageText);
 //        CharSequence charSequence = Methods.fromHtml("If your query is still unanswered, please contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +

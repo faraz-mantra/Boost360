@@ -45,7 +45,8 @@ public class PreSignUpActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
 
-        if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")){
+        if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats") ||
+                Constants.PACKAGE_NAME.equalsIgnoreCase("com.us.nowfloats")){
             setContentView(R.layout.activity_pre_sign_up__main_v3);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
@@ -78,7 +79,7 @@ public class PreSignUpActivity extends FragmentActivity {
 
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 Intent signUpIntent = null;
-                if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.us.nowfloats")) {
                     signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
                     signUpIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(signUpIntent);
