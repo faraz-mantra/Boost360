@@ -54,7 +54,7 @@ public class AllPlansFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(vpPricingPlans, true);
         pricingPagerAdapter.notifyDataSetChanged();
-        if(mBasePlans!=null) {
+        if(mBasePlans!=null && mBasePlans.size()>0) {
             tvPrice.setText(mBasePlans.get(vpPricingPlans.getCurrentItem()).getPrice() + "");
             tvCurrency.setText(mBasePlans.get(vpPricingPlans.getCurrentItem()).getCurrencyCode());
         }

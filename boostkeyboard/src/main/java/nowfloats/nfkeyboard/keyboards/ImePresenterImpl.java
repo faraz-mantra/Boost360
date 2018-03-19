@@ -518,6 +518,7 @@ public class ImePresenterImpl implements ItemClickListener,
                     0, "SINGLE", new CallBack<List<Product>>() {
                     @Override
                     public void onSuccess(List<Product> data) {
+                        if (productList == null) return;
                         productList.clear();
                         if (data != null && data.size()>0) {
                             for (Product product : data) {
@@ -534,6 +535,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
                     @Override
                     public void onError(Throwable t) {
+                        if (productList == null) return;
                         AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
                         productList.clear();
                         productList.add(model);
@@ -553,6 +555,7 @@ public class ImePresenterImpl implements ItemClickListener,
                     0, 0, new CallBack<Updates>() {
                         @Override
                         public void onSuccess(Updates data) {
+                            if (updatesList == null) return;
                             updatesList.clear();
                             if (data != null && data.getFloats()!= null && data.getFloats().size()>0) {
                                 for (Float update : data.getFloats()) {
@@ -569,6 +572,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
                         @Override
                         public void onError(Throwable t) {
+                            if (updatesList == null) return;
                             AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
                             updatesList.clear();
                             updatesList.add(model);
