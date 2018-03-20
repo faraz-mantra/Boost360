@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.TopUpPlansActivity;
@@ -98,12 +99,13 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
                 topUpTv.setVisibility(View.INVISIBLE);
             }else{
                 topUpTv.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(activePlan.getPrimaryImageUri()).into(planImV);
                 if (activePlan.getName().toLowerCase().contains("lite")){
-                    planImV.setImageResource(R.drawable.boost_lite_logo);
+                    //planImV.setImageResource(R.drawable.boost_lite_logo);
                 }else if (activePlan.getName().toLowerCase().contains("pro")){
-                    planImV.setImageResource(R.drawable.boost_pro_logo);
+                    //planImV.setImageResource(R.drawable.boost_pro_logo);
                 }else if (activePlan.getName().toLowerCase().contains("light")){
-                    planImV.setImageResource(R.drawable.lighthouse);
+                    //planImV.setImageResource(R.drawable.lighthouse);
                     renewTv.setVisibility(View.INVISIBLE);
                 }
                 mImagDivider.setVisibility(View.VISIBLE);

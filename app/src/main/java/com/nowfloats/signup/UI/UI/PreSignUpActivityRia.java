@@ -200,7 +200,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pre_sign_up_trial_4);
-        if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || !Constants.PACKAGE_NAME.equals("com.us.nowfloats")) {
+        if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             findViewById(R.id.layout_ria).setVisibility(View.GONE);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);

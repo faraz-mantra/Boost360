@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Store.Model.OnItemClickCallback;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 /**
@@ -41,7 +42,7 @@ public class UpgradeAdapter extends RecyclerView.Adapter<UpgradeAdapter.UpgradeC
 
     @Override
     public int getItemCount() {
-        return 2;
+        return BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?2:1;
     }
 
     class UpgradeCardHolder extends RecyclerView.ViewHolder{

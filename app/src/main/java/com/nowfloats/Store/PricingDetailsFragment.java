@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.nowfloats.Store.Adapters.AllPlansRvAdapter;
 import com.nowfloats.Store.Model.PackageDetails;
 import com.squareup.picasso.Picasso;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -93,16 +94,17 @@ public class PricingDetailsFragment extends Fragment {
                         counter++;
                     }
                 }
-                if(mBasePackage.getName().toLowerCase().contains("pro")) {
-                    packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", true));
-                    packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", true));
-                    packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", true));
-                }else {
-                    packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", false));
-                    packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", false));
-                    packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", false));
+                if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+                    if (mBasePackage.getName().toLowerCase().contains("pro")) {
+                        packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", true));
+                        packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", true));
+                        packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", true));
+                    } else {
+                        packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", false));
+                        packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", false));
+                        packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", false));
+                    }
                 }
-
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {

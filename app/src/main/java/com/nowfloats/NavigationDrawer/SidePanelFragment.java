@@ -75,7 +75,7 @@ public class SidePanelFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
-    TextView dashBoardTextView, tvManageCustomers,tvSocialSharing,tvManageInventory, tvManageContent,
+    TextView dashBoardTextView,analyticsTextView, tvManageCustomers,tvSocialSharing,tvManageInventory, tvManageContent,
             accountSettingsText,upgradeText,keyboardTextView, helpAndSupportText, shareText,aboutText;
     public static TextView fpNameTextView;
     UserSessionManager session;
@@ -93,7 +93,7 @@ public class SidePanelFragment extends Fragment {
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
-    LinearLayout homeLayout, upgradeLayout, accountSettingsLayout,keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+    LinearLayout homeLayout,analyticsLayout, upgradeLayout, accountSettingsLayout,keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
             manageContentLayout, manageCustomersLayout,socialLayout,manageInventoryLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -106,7 +106,7 @@ public class SidePanelFragment extends Fragment {
     private final int gallery_req_id = 6;
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
-    private ImageView shareImageView,keyboardImageView, upgradeImageView, dasbBoardImageView, helpAndSupportImageView,
+    private ImageView shareImageView,keyboardImageView, upgradeImageView, analyticsImageView,dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView,manageContentImageView,aboutImageView,
             socialImageView,manageInventoryImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
@@ -315,6 +315,7 @@ public class SidePanelFragment extends Fragment {
         View card = view.findViewById(R.id.navigationDrawer_main_leftPane);
 
         homeLayout = card.findViewById(R.id.firstRow_Layout);
+        analyticsLayout = card.findViewById(R.id.analytics_row_Layout);
         manageCustomersLayout = card.findViewById(R.id.tenth_Layout);
         manageContentLayout = card.findViewById(R.id.layout_manage_content);
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
@@ -335,6 +336,7 @@ public class SidePanelFragment extends Fragment {
         }
 
         dashBoardTextView = (TextView) homeLayout.findViewById(R.id.firstrow_TextView);
+        analyticsTextView = (TextView) analyticsLayout.findViewById(R.id.analytics_row_TextView);
         tvManageCustomers = (TextView) manageCustomersLayout.findViewById(R.id.tvManageCustomers);
         tvManageContent = (TextView) manageContentLayout.findViewById(R.id.tvManageContent);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
@@ -347,6 +349,7 @@ public class SidePanelFragment extends Fragment {
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
 
         dasbBoardImageView = homeLayout.findViewById(R.id.firstrow_ImageView);
+        analyticsImageView = analyticsLayout.findViewById(R.id.analytics_row_ImageView);
         manageCustomerImageView = manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
         manageContentImageView = manageContentLayout.findViewById(R.id.img_manage_content);
         manageInventoryImageView = manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
@@ -399,6 +402,7 @@ public class SidePanelFragment extends Fragment {
         //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
         dashBoardTextView.setTypeface(robotoMedium);
+        analyticsTextView.setTypeface(robotoMedium);
         tvManageCustomers.setTypeface(robotoMedium);
         tvManageContent.setTypeface(robotoMedium);
         tvManageInventory.setTypeface(robotoMedium);
@@ -446,6 +450,13 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(manageContentImageView, tvManageContent, manageContentLayout);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_content));
+            }
+        });
+        analyticsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onclickColorChange(analyticsImageView, analyticsTextView, analyticsLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.deeplink_analytics));
             }
         });
 
@@ -844,6 +855,7 @@ public class SidePanelFragment extends Fragment {
 
     private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        analyticsTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         keyboardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageContent.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -858,6 +870,7 @@ public class SidePanelFragment extends Fragment {
 
 
         dasbBoardImageView.setColorFilter(defaultLabelFilter);
+        analyticsImageView.setColorFilter(defaultLabelFilter);
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
         keyboardImageView.setColorFilter(defaultLabelFilter);
         manageContentImageView.setColorFilter(defaultLabelFilter);
@@ -871,6 +884,7 @@ public class SidePanelFragment extends Fragment {
 
 
         homeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageCustomersLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         keyboardLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageContentLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));

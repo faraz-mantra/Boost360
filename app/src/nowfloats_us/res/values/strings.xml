@@ -581,7 +581,6 @@
     </string-array>
     <string-array name="account_setting_tab_items">
         <item>Site Appearance</item>
-        <item>Domain and Email</item>
         <item>Your Plans</item>
         <item>Change Password</item>
         <item>Log out</item>

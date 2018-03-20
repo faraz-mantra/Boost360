@@ -79,7 +79,7 @@ public class PreSignUpActivity extends FragmentActivity {
 
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 Intent signUpIntent = null;
-                if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.us.nowfloats")) {
+                if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                     signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
                     signUpIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(signUpIntent);

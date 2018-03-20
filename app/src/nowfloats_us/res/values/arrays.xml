@@ -2,7 +2,6 @@
 <resources>
     <array name="account_settings">
         <item>@drawable/ic_site_apperance</item>
-        <item>@drawable/ic_domain_enad_emails</item>
         <item>@drawable/ic_your_plan</item>
         <item>@drawable/icon_change_password</item>
         <item>@drawable/icon_logout</item>
