@@ -15,6 +15,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -40,6 +43,7 @@ import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
+import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -78,7 +82,7 @@ public class Home_Main_Fragment extends Fragment implements
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
     private int maxSyncCall = 2;
-
+    OnBoardingManager manager;
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
@@ -225,12 +229,30 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         bus = BusProvider.getInstance().getBus();
         bus.register(this);
         current_Activity = getActivity();
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_home_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        manager = new OnBoardingManager(getContext());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.on_boarding_option:
+                if (manager != null)
+                manager.startOnBoarding();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

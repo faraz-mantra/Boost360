@@ -15,6 +15,8 @@ public class OnBoardingManager {
     }
 
     public void startOnBoarding(){
-        mContext.startActivity(new Intent(mContext, OnBoardingActivity.class));
+        Intent  i =new Intent(mContext, OnBoardingActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(i);
     }
 }
