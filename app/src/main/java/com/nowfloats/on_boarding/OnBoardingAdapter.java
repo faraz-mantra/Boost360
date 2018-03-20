@@ -1,6 +1,7 @@
 package com.nowfloats.on_boarding;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.thinksity.R;
 
 /**
@@ -19,8 +21,8 @@ import com.thinksity.R;
 
 public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context mContext;
-    private String[] titles, descriptions;
-    LinearLayout.LayoutParams linLayoutParams;
+    private String[] titles, descriptions, buttonText;
+    LinearLayout.LayoutParams linearLayoutParams;
     int leftSpace, topSpace;
     DisplayMetrics metrics;
     public OnBoardingAdapter(Context context){
@@ -28,11 +30,12 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         metrics = mContext.getResources().getDisplayMetrics();
         leftSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
         topSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
-        linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 80 / 100,
+        linearLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 80 / 100,
                 metrics.heightPixels * 50 / 100);
-        linLayoutParams.setMargins(leftSpace, topSpace, leftSpace, topSpace);
+        linearLayoutParams.setMargins(leftSpace, topSpace, leftSpace, topSpace);
         descriptions = mContext.getResources().getStringArray(R.array.on_boarding_description);
         titles = mContext.getResources().getStringArray(R.array.on_boarding_titles);
+        buttonText = mContext.getResources().getStringArray(R.array.on_boarding_btnTexts);
     }
     @NonNull
     @Override
@@ -57,7 +60,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             MyViewHolder myHolder = (MyViewHolder) holder;
             myHolder.titleTv.setText(titles[position]);
             myHolder.descriptionTv.setText(descriptions[position]);
-            //myHolder.btnTv.setText("");
+            myHolder.btnTv.setText(buttonText[position]);
         }
     }
 
@@ -72,11 +75,31 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setLayoutParams(linLayoutParams);
+            itemView.setLayoutParams(linearLayoutParams);
 
             titleTv = itemView.findViewById(R.id.tv_title);
             descriptionTv = itemView.findViewById(R.id.tv_description);
             btnTv = itemView.findViewById(R.id.btn_tv);
+            btnTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (getAdapterPosition()){
+                        case 0:
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            mContext.startActivity(new Intent(mContext, ProductGalleryActivity.class));
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                    }
+                }
+            });
         }
     }
 }
