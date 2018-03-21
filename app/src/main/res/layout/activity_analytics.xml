@@ -41,7 +41,7 @@
             android:background="#fafafa"
             android:gravity="center"
             android:textColor="@color/dark_grey"/>
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_year_tab"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -50,9 +50,7 @@
             android:gravity="center"
             android:paddingRight="7dp"
             android:background="@color/dark_grey"
-            android:drawableEnd="@drawable/ic_drop_down_white"
-            android:textColor="#fafafa"
-            android:drawableRight="@drawable/ic_drop_down_white" />
+            android:textColor="#fafafa" />
     </LinearLayout>
 
     <FrameLayout

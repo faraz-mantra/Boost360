@@ -98,8 +98,8 @@ public class Mobile_Site_Activity extends AppCompatActivity {
                                 // in standard case YourActivity.this
                                 progressDialog = new ProgressDialog(Mobile_Site_Activity.this);
                                 progressDialog.setMessage(getString(R.string.loading));
-                                progressDialog.show();
                             }
+                            progressDialog.show();
                         }
                     });
                 }catch(Exception exception){

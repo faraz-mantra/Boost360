@@ -314,9 +314,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                     @Override
                     public void run() {
 
-                        if(mBasePackages == null && mTopUps == null){
-                            return;
-                        }
+
                         if(mBasePackages == null){
                             mBasePackages = new ArrayList<PackageDetails>();
                         }

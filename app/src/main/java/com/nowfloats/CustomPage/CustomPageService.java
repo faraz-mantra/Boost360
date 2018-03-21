@@ -1,6 +1,5 @@
 package com.nowfloats.CustomPage;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
@@ -17,7 +16,7 @@ import retrofit.client.Response;
  * Created by guru on 25/08/2015.
  */
 public class CustomPageService {
-    public void GetPages(final Activity activity, String tag, String id,
+    public void GetPages(String tag, String id,
                          CustomPageInterface anInterface, final Bus bus){
         try {
             Log.i("CustomPAges data", "API call Started");

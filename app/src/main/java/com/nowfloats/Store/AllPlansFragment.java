@@ -54,7 +54,7 @@ public class AllPlansFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(vpPricingPlans, true);
         pricingPagerAdapter.notifyDataSetChanged();
-        if(mBasePlans!=null) {
+        if(mBasePlans!=null && mBasePlans.size()>0) {
             tvPrice.setText(mBasePlans.get(vpPricingPlans.getCurrentItem()).getPrice() + "");
             tvCurrency.setText(mBasePlans.get(vpPricingPlans.getCurrentItem()).getCurrencyCode());
         }
@@ -76,13 +76,13 @@ public class AllPlansFragment extends Fragment {
 
             }
         });
-
+        if(mBasePlans == null || mBasePlans.size() == 0){
+            llPurchasePlan.setVisibility(View.GONE);
+        }
         llPurchasePlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mBasePlans == null || mBasePlans.size() == 0){
-                    return;
-                }
+
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
                 Intent i = new Intent(getActivity(), ProductCheckoutActivity.class);
                 i.putExtra("package_ids", new String[]{mBasePlans.get(vpPricingPlans.getCurrentItem()).getId()});

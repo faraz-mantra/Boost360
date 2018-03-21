@@ -64,22 +64,22 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Site_Meter_Fragment extends Fragment implements DomainApiService.DomainCallback{
-    private static int businessNameWeight = 5;
-    private static int businessDescriptionWeight = 10;
-    private static int businessCategoryWeight = 5;
-    private static int featuredImageWeight = 10;
-    private static int phoneWeight = 5;
-    private static int emailWeight = 5;
-    private static int businessAddressWeight = 10;
-    private static int businessHoursWeight = 5;
-    private static int businessTimingWeight = 5;
-    private static int facebookWeight = 10;
-    private static int twitterWeight = 10;
-    private static int logoWeight = 5;
-    private static int firstUpdatesWeight = 5;
-    private static int siteMeterTotalWeight = 0;
-    private static boolean fiveUpdatesDone = false;
-    private static int onUpdate = 4;
+    public final static int businessNameWeight = 5;
+    public final static int businessDescriptionWeight = 10;
+    public final static int businessCategoryWeight = 5;
+    public final static int featuredImageWeight = 10;
+    public final static int phoneWeight = 5;
+    public final static int emailWeight = 5;
+    public final static int businessAddressWeight = 10;
+    public final static int businessHoursWeight = 5;
+    public final static int businessTimingWeight = 5;
+    public final static int facebookWeight = 10;
+    public final static int twitterWeight = 10;
+    public final static int logoWeight = 5;
+    public final static int firstUpdatesWeight = 5;
+    int siteMeterTotalWeight = 0;
+    boolean fiveUpdatesDone = false;
+    public final static int onUpdate = 4;
     UserSessionManager session;
     private RecyclerView recyclerView;
     private SiteMeterAdapter adapter;

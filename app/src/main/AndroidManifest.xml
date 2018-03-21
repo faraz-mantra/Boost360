@@ -645,13 +645,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.Store.TopUpPlansActivity" />
         <activity android:name="com.nowfloats.on_boarding.OnBoardingActivity"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.custom"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
 </application>
 
 </manifest>

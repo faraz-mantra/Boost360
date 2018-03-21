@@ -175,7 +175,7 @@ public class CustomPageFragment extends Fragment {
     }
 
     private void LoadPageList(Activity activity, Bus bus) {
-        new CustomPageService().GetPages(activity, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
+        new CustomPageService().GetPages( session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
     }
 
     @Subscribe
