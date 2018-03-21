@@ -7,9 +7,5 @@
     <string name="package_expire">Package Name</string>
     <string name="payer_phone_no">Phone Number</string>
     <string name="payment_page_title">Payment</string>
-    <string name="colon">: </string>
-    <string name="mm_yy">MM/yy</string>
-    <string name="card_holders_name">Name</string>
-    <string name="cvv">CVV</string>
     <string name="proceed">Proceed with Card</string>
 </resources>

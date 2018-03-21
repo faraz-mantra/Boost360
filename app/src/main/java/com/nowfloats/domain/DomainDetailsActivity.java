@@ -767,7 +767,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private void setDomainDetailsCard(boolean active,String statusMessage){
 
         domainDetailsCard.setVisibility(View.VISIBLE);
-        emailDetailsCard.setVisibility(View.VISIBLE);
+        emailDetailsCard.setVisibility(isLinkedDomain ? View.GONE : View.VISIBLE);
         ImageView domainImg = (ImageView) domainDetailsCard.findViewById(R.id.img_domain);
         ImageView emailImg = (ImageView) emailDetailsCard.findViewById(R.id.img_email);
         TextView domainMessageTv = (TextView) domainDetailsCard.findViewById(R.id.tv_domain_message);
@@ -792,9 +792,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }
 
         if(active){
-            if(isLinkedDomain){
-                emailDetailsCard.setVisibility(View.GONE);
-            }
+
             domainMessageTv.setVisibility(View.VISIBLE);
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             emailImg.setColorFilter(ContextCompat.getColor(this, R.color.primary_color));
