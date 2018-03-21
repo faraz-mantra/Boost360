@@ -57,6 +57,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -233,21 +234,25 @@ public class Home_Main_Fragment extends Fragment implements
         bus = BusProvider.getInstance().getBus();
         bus.register(this);
         current_Activity = getActivity();
+        session = new UserSessionManager(getActivity(),getActivity());
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        checkForOnBoarding();
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+            checkForOnBoarding();
+        }
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();
     }
 
     private void checkForOnBoarding() {
         manager = new OnBoardingManager(getContext());
-        int siteMeter = manager.siteMeterCalculation(session, mPref);
-
+        manager.siteMeterCalculation(session, mPref);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_home_main, menu);
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+            inflater.inflate(R.menu.menu_home_main, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
 
     }
@@ -257,7 +262,7 @@ public class Home_Main_Fragment extends Fragment implements
         switch (item.getItemId()){
             case R.id.on_boarding_option:
                 if (manager != null)
-                manager.startOnBoarding();
+                manager.siteMeterCalculation(session, mPref);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -269,7 +274,6 @@ public class Home_Main_Fragment extends Fragment implements
         View mainView ;
         mainView =  inflater.inflate(R.layout.fragment_home__main_, container, false);
         fetch_home_data = new Fetch_Home_Data(getActivity(),0);
-        session = new UserSessionManager(getActivity().getApplicationContext(),getActivity());
 
         HomeActivity.StorebizFloats.clear();
         progressCrd = (CardView)mainView.findViewById(R.id.progressCard);

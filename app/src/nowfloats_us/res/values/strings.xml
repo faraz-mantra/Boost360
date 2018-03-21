@@ -168,7 +168,7 @@
     <string name="email_text2">Add email</string>
     <string name="postUpdate_text2">Message regularly and relevantly</string>
     <string name="share_text2">Promote your website</string>
-
+    <string name="contact_us_number">18448112065</string>
     <string-array name="CountryCodes">
         <item>93,AF</item>
         <item>355,AL</item>

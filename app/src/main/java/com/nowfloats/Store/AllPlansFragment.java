@@ -52,7 +52,10 @@ public class AllPlansFragment extends Fragment {
         pricingPagerAdapter = new PricingPlansPagerAdapter(getActivity().getSupportFragmentManager(), mBasePlans, mTopUps);
         vpPricingPlans.setAdapter(pricingPagerAdapter);
         TabLayout tabLayout = view.findViewById(R.id.tabDots);
-        tabLayout.setupWithViewPager(vpPricingPlans, true);
+        if (mBasePlans != null && mBasePlans.size()>1){
+            tabLayout.setupWithViewPager(vpPricingPlans, true);
+        }
+
         pricingPagerAdapter.notifyDataSetChanged();
         if(mBasePlans!=null && mBasePlans.size()>0) {
             tvPrice.setText(mBasePlans.get(vpPricingPlans.getCurrentItem()).getPrice() + "");

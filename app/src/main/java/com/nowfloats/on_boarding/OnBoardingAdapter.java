@@ -25,16 +25,16 @@ import com.thinksity.R;
 public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context mContext;
     private String[] titles, descriptions, buttonText;
-    LinearLayout.LayoutParams linearLayoutParams;
-    int leftSpace, topSpace;
-    DisplayMetrics metrics;
+    private LinearLayout.LayoutParams linearLayoutParams;
+    private int leftSpace, topSpace;
+    private DisplayMetrics metrics;
     public OnBoardingAdapter(Context context){
         mContext = context;
         metrics = mContext.getResources().getDisplayMetrics();
         leftSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
         topSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
         linearLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 80 / 100,
-                metrics.heightPixels * 50 / 100);
+                metrics.heightPixels * 55 / 100);
         linearLayoutParams.setMargins(leftSpace, topSpace, leftSpace, topSpace);
         descriptions = mContext.getResources().getStringArray(R.array.on_boarding_description);
         titles = mContext.getResources().getStringArray(R.array.on_boarding_titles);
@@ -62,6 +62,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof MyViewHolder){
             MyViewHolder myHolder = (MyViewHolder) holder;
             myHolder.titleTv.setText(titles[position]);
+            myHolder.cardNumberTv.setText(String.valueOf(position+1));
             myHolder.descriptionTv.setText(descriptions[position]);
             myHolder.btnTv.setText(buttonText[position]);
         }
@@ -74,13 +75,14 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView titleTv, descriptionTv, btnTv;
+        TextView titleTv, cardNumberTv, descriptionTv, btnTv;
         public MyViewHolder(View itemView) {
             super(itemView);
 
             itemView.setLayoutParams(linearLayoutParams);
 
             titleTv = itemView.findViewById(R.id.tv_title);
+            cardNumberTv = itemView.findViewById(R.id.tv_card_number);
             descriptionTv = itemView.findViewById(R.id.tv_description);
             btnTv = itemView.findViewById(R.id.btn_tv);
             btnTv.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +91,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     Intent intent = null;
                     switch (getAdapterPosition()){
                         case 0:
-                            break;
+                            return;
                         case 1:
                             intent = new Intent(mContext, FragmentsFactoryActivity.class);
                             intent.putExtra("fragmentName","SiteMeterFragment");

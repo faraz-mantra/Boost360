@@ -18,6 +18,7 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.TopUpPlansActivity;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.util.Methods;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -98,7 +99,8 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
                 topUpImV.setVisibility(View.VISIBLE);
                 topUpTv.setVisibility(View.INVISIBLE);
             }else{
-                topUpTv.setVisibility(View.VISIBLE);
+
+                topUpTv.setVisibility(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?View.VISIBLE:View.INVISIBLE);
                 Glide.with(mContext).load(activePlan.getPrimaryImageUri()).into(planImV);
                 if (activePlan.getName().toLowerCase().contains("lite")){
                     //planImV.setImageResource(R.drawable.boost_lite_logo);

@@ -11,6 +11,9 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment.businessAddressWeight;
 import static com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment.businessCategoryWeight;
 import static com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment.businessDescriptionWeight;
@@ -21,25 +24,30 @@ import static com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment.featu
 import static com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment.logoWeight;
 import static com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment.phoneWeight;
 import static com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment.twitterWeight;
+import static com.nowfloats.on_boarding.OnBoardingScreenApis.PRODUCTS;
+import static com.nowfloats.on_boarding.OnBoardingScreenApis.UPDATES;
 
 /**
  * Created by Admin on 16-03-2018.
  */
 
-public class OnBoardingManager {
+public class OnBoardingManager implements OnBoardingCallback {
 
     private Context mContext;
+    private int siteMeterTotalWeight = 0;
     public OnBoardingManager(Context context){
         mContext = context;
     }
 
-    public void startOnBoarding(){
+    public void startOnBoarding(ArrayList<Boolean> screenList){
         Intent  i =new Intent(mContext, OnBoardingActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(i);
     }
-    public int siteMeterCalculation(UserSessionManager session, SharedPreferences pref) {
-        int siteMeterTotalWeight = 0;
+    public void siteMeterCalculation(UserSessionManager session, SharedPreferences pref) {
+        OnBoardingScreenApis apis = new OnBoardingScreenApis(mContext,session.getFpTag(), session.getFPID());
+        apis.setCallbackListener(this);
+        apis.startProcess();
         if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                     siteMeterTotalWeight += 10;
         }
@@ -87,6 +95,19 @@ public class OnBoardingManager {
                     siteMeterTotalWeight += businessHoursWeight;
                 }
             }
-            return siteMeterTotalWeight;
         }
+
+    @Override
+    public void onBoardingCall(HashMap<String, Integer> map) {
+        if (map != null){
+            ArrayList<Boolean> arrayList = new ArrayList<>();
+            if (map.containsKey(UPDATES)){
+                siteMeterTotalWeight += map.get(UPDATES);
+            }
+            if (map.containsKey(PRODUCTS)){
+                map.get(PRODUCTS);
+            }
+            startOnBoarding(arrayList);
+        }
+    }
 }
