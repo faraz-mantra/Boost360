@@ -4,12 +4,15 @@ package com.nowfloats.Product_Gallery;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
 /**
@@ -28,6 +31,7 @@ public class ProductGalleryActivity extends AppCompatActivity {
     public static final String TAG_PRODUCT = "TAG_PRODUCT";
 
     private int count = 0;
+    UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class ProductGalleryActivity extends AppCompatActivity {
         ivDelete = (ImageView) findViewById(R.id.ivDelete);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        session = new UserSessionManager(this, this);
         hideActionDelete();
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -114,7 +119,8 @@ public class ProductGalleryActivity extends AppCompatActivity {
 
     public void hideActionDelete() {
         count = 0;
-        headerText.setText(getResources().getString(R.string.product_gallery));
+        headerText.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))?
+                getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
         ivDelete.setVisibility(View.GONE);
     }
 }

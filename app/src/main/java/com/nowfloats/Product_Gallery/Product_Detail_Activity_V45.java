@@ -130,16 +130,17 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         setContentView(R.layout.product_detail_v45);
         toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
         setSupportActionBar(toolbar);
+
+        activity = Product_Detail_Activity_V45.this;
+        session = new UserSessionManager(getApplicationContext(), activity);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity = Product_Detail_Activity_V45.this;
         apiService = new ProductAPIService();
         save = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
         TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText(getString(R.string.add_product));
+        title.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.add_product):"Add "+session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
         save.setImageResource(R.drawable.product_tick);
-        session = new UserSessionManager(getApplicationContext(), activity);
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         switchView = (Switch) findViewById(R.id.switchView);
@@ -229,7 +230,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 if (product_data != null) {
                     replaceImage = true;
                     save.setVisibility(View.GONE);
-                    title.setText(getString(R.string.edit_product));
+                    title.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.edit_product):"Edit "+session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
                     getShippingMetrix(product_data._id);
                     //load image
 
@@ -511,7 +512,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
 
                         boolean flag = ValidateFields(false);
 
-                        if (path == null || path.trim().length() == 0) {
+                        if (flag && (path == null || path.trim().length() == 0)) {
                             flag = false;
                             Methods.showSnackBarNegative(activity, getString(R.string.upload_product_image));
                         }
@@ -740,15 +741,12 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             values.put(ship, null);
         }
 
-        if (etAvailableUnits != null && etAvailableUnits.getText().toString().trim().length() > 0) {
-            values.put(availableUnits, etAvailableUnits.getText().toString());
+        if (productName != null && productName.getText().toString().trim().length() > 0) {
+            values.put(name, productName.getText().toString().trim());
         } else {
-            values.put(availableUnits, "-1");
-            if (!keyCheck) {
-                YoYo.with(Techniques.Shake).playOn(etAvailableUnits);
-                Methods.showSnackBarNegative(activity, "Please enter product available units");
-                flag = false;
-            }
+            YoYo.with(Techniques.Shake).playOn(productName);
+            Methods.showSnackBarNegative(activity, getString(R.string.enter_product_name));
+            flag = false;
         }
 
         if (productDiscount != null && productDiscount.getText().toString().trim().length() > 0) {
@@ -763,24 +761,14 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             values.put(link, "");
         }
 
-
-        if (productName != null && productName.getText().toString().trim().length() > 0) {
-            values.put(name, productName.getText().toString().trim());
-        } else {
-            YoYo.with(Techniques.Shake).playOn(productName);
-            Methods.showSnackBarNegative(activity, getString(R.string.enter_product_name));
+        if (productPrice != null && productPrice.getText().toString().trim().length() > 0) {
+            values.put(price, productPrice.getText().toString().trim());
+        } else if (flag){
+            YoYo.with(Techniques.Shake).playOn(productPrice);
+            Methods.showSnackBarNegative(activity, getString(R.string.enter_product_price));
             flag = false;
         }
 
-        if (flag) {
-            if (productPrice != null && productPrice.getText().toString().trim().length() > 0) {
-                values.put(price, productPrice.getText().toString().trim());
-            } else {
-                YoYo.with(Techniques.Shake).playOn(productPrice);
-                Methods.showSnackBarNegative(activity, getString(R.string.enter_product_price));
-                flag = false;
-            }
-        }
 
         if ((productPrice != null && productPrice.getText().toString().trim().length() > 0) &&
                 (productDiscount != null && productDiscount.getText().toString().trim().length() > 0) && flag) {
@@ -791,6 +779,16 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             }
         }
 
+        if (etAvailableUnits != null && etAvailableUnits.getText().toString().trim().length() > 0) {
+            values.put(availableUnits, etAvailableUnits.getText().toString());
+        } else {
+            values.put(availableUnits, "-1");
+            if (!keyCheck && flag) {
+                YoYo.with(Techniques.Shake).playOn(etAvailableUnits);
+                Methods.showSnackBarNegative(activity, "Please enter product available units");
+                flag = false;
+            }
+        }
         System.out.println(values);
 
         return flag;
@@ -1010,29 +1008,31 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (requestCode == media_req_id) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                cameraIntent();
-
+            if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                Methods.showApplicationPermissions("Camera And Storage Permission","We need these permission to enable capture and upload images",Product_Detail_Activity_V45.this);
             }
 
         } else if (requestCode == gallery_req_id) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                galleryIntent();
-
+            if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                Methods.showApplicationPermissions("Storage Permission","We need this permission to enable image upload",Product_Detail_Activity_V45.this);
             }
-
         }
     }
 
     public void galleryIntent() {
         try {
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                        gallery_req_id);
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    Methods.showApplicationPermissions("Storage Permission","We need this permission to enable image upload",Product_Detail_Activity_V45.this);
+                }else{
+                    ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},gallery_req_id);
+                }
+
             } else {
                 mIsImagePicking = true;
                 Intent i = new Intent(
@@ -1053,8 +1053,13 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                        media_req_id);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.CAMERA)){
+                    Methods.showApplicationPermissions("Camera And Storage Permission","We need these permission to enable capture and upload images",Product_Detail_Activity_V45.this);
+                }else{
+                    ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,  Manifest.permission.CAMERA},media_req_id);
+                }
+
             } else {
                 mIsImagePicking = true;
                 ContentValues Cvalues = new ContentValues();

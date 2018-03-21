@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,9 +26,8 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -176,24 +174,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
                 content = "We need permission to enable sharing feature in Boost Keyboard";
                 break;
         }
-        new MaterialDialog.Builder(mContext)
-                .content(content)
-                .title(title)
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.light_gray)
-                .negativeText("Cancel")
-                .positiveText("Take Me There")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", mContext.getPackageName(), null);
-                        intent.setData(uri);
-                        startActivity(intent);
-                    }
-                })
-                .build().show();
+        Methods.showApplicationPermissions(title, content, mContext);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
