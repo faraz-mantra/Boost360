@@ -129,7 +129,7 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
 //                            CustomPageFragment.dataModel.remove(n);
 //                        }
 
-                            new CustomPageService().GetPages(activity,tag,Constants.clientId,pageInterface,bus);
+                            new CustomPageService().GetPages(tag,Constants.clientId,pageInterface,bus);
                             CustomPageFragment.posList = new ArrayList<>();
 
 //                        CustomPageFragment.custompageAdapter.notifyDataSetChanged();

@@ -76,13 +76,13 @@ public class AllPlansFragment extends Fragment {
 
             }
         });
-
+        if(mBasePlans == null || mBasePlans.size() == 0){
+            llPurchasePlan.setVisibility(View.GONE);
+        }
         llPurchasePlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mBasePlans == null || mBasePlans.size() == 0){
-                    return;
-                }
+
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
                 Intent i = new Intent(getActivity(), ProductCheckoutActivity.class);
                 i.putExtra("package_ids", new String[]{mBasePlans.get(vpPricingPlans.getCurrentItem()).getId()});

@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nowfloats.CustomPage.CustomPageActivity;
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
+import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.thinksity.R;
 
@@ -83,21 +86,30 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             btnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = null;
                     switch (getAdapterPosition()){
                         case 0:
                             break;
                         case 1:
+                            intent = new Intent(mContext, FragmentsFactoryActivity.class);
+                            intent.putExtra("fragmentName","SiteMeterFragment");
                             break;
                         case 2:
+                            intent = new Intent(mContext, CustomPageActivity.class);
                             break;
                         case 3:
-                            mContext.startActivity(new Intent(mContext, ProductGalleryActivity.class));
+                            intent = new Intent(mContext, ProductGalleryActivity.class);
                             break;
                         case 4:
                             break;
                         case 5:
+                            intent  = new Intent(mContext, Mobile_Site_Activity.class);
+                            intent.putExtra("WEBSITE_NAME","https://www.whatsapp.com/faq/en/android/23130793");
                             break;
+                        default:
+                            return;
                     }
+                    mContext.startActivity(intent);
                 }
             });
         }

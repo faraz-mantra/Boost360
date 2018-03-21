@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.NavigationDrawer.DictateFragment;
 import com.nowfloats.NavigationDrawer.HelpAndSupportFragment;
+import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.NavigationDrawer.WildFireFragment;
 import com.thinksity.R;
 
@@ -45,6 +46,10 @@ public class FragmentsFactoryActivity extends AppCompatActivity {
                 case "DictateFragment":
                     headerText.setText("Dictate");
                     attachedFragment = new DictateFragment();
+                    break;
+                case "SiteMeterFragment":
+                    headerText.setText("Site Health");
+                    attachedFragment = new Site_Meter_Fragment();
                     break;
                 case "WildFireFragment":
                     headerText.setText("WildFire");

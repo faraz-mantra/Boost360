@@ -234,14 +234,22 @@ public class Home_Main_Fragment extends Fragment implements
         bus.register(this);
         current_Activity = getActivity();
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        checkForOnBoarding();
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();
     }
+
+    private void checkForOnBoarding() {
+        manager = new OnBoardingManager(getContext());
+        int siteMeter = manager.siteMeterCalculation(session, mPref);
+
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_home_main, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        manager = new OnBoardingManager(getContext());
+
     }
 
     @Override
