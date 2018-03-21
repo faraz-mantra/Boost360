@@ -76,6 +76,7 @@ public class ImePresenterImpl implements ItemClickListener,
     public final static int KEY_EMOJI = -2005,KEY_IME_OPTION = -2006, KEY_SPACE = -2007, KEY_NUMBER = -2000,
             KEY_SYM = -2001, KEY_SYM_SHIFT = -2002, KEY_QWRTY = -2003, KEY_LANGUAGE_CHANGE= -2004;
     private Context mContext;
+    private String packageName = "";
     private KeyboardUtils.CandidateType currentCandidateType = KeyboardUtils.CandidateType.BOOST_SHARE;
     private KeyboardUtils.KeyboardType mKeyboardTypeCurrent = KeyboardUtils.KeyboardType.QWERTY_LETTERS;
     private KeyboardBaseImpl mCurrentKeyboard;
@@ -179,6 +180,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
         MixPanelUtils.getInstance().createUser(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag());
+        packageName = attribute.packageName;
         mShiftType = ShiftType.CAPITAL;
         switch (attribute.inputType & InputType.TYPE_MASK_CLASS){
             case InputType.TYPE_CLASS_NUMBER:
@@ -412,7 +414,8 @@ public class ImePresenterImpl implements ItemClickListener,
         String shareUrl = null;
         try {
             if (!TextUtils.isEmpty(model.getUrl())) {
-                uri = Uri.parse(model.getUrl()).buildUpon().appendQueryParameter(UTM_SOURCE, "boost_keyboard").appendQueryParameter(UTM_MEDIUM, "share").build();
+                uri = Uri.parse(model.getUrl()).buildUpon().appendQueryParameter(UTM_SOURCE, "bk")
+                        .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName)?"share":packageName).build();
             }
         }catch(Exception e){
 

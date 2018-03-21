@@ -23,7 +23,7 @@ public class ProcessFPDetails {
     private static String WIDGET_PRODUCT_GALLERY = "PRODUCTCATALOGUE";
     private static String WIDGET_FB_LIKE_BOX = "FbLikeBox";
     private static String WIDGET_CUSTOMPAGES = "CUSTOMPAGES";
-
+    private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
     public static void storeFPDetails(Activity activity,Get_FP_Details_Model get_fp_details_model)
     {
         try {
@@ -139,6 +139,14 @@ public class ProcessFPDetails {
 
 //        for(String widget : widgetsList)
 //        {
+            if(widgetsList.contains(FP_WEB_WIDGET_DOMAIN)) {
+                session.storeFPDetails(Key_Preferences.GET_FP_WEB_WIDGET_DOMAIN,FP_WEB_WIDGET_DOMAIN);
+                MixPanelController.setProperties("ImageGallery", "True");
+            } else {
+                MixPanelController.setProperties("ImageGallery", "False");
+                session.storeFPDetails(Key_Preferences.GET_FP_WEB_WIDGET_DOMAIN,"");
+            }
+
             if(widgetsList.contains(WIDGET_IMAGE_GALLERY)) {
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY,WIDGET_IMAGE_GALLERY);
                 MixPanelController.setProperties("ImageGallery", "True");

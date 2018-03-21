@@ -92,8 +92,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     private void getUserDetails() {
-        String query = String.format("{_id:'%s'}", mOrder.getOrderUserId());
-        Constants.webActionAdapter.create(WebActionCallInterface.class).getUser(query, 1, new Callback<WebActionModel<UserModel>>() {
+        Constants.webActionAdapter.create(WebActionCallInterface.class).getUser(mOrder.getOrderUserId(), 1, new Callback<WebActionModel<UserModel>>() {
             @Override
             public void success(WebActionModel<UserModel> userModelWebActionModel, Response response) {
                 if(userModelWebActionModel!=null && userModelWebActionModel.getData().size()>0) {

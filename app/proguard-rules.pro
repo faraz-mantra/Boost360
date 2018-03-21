@@ -364,3 +364,5 @@
 -keepnames class com.anachat.chatsdk.** { *; }
 -dontwarn com.anachat.chatsdk.uimodule.**
 -keepclassmembers class com.anachat.chatsdk.** { *; }
+
+-dontwarn org.apache.http.**

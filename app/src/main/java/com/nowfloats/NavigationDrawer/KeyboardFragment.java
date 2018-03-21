@@ -17,13 +17,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.util.EventKeysWL;
@@ -77,14 +77,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
         MixPanelController.track(EventKeysWL.SIDE_PANEL_KEYBOARD, null);
         if (!isAdded() && isDetached()) return;
         storageSwitchTv = view.findViewById(R.id.storage_switch);
+        TextView keyboardMessageTv = view.findViewById(R.id.tv_cross_platform);
+        keyboardMessageTv.setText(Methods.fromHtml(String.format("<font color=%s>The Boost " +
+                "Keyboard allows you to share your products and updates without " +
+                "leaving a chat.</font><br>For a smooth experience, we require some permissions.","#212121")));
         microphoneSwitchTv = view.findViewById(R.id.microphone_switch);
         keyboardSwitchTv = view.findViewById(R.id.keyboard_switch);
-        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Log.v("ggg",""+hasFocus+" ");
-            }
-        });
+
         storageSwitchTv.setOnTouchListener(this);
         keyboardSwitchTv.setOnTouchListener(this);
         microphoneSwitchTv.setOnTouchListener(this);
@@ -111,13 +110,14 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
         storageSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED);
         microphoneSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_DENIED);
         keyboardSwitchTv.setChecked(isInputMethodEnabled());
-        MixPanelController.track(MixPanelController.KEYBOARD_ENABLED,null);
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == INPUT_METHOD_SETTINGS){
             if (isInputMethodActivated()){
+                MixPanelController.track(MixPanelController.KEYBOARD_ENABLED,null);
                 if (imeManager != null)
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override

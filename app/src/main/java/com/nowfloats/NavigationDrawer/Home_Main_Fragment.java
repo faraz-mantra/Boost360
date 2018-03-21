@@ -249,8 +249,6 @@ public class Home_Main_Fragment extends Fragment implements
         emptyMsgLayout.setVisibility(View.GONE);
 
 
-
-
         ImageView retryPost = (ImageView)mainView.findViewById(R.id.retryPost);
         ImageView cancelPost = (ImageView)mainView.findViewById(R.id.cancelPost);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
