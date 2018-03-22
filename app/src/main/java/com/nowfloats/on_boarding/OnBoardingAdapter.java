@@ -74,6 +74,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void refreshAfterComplete(){
+        mOnBoardingModel.setToBeCompletePos(-1);
         int  i = -1;
         for (OnBoardingModel.ScreenData data : mOnBoardingModel.getScreenDataArrayList()){
             i++;
@@ -98,15 +99,17 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     data.setIsComplete(sharedPreferences.getBoolean(Key_Preferences.WEBSITE_SHARE,false));
                     break;
             }
-            if (!data.isComplete()){
+            if (!data.isComplete() && mOnBoardingModel.getToBeCompletePos() == -1){
                 mOnBoardingModel.setToBeCompletePos(i);
-                if(mRecyclerView != null){
-                    mRecyclerView.scrollToPosition(mOnBoardingModel.getToBeCompletePos());
-                }
                 break;
             }
         }
-
+        if (mOnBoardingModel.getToBeCompletePos() == -1){
+            mOnBoardingModel.setToBeCompletePos(6);
+        }
+        if(mRecyclerView != null){
+            mRecyclerView.scrollToPosition(mOnBoardingModel.getToBeCompletePos());
+        }
         notifyDataSetChanged();
     }
     @Override

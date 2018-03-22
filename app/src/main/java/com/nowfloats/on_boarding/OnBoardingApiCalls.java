@@ -1,5 +1,7 @@
 package com.nowfloats.on_boarding;
 
+import android.util.Log;
+
 import com.nowfloats.on_boarding.models.OnBoardingAddModel;
 import com.nowfloats.on_boarding.models.OnBoardingStepsModel;
 import com.nowfloats.on_boarding.models.OnBoardingUpdateModel;
@@ -19,16 +21,16 @@ public class OnBoardingApiCalls {
         OnBoardingWebActionApis apis = Constants.webActionAdapter.create(OnBoardingWebActionApis.class);
         OnBoardingUpdateModel model = new OnBoardingUpdateModel();
         model.setQuery(String.format("{fptag:'%s'}",fptag));
-        model.setUpdateValue(String.format("$set:%s", value));
+        model.setUpdateValue(String.format("{$set:%s}", value));
         apis.updateData(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-
+                Log.v("ggg",s);
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                Log.v("ggg",error.getMessage());
             }
         });
     }

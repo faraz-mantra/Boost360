@@ -419,7 +419,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         }
         if (session.getSiteHealth() != siteMeterTotalWeight){
             session.setSiteHealth(siteMeterTotalWeight);
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{site_health:'%s'}",siteMeterTotalWeight));
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{site_health:%s}",siteMeterTotalWeight));
         }
 
         MixPanelController.setProperties("SiteHealth", "" + siteMeterTotalWeight);

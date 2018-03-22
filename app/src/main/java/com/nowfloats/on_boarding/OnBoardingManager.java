@@ -144,22 +144,25 @@ public class OnBoardingManager implements OnBoardingCallback {
                                 data.setValue(String.valueOf(stepsModel.getSiteHealth()));
                                 break;
                             case 2:
-                                data.setIsComplete(stepsModel.getAddProduct());
+                                data.setIsComplete(stepsModel.getCustomPage());
                                 break;
                             case 3:
                                 data.setIsComplete(stepsModel.getAddProduct());
                                 break;
                             case 4:
-                                data.setIsComplete(stepsModel.getAddProduct());
+                                data.setIsComplete(stepsModel.getBoostApp());
                                 break;
                             case 5:
-                                data.setIsComplete(stepsModel.getAddProduct());
+                                data.setIsComplete(stepsModel.getShareWebsite());
                                 break;
                         }
                         screenDataArrayList.add(data);
-                        if (!data.isComplete() && onBoardingModel.getToBeCompletePos() == 0){
+                        if (!data.isComplete() && onBoardingModel.getToBeCompletePos() == -1){
                             onBoardingModel.setToBeCompletePos(i);
                         }
+                    }
+                    if (onBoardingModel.getToBeCompletePos() == -1){
+                        onBoardingModel.setToBeCompletePos(6);
                     }
                     onBoardingModel.setScreenDataArrayList(screenDataArrayList);
                     startOnBoarding(onBoardingModel);

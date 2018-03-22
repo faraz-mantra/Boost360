@@ -234,7 +234,7 @@ public class Home_Main_Fragment extends Fragment implements
         current_Activity = getActivity();
         session = new UserSessionManager(getActivity(),getActivity());
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+        if (BuildConfig.APPLICATION_ID.equals("com.us.nowfloats")) {
             checkForOnBoarding();
         }
         mDbController = DbController.getDbController(current_Activity);

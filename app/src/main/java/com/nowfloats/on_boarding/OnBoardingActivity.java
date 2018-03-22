@@ -116,6 +116,11 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 isSomethingChanged = true;
                 break;
             case 4:
+                if (!screenData.isComplete()){
+                    screenData.setIsComplete(true);
+                    adapter.refreshAfterComplete();
+                    OnBoardingApiCalls.updateData(session.getFpTag(),"{boost_app:true}");
+                }
                 return;
             case 5:
                 shareWebsite();

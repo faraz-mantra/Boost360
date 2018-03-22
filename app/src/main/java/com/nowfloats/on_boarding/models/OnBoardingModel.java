@@ -13,7 +13,7 @@ public class OnBoardingModel implements Parcelable{
 
     private ArrayList<ScreenData> screenDataArrayList;
 
-    private int toBeCompletePos = 0;
+    private int toBeCompletePos = -1;
 
     public OnBoardingModel(){
 
