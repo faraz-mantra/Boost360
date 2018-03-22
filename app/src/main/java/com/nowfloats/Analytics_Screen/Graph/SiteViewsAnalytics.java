@@ -78,7 +78,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         tvMonth = findViewById(R.id.tv_month_tab);
         tvWeek = findViewById(R.id.tv_week_tab);
         tvYear = findViewById(R.id.tv_year_tab);
-        tvYear.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_drop_down_white),null,null,null);
+        tvYear.setCompoundDrawablesWithIntrinsicBounds(null, null, AppCompatResources.getDrawable(this,R.drawable.ic_drop_down_white),null);
         tvMonth.setOnClickListener(this);
         tvWeek.setOnClickListener(this);
         tvYear.setOnClickListener(this);

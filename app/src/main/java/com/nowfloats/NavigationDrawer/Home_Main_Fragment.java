@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -230,7 +229,6 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         bus = BusProvider.getInstance().getBus();
         bus.register(this);
         current_Activity = getActivity();
@@ -245,27 +243,14 @@ public class Home_Main_Fragment extends Fragment implements
 
     private void checkForOnBoarding() {
         manager = new OnBoardingManager(getContext());
-        manager.siteMeterCalculation(session, mPref);
+        manager.getOnBoardingData(session.getFpTag());
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-            inflater.inflate(R.menu.menu_home_main, menu);
-        }
+
         super.onCreateOptionsMenu(menu, inflater);
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.on_boarding_option:
-                if (manager != null)
-                manager.siteMeterCalculation(session, mPref);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

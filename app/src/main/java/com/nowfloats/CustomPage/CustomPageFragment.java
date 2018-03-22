@@ -25,6 +25,7 @@ import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -186,6 +187,10 @@ public class CustomPageFragment extends Fragment {
                 emptylayout.setVisibility(View.VISIBLE);
             } else {
                 emptylayout.setVisibility(View.GONE);
+            }
+            if (session.getCustomPageCount() != dataModel.size()){
+                session.setCustomPageCount(dataModel.size());
+                OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{custom_page:'%s'}",dataModel.size()>0?"true":"false"));
             }
             progress_layout.setVisibility(View.GONE);
             custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface, bus);

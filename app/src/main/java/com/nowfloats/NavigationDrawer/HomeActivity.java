@@ -1232,46 +1232,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         intent.putExtra(Intent.EXTRA_TEXT, url);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
-//        prefsEditor.putBoolean("shareWebsite", true);
-//        prefsEditor.commit();
-//        Constants.websiteShared = true;
         session.setWebsiteshare(true);
-//        final String[] INTENT_FILTER = new String[] {
-//                "com.twitter.android",
-//                "com.facebook.katana"
-//        };
-//
-//        List<Intent> targetShareIntents=new ArrayList<Intent>();
-//        Intent shareIntent=new Intent();
-//        shareIntent.setAction(Intent.ACTION_SEND);
-//        shareIntent.setType("text/plain");
-//        List<ResolveInfo> resInfos=getPackageManager().queryIntentActivities(shareIntent, 0);
-//        if(!resInfos.isEmpty()){
-//            System.out.println("Have package");
-//            for(ResolveInfo resInfo : resInfos){
-//                String packageName=resInfo.activityInfo.packageName;
-//                BoostLog.i("Package Name", packageName);
-//                if(packageName.contains("com.twitter.android") || packageName.contains("com.facebook.katana") || packageName.contains("com.instagram.android")  ){
-//                    Intent intent=new Intent();
-//                    intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
-//                    intent.setAction(Intent.ACTION_SEND);
-//                    intent.setType("text/plain");
-//                    intent.putExtra(Intent.EXTRA_TEXT, "Text");
-//                    intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-//                    intent.setPackage(packageName);
-//                    targetShareIntents.add(intent);
-//                }
-//            }
-//            if(!targetShareIntents.isEmpty()){
-//                System.out.println("Have Intent");
-//                Intent chooserIntent=Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
-//                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
-//                startActivity(chooserIntent);
-//            }else{
-//                System.out.println("Do not Have Intent");
-//                //showDialaog(this);
-//            }
-//        }
     }
 
     private boolean get_VersionUpdate() {

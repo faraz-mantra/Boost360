@@ -254,12 +254,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void setWebsiteshare(boolean cnt)
     {
-        editor.putBoolean(KEY_website , cnt);
+        editor.putBoolean(Key_Preferences.WEBSITE_SHARE , cnt);
         editor.commit();
     }
     public Boolean getWebsiteshare()
     {
-        return pref.getBoolean(KEY_website,false);
+        return pref.getBoolean(Key_Preferences.WEBSITE_SHARE,false);
     }
     public void setBusinessHours(boolean cnt)
     {
@@ -961,5 +961,27 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void sendFetched(FloatsMessageModel jsonObject) {}
 
 
+    public void setSiteHealth(int siteMeterTotalWeight) {
+        editor.putInt(Key_Preferences.SITE_HEALTH,siteMeterTotalWeight).apply();
+    }
 
+    public int getSiteHealth(){
+        return pref.getInt(Key_Preferences.SITE_HEALTH,20);
+    }
+
+    public void setProductsCount(int size) {
+        editor.putInt(Key_Preferences.PRODUCTS_COUNT, size).apply();
+    }
+
+    public int getProductsCount(){
+        return pref.getInt(Key_Preferences.PRODUCTS_COUNT,0);
+    }
+
+    public void setCustomPageCount(int size) {
+        editor.putInt(Key_Preferences.CUSTOM_PAGE, size).apply();
+    }
+
+    public int getCustomPageCount(){
+        return pref.getInt(Key_Preferences.CUSTOM_PAGE,0);
+    }
 }

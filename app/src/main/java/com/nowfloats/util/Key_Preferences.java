@@ -31,6 +31,10 @@ public class Key_Preferences {
     public static final String PRODUCT_CATEGORY = "GET_PRODUCT_CATEGORY_VERB";
     public static final String EXTERNAL_SOURCE_ID = "GET_EXTERNAL_SOURCE_ID";
     public static final String GET_FP_WEB_WIDGET_DOMAIN = "GET_FP_DOMAIN_WIDGET";
+    public static final String SITE_HEALTH = "site_health";
+    public static final String PRODUCTS_COUNT = "products_count";
+    public static final String CUSTOM_PAGE = "custom_page_count";
+    public static final String WEBSITE_SHARE = "website_share";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";

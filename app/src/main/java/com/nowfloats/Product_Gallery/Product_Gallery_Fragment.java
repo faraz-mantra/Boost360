@@ -34,6 +34,7 @@ import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.accessbility.BubbleInAppDialog;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -349,6 +350,10 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         } catch (Exception e) {
             e.printStackTrace();
             System.gc();
+        }
+        if (session.getProductsCount() != productItemModelList.size()){
+            session.setProductsCount(productItemModelList.size());
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{add_product:'%s'}",productItemModelList.size()>0?"true":"false"));
         }
     }
 

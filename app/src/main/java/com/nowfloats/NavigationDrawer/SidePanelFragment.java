@@ -39,6 +39,7 @@ import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
+import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -851,6 +852,11 @@ public class SidePanelFragment extends Fragment {
 
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight + "%");
+
+        if (session.getSiteHealth() != siteMeterTotalWeight){
+            session.setSiteHealth(siteMeterTotalWeight);
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{site_health:'%s'}",siteMeterTotalWeight));
+        }
     }
 
     private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
