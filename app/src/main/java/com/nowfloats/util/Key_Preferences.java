@@ -35,6 +35,7 @@ public class Key_Preferences {
     public static final String PRODUCTS_COUNT = "products_count";
     public static final String CUSTOM_PAGE = "custom_page_count";
     public static final String WEBSITE_SHARE = "website_share";
+    public static final String ON_BOARDING_STATUS = "on_boarding_status";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";

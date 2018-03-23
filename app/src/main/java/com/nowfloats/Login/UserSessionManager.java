@@ -977,6 +977,14 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getInt(Key_Preferences.PRODUCTS_COUNT,0);
     }
 
+    public void setOnBoardingStatus(boolean flag) {
+        editor.putBoolean(Key_Preferences.ON_BOARDING_STATUS, flag).apply();
+    }
+
+    public boolean getOnBoardingStatus(){
+        return pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false);
+    }
+
     public void setCustomPageCount(int size) {
         editor.putInt(Key_Preferences.CUSTOM_PAGE, size).apply();
     }

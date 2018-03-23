@@ -130,9 +130,14 @@ public class OnBoardingManager implements OnBoardingCallback {
                         stepsModel.setCustomPage(sharedPreferences.getInt(Key_Preferences.CUSTOM_PAGE,0) > 0);
                         stepsModel.setShareWebsite(sharedPreferences.getBoolean(Key_Preferences.WEBSITE_SHARE,false));
                         stepsModel.setBoostApp(true);
+                        stepsModel.setComplete(false);
                         OnBoardingApiCalls.addData(stepsModel);
                     }
 
+                    sharedPreferences.edit().putBoolean(Key_Preferences.ON_BOARDING_STATUS,stepsModel.isComplete()).apply();
+                    if (stepsModel.isComplete()){
+                        return;
+                    }
                     for (int i = 0; i< 6; i++) {
                         OnBoardingModel.ScreenData data = new OnBoardingModel.ScreenData();
                         switch (i){
@@ -161,9 +166,7 @@ public class OnBoardingManager implements OnBoardingCallback {
                             onBoardingModel.setToBeCompletePos(i);
                         }
                     }
-                    if (onBoardingModel.getToBeCompletePos() == -1){
-                        onBoardingModel.setToBeCompletePos(6);
-                    }
+
                     onBoardingModel.setScreenDataArrayList(screenDataArrayList);
                     startOnBoarding(onBoardingModel);
                 }

@@ -14,6 +14,9 @@ public class OnBoardingStepsModel{
     @SerializedName("welcome_aboard")
     @Expose
     private boolean welcomeAboard;
+    @SerializedName("is_complete")
+    @Expose
+    private boolean isComplete;
     @SerializedName("site_health")
     @Expose
     private int siteHealth;
@@ -29,6 +32,14 @@ public class OnBoardingStepsModel{
     @SerializedName("share_website")
     @Expose
     private boolean shareWebsite;
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
 
     public String getFptag() {
         return fptag;

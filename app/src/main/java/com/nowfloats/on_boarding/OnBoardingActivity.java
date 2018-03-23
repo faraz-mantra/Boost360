@@ -137,4 +137,10 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
         startActivity(intent);
     }
 
+    @Override
+    public void onBoardingComplete() {
+        OnBoardingApiCalls.updateData(session.getFpTag(),"{is_complete:true}");
+        finish();
+    }
+
 }

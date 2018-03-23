@@ -101,11 +101,12 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
             if (!data.isComplete() && mOnBoardingModel.getToBeCompletePos() == -1){
                 mOnBoardingModel.setToBeCompletePos(i);
-                break;
             }
         }
         if (mOnBoardingModel.getToBeCompletePos() == -1){
-            mOnBoardingModel.setToBeCompletePos(6);
+            mOnBoardingModel.setToBeCompletePos(5);
+            sharedPreferences.edit().putBoolean(Key_Preferences.ON_BOARDING_STATUS,true).apply();
+            ((ItemClickListener)mContext).onBoardingComplete();
         }
         if(mRecyclerView != null){
             mRecyclerView.scrollToPosition(mOnBoardingModel.getToBeCompletePos());
@@ -165,5 +166,6 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
     public interface ItemClickListener{
         void onItemClick(int pos, OnBoardingModel.ScreenData data);
+        void onBoardingComplete();
     }
 }

@@ -351,7 +351,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             e.printStackTrace();
             System.gc();
         }
-        if (productItemModelList != null && session.getProductsCount() != productItemModelList.size()){
+        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
             session.setProductsCount(productItemModelList.size());
             OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{add_product:%s}",productItemModelList.size()>0?"true":"false"));
         }
@@ -443,7 +443,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
 
-        if (productItemModelList != null && session.getProductsCount() != productItemModelList.size()){
+        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
             session.setProductsCount(productItemModelList.size());
             OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{add_product:%s}",productItemModelList.size()>0?"true":"false"));
         }

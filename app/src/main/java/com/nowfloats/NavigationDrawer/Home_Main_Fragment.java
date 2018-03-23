@@ -234,21 +234,17 @@ public class Home_Main_Fragment extends Fragment implements
         current_Activity = getActivity();
         session = new UserSessionManager(getActivity(),getActivity());
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        if (BuildConfig.APPLICATION_ID.equals("com.us.nowfloats")) {
-            checkForOnBoarding();
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && !mPref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false)
+                && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
+            manager = new OnBoardingManager(getContext());
+            manager.getOnBoardingData(session.getFpTag());
         }
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();
     }
 
-    private void checkForOnBoarding() {
-        manager = new OnBoardingManager(getContext());
-        manager.getOnBoardingData(session.getFpTag());
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         super.onCreateOptionsMenu(menu, inflater);
 
     }
