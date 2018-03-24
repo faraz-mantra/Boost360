@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -122,6 +123,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         private TextView titleTv, cardNumberTv, descriptionTv, btnTv;
         private CardView itemView;
+        private ImageView completeImg;
         public MyViewHolder(final View itemView) {
             super(itemView);
             this.itemView = (CardView) itemView;
@@ -130,6 +132,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             titleTv = itemView.findViewById(R.id.tv_title);
             cardNumberTv = itemView.findViewById(R.id.tv_card_number);
             descriptionTv = itemView.findViewById(R.id.tv_description);
+            completeImg = itemView.findViewById(R.id.img_complete);
             btnTv = itemView.findViewById(R.id.btn_tv);
             btnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,10 +154,17 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             cardNumberTv.setText(String.valueOf(position+1));
             descriptionTv.setText(descriptions[position]);
             btnTv.setText(buttonText[position]);
-            if (!mOnBoardingModel.getScreenDataArrayList().get(position).isComplete() && position != mOnBoardingModel.getToBeCompletePos()){
+
+            if(mOnBoardingModel.getScreenDataArrayList().get(position).isComplete()){
+                completeImg.setVisibility(View.VISIBLE);
+                itemView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+                btnTv.setBackgroundResource(R.drawable.btn_bg);
+            }else if(position != mOnBoardingModel.getToBeCompletePos()){
+                completeImg.setVisibility(View.GONE);
                 itemView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.d9d9d9));
                 btnTv.setBackgroundResource(R.color.light_gray);
             }else{
+                completeImg.setVisibility(View.GONE);
                 itemView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
                 btnTv.setBackgroundResource(R.drawable.btn_bg);
             }

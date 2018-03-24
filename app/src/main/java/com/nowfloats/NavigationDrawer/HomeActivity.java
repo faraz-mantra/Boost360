@@ -1512,7 +1512,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                 setWebEngageProperties();
             }
-            showOnBoardingScreens();
+            //showOnBoardingScreens();
             // Constants.fromLogin = false ;
         }
 
