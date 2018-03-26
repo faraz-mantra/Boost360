@@ -99,7 +99,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
-                    OnBoardingApiCalls.updateData(session.getFpTag(), "{welcome_aboard:true}");
+                    OnBoardingApiCalls.updateData(session.getFpTag(), "welcome_aboard:true");
                 }
                 break;
             case 1:
@@ -119,7 +119,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 if (!screenData.isComplete()){
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
-                    OnBoardingApiCalls.updateData(session.getFpTag(),"{boost_app:true}");
+                    OnBoardingApiCalls.updateData(session.getFpTag(),"");
                 }
                 return;
             case 5:
@@ -127,7 +127,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 if (!screenData.isComplete()){
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
-                    OnBoardingApiCalls.updateData(session.getFpTag(),"{share_website:true}");
+                    OnBoardingApiCalls.updateData(session.getFpTag(),"share_website:true");
                 }
                 // step complete
                 return;
@@ -139,7 +139,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
 
     @Override
     public void onBoardingComplete() {
-        OnBoardingApiCalls.updateData(session.getFpTag(),"{is_complete:true}");
+        OnBoardingApiCalls.updateData(session.getFpTag(),"is_complete:true");
         finish();
     }
 

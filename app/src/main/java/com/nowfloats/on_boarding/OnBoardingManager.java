@@ -155,7 +155,10 @@ public class OnBoardingManager implements OnBoardingCallback {
                                 data.setIsComplete(stepsModel.getAddProduct());
                                 break;
                             case 4:
-                                data.setIsComplete(stepsModel.getBoostApp());
+                                if (!stepsModel.getBoostApp()) {
+                                    OnBoardingApiCalls.updateData(fptag,"");
+                                }
+                                data.setIsComplete(true);
                                 break;
                             case 5:
                                 data.setIsComplete(stepsModel.getShareWebsite());

@@ -36,7 +36,6 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -970,13 +969,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         bus.register(this);
         BoostLog.d("HomeActivity", "onStart");
         isExpiredCheck = true;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
     }
 
     @Override

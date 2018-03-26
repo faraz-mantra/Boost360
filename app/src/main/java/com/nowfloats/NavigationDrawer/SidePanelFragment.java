@@ -855,7 +855,7 @@ public class SidePanelFragment extends Fragment {
 
         if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
             session.setSiteHealth(siteMeterTotalWeight);
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{site_health:%s}",siteMeterTotalWeight));
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("site_health:%s",siteMeterTotalWeight));
         }
     }
 

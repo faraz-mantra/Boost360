@@ -190,7 +190,7 @@ public class CustomPageFragment extends Fragment {
             }
             if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()){
                 session.setCustomPageCount(dataModel.size());
-                OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{custom_page:%s}",dataModel.size()>0?"true":"false"));
+                OnBoardingApiCalls.updateData(session.getFpTag(),String.format("custom_page:%s",dataModel.size()>0?"true":"false"));
             }
             progress_layout.setVisibility(View.GONE);
             custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface, bus);

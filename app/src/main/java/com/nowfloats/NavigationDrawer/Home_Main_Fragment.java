@@ -42,7 +42,6 @@ import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
-import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -56,7 +55,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -82,7 +80,7 @@ public class Home_Main_Fragment extends Fragment implements
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
     private int maxSyncCall = 2;
-    OnBoardingManager onBoardingManager;
+
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
@@ -116,10 +114,6 @@ public class Home_Main_Fragment extends Fragment implements
     public void onResume() {
         super.onResume();
 
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && !mPref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false)
-                && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
-            onBoardingManager.getOnBoardingData(session.getFpTag());
-        }
         MixPanelController.track(EventKeysWL.HOME_SCREEN, null);
         BoostLog.d("Home_Main_Fragment","onResume : "+session.getFPName());
         getActivity().setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -238,7 +232,7 @@ public class Home_Main_Fragment extends Fragment implements
         bus.register(this);
         current_Activity = getActivity();
         session = new UserSessionManager(getActivity(),getActivity());
-        onBoardingManager = new OnBoardingManager(getContext());
+
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();

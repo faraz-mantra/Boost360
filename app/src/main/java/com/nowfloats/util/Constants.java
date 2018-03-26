@@ -8,7 +8,6 @@ import android.location.Address;
 import android.util.DisplayMetrics;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.GsonBuilder;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
@@ -28,8 +27,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
+import retrofit.android.AndroidLog;
 import retrofit.client.OkClient;
-import retrofit.converter.GsonConverter;
 
 
 public class Constants {
@@ -123,7 +122,7 @@ public class Constants {
     public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter riaMemoryRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
-    public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL).setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response"))*/.build();
+    public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL)/*.setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response")).build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 

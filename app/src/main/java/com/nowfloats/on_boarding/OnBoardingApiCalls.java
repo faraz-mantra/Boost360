@@ -21,7 +21,7 @@ public class OnBoardingApiCalls {
         OnBoardingWebActionApis apis = Constants.webActionAdapter.create(OnBoardingWebActionApis.class);
         OnBoardingUpdateModel model = new OnBoardingUpdateModel();
         model.setQuery(String.format("{fptag:'%s'}",fptag));
-        model.setUpdateValue(String.format("{$set:%s}", value));
+        model.setUpdateValue(String.format("{$set:{%s,boost_app:true}}", value));
         apis.updateData(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {

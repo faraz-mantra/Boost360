@@ -1144,7 +1144,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public void nfxCallBack(String response, int callType, String name) {
         hideLoader();
         if (response.equals("error")) {
-            Toast.makeText(getActivity(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
             return;
         }
         BoostLog.d("ggg: ", response + callType + ":");

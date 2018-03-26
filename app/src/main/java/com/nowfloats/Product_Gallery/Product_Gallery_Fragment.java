@@ -353,7 +353,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         }
         if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
             session.setProductsCount(productItemModelList.size());
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{add_product:%s}",productItemModelList.size()>0?"true":"false"));
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
         }
     }
 
@@ -445,7 +445,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
 
         if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
             session.setProductsCount(productItemModelList.size());
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("{add_product:%s}",productItemModelList.size()>0?"true":"false"));
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
         }
     }
 
