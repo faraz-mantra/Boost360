@@ -966,7 +966,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     public int getSiteHealth(){
-        return pref.getInt(Key_Preferences.SITE_HEALTH,20);
+        return pref.getInt(Key_Preferences.SITE_HEALTH,0);
     }
 
     public void setProductsCount(int size) {

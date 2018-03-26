@@ -169,6 +169,9 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 btnTv.setBackgroundResource(R.drawable.btn_bg);
             }
 
+
+            btnTv.setVisibility(position == 4?View.INVISIBLE:View.VISIBLE);
+
             int padd = Methods.dpToPx(10,mContext);
             btnTv.setPadding(padd,padd,padd,padd);
         }
