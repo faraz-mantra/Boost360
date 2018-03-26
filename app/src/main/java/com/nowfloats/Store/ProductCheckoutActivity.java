@@ -80,6 +80,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
     private List<PackageDetails> mPurchasePlans;
     private final int DIRECT_REQUEST_CODE = 1;
     private final int OPC_REQUEST_CODE = 2;
+    private final int PADDLE_REQUEST_CODE = 3;
     private String[] mPackageIds;
     
 
@@ -412,7 +413,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK) {
+        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE || requestCode == PADDLE_REQUEST_CODE && resultCode==RESULT_OK) {
             if (data == null) {
                 return;
             }
@@ -450,22 +451,38 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if(materialProgress!=null && !materialProgress.isShowing()){
                 materialProgress.show();
             }
+            if(method != null)
+            {
+                method.RedirectUri = "https://hello.nowfloats.com";
+            }
+
             storeInterface.initiatePaymentProcess(params, method, new Callback<PaymentTokenResult>() {
                 @Override
                 public void success(PaymentTokenResult paymentTokenResult, Response response) {
+                    if (materialProgress!=null){
+                        materialProgress.dismiss();
+                    }
                     if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
-                        i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
-                        i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                        i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
-                        if (materialProgress!=null){
-                            materialProgress.dismiss();
+                        switch (paymentTokenResult.getResult().getPaymentMethodType())
+                        {
+                            case "INSTAMOJO":
+                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
+                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
+                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+
+                                startActivityForResult(i, OPC_REQUEST_CODE);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                break;
+                            case "PADDLE":
+                                Intent paddleIntent = new Intent(ProductCheckoutActivity.this, PaddleCheckoutActivity.class);
+                                paddleIntent.putExtra("paymentUrl", paymentTokenResult.getResult().getTargetPaymentCollectionUri());
+                                startActivityForResult(paddleIntent, PADDLE_REQUEST_CODE);
+                                break;
+                            default:
+                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
                         }
-                        startActivityForResult(i, OPC_REQUEST_CODE);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                     }else {
-                        if(materialProgress!=null && materialProgress.isShowing()){
-                            materialProgress.dismiss();
-                        }
                         Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
                     }
                 }

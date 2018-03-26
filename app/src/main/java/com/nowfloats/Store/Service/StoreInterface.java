@@ -68,6 +68,6 @@ public interface StoreInterface {
     @POST("/payment/v1/floatingpoint/createDraftInvoice")
     void createDraftInvoice(@QueryMap Map<String, String> params, @Body SendDraftInvoiceModel model, Callback<ReceivedDraftInvoice> callback);
 
-    @POST("/payment/v1/floatingpoint/initiatePaymentProcess")
+    @POST("/payment/v2/floatingpoint/initiatePaymentProcess")
     void initiatePaymentProcess(@QueryMap Map<String, String> params, @Body SupportedPaymentMethods model, Callback<PaymentTokenResult> callback);
 }

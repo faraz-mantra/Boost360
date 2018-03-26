@@ -185,6 +185,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==DIRECT_REQUEST_CODE && resultCode==RESULT_OK){
             if(data==null){
                 return;
@@ -208,7 +209,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                             "The Payment ID for your transaction is " + paymentId +". Your package will be activated within 24 hours. \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
                     showDialog(status, msg);*/
-                    pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn);
+                    pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn, 0);
                 }
             }else {
                 if(status.equals("Pending")){
@@ -228,7 +229,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
 
 
 
-    private void pollServerForStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn) {
+    private void pollServerForStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn, final int pollCount) {
         if(!materialProgress.isShowing()) {
             materialProgress.show();
         }
@@ -250,7 +251,15 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                         getPricingPlanDetails();
 
                     }else {
-                        pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn);
+                        if(pollCount < 5) {
+                            pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn, pollCount + 1);
+                        } else {
+                            String msg = "Alert! \n" +
+                                    "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment Request ID for your transaction is " + transactionId +" . \n" +
+                                    "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                            Methods.showDialog(NewPricingPlansActivity.this,status, msg);
+                        }
+
                     }
                 }catch (JSONException e){
                     e.printStackTrace();
