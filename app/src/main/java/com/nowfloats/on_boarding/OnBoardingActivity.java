@@ -119,7 +119,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 if (!screenData.isComplete()){
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
-                    OnBoardingApiCalls.updateData(session.getFpTag(),"");
+                    OnBoardingApiCalls.updateData(session.getFpTag(),"boost_app:true");
                 }
                 return;
             case 5:

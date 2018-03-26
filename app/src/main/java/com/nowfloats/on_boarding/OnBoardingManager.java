@@ -156,7 +156,7 @@ public class OnBoardingManager implements OnBoardingCallback {
                                 break;
                             case 4:
                                 if (!stepsModel.getBoostApp()) {
-                                    OnBoardingApiCalls.updateData(fptag,"");
+                                    OnBoardingApiCalls.updateData(fptag,"boost_app:true");
                                 }
                                 data.setIsComplete(true);
                                 break;
