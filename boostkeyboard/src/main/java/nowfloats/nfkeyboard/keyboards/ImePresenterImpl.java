@@ -189,13 +189,30 @@ public class ImePresenterImpl implements ItemClickListener,
                 setKeyboardType(KeyboardUtils.KeyboardType.NUMBERS);
                 currentCandidateType = KeyboardUtils.CandidateType.NULL;
                 break;
-            case InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS:
-                currentCandidateType = KeyboardUtils.CandidateType.NULL;
-                setKeyboardType(KeyboardUtils.KeyboardType.EMAIL_ADDRESS);
-                break;
-            case InputType.TYPE_TEXT_VARIATION_PASSWORD:
-                mShiftType = ShiftType.NORMAL;
             case InputType.TYPE_CLASS_TEXT:
+                final int variation = attribute.inputType & EditorInfo.TYPE_MASK_VARIATION;
+                switch (variation) {
+                    case EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS:
+                    case EditorInfo.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS:
+                        currentCandidateType = KeyboardUtils.CandidateType.NULL;
+                        mShiftType = ShiftType.NORMAL;
+                        setKeyboardType(KeyboardUtils.KeyboardType.EMAIL_ADDRESS);
+                        break;
+                    case EditorInfo.TYPE_TEXT_VARIATION_PASSWORD:
+                    case EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:
+                    case EditorInfo.TYPE_TEXT_VARIATION_WEB_PASSWORD:
+                        mShiftType = ShiftType.NORMAL;
+                        currentCandidateType = KeyboardUtils.CandidateType.NULL;
+                        setKeyboardType(KeyboardUtils.KeyboardType.QWERTY_LETTERS);
+                        break;
+                    default:
+                        currentCandidateType = KeyboardUtils.CandidateType.BOOST_SHARE;
+                        setKeyboardType(KeyboardUtils.KeyboardType.QWERTY_LETTERS);
+                        break;
+
+                }
+
+                break;
             default:
                 currentCandidateType = KeyboardUtils.CandidateType.BOOST_SHARE;
                 setKeyboardType(KeyboardUtils.KeyboardType.QWERTY_LETTERS);
@@ -237,6 +254,10 @@ public class ImePresenterImpl implements ItemClickListener,
                 mEnterKey.iconPreview = null;
                 mEnterKey.icon = null;
                 mEnterKey.label = "send";
+                break;
+            case EditorInfo.IME_ACTION_DONE:
+                mEnterKey.icon = res.getDrawable(R.drawable.ic_check_white_24dp);
+                mEnterKey.label = null;
                 break;
             default:
                 mEnterKey.icon = res.getDrawable(R.drawable.ic_enter_arrow);
@@ -587,7 +608,7 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     private AllSuggestionModel createSuggestionModel(String text, BaseAdapterManager.SectionTypeEnum type){
-        AllSuggestionModel model = new AllSuggestionModel("Data not found",null);
+        AllSuggestionModel model = new AllSuggestionModel(text,null);
         model.setTypeEnum(type);
         return model;
     }
@@ -639,7 +660,25 @@ public class ImePresenterImpl implements ItemClickListener,
                     onShiftPressed();
                     break;
                 case KEY_IME_OPTION:
-                    sendKeyEvent(KeyEvent.KEYCODE_ENTER);
+                    final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
+                    final int imeOptionsActionId = KeyboardUtils.getImeOptionsActionIdFromEditorInfo(editorInfo);
+                    if (inputConnection != null && KeyboardUtils.IME_ACTION_CUSTOM_LABEL == imeOptionsActionId) {
+                        // Either we have an actionLabel and we should performEditorAction with
+                        // actionId regardless of its value.
+                        inputConnection.performEditorAction(editorInfo.actionId);
+                    } else if (inputConnection != null && EditorInfo.IME_ACTION_NONE != imeOptionsActionId) {
+                        // We didn't have an actionLabel, but we had another action to execute.
+                        // EditorInfo.IME_ACTION_NONE explicitly means no action. In contrast,
+                        // EditorInfo.IME_ACTION_UNSPECIFIED is the default value for an action, so it
+                        // means there should be an action and the app didn't bother to set a specific
+                        // code for it - presumably it only handles one. It does not have to be treated
+                        // in any specific way: anything that is not IME_ACTION_NONE should be sent to
+                        // performEditorAction.
+                        inputConnection.performEditorAction(imeOptionsActionId);
+                    } else {
+                        sendKeyEvent(KeyEvent.KEYCODE_ENTER);
+                    }
+
                     break;
                 case KEY_NUMBER:
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.NUMBERS);
@@ -707,9 +746,15 @@ public class ImePresenterImpl implements ItemClickListener,
                 }
             }
             if (isLanguageVisible){
-                mInputMethodManager.switchToLastInputMethod(getToken());
+                boolean isLastIMESwitched = false;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    isLastIMESwitched = mInputMethodManager.switchToNextInputMethod(getToken(),false);
+                }
+                if (!isLastIMESwitched){
+                    mInputMethodManager.switchToLastInputMethod(getToken());
+                }
             }else{
-                Toast.makeText(mContext, "Unable to show other language", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Unable to show other language keyboard", Toast.LENGTH_SHORT).show();
             }
         }
 

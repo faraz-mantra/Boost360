@@ -41,7 +41,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             //Fabric.with(this, new Crashlytics());
         }catch(Exception e){e.printStackTrace();}
 
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 

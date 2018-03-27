@@ -99,6 +99,7 @@
                     android:layout_marginLeft="5dp"
                     android:text="@string/alternate_number2"
                     android:textSize="10sp"
+                    android:inputType="text"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
@@ -126,6 +127,7 @@
                     android:layout_marginLeft="5dp"
                     android:text="@string/alternate_number3"
                     android:textSize="10sp"
+                    android:inputType="text"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
