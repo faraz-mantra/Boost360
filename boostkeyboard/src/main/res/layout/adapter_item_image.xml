@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text=""
+            android:gravity="center"
             android:maxLines="2"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>
