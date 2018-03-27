@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -43,7 +42,6 @@ import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
-import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -57,7 +55,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -83,7 +80,7 @@ public class Home_Main_Fragment extends Fragment implements
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
     private int maxSyncCall = 2;
-    OnBoardingManager manager;
+
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
@@ -116,6 +113,7 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
+
         MixPanelController.track(EventKeysWL.HOME_SCREEN, null);
         BoostLog.d("Home_Main_Fragment","onResume : "+session.getFPName());
         getActivity().setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -230,43 +228,22 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         bus = BusProvider.getInstance().getBus();
         bus.register(this);
         current_Activity = getActivity();
         session = new UserSessionManager(getActivity(),getActivity());
+
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-            checkForOnBoarding();
-        }
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();
     }
 
-    private void checkForOnBoarding() {
-        manager = new OnBoardingManager(getContext());
-        manager.siteMeterCalculation(session, mPref);
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-            inflater.inflate(R.menu.menu_home_main, menu);
-        }
         super.onCreateOptionsMenu(menu, inflater);
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.on_boarding_option:
-                if (manager != null)
-                manager.siteMeterCalculation(session, mPref);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

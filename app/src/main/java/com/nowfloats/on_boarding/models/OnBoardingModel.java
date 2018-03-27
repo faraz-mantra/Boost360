@@ -1,4 +1,4 @@
-package com.nowfloats.on_boarding;
+package com.nowfloats.on_boarding.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -13,13 +13,20 @@ public class OnBoardingModel implements Parcelable{
 
     private ArrayList<ScreenData> screenDataArrayList;
 
+    private int toBeCompletePos = -1;
+
+    public OnBoardingModel(){
+
+    }
     protected OnBoardingModel(Parcel in) {
         screenDataArrayList = in.createTypedArrayList(ScreenData.CREATOR);
+        toBeCompletePos = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeTypedList(screenDataArrayList);
+        dest.writeInt(toBeCompletePos);
     }
 
     @Override
@@ -43,6 +50,14 @@ public class OnBoardingModel implements Parcelable{
         return screenDataArrayList;
     }
 
+    public int getToBeCompletePos() {
+        return toBeCompletePos;
+    }
+
+    public void setToBeCompletePos(int toBeCompletePos) {
+        this.toBeCompletePos = toBeCompletePos;
+    }
+
     public void setScreenDataArrayList(ArrayList<ScreenData> screenDataArrayList) {
         this.screenDataArrayList = screenDataArrayList;
     }
@@ -52,20 +67,24 @@ public class OnBoardingModel implements Parcelable{
 
         public String key;
 
-        public boolean isVisible;
+        public boolean isComplete;
 
-        public String value;
+        public String value="";
+
+        public ScreenData(){
+
+        }
 
         protected ScreenData(Parcel in) {
             key = in.readString();
-            isVisible = in.readByte() != 0;
+            isComplete = in.readByte() != 0;
             value = in.readString();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(key);
-            dest.writeByte((byte) (isVisible ? 1 : 0));
+            dest.writeByte((byte) (isComplete ? 1 : 0));
             dest.writeString(value);
         }
 
@@ -94,12 +113,12 @@ public class OnBoardingModel implements Parcelable{
             this.key = key;
         }
 
-        public boolean isVisible() {
-            return isVisible;
+        public boolean isComplete() {
+            return isComplete;
         }
 
-        public void setVisible(boolean visible) {
-            isVisible = visible;
+        public void setIsComplete(boolean complete) {
+            isComplete = complete;
         }
 
         public String getValue() {

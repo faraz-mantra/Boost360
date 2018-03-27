@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -30,6 +29,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
@@ -42,6 +42,7 @@ import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
+import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -416,6 +417,11 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
+            session.setSiteHealth(siteMeterTotalWeight);
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("site_health:%s",siteMeterTotalWeight));
+        }
+
         MixPanelController.setProperties("SiteHealth", "" + siteMeterTotalWeight);
     }
 
@@ -449,11 +455,14 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             case social:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_SOCIAL, null);
                 if (!(Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false))) {
-                    if(activity instanceof HomeActivity)
-                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
-                    else{
-                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
-                    }
+                    Intent in = new Intent(activity, Social_Sharing_Activity.class);
+                    startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                    if(activity instanceof HomeActivity)
+//                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
+//                    else{
+//                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                    }
                     /*Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/

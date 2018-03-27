@@ -661,8 +661,8 @@
         <activity
             android:name="com.nowfloats.on_boarding.OnBoardingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name="com.nowfloats.Store.PaddleCheckoutActivity"></activity>
-    </application>
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+</application>
 
 </manifest>
