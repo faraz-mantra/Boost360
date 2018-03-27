@@ -345,12 +345,5 @@
     <orderEntry type="module" module-name="boostkeyboard" />
     <orderEntry type="library" name="android-android-27" level="project" />
     <orderEntry type="library" name="org.apache.http.legacy-android-27" level="project" />
-    <orderEntry type="module" module-name="instamojoLib" />
-    <orderEntry type="module" module-name="riachatsdkMain" />
-    <orderEntry type="module" module-name="messagelibrary" />
-    <orderEntry type="module" module-name="cropper" />
-    <orderEntry type="module" module-name="ZoomImageLibrary" />
-    <orderEntry type="module" module-name="library" />
-    <orderEntry type="module" module-name="boostkeyboard" />
   </component>
 </module>
