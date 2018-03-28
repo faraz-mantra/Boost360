@@ -76,6 +76,16 @@ public class MixPanelController {
     public static final String KEYBOARD_ACTIVATED = "KeyboardActivated";
     public static final String KEYBOARD_ENABLED = "KeyboardEnabled";
 
+
+    public static final String ON_BOARDING_COMPLETE = "OnBoardingComplete";
+    public static final String ON_BOARDING_SCREEN_SHOW = "OnBoardingShow";
+    public static final String ON_BOARDING_SHARE_WEBSITE = "OnBoardingShareWebsite";
+    public static final String ON_BOARDING_BOOST_APP = "OnBoardingBoostApp";
+    public static final String ON_BOARDING_ADD_PRODUCT = "OnBoardingAddProduct";
+    public static final String ON_BOARDING_CUSTOM_PAGE = "OnBoardingAddCustomPage";
+    public static final String ON_BOARDING_SITE_HEALTH = "OnBoardingSiteHealth";
+    public static final String ON_BOARDING_WELCOME_ABOARD = "OnBoardingWelcomeAboard";
+
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",

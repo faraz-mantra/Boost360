@@ -13,6 +13,7 @@ import com.nowfloats.on_boarding.models.OnBoardingStepsModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -56,61 +57,6 @@ public class OnBoardingManager implements OnBoardingCallback {
         mContext.startActivity(i);
     }
 
-    public int siteMeterCalculation(UserSessionManager session, SharedPreferences pref) {
-//        OnBoardingScreenApis apis = new OnBoardingScreenApis(mContext,session.getFpTag(), session.getFPID());
-//        apis.setCallbackListener(this);
-//        apis.startProcess();
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
-                    siteMeterTotalWeight += 10;
-        }
-
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) && !mContext.getResources().getString(R.string.phoneNumber_percentage).equals("0")) {
-            siteMeterTotalWeight += phoneWeight;
-
-        }
-
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !mContext.getResources().getString(R.string.businessCategory_percentage).equals("0")) {
-            siteMeterTotalWeight += businessCategoryWeight;
-
-        }
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)) && !mContext.getResources().getString(R.string.featuredImage_percentage).equals("0")) {
-            siteMeterTotalWeight += featuredImageWeight;
-        }
-
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !mContext.getResources().getString(R.string.businessName_percentage).equals("0")) {
-            siteMeterTotalWeight += businessNameWeight;
-
-        }
-
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !mContext.getResources().getString(R.string.businessdescription_percentage).equals("0")) {
-            siteMeterTotalWeight += businessDescriptionWeight;
-
-        }
-        if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && !TextUtils.isEmpty(session.getFacebookPageID())) {
-            siteMeterTotalWeight += twitterWeight;
-        }
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
-                !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE)) &&
-                !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE)) &&
-                !mContext.getResources().getString(R.string.address_percentage).equals("0")) {
-            siteMeterTotalWeight += businessAddressWeight;
-        }
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !mContext.getResources().getString(R.string.email_percentage).equals("0")) {
-            siteMeterTotalWeight += emailWeight;
-        }
-
-        if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !mContext.getResources().getString(R.string.Logo_percentage).equals("0")) {
-            siteMeterTotalWeight += logoWeight;
-        }
-
-        if (session.getBusinessHours()) {
-            siteMeterTotalWeight += businessHoursWeight;
-        }
-
-        return siteMeterTotalWeight;
-    }
-
-
     public void getOnBoardingData(final String fptag){
         OnBoardingWebActionApis apis = Constants.webActionAdapter.create(OnBoardingWebActionApis.class);
         apis.getData(String.format("{fptag:'%s'}", fptag), new Callback<WebActionModel<OnBoardingDataModel>>() {
@@ -136,6 +82,7 @@ public class OnBoardingManager implements OnBoardingCallback {
 
                     sharedPreferences.edit().putBoolean(Key_Preferences.ON_BOARDING_STATUS,stepsModel.isComplete()).apply();
                     if (stepsModel.isComplete()){
+                        MixPanelController.track(MixPanelController.ON_BOARDING_COMPLETE,null);
                         return;
                     }
                     for (int i = 0; i< 6; i++) {
