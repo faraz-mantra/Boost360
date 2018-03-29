@@ -1,4 +1,4 @@
-package com.nowfloats.NavigationDrawer;
+package flavourfiles;
 
 import android.Manifest;
 import android.app.Activity;
@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -36,7 +37,6 @@ import java.util.List;
 import nowfloats.nfkeyboard.keyboards.ImeKeyboardService;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
@@ -52,12 +52,6 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
     IntentFilter filter = new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED);
     InputMethodChangeReceiver mReceiver;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        imeManager = (InputMethodManager)getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +62,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        imeManager = (InputMethodManager)mContext.getSystemService(INPUT_METHOD_SERVICE);
         mReceiver = new InputMethodChangeReceiver();;
     }
 
@@ -119,12 +114,12 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
             if (isInputMethodActivated()){
                 MixPanelController.track(MixPanelController.KEYBOARD_ENABLED,null);
                 if (imeManager != null)
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        imeManager.showInputMethodPicker();
-                    }
-                },1000);
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            imeManager.showInputMethodPicker();
+                        }
+                    },1000);
             }
         }else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -155,7 +150,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
             }
         }else{
             if (code == MICROPHONE_CODE) {
-              microphoneSwitchTv.setChecked(true);
+                microphoneSwitchTv.setChecked(true);
             }else if(code == STORAGE_CODE) {
                 storageSwitchTv.setChecked(true);
             }

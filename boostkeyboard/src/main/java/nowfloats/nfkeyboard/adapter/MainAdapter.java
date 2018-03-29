@@ -16,7 +16,8 @@ import nowfloats.nfkeyboard.models.AllSuggestionModel;
 public class MainAdapter extends RecyclerView.Adapter {
 
     private BaseAdapterManager baseAdapterManager;
-    private ArrayList<AllSuggestionModel> mSuggestionModels;
+    private ArrayList<AllSuggestionModel> mSuggestionModels = new ArrayList<>();;
+
     public MainAdapter(Context context, ItemClickListener listener){
         baseAdapterManager = new BaseAdapterManager(context, listener);
     }
@@ -36,15 +37,21 @@ public class MainAdapter extends RecyclerView.Adapter {
     }
 
     public void setSuggestionModels(ArrayList<AllSuggestionModel> models){
-        if (mSuggestionModels == null){
-            mSuggestionModels = new ArrayList<>();
-        }
+
         mSuggestionModels.clear();
-        mSuggestionModels.addAll(models);
+        if (models != null){
+            mSuggestionModels.addAll(models);
+        }
+        notifyDataSetChanged();
     }
     @Override
     public int getItemCount() {
         return mSuggestionModels.size();
     }
 
+    public void setLoginScreen(AllSuggestionModel model) {
+        mSuggestionModels.clear();
+        mSuggestionModels.add(model);
+        notifyDataSetChanged();
+    }
 }

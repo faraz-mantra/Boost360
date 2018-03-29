@@ -11,7 +11,6 @@ import nowfloats.nfkeyboard.keyboards.ImePresenterImpl;
 public interface CandidateToPresenterInterface extends ItemClickListener, EmojiconGridView.OnEmojiconClickedListener,
         EmojiconsPopup.OnEmojiconBackspaceClickedListener {
 
-    void onScrollItems(int totalItemCount, int lastVisiblePos, ImePresenterImpl.TabType type);
     ImePresenterImpl.TabType getTabType();
     void onSpeechResult(String speech);
 }

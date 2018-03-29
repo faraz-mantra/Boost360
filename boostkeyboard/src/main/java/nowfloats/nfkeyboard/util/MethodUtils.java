@@ -62,11 +62,11 @@ public class MethodUtils {
 
     public static void startBoostActivity(Context mContext ){
         PackageManager packageManager = mContext.getPackageManager();
-        if (!isPackageInstalled("com.biz2.nowfloats",packageManager)){
+        if (!isPackageInstalled(mContext.getPackageName(),packageManager)){
             Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
         }
         try {
-            Intent LaunchIntent = packageManager.getLaunchIntentForPackage("com.biz2.nowfloats");
+            Intent LaunchIntent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
             mContext.startActivity(LaunchIntent);
         }catch(Exception e){
             Toast.makeText(mContext, "Unable to open Boost App ", Toast.LENGTH_SHORT).show();

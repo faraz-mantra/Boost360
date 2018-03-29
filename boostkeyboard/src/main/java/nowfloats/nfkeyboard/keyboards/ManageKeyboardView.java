@@ -21,9 +21,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import hani.momanii.supernova_emoji_library.Helper.EmojiconGridView;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconRecents;
@@ -40,17 +42,24 @@ import hani.momanii.supernova_emoji_library.emoji.Sport;
 import hani.momanii.supernova_emoji_library.emoji.Symbols;
 import nowfloats.nfkeyboard.R;
 import nowfloats.nfkeyboard.activity.SpeechRecognitionManager;
+import nowfloats.nfkeyboard.adapter.BaseAdapterManager;
 import nowfloats.nfkeyboard.adapter.MainAdapter;
+import nowfloats.nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
 import nowfloats.nfkeyboard.interface_contracts.CandidateToPresenterInterface;
 import nowfloats.nfkeyboard.interface_contracts.ItemClickListener;
 import nowfloats.nfkeyboard.interface_contracts.SpeechRecognitionResultInterface;
 import nowfloats.nfkeyboard.models.AllSuggestionModel;
+import nowfloats.nfkeyboard.network.ApiCallPresenter;
+import nowfloats.nfkeyboard.util.SharedPrefUtil;
+
+import static nowfloats.nfkeyboard.keyboards.ImePresenterImpl.TabType.PRODUCTS;
+import static nowfloats.nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 
 /**
  * Created by Admin on 27-02-2018.
  */
 
-public class ManageKeyboardView extends FrameLayout implements ItemClickListener, SpeechRecognitionResultInterface {
+public class ManageKeyboardView extends FrameLayout implements ItemClickListener, SpeechRecognitionResultInterface, ApiCallToKeyboardViewInterface {
     private KeyboardViewBaseImpl mKeyboardView;
     private Context mContext;
     private RecyclerView mRecyclerView;
@@ -61,9 +70,12 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     private ConstraintLayout speechLayout, shareLayout;
     private RelativeLayout emojiLayout;
     private PagerAdapter mEmojisAdapter;
+    private ApiCallPresenter apiCallPresenter;
     private View[] mEmojiTabs;
+    private ArrayList<AllSuggestionModel> updatesList = new ArrayList<>(), productList = new ArrayList<>();
     private EmojiconRecentsManager mRecentsManager;
     private int mEmojiTabLastSelectedIndex = -1;
+    boolean isProductCompleted, isUpdatesCompleted;
 
     String iconPressedColor="#ffffff";
     String tabsColor="#212121";
@@ -94,8 +106,18 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         shareLayout= findViewById(R.id.sharelayout);
         emojiLayout = findViewById(R.id.emoji_layout);
         mSpeechMessageTv = findViewById(R.id.tv_message);
+        apiCallPresenter = new ApiCallPresenter(mContext, this);
     }
-    public void showShareLayout(ArrayList<AllSuggestionModel> models){
+
+    public void clearResources(){
+        updatesList.clear();
+        productList.clear();
+        isProductCompleted = isUpdatesCompleted = false;
+        if (shareAdapter != null)
+        shareAdapter.setSuggestionModels(null);
+    }
+
+    public void showShareLayout(final ImePresenterImpl.TabType type){
         mKeyboardView.setVisibility(INVISIBLE);
         emojiLayout.setVisibility(GONE);
         stopListening();
@@ -105,37 +127,88 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
             shareAdapter = new MainAdapter(mContext, this);
-            shareAdapter.setSuggestionModels(models);
             mRecyclerView.setAdapter(shareAdapter);
-//            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//
-//                @Override
-//                public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
-//                    Runnable r = new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//                            int totalItemCount = linearLayoutManager.getItemCount();
-//                            int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-//                            if (presenterListener != null)
-//                            presenterListener.onScrollItems(totalItemCount, lastVisibleItem, presenterListener.getTabType());
-//                        }
-//                    };
-//                    r.run();
-//                }
-//            });
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+                @Override
+                public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
+
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int totalItemCount = linearLayoutManager.getItemCount();
+                    int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                    if (apiCallPresenter == null){
+                        Toast.makeText(mContext, "Please reopen this keyboard", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(lastVisibleItem>=totalItemCount-2){
+                        if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
+                            shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
+                        }else {
+                            callLoadingApi(presenterListener.getTabType());
+                        }
+                    }
+                }
+            });
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
-        }else {
-            shareAdapter.setSuggestionModels(models);
-            shareAdapter.notifyDataSetChanged();
+            if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
+                shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
+            }else {
+                callLoadingApi(type);
+            }
         }
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
+                    shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
+                }else {
+                    shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
+                }
+            }
+        });
+
     }
 
-    public void onSetSuggestions(ArrayList<AllSuggestionModel> models){
-        shareAdapter.setSuggestionModels(models);
-        shareAdapter.notifyDataSetChanged();
+    private void callLoadingApi(final ImePresenterImpl.TabType type){
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                switch (type){
+                    case PRODUCTS:
+                        if (isProductCompleted){
+                            return;
+                        }
+                        if (productList.size()>0 && productList.get(productList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                            return;
+                        }
+                        productList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
+                        apiCallPresenter.loadMore(productList.size()-1, PRODUCTS);
+                        break;
+                    case UPDATES:
+                        if (isUpdatesCompleted){
+                            return;
+                        }
+                        if (updatesList.size()>0 && updatesList.get(updatesList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                            return;
+                        }
+                        updatesList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
+                        apiCallPresenter.loadMore(updatesList.size()-1, UPDATES);
+                        break;
+                    default:
+                        break;
+                }
+                shareAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
+    private AllSuggestionModel createSuggestionModel(String text, BaseAdapterManager.SectionTypeEnum type){
+        AllSuggestionModel model = new AllSuggestionModel(text,null);
+        model.setTypeEnum(type);
+        return model;
+    }
+
     public void showKeyboardLayout(){
         shareLayout.setVisibility(GONE);
         emojiLayout.setVisibility(GONE);
@@ -365,5 +438,78 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             }
         }
         emojiLayout.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void onLoadMore(final ImePresenterImpl.TabType type, List<AllSuggestionModel> models) {
+
+        switch (type){
+            case UPDATES:
+                if(updatesList.get(updatesList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                    updatesList.remove(updatesList.size()-1);
+                }
+                updatesList.addAll(models);
+                if (updatesList.size() == 0){
+                    updatesList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                }
+                break;
+            case PRODUCTS:
+                if(productList.get(productList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                    productList.remove(productList.size()-1);
+                }
+                productList.addAll(models);
+                if (productList.size() == 0){
+                    productList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                }
+                break;
+        }
+        if (type == presenterListener.getTabType()){
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    shareAdapter.setSuggestionModels(type == UPDATES?updatesList:productList);
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onError(final ImePresenterImpl.TabType type) {
+        switch (type){
+            case UPDATES:
+                if(updatesList.get(updatesList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                    updatesList.remove(updatesList.size()-1);
+                }
+                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                break;
+            case PRODUCTS:
+                if(productList.get(productList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                    productList.remove(productList.size()-1);
+                }
+                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        if (type == presenterListener.getTabType()){
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    shareAdapter.setSuggestionModels(type == UPDATES?updatesList:productList);
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onCompleted(ImePresenterImpl.TabType type) {
+        switch (type){
+            case UPDATES:
+                isUpdatesCompleted = true;
+                break;
+            case PRODUCTS:
+                isProductCompleted = true;
+                break;
+        }
     }
 }
