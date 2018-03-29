@@ -103,6 +103,7 @@ public class OnBoardingManager implements OnBoardingCallback {
                                 break;
                             case 4:
                                 if (!stepsModel.getBoostApp()) {
+                                    MixPanelController.track(MixPanelController.ON_BOARDING_BOOST_APP,null);
                                     OnBoardingApiCalls.updateData(fptag,"boost_app:true");
                                 }
                                 data.setIsComplete(true);

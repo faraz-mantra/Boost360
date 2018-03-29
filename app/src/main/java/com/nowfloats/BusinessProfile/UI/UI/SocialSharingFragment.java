@@ -172,20 +172,20 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         arrowTextView = (TextView) view.findViewById(R.id.guidelines_arrow_text);
         //Quikr added
         CardView card = (CardView) view.findViewById(R.id.quikr_card);
-
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            card.setVisibility(View.GONE);
-        } else {
-            final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-                for (String category : quikrArray) {
-                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                        card.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                }
-            }
-        }
+        card.setVisibility(View.GONE);
+//        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            card.setVisibility(View.GONE);
+//        } else {
+//            final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+//            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+//                for (String category : quikrArray) {
+//                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+//                        card.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
 
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);

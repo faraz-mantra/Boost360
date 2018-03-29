@@ -155,7 +155,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 //    private StringBuilder mStringBuilder;
 
-    private Handler mHandler;
+    private Handler mHandler = new Handler(Looper.getMainLooper());;
 
     private Button mCurrButton, mDefaultButton;
 
@@ -1978,7 +1978,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         rvButtonsContainer.setLayoutManager(buttonsLayoutManager);
         rvButtonsContainer.setAdapter(mButtonsAdapter);
-        mHandler = new Handler(Looper.getMainLooper());
         startChat(mAllNodes.get(0));
     }
 

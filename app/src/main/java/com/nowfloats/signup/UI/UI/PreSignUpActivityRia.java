@@ -1023,8 +1023,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     @Override
     public void CheckUniqueNumber_preExecute(String value) {
-        pd = ProgressDialog.show(activity, null, getString(R.string.checking_contact_number));
-        pd.setCancelable(false);
+        showLoader(getString(R.string.checking_contact_number));
     }
 
     @Override
@@ -1042,10 +1041,25 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 //        }
 
     }
+    private void showLoader(final String message) {
 
+        if (pd == null) {
+            pd = new ProgressDialog(PreSignUpActivityRia.this);
+            pd.setCancelable(false);
+        }
+        pd.setMessage(message);
+        pd.show();
+    }
+
+    private void hideLoader() {
+
+        if (pd != null && pd.isShowing()) {
+            pd.dismiss();
+        }
+    }
     @Override
     public void CheckUniqueNumber_postExecute(String value, String phoneNumber) {
-        pd.dismiss();
+       hideLoader();
         if (value.equals("Success")) {
 
             numberDialog.dismiss();
@@ -1192,9 +1206,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         if (v.getId() == R.id.verify_button) {
             try {
                 if (getEditTextData()) {
-                    pd = ProgressDialog.show(PreSignUpActivityRia.this, "", getString(R.string.creating_website));
-                    pd.setCancelable(false);
-
+                    showLoader( getString(R.string.creating_website));
                     if (data_lat.equalsIgnoreCase("0")) {
 
                         LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
@@ -1583,15 +1595,18 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     private void createStore_retrofit(PreSignUpActivityRia webSiteAddressActivity, HashMap<String, String> jsonData, Bus bus) {
 
-        pd = ProgressDialog.show(PreSignUpActivityRia.this, "", getString(R.string.creating_website));
-        pd.setCancelable(false);
+        showLoader(getString(R.string.creating_website));
         new Create_Tag_Service(webSiteAddressActivity, jsonData, bus);
     }
 
     @Subscribe
     public void put_createStore(Create_Store_Event response) {
         final String fpId = response.fpId;
-
+        hideLoader();
+        if (TextUtils.isEmpty(fpId)){
+            Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+            return;
+        }
         dataBase.insertLoginStatus(fpId);
         sessionManager = new UserSessionManager(getApplicationContext(), PreSignUpActivityRia.this);
         sessionManager.storeFPID(fpId);
@@ -1609,13 +1624,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 // This method will be executed once the timer is over Start your app main activity
                 getFPDetails(PreSignUpActivityRia.this, fpId, Constants.clientId, bus);
             }
-        }, 8000);
+        }, 5000);
 
         // Store it in Database
         // Store it in Shared pref
     }
 
     private void getFPDetails(PreSignUpActivityRia activity, String fpId, String clientId, Bus bus) {
+        showLoader(getString(R.string.please_wait));
         new Get_FP_Details_Service(activity, fpId, clientId, bus);
     }
 
@@ -1625,9 +1641,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (pd != null &&pd.isShowing()) {
-                    pd.dismiss();
-                }
+               hideLoader();
             }
         });
         //VISITOR and SUBSCRIBER COUNT API
