@@ -1,6 +1,7 @@
 package nowfloats.nfkeyboard.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -16,6 +17,7 @@ import nowfloats.nfkeyboard.models.AllSuggestionModel;
 public class MainAdapter extends RecyclerView.Adapter {
 
     private BaseAdapterManager baseAdapterManager;
+    private RecyclerView mRecyclerView;
     private ArrayList<AllSuggestionModel> mSuggestionModels = new ArrayList<>();;
 
     public MainAdapter(Context context, ItemClickListener listener){
@@ -32,26 +34,42 @@ public class MainAdapter extends RecyclerView.Adapter {
     }
 
     @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mRecyclerView = recyclerView;
+    }
+
+    @Override
     public int getItemViewType(int position) {
         return mSuggestionModels.get(position).getTypeEnum().getValue();
     }
 
-    public void setSuggestionModels(ArrayList<AllSuggestionModel> models){
-
-        mSuggestionModels.clear();
-        if (models != null){
-            mSuggestionModels.addAll(models);
-        }
-        notifyDataSetChanged();
+    public void setSuggestionModels(final ArrayList<AllSuggestionModel> models){
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mSuggestionModels.clear();
+                if (models != null){
+                    mSuggestionModels.addAll(models);
+                }
+                notifyDataSetChanged();
+            }
+        });
     }
     @Override
     public int getItemCount() {
         return mSuggestionModels.size();
     }
 
-    public void setLoginScreen(AllSuggestionModel model) {
-        mSuggestionModels.clear();
-        mSuggestionModels.add(model);
-        notifyDataSetChanged();
+    public void setLoginScreen(final AllSuggestionModel model) {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mSuggestionModels.clear();
+                mSuggestionModels.add(model);
+                notifyDataSetChanged();
+            }
+        });
+
     }
 }

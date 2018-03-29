@@ -151,23 +151,28 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             });
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
-            if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
-                shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
-            }else {
-                callLoadingApi(type);
+        }
+
+        if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
+            shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
+        }else {
+            switch (type){
+                case UPDATES:
+                    if (updatesList.size()>0){
+                        shareAdapter.setSuggestionModels(updatesList);
+                    }else{
+                        callLoadingApi(UPDATES);
+                    }
+                    break;
+                case PRODUCTS:
+                    if (productList.size()>0){
+                        shareAdapter.setSuggestionModels(productList);
+                    }else{
+                        callLoadingApi(PRODUCTS);
+                    }
+                    break;
             }
         }
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
-                    shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
-                }else {
-                    shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
-                }
-            }
-        });
-
     }
 
     private void callLoadingApi(final ImePresenterImpl.TabType type){
@@ -183,6 +188,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                             return;
                         }
                         productList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
+                        shareAdapter.setSuggestionModels(productList);
                         apiCallPresenter.loadMore(productList.size()-1, PRODUCTS);
                         break;
                     case UPDATES:
@@ -193,12 +199,12 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                             return;
                         }
                         updatesList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
+                        shareAdapter.setSuggestionModels(updatesList);
                         apiCallPresenter.loadMore(updatesList.size()-1, UPDATES);
                         break;
                     default:
                         break;
                 }
-                shareAdapter.notifyDataSetChanged();
             }
         });
 
@@ -463,14 +469,8 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 }
                 break;
         }
-        if (type == presenterListener.getTabType()){
-            mRecyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    shareAdapter.setSuggestionModels(type == UPDATES?updatesList:productList);
-                }
-            });
-
+        if (type == presenterListener.getTabType()) {
+            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
         }
     }
 
@@ -491,13 +491,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 break;
         }
         if (type == presenterListener.getTabType()){
-            mRecyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    shareAdapter.setSuggestionModels(type == UPDATES?updatesList:productList);
-                }
-            });
-
+            shareAdapter.setSuggestionModels(type == UPDATES?updatesList:productList);
         }
     }
 
