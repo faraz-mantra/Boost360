@@ -33,8 +33,7 @@ class LoaderAdapter extends BaseAdapter<AllSuggestionModel> {
 
         public MyHolder(View itemView) {
             super(itemView);
-            linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
-            itemView.setLayoutParams(linLayoutParams);
+            setViewLayoutSize(itemView);
         }
     }
 }

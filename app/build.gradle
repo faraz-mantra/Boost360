@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2018030028
+        versionCode 2018040002
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -134,7 +134,7 @@ dependencies {
     implementation files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
-    implementation project(':boostkeyboard')
+    partoneCompile project(':boostkeyboard')
     implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true;

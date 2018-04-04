@@ -36,24 +36,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 import nowfloats.nfkeyboard.R;
-import nowfloats.nfkeyboard.adapter.BaseAdapterManager;
 import nowfloats.nfkeyboard.interface_contracts.CandidateToPresenterInterface;
 import nowfloats.nfkeyboard.interface_contracts.ImeToPresenterInterface;
 import nowfloats.nfkeyboard.interface_contracts.ItemClickListener;
 import nowfloats.nfkeyboard.interface_contracts.PresenterToImeInterface;
 import nowfloats.nfkeyboard.interface_contracts.UrlToBitmapInterface;
 import nowfloats.nfkeyboard.models.AllSuggestionModel;
-import nowfloats.nfkeyboard.models.networkmodels.Product;
-import nowfloats.nfkeyboard.network.CallBack;
-import nowfloats.nfkeyboard.network.Float;
-import nowfloats.nfkeyboard.network.NetworkAdapter;
-import nowfloats.nfkeyboard.network.Updates;
 import nowfloats.nfkeyboard.util.KeyboardUtils;
 import nowfloats.nfkeyboard.util.MethodUtils;
 import nowfloats.nfkeyboard.util.MixPanelUtils;
@@ -82,29 +74,11 @@ public class ImePresenterImpl implements ItemClickListener,
     private KeyboardBaseImpl mCurrentKeyboard;
     private boolean caps;
     private int imeOptionId;
-    private ArrayList<AllSuggestionModel> updatesList, productList;
     private InputMethodManager mInputMethodManager;
     private PresenterToImeInterface imeListener;
     private AudioManager mAudioManager;
     private TabType mTabType = TabType.NO_TAB;
     private ShiftType mShiftType = ShiftType.CAPITAL;
-
-    @Override
-    public void onScrollItems(int totalItemCount, int lastVisiblePos, TabType type) {
-        if(lastVisiblePos>=totalItemCount-2){
-            switch (type){
-                case PRODUCTS:
-                    if (productList.size()>= 10){
-
-                    }
-                    break;
-                case UPDATES:
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 
     @Override
     public TabType getTabType() {
@@ -222,9 +196,8 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     private void initializeValues() {
-        updatesList = null;
-        productList = null;
         mTabType = TabType.KEYBOARD;
+        manageKeyboardView.clearResources();
     }
 
     private void setImeOptions(Resources res, int options) {
@@ -484,40 +457,13 @@ public class ImePresenterImpl implements ItemClickListener,
             if (mTabType != TabType.UPDATES) {
                 mTabType = TabType.UPDATES;
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SHOW_UPDATES,null);
-                if ( SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()){
-                    manageKeyboardView.showShareLayout(updatesList == null ?
-                            createModelList(TabType.UPDATES) : updatesList);
-                }else{
-
-                    if (updatesList == null){
-                        updatesList = new ArrayList<>();
-                    }else {
-                        updatesList.clear();
-                    }
-                    AllSuggestionModel model = createSuggestionModel("Login",BaseAdapterManager.SectionTypeEnum.Login);
-                    updatesList.add(model);
-                    manageKeyboardView.showShareLayout(updatesList);
-                }
-
+                manageKeyboardView.showShareLayout(mTabType);
             }
         }else if(view.getId() ==  R.id.tv_products) {
             if (mTabType != TabType.PRODUCTS) {
                 mTabType = TabType.PRODUCTS;
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SHOW_PRODUCT,null);
-                if (SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn()) {
-                    manageKeyboardView.showShareLayout(productList == null ?
-                            createModelList(TabType.PRODUCTS) : productList);
-                }else{
-
-                    if (productList == null){
-                        productList = new ArrayList<>();
-                    }else {
-                        productList.clear();
-                    }
-                    AllSuggestionModel model = createSuggestionModel("Login",BaseAdapterManager.SectionTypeEnum.Login);
-                    productList.add(model);
-                    manageKeyboardView.showShareLayout(productList);
-                }
+                manageKeyboardView.showShareLayout(mTabType);
             }
         }else if(view.getId() ==  R.id.img_settings) {
             if (mTabType != TabType.SETTINGS) {
@@ -528,90 +474,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
         }
     }
-    public ArrayList<AllSuggestionModel> createModelList(TabType suggestionType) {
-        if(suggestionType == TabType.PRODUCTS) {
-            productList = new ArrayList<>();
-            AllSuggestionModel model = createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader);
-            productList.add(model);
-            NetworkAdapter adapter = new NetworkAdapter();
-            SharedPrefUtil boostPref = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext);
-            adapter.getAllProducts(boostPref.getFpTag(), mContext.getString(R.string.client_id),
-                    0, "SINGLE", new CallBack<List<Product>>() {
-                    @Override
-                    public void onSuccess(List<Product> data) {
-                        if (productList == null) return;
-                        productList.clear();
-                        if (data != null && data.size()>0) {
-                            for (Product product : data) {
-                                productList.add(product.toAllSuggestion());
-                            }
-                        }else{
-                            AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
-                            productList.add(model);
-                        }
-                        if (mTabType == TabType.PRODUCTS) {
-                            manageKeyboardView.onSetSuggestions(productList);
-                        }
-                    }
 
-                    @Override
-                    public void onError(Throwable t) {
-                        if (productList == null) return;
-                        AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
-                        productList.clear();
-                        productList.add(model);
-                        if (mTabType == TabType.PRODUCTS) {
-                            manageKeyboardView.onSetSuggestions(productList);
-                        }
-                    }
-                });
-            return productList;
-        } else if(suggestionType == TabType.UPDATES) {
-            updatesList = new ArrayList<>();
-            AllSuggestionModel model = createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader);
-            updatesList.add(model);
-            NetworkAdapter adapter = new NetworkAdapter();
-            SharedPrefUtil boostPref = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext);
-            adapter.getAllUpdates(boostPref.getFpId(), mContext.getString(R.string.client_id),
-                    0, 0, new CallBack<Updates>() {
-                        @Override
-                        public void onSuccess(Updates data) {
-                            if (updatesList == null) return;
-                            updatesList.clear();
-                            if (data != null && data.getFloats()!= null && data.getFloats().size()>0) {
-                                for (Float update : data.getFloats()) {
-                                    updatesList.add(update.toAllSuggestion());
-                                }
-                            }else{
-                                AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
-                                updatesList.add(model);
-                            }
-                            if(mTabType == TabType.UPDATES) {
-                                manageKeyboardView.onSetSuggestions(updatesList);
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable t) {
-                            if (updatesList == null) return;
-                            AllSuggestionModel model = createSuggestionModel("Data not found",BaseAdapterManager.SectionTypeEnum.EmptyList);
-                            updatesList.clear();
-                            updatesList.add(model);
-                            if (mTabType == TabType.UPDATES) {
-                                manageKeyboardView.onSetSuggestions(updatesList);
-                            }
-                        }
-                    });
-            return updatesList;
-        }
-      return null;
-    }
-
-    private AllSuggestionModel createSuggestionModel(String text, BaseAdapterManager.SectionTypeEnum type){
-        AllSuggestionModel model = new AllSuggestionModel(text,null);
-        model.setTypeEnum(type);
-        return model;
-    }
     private void sendKeyEvent(int keyEventCode) {
         if (imeListener.getImeCurrentInputConnection() != null) {
             imeListener.getImeCurrentInputConnection().sendKeyEvent(

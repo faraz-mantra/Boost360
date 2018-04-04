@@ -1119,6 +1119,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             case R.id.iv_hint_shipping_days:
                 showHintDialog(getString(R.string.product_shipping_days_hint));
                 break;
+            case R.id.iv_hint_available_units:
+                showHintDialog(getString(R.string.product_available_unit_hint));
+                break;
             case R.id.iv_hint_transaction_charge:
                 showHintDialog(getString(R.string.product_transaction_charge_hint));
                 break;
