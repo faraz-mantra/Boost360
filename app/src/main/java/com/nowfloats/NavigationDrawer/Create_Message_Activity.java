@@ -490,19 +490,20 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
         LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            layout.setVisibility(View.GONE);
-        }else {
-            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-                for (String category : quikrArray) {
-                    if (category.equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                        layout.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                }
-            }
-        }
+        layout.setVisibility(View.GONE);
+//        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            layout.setVisibility(View.GONE);
+//        }else {
+//            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+//            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+//                for (String category : quikrArray) {
+//                    if (category.equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+//                        layout.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
         showUpdateKeywords();
         ivSpeakUpdate.setOnClickListener(new View.OnClickListener() {
             @Override

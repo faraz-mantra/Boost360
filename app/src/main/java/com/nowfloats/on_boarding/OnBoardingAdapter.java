@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.on_boarding.models.OnBoardingModel;
 import com.nowfloats.util.Constants;
@@ -143,6 +144,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         ((ItemClickListener)mContext).onItemClick(getAdapterPosition(), mOnBoardingModel.getScreenDataArrayList().get(getAdapterPosition()));
 
                     }else if(mRecyclerView != null){
+                        Toast.makeText(mContext, "Finish Previous Step!", Toast.LENGTH_SHORT).show();
                         mRecyclerView.scrollToPosition(mOnBoardingModel.getToBeCompletePos());
                     }
                 }

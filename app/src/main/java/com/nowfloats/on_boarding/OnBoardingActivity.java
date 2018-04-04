@@ -19,6 +19,7 @@ import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.on_boarding.models.OnBoardingModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import static android.view.Window.FEATURE_NO_TITLE;
@@ -43,6 +44,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             finish();
             return;
         }
+        MixPanelController.track(MixPanelController.ON_BOARDING_SCREEN_SHOW,null);
         session = new UserSessionManager(this, this);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int screenWidth = (int) (metrics.widthPixels);
@@ -93,6 +95,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
         Intent intent = null;
         switch (position){
             case 0:
+                MixPanelController.track(MixPanelController.ON_BOARDING_WELCOME_ABOARD,null);
                 intent = new Intent(this, Mobile_Site_Activity.class);
                 intent.putExtra("WEBSITE_NAME","https://hello.nowfloats.com/product");
                 // step complete
@@ -103,19 +106,23 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 }
                 break;
             case 1:
+                MixPanelController.track(MixPanelController.ON_BOARDING_SITE_HEALTH,null);
                 intent = new Intent(this, FragmentsFactoryActivity.class);
                 intent.putExtra("fragmentName","SiteMeterFragment");
                 isSomethingChanged = true;
                 break;
             case 2:
+                MixPanelController.track(MixPanelController.ON_BOARDING_CUSTOM_PAGE,null);
                 intent = new Intent(this, CustomPageActivity.class);
                 isSomethingChanged = true;
                 break;
             case 3:
+                MixPanelController.track(MixPanelController.ON_BOARDING_ADD_PRODUCT,null);
                 intent = new Intent(this, ProductGalleryActivity.class);
                 isSomethingChanged = true;
                 break;
             case 4:
+                MixPanelController.track(MixPanelController.ON_BOARDING_BOOST_APP,null);
                 if (!screenData.isComplete()){
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
@@ -123,6 +130,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 }
                 return;
             case 5:
+                MixPanelController.track(MixPanelController.ON_BOARDING_SHARE_WEBSITE,null);
                 shareWebsite();
                 if (!screenData.isComplete()){
                     screenData.setIsComplete(true);
@@ -139,6 +147,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
 
     @Override
     public void onBoardingComplete() {
+        MixPanelController.track(MixPanelController.ON_BOARDING_COMPLETE,null);
         OnBoardingApiCalls.updateData(session.getFpTag(),"is_complete:true");
         finish();
     }
