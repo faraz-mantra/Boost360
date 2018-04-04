@@ -44,6 +44,7 @@
                 android:layout_width="@dimen/margin_20"
                 android:layout_height="@dimen/margin_20"
                 android:layout_centerVertical="true"
+                android:tint="@color/primary_color"
                 android:src="@drawable/ic_create_wand" />
 
             <TextView

@@ -826,7 +826,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     private void showLoader(final String message) {
-
+        if (getActivity() == null || !isAdded()) return;
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setCanceledOnTouchOutside(false);

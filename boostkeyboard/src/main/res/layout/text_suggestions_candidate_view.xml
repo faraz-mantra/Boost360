@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<nowfloats.nfkeyboard.keyboards.TextSuggestionsCandidateView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#212121">
+    android:layout_height="40dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="#424242">
 
     <ImageView
         android:id="@+id/img_nowfloats"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="5dp"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:padding="7dp"
         android:layout_gravity="center_vertical"
+        android:elevation="3dp"
         android:background="?android:selectableItemBackground"
         android:src="@drawable/ic_nowfloats_circle"/>
 
@@ -24,10 +27,11 @@
         android:layout_height="wrap_content"/>
     <ImageView
         android:id="@+id/img_settings"
-        android:padding="5dp"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:padding="7dp"
+        android:tint="@color/white"
         android:layout_gravity="center_vertical"
         android:src="@android:drawable/ic_btn_speak_now"
         android:background="?android:selectableItemBackground"/>
-</LinearLayout>
+</nowfloats.nfkeyboard.keyboards.TextSuggestionsCandidateView>

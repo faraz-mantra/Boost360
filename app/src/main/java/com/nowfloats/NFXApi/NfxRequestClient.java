@@ -349,7 +349,7 @@ public class NfxRequestClient {
             param.put(SOCIAL_DATA, internalParams1);
             param.put(MERCHANT_DATA, internalParams2);
             BoostLog.d("JSON String", param.toString());
-            Log.v("ggg",param.toString());
+            //Log.v("ggg",param.toString());
             return param;
         } catch (JSONException e) {
             e.printStackTrace();

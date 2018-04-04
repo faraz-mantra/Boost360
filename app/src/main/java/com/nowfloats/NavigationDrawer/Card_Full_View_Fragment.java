@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nowfloats.NavigationDrawer.API.MessageTag_Async_Task;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -337,7 +338,7 @@ public class Card_Full_View_Fragment extends Fragment {
         {
             imageView.setVisibility(View.VISIBLE);
             baseName = imageUri ;
-            Picasso.with(getActivity()).load(baseName).noPlaceholder().into(imageView);
+            Glide.with(this).load(baseName).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
         }
     }

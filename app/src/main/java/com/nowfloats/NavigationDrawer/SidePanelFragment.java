@@ -48,6 +48,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -853,7 +854,7 @@ public class SidePanelFragment extends Fragment {
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight + "%");
 
-        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && !session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
             session.setSiteHealth(siteMeterTotalWeight);
             OnBoardingApiCalls.updateData(session.getFpTag(),String.format("site_health:%s",siteMeterTotalWeight));
         }

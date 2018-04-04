@@ -43,6 +43,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.io.ByteArrayOutputStream;
@@ -351,7 +352,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             e.printStackTrace();
             System.gc();
         }
-        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
             session.setProductsCount(productItemModelList.size());
             OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
         }
@@ -443,7 +444,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
 
-        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
             session.setProductsCount(productItemModelList.size());
             OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
         }

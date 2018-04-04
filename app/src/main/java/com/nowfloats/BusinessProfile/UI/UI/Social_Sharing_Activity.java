@@ -850,30 +850,20 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
     private void showLoader(final String message) {
-
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(activity);
-                    progressDialog.setCanceledOnTouchOutside(false);
-                }
-                progressDialog.setMessage(message);
-                progressDialog.show();
-            }
-        });
+        if(isFinishing()) return;
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.setMessage(message);
+        progressDialog.show();
     }
 
     private void hideLoader() {
 
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-            }
-        });
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
     private void getFacebookProfile(final AccessToken accessToken, final int from) {
         Bundle parameters = new Bundle();

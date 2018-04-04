@@ -1,5 +1,6 @@
 package com.nowfloats.Store.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,10 @@ import com.thinksity.R;
 public class UpgradeAdapter extends RecyclerView.Adapter<UpgradeAdapter.UpgradeCardHolder> {
 
     private OnItemClickCallback callbackListner;
-    public UpgradeAdapter(OnItemClickCallback callback){
+    private Context mContext;
+    public UpgradeAdapter(Context context, OnItemClickCallback callback){
         callbackListner = callback;
+        mContext = context;
     }
     @Override
     public UpgradeCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,8 +33,8 @@ public class UpgradeAdapter extends RecyclerView.Adapter<UpgradeAdapter.UpgradeC
     @Override
     public void onBindViewHolder(UpgradeCardHolder holder, int position) {
         if (position == 0){
-            holder.setCardHolderContent(R.drawable.ic_base_plan,"Base Plans","BOOST Lite, BOOST Pro, BOOST Custom",
-                    "Your NowFloats website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won't be able to update any content.",
+            holder.setCardHolderContent(R.drawable.ic_base_plan,"Base Plans", mContext.getString(R.string.upgrade_base_plan_description),
+                    mContext.getString(R.string.upgrade_base_plan_content),
                     "Check Base Plans");
         }else{
             holder.setCardHolderContent(R.drawable.ic_top_up_plans,"Top-up Plans","WildFire, Dictate, My Business App",

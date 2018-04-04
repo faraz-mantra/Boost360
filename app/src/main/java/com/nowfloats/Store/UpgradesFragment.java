@@ -59,7 +59,7 @@ public class UpgradesFragment extends Fragment implements OnItemClickCallback{
 //        });
 //        adapter.setItems(adapterImages,adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.setAdapter(new UpgradeAdapter(this));
+        mRecyclerView.setAdapter( new UpgradeAdapter(mContext,this));
     }
 
     @Override

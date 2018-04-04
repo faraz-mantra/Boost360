@@ -52,7 +52,6 @@
         app:layout_constraintBottom_toBottomOf="@id/tv_visits_title"/>
 
 
-
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/graph"
         android:layout_width="0dp"

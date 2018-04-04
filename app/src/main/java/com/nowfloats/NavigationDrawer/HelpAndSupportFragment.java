@@ -171,6 +171,9 @@ public class HelpAndSupportFragment extends Fragment {
 
     private void setAdapterWithPager(View view){
         hideProgress();
+        if(getActivity() == null || !isAdded()){
+            return;
+        }
         ViewPager mPager = view.findViewById(R.id.ps_pager);
         mPager.setClipToPadding(false);
         // set padding manually, the more you set the padding the more you see of prev & next page

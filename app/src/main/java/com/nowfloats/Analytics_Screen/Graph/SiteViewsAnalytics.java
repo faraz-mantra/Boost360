@@ -47,7 +47,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
     public static final String VISITS_TYPE = "visits_type";
     private VisitsType mVisitsType;
     public enum VisitsType{
-        UNIQUE, TOTAL;
+        UNIQUE, TOTAL, MAP_VISITS;
     }
 
     @Override
@@ -71,6 +71,9 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
                 break;
             case TOTAL:
                 setTitle("Total Visits");
+                break;
+            case MAP_VISITS:
+                setTitle("Map Visits");
                 break;
             default:
                 finish();

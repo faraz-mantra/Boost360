@@ -25,7 +25,7 @@ public class OnBoardingApiCalls {
         apis.updateData(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                Log.v("ggg",s);
+                //Log.v("ggg",s);
             }
 
             @Override

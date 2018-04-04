@@ -27,6 +27,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Layout;
@@ -261,7 +262,7 @@ public class Methods {
 
     public static void showSnackBarPositive(Activity context, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
-        snackBar.getView().setBackgroundColor(Color.parseColor("#5DAC01"));
+        snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_positive_color));
         snackBar.show();
         /*SnackbarManager.show(
                 Snackbar.with(context) // context
@@ -273,7 +274,7 @@ public class Methods {
 
     public static void showSnackBarNegative(Activity context, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
-        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+        snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
         snackBar.show();
     }
 
@@ -301,13 +302,13 @@ public class Methods {
     }
     public static void showSnackBarNegative(View mView, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(mView, msg, android.support.design.widget.Snackbar.LENGTH_LONG);
-        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+        snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));
         snackBar.show();
     }
 
     public static void snackbarNoInternet(Activity context) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), android.support.design.widget.Snackbar.LENGTH_LONG);
-        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+        snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
         snackBar.show();
     }
 

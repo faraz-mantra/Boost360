@@ -49,11 +49,13 @@ public class KeyboardUtils {
         }
     }
     public enum CandidateType{
-        TEXT_LIST, BOOST_SHARE, NULL;
+        TEXT_LIST, BOOST_SHARE, BOOST_SHARE1, NULL;
         public static int getXml(CandidateType type){
             switch (type){
                 case TEXT_LIST:
-                    return R.layout.candidate_view;
+                    return R.layout.text_suggestions_candidate_view;
+                case BOOST_SHARE1:
+                    return R.layout.boost_share_candidate_view1;
                 case BOOST_SHARE:
                 default:
                     return R.layout.boost_share_candidate_view;

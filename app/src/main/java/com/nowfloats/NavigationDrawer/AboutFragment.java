@@ -65,6 +65,7 @@ public class AboutFragment extends Fragment {
                 Intent intent = null;
                 switch(adapterTexts[pos]){
                     case "About NowFloats":
+                    case "About RedTim":
                         MixPanelController.track(EventKeysWL.EVENT_ABOUT_US, null);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_about_us_link));

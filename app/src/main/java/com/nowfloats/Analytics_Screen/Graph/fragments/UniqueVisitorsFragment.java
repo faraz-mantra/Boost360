@@ -376,6 +376,9 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
             case TOTAL:
                 visitsApi.getTotalVisits(manager.getFpTag(), map,callback);
                 break;
+            case MAP_VISITS:
+                visitsApi.getMapVisits(manager.getFpTag(), map,callback);
+                break;
         }
     }
     private Callback<VisitsModel> visitsModelCallback = new Callback<VisitsModel>() {
@@ -405,7 +408,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         @Override
         public void failure(RetrofitError error) {
             visitsCount.setText("0");
-            Toast.makeText(mContext, "unable to fetch total unique visits", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "unable to fetch visits", Toast.LENGTH_SHORT).show();
         }
     };
 

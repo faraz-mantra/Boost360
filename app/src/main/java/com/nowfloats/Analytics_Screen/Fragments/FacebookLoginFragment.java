@@ -57,7 +57,7 @@ import java.util.List;
  * Created by Abhi on 11/25/2016.
  */
 
-public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallBackListener,FacebookHandler.FacebookCallbacks {
+public class FacebookLoginFragment extends Fragment implements NfxRequestClient.NfxCallBackListener,FacebookHandler.FacebookCallbacks {
     private static final int PAGE_NO_FOUND = 404;
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     final List<String> publishPermissions = Arrays.asList(Constants.FACEBOOK_PUBLISH_PERMISSIONS);
 
     public static Fragment getInstance(int i){
-        LoginFragment frag=new LoginFragment();
+        FacebookLoginFragment frag=new FacebookLoginFragment();
         Bundle bundle=new Bundle();
         bundle.putInt("status",i);
         frag.setArguments(bundle);
@@ -125,7 +125,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
             @Override
             public void onClick(View view) {
                // fbData(FROM_FB_PAGE);
-                facebookHandler.getFacebookPermissions(LoginFragment.this,readPermissions,publishPermissions);
+                facebookHandler.getFacebookPermissions(FacebookLoginFragment.this,readPermissions,publishPermissions);
             }
         });
     }
@@ -188,7 +188,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
             if(pages == null || items == null || items.size() == 0) {
                 // no pages found on something wrong
                 onFBPageError();
-                NfxRequestClient requestClient = new NfxRequestClient(LoginFragment.this)
+                NfxRequestClient requestClient = new NfxRequestClient(FacebookLoginFragment.this)
                         .setmFpId(session.getFPID())
                         .setmType("facebookpage")
                         .setmCallType(PAGE_NO_FOUND)
@@ -553,7 +553,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-              facebookHandler.getFacebookPermissions(LoginFragment.this,readPermissions,publishPermissions);
+              facebookHandler.getFacebookPermissions(FacebookLoginFragment.this,readPermissions,publishPermissions);
             }
         });
 

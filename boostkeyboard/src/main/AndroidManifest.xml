@@ -22,6 +22,7 @@
             <meta-data android:name="android.view.im"
                 android:resource="@xml/kbd_method" />
         </service>
+        <activity android:name=".activity.TestMainActivity" />
     </application>
 
 </manifest>

@@ -33,6 +33,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -188,7 +189,7 @@ public class CustomPageFragment extends Fragment {
             } else {
                 emptylayout.setVisibility(View.GONE);
             }
-            if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()){
+            if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && !session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()){
                 session.setCustomPageCount(dataModel.size());
                 OnBoardingApiCalls.updateData(session.getFpTag(),String.format("custom_page:%s",dataModel.size()>0?"true":"false"));
             }

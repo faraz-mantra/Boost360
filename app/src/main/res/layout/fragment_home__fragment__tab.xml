@@ -62,7 +62,7 @@
             android:gravity="center"
             android:text=""
             android:padding="2dp"
-            android:textColor="@color/white"
+            android:textColor="@color/alert_count_color"
             android:textSize="9sp"
             android:maxLines="1"
             android:visibility="gone"

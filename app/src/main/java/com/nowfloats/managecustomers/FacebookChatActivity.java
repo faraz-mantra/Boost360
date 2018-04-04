@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nowfloats.Analytics_Screen.Fragments.LoginFragment;
+import com.nowfloats.Analytics_Screen.Fragments.FacebookLoginFragment;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.managecustomers.adapters.FacebookChatAdapter;
@@ -51,7 +51,7 @@ import retrofit.client.Response;
  * Created by Admin on 17-08-2017.
  */
 
-public class FacebookChatActivity extends AppCompatActivity implements View.OnClickListener,LoginFragment.OpenNextScreen {
+public class FacebookChatActivity extends AppCompatActivity implements View.OnClickListener,FacebookLoginFragment.OpenNextScreen {
 
     private static final int NO_MESSAGES = 0,CONNECT_TO_PAGE = 1;
     private RecyclerView chatUserRecyclerView;
@@ -155,11 +155,11 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 Fragment frag=null;
-                frag = manager.findFragmentByTag("LoginFragment");
+                frag = manager.findFragmentByTag("FacebookLoginFragment");
                 if(frag == null)
-                    frag = LoginFragment.getInstance(0);
+                    frag = FacebookLoginFragment.getInstance(0);
 
-                transaction.replace(R.id.fragment_layout,frag,"LoginFragment").commit();
+                transaction.replace(R.id.fragment_layout,frag,"FacebookLoginFragment").commit();
                 break;
         }
     }

@@ -15,7 +15,10 @@
     <color name="product_delete_btn">#ff3f3f</color>
     <color name="e0e0e0">#e0e0e0</color>
     <color name="accentColor">#615b5b</color>
-
+    <color name="alert_count_color">@color/white</color>
+    <color name="alert_count_circle_color">@color/red</color>
+    <color name="snackbar_negative_color">#E02200</color>
+    <color name="snackbar_positive_color">#5DAC01</color>
     <color name="percentage_text_color">#c5c5c5</color>
     <color name="side_panel_progress_bar_blue">#289dd9</color>
     <color name="side_panel_progress_bar_percentage">#616161</color>

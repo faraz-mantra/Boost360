@@ -248,6 +248,18 @@ public class Analytics_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        LinearLayout mapVisitsLinearLayout = (LinearLayout) rootView.findViewById(R.id.mapVisitsLinearLayout);
+        mapVisitsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MixPanelController.track("MapVisitsDetailedView", null);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
+                    q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.MAP_VISITS);
+                startActivity(q);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
         LinearLayout subscribeLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscribers_details);
         subscribeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,6 +317,7 @@ public class Analytics_Fragment extends Fragment {
 
         PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
+        ImageView mapBack = (ImageView) rootView.findViewById(R.id.map_visits_img);
         ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
         ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
         ImageView businessEnqBg = (ImageView) rootView.findViewById(R.id.business_enq_bg);
@@ -316,6 +329,7 @@ public class Analytics_Fragment extends Fragment {
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
+        mapBack.setColorFilter(porterDuffColorFilter);
         subsBack.setColorFilter(porterDuffColorFilter);
         searchBack.setColorFilter(porterDuffColorFilter);
         businessEnqBg.setColorFilter(porterDuffColorFilter);

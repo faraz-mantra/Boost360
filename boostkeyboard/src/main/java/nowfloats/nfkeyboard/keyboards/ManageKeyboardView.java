@@ -478,13 +478,13 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     public void onError(final ImePresenterImpl.TabType type) {
         switch (type){
             case UPDATES:
-                if(updatesList.get(updatesList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                if(updatesList.size()>0 && updatesList.get(updatesList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
                     updatesList.remove(updatesList.size()-1);
                 }
                 Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
                 break;
             case PRODUCTS:
-                if(productList.get(productList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
+                if(productList.size()>0 && productList.get(productList.size()-1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader){
                     productList.remove(productList.size()-1);
                 }
                 Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();

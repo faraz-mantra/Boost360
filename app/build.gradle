@@ -102,7 +102,7 @@ android {
 
         nowfloats_us {
             versionName "1.0.0"
-            applicationId "com.us.nowfloats"
+            applicationId "com.redtim"
             dimension "default"
         }
         partone {
@@ -135,6 +135,7 @@ dependencies {
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
     partoneCompile project(':boostkeyboard')
+    nowfloats_usCompile project(':boostkeyboard')
     implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true;

@@ -29,7 +29,7 @@ public abstract class BaseAdapter <T extends AllSuggestionModel> {
         padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, metrics);
         paddingTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 23, metrics);
         linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 75 / 100,
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 160, metrics));
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, metrics));
     }
     BaseAdapter(Context context, ItemClickListener listener){
         this(context);

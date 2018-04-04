@@ -885,7 +885,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             Locale obj = new Locale("", countryCode);
             signUpCountryList.add(obj.getDisplayCountry());
             Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-            Log.v("ggg",obj.getCountry());
+            //Log.v("ggg",obj.getCountry());
         }
         Collections.sort(signUpCountryList);
         if (isFinishing()) {

@@ -318,6 +318,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 MixPanelController.track("$app_open",null);
             }
             if (url.contains(getString(R.string.keyboard))){
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                         .commit();
             }
