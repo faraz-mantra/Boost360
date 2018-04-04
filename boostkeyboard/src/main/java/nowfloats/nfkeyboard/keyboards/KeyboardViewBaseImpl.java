@@ -53,7 +53,7 @@ public class KeyboardViewBaseImpl extends KeyboardView implements KeyboardViewIn
     public boolean setShifted(boolean bol) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP  && mCurrentKeyboard.getShiftKeyIndex() != -1) {
             Keyboard.Key key = mCurrentKeyboard.getKeys().get(mCurrentKeyboard.getShiftKeyIndex());
-            key.icon.setColorFilter(ContextCompat.getColor(mContext, bol ? R.color.yellow : R.color.white), PorterDuff.Mode.SRC_IN);
+            key.icon.setColorFilter(ContextCompat.getColor(mContext, bol ? R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN);
         }
         return super.setShifted(bol);
     }

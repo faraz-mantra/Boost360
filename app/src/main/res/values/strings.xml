@@ -746,7 +746,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="thank_you_for_your_interest">Thank you for your interest!</string>
     <string name="business_app_requested_success">We will get back to you on this as soon as we can. Thank you for your patience.</string>
     <string name="processing_request">Processing Your Request</string>
-    <string name="username">Username</string>
+    <string name="username">username</string>
     <string name="plans_in_use">PLANS IN USE</string>
     <string name="buy">Buy</string>
     <string name="plan_name">Plan Name</string>
@@ -773,7 +773,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="create_your_nowfloats_site">Create your NowFloats site</string>
     <string name="email_address">Email Address</string>
     <string name="chat_with_ria">Chat with RIA</string>
-    <string name="log_in"> Log In</string>
+    <string name="log_in"> Login</string>
     <string name="phone_number">Phone number</string>
     <string name="share_website">Share website</string>
     <string name="tell_world_about_your_business_on_facebook_twitter">Tell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitter</string>
@@ -822,7 +822,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="update_your_website_to_increase_discoverability">Update your website regularly to get more customers</string>
     <string name="update_logo">Update Logo</string>
     <string name="of">of</string>
-    <string name="password">Password</string>
+    <string name="password">password</string>
     <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your user name is nowfloats</string>
     <string name="forgot_your_password">Forgot password?</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>

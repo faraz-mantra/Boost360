@@ -372,11 +372,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 if (city.contains(",")) {
                     String country[] = city.split(",");
                     city = country[0];
-                    if (country.length == 3) {
-                        countryEditText.setText(country[2].trim());
-                    } else if (country.length == 2)
-                        countryEditText.setText(country[1].trim());
-//                    countryEditText.setFocusable(true);
+                    if (country.length>1){
+                        countryEditText.setText(country[country.length -1].trim());
+                    }
+//                  countryEditText.setFocusable(true);
                 }
                 cityEditText.setTag(false);
                 cityEditText.setText(city);
@@ -412,7 +411,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    Methods.showSnackBarNegative(PreSignUpActivityRia.this,"Please select city with suggested country");
+                    Methods.showSnackBarNegative(PreSignUpActivityRia.this,"Please select city first");
                 }
                 return true;
 
@@ -488,7 +487,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     if (TextUtils.isEmpty(countryEditText.getText().toString())) {
-                        Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select city with suggested country");
+                        Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select city first");
                     } else{
                         showOtpDialog();
                     }
@@ -516,7 +515,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
                 if (!isFirstCheck) {
 
-                    if (Util.isNetworkStatusAvialable(PreSignUpActivityRia.this)) {
+                    if (etWebsiteAddress.getText().toString().trim().length() == 0){
+                        ivWebsiteStatus.setVisibility(View.GONE);
+                    }else if (Util.isNetworkStatusAvialable(PreSignUpActivityRia.this)) {
                         mDomainAvailabilityCheck.domainCheck(s.toString());
                     } else {
                         Toast.makeText(PreSignUpActivityRia.this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show();
@@ -538,7 +539,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         }
         if (phoneEditText.getText().toString().trim().length() != 0) {
             phoneEditText.setText("");
-            ivPhoneStatus.setBackgroundResource(R.drawable.warning);
+            ivPhoneStatus.setVisibility(View.GONE);
         }
     }
 
@@ -788,9 +789,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 emailEditText.setText(mBundle.getString(Save_Email, ""));
             }
 
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Phone)) &&
-                    !TextUtils.isEmpty(mBundle.getString(Save_Otp))
-                    && mBundle.getString(Save_Otp).equalsIgnoreCase("true")) {
+            if (TextUtils.isEmpty(mBundle.getString(Save_Phone)) || TextUtils.isEmpty(mBundle.getString(Save_Otp))){
+                if (ivPhoneStatus.getVisibility() == View.VISIBLE){
+                    ivPhoneStatus.setVisibility(View.GONE);
+                }
+            } else if (mBundle.getString(Save_Otp).equalsIgnoreCase("true")) {
+                if (ivPhoneStatus.getVisibility() != View.VISIBLE){
+                    ivPhoneStatus.setVisibility(View.VISIBLE);
+                }
                 ivPhoneStatus.setBackgroundResource(R.drawable.green_check);
                 data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
                 phoneEditText.setText(mBundle.getString(Save_Phone_Code, "") + " - " +
@@ -810,10 +816,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 phoneEditText.setTextColor(getResources().getColor(R.color.light_gray));
 
             } else {
-
+                if (ivPhoneStatus.getVisibility() == View.VISIBLE){
+                    ivPhoneStatus.setVisibility(View.GONE);
+                }
+                ivPhoneStatus.setBackgroundResource(R.drawable.warning);
                 phoneEditText.setEnabled(true);
                 phoneEditText.setClickable(true);
-                ivPhoneStatus.setBackgroundResource(R.drawable.warning);
+
                 phoneEditText.setTextColor(getResources().getColor(R.color.black));
             }
 
@@ -827,15 +836,22 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             if (!TextUtils.isEmpty(mBundle.getString(Save_Pin_Code))) {
                 etPinCode.setText(mBundle.getString(Save_Pin_Code, ""));
             }
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Website_Address))
-                    && !TextUtils.isEmpty(mBundle.getString(Save_IS_FP_AVAILABLE))
-                    && mBundle.getString(Save_IS_FP_AVAILABLE).equalsIgnoreCase("true")) {
+            if (TextUtils.isEmpty(mBundle.getString(Save_Website_Address)) || TextUtils.isEmpty(mBundle.getString(Save_IS_FP_AVAILABLE))){
+                if (ivWebsiteStatus.getVisibility() == View.VISIBLE){
+                    ivWebsiteStatus.setVisibility(View.GONE);
+                }
+            } else if (mBundle.getString(Save_IS_FP_AVAILABLE).equalsIgnoreCase("true")) {
+                if (ivWebsiteStatus.getVisibility() != View.VISIBLE){
+                    ivWebsiteStatus.setVisibility(View.VISIBLE);
+                }
                 ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
                 fpTag = mBundle.getString(Save_Website_Address, "");
                 etWebsiteAddress.setText(mBundle.getString(Save_Website_Address, ""));
 
             } else {
-
+                if (ivWebsiteStatus.getVisibility() != View.VISIBLE){
+                    ivWebsiteStatus.setVisibility(View.VISIBLE);
+                }
                 ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
                 API_Layer_Signup.getTag(activity, businessNameEditText.getText().toString(),
                         countryEditText.getText().toString(), cityEditText.getText().toString(),
@@ -1063,6 +1079,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         if (value.equals("Success")) {
 
             numberDialog.dismiss();
+            if (ivPhoneStatus.getVisibility() != View.VISIBLE){
+                ivPhoneStatus.setVisibility(View.VISIBLE);
+            }
             phoneEditText.setText("+" + data_country_code + " - " + phoneNumber);
             ivPhoneStatus.setBackgroundResource(R.drawable.green_check);
             data_phone = phoneNumber;
@@ -1584,12 +1603,20 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     @Override
     public void onDomainAvailable(String websiteTag) {
         this.fpTag = websiteTag;
+        if (ivWebsiteStatus.getVisibility() != View.VISIBLE){
+            ivWebsiteStatus.setVisibility(View.VISIBLE);
+        }
         ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
     }
 
     @Override
     public void onDomainNotAvailable() {
         this.fpTag = "";
+        if(etWebsiteAddress.getText().toString().trim().length() == 0){
+            ivWebsiteStatus.setVisibility(View.GONE);
+        }else if (ivWebsiteStatus.getVisibility() != View.VISIBLE){
+            ivWebsiteStatus.setVisibility(View.VISIBLE);
+        }
         ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
     }
 

@@ -466,7 +466,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
         hideLoader();
-
+        if (!isAdded() || getActivity() == null) return;
         if(!isAlreadyCalled) {
             if(domainDetails == null && sessionManager.getRootAliasURI() != null) {
                 showCustomDialog(getString(R.string.domain_linking_success),
