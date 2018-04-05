@@ -28,15 +28,15 @@ public class Specific {
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 
-    public static final String TWITTER_TOK 				= "4CiUg5gcIbvYre8XjGd8GsElV";
-    public static final String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
-    public static final String FACEBOOK_URL = "https://www.facebook.com/redtim";
+    public static final String TWITTER_TOK 				= "qhecWhz0QK6PcGcsrCL03K8V2";
+    public static final String TWITTER_SEC 				= "MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky";
+    public static final String FACEBOOK_URL = "https://www.facebook.com/RedTimApp";
     public static final String PACKAGE_NAME = "com.redtim";
     public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "read_insights", "business_management"};
     public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
-    public static final String FACEBOOK_PAGE_ID = "fb://page/277931445614143";
-    public static final String TWITTER_URL = "https://twitter.com/Redtim";
-    public static final String TWITTER_ID_URL = "twitter://user?screen_name=redtim";
-    public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
+    public static final String FACEBOOK_PAGE_ID = "fb://page/179149512732456";
+    public static final String TWITTER_URL = "https://twitter.com/RedTimApp/";
+    public static final String TWITTER_ID_URL = "twitter://user?screen_name=RedTimApp";
+    public static final String TWILIO_AUTHY_API_KEY = "";
 
 }

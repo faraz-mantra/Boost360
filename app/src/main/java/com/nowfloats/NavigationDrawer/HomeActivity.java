@@ -1506,9 +1506,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                 setWebEngageProperties();
             }
-            if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-                showOnBoardingScreens();
-            }
+//            if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+//                showOnBoardingScreens();
+//            }
             // Constants.fromLogin = false ;
         }
 

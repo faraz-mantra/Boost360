@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    style="@style/Theme.AppCompat.Translucent"
     android:background="@color/transparent">
 
     <TextView
@@ -11,7 +12,8 @@
         android:layout_height="80dp"
         android:paddingBottom="20dp"
         android:paddingTop="5dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
         android:background="@drawable/ic_tooltip_bg"
         android:text="You'll receive your code to this number. If you want to keep it hidden from your customers, you can change it post signing up."
         app:layout_constraintBottom_toBottomOf="parent"

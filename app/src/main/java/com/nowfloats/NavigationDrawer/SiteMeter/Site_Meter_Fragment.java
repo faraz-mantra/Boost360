@@ -417,7 +417,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && !session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
+        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
             session.setSiteHealth(siteMeterTotalWeight);
             OnBoardingApiCalls.updateData(session.getFpTag(),String.format("site_health:%s",siteMeterTotalWeight));
         }

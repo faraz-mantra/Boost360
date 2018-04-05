@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
-    <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
+    <string name="twitter_consumer_key">qhecWhz0QK6PcGcsrCL03K8V2</string>
+    <string name="twitter_consumer_secret">MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky</string>
     <string name="website_domain_name">.redtim.com</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">RedTim</string>
@@ -407,7 +407,7 @@
     <string name="your_site_health">Your Site Health</string>
 
     <string name="settings_feedback_link">tim@redtim.com</string>
-    <string name="settings_facebook_like_link">https://www.facebook.com/redtim</string>
+    <string name="settings_facebook_like_link">https://www.facebook.com/RedTimApp/</string>
     <string name="settings_about_us_link">https://redtim.com/</string>
 
     <string name="settings_tou_url">https://redtim.com/tnc</string>
@@ -487,7 +487,7 @@
         <item>Can I actually make a business website with 4 SMSs through RedTim?</item>
     </string-array>
     <string-array name="answer_4">
-        <item><![CDATA[RedTim is the website management app that makes creating, updating, analyzing the website a walk in the park. Highly intuitive, and built on common app logic, RedTim will get you going and ensure your website is well maintained by you. You can also update the store information and check the analytics of your website. It is available for iPhone and Android smartphones currently (the Windows Phone version is coming soon). For more information visit <a href="https://redtim.com/RedTim">https://redtim.com</a>.]]></item>
+        <item><![CDATA[RedTim is the website management app that makes creating, updating, analyzing the website a walk in the park. Highly intuitive, and built on common app logic, RedTim will get you going and ensure your website is well maintained by you. You can also update the store information and check the analytics of your website. It is available for iPhone and Android smartphones currently (the Windows Phone version is coming soon). For more information visit <a href="https://redtim.com">https://redtim.com</a>.]]></item>
         <item><![CDATA[RedTim has a web management portal with which you can update your RedTim business website. You can also manage the store information and check more in-depth analytics of your website. If you have multiple stores, you can manage them all from this one portal.]]></item>
         <item><![CDATA[Yes, it\'s true. In India, you can send a message to 56767878 with the word \"FLOAT\" and it will trigger three more messages at the end of which, your business website will be ready. Every message you send after that will be an update on your website.<br/> Best thing is, we just made your SMS - search engine optimized for your business.]]></item>
     </string-array>

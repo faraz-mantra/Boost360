@@ -27,7 +27,6 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -444,7 +443,7 @@ public class Home_Fragment_Tab extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") && !pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false)
+        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false)
                 && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
             onBoardingManager.getOnBoardingData(session.getFpTag());

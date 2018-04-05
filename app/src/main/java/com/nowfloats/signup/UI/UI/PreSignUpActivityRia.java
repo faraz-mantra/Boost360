@@ -951,16 +951,16 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         Rect location = locateView(image);
         if (location == null) return;
         int position_x = location.centerX() - Methods.dpToPx(300,PreSignUpActivityRia.this);
-        int position_y = location.centerY()-location.height()/2 - Methods.dpToPx(80,PreSignUpActivityRia.this);
+        int position_y = location.bottom-location.height() - Methods.dpToPx(80,PreSignUpActivityRia.this);
         if (popup == null) {
             try {
 
                 popup = new PopupWindow(this);
                 View layout = LayoutInflater.from(this).inflate(R.layout.layout_popup_dialog, null);
+                popup.setBackgroundDrawable(ContextCompat.getDrawable(PreSignUpActivityRia.this,R.color.transparent));
                 popup.setContentView(layout);
                 popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
                 popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-                popup.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.white_round_corner));
                 popup.setOutsideTouchable(true);
                 popup.setFocusable(true);
                 layout.measure(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
