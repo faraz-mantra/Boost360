@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -45,6 +47,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -195,6 +198,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private DataBase dataBase;
     private String citytext = "";
     public ProgressDialog pd;
+    private PopupWindow popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -417,6 +421,15 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
             }
         });
+        ivPhoneStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (phoneEditText.getText().toString().trim().length()==0){
+                    // show message
+                    initiatePopupWindow(v);
+                }
+            }
+        });
         emailEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -537,9 +550,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             if (Code_PhoneMap.containsKey(country_code))
                 data_country_code = Code_PhoneMap.get(country_code);
         }
+
         if (phoneEditText.getText().toString().trim().length() != 0) {
             phoneEditText.setText("");
-            ivPhoneStatus.setVisibility(View.GONE);
+            ivPhoneStatus.setImageResource(R.drawable.icon_info);
         }
     }
 
@@ -569,10 +583,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         hideKeyBoard();
                         if (Utils.isNetworkConnected(PreSignUpActivityRia.this)) {
-                            if (number.length() > 0) {
-                                API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim());
-                            } else {
+                            int length = number.getText().toString().trim().length();
+                            if (length == 0) {
                                 Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                            } else if (length<4 || length>13){
+                                Toast.makeText(PreSignUpActivityRia.this, "Enter valid number", Toast.LENGTH_SHORT).show();
+                            }else {
+                                API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim());
                             }
                         } else {
                             Toast.makeText(PreSignUpActivityRia.this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
@@ -790,14 +807,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             }
 
             if (TextUtils.isEmpty(mBundle.getString(Save_Phone)) || TextUtils.isEmpty(mBundle.getString(Save_Otp))){
-                if (ivPhoneStatus.getVisibility() == View.VISIBLE){
-                    ivPhoneStatus.setVisibility(View.GONE);
-                }
+
             } else if (mBundle.getString(Save_Otp).equalsIgnoreCase("true")) {
-                if (ivPhoneStatus.getVisibility() != View.VISIBLE){
-                    ivPhoneStatus.setVisibility(View.VISIBLE);
-                }
-                ivPhoneStatus.setBackgroundResource(R.drawable.green_check);
+
+                ivPhoneStatus.setImageResource(R.drawable.green_check);
                 data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
                 phoneEditText.setText(mBundle.getString(Save_Phone_Code, "") + " - " +
                         mBundle.getString(Save_Phone, ""));
@@ -816,10 +829,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 phoneEditText.setTextColor(getResources().getColor(R.color.light_gray));
 
             } else {
-                if (ivPhoneStatus.getVisibility() == View.VISIBLE){
-                    ivPhoneStatus.setVisibility(View.GONE);
-                }
-                ivPhoneStatus.setBackgroundResource(R.drawable.warning);
+
+                ivPhoneStatus.setImageResource(R.drawable.icon_info);
                 phoneEditText.setEnabled(true);
                 phoneEditText.setClickable(true);
 
@@ -903,6 +914,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
             //Log.v("ggg",obj.getCountry());
         }
+        Country_CodeMap.put("USA","US");
         Collections.sort(signUpCountryList);
         if (isFinishing()) {
             return;
@@ -933,9 +945,57 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             }
         });
 
-
     }
 
+    private void initiatePopupWindow(View image) {
+        Rect location = locateView(image);
+        if (location == null) return;
+        int position_x = location.centerX() - Methods.dpToPx(300,PreSignUpActivityRia.this);
+        int position_y = location.centerY()-location.height()/2 - Methods.dpToPx(80,PreSignUpActivityRia.this);
+        if (popup == null) {
+            try {
+
+                popup = new PopupWindow(this);
+                View layout = LayoutInflater.from(this).inflate(R.layout.layout_popup_dialog, null);
+                popup.setContentView(layout);
+                popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+                popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+                popup.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.white_round_corner));
+                popup.setOutsideTouchable(true);
+                popup.setFocusable(true);
+                layout.measure(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, position_x,position_y);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if (popup.isShowing()){
+            popup.dismiss();
+        }else
+        {
+            popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, position_x,position_y);
+        }
+    }
+    public static Rect locateView(View v)
+    {
+        int[] loc_int = new int[2];
+        if (v == null) return null;
+        try
+        {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe)
+        {
+            //Happens when the view doesn't exist on screen anymore.
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = location.left + v.getWidth();
+        location.bottom = location.top + v.getHeight();
+        return location;
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -1079,11 +1139,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         if (value.equals("Success")) {
 
             numberDialog.dismiss();
-            if (ivPhoneStatus.getVisibility() != View.VISIBLE){
-                ivPhoneStatus.setVisibility(View.VISIBLE);
-            }
+
             phoneEditText.setText("+" + data_country_code + " - " + phoneNumber);
-            ivPhoneStatus.setBackgroundResource(R.drawable.green_check);
+            ivPhoneStatus.setImageResource(R.drawable.green_check);
             data_phone = phoneNumber;
         } else if (value.equalsIgnoreCase("Error")) {
             Methods.showSnackBarNegative(numberDialog.getView(), getString(R.string.something_went_wrong_try_again));
@@ -1500,7 +1558,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 if (model.getSuccess()) {
                     otpDialogDismiss();
                     phoneEditText.setText("+" + data_country_code + " - " + number);
-                    ivPhoneStatus.setBackgroundResource(R.drawable.green_check);
+                    ivPhoneStatus.setImageResource(R.drawable.green_check);
                     data_phone = number;
                 } else {
                     hideProgressbar();

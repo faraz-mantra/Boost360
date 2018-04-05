@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -221,8 +220,8 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                     default:
                         return;
                 }
-                map.put("startDate", getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getStartDate(),pattern));
-                map.put("endDate",getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getEndDate(),pattern));
+                map.put("startDate", Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getStartDate(),pattern));
+                map.put("endDate",Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getEndDate(),pattern));
                 ((ViewCallback)mContext).onChartBarClicked(map,(int)e.getVal());
             }
 
@@ -260,34 +259,6 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         getVisitsData(map,totalVisitsCallback);
     }
 
-    private String getFormattedDate(String date, String pattern) {
-        if (TextUtils.isEmpty(date)) {
-            return "";
-        }
-        return Methods.getFormattedDate(getMilliseconds(date),pattern);
-    }
-    private long getMilliseconds(String date){
-        String[]dateTime = null;
-        long dateMilliseconds = 0;
-        if (date.contains("/Date")) {
-            date = date.replace("/Date(", "").replace(")/","");
-        }
-
-        if(date.contains("+")) {
-            dateTime = date.split("\\+");
-            if (dateTime[1].length() > 1) {
-                dateMilliseconds += Integer.parseInt(dateTime[1].substring(0, 2)) * 60 * 60 * 1000;
-            }
-            if (dateTime[1].length() > 3) {
-                dateMilliseconds += Integer.parseInt(dateTime[1].substring(2, 4)) * 60 * 1000;
-            }
-            dateMilliseconds += Long.valueOf(dateTime[0]);
-        }else{
-            dateMilliseconds += Long.valueOf(date);
-        }
-
-        return dateMilliseconds;
-    }
     private void addDataToGraph( List<IBarDataSet> dataSet){
         BarData data = new BarData(labels, dataSet);
         data.setValueFormatter(new MyYAxisValueFormatter());
@@ -340,12 +311,12 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         for(int i=0;i<data.size();i++)
         {
             valueSet1.add(new BarEntry(data.get(i).getDataCount(),i));
-            c.setTimeInMillis(getMilliseconds(data.get(i).getStartDate()));
+            c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getStartDate()));
             switch (batchType){
                 case ww:
                     int month = c.get(Calendar.MONTH);
                     int startDate = c.get(Calendar.DAY_OF_MONTH);
-                    c.setTimeInMillis(getMilliseconds(data.get(i).getEndDate()));
+                    c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getEndDate()));
                     labels.add(String.format(Locale.ENGLISH,"%d-%d %s'%d",startDate,c.get(Calendar.DAY_OF_MONTH),months[month],c.get(Calendar.YEAR)%100));
                     break;
                 case mm:

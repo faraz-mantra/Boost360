@@ -497,14 +497,31 @@ public class Methods {
     }
 
     public static String getFormattedDate(String date, String format){
-        String formatted = "", dateTime = "";
         if (TextUtils.isEmpty(date)) {
             return "";
         }
+        return getFormattedDate(getDateMillSecond(date),format);
+    }
+    public static Long getDateMillSecond(String date){
+        String[]dateTime = null;
+        long dateMilliseconds = 0;
         if (date.contains("/Date")) {
-            date = date.replace("/Date(", "").replace(")/", "");
+            date = date.replace("/Date(", "").replace(")/","");
         }
-        return getFormattedDate(Long.valueOf(date),format);
+
+        if(date.contains("+")) {
+            dateTime = date.split("\\+");
+            if (dateTime[1].length() > 1) {
+                dateMilliseconds += Integer.parseInt(dateTime[1].substring(0, 2)) * 60 * 60 * 1000;
+            }
+            if (dateTime[1].length() > 3) {
+                dateMilliseconds += Integer.parseInt(dateTime[1].substring(2, 4)) * 60 * 1000;
+            }
+            dateMilliseconds += Long.valueOf(dateTime[0]);
+        }else{
+            dateMilliseconds += Long.valueOf(date);
+        }
+        return dateMilliseconds;
     }
     public static String getFormattedDate(long epochTime, String format){
         Date date1 = new Date(epochTime);
