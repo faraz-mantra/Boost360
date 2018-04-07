@@ -253,7 +253,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         businessCategoryEditText.setFocusable(false);
         businessCategoryEditText.setFocusableInTouchMode(false);
-
+        makeAutoCompleteFilter(null);
         CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY SITE' you agree to our " +
                 "<a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
@@ -343,7 +343,15 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                                 for (int i = 0; i < a.getCount(); i++) {
                                     //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
 //                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                                    citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString());
+                                    String city = a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString();
+                                    if (city.contains(",")) {
+                                        String country[] = city.split(",");
+                                        city = country[0];
+                                        if (country.length>1){
+                                            city += ","+(country[country.length -1].trim());
+                                        }
+                                    }
+                                    citys.add(city);
                                 }
 
                                 a.release();
@@ -951,7 +959,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         Rect location = locateView(image);
         if (location == null) return;
         int position_x = location.centerX() - Methods.dpToPx(300,PreSignUpActivityRia.this);
-        int position_y = location.bottom-location.height() - Methods.dpToPx(80,PreSignUpActivityRia.this);
+        int position_y = location.bottom-location.height() - Methods.dpToPx(120,PreSignUpActivityRia.this);
         if (popup == null) {
             try {
 
@@ -963,7 +971,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
                 popup.setOutsideTouchable(true);
                 popup.setFocusable(true);
-                layout.measure(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, position_x,position_y);
 
@@ -1152,7 +1159,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         }
     }
 
-    private String contactName = "contact";
+    private String contactName = "";
 
     private HashMap<String, String> getJSONData() {
         HashMap<String, String> store = new HashMap<String, String>();
@@ -1162,8 +1169,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             store.put("contactName", contactName);
             store.put("name", data_businessName);
             store.put("desc", "");
-            store.put("address", data_city);
-            store.put("city", etStreetAddress.getText().toString());
+            store.put("address", etStreetAddress.getText().toString());
+            store.put("city", data_city);
             store.put("pincode", etPinCode.getText().toString());
             store.put("country", data_country);
             store.put("primaryNumber", data_phone);
@@ -1283,7 +1290,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         if (v.getId() == R.id.verify_button) {
             try {
                 if (getEditTextData()) {
-                    showLoader( getString(R.string.creating_website));
                     if (data_lat.equalsIgnoreCase("0")) {
 
                         LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(

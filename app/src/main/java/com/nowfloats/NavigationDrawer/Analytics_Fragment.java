@@ -357,6 +357,7 @@ public class Analytics_Fragment extends Fragment {
 
         PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
+        ImageView mapBack = (ImageView) rootView.findViewById(R.id.map_visits_img);
         ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
         ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
         ImageView businessEnqBg = (ImageView) rootView.findViewById(R.id.business_enq_bg);
@@ -368,6 +369,7 @@ public class Analytics_Fragment extends Fragment {
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
+        mapBack.setColorFilter(porterDuffColorFilter);
         subsBack.setColorFilter(porterDuffColorFilter);
         searchBack.setColorFilter(porterDuffColorFilter);
         businessEnqBg.setColorFilter(porterDuffColorFilter);

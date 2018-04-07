@@ -73,9 +73,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
         if (!isAdded() && isDetached()) return;
         storageSwitchTv = view.findViewById(R.id.storage_switch);
         TextView keyboardMessageTv = view.findViewById(R.id.tv_cross_platform);
-        keyboardMessageTv.setText(Methods.fromHtml(String.format("<font color=%s>The Boost " +
-                "Keyboard allows you to share your products and updates without " +
-                "leaving a chat.</font><br>For a smooth experience, we require some permissions.","#212121")));
+        keyboardMessageTv.setText(Methods.fromHtml(String.format("<font color=%s>"+getString(R.string.keyboard_message)+"</font><br>For a smooth experience, we require some permissions.","#212121")));
         microphoneSwitchTv = view.findViewById(R.id.microphone_switch);
         keyboardSwitchTv = view.findViewById(R.id.keyboard_switch);
 
@@ -100,7 +98,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
     public void onResume() {
         super.onResume();
         if (headerText != null && mContext instanceof HomeActivity)
-            headerText.setText("Boost keyboard");
+            headerText.setText(getString(R.string.boost_keyboard));
 
         storageSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED);
         microphoneSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_DENIED);
@@ -162,11 +160,11 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener {
         switch (code){
             case MICROPHONE_CODE:
                 title = "Microphone Permission";
-                content = "We need permission to enable voice input feature in Boost Keyboard";
+                content = "We need permission to enable voice input feature in "+getString(R.string.boost_keyboard);
                 break;
             case STORAGE_CODE:
                 title = "Storage Permission";
-                content = "We need permission to enable sharing feature in Boost Keyboard";
+                content = "We need permission to enable sharing feature in "+getString(R.string.boost_keyboard);
                 break;
         }
         Methods.showApplicationPermissions(title, content, mContext);

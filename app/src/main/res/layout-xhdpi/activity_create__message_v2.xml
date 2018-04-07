@@ -217,7 +217,8 @@
 
                 <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
                     android:id="@+id/shareTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
@@ -227,7 +228,7 @@
 
                 <LinearLayout
                     android:id="@+id/socialSharingIconLayout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="end|bottom"

@@ -258,7 +258,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 confirmCheckerActive = true;
                 if (confirmPwd.equals(newPwd)) {
                     confirmChecker.setVisibility(View.VISIBLE);
-                    confirmChecker.setImageResource(R.drawable.domain_available);
+                    confirmChecker.setImageResource(R.drawable.green_check);
                 } else {
                     confirmChecker.setVisibility(View.VISIBLE);
                     confirmChecker.setImageResource(R.drawable.domain_not_available);

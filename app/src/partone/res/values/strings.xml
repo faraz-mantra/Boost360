@@ -354,6 +354,7 @@
 
     <string name="email_id_to_request_plans">lead@nowfloats.com</string>
 
+    <string name="setting_faq_url">https://hello.nowfloats.com/faqs</string>
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
     <string name="renew_light_house_plan">Renew Boost plan to get all the features</string>
@@ -372,7 +373,8 @@
     <!--FAQ hardcoded string end-->
     <string name="Logo_percentage">5</string>
     <string name="business_hours">5</string>
-
+    <string name="package_name">com.biz2.nowfloats</string>
+    <string name="onboarding_about_product_url">https://redtim.com/product</string>
     <string name="support_name">Ria</string>
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 

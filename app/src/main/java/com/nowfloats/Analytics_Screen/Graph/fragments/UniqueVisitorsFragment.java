@@ -2,9 +2,11 @@ package com.nowfloats.Analytics_Screen.Graph.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -169,6 +172,8 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 fetchTotalViews((HashMap<String, String>) map.clone());
         }
         graph = (BarChart) view.findViewById(R.id.graph);
+        Paint p = graph.getPaint(Chart.PAINT_INFO);
+        p.setColor(ContextCompat.getColor(mContext,R.color.primaryColor));
         graph.setDrawGridBackground(false);
 //        graph.getLegend().setEnabled(false);
 //        graph.setDrawBorders(false);

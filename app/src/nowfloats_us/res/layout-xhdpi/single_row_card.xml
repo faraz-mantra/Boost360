@@ -94,7 +94,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Boost Keyboard"
+                android:text="@string/boost_keyboard"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
             <TextView

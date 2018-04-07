@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
@@ -91,7 +90,7 @@ public class HelpAndSupportFragment extends Fragment {
         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK,null);
         mRiaSupportModelList = new ArrayList<>(2);
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.us.nowfloats")) {
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
             HashMap<String, String> param = new HashMap<>();
             param.put("clientId", Constants.clientId);
             param.put("fpTag", manager.getFpTag());
@@ -119,8 +118,8 @@ public class HelpAndSupportFragment extends Fragment {
         spanTxt.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                Intent i = new Intent(getActivity(), FAQMainAcivity.class);
-                i.putExtra("array", getResources().getStringArray(R.array.faqmain));
+                Intent i = new Intent(mContext, Mobile_Site_Activity.class);
+                i.putExtra("WEBSITE_NAME",getString(R.string.setting_faq_url));
                 startActivity(i);
             }
         }, spanTxt.length() - Methods.fromHtml("<u><b>FAQs</b></u>").length(), spanTxt.length(), 0);

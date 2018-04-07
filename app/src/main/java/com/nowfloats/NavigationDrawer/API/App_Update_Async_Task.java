@@ -49,7 +49,7 @@ public class App_Update_Async_Task extends AsyncTask<Void, String, String> {
         try{
 
             HttpClient client = new DefaultHttpClient();
-            HttpGet httpRequest = new HttpGet("https://androidquery.appspot.com/api/market?app=com.biz2.nowfloats");
+            HttpGet httpRequest = new HttpGet("https://androidquery.appspot.com/api/market?app="+mContext.getPackageName());
             org.apache.http.HttpResponse responseOfSite = client.execute(httpRequest);
             HttpEntity entity =(HttpEntity) ((org.apache.http.HttpResponse) responseOfSite).getEntity();
             if(entity!=null){

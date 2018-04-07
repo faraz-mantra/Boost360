@@ -85,6 +85,12 @@ public class MixPanelController {
     public static final String ON_BOARDING_CUSTOM_PAGE = "OnBoardingAddCustomPage";
     public static final String ON_BOARDING_SITE_HEALTH = "OnBoardingSiteHealth";
     public static final String ON_BOARDING_WELCOME_ABOARD = "OnBoardingWelcomeAboard";
+    public static final String SEARCH_RANKING_MAIN = "SearchRankingMain";
+    public static final String SEARCH_RANKING_INCREASED = "SearchRankingIncrease";
+    public static final String SEARCH_RANKING_DECREASE = "SearchRankingDecrease";
+    public static final String SEARCH_RANKING_LOST = "SearchRankingLost";
+    public static final String SEARCH_RANKING_NEW = "SearchRankingNew";
+    public static final String SEARCH_RANKING_SAME = "SearchRankingSame";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

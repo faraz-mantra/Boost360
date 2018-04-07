@@ -36,6 +36,7 @@ import android.text.TextUtils;
 import android.text.style.LeadingMarginSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
@@ -133,8 +134,8 @@ public class Methods {
         Intent facebookIntent;
         //if(review.trim().length() == 0) {
         try {
-            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+           context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+           facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
         } catch (Exception e) {
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
         }
@@ -738,7 +739,7 @@ public class Methods {
 
     public static int dpToPx(int dp, Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
     }
 
     public interface SmsApi {

@@ -97,7 +97,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             case 0:
                 MixPanelController.track(MixPanelController.ON_BOARDING_WELCOME_ABOARD,null);
                 intent = new Intent(this, Mobile_Site_Activity.class);
-                intent.putExtra("WEBSITE_NAME","https://hello.nowfloats.com/product");
+                intent.putExtra("WEBSITE_NAME",getString(R.string.onboarding_about_product_url));
                 // step complete
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);

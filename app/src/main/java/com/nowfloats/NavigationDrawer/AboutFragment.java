@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.riachatsdk.ChatManager;
@@ -68,12 +67,12 @@ public class AboutFragment extends Fragment {
                     case "About RedTim":
                         MixPanelController.track(EventKeysWL.EVENT_ABOUT_US, null);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
-                        intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_about_us_link));
+                        intent.putExtra("WEBSITE_NAME", getString(R.string.settings_about_us_link));
                         break;
                     case "FAQs":
                         MixPanelController.track(EventKeysWL.EVENT_FAQs, null);
-                        intent = new Intent(mContext, FAQMainAcivity.class);
-                        intent.putExtra("array", getResources().getStringArray(R.array.faqmain));
+                        intent = new Intent(mContext, Mobile_Site_Activity.class);
+                        intent.putExtra("WEBSITE_NAME",getString(R.string.setting_faq_url));
                         break;
                     case "Feedback":
                         MixPanelController.track("ChatFeedback", null);

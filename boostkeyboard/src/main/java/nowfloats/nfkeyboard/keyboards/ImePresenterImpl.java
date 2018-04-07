@@ -219,11 +219,11 @@ public class ImePresenterImpl implements ItemClickListener,
                 mEnterKey.label = "Go";
                 break;
             case EditorInfo.IME_ACTION_NEXT:
-                mEnterKey.icon = res.getDrawable(R.drawable.ic_next);
+                mEnterKey.icon = res.getDrawable(R.drawable.ic_next_kbd);
                 mEnterKey.label = null;
                 break;
             case EditorInfo.IME_ACTION_SEARCH:
-                mEnterKey.icon = res.getDrawable(R.drawable.ic_search);
+                mEnterKey.icon = res.getDrawable(R.drawable.ic_search_kbd);
                 mEnterKey.label = null;
                 break;
             case EditorInfo.IME_ACTION_SEND:

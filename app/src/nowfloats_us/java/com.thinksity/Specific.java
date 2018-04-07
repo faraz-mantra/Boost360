@@ -24,6 +24,7 @@ public class Specific {
     public static String access_level = "20";
     public static final String CONTACT_EMAIL_ID = "tim@redtim.com";
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
+    public static final String RIA_FIREBASE_COLLECTION_NAME = "RedTimUserActivityLog";
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";

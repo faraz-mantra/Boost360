@@ -24,6 +24,7 @@ import com.nowfloats.Analytics_Screen.model.SearchRankModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class SearchRankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_ranking);
-
+        MixPanelController.track(MixPanelController.SEARCH_RANKING_MAIN,null);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -126,6 +127,7 @@ public class SearchRankingActivity extends AppCompatActivity {
                 mFilteredList.clear();
                 switch (filter) {
                     case FILTER_INCREASED:
+                        MixPanelController.track(MixPanelController.SEARCH_RANKING_INCREASED,null);
                         for (SearchRankModel model : mSearchRankList) {
                             if (model.getOldRank() != -1 && model.getNewRank() != -1 &&
                                     getPage(model.getNewRank()) < getPage(model.getOldRank())) {
@@ -134,6 +136,7 @@ public class SearchRankingActivity extends AppCompatActivity {
                         }
                         break;
                     case FILTER_DECREASED:
+                        MixPanelController.track(MixPanelController.SEARCH_RANKING_DECREASE,null);
                         for (SearchRankModel model : mSearchRankList) {
                             if (model.getOldRank() != -1 && model.getNewRank() != -1 &&
                                     getPage(model.getNewRank()) > getPage(model.getOldRank())) {
@@ -142,6 +145,7 @@ public class SearchRankingActivity extends AppCompatActivity {
                         }
                         break;
                     case FILTER_SAME:
+                        MixPanelController.track(MixPanelController.SEARCH_RANKING_SAME,null);
                         for (SearchRankModel model : mSearchRankList) {
                             if (model.getOldRank() != -1 && model.getNewRank() != -1 &&
                                     getPage(model.getNewRank()) == getPage(model.getOldRank())) {
@@ -150,6 +154,7 @@ public class SearchRankingActivity extends AppCompatActivity {
                         }
                         break;
                     case FILTER_LOST:
+                        MixPanelController.track(MixPanelController.SEARCH_RANKING_LOST,null);
                         for (SearchRankModel model : mSearchRankList) {
                             if (model.getOldRank() != -1 && model.getNewRank() == -1) {
                                 mFilteredList.add(model);
@@ -157,6 +162,7 @@ public class SearchRankingActivity extends AppCompatActivity {
                         }
                         break;
                     case FILTER_NEW:
+                        MixPanelController.track(MixPanelController.SEARCH_RANKING_NEW,null);
                         for (SearchRankModel model : mSearchRankList) {
                             if (model.getOldRank() == -1 && model.getNewRank() != -1) {
                                 mFilteredList.add(model);

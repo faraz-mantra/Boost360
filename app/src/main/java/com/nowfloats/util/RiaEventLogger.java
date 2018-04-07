@@ -3,12 +3,11 @@ package com.nowfloats.util;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nowfloats.NavigationDrawer.model.RiaEventModel;
-import com.squareup.otto.Bus;
 import com.thinksity.BuildConfig;
+import com.thinksity.Specific;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
@@ -60,7 +59,7 @@ public class RiaEventLogger {
                     .setFpTag(FPTag)
                     .setNodeId(NodeId);
 
-            mDatabase.child("RIAUserActivityLog").push().setValue(Event);
+            mDatabase.child(Specific.RIA_FIREBASE_COLLECTION_NAME).push().setValue(Event);
         }
     }
 
@@ -79,7 +78,7 @@ public class RiaEventLogger {
                     .setFpTag(FPTag)
                     .setNodeId(NodeId)
                     .setEventData(EventData);
-            mDatabase.child("RIAUserActivityLog").push().setValue(Event);
+            mDatabase.child(Specific.RIA_FIREBASE_COLLECTION_NAME).push().setValue(Event);
         }
     }
 
@@ -105,7 +104,7 @@ public class RiaEventLogger {
                     .setFpTag(FPTag)
                     .setNodeId(NodeId)
                     .setEventData(EventData);
-            mDatabase.child("RIAUserActivityLog").push().setValue(Event);
+            mDatabase.child(Specific.RIA_FIREBASE_COLLECTION_NAME).push().setValue(Event);
         }
     }
 }
