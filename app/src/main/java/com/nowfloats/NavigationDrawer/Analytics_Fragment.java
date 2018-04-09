@@ -66,6 +66,7 @@ import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
+import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
@@ -106,6 +107,7 @@ public class Analytics_Fragment extends Fragment {
     CardView cvRiaCard,vmnCallCard ;
     Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
+    LinearLayout mLockLayout;
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
     private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
     private static final String BUTTON_TYPE_NEXT_NODE = "NextNode";
@@ -123,8 +125,9 @@ public class Analytics_Fragment extends Fragment {
     private String mButtonId;
     private String mNextNodeId;
     LinearLayout llTwoButtons, llSingleButtonLayout;
-    private String vmnMissedCalls, vmnTotalCalls, vmnReceivedCalls;
-
+    private String vmnTotalCalls;
+    SharedPreferences pref;
+    OnBoardingManager onBoardingManager;
 
     @Override
     public void onResume() {
@@ -132,6 +135,14 @@ public class Analytics_Fragment extends Fragment {
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
+        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false)
+                && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
+            //onBoardingManager.getOnBoardingData(session.getFpTag());
+            mLockLayout.setVisibility(View.VISIBLE);
+        }else{
+            mLockLayout.setVisibility(View.GONE);
+        }
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
             visitorsCount.setText(session.getVisitorsCount());
@@ -185,6 +196,7 @@ public class Analytics_Fragment extends Fragment {
             e.printStackTrace();
         }
         this.context = context;
+
     }
 
     @Override
@@ -192,6 +204,8 @@ public class Analytics_Fragment extends Fragment {
         super.onCreate(savedInstanceState);
         session = new UserSessionManager(getActivity(), getActivity());
         bus = BusProvider.getInstance().getBus();
+        pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        onBoardingManager = new OnBoardingManager(getContext());
 //        if(Util.isNullOrEmpty(session.getVisitorsCount()) || Util.isNullOrEmpty(session.getSubcribersCount())){
         try {
             //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);
@@ -235,6 +249,23 @@ public class Analytics_Fragment extends Fragment {
             }
         });
     }
+    private void setAnalyticsLockScreen(){
+        ((ImageView)mLockLayout.findViewById(R.id.image1)).setImageResource(R.drawable.ic_lock);
+        TextView actionButton = mLockLayout.findViewById(R.id.btn_action);
+        TextView title = mLockLayout.findViewById(R.id.main_text1);
+        title.setText("SEO DISABLED");
+        TextView message = mLockLayout.findViewById(R.id.message_text2);
+        title.setTextColor(ContextCompat.getColor(context,R.color.white));
+        message.setTextColor(ContextCompat.getColor(context,R.color.white));
+        message.setText("Complete onboarding to unlock Analytics ");
+        actionButton.setText("Resume Onboarding");
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBoardingManager.getOnBoardingData(session.getFpTag());
+            }
+        });
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
@@ -243,6 +274,8 @@ public class Analytics_Fragment extends Fragment {
         llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
         btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
         vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
+        mLockLayout = rootView.findViewById(R.id.lock_analytics);
+        setAnalyticsLockScreen();
         queryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,7 +349,7 @@ public class Analytics_Fragment extends Fragment {
                /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
                 } else {*/
-                SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+
                 int status = pref.getInt("fbPageStatus", 0);
 
                 Intent i = new Intent(getActivity(), SocialAnalytics.class);
