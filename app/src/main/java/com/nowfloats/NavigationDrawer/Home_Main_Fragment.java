@@ -496,6 +496,7 @@ public class Home_Main_Fragment extends Fragment implements
         Create_Message_Activity.path = "";
         Constants.createMsg = false;
         loadDataFromDb(skip, isNewMessage);
+        bus.post(new UpdateFetchAfterPost());
     }
 
     @Override

@@ -8,16 +8,16 @@
 
     <TextView
         android:layout_width="300dp"
-        android:layout_height="120dp"
-        android:paddingBottom="25dp"
-        android:paddingTop="3dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:gravity="center_vertical"
-        android:background="@drawable/ic_tooltip_bg"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tooltip_bg"
+        android:gravity="left"
         android:text="This is what we hold on to as your registered number. We'll stay in touch with you through this. If you want to keep this number hidden from your customers, you can change it post signing up."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>

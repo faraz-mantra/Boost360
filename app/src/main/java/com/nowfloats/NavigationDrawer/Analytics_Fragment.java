@@ -257,7 +257,7 @@ public class Analytics_Fragment extends Fragment {
         TextView message = mLockLayout.findViewById(R.id.message_text2);
         title.setTextColor(ContextCompat.getColor(context,R.color.white));
         message.setTextColor(ContextCompat.getColor(context,R.color.white));
-        message.setText("Complete onboarding to unlock Analytics ");
+        message.setText("Complete onboarding to unlock analytics ");
         actionButton.setText("Resume Onboarding");
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -716,7 +716,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="select_country">Select country</string>
     <string name="checking_contact_number">Checking contact number..</string>
     <string name="creating_website">Creating Website &#8230;</string>
-    <string name="enter_valid_website_name">Please enter a valid website Name</string>
+    <string name="enter_valid_website_name">Please enter a valid website name</string>
     <string name="chosen_website_available">Chosen website address is available!</string>
     <string name="chosen_website_not_available">Chosen website address is not available!</string>
     <string name="error">error!</string>
