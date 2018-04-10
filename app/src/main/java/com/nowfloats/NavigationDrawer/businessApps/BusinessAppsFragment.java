@@ -86,7 +86,7 @@ public class BusinessAppsFragment extends Fragment {
         mPager.setPageMargin(20);
 
         mPager.setAdapter(mAdapter);
-        PageIndicatorView pageIndicatorView = (PageIndicatorView) view.findViewById(R.id.ps_indicator);
+        final PageIndicatorView pageIndicatorView = (PageIndicatorView) view.findViewById(R.id.ps_indicator);
         pageIndicatorView.setViewPager(mPager);
      /*   mIndicator.setViewPager(mPager);
         mIndicator.setPageColor(R.color.background_grey_onclick);
@@ -101,7 +101,7 @@ public class BusinessAppsFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-
+                pageIndicatorView.setSelection(position);
                 switch(position) {
                     case 3:
                         if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)>BIZ_APP_PAID) {
