@@ -44,6 +44,5 @@
         attrs:piv_count="4"
         attrs:piv_radius="4dp"
         attrs:piv_selectedColor="@color/business_button_black"
-        attrs:piv_unselectedColor="@color/business_button_gray"
-        attrs:piv_viewPager="@id/viewPager" />
+        attrs:piv_unselectedColor="@color/business_button_gray" />
 </RelativeLayout>

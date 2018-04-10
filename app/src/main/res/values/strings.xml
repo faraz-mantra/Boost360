@@ -1261,7 +1261,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
     <string name="business_app_definition"><![CDATA[You can build you <b>personalized Android app</b> from your NowFloats Boost website itself, for your customers.You can <b>send notifications</b> to your customers about your latest products and updates via the app]]></string>
     <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
-    <string name="upgrade_base_plan_content"><Data><![CDATA[Your RedTim website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won't be able to update any content.]]></Data></string>
+    <string name="upgrade_base_plan_content"><Data><![CDATA[Your NowFloats website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won't be able to update any content.]]></Data></string>
     <string name="upgrade_base_plan_description"><Data><![CDATA[BOOST Lite, BOOST Pro, BOOST Custom]]></Data></string>
     <string name="Year">Year</string>
     <string name="support_name">Support</string>
