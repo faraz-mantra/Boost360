@@ -660,9 +660,9 @@
         <activity android:name="com.nowfloats.Store.TopUpPlansActivity" />
         <activity
             android:name="com.nowfloats.on_boarding.OnBoardingActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
-</application>
+        <activity android:name="com.nowfloats.Store.PaymentOptionsActivity" />
+    </application>
 
 </manifest>

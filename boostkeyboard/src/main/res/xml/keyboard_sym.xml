@@ -81,7 +81,6 @@
             android:isSticky="true"
             android:keyEdgeFlags="left"
             android:keyLabel="=\\&lt;"
-            android:keyIcon="@drawable/ic_arrow_up"
             android:keyWidth="13.85%p" />
         <Key
             android:codes="33"
@@ -108,7 +107,6 @@
             android:codes="-5"
             android:isRepeatable="true"
             android:keyEdgeFlags="right"
-            android:keyIcon="@drawable/ic_backspace_arrow"
             android:keyWidth="13.85%p" />
     </Row>
 
@@ -130,8 +128,7 @@
             privately defined in com.example.android.softkeyboard.LatinKeyboardView.
         -->
         <Key
-            android:codes="-2004"
-            android:keyIcon="@drawable/ic_language_change" />
+            android:codes="-2004" />
         <Key
             android:codes="-2007"
             android:isRepeatable="true"

@@ -7,7 +7,6 @@ import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.inputmethodservice.Keyboard;
 import android.media.AudioManager;
@@ -20,6 +19,7 @@ import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.HapticFeedbackConstants;
@@ -203,7 +203,7 @@ public class ImePresenterImpl implements ItemClickListener,
         manageKeyboardView.clearResources();
     }
 
-    private void setImeOptions(Resources res, int options) {
+    private void setImeOptions(int options) {
         int keySize = mCurrentKeyboard.getKeys().size();
         Keyboard.Key mEnterKey = null;
         if (keySize > 0) {
@@ -219,11 +219,11 @@ public class ImePresenterImpl implements ItemClickListener,
                 mEnterKey.label = "Go";
                 break;
             case EditorInfo.IME_ACTION_NEXT:
-                mEnterKey.icon = res.getDrawable(R.drawable.ic_next_kbd);
+                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_next_kbd);
                 mEnterKey.label = null;
                 break;
             case EditorInfo.IME_ACTION_SEARCH:
-                mEnterKey.icon = res.getDrawable(R.drawable.ic_search_kbd);
+                mEnterKey.icon = AppCompatResources.getDrawable(mContext,R.drawable.ic_search_kbd);
                 mEnterKey.label = null;
                 break;
             case EditorInfo.IME_ACTION_SEND:
@@ -232,11 +232,11 @@ public class ImePresenterImpl implements ItemClickListener,
                 mEnterKey.label = "send";
                 break;
             case EditorInfo.IME_ACTION_DONE:
-                mEnterKey.icon = res.getDrawable(R.drawable.ic_check_white_24dp);
+                mEnterKey.icon = AppCompatResources.getDrawable(mContext,R.drawable.ic_check_white_24dp);
                 mEnterKey.label = null;
                 break;
             default:
-                mEnterKey.icon = res.getDrawable(R.drawable.ic_enter_arrow);
+                mEnterKey.icon = AppCompatResources.getDrawable(mContext,R.drawable.ic_enter_arrow);
                 mEnterKey.label = null;
                 break;
         }
@@ -258,11 +258,33 @@ public class ImePresenterImpl implements ItemClickListener,
             mKeyboardTypeCurrent = type;
         }
         mCurrentKeyboard = mKeyboardView.getKeyboard(type);
-        setImeOptions(mContext.getResources(), imeOptionId);
+        addSvgImages();
+        setImeOptions(imeOptionId);
         mKeyboardView.setKeyboard(mCurrentKeyboard);
         mKeyboardView.setShifted(mShiftType != ShiftType.NORMAL);
         manageKeyboardView.showKeyboardLayout();
     }
+
+    private void addSvgImages() {
+        for (Keyboard.Key key : mCurrentKeyboard.getKeys()) {
+            switch (key.codes[0]) {
+                case Keyboard.KEYCODE_DELETE:
+                    key.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_backspace_arrow);
+                    //inputConnection.deleteSurroundingText(1, 0);
+                    break;
+                case Keyboard.KEYCODE_SHIFT:
+                    key.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_arrow_up);
+                    break;
+                case KEY_EMOJI:
+                    key.icon = AppCompatResources.getDrawable(mContext, R.drawable.emoji_happiness);
+                    break;
+                case KEY_LANGUAGE_CHANGE:
+                    key.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_language_change);
+                    break;
+            }
+        }
+    }
+
 
     private IBinder getToken() {
         final Dialog dialog = imeListener.getWindow();

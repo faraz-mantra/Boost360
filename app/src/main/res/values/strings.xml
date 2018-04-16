@@ -1302,4 +1302,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Change Password</item>
         <item>Log out</item>
     </string-array>
+    <string-array name="payment_options">
+        <item>OPC Online pay</item>
+        <item>Cheque pay</item>
+        <item>Bank Transfer</item>
+    </string-array>
 </resources>

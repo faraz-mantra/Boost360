@@ -21,6 +21,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -271,6 +272,30 @@ public class Methods {
                         .textColor(Color.WHITE) // change the text color
                         .color(Color.parseColor("#5DAC01")) // change the background color
                 ,context); // activity where it is displayed*/
+    }
+
+    public static String getRealPathFromURI(Activity c, Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = c.managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    public static String getPath(Activity c, Uri uri) {
+        try {
+            String[] projection = { MediaStore.Images.Media.DATA };
+            Cursor cursor = c.managedQuery(uri, projection, null, null, null);
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     public static void showSnackBarNegative(Activity context, String msg) {

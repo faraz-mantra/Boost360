@@ -27,7 +27,7 @@
         <Key android:codes="108" android:keyLabel="l" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:codes="-1" android:keyIcon="@drawable/ic_arrow_up" android:keyWidth="13.85%p" android:keyEdgeFlags="left"/>
+        <Key android:codes="-1" android:keyWidth="13.85%p" android:keyEdgeFlags="left"/>
         <Key android:codes="122" android:keyLabel="z"/>
         <Key android:codes="120" android:keyLabel="x"/>
         <Key android:codes="99" android:keyLabel="c"/>
@@ -35,12 +35,12 @@
         <Key android:codes="98" android:keyLabel="b"/>
         <Key android:codes="110" android:keyLabel="n"/>
         <Key android:codes="109" android:keyLabel="m"/>
-        <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace_arrow" android:isRepeatable="true"  android:keyWidth="13.85%p" android:keyEdgeFlags="right"/>
+        <Key android:codes="-5" android:isRepeatable="true"  android:keyWidth="13.85%p" android:keyEdgeFlags="right"/>
     </Row>
     <Row android:rowEdgeFlags="bottom">
         <Key android:codes="-2001" android:keyLabel="\?123" android:keyWidth="13.85%p" android:keyEdgeFlags="left" />
         <Key android:codes="64" android:keyLabel="\@" />
-        <Key android:codes="-2004" android:keyIcon="@drawable/ic_language_change" />
+        <Key android:codes="-2004"  />
         <Key android:codes="-2007" android:keyLabel="SPACE" android:keyWidth="38.6%p" android:isRepeatable="true"/>
         <Key android:codes="46" android:keyLabel="." />
         <Key android:codes="-2006" android:keyLabel="Next" android:keyWidth="13.85%p" android:keyEdgeFlags="right"/>
