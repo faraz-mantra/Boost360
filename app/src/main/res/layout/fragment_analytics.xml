@@ -308,6 +308,7 @@
             card_view:cardBackgroundColor="#FFFFFF"
             card_view:cardCornerRadius="3dp"
             android:elevation="3dp"
+            android:id="@+id/map_card"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp">
 

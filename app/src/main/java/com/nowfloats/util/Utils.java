@@ -3,6 +3,8 @@ package com.nowfloats.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 
 public class Utils {
@@ -18,6 +20,11 @@ public class Utils {
 			}
 		}
 		return false;
+	}
+
+	public static int dipToPx(Context c,float dipValue) {
+		DisplayMetrics metrics = c.getResources().getDisplayMetrics();
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
 	}
 
 }

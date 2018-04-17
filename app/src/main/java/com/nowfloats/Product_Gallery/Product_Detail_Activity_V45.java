@@ -2,6 +2,7 @@ package com.nowfloats.Product_Gallery;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -31,30 +32,42 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
+import com.nowfloats.Product_Gallery.Adapter.InventoryListAdapter;
+import com.nowfloats.Product_Gallery.Model.ProductKeywordReqModel;
+import com.nowfloats.Product_Gallery.Model.ProductKeywordResponseModel;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
 import com.nowfloats.Product_Gallery.Model.ShippingMetricsModel;
+import com.nowfloats.Product_Gallery.Model.Tag;
 import com.nowfloats.Product_Gallery.Model.UpdateValue;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductDelete;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.ProductImageUploadV45;
 import com.nowfloats.Product_Gallery.fragments.ShippingCalculatorFragment;
+import com.nowfloats.Product_Gallery.widgets.NonScrollListView;
+import com.nowfloats.Product_Gallery.widgets.TagView;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.riachatsdk.utils.Utils;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -63,6 +76,11 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.webactions.WebAction;
+import com.nowfloats.webactions.WebActionsFilter;
+import com.nowfloats.webactions.models.WebActionError;
+import com.nowfloats.webactions.models.WebActionVisibility;
+import com.nowfloats.webactions.webactioninterfaces.IFilter;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
@@ -73,6 +91,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -93,6 +112,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     TextView tvApEnabledText;
     ImageView productImage;
     Switch switchView, svFreeShipment;
+    NonScrollListView lvInventoryData;
     private String currencyType = "";
     public UserSessionManager session;
     ProductGalleryInterface productInterface;
@@ -117,6 +137,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     private RiaNodeDataModel mRiaNodedata;
     private boolean mIsImagePicking = false, mIsApEnabled = false;
     private ShippingMetricsModel mShippingMetrix;
+    private WebAction webAction;
+    private InventoryListAdapter mInventoryAdapter;
+    private List<com.nowfloats.webactions.models.WebAction> mInventoryWebActionList = new ArrayList<>();
 
 
     @Override
@@ -146,6 +169,10 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         switchView = (Switch) findViewById(R.id.switchView);
         svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         switchView.setChecked(true);
+
+        mInventoryAdapter = new InventoryListAdapter(this, R.layout.inventory_list_row_layout, mInventoryWebActionList);
+        lvInventoryData = findViewById(R.id.lv_inventory_data);
+        lvInventoryData.setAdapter(mInventoryAdapter);
 
         mPriorityList = getResources().getStringArray(R.array.priority_list);
 
@@ -582,6 +609,177 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 save.setVisibility(View.VISIBLE);
             }
         });
+        webAction = new WebAction.WebActionBuilder()
+                .setAuthHeader("58ede4d4ee786c1604f6c535")
+                .build();
+        if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
+            displayAssociatedWebActions();
+        } else {
+            lvInventoryData.setVisibility(View.GONE);
+        }
+
+        lvInventoryData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                showInventoryDataDialog(mInventoryAdapter.getItem(i), i);
+            }
+        });
+    }
+
+    private void showInventoryDataDialog(com.nowfloats.webactions.models.WebAction item, int position) {
+        switch (position) {
+            //Position Keywords
+            case 0:
+                showProductKeywordDialog();
+                break;
+            case 1:
+                showProductImages();
+                break;
+        }
+    }
+
+    private void showProductImages() {
+        if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
+            Intent i = new Intent(this, MultipleProductImageActivity.class);
+            i.putExtra("product_id", product_data._id);
+            startActivity(i);
+        } else {
+            Toast.makeText(this, "Please save the Product first", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void showProductKeywordDialog() {
+        webAction.setWebActionName("product_keywords");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.product_keywords_dialog_layout, null);
+        final TagView tvProductKeyword = dialogView.findViewById(R.id.tv_product_keyword);
+        final ProgressBar pbAddingKeyword = dialogView.findViewById(R.id.pb_adding_keyword);
+        final Button btnAddKeyword = dialogView.findViewById(R.id.btn_add_keyword);
+        final EditText etKeywordInput = dialogView.findViewById(R.id.et_keyword_input);
+        final ProgressBar pbKeywordLoader = dialogView.findViewById(R.id.pb_keyword_loader);
+        final TextView tvAddKeywords = dialogView.findViewById(R.id.tv_add_product_keywords);
+        builder.setView(dialogView);
+        Dialog dialog = builder.create();
+        dialog.show();
+        final List<Tag> keywordList = new ArrayList<>();
+        if(product_data != null) {
+            IFilter filter = new WebActionsFilter();
+            filter = filter.eq("_pid", product_data._id);
+            pbKeywordLoader.setVisibility(View.VISIBLE);
+            webAction.findProductKeywords(filter, new WebAction.WebActionCallback<List<ProductKeywordResponseModel>>() {
+                @Override
+                public void onSuccess(List<ProductKeywordResponseModel> result) {
+                    pbKeywordLoader.setVisibility(View.INVISIBLE);
+                    if(result != null && result.size() > 0) {
+
+                        for (ProductKeywordResponseModel productKeyword: result) {
+                            Tag tag = new Tag(productKeyword.getKeyword(), productKeyword.getId());
+                            keywordList.add(tag);
+                        }
+
+                        tvProductKeyword.addTags(keywordList);
+                    } else {
+                        tvAddKeywords.setVisibility(View.VISIBLE);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(WebActionError error) {
+                    BoostLog.d("INVENTORY", error.getErrorMessage());
+                    pbKeywordLoader.setVisibility(View.INVISIBLE);
+                }
+            });
+        }
+
+        btnAddKeyword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!TextUtils.isEmpty(etKeywordInput.getText().toString()) &&
+                        pbAddingKeyword.getVisibility() != View.VISIBLE) {
+                    if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
+                        btnAddKeyword.setText("");
+                        pbAddingKeyword.setVisibility(View.VISIBLE);
+                        final ProductKeywordReqModel reqData = new ProductKeywordReqModel();
+                        reqData._pid = product_data._id;
+                        reqData.keyword = etKeywordInput.getText().toString();
+                        webAction.insert(session.getFpTag(), reqData, new WebAction.WebActionCallback<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                pbAddingKeyword.setVisibility(View.INVISIBLE);
+                                btnAddKeyword.setText("Add");
+
+                                if(!TextUtils.isEmpty(result)) {
+                                    tvProductKeyword.addTag(new Tag(reqData.keyword, result));
+                                }
+                                etKeywordInput.setText("");
+                                tvAddKeywords.setVisibility(View.INVISIBLE);
+                            }
+
+                            @Override
+                            public void onFailure(WebActionError error) {
+                                pbAddingKeyword.setVisibility(View.INVISIBLE);
+                                btnAddKeyword.setText("Add");
+                                etKeywordInput.setText("");
+                            }
+                        });
+                    } else {
+                        Toast.makeText(Product_Detail_Activity_V45.this, "Please save the Product First", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        });
+
+        tvProductKeyword.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
+            @Override
+            public void onTagDeleted(TagView view, Tag tag, final int position) {
+                IFilter filter = new WebActionsFilter();
+                filter = filter.eq("_id", tag.tagId);
+                webAction.delete(filter, false, new WebAction.WebActionCallback<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean result) {
+                        if(result){
+                            tvProductKeyword.remove(position);
+                            if(tvProductKeyword.getTagsCount() == 0) {
+                                tvAddKeywords.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(WebActionError error) {
+
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    private void displayAssociatedWebActions() {
+        webAction.getAllWebActions("INVENTORY", WebActionVisibility.NONE, new WebAction.WebActionCallback<List<com.nowfloats.webactions.models.WebAction>>() {
+            @Override
+            public void onSuccess(List<com.nowfloats.webactions.models.WebAction> result) {
+                if(result == null)
+                    return;
+                mInventoryAdapter.addAll(result);
+                ViewGroup.LayoutParams lp = lvInventoryData.getLayoutParams();
+                lp.height = Utils.dpToPx(Product_Detail_Activity_V45.this, 60) * result.size();
+                lvInventoryData.setLayoutParams(lp);
+                lvInventoryData.requestLayout();
+            }
+
+            @Override
+            public void onFailure(WebActionError error) {
+                BoostLog.d("INVENTORY", error.getErrorMessage());
+
+            }
+        });
+
     }
 
     private void enableRealTimePriceUpdate() {
