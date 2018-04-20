@@ -253,7 +253,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         businessCategoryEditText.setFocusable(false);
         businessCategoryEditText.setFocusableInTouchMode(false);
-
+        makeAutoCompleteFilter(null);
         CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY SITE' you agree to our " +
                 "<a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
@@ -291,6 +291,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         countryData.execute();*/
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         verify_button.setOnClickListener(this);
+        setEnableCreateWebsiteButton(true);
 
         cityEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -330,27 +331,36 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                AutocompletePredictionBuffer a = result.await();
+                                final AutocompletePredictionBuffer a = result.await();
                                 //Log.v("ggg","ok");
-                                citys.clear();
+
                                 cityEditText.post(new Runnable() {
                                     @Override
                                     public void run() {
+                                        citys.clear();
                                         adapter.notifyDataSetChanged();
                                     }
                                 });
 
-                                for (int i = 0; i < a.getCount(); i++) {
-                                    //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
-//                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                                    citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                                }
-
-                                a.release();
 
                                 cityEditText.post(new Runnable() {
                                     @Override
                                     public void run() {
+                                        for (int i = 0; i < a.getCount(); i++) {
+                                            //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
+//                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
+                                            String city = a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString();
+                                            if (city.contains(",")) {
+                                                String country[] = city.split(",");
+                                                city = country[0];
+                                                if (country.length>1){
+                                                    city += ", "+(country[country.length -1].trim());
+                                                }
+                                            }
+                                            citys.add(city);
+                                        }
+
+                                        a.release();
                                         adapter = new ArrayAdapter<>(PreSignUpActivityRia.this,
                                                 android.R.layout.simple_dropdown_item_1line, citys);
                                         if (!isFinishing()) {
@@ -373,8 +383,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String city = ((TextView) view).getText().toString();
-                if (city.contains(",")) {
-                    String country[] = city.split(",");
+                if (city.contains(", ")) {
+                    String country[] = city.split(", ");
                     city = country[0];
                     if (country.length>1){
                         countryEditText.setText(country[country.length -1].trim());
@@ -950,8 +960,11 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private void initiatePopupWindow(View image) {
         Rect location = locateView(image);
         if (location == null) return;
-        int position_x = location.centerX() - Methods.dpToPx(300,PreSignUpActivityRia.this);
-        int position_y = location.bottom-location.height() - Methods.dpToPx(80,PreSignUpActivityRia.this);
+        View layout1 = LayoutInflater.from(this).inflate(R.layout.layout_popup_dialog, null);
+        layout1.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        int position_x = location.centerX() - layout1.getMeasuredWidth();
+        int position_y = location.bottom-location.height() - layout1.getMeasuredHeight();
         if (popup == null) {
             try {
 
@@ -963,7 +976,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
                 popup.setOutsideTouchable(true);
                 popup.setFocusable(true);
-                layout.measure(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, position_x,position_y);
 
@@ -1050,11 +1062,12 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             } else if (etWebsiteAddress.getText().toString().trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(etWebsiteAddress);
+                String message = (String) ivWebsiteStatus.getTag();
                 Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_website_name));
             } else if (TextUtils.isEmpty(fpTag)) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(etWebsiteAddress);
-                Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_website_name));
+                Methods.showSnackBarNegative(activity, "Website name is already exists, Try something else.");
             } else if (phoneEditText.getText().toString().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(phoneEditText);
@@ -1152,7 +1165,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         }
     }
 
-    private String contactName = "contact";
+    private String contactName = "";
 
     private HashMap<String, String> getJSONData() {
         HashMap<String, String> store = new HashMap<String, String>();
@@ -1162,8 +1175,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             store.put("contactName", contactName);
             store.put("name", data_businessName);
             store.put("desc", "");
-            store.put("address", data_city);
-            store.put("city", etStreetAddress.getText().toString());
+            store.put("address", etStreetAddress.getText().toString());
+            store.put("city", data_city);
             store.put("pincode", etPinCode.getText().toString());
             store.put("country", data_country);
             store.put("primaryNumber", data_phone);
@@ -1280,10 +1293,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.verify_button) {
+        if (v.getId() == R.id.verify_button && (Boolean)v.getTag()) {
             try {
                 if (getEditTextData()) {
-                    showLoader( getString(R.string.creating_website));
                     if (data_lat.equalsIgnoreCase("0")) {
 
                         LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
@@ -1679,16 +1691,21 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void createStore_retrofit(PreSignUpActivityRia webSiteAddressActivity, HashMap<String, String> jsonData, Bus bus) {
-
+        setEnableCreateWebsiteButton(false);
         showLoader(getString(R.string.creating_website));
         new Create_Tag_Service(webSiteAddressActivity, jsonData, bus);
     }
 
+    private void setEnableCreateWebsiteButton(boolean bool){
+        verify_button.setTag(bool);
+        verify_button.setBackgroundResource(bool? R.drawable.rounded_corner_pre_signup : R.drawable.rounded_gray_padded);
+    }
     @Subscribe
     public void put_createStore(Create_Store_Event response) {
         final String fpId = response.fpId;
-        hideLoader();
         if (TextUtils.isEmpty(fpId)){
+            hideLoader();
+            setEnableCreateWebsiteButton(true);
             Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
             return;
         }
@@ -1706,6 +1723,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
             @Override
             public void run() {
+                hideLoader();
                 // This method will be executed once the timer is over Start your app main activity
                 getFPDetails(PreSignUpActivityRia.this, fpId, Constants.clientId, bus);
             }
@@ -1726,7 +1744,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-               hideLoader();
+                hideLoader();
             }
         });
         //VISITOR and SUBSCRIBER COUNT API

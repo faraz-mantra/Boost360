@@ -1027,6 +1027,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             @Override
             public void run() {
                 if (nextScreen.equals(getString(R.string.keyboard))){
+//                    Intent intent = new Intent(HomeActivity.this, PaymentOptionsActivity.class);
+//                    startActivity(intent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
@@ -1116,7 +1118,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 } else if (nextScreen.equals(getString(R.string.chat))) {
-                    if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                    if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT,null);
                         new AnaChatBuilder(HomeActivity.this)
                                 .setBusinessId(Constants.ANA_BUSINESS_ID)
@@ -1124,7 +1126,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                                 .setFlowId(session.getFpTag())
                                 .setThemeColor(R.color.primary)
                                 .setToolBarDescription("Available")
-                                .setToolBarTittle("Ria Chat")
+                                .setToolBarTittle(getString(R.string.support_name)+" Chat")
                                 .setToolBarLogo(R.drawable.ria_circle_image)
                                 .start();
                     }

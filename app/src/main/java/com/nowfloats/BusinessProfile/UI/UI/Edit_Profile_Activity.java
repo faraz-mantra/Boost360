@@ -101,6 +101,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(),Edit_Profile_Activity.this);
         editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
         select_pic = (ImageView)findViewById(R.id.select_businessprofileimage);
+
         yourname = (EditText)findViewById(R.id.profileName);
         buzzname = (EditText)findViewById(R.id.businessName);
         category = (EditText)findViewById(R.id.businessCategory);

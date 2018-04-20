@@ -7,7 +7,7 @@
         <item>@drawable/icon_logout</item>
     </array>
     <array name="about_sidepanel">
-        <item>@drawable/ic_nowfloats_gray</item>
+        <item>@drawable/ria_circle_image</item>
         <item>@drawable/ic_faq</item>
         <item>@drawable/ic_feedback</item>
         <item>@drawable/ic_facebook_circle</item>

@@ -97,13 +97,14 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             case 0:
                 MixPanelController.track(MixPanelController.ON_BOARDING_WELCOME_ABOARD,null);
                 intent = new Intent(this, Mobile_Site_Activity.class);
-                intent.putExtra("WEBSITE_NAME","https://hello.nowfloats.com/product");
+                intent.putExtra("WEBSITE_NAME",getString(R.string.onboarding_about_product_url));
                 // step complete
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
                     OnBoardingApiCalls.updateData(session.getFpTag(), "welcome_aboard:true");
                 }
+                isSomethingChanged = true;
                 break;
             case 1:
                 MixPanelController.track(MixPanelController.ON_BOARDING_SITE_HEALTH,null);
@@ -122,6 +123,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 isSomethingChanged = true;
                 break;
             case 4:
+                isSomethingChanged = true;
                 MixPanelController.track(MixPanelController.ON_BOARDING_BOOST_APP,null);
                 if (!screenData.isComplete()){
                     screenData.setIsComplete(true);
@@ -130,6 +132,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 }
                 return;
             case 5:
+                isSomethingChanged = true;
                 MixPanelController.track(MixPanelController.ON_BOARDING_SHARE_WEBSITE,null);
                 shareWebsite();
                 if (!screenData.isComplete()){

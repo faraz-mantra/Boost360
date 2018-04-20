@@ -190,7 +190,7 @@ public class PunchHoleCoachMark extends InternallyAnchoredCoachMark {
     }
 
     /**
-     * Check if the punch hole should have a horizontal animation. Checks:
+     * CHECK if the punch hole should have a horizontal animation. Checks:
      *  - the width of the target view is bigger than the diameter of the circle
      *      (otherwise there's no space to perform the animation).
      *  - the duration is greater than 0

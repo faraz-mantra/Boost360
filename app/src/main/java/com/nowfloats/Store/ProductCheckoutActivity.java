@@ -131,6 +131,8 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //startActivity(new Intent(ProductCheckoutActivity.this, PaymentOptionsActivity.class));
+
                 if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
                     Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
                     mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),

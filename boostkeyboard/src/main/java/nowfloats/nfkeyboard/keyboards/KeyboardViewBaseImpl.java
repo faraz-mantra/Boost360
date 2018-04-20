@@ -2,6 +2,7 @@ package nowfloats.nfkeyboard.keyboards;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Build;
@@ -53,7 +54,7 @@ public class KeyboardViewBaseImpl extends KeyboardView implements KeyboardViewIn
     public boolean setShifted(boolean bol) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP  && mCurrentKeyboard.getShiftKeyIndex() != -1) {
             Keyboard.Key key = mCurrentKeyboard.getKeys().get(mCurrentKeyboard.getShiftKeyIndex());
-            key.icon.setColorFilter(ContextCompat.getColor(mContext, bol ? R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN);
+            key.icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext,bol ? R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN));
         }
         return super.setShifted(bol);
     }

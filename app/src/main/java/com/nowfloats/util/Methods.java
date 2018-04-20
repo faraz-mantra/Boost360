@@ -21,6 +21,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -36,6 +37,7 @@ import android.text.TextUtils;
 import android.text.style.LeadingMarginSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
@@ -133,8 +135,8 @@ public class Methods {
         Intent facebookIntent;
         //if(review.trim().length() == 0) {
         try {
-            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+           context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+           facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
         } catch (Exception e) {
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
         }
@@ -270,6 +272,30 @@ public class Methods {
                         .textColor(Color.WHITE) // change the text color
                         .color(Color.parseColor("#5DAC01")) // change the background color
                 ,context); // activity where it is displayed*/
+    }
+
+    public static String getRealPathFromURI(Activity c, Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = c.managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    public static String getPath(Activity c, Uri uri) {
+        try {
+            String[] projection = { MediaStore.Images.Media.DATA };
+            Cursor cursor = c.managedQuery(uri, projection, null, null, null);
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     public static void showSnackBarNegative(Activity context, String msg) {
@@ -738,7 +764,7 @@ public class Methods {
 
     public static int dpToPx(int dp, Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
     }
 
     public interface SmsApi {

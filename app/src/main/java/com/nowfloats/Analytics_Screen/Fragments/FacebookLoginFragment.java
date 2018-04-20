@@ -411,7 +411,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                                     }
                                 }
                             });
-                    if (!getActivity().isFinishing())
+                    if (getActivity() != null && !getActivity().isFinishing())
                         builder.show();
                 }
                 break;

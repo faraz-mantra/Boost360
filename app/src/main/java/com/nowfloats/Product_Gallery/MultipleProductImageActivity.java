@@ -51,6 +51,8 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.Window.FEATURE_NO_TITLE;
+
 public class MultipleProductImageActivity extends AppCompatActivity {
 
     FloatingActionButton fabDeleteImage, fabAddImage;
@@ -74,7 +76,8 @@ public class MultipleProductImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_multiple_product_image);
 
 
@@ -132,6 +135,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                             mAdapter.removeImage(position);
                             vpMultipleImages.setAdapter(null);
                             vpMultipleImages.setAdapter(mAdapter);
+                            tvCurrentCountKeeper.setText(String.format("%d of %d", vpMultipleImages.getCurrentItem() + 1, mAdapter.getCount()));
                         }
                         if(progressDialog != null && progressDialog.isShowing()) {
                             progressDialog.dismiss();
@@ -334,7 +338,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
             }
         }
 
-        if(!TextUtils.isEmpty(path)) {
+        if(!TextUtils.isEmpty(path) && resultCode == RESULT_OK) {
             progressDialog.show();
             mWebAction.uploadFile(path, new WebAction.WebActionCallback<String>() {
                 @Override
@@ -408,6 +412,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }
                 tvCurrentCountKeeper.setText(String.format("%d of %d", vpMultipleImages.getCurrentItem() + 1, mAdapter.getCount()));
+                ivNavLeft.setVisibility(View.INVISIBLE);
                 if(mAdapter.getCount() == 0) {
                     tvAddImages.setVisibility(View.VISIBLE);
                     tvCurrentCountKeeper.setText("0 of 0");
