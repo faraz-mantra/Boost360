@@ -18,8 +18,13 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
+import nowfloats.nfkeyboard.database.DatabaseTable;
 import nowfloats.nfkeyboard.interface_contracts.UrlToBitmapInterface;
+import nowfloats.nfkeyboard.models.KeywordModel;
+
+import static nowfloats.nfkeyboard.database.DatabaseOpenHelper.COL_WORD;
 
 /**
  * Created by Admin on 26-02-2018.
@@ -39,14 +44,14 @@ public class MethodUtils {
     public static Uri getImageUri(Context mContext, Bitmap inImage, String imageId) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId+ ".png", "drawing");
-        if (TextUtils.isEmpty(path)){
+        String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId + ".png", "drawing");
+        if (TextUtils.isEmpty(path)) {
             return null;
         }
         return Uri.parse(path);
     }
 
-    public static void onGlideBitmapReady(final UrlToBitmapInterface listener, final String text, String imageUrl, final String imageId){
+    public static void onGlideBitmapReady(final UrlToBitmapInterface listener, final String text, String imageUrl, final String imageId) {
         Glide.with(listener.getContext())
                 .asBitmap()
                 .load(imageUrl)
@@ -54,24 +59,25 @@ public class MethodUtils {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
 
-                        listener.onResourcesReady(resource, text,imageId);
+                        listener.onResourcesReady(resource, text, imageId);
 
                     }
                 });
     }
 
-    public static void startBoostActivity(Context mContext ){
+    public static void startBoostActivity(Context mContext) {
         PackageManager packageManager = mContext.getPackageManager();
-        if (!isPackageInstalled(mContext.getPackageName(),packageManager)){
+        if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
             Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
         }
         try {
             Intent LaunchIntent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
             mContext.startActivity(LaunchIntent);
-        }catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(mContext, "Unable to open Boost App ", Toast.LENGTH_SHORT).show();
         }
     }
+
     private static boolean isPackageInstalled(String packagename, PackageManager manager) {
         try {
             manager.getPackageInfo(packagename, 0);
@@ -79,5 +85,10 @@ public class MethodUtils {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    public static ArrayList<KeywordModel> fetchWordsFromDatabase(DatabaseTable mDatabaseTable, String text) {
+        ArrayList<KeywordModel> suggestions = mDatabaseTable.getWordMatches(text, new String[]{COL_WORD});
+        return suggestions;
     }
 }

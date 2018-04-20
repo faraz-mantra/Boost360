@@ -12,6 +12,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
 import nowfloats.nfkeyboard.R;
+import nowfloats.nfkeyboard.interface_contracts.CandidateViewItemClickListener;
 import nowfloats.nfkeyboard.util.SharedPrefUtil;
 
 /**
@@ -73,7 +74,7 @@ public class BoostShareCandidateView extends BaseCandidateView {
 //        startAnimation(anim);
         ScaleAnimation anim1  = new ScaleAnimation(0,1,1,1);
         anim1.setInterpolator(new AccelerateDecelerateInterpolator());
-        anim1.setDuration(400);
+        anim1.setDuration(100);
         findViewById(R.id.tv_updates).startAnimation(anim1);
         findViewById(R.id.tv_products).startAnimation(anim1);
     }
@@ -83,7 +84,7 @@ public class BoostShareCandidateView extends BaseCandidateView {
 
     }
 
-    public void setItemClickListener(OnClickListener listener){
+    public void setItemClickListener(CandidateViewItemClickListener listener){
         this.listener = listener;
     }
     @Override
@@ -94,6 +95,6 @@ public class BoostShareCandidateView extends BaseCandidateView {
         currentView = view.getId();
         findViewById(R.id.tv_updates).setBackgroundResource(view.getId() == R.id.tv_updates ? R.drawable.round_414141:android.R.color.transparent);
         findViewById(R.id.tv_products).setBackgroundResource(view.getId() == R.id.tv_products ? R.drawable.round_414141:android.R.color.transparent);
-        listener.onClick(view);
+        listener.onKeyboardTabClick(view);
     }
 }

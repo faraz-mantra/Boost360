@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import nowfloats.nfkeyboard.interface_contracts.CandidateViewItemClickListener;
+
 /**
  * Created by Admin on 26-02-2018.
  */
 
 public abstract class BaseCandidateView extends LinearLayout implements View.OnClickListener{
-    OnClickListener listener;
+    CandidateViewItemClickListener listener;
     Context mContext;
     public BaseCandidateView(Context context) {
         super(context);
@@ -37,7 +39,7 @@ public abstract class BaseCandidateView extends LinearLayout implements View.OnC
         super(context, attrs, defStyleAttr, defStyleRes);
         mContext = context;
     }
-    public void setItemClickListener(OnClickListener listener){
+    public void setItemClickListener(CandidateViewItemClickListener listener){
         this.listener = listener;
     }
     abstract void addCandidateView(ViewGroup parent, ImePresenterImpl.TabType tabType);

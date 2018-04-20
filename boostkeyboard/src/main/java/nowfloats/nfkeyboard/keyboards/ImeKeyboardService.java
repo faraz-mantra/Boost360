@@ -72,6 +72,11 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     }
 
     @Override
+    public void onFinishInput() {
+        super.onFinishInput();
+    }
+
+    @Override
     public InputBinding getImeCurrentInputBinding() {
         return getCurrentInputBinding();
     }
@@ -91,5 +96,12 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     public void onDestroy() {
         mPresenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd) {
+        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
+        mPresenter.showWordSuggestions(0,getImeCurrentInputConnection());
+
     }
 }
