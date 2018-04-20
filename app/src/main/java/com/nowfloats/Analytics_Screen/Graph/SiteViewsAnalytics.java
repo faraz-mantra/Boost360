@@ -67,13 +67,13 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
 
         switch (mVisitsType){
             case UNIQUE:
-                setTitle("Unique Visitors");
+                setTitle(getString(R.string.unique_visitors));
                 break;
             case TOTAL:
-                setTitle("Total Visits");
+                setTitle(getString(R.string.overall_visits));
                 break;
             case MAP_VISITS:
-                setTitle("Map Visits");
+                setTitle(getString(R.string.map_visits));
                 break;
             default:
                 finish();

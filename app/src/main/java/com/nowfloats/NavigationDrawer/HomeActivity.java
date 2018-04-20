@@ -1027,8 +1027,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             @Override
             public void run() {
                 if (nextScreen.equals(getString(R.string.keyboard))){
-//                    Intent intent = new Intent(HomeActivity.this, PaymentOptionsActivity.class);
-//                    startActivity(intent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {

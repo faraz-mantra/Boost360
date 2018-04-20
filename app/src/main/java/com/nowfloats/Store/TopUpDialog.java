@@ -27,6 +27,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -133,7 +134,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
     }
 
     private void startBuy(String id){
-        Intent i = new Intent(mContext, ProductCheckoutActivity.class);
+        Intent i = new Intent(mContext, BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?ProductCheckout_v2Activity.class:ProductCheckoutActivity.class);
         i.putExtra("package_ids", new String[]{id});
         activity.startActivityForResult(i, DIRECT_REQUEST_CODE);
     }
