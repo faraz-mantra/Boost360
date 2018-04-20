@@ -1,17 +1,17 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ScrollView
+
+    <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment"
         android:background="@color/screen_bg"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,18 +122,17 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/visitors_card"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
+                android:layout_marginTop="10dp"
                 android:elevation="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/numberOfVisitorsLinearLayout"
@@ -163,17 +162,17 @@
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/unique_visitors" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right">
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -182,21 +181,21 @@
                             android:orientation="horizontal">
 
                             <ProgressBar
+                                android:id="@+id/visitors_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/visitors_progressBar" />
+                                android:visibility="gone" />
 
                             <TextView
-                                fontPath="Roboto-Medium.ttf"
                                 android:id="@+id/visitors_count"
+                                fontPath="Roboto-Medium.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/primaryColor"
                                 android:text="0"
-                                android:visibility="visible"
+                                android:textColor="@color/primaryColor"
                                 android:textSize="25sp"
+                                android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </LinearLayout>
 
@@ -204,26 +203,26 @@
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:visibility="visible"
-                            android:src="@drawable/next" />
+                            android:src="@drawable/next"
+                            android:visibility="visible" />
                     </LinearLayout>
 
                 </LinearLayout>
 
 
             </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
+                android:layout_marginTop="10dp"
                 android:elevation="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/numberOfVisitsLinearLayout"
@@ -253,17 +252,17 @@
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/overall_visits" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right">
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -272,21 +271,21 @@
                             android:orientation="horizontal">
 
                             <ProgressBar
+                                android:id="@+id/visits_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/visits_progressBar" />
+                                android:visibility="gone" />
 
                             <TextView
-                                fontPath="Roboto-Medium.ttf"
                                 android:id="@+id/analytics_screen_visitor_count"
+                                fontPath="Roboto-Medium.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/primaryColor"
                                 android:text="0"
-                                android:visibility="visible"
+                                android:textColor="@color/primaryColor"
                                 android:textSize="28sp"
+                                android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </LinearLayout>
 
@@ -294,8 +293,8 @@
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:visibility="visible"
-                            android:src="@drawable/next" />
+                            android:src="@drawable/next"
+                            android:visibility="visible" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -303,25 +302,23 @@
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/map_card"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
+                android:layout_marginTop="10dp"
                 android:elevation="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/mapVisitsLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-
 
 
                     <FrameLayout
@@ -348,17 +345,17 @@
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/map_visits" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right">
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -367,21 +364,21 @@
                             android:orientation="horizontal">
 
                             <ProgressBar
+                                android:id="@+id/map_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/map_progressBar" />
+                                android:visibility="gone" />
 
                             <TextView
-                                fontPath="Roboto-Medium.ttf"
                                 android:id="@+id/analytics_screen_map_count"
+                                fontPath="Roboto-Medium.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/primaryColor"
                                 android:text="0"
-                                android:visibility="visible"
+                                android:textColor="@color/primaryColor"
                                 android:textSize="28sp"
+                                android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </LinearLayout>
 
@@ -389,26 +386,26 @@
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:visibility="visible"
-                            android:src="@drawable/next" />
+                            android:src="@drawable/next"
+                            android:visibility="visible" />
                     </LinearLayout>
 
                 </LinearLayout>
 
 
             </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_business_enq"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
+                android:layout_marginTop="10dp"
                 android:elevation="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/analytics_screen_business_enq"
@@ -432,44 +429,48 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:tint="#ffffff"
                             android:layout_gravity="center"
-                            android:src="@drawable/business_enq_main" />
+                            android:src="@drawable/business_enq_main"
+                            android:tint="#ffffff" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/business_enquiries_title" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right">
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
-                        <FrameLayout android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center">
+
                             <ProgressBar
+                                android:id="@+id/business_enq_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/business_enq_progressBar" />
+                                android:visibility="gone" />
+
                             <TextView
-                                fontPath="Roboto-Medium.ttf"
                                 android:id="@+id/analytics_screen_business_enq_count"
+                                fontPath="Roboto-Medium.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="visible"
                                 android:text="0"
-                                android:textSize="28sp"
                                 android:textColor="@color/primaryColor"
+                                android:textSize="28sp"
+                                android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
+
                         <ImageView
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
@@ -479,18 +480,17 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_1"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
+                android:layout_marginTop="10dp"
                 android:elevation="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/subscribers_details"
@@ -520,36 +520,41 @@
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/subscribers" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center|right">
-                        <FrameLayout android:layout_width="wrap_content"
+                        android:gravity="center|right"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center">
+
                             <ProgressBar
+                                android:id="@+id/subscriber_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/subscriber_progressBar" />
+                                android:visibility="gone" />
+
                             <TextView
-                                fontPath="Roboto-Medium.ttf"
                                 android:id="@+id/analytics_screen_subscriber_count"
+                                fontPath="Roboto-Medium.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="visible"
                                 android:text="0"
-                                android:textSize="28sp"
                                 android:textColor="@color/primaryColor"
+                                android:textSize="28sp"
+                                android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
+
                         <ImageView
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
@@ -563,18 +568,17 @@
             </android.support.v7.widget.CardView>
 
 
-            <android.support.v7.widget.CardView
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_2"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
+                android:layout_marginTop="10dp"
                 android:elevation="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/analytics_screen_search_queries"
@@ -604,26 +608,28 @@
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/search_queries" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right">
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
-                        <FrameLayout android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center">
+
                             <ProgressBar
+                                android:id="@+id/search_query_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/search_query_progressBar" />
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/analytics_screen_search_queries_count"
@@ -636,6 +642,7 @@
                                 android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
+
                         <ImageView
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
@@ -644,18 +651,19 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_wildfire"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:elevation="3dp"
                 android:visibility="gone"
                 card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
-                android:elevation="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -678,23 +686,23 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
-                            android:tint="@color/white"
-                            android:src="@drawable/wildfire_gray" />
+                            android:src="@drawable/wildfire_gray"
+                            android:tint="@color/white" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/wildfire_analytics" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right">
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="34dp"
@@ -704,19 +712,19 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_vmn_call"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
-                android:elevation="3dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:elevation="3dp"
+                android:visibility="gone"
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/analytics_screen_vmn_call"
@@ -740,32 +748,35 @@
                         <ImageView
                             android:layout_width="18dp"
                             android:layout_height="18dp"
-                            android:tint="@color/white"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_call_white" />
+                            android:src="@drawable/ic_call_white"
+                            android:tint="@color/white" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/call_tracker" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right">
-                        <FrameLayout android:layout_width="wrap_content"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center">
+
                             <ProgressBar
+                                android:id="@+id/vmn_progressbar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/vmn_progressbar" />
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/analytics_screen_vmn_tracker_count"
@@ -778,6 +789,7 @@
                                 android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
+
                         <ImageView
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
@@ -792,11 +804,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="15dp"
                 card_view:cardBackgroundColor="#FFFFFF"
                 card_view:cardCornerRadius="3dp">
 
@@ -851,21 +863,20 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/facebook_analytics_card_view"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="3dp"
-                android:elevation="3dp"
-
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="15dp"
-                android:layout_gravity="center_horizontal">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:elevation="3dp"
+                android:visibility="gone"
+
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
                     android:id="@+id/facebook_analytics_layout"
@@ -878,23 +889,23 @@
                         android:id="@+id/iv_fb_page_analytics"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:layout_marginLeft="20dp"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
                         android:src="@drawable/analytics_facebook" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
                         android:text="@string/facebook_analytics" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_gravity="center_vertical"
-                        android:gravity="end">
+                        android:gravity="end"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -903,21 +914,21 @@
                             android:orientation="horizontal">
 
                             <ProgressBar
+                                android:id="@+id/facebook_updates_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:id="@+id/facebook_updates_progressBar" />
+                                android:visibility="gone" />
 
                             <TextView
-                                fontPath="Roboto-Medium.ttf"
                                 android:id="@+id/analytics_screen_updates_count"
+                                fontPath="Roboto-Medium.ttf"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/primaryColor"
                                 android:text=""
-                                android:visibility="gone"
+                                android:textColor="@color/primaryColor"
                                 android:textSize="28sp"
+                                android:visibility="gone"
                                 tools:ignore="MissingPrefix" />
                         </LinearLayout>
 
@@ -925,8 +936,8 @@
                             android:layout_width="34dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:visibility="visible"
-                            android:src="@drawable/next" />
+                            android:src="@drawable/next"
+                            android:visibility="visible" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -935,18 +946,19 @@
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
-    android:id="@+id/lock_analytics"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="gone"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@color/transluscent_background">
-    <include
-        android:layout_height="match_parent"
+        android:id="@+id/lock_analytics"
         android:layout_width="match_parent"
-        layout="@layout/layout_empty_img_text_button_screen"
-        />
+        android:layout_height="match_parent"
+        android:background="@color/transluscent_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <include
+            layout="@layout/layout_empty_img_text_button_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </FrameLayout>

@@ -3,6 +3,7 @@
     <string name="twitter_consumer_key">Xx4v6Ak52csfHNOn41BAkJmww</string>
     <string name="twitter_consumer_secret">km55qJLj1YmiQdHhAZgwbas5XCYcgdU9syQ2WoL0HcZqXf9Qe7</string>
     <string name="website_domain_name">.sukere.com</string>
+    <string name="package_name">com.sukere</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Sukere Digital Marketing</string>
     <string name="hello_world">Hello world!</string>
@@ -14,6 +15,7 @@
     <string name="title_activity_login">Welcome Back</string>
     <string name="title_activity_business_profile">BusinessProfileActivity</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="onboarding_about_product_url">http://www.sukere.com/about/</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="title_activity_business_profile__home">Business Profile</string>

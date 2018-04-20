@@ -38,5 +38,6 @@ public class Specific {
     public static final String TWITTER_URL = "https://twitter.com/sukereinfotechs";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=sukereinfotechs";
     public static final String TWILIO_AUTHY_API_KEY = "";
+    public static final String RIA_FIREBASE_COLLECTION_NAME = "SukereUserActivityLog";
 
 }

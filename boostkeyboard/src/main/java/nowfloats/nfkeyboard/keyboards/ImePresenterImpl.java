@@ -87,6 +87,7 @@ public class ImePresenterImpl implements ItemClickListener,
     private AudioManager mAudioManager;
     private TabType mTabType = TabType.NO_TAB;
     private ShiftType mShiftType = ShiftType.CAPITAL;
+    private int mPrimaryCode;
 
     @Override
     public TabType getTabType() {
@@ -558,19 +559,20 @@ public class ImePresenterImpl implements ItemClickListener,
 
 
     public void showWordSuggestions(int primaryCode, InputConnection inputConnection) {
-        if (primaryCode != 32) {
-            CharSequence inputSequence = inputConnection.getTextBeforeCursor(1000, 0);
-            String[] words = inputSequence.toString().split(" ");
+        if (mPrimaryCode != 32 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+            CharSequence inputSequence = inputConnection.getTextBeforeCursor(100, 0);
+            if (inputSequence != null && inputSequence.length() > 0) {
+                String[] words = inputSequence.toString().split(" ");
 
-            ArrayList<KeywordModel> suggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, words[words.length - 1]);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("data", suggestions);
-            mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
+                ArrayList<KeywordModel> suggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, words[words.length - 1]);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", suggestions);
+                mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
+            }
         }
     }
 
     class KeyboardListener extends AbstractKeyboardListener {
-
         @Override
         public void onPress(int primaryCode) {
 
@@ -589,6 +591,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
             InputConnection inputConnection = imeListener.getImeCurrentInputConnection();
             playClick(primaryCode);
+            mPrimaryCode = primaryCode;
 
             switch (primaryCode) {
                 case Keyboard.KEYCODE_DELETE:
