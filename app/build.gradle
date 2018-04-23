@@ -158,7 +158,7 @@ dependencies {
     implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
     implementation 'com.kitsune:anachatsdk:1.18.11@aar'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
-    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'com.melnykov:floatingactionbutton:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'

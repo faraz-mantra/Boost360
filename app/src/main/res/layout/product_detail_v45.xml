@@ -42,6 +42,14 @@
                     android:src="@drawable/default_product_image" />
             </android.support.v7.widget.CardView>
 
+            <com.nowfloats.Product_Gallery.widgets.NonScrollListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_inventory_data"
+                android:divider="@null">
+
+            </com.nowfloats.Product_Gallery.widgets.NonScrollListView>
+
             <LinearLayout
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"

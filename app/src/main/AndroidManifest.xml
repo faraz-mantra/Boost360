@@ -678,6 +678,11 @@
         <activity android:name="com.nowfloats.Store.ProductCheckout_v2Activity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
+        <activity
+            android:name="com.nowfloats.Product_Gallery.MultipleProductImageActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
+
+        </activity>
     </application>
 
 </manifest>
