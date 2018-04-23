@@ -81,9 +81,19 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     }
 
     private void showInfoDialog() {
-
-        String title = String.format("%s in a %s",mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE?
-                getString(R.string.unique_visitors):getString(R.string.overall_visits),tabType.toLowerCase());
+        String visitsName = "";
+        switch (mVisitType){
+            case TOTAL:
+                visitsName = getString(R.string.overall_visits);
+                break;
+            case MAP_VISITS:
+                visitsName = getString(R.string.map_visits);
+                break;
+            case UNIQUE:
+                visitsName = getString(R.string.unique_visitors);
+                break;
+        }
+        String title = String.format("%s in a %s",visitsName,tabType.toLowerCase());
 
         String content = String.format(getString(mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE?
                 R.string.unique_visitors_message : R.string.total_visits_message),tabType.toLowerCase());
@@ -163,8 +173,19 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         visitsTitle= (TextView) view.findViewById(R.id.tv_visits_title);
         progressBar = view.findViewById(R.id.progress_bar);
         view.findViewById(R.id.img_info).setOnClickListener(this);
-        visitsTitle.setText( String.format("%s in a %s",mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE?
-                getString(R.string.unique_visitors):getString(R.string.overall_visits),tabType.toLowerCase()));
+        String visitsName = "";
+        switch (mVisitType){
+            case TOTAL:
+                visitsName = getString(R.string.overall_visits);
+                break;
+            case MAP_VISITS:
+                visitsName = getString(R.string.map_visits);
+                break;
+            case UNIQUE:
+                visitsName = getString(R.string.unique_visitors);
+                break;
+        }
+        visitsTitle.setText( String.format("%s in a %s",visitsName,tabType.toLowerCase()));
         if (totalVisits != 0){
             visitsCount.setText(String.valueOf(totalVisits));
         }else if(getArguments().containsKey("hashmap")){
