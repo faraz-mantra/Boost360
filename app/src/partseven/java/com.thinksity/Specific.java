@@ -29,7 +29,7 @@ public class Specific {
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 
     public static final String TWITTER_TOK 				= "Xx4v6Ak52csfHNOn41BAkJmww";
-    public static final String TWITTER_SEC 				= "km55qJLj1YmiQdHhAZgwbas5XCYcgdU9syQ2WoL0HcZqXf9Qe7";
+    public static final String TWITTER_SEC 				= "er7oOIMdUqxK7pBmg8SFwS8NZuI2RVXt3bgZj77cv7IGqKSGtQ"; // to be replaced
     public static final String FACEBOOK_URL = "https://www.facebook.com/sukereinfotechs";
     public static final String PACKAGE_NAME = "com.sukere";
     public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging"};

@@ -250,7 +250,7 @@ public class ImePresenterImpl implements ItemClickListener,
                         //currentCandidateType = KeyboardUtils.CandidateType.BOOST_SHARE;
                         currentCandidateType = KeyboardUtils.CandidateType.TEXT_LIST;
                         setKeyboardType(KeyboardUtils.KeyboardType.QWERTY_LETTERS);
-                        showWordSuggestions(0, imeListener.getImeCurrentInputConnection());
+                        showWordSuggestions(imeListener.getImeCurrentInputConnection());
                         break;
 
                 }
@@ -558,13 +558,17 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
 
-    public void showWordSuggestions(int primaryCode, InputConnection inputConnection) {
+    public void showWordSuggestions(InputConnection inputConnection) {
         if (mPrimaryCode != 32 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
             CharSequence inputSequence = inputConnection.getTextBeforeCursor(100, 0);
             if (inputSequence != null && inputSequence.length() > 0) {
-                String[] words = inputSequence.toString().split(" ");
+                String text = inputSequence.toString();
+                if (inputSequence.toString().indexOf(" ") > 0) {
+                    text = inputSequence.toString().substring(inputSequence.toString().lastIndexOf(" "), inputSequence.toString().length());
+                }
+                // String[] words = inputSequence.toString().split(" ");
 
-                ArrayList<KeywordModel> suggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, words[words.length - 1]);
+                ArrayList<KeywordModel> suggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", suggestions);
                 mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
