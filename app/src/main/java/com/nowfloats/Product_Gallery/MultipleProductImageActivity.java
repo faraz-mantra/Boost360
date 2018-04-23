@@ -158,7 +158,6 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         vpMultipleImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.nowfloats.Store;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -42,28 +43,40 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
 
     private final static int media_req_id = 111, gallery_req_id = 112, ACTION_REQUEST_IMAGE_EDIT = 113;
     private String path;
-    Uri imageUri ;
+    private int requestCode;
+    private Uri imageUri ;
+    private PaymentType requestedFragmentType = null;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onOptionClicked(PaymentType type) {
-        showPaymentOptionScreen(type, null);
-//        switch (type){
-//            case CHEQUE:
-//
-//                break;
-//            case OPC:
-//
-//                break;
-//            case BANK_TRANSFER:
-//
-//                break;
-//        }
+        showPaymentOptionScreen(type, new Bundle());
     }
 
     @Override
     public void onPickImage(PaymentType type, int requestCode) {
+        requestedFragmentType = type;
+        this.requestCode = requestCode;
         choosePicture();
     }
+
+    @Override
+    public void showProcess(String message) {
+        showLoader(message);
+    }
+
+    @Override
+    public void hideProcess() {
+        hideLoader();
+    }
+
+    @Override
+    public void setResult(Intent intent) {
+        setResult(RESULT_OK, intent);
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
 
     public enum PaymentType{
         PAYMENT_OPTIONS, CHEQUE,OPC,BANK_TRANSFER;
@@ -78,6 +91,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
         showPaymentOptionScreen(PaymentType.PAYMENT_OPTIONS, null);
     }
 
@@ -180,17 +194,46 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
+                    sendPathToFragment();
                 }
+            }else{
+                super.onActivityResult(requestCode, resultCode, data);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    private void showLoader(final String message) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.setMessage(message);
+        progressDialog.show();
+    }
+
+    private void hideLoader() {
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void sendPathToFragment() {
+        OnImagePicked frag = (OnImagePicked) getSupportFragmentManager().findFragmentByTag(requestedFragmentType.name());
+        if (frag == null) return;
+        Bundle b = new Bundle();
+        b.putString("path",path);
+        b.putInt("requestCode",requestCode);
+        frag.onShowPicked(b);
     }
 
     private void editImage(){
         Intent in =new Intent(this,EditImageActivity.class);
         in.putExtra("image",path);
-        in.putExtra("isFixedAspectRatio",true);
+        in.putExtra("isFixedAspectRatio",false);
         startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
     }
 
@@ -245,12 +288,17 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
     }
 
     private void showPaymentOptionScreen(PaymentType type, Bundle b){
+        if (b != null) {
+            b.putString("packageList", getIntent().getStringExtra("packageList"));
+            b.putString(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, getIntent().getStringExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER));
+        }
         FragmentManager manager = getSupportFragmentManager();
         Fragment  frag = manager.findFragmentByTag(type.name());
         switch (type){
             case OPC:
 
                 if (frag == null){
+
                     frag = OpcPaymentFragment.getInstance(b);
                 }
                 manager.beginTransaction().replace(R.id.fragment_layout,frag,type.name())

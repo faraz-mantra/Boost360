@@ -4,8 +4,7 @@
     android:id="@+id/activity_product_checkout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.nowfloats.Store.ProductCheckoutActivity">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/product_checkout_toolbar"
@@ -229,26 +228,34 @@
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
+                    android:textSize="13sp"
                     android:background="@drawable/et_opc_bg"
                     android:layout_marginRight="20dp"
                     android:layout_height="40dp" />
-                <Button
+                <TextView
                     android:id="@+id/btnOpcApply"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="APPLY"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center"
                     android:textColor="@color/white"
-                    android:background="@drawable/btn_main"/>
+                    android:background="@drawable/btn_bg"/>
 
             </LinearLayout>
-            <Button
+            <TextView
                 android:id="@+id/btn_pay_now"
                 android:layout_below="@+id/llOpcInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_main"
+                android:background="@drawable/btn_bg"
                 android:textColor="@color/white"
                 android:layout_weight="1"
+                android:padding="10dp"
+                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"

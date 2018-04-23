@@ -46,7 +46,318 @@
     <string name="ps_sc8_lbl2">NowFloats</string>
     <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
     <string name="ps_sc8_lbl4">Store</string>
-
+    <string-array name="bank_names">
+        <item>AAPNA SAHAKARI  BANK LTD</item>
+        <item>ABHYUDAYA CO-OP. BANK</item>
+        <item>ABHYUDAYA CO-OPERATIVE BANK LTD</item>
+        <item>ABN AMRO BANK N.V- ROYAL BANK OF SCOTLAND</item>
+        <item>ABU DHABI COMMERCIAL BANK</item>
+        <item>ADARSH CO-OPERATIVE BANK LTD</item>
+        <item>AGRASEN CO-OPERATIVE URBAN BANK LIMITED</item>
+        <item>AHMADABAD MERCANTILE CO-OP BANK LTD.</item>
+        <item>AHMEDABAD DISTRICT CO-OPERATIVE BANK</item>
+        <item>AKHAND ANAND CO-OP BANK</item>
+        <item>ALLAHABAD BANK</item>
+        <item>AMERICAN EXPRESS BANK</item>
+        <item>ANDHRA BANK</item>
+        <item>ANNASAHEB MAGAR SAHAKARI BANK MARYADIT</item>
+        <item>ANTWERP DIAMOND BANK</item>
+        <item>APEX BANK LTD.</item>
+        <item>ARAB BANGLADESH BANK</item>
+        <item>ARVIND SAHAKARI BANK LTD</item>
+        <item>ASHOK NAGARI SAHAKARI BANK </item>
+        <item>ASSOCIATE CO-OP BANK LTD</item>
+        <item>AU SMALL FINANCE BANK</item>
+        <item>AUSTRALIA AND NEW ZEALAND BANK</item>
+        <item>AXIS BANK </item>
+        <item>BANDHAN BANK</item>
+        <item>BANK INTERNASIONAL INDONESIA</item>
+        <item>BANK OF AMERICA</item>
+        <item>BANK OF BAHRAIN AND KUWAIT</item>
+        <item>BANK OF BARODA </item>
+        <item>BANK OF CEYLON</item>
+        <item>BANK OF INDIA</item>
+        <item>BANK OF MAHARASHTRA</item>
+        <item>BANK OF NOVA SCOTIA</item>
+        <item>BANK OF TOKYO MITSUBISHI</item>
+        <item>BARCLAYS BANK</item>
+        <item>BARODA GUJARAT GRAMIN BANK</item>
+        <item>BASSEIN CATHOLIC CO-OP. BANK LTD</item>
+        <item>BDO</item>
+        <item>BHADRADRI CO-OPERATIVE URBAN BANK</item>
+        <item>BHARAT BANK</item>
+        <item>BHARATIYA MAHILA BANK</item>
+        <item>BHAVANI SAHAKARI BANK LIMITED</item>
+        <item>BNP PARIBAS</item>
+        <item>BOMBAY MERCANTILE CO-OPERATIVE BANK LTD</item>
+        <item>CALICUT CITY SERVICE CO-OPERATIVE BANK LTD.</item>
+        <item>CALYON BANK</item>
+        <item>CANARA BANK</item>
+        <item>CARPORATION BANK </item>
+        <item>CATHOLIC SYRIAN BANK</item>
+        <item>CENTRAL BANK OF INDIA</item>
+        <item>CHHATTISHGARH RAJYA GRAMIN BANK</item>
+        <item>CHINATRUST COMMERCIAL BANK</item>
+        <item>CITIBANK</item>
+        <item>CITIZEN CO-OP  BANK LTD. NOIDA </item>
+        <item>CITIZENCREDITCO-OPERATIVE BANK. LTD.</item>
+        <item>CITY UNION BANK</item>
+        <item>COLOUR MECHANTS CO-OPERATIVE BANK LTD</item>
+        <item>COMMERCIAL CO-OP.BANK LTD.</item>
+        <item>COMMONWEALTH BANK</item>
+        <item>CORPORATION BANK</item>
+        <item>COSMOS CO-OPERATIVE BANK</item>
+        <item>DATTATRAYA MAHARAJ KALAMBE JAOLI SAHAKARI BANK LTD</item>
+        <item>DBS BANK</item>
+        <item>DCB BANK LTD</item>
+        <item>DENA BANK</item>
+        <item>DENA GUJARAT GRAMIN BANK</item>
+        <item>DEUTSCHE BANK</item>
+        <item>DEVELOPMENT CREDIT BANK</item>
+        <item>DEVI GAYATRI CO-OP URBAN BANK LTD</item>
+        <item>DHANLAXMI BANK</item>
+        <item>DNS BANK</item>
+        <item>DOMBIVLI NAGARI SAHAKARI BANK LTD</item>
+        <item>DR. BABASAHEB AMBEDKAR URBAN  CO-OPERATIVE BANK LTD</item>
+        <item>EDATHALA SERVICE CO-OP. BANK LTD</item>
+        <item>EQUITAS SMALL FINANCE BANK</item>
+        <item>EQUITAS SMALL FINANCE BANK LTD.</item>
+        <item>FEDERAL BANK</item>
+        <item>FINGROWTH CO-OPERATIVE BANK LTD</item>
+        <item>FIRSTRAND BANK</item>
+        <item>GODAVARI URBAN CO-OPERATIVE BANK LTD</item>
+        <item>GP PARSIK BANK</item>
+        <item>HDFC BANK</item>
+        <item>HSBC</item>
+        <item>ICICI BANK</item>
+        <item>IDBI</item>
+        <item>IDFC BANK</item>
+        <item>INDIAN BANK</item>
+        <item>INDIAN OVERSEAS BANK</item>
+        <item>INDORE CLOTH MARKET CO OPERATIVE BANK LIMITED</item>
+        <item>INDRAPRASTHA SEHKARI BANK LIMITED</item>
+        <item>INDUSIND BANK LIMITED</item>
+        <item>INDUSTRIAL CO BANK</item>
+        <item>ING VYSYA BANK</item>
+        <item>INTEGRAL URBAN CO-OPERATIVE BANK LTD</item>
+        <item>IOB</item>
+        <item>J&amp;K BANK</item>
+        <item>JAIN CO-OPERATIVE BANK LTD</item>
+        <item>JALGAON PEOPLES CO-OP. BANK LTD</item>
+        <item>JAMIA COOPERATIVE BANK LIMITED</item>
+        <item>JAMMU &amp; KASHMIR BANK LTD</item>
+        <item>JANAKALYAN SAHAKARI BANK LTD</item>
+        <item>JANASEVA SAHAKARI BANK LTD</item>
+        <item>JANATA SAHAKARI BANK LTD</item>
+        <item>JANATHA SEVA CO-OPERATIVE BANK</item>
+        <item>JANTA SAHKARI BANK LTD</item>
+        <item>JIVAN COMMERCIAL CO-OPERATIVE BANK LTD</item>
+        <item>JPMORGAN CHASE BANK</item>
+        <item>KALLAPPANNA AWADE ICHALKARANJI JANATA SAHAKARI BANK LTD</item>
+        <item>KALUPUR COMMERCIAL CO-OPERATIVE BANK</item>
+        <item>KANKARIA MANINAGAR NAGRIK SAHAKARI BANK LTD</item>
+        <item>KARNATAKA BANK LIMITED</item>
+        <item>KARNATAKA BANK LTD</item>
+        <item>KARNATAKA VIKAS GRAMEENA BANK</item>
+        <item>KARNAVATI CO-OP BANK LTD.</item>
+        <item>KARUR VYSYA BANK</item>
+        <item>KERALA GRAMIN BANK</item>
+        <item>KNS BANK</item>
+        <item>KOKAN MERCANTILE CO. OP. BANK</item>
+        <item>KOTAK MAHINDRA BANK</item>
+        <item>KRUNG THAI BANK</item>
+        <item>KUNBI SAHAKARI BANK LTD</item>
+        <item>LAKSHMI VILAS BANK</item>
+        <item>LALBAUG CO-OPERATIVE BANK LTD</item>
+        <item>LOKMANGAL CO-OP BANK LTD</item>
+        <item>LOKVIKAS NAGARI SAHAKARI BANK LTD</item>
+        <item>M S CO-OPERATIVE BANK LIMITED</item>
+        <item>MAHARASHTRA GRAMIN BANK</item>
+        <item>MAHESH BANK</item>
+        <item>MAHILA CO OPERATIVE BANK LIMITED</item>
+        <item>MAKARPURA INDUSTRIAL ESTATE CO.OP BANK LTD </item>
+        <item>MASHREQ BANK PSC</item>
+        <item>MIZUHO CORPORATE BANK</item>
+        <item>MODEL-COOP BANK LTD</item>
+        <item>MUMBAI DISTRICT CENTRAL CO-OP BANK LTD.</item>
+        <item>NAGAR URBAN CO-OP BANK LTD.</item>
+        <item>NAGPUR NAGARIK SAHAKARI BANK LTD</item>
+        <item>NAGRIK SAHKARI BANK LIMITED</item>
+        <item>NAINITAL BANK</item>
+        <item>NATIONAL AUSTRALIA BANK</item>
+        <item>NEW INDIA CO-OPERATIVE BANK LTD</item>
+        <item>NIDHI CO OPERATIVE BANK</item>
+        <item>NIRMAL URBAN CO. OPERATIVE BANK LTD. NAGPUR</item>
+        <item>NKGSB CO OP BANK LTD</item>
+        <item>NKGSN CO-OP BANK LTD</item>
+        <item>NUTAN NAGARIK SAHAKARI BANK LTD</item>
+        <item>ORIENTAL BANK OF COMMERCE</item>
+        <item>PATAN CO- OPERATIVE BANK LTD </item>
+        <item>PAVANA SAHAKARI BANK LTD</item>
+        <item>PIMPRI CHINCHWAD SAHAKARI BANK MARYADIT PIMPRI</item>
+        <item>PMC BANK</item>
+        <item>POORNAWADI NAGARIK SAHAKARI BANK</item>
+        <item>POST BANK OF INDIA</item>
+        <item>POST OFFICE SAVINGS BANK</item>
+        <item>PRERANA CO-OPERATIVE BANK LTD</item>
+        <item>PRERANA SAHKARI BANK</item>
+        <item>PRIME CO-OP. BANK LTD.</item>
+        <item>PROGRESSIVE MERCANTILE CO-OP BANK LTD</item>
+        <item>PROGRESSIVE URBAN CO-OP BANK LTD.</item>
+        <item>PUNE CANTONMENT SAHAKARI BANK LTD.</item>
+        <item>PUNE PEOPLE'S CO-OP. BANK</item>
+        <item>PUNE URBAN CO-OP BANK</item>
+        <item>PUNJAB &amp; MAHARASHTRA CO-OPERATIVE BANK LIMITED</item>
+        <item>PUNJAB &amp; SIND BANK</item>
+        <item>PUNJAB AND MAHARASHTRA CO-OPERATIVE BANK LIMITED</item>
+        <item>PUNJAB NATIONAL BANK</item>
+        <item>RAJARAMBAPU SAHAKARI BANK LTD</item>
+        <item>RAJARSHI SHAHU SAHAKARI BANK LTD</item>
+        <item>RAJASTHAN MARUDHARA GRAMIN BANK</item>
+        <item>RAJDHANI NAGAR SAHKARI BANK LTD</item>
+        <item>RAJGURUNAGAR SAHAKARI BANK LTD</item>
+        <item>RAJKOT NAGARIK SAHAKARI BANK LTD.</item>
+        <item>RAJKOT PEOPLES CO-OPERATIVE BANK LTD.</item>
+        <item>RBL BANK</item>
+        <item>RESERVE BANK</item>
+        <item>ROYAL BANK OF SCOTLAND</item>
+        <item>SADHANA SAHKARI BANK</item>
+        <item>SAMPADA SAHAKARI BANK LTD</item>
+        <item>SANMITRA SAHAKARI BANK LTD.</item>
+        <item>SARASPUR NAGRIK CO. OP. BANK LTD</item>
+        <item>SARASWAT BANK</item>
+        <item>SARASWAT CO-OPERATIVE BANK</item>
+        <item>SARVA HARYANA GRAMIN BANK</item>
+        <item>SARVODAYA COMMERCIAL CO-OP. BANK LTD.</item>
+        <item>SAURASHTRA GRAMIN BANK</item>
+        <item>SBBJ</item>
+        <item>SDC BANK (THE SAHEB RAO DESHMUKH CO-OP BANK)</item>
+        <item>SHAMRAO VITHAL CO OPERATIVE BANK LTD</item>
+        <item>SHINHAN BANK</item>
+        <item>SHIVAJI NAGRI SAHAKARI BANK LTD.PAITHAN</item>
+        <item>SHREE BHARAT CO-OPERATIVE BANK LTD.</item>
+        <item>SHREE DHARATI CO-OPERATIVE BANK LTD</item>
+        <item>SHREE GAJANAN LOKSEVA SAHAKARI BANK MARYADIT</item>
+        <item>SHREE KADI NAGARIK SAHAKARI BANK LTD.</item>
+        <item>KADI</item>
+        <item>SHREE MAHESH CO- OP BANK LIMITED</item>
+        <item>SHREE RAJKOT DISTRICT CO-OP. BANK LTD</item>
+        <item>SHREE VARDHAMAN SAHAKARI BANK LTD</item>
+        <item>SHRI ARIHANT CO-OPERATIVE BANK LTD</item>
+        <item>SHRI CHHANI NAGRIK SAHAKARI BANK LTD</item>
+        <item>SHRIRAM URBAN CO-OP BANK LTD</item>
+        <item>SIR M. VISVESVARAYA CO-OPERATIVE BANK LTD</item>
+        <item>SONALI BANK</item>
+        <item>SOUTH INDIAN BANK</item>
+        <item>SREE NARAYANA GURU CO- OPERATIVE BANK LTD</item>
+        <item>SREENIDHI SOUHARDA SAHAKARI BANK NIYAMITHA</item>
+        <item>SS BANK</item>
+        <item>STANDARD CHARTED BANK</item>
+        <item>STATE BANK OF BIKANER &amp; JAIPUR</item>
+        <item>STATE BANK OF HYDERABAD</item>
+        <item>STATE BANK OF INDIA </item>
+        <item>STATE BANK OF MAURITIUS</item>
+        <item>STATE BANK OF MYSORE</item>
+        <item>STATE BANK OF PATIALA</item>
+        <item>STATE BANK OF TRAVANCORE</item>
+        <item>SURAT NATIONAL CO-OPERATIVE BANK LTD</item>
+        <item>SUVARNAYUG SAHAKARI BANK LTD</item>
+        <item>SVC BANK</item>
+        <item>SVC CO-OPERATIVE BANK LTD</item>
+        <item>SYNDICATE BANK</item>
+        <item>TAMIL NADU INDUSTRIAL CO-OP. BANK LTD</item>
+        <item>TAMILNADU MERCANTILE BANK LTD</item>
+        <item>THANE BHARAT SAHAKARI BANK LTD</item>
+        <item>THE ABHINAV SAHAKARI BANK LTD.</item>
+        <item>THE AHMEDABAD MECANTILE CO-OP BANK LTD</item>
+        <item>THE AJARA URBAN CO-OP BANK LTD</item>
+        <item>THE AKOLA URBAN CO-OPERATIVE BANK LTD</item>
+        <item>THE ANDHRA PRADESH STATE CO-OP BANK LTD</item>
+        <item>THE BARAMATI SAHAKARI BANK LTD.</item>
+        <item>THE BARODA CITY CO-OPERATIVE BANK LTD</item>
+        <item>THE BHAGYODAYA CO-OPERATIVE BANK LTD</item>
+        <item>THE BHANDARA URBAN CO-OPERATIVE BANK LTD</item>
+        <item>THE CATHOLIC SYRIAN BANK LTD</item>
+        <item>THE CHANASMA NAGRIK SAHAKARI BANK LTD</item>
+        <item>THE CITY CO-OPERATIVE BANK LTD</item>
+        <item>THE CO-OPERATIVE BANK OF RAJKOT LTD</item>
+        <item>THE DECCAN MERCHANTS CO-OP BANK LTD</item>
+        <item>THE DELHI STATE CO-OPERATIVE BANK LTD</item>
+        <item>THE EENADU CO-OPERATIVE URBAN BANK LTD</item>
+        <item>THE FINANCIAL CO-OPERATIVE BANK LTD</item>
+        <item>THE GAYATRI CO-OPERATIVE URBAN BANK LTD</item>
+        <item>THE GREATER BOMBAY CO-OP BANK LTD</item>
+        <item>THE GUJARAT STATE CO-OP BANK LTD</item>
+        <item>THE JAIN SAHAKARI BANK LTD</item>
+        <item>THE JALGAON PEOPLES CO-OPERATIVE BANK LTD</item>
+        <item>THE JHAJJAR CENTRAL CO-OPERATIVE BANK LTD.</item>
+        <item>THE KALUPUR COMMERCIAL CO-OPERATIVE BANK LTD</item>
+        <item>THE KALYAN JANATA SAHAKARI BANK LTD</item>
+        <item>THE KANGRA CO-OPERATIVE BANK LIMITED</item>
+        <item>THE KARAD URBAN CO-OP. BANK LTD</item>
+        <item>THE KARNATAKA STATE CO-OP</item>
+        <item>THE KHAMGAON URBAN CO-OPERATIVE BANK LTD.</item>
+        <item>THE KHATTRI CO. OPERATIVE URBAN BANK LTD</item>
+        <item>THE KOZHIKODE DISTRICT CO-OPERATIVE BANK LTDTHE KOZHIKODE DISTRICT CO-OPERATIVE BANK LTD</item>
+        <item>THE KRANTHI CO-OP URBAN BANK LTD.</item>
+        <item>THE MAHANAGAR CO-OP BANK LTD</item>
+        <item>THE MALAD SAHAKARI BANK LTD</item>
+        <item>THE MEHSANA NAGRIK SAHAKARI BANK LTD.</item>
+        <item>THE MEHSANA URBAN CO-OP BANK LTD</item>
+        <item>THE NANDURBAR MERCHANT'S CO-OP BANK LTD</item>
+        <item>THE NANITAL BANK LTD</item>
+        <item>THE NASIK MERCHANTS CO-OP BANK LTD. NASHIK</item>
+        <item>THE NASIK ROAD DEOLALI VYAPARI SAHAKARI BNAK LIMITED.</item>
+        <item>THE NATIONAL CO-OPERATIVE BANK LTD</item>
+        <item>THE NAVNIRMAN CO.OP. BANK LTD</item>
+        <item>THE NAWANAGAR CO-OPRATIVE BANK LTD</item>
+        <item>THE PANDHARPUR URBAN CO-OP BANK LTD</item>
+        <item>THE PRATAP CO-OPERATIVE BANK LTD</item>
+        <item>THE PUNJAB STATE COOPERATIVE BANK LIMITED</item>
+        <item>THE RAJKOT COMMERCIAL CO-OP BANK LTD.</item>
+        <item>THE SANKHEDA NAGARIK SAHAKARI BANK LTD</item>
+        <item>THE SATARA SAHAKARI BANK LTD</item>
+        <item>THE SEVA VIKAS CO-OP BANK LTD.</item>
+        <item>THE SOUTH INDIAN BANK</item>
+        <item>THE SURAT PEOPLE'S CO-OP. BANK LTD</item>
+        <item>THE SUTEX CO-OP BANK LTD</item>
+        <item>THE SUVIKAS PEOPLE'S CO-OPRATIVE BANK LTD</item>
+        <item>THE TAMILNADU INDUSTRIAL CO OPERATIVE BANK LTD</item>
+        <item>THE TAMILNADU STATE APEX CO OPERATIVE BANK LTD</item>
+        <item>THE THANE DIST.CENTRAL CO-OP BANK LTD</item>
+        <item>THE THANE JANATA SAHAKARI BANK</item>
+        <item>THE UDAIPUR URBAN CO-OPERATIVE BANK LTD</item>
+        <item>THE UNION CO-OPERATIVE BANK LTD</item>
+        <item>THE VAISH COOPERATIVE ADARSH BANK LTD</item>
+        <item>THE VAISH CO-OPERATIVE NEW BANK LTD</item>
+        <item>THE VARACHHA CO-OPERATIVE BANK LTD</item>
+        <item>THE VERAVAL MERCANTILE CO OPERATIVE BANK LTD</item>
+        <item>THE VISAKHAPATNAM COOPERATIVE BANK PVT LTD</item>
+        <item>THE VISHVESHWAR SAHKARI BANK LTD PUNE</item>
+        <item>THE ZORASTRAIN CO-OPERATIVE BANK</item>
+        <item>TIRUPATI URBAN CO-OPERATIVE BANK LIMITED</item>
+        <item>TJSB SAHSKARI BANK LTD</item>
+        <item>TUMKUR GRAIN MERCHANTS CO-OPERATIVE BANK LIMITED</item>
+        <item>UBS</item>
+        <item>UCO BANK</item>
+        <item>UDYAM VIKAS SAHAKARI BANK  LTD</item>
+        <item>UJJIVAN SMALL FINANCE BANK</item>
+        <item>UMA CO-OPERATIVE BANK LTD</item>
+        <item>UMIYA URBAN CO-OPERATIVE BANK MYDT</item>
+        <item>UNITED BANK OF INDIA</item>
+        <item>UTKAL GRAMEEN BANK</item>
+        <item>VAIDYANATH URBAN CO OP BANK LTD</item>
+        <item>VASAI VIKAS SAHAKARI BANK LIMITED</item>
+        <item>VIDHARBHA KOKAN GRAMIN BANK</item>
+        <item>VIDYA SAHAKARI BANK LTD</item>
+        <item>VIJAY COMMERCIAL CO OPERATIVE BANK</item>
+        <item>VIJAYA BANK</item>
+        <item>VISHWAS CO-OPERATIVE BANK LTD</item>
+        <item>WARANGAL URBAN CO-OPERATIVE BANK LTD</item>
+        <item>WESTPAC BANK.</item>
+        <item>WOORI BANK.</item>
+        <item>YES BANK</item>
+    </string-array>
     <string-array name="business_hours_arrays">
         <item>12:00AM</item>
         <item>12:30AM</item>
@@ -1286,7 +1597,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.</string>
     <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
     <string name="domain_linking_success">Domain Linking Successful</string>
-    <string name="map_visits">Map Visits</string>
+    <string name="map_visits">Address Views</string>
     <string name="boost_keyboard">Boost Keyboard</string>
 
     <string-array name="manage_content_tab_items">
@@ -1303,8 +1614,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Log out</item>
     </string-array>
     <string-array name="payment_options">
-        <item>OPC Online pay</item>
-        <item>Cheque pay</item>
+        <item>OPC Online Pay</item>
+        <item>Pay By Cheque</item>
         <item>Bank Transfer</item>
     </string-array>
 </resources>

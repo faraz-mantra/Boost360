@@ -58,7 +58,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
     List<PackageDetails> mBasePackages;
     List<PackageDetails>  mTopUps;
     private static final int NUM_OF_FEATURES = 5;
-    private final int DIRECT_REQUEST_CODE = 2013;
+    public static final int DIRECT_REQUEST_CODE = 2013;
 
     MaterialDialog materialProgress;
 
@@ -185,7 +185,6 @@ public class NewPricingPlansActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==DIRECT_REQUEST_CODE && resultCode==RESULT_OK){
             if(data==null){
                 return;
@@ -224,6 +223,9 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                     Methods.showDialog(NewPricingPlansActivity.this,status, msg);
                 }
             }
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

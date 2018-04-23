@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -102,7 +104,7 @@ public class AllPlansFragment extends Fragment {
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
-                Intent i = new Intent(getActivity(), ProductCheckoutActivity.class);
+                Intent i = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?ProductCheckout_v2Activity.class:ProductCheckoutActivity.class);
                 i.putExtra("package_ids", new String[]{mBasePlans.get(vpPricingPlans.getCurrentItem()).getId()});
                 startActivityForResult(i, DIRECT_REQUEST_CODE);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -140,7 +142,11 @@ public class AllPlansFragment extends Fragment {
             //sendEmail(success, status, message, paymentId, transactionId, amount);
             BoostLog.d("TransaCtionId", transactionId);
             if(success) {
-                if(status.equals("Success")) {
+                if (TextUtils.isEmpty(status)){
+                    String msg = "Sorry! \n" +
+                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
+                    Methods.showDialog(getActivity(),status, msg);
+                } else if(status.equals("Success")) {
 
                     MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
 
@@ -151,7 +157,11 @@ public class AllPlansFragment extends Fragment {
                     pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn, 0);
                 }
             }else {
-                if(status.equals("Pending")){
+                if (TextUtils.isEmpty(status)){
+                    String msg = "Sorry! \n" +
+                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
+                    Methods.showDialog(getActivity(),status, msg);
+                } else if(status.equals("Pending")){
                     String msg = "Alert! \n" +
                             "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours";
                     Methods.showDialog(getActivity(),status, msg);
