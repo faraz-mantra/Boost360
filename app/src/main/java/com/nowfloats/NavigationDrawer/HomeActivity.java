@@ -1021,9 +1021,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+/*<<<<<<< HEAD
                 if (nextScreen.equals(getString(R.string.keyboard))) {
 //                    Intent intent = new Intent(HomeActivity.this, PaymentOptionsActivity.class);
 //                    startActivity(intent);
+=======*/
+                if (nextScreen.equals(getString(R.string.keyboard))) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {

@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.PopupWindow;
@@ -52,10 +51,11 @@ public class KeyboardViewBaseImpl extends KeyboardView implements KeyboardViewIn
 
     @Override
     public boolean setShifted(boolean bol) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP  && mCurrentKeyboard.getShiftKeyIndex() != -1) {
+        if (mCurrentKeyboard.getShiftKeyIndex() != -1) {
             Keyboard.Key key = mCurrentKeyboard.getKeys().get(mCurrentKeyboard.getShiftKeyIndex());
             key.icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext,bol ? R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN));
         }
+
         return super.setShifted(bol);
     }
 }

@@ -1,7 +1,10 @@
 package com.nowfloats.Store.Service;
 
+import com.nowfloats.Store.Model.ChequePaymentModel;
 import com.nowfloats.Store.Model.EnablePackageResponse;
+import com.nowfloats.Store.Model.InitiateModel;
 import com.nowfloats.Store.Model.MailModel;
+import com.nowfloats.Store.Model.MarkAsPaidModel;
 import com.nowfloats.Store.Model.OPCModels.UpdateDraftInvoiceModel;
 import com.nowfloats.Store.Model.PaymentTokenResult;
 import com.nowfloats.Store.Model.PricingPlansModel;
@@ -70,4 +73,14 @@ public interface StoreInterface {
 
     @POST("/payment/v2/floatingpoint/initiatePaymentProcess")
     void initiatePaymentProcess(@QueryMap Map<String, String> params, @Body SupportedPaymentMethods model, Callback<PaymentTokenResult> callback);
+
+
+    @POST("/payment/v1/invoice/UpdateChequePaymentLog")
+    void updateChequeLog(@Body ChequePaymentModel model, Callback<String> res);
+
+    @POST("/Support/v2/MarkFloatingPointAsPaid")
+    void markAsPaid(@Body MarkAsPaidModel model, Callback<String> res);
+
+    @POST("/payment/v1/floatingpoints/initiate/{clientId}")
+    void initiate(@Path("clientId") String clientId, @Body InitiateModel model, Callback<String> res);
 }

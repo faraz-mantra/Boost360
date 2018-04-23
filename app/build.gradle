@@ -48,7 +48,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2018040007
+        versionCode 2018040023
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -107,7 +107,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.9.6"
+            versionName "4.9.7"
             applicationId "com.biz2.nowfloats"
             dimension "default"
         }

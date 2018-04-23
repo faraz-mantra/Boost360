@@ -58,7 +58,7 @@ public class PaymentOptionsListFragment extends ListFragment implements AdapterV
 
         sessionManager = new UserSessionManager(mContext, getActivity());
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.payment_options, android.R.layout.simple_list_item_1);
+                R.array.payment_options, R.layout.layout_simple_text_list_item);
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
 

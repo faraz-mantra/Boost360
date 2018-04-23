@@ -1,7 +1,6 @@
 package com.nowfloats.Store;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,15 +11,12 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Store.Adapters.ActivePlansRvAdapter;
 import com.nowfloats.Store.Adapters.TopUpDialogRvAdapter;
 import com.nowfloats.Store.Model.ActivePackage;
@@ -28,6 +24,7 @@ import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.text.DateFormat;
@@ -222,7 +219,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
                 }
                 dialog.dismiss();
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
-                Intent i = new Intent(getActivity(), ProductCheckoutActivity.class);
+                Intent i = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?ProductCheckout_v2Activity.class:ProductCheckoutActivity.class);
                 i.putExtra("package_ids", mPackageIds.toArray(new String[mPackageIds.size()]));
                 startActivityForResult(i, DIRECT_REQUEST_CODE);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

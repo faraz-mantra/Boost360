@@ -134,7 +134,6 @@ public class ImePresenterImpl implements ItemClickListener,
         } else {
             doCommitContent(text, "image/png", uri);
         }
-
     }
 
     @Override
