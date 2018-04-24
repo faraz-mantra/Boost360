@@ -21,6 +21,9 @@ public class DatabaseTable {
     }
 
     public ArrayList<KeywordModel> getWordMatches(String query, String[] columns) {
+        if (query.indexOf("'") > 0) {
+            query = query.replace("'", "''");
+        }
         String selection = COL_WORD + " like '" + query + "%'";
         ArrayList<String> list = new ArrayList<>();
         ArrayList<KeywordModel> modelList = new ArrayList<>();

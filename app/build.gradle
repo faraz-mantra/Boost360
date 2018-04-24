@@ -107,7 +107,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.9.7"
+            versionName "4.9.8"
             applicationId "com.biz2.nowfloats"
             dimension "default"
         }
