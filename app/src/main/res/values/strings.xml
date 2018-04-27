@@ -1594,11 +1594,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Privacy Policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
-    <string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.</string>
+    <string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
     <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
     <string name="domain_linking_success">Domain Linking Successful</string>
     <string name="map_visits">Address Views</string>
     <string name="boost_keyboard">Boost Keyboard</string>
+    <string name="enable_keyboard">Enable Keyboard</string>
 
     <string-array name="manage_content_tab_items">
         <item>My Business Profile</item>

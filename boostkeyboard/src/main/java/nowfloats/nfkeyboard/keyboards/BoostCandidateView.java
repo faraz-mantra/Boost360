@@ -17,7 +17,6 @@ import nowfloats.nfkeyboard.util.SharedPrefUtil;
  */
 
 public class BoostCandidateView extends BaseCandidateView{
-    private OnClickListener listener;
     private int currentView;
     private Context mContext;
     public BoostCandidateView(Context context) {
@@ -76,9 +75,9 @@ public class BoostCandidateView extends BaseCandidateView{
 
     }
 
-    public void setItemClickListener(OnClickListener listener){
+   /* public void setItemClickListener(OnClickListener listener){
         this.listener = listener;
-    }
+    }*/
     @Override
     public void onClick(View view) {
         if (currentView == view.getId()){
@@ -89,6 +88,6 @@ public class BoostCandidateView extends BaseCandidateView{
         findViewById(R.id.tv_products).setBackgroundResource(view.getId() == R.id.tv_products ? R.drawable.round_414141:android.R.color.transparent);
         findViewById(R.id.img_settings).setBackgroundResource(view.getId() == R.id.img_settings ? R.drawable.round_414141:android.R.color.transparent);
         findViewById(R.id.img_nowfloats).setBackgroundResource(view.getId() == R.id.img_nowfloats ? R.drawable.round_414141:android.R.color.transparent);
-        listener.onClick(view);
+        listener.onKeyboardTabClick(view);
     }
 }

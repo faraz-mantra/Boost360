@@ -131,6 +131,7 @@ public interface EventKeysWL
     String KEYBOARD_SWITCH_CLICKED = "KeyboardSwitchClicked";
     String STORAGE_SWITCH_CLICKED = "StoragePermissionSwitchClicked";
     String MICROPHONE_SWITCH_CLICKED = "MicrophonePermissionSwitchClicked";
+    String ALLOW_ACCESS_SWITCH_CLICKED = "AllowPermissionSwitchClicked";
 
     // PRODUCT_GALLERY_
 

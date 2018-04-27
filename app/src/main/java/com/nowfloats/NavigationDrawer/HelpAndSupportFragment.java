@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -48,9 +49,11 @@ public class HelpAndSupportFragment extends Fragment {
     private Context mContext;
     private List<RiaSupportModel> mRiaSupportModelList;
     private ProgressDialog dialog;
-    enum MemberType{
-        CHC,WEB,DEFAULT;
+
+    enum MemberType {
+        CHC, WEB, DEFAULT;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +68,10 @@ public class HelpAndSupportFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return  inflater.inflate(R.layout.fragment_new_help_and_support,container,false);
+        return inflater.inflate(R.layout.fragment_new_help_and_support, container, false);
     }
 
-    private void showProgress(){
+    private void showProgress() {
         if (dialog == null) {
             dialog = new ProgressDialog(mContext);
             dialog.setCanceledOnTouchOutside(false);
@@ -78,24 +81,26 @@ public class HelpAndSupportFragment extends Fragment {
         if (!dialog.isShowing())
             dialog.show();
     }
-    private void hideProgress(){
-        if (dialog != null && dialog.isShowing()){
+
+    private void hideProgress() {
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded() || isDetached()) return;
-        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK,null);
+        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK, null);
         mRiaSupportModelList = new ArrayList<>(2);
-        UserSessionManager manager = new UserSessionManager(mContext,getActivity());
+        UserSessionManager manager = new UserSessionManager(mContext, getActivity());
         if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
             HashMap<String, String> param = new HashMap<>();
             param.put("clientId", Constants.clientId);
             param.put("fpTag", manager.getFpTag());
             getRiaMembers(param, view);
-        }else{
+        } else {
             addDefaultRiaData();
             setAdapterWithPager(view);
         }
@@ -111,6 +116,7 @@ public class HelpAndSupportFragment extends Fragment {
 //        tvTextRia.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
+
     protected void makeLinkClickable(TextView view) {
 
         SpannableStringBuilder spanTxt = new SpannableStringBuilder("If your query is still unanswered, please check ");
@@ -119,31 +125,32 @@ public class HelpAndSupportFragment extends Fragment {
             @Override
             public void onClick(View widget) {
                 Intent i = new Intent(mContext, Mobile_Site_Activity.class);
-                i.putExtra("WEBSITE_NAME",getString(R.string.setting_faq_url));
+                i.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url));
                 startActivity(i);
             }
         }, spanTxt.length() - Methods.fromHtml("<u><b>FAQs</b></u>").length(), spanTxt.length(), 0);
         spanTxt.append(" ");
-        spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>"+getString(R.string.settings_feedback_link) +"</b></a> or call our toll-free number <a href=\"tel:"+ getString(R.string.contact_us_number)+"\"><b>"+getString(R.string.contact_us_number)+"</b></a>."));
+        spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>" + getString(R.string.settings_feedback_link) + "</b></a> or call our toll-free number <a href=\"tel:" + getString(R.string.contact_us_number) + "\"><b>" + getString(R.string.contact_us_number) + "</b></a>."));
         view.setMovementMethod(LinkMovementMethod.getInstance());
         view.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }
-    private void getRiaMembers(HashMap<String,String> map, final View view){
+
+    private void getRiaMembers(HashMap<String, String> map, final View view) {
         showProgress();
         RiaNetworkInterface riaNetworkInterface = Constants.riaRestAdapter.create(RiaNetworkInterface.class);
         riaNetworkInterface.getAllMemberForFp(map, new Callback<List<RiaSupportModel>>() {
             @Override
             public void success(List<RiaSupportModel> list, Response response) {
                 if (list == null || list.size() == 0 ||
-                        response.getStatus() <200 || response.getStatus()>300 ){
+                        response.getStatus() < 200 || response.getStatus() > 300) {
                     addDefaultRiaData();
-                }else {
-                    for (RiaSupportModel model : list){
-                        if (TextUtils.isEmpty(model.getType())){
+                } else {
+                    for (RiaSupportModel model : list) {
+                        if (TextUtils.isEmpty(model.getType())) {
                             model.setType(MemberType.WEB.toString());
                             mRiaSupportModelList.add(model);
-                        }else if( MemberType.CHC.name().equals(model.getType())){
-                            mRiaSupportModelList.add(0,model);
+                        } else if (MemberType.CHC.name().equals(model.getType())) {
+                            mRiaSupportModelList.add(0, model);
                         }
                     }
                 }
@@ -154,7 +161,7 @@ public class HelpAndSupportFragment extends Fragment {
             public void failure(RetrofitError error) {
                 addDefaultRiaData();
                 setAdapterWithPager(view);
-                Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
 
             }
         });
@@ -163,37 +170,42 @@ public class HelpAndSupportFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (headerText != null){
+        if (headerText != null) {
             headerText.setText("Help and Support");
         }
     }
 
-    private void setAdapterWithPager(View view){
+    private void setAdapterWithPager(View view) {
         hideProgress();
-        if(getActivity() == null || !isAdded()){
+        if (getActivity() == null || !isAdded()) {
             return;
         }
         ViewPager mPager = view.findViewById(R.id.ps_pager);
         mPager.setClipToPadding(false);
         // set padding manually, the more you set the padding the more you see of prev & next page
-        int padding = Methods.dpToPx(25,mContext);
-        mPager.setPadding(padding,padding,padding,padding);
+        int padding = Methods.dpToPx(25, mContext);
+        mPager.setPadding(padding, padding, padding, padding);
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
-        mPager.setPageMargin(padding/2);
+        mPager.setPageMargin(padding / 2);
         mPager.setAdapter(new viewPagerAdapter(getChildFragmentManager()));
         PageIndicatorView pageIndicatorView = view.findViewById(R.id.ps_indicator);
         pageIndicatorView.setCount(mRiaSupportModelList.size());
         pageIndicatorView.setViewPager(mPager);
     }
-    private void addDefaultRiaData(){
+
+    private void addDefaultRiaData() {
         RiaSupportModel model = new RiaSupportModel();
-        model.setName(getString(R.string.support_name));
+        Activity activity = getActivity();
+        if (activity != null && isAdded()) {
+            model.setName(getString(R.string.support_name));
+            model.setEmail(getString(R.string.settings_feedback_link));
+            model.setPhoneNumber(getString(R.string.contact_us_number));
+        }
         model.setGender(1);
-        model.setEmail(getString(R.string.settings_feedback_link));
         model.setType(MemberType.DEFAULT.toString());
-        model.setPhoneNumber(getString(R.string.contact_us_number));
         mRiaSupportModelList.add(model);
     }
+
     private class viewPagerAdapter extends FragmentStatePagerAdapter {
 
         viewPagerAdapter(FragmentManager fm) {
@@ -203,7 +215,7 @@ public class HelpAndSupportFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             Bundle b = new Bundle();
-            b.putString(HelpAndSupportCardItemFragment.RIA_MODEL_DATA,new Gson().toJson(mRiaSupportModelList.get(position)));
+            b.putString(HelpAndSupportCardItemFragment.RIA_MODEL_DATA, new Gson().toJson(mRiaSupportModelList.get(position)));
             return HelpAndSupportCardItemFragment.getInstance(b);
         }
 
