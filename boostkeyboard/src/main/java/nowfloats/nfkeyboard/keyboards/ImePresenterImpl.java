@@ -69,6 +69,7 @@ public class ImePresenterImpl implements ItemClickListener,
         CandidateViewItemClickListener,
         UrlToBitmapInterface {
     private final DatabaseTable mDatabaseTable;
+    private final SpellCorrector corrector;
     private CandidateViewBaseImpl mCandidateView;
     private KeyboardViewBaseImpl mKeyboardView;
     private ManageKeyboardView manageKeyboardView;
@@ -88,6 +89,9 @@ public class ImePresenterImpl implements ItemClickListener,
     private TabType mTabType = TabType.NO_TAB;
     private ShiftType mShiftType = ShiftType.CAPITAL;
     private int mPrimaryCode;
+    private String text;
+    private ArrayList<KeywordModel> mSuggestions;
+    private static boolean isSelectedKeyboardItem = false;
 
     @Override
     public TabType getTabType() {
@@ -138,6 +142,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
     @Override
     public void onItemClick(KeywordModel word) {
+        isSelectedKeyboardItem = true;
         if (word.getType().equalsIgnoreCase(KeywordModel.NEW_WORD)) {
             mDatabaseTable.saveWordToDatabase(word.getWord());
         }
@@ -199,6 +204,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
     ImePresenterImpl(Context context, PresenterToImeInterface imeListener) {
         mDatabaseTable = new DatabaseTable(context);
+        corrector = new SpellCorrector(context);
         mCandidateView = new CandidateViewBaseImpl(context);
         MixPanelUtils.getInstance().setMixPanel(context);
         mCandidateView.setcandidateItemClickListener(this);
@@ -558,18 +564,27 @@ public class ImePresenterImpl implements ItemClickListener,
 
 
     public void showWordSuggestions(InputConnection inputConnection) {
-        if (mPrimaryCode != 32 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+        if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
             CharSequence inputSequence = inputConnection.getTextBeforeCursor(100, 0);
             if (inputSequence != null && inputSequence.length() > 0) {
-                String text = inputSequence.toString();
+                text = inputSequence.toString();
                 if (inputSequence.toString().indexOf(" ") > 0) {
                     text = inputSequence.toString().substring(inputSequence.toString().lastIndexOf(" "), inputSequence.toString().length());
                 }
                 // String[] words = inputSequence.toString().split(" ");
 
-                ArrayList<KeywordModel> suggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim());
+                mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim());
+                ArrayList<KeywordModel> corrections = new ArrayList<>();
+                if (mSuggestions != null && mSuggestions.isEmpty() && mPrimaryCode != -5) {
+                    corrections = corrector.correct(text.trim());
+                    mSuggestions = corrections;
+                }
+                KeywordModel model = new KeywordModel();
+                model.setWord(text);
+                model.setType(KeywordModel.NEW_WORD);
+                mSuggestions.add(0, model);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("data", suggestions);
+                bundle.putSerializable("data", mSuggestions);
                 mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
             }
         }
@@ -586,7 +601,7 @@ public class ImePresenterImpl implements ItemClickListener,
         @Override
         public void onRelease(int primaryCode) {
             //mPopUpView.onRelease();
-            //mKeyboardView.setPreviewEnabled(false);
+            mKeyboardView.setPreviewEnabled(false);
         }
 
         @Override
@@ -649,7 +664,30 @@ public class ImePresenterImpl implements ItemClickListener,
                     break;
                 case KEY_SPACE:
                     primaryCode = 32;
+                    if (!isSelectedKeyboardItem && mSuggestions != null && !mSuggestions.isEmpty() && mSuggestions.size() > 1 && !text.equalsIgnoreCase(mSuggestions.get(1).getWord())) {
+                        ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
+                        int selectionStart = et.selectionEnd;
+                        CharSequence inputSequence = imeListener.getImeCurrentInputConnection().getTextBeforeCursor(1000, 0);
+                        int index = inputSequence.toString().trim().lastIndexOf(" ");
+                        String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
+                        imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().trim().indexOf(" ") != -1 ?
+                                oldText.length() - 1 : oldText.length(), 0);
+                        imeListener.getImeCurrentInputConnection().finishComposingText();
+                        imeListener.getImeCurrentInputConnection().commitText(mSuggestions.get(1).getWord(), 1);
+                        imeListener.getImeCurrentInputConnection().finishComposingText();
+                        mSuggestions.clear();
+                        mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, " ");
+                        ArrayList<KeywordModel> corrections = new ArrayList<>();
+                        if (mSuggestions != null && mSuggestions.isEmpty() && mPrimaryCode != -5) {
+                            corrections = corrector.correct(" ");
+                            mSuggestions = corrections;
+                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("data", mSuggestions);
+                        mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
+                    }
                 default:
+                    isSelectedKeyboardItem = false;
                     char code = (char) primaryCode;
                     if (Character.isLetter(code) && mShiftType != ShiftType.NORMAL) {
                         code = Character.toUpperCase(code);

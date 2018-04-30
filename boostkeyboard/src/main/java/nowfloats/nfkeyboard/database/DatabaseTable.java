@@ -3,7 +3,6 @@ package nowfloats.nfkeyboard.database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 
@@ -34,18 +33,22 @@ public class DatabaseTable {
             if (cursor != null && cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
                     String word = cursor.getString(cursor.getColumnIndex(COL_WORD));
-                    if (word.equalsIgnoreCase(query)) {
+                    /*if (word.equalsIgnoreCase(query)) {
                         isQueryWordExisting = true;
                     } else {
                         KeywordModel model = new KeywordModel();
                         model.setType(KeywordModel.DICTIONARY_WORD);
                         model.setWord(cursor.getString(cursor.getColumnIndex(COL_WORD)));
                         modelList.add(model);
-                    }
+                    }*/
+                    KeywordModel model = new KeywordModel();
+                    model.setType(KeywordModel.DICTIONARY_WORD);
+                    model.setWord(word);
+                    modelList.add(model);
                     cursor.moveToNext();
                 }
 
-                if (!TextUtils.isEmpty(query)) {
+                /*if (!TextUtils.isEmpty(query)) {
                     KeywordModel model = new KeywordModel();
                     model.setWord(query);
                     if (isQueryWordExisting) {
@@ -54,16 +57,16 @@ public class DatabaseTable {
                         model.setType(KeywordModel.NEW_WORD);
                     }
                     modelList.add(0, model);
-                }
+                }*/
                 mDatabaseOpenHelper.updateEntry(query);
-            } else {
+            }/* else {
                 //mDatabaseOpenHelper.insertEntry(query);
                 KeywordModel model = new KeywordModel();
                 model.setType(KeywordModel.NEW_WORD);
                 model.setWord(query);
                 //list.add(query);
                 modelList.add(model);
-            }
+            }*/
         } finally {
             if (cursor != null) {
                 cursor.close();
