@@ -3,7 +3,6 @@ package nowfloats.nfkeyboard.database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 
@@ -24,8 +23,8 @@ public class DatabaseTable {
         if (query.indexOf("'") > 0) {
             query = query.replace("'", "''");
         }
+        //String selection = COL_WORD + " like '" + query + "%'";
         String selection = COL_WORD + " like '" + query + "%'";
-        ArrayList<String> list = new ArrayList<>();
         ArrayList<KeywordModel> modelList = new ArrayList<>();
         Cursor cursor = null;
         boolean isQueryWordExisting = false;
@@ -34,35 +33,15 @@ public class DatabaseTable {
             if (cursor != null && cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
                     String word = cursor.getString(cursor.getColumnIndex(COL_WORD));
-                    if (word.equalsIgnoreCase(query)) {
-                        isQueryWordExisting = true;
-                    } else {
-                        KeywordModel model = new KeywordModel();
-                        model.setType(KeywordModel.DICTIONARY_WORD);
-                        model.setWord(cursor.getString(cursor.getColumnIndex(COL_WORD)));
+                    KeywordModel model = new KeywordModel();
+                    model.setType(KeywordModel.DICTIONARY_WORD);
+                    model.setWord(word.trim());
+                    if (!modelList.contains(model)) {
                         modelList.add(model);
                     }
                     cursor.moveToNext();
                 }
-
-                if (!TextUtils.isEmpty(query)) {
-                    KeywordModel model = new KeywordModel();
-                    model.setWord(query);
-                    if (isQueryWordExisting) {
-                        model.setType(KeywordModel.DICTIONARY_WORD);
-                    } else {
-                        model.setType(KeywordModel.NEW_WORD);
-                    }
-                    modelList.add(0, model);
-                }
                 mDatabaseOpenHelper.updateEntry(query);
-            } else {
-                //mDatabaseOpenHelper.insertEntry(query);
-                KeywordModel model = new KeywordModel();
-                model.setType(KeywordModel.NEW_WORD);
-                model.setWord(query);
-                //list.add(query);
-                modelList.add(model);
             }
         } finally {
             if (cursor != null) {
@@ -90,7 +69,7 @@ public class DatabaseTable {
     }
 
     public void saveWordToDatabase(String word) {
-        mDatabaseOpenHelper.insertEntry(word);
+        mDatabaseOpenHelper.checkAndInsertEntry(word);
     }
 
 }

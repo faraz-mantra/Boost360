@@ -196,9 +196,11 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.img_info1:
+                MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_MANAGE_CUSTOMERS, null);
                showOverlay(overLayout1,getString(R.string.website_customers),getString(R.string.manage_website_customers));
                 return;
             case R.id.img_info2:
+                MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_MANAGE_CUSTOMERS, null);
                 showOverlay(overLayout2,getString(R.string.cross_platform),getString(R.string.manage_multichannel_customers));
                 return;
             case R.id.ll_calls:

@@ -3,9 +3,6 @@ package nowfloats.nfkeyboard.keyboards;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +61,7 @@ public class TextSuggestionsCandidateView extends BaseCandidateView {
 
     @Override
     void setCandidateData(Bundle bundle) {
-        if (textSuggestionAdapter == null) {
+       /* if (textSuggestionAdapter == null) {
             RecyclerView mRecyclerView = findViewById(R.id.rv_suggestions);
             mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
             mRecyclerView.addItemDecoration(
@@ -73,46 +70,57 @@ public class TextSuggestionsCandidateView extends BaseCandidateView {
             textSuggestionAdapter = new TextSuggestionAdapter(mContext);
             mRecyclerView.setAdapter(textSuggestionAdapter);
             textSuggestionAdapter.setKeyboardItemClickListener(listener);
-        }
-
-        suggestions = (ArrayList<KeywordModel>) bundle.getSerializable("data");
-        textSuggestionAdapter.addNewSuggestions(suggestions);
-        if (suggestions != null && !suggestions.isEmpty()) {
-            findViewById(R.id.suggestion_layout).setVisibility(VISIBLE);
-        } else {
-            findViewById(R.id.suggestion_layout).setVisibility(INVISIBLE);
-        }
+        }*/
 
         TextView suggestion1 = findViewById(R.id.tv_suggestion1);
         View view = findViewById(R.id.view);
         TextView suggestion2 = findViewById(R.id.tv_suggestion2);
         TextView suggestion3 = findViewById(R.id.tv_suggestion3);
         View view2 = findViewById(R.id.view2);
-        if (suggestions.size() == 1) {
-            suggestion1.setVisibility(VISIBLE);
-            suggestion2.setVisibility(GONE);
-            suggestion3.setVisibility(GONE);
-            view.setVisibility(GONE);
-            view2.setVisibility(GONE);
-            suggestion1.setText(suggestions.get(0).getWord());
-        } else if (suggestions.size() == 2) {
-            suggestion1.setVisibility(VISIBLE);
-            suggestion2.setVisibility(VISIBLE);
-            suggestion3.setVisibility(GONE);
-            view.setVisibility(VISIBLE);
-            view2.setVisibility(GONE);
-            suggestion1.setText(suggestions.get(0).getWord());
-            suggestion2.setText(suggestions.get(1).getWord());
-        } else if (suggestions.size() > 2) {
-            suggestion1.setVisibility(VISIBLE);
-            suggestion2.setVisibility(VISIBLE);
-            suggestion3.setVisibility(VISIBLE);
-            view.setVisibility(VISIBLE);
-            view2.setVisibility(VISIBLE);
-            suggestion1.setText(suggestions.get(0).getWord());
-            suggestion2.setText(suggestions.get(1).getWord());
-            suggestion3.setText(suggestions.get(2).getWord());
+        suggestions = new ArrayList<>();
+        if (bundle.getSerializable("data") != null && ((ArrayList<KeywordModel>) bundle.getSerializable("data")).size() > 0) {
+
+            suggestions = (ArrayList<KeywordModel>) bundle.getSerializable("data");
+            // textSuggestionAdapter.addNewSuggestions(suggestions);
+            if (suggestions != null && !suggestions.isEmpty()) {
+                findViewById(R.id.suggestion_layout).setVisibility(VISIBLE);
+            } else {
+                findViewById(R.id.suggestion_layout).setVisibility(INVISIBLE);
+            }
+            if (suggestions != null && !suggestions.isEmpty()) {
+                if (suggestions.size() == 1) {
+                    suggestion1.setVisibility(VISIBLE);
+                    suggestion2.setVisibility(GONE);
+                    suggestion3.setVisibility(GONE);
+                    view.setVisibility(GONE);
+                    view2.setVisibility(GONE);
+                    suggestion1.setText(suggestions.get(0).getWord());
+                } else if (suggestions.size() == 2) {
+                    suggestion1.setVisibility(VISIBLE);
+                    suggestion2.setVisibility(VISIBLE);
+                    suggestion3.setVisibility(GONE);
+                    view.setVisibility(VISIBLE);
+                    view2.setVisibility(GONE);
+                    suggestion1.setText(suggestions.get(0).getWord());
+                    suggestion2.setText(suggestions.get(1).getWord());
+                } else if (suggestions.size() > 2) {
+                    suggestion1.setVisibility(VISIBLE);
+                    suggestion2.setVisibility(VISIBLE);
+                    suggestion3.setVisibility(VISIBLE);
+                    view.setVisibility(VISIBLE);
+                    view2.setVisibility(VISIBLE);
+                    suggestion1.setText(suggestions.get(0).getWord());
+                    if (suggestions.size() > 1) {
+                        suggestion2.setText(suggestions.get(1).getWord());
+                    }
+                    if (suggestions.size() > 2) {
+                        suggestion3.setText(suggestions.get(2).getWord());
+                    }
+                }
+            }
+
         }
+
 
         suggestion1.setOnClickListener(this);
         suggestion2.setOnClickListener(this);
@@ -121,12 +129,14 @@ public class TextSuggestionsCandidateView extends BaseCandidateView {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.tv_suggestion1) {
-            listener.onItemClick(suggestions.get(0));
-        } else if (view.getId() == R.id.tv_suggestion2) {
-            listener.onItemClick(suggestions.get(1));
-        } else if (view.getId() == R.id.tv_suggestion3) {
-            listener.onItemClick(suggestions.get(2));
+        if (suggestions != null && !suggestions.isEmpty()) {
+            if (view.getId() == R.id.tv_suggestion1) {
+                listener.onItemClick(suggestions.get(0));
+            } else if (view.getId() == R.id.tv_suggestion2) {
+                listener.onItemClick(suggestions.get(1));
+            } else if (view.getId() == R.id.tv_suggestion3) {
+                listener.onItemClick(suggestions.get(2));
+            }
         }
         if (currentView != R.id.img_nowfloats && currentView == view.getId()) {
             return;

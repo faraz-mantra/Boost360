@@ -13,6 +13,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,8 +40,12 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 import nowfloats.nfkeyboard.R;
@@ -69,6 +74,8 @@ public class ImePresenterImpl implements ItemClickListener,
         CandidateViewItemClickListener,
         UrlToBitmapInterface {
     private final DatabaseTable mDatabaseTable;
+    private final SpellCorrector corrector;
+    private ExecutorService mExecutorService;
     private CandidateViewBaseImpl mCandidateView;
     private KeyboardViewBaseImpl mKeyboardView;
     private ManageKeyboardView manageKeyboardView;
@@ -88,6 +95,17 @@ public class ImePresenterImpl implements ItemClickListener,
     private TabType mTabType = TabType.NO_TAB;
     private ShiftType mShiftType = ShiftType.CAPITAL;
     private int mPrimaryCode;
+    private String text;
+    private static String previousText;
+    private ArrayList<KeywordModel> mSuggestions;
+    private static boolean isSelectedKeyboardItem = false;
+    private static boolean isSelectedKeyboardEdited = false;
+    private static boolean isPreviousWordEdited = false;
+    private ArrayList<String> mSuggestedWordlist;
+    private Handler mHandler;
+    private Runnable runnable;
+    private Future longRunningTaskFuture;
+    private String enteredText;
 
     @Override
     public TabType getTabType() {
@@ -138,8 +156,9 @@ public class ImePresenterImpl implements ItemClickListener,
 
     @Override
     public void onItemClick(KeywordModel word) {
+        isSelectedKeyboardItem = true;
         if (word.getType().equalsIgnoreCase(KeywordModel.NEW_WORD)) {
-            mDatabaseTable.saveWordToDatabase(word.getWord());
+            mDatabaseTable.saveWordToDatabase(word.getWord().trim());
         }
         ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
         int selectionStart = et.selectionStart;
@@ -149,7 +168,7 @@ public class ImePresenterImpl implements ItemClickListener,
         imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().indexOf(" ") != -1 ?
                 oldText.length() - 1 : oldText.length(), 0);
         imeListener.getImeCurrentInputConnection().finishComposingText();
-        imeListener.getImeCurrentInputConnection().commitText(word.getWord(), 1);
+        imeListener.getImeCurrentInputConnection().commitText(word.getWord().trim(), 1);
         imeListener.getImeCurrentInputConnection().finishComposingText();
     }
 
@@ -198,7 +217,9 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     ImePresenterImpl(Context context, PresenterToImeInterface imeListener) {
+        mHandler = new Handler(context.getMainLooper());
         mDatabaseTable = new DatabaseTable(context);
+        corrector = new SpellCorrector(context);
         mCandidateView = new CandidateViewBaseImpl(context);
         MixPanelUtils.getInstance().setMixPanel(context);
         mCandidateView.setcandidateItemClickListener(this);
@@ -206,6 +227,8 @@ public class ImePresenterImpl implements ItemClickListener,
         mInputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         this.imeListener = imeListener;
+        mExecutorService = Executors.newSingleThreadExecutor();
+        mSuggestions = new ArrayList<>();
     }
 
     @Override
@@ -558,22 +581,78 @@ public class ImePresenterImpl implements ItemClickListener,
 
 
     public void showWordSuggestions(InputConnection inputConnection) {
-        if (mPrimaryCode != 32 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
-            CharSequence inputSequence = inputConnection.getTextBeforeCursor(100, 0);
+        //if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+
+        if (currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+            CharSequence inputSequence = inputConnection.getTextBeforeCursor(1000, 0);
             if (inputSequence != null && inputSequence.length() > 0) {
-                String text = inputSequence.toString();
-                if (inputSequence.toString().indexOf(" ") > 0) {
+                text = inputSequence.toString();
+                if (inputSequence.toString().lastIndexOf(" ") > 0) {
                     text = inputSequence.toString().substring(inputSequence.toString().lastIndexOf(" "), inputSequence.toString().length());
                 }
-                // String[] words = inputSequence.toString().split(" ");
+                if (mPrimaryCode == -2007) {
+                    text = " ";
+                }
+                mExecutorService.execute(new Thread(searchKeywordRunnable));
+               /* if (isPreviousWordEdited && isSelectedKeyboardEdited) {
+                    ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
+                    int selectionStart = et.selectionEnd;
+                    int index = inputSequence.toString().trim().lastIndexOf(" ");
+                    String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
+                    imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().trim().indexOf(" ") != -1 ?
+                            oldText.length() - 1 : oldText.length(), 0);
+                    enteredText = previousText;
 
-                ArrayList<KeywordModel> suggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("data", suggestions);
-                mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
+                    try {
+                        imeListener.getImeCurrentInputConnection().commitText(enteredText, 1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    isSelectedKeyboardItem = true;
+                }*/
+
             }
         }
     }
+
+    Runnable updateKeyboardRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", (Serializable) mSuggestions);
+            mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
+        }
+    };
+
+    Runnable searchKeywordRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mHandler.removeCallbacks(updateKeyboardRunnable);
+            mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
+            if (mSuggestions != null && mSuggestions.size() < 3) {
+                mSuggestions.addAll(corrector.correct(text.trim()));
+            }
+            mSuggestedWordlist = new ArrayList<>();
+            boolean isWordPresent = false;
+            if (text.trim().length() > 0) {
+                for (KeywordModel model : mSuggestions) {
+                    if (model.getWord().trim().equalsIgnoreCase(text.trim())) {
+                        isWordPresent = true;
+                    }
+                    mSuggestedWordlist.add(model.getWord().trim().toLowerCase());
+                }
+                if (!isWordPresent) {
+                    KeywordModel model = new KeywordModel();
+                    model.setWord(text);
+                    model.setType(KeywordModel.NEW_WORD);
+                    mSuggestions.add(0, model);
+                }
+            }
+            mHandler.postDelayed(updateKeyboardRunnable, 1);
+            //mHandler.post(updateKeyboardRunnable);
+
+        }
+    };
 
     class KeyboardListener extends AbstractKeyboardListener {
         @Override
@@ -586,7 +665,7 @@ public class ImePresenterImpl implements ItemClickListener,
         @Override
         public void onRelease(int primaryCode) {
             //mPopUpView.onRelease();
-            //mKeyboardView.setPreviewEnabled(false);
+            mKeyboardView.setPreviewEnabled(false);
         }
 
         @Override
@@ -599,14 +678,20 @@ public class ImePresenterImpl implements ItemClickListener,
             switch (primaryCode) {
                 case Keyboard.KEYCODE_DELETE:
                     //sendKeyEvent(KeyEvent.KEYCODE_DEL);
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = true;
                     inputConnection.deleteSurroundingText(1, 0);
                     //inputConnection.commitText("", 1);
                     //showWordSuggestions(primaryCode, inputConnection);
                     break;
                 case Keyboard.KEYCODE_SHIFT:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     onShiftPressed();
                     break;
                 case KEY_IME_OPTION:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
                     final int imeOptionsActionId = KeyboardUtils.getImeOptionsActionIdFromEditorInfo(editorInfo);
                     if (inputConnection != null && KeyboardUtils.IME_ACTION_CUSTOM_LABEL == imeOptionsActionId) {
@@ -628,28 +713,94 @@ public class ImePresenterImpl implements ItemClickListener,
 
                     break;
                 case KEY_NUMBER:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.NUMBERS);
                     break;
                 case KEY_EMOJI:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     mTabType = TabType.NO_TAB;
                     addCandidateTypeView(KeyboardUtils.CandidateType.BOOST_SHARE, TabType.NO_TAB);
                     manageKeyboardView.showEmojiLayout();
                     break;
                 case KEY_QWRTY:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.QWERTY_LETTERS);
                     break;
                 case KEY_SYM:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.SYMBOLS);
                     break;
                 case KEY_SYM_SHIFT:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     setCurrentKeyboard(KeyboardUtils.KeyboardType.SYMBOLS_SHIFT);
                     break;
                 case KEY_LANGUAGE_CHANGE:
+                    isSelectedKeyboardItem = false;
+                    isSelectedKeyboardEdited = false;
                     showLanguageMethods();
                     break;
                 case KEY_SPACE:
                     primaryCode = 32;
+                   /* if (!isSelectedKeyboardItem && mSuggestions != null && !mSuggestions.isEmpty()) {
+                        ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
+                        int selectionStart = et.selectionEnd;
+                        CharSequence inputSequence = imeListener.getImeCurrentInputConnection().getTextBeforeCursor(1000, 0);
+                        int index = inputSequence.toString().trim().lastIndexOf(" ");
+                        String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
+                        imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().trim().indexOf(" ") != -1 ?
+                                oldText.length() - 1 : oldText.length(), 0);
+                        //imeListener.getImeCurrentInputConnection().finishComposingText();
+                        if (mSuggestions.size() > 0 && text.trim().equalsIgnoreCase(mSuggestions.get(0).getWord().trim()) || mSuggestedWordlist.contains(text.trim().toLowerCase())) {
+                            enteredText = mSuggestions.size() > 0 ? isSelectedKeyboardEdited ? text.trim() : mSuggestedWordlist.contains(text.trim().toLowerCase()) ? text.trim() :
+                                    mSuggestions.get(0).getType().equalsIgnoreCase(KeywordModel.NEW_WORD) ?
+                                            mSuggestions.size() > 1 ? mSuggestions.get(1).getWord().trim() :
+                                                    mSuggestions.get(0).getWord().trim() : mSuggestions.get(0).getWord().trim() : text.trim();
+                            Log.v(ImePresenterImpl.class.getName(), " entered text - > " + enteredText.trim());
+                            imeListener.getImeCurrentInputConnection().commitText(enteredText.trim(), 1);
+
+                            text = "a";
+                            mExecutorService.execute(new Thread(searchKeywordRunnable));
+                            isSelectedKeyboardEdited = false;
+                            isSelectedKeyboardItem = true;
+                        }*//* else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    enteredText = mSuggestions.size() > 0 ? isSelectedKeyboardEdited ? text.trim() : mSuggestedWordlist.contains(text.trim().toLowerCase()) ? text.trim() :
+                                            mSuggestions.get(0).getType().equalsIgnoreCase(KeywordModel.NEW_WORD) ?
+                                                    mSuggestions.size() > 1 ? mSuggestions.get(1).getWord().trim() :
+                                                            mSuggestions.get(0).getWord().trim() : mSuggestions.get(0).getWord().trim() : text.trim();
+                                    imeListener.getImeCurrentInputConnection().commitText(enteredText.trim(), 1);
+                                    text = "a";
+                                    mExecutorService.execute(new Thread(searchKeywordRunnable));
+                                    isSelectedKeyboardEdited = false;
+                                    isSelectedKeyboardItem = true;
+                                }
+                            }, 3);
+                        }*//*
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (isSelectedKeyboardEdited) {
+                                    mDatabaseTable.saveWordToDatabase(enteredText);
+                                }
+                            }
+                        }).start();
+                    }
+                    previousText = text;*/
+
                 default:
+                    if (isSelectedKeyboardEdited && primaryCode == KEY_SPACE) {
+                        isSelectedKeyboardEdited = false;
+                    }
+                    if (primaryCode != 32) {
+                        isSelectedKeyboardItem = false;
+                    }
                     char code = (char) primaryCode;
                     if (Character.isLetter(code) && mShiftType != ShiftType.NORMAL) {
                         code = Character.toUpperCase(code);

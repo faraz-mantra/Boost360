@@ -259,6 +259,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.keyboard_info:
+                MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_BOOST_KEYBOARD, null);
                 showOverlay(overLayout1, getString(R.string.boost_keyboard), getString(R.string.keyboard_message));
                 break;
             case R.id.ll_enable_keyboard:

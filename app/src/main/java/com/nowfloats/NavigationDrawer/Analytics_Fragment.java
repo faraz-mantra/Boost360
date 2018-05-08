@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -202,6 +203,7 @@ public class Analytics_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         session = new UserSessionManager(getActivity(), getActivity());
         bus = BusProvider.getInstance().getBus();
         pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);

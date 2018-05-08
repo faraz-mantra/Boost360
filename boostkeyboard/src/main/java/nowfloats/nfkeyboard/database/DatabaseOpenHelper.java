@@ -114,4 +114,22 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
 
+    public void checkAndInsertEntry(String word) {
+        int count;
+        if (mDatabase == null) {
+            mDatabase = getWritableDatabase();
+        }
+        Cursor c = mDatabase.rawQuery("SELECT count FROM FTS WHERE word = ?", new String[]{word.trim()});
+        if (c != null && c.moveToFirst()) {
+            count = c.getInt(c.getColumnIndex(COL_COUNT));
+            ContentValues cv = new ContentValues();
+            cv.put(COL_COUNT, ++count);
+            mDatabase.update(FTS_VIRTUAL_TABLE, cv, "word=?", new String[]{word});
+        } else {
+            long id = addWords(word, 1);
+            if (id < 0) {
+                Log.e(TAG, "unable to add word: " + word);
+            }
+        }
+    }
 }

@@ -40,7 +40,7 @@ public interface StoreInterface {
     @GET("/Support/v2/floatingpoint/getpackages")
     void getOldStoreList(@QueryMap Map<String,String> map, Callback<StoreMainModel> callback);
 
-    @GET("/Support/v4/floatingpoint/getpackages")
+    @GET("/Support/v5/floatingpoint/getpackages")
     void getStoreList(@QueryMap Map<String,String> map, Callback<PricingPlansModel> callback);
 
     //https://api.withfloats.com/Discover/v1/floatingPoint/5406bd254ec0a40d409f2b2b/requestplan?

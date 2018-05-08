@@ -83,7 +83,7 @@ public class HelpAndSupportFragment extends Fragment {
     }
 
     private void hideProgress() {
-        if (dialog != null && dialog.isShowing()) {
+        if (dialog != null && dialog.isShowing() && getActivity() != null && isAdded()) {
             dialog.dismiss();
         }
     }
