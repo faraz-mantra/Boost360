@@ -581,7 +581,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
 
     public void showWordSuggestions(InputConnection inputConnection) {
-        //if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+        // if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
 
         if (currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
             CharSequence inputSequence = inputConnection.getTextBeforeCursor(1000, 0);
@@ -590,27 +590,7 @@ public class ImePresenterImpl implements ItemClickListener,
                 if (inputSequence.toString().lastIndexOf(" ") > 0) {
                     text = inputSequence.toString().substring(inputSequence.toString().lastIndexOf(" "), inputSequence.toString().length());
                 }
-                if (mPrimaryCode == -2007) {
-                    text = " ";
-                }
                 mExecutorService.execute(new Thread(searchKeywordRunnable));
-               /* if (isPreviousWordEdited && isSelectedKeyboardEdited) {
-                    ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
-                    int selectionStart = et.selectionEnd;
-                    int index = inputSequence.toString().trim().lastIndexOf(" ");
-                    String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
-                    imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().trim().indexOf(" ") != -1 ?
-                            oldText.length() - 1 : oldText.length(), 0);
-                    enteredText = previousText;
-
-                    try {
-                        imeListener.getImeCurrentInputConnection().commitText(enteredText, 1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    isSelectedKeyboardItem = true;
-                }*/
-
             }
         }
     }
@@ -630,6 +610,7 @@ public class ImePresenterImpl implements ItemClickListener,
             mHandler.removeCallbacks(updateKeyboardRunnable);
             mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
             if (mSuggestions != null && mSuggestions.size() < 3) {
+                corrector.setSuggestedWordListLimit(3 - mSuggestions.size());
                 mSuggestions.addAll(corrector.correct(text.trim()));
             }
             mSuggestedWordlist = new ArrayList<>();
@@ -648,7 +629,7 @@ public class ImePresenterImpl implements ItemClickListener,
                     mSuggestions.add(0, model);
                 }
             }
-            mHandler.postDelayed(updateKeyboardRunnable, 1);
+            mHandler.post(updateKeyboardRunnable);
             //mHandler.post(updateKeyboardRunnable);
 
         }
@@ -746,7 +727,11 @@ public class ImePresenterImpl implements ItemClickListener,
                     break;
                 case KEY_SPACE:
                     primaryCode = 32;
-                   /* if (!isSelectedKeyboardItem && mSuggestions != null && !mSuggestions.isEmpty()) {
+                    /*if (!isSelectedKeyboardItem && mSuggestions != null && !mSuggestions.isEmpty()) {
+                        StringBuilder builder1 = new StringBuilder();
+                        for (KeywordModel model : mSuggestions) {
+                            builder1.append(model.getWord() + ",");
+                        }
                         ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
                         int selectionStart = et.selectionEnd;
                         CharSequence inputSequence = imeListener.getImeCurrentInputConnection().getTextBeforeCursor(1000, 0);
@@ -754,35 +739,40 @@ public class ImePresenterImpl implements ItemClickListener,
                         String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
                         imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().trim().indexOf(" ") != -1 ?
                                 oldText.length() - 1 : oldText.length(), 0);
-                        //imeListener.getImeCurrentInputConnection().finishComposingText();
-                        if (mSuggestions.size() > 0 && text.trim().equalsIgnoreCase(mSuggestions.get(0).getWord().trim()) || mSuggestedWordlist.contains(text.trim().toLowerCase())) {
+                        if (mSuggestions.size() > 0 && mSuggestedWordlist.contains(text.trim().toLowerCase())) {
                             enteredText = mSuggestions.size() > 0 ? isSelectedKeyboardEdited ? text.trim() : mSuggestedWordlist.contains(text.trim().toLowerCase()) ? text.trim() :
                                     mSuggestions.get(0).getType().equalsIgnoreCase(KeywordModel.NEW_WORD) ?
                                             mSuggestions.size() > 1 ? mSuggestions.get(1).getWord().trim() :
                                                     mSuggestions.get(0).getWord().trim() : mSuggestions.get(0).getWord().trim() : text.trim();
-                            Log.v(ImePresenterImpl.class.getName(), " entered text - > " + enteredText.trim());
+                            StringBuilder builder = new StringBuilder();
+                            for (KeywordModel model : mSuggestions) {
+                                builder.append(model.getWord() + ",");
+                            }
                             imeListener.getImeCurrentInputConnection().commitText(enteredText.trim(), 1);
 
-                            text = "a";
-                            mExecutorService.execute(new Thread(searchKeywordRunnable));
+                            *//*text = "a";
+                            mExecutorService.execute(new Thread(searchKeywordRunnable));*//*
                             isSelectedKeyboardEdited = false;
                             isSelectedKeyboardItem = true;
-                        }*//* else {
+                        } else {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    enteredText = mSuggestions.size() > 0 ? isSelectedKeyboardEdited ? text.trim() : mSuggestedWordlist.contains(text.trim().toLowerCase()) ? text.trim() :
-                                            mSuggestions.get(0).getType().equalsIgnoreCase(KeywordModel.NEW_WORD) ?
-                                                    mSuggestions.size() > 1 ? mSuggestions.get(1).getWord().trim() :
-                                                            mSuggestions.get(0).getWord().trim() : mSuggestions.get(0).getWord().trim() : text.trim();
-                                    imeListener.getImeCurrentInputConnection().commitText(enteredText.trim(), 1);
-                                    text = "a";
-                                    mExecutorService.execute(new Thread(searchKeywordRunnable));
-                                    isSelectedKeyboardEdited = false;
-                                    isSelectedKeyboardItem = true;
+                                    if (mSuggestions.size() > 0 && mSuggestedWordlist.contains(text.trim().toLowerCase())) {
+                                        enteredText = mSuggestions.size() > 0 ? isSelectedKeyboardEdited ? text.trim() : mSuggestedWordlist.contains(text.trim().toLowerCase()) ? text.trim() :
+                                                mSuggestions.get(0).getType().equalsIgnoreCase(KeywordModel.NEW_WORD) ?
+                                                        mSuggestions.size() > 1 ? mSuggestions.get(1).getWord().trim() :
+                                                                mSuggestions.get(0).getWord().trim() : mSuggestions.get(0).getWord().trim() : text.trim();
+                                        imeListener.getImeCurrentInputConnection().commitText(enteredText.trim(), 1);
+                                        Log.v(" enteredText delayed text - > ", enteredText != null ? enteredText.trim() : " empty");
+                                        *//*text = "a";
+                                        mExecutorService.execute(new Thread(searchKeywordRunnable));*//*
+                                        isSelectedKeyboardEdited = false;
+                                        isSelectedKeyboardItem = true;
+                                    }
                                 }
-                            }, 3);
-                        }*//*
+                            }, 5);
+                        }
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -792,6 +782,7 @@ public class ImePresenterImpl implements ItemClickListener,
                             }
                         }).start();
                     }
+                    Log.v(" entered text - > ", enteredText != null ? enteredText.trim() : " empty");
                     previousText = text;*/
 
                 default:

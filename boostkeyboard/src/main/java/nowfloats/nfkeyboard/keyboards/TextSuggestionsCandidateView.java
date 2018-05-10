@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -81,6 +82,11 @@ public class TextSuggestionsCandidateView extends BaseCandidateView {
         if (bundle.getSerializable("data") != null && ((ArrayList<KeywordModel>) bundle.getSerializable("data")).size() > 0) {
 
             suggestions = (ArrayList<KeywordModel>) bundle.getSerializable("data");
+            StringBuilder builder = new StringBuilder();
+            for (KeywordModel model : suggestions) {
+                builder.append(model.getWord() + ",");
+            }
+            Log.v(" adapter data - > ", builder.toString());
             // textSuggestionAdapter.addNewSuggestions(suggestions);
             if (suggestions != null && !suggestions.isEmpty()) {
                 findViewById(R.id.suggestion_layout).setVisibility(VISIBLE);

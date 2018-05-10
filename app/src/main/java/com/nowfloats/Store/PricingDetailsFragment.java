@@ -1,26 +1,35 @@
 package com.nowfloats.Store;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.nowfloats.Store.Adapters.AllPlansRvAdapter;
 import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.WidgetPacks;
 import com.squareup.picasso.Picasso;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +44,8 @@ public class PricingDetailsFragment extends Fragment {
     private List<PackageDetails> mTopUps;
     private AllPlansRvAdapter mRvAdapter;
     private Context mContext;
+    private PopupWindow popup;
+    private TextView tvDesc;
 
     public PricingDetailsFragment() {
     }
@@ -68,83 +79,147 @@ public class PricingDetailsFragment extends Fragment {
         ivPackageLogo = (ImageView) pricingView.findViewById(R.id.iv_package_logo);
         if (mBasePackage == null) return pricingView;
         Picasso.with(getActivity()).load(mBasePackage.getPrimaryImageUri()).into(ivPackageLogo);
-        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>());
+        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>(), getActivity());
         prepareBasePackageDetails();
 
         rvAllPlanDetails.setAdapter(mRvAdapter);
+        mRvAdapter.setClickListener(planDescriptionClickListener);
         rvAllPlanDetails.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return pricingView;
     }
+
+    List<List<Pair<String, List<WidgetPacks>>>> packages = new ArrayList<>();
 
     private void prepareBasePackageDetails() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 final List<Pair<String, Boolean>> packageDetails = new ArrayList<>();
-                Map<String, StringBuilder> map = new HashMap<>();
-                packageDetails.add(new Pair<>(mBasePackage.getValidityInMths() + " MONTHS PLAN", true));
+                final List<Pair<String, List<WidgetPacks>>> groupPackageDetails = new ArrayList<>();
+                final List<Pair<String, List<WidgetPacks>>> normalPackageDetails = new ArrayList<>();
+                final List<Pair<String, List<WidgetPacks>>> allPackages = new ArrayList<>();
+                Map<String, List<WidgetPacks>> map = new HashMap<>();
                 int i = 0;
                 int counter = 0;
                 WidgetPacks widgetPack;
-                /*if (Constants.PACKAGE_NAME.equals("com.redtim")) {
-                    for (; i < mBasePackage.getWidgetPacks().size(); i++) {
-                        StringBuilder groupValues = new StringBuilder();
-                        widgetPack = mBasePackage.getWidgetPacks().get(i);
-                        if (widgetPack.Name != null) {
-                            if (widgetPack.Group == null) {
-                                packageDetails.add(new Pair<>(widgetPack.Name.toUpperCase(), true));
-                            } else {
-                                if (map.containsKey(widgetPack.Group)) {
-                                    groupValues = map.get(widgetPack.Group);
-                                    groupValues.append("   " + widgetPack.Name + "<br/>");
-                                    map.put(widgetPack.Group.toUpperCase(), groupValues);
-                                } else {
-                                    groupValues.append(widgetPack.Group + "<br/>");
-                                    groupValues.append("   " + widgetPack.Name);
-                                    map.put(widgetPack.Group.toUpperCase(), groupValues);
+                List<WidgetPacks> groupValues;
+                List<WidgetPacks> packageItems;
+                List<WidgetPacks> normalPackageItems = new ArrayList<>();
+                //if (Constants.PACKAGE_NAME.equals("com.redtim")) {
+                normalPackageDetails.add(new Pair<>(mBasePackage.getValidityInMths() + " MONTHS PLAN", normalPackageItems));
+                for (; i < mBasePackage.getWidgetPacks().size(); i++) {
+                    widgetPack = mBasePackage.getWidgetPacks().get(i);
+                    if (widgetPack.Name != null) {
+                        if (widgetPack.Group == null) {
+                            normalPackageItems = new ArrayList<>();
+                            normalPackageItems.add(widgetPack);
+                            normalPackageDetails.add(new Pair<>(widgetPack.Name, normalPackageItems));
+                        } else {
+                            if (map.containsKey(widgetPack.Group.toUpperCase())) {
+                                groupValues = new ArrayList<>();
+                                groupValues = map.get(widgetPack.Group);
+                                for (Pair<String, List<WidgetPacks>> pair : groupPackageDetails) {
+                                    if (pair.first.equalsIgnoreCase(widgetPack.Group)) {
+                                        groupPackageDetails.remove(pair);
+                                        groupPackageDetails.remove(pair);
+                                        break;
+                                    }
                                 }
-                                packageDetails.add(new Pair<>(groupValues.toString(), true));
+                                groupValues.add(widgetPack);
+                                map.put(widgetPack.Group.toUpperCase(), groupValues);
+                                Collections.sort(groupValues, new Comparator<WidgetPacks>() {
+                                    @Override
+                                    public int compare(WidgetPacks o1, WidgetPacks o2) {
+                                        return o1.Priority - o2.Priority;
+                                    }
+                                });
+                                groupPackageDetails.add(new Pair<>(widgetPack.Group.toUpperCase(), groupValues));
+                            } else {
+                                packageItems = new ArrayList<>();
+                                packageItems.add(widgetPack);
+                                map.put(widgetPack.Group.toUpperCase(), packageItems);
+                                groupPackageDetails.add(new Pair<>(widgetPack.Group.toUpperCase(), packageItems));
                             }
-                            counter++;
                         }
-                    }
-                } else {*/
-                if (mBasePackage.getWidgetPacks() != null && mBasePackage.getWidgetPacks().size() > 0) {
-                    StringBuilder mainPackageFeatures = new StringBuilder("A DYNAMIC WEBSITE WITH:<br/>");
-                    for (; counter < 4 && i < mBasePackage.getWidgetPacks().size(); i++) {
-                        if (mBasePackage.getWidgetPacks().get(i).Name != null) {
-                            mainPackageFeatures.append("- " + mBasePackage.getWidgetPacks().get(i).Name.toUpperCase() + "<br/>");
-                            counter++;
-                        }
-                    }
-                    packageDetails.add(new Pair<>(mainPackageFeatures.toString(), true));
-                    for (; counter < 8 && i < mBasePackage.getWidgetPacks().size(); i++) {
-                        if (mBasePackage.getWidgetPacks().get(i).Name != null) {
-                            packageDetails.add(new Pair<>(mBasePackage.getWidgetPacks().get(i).Name.toUpperCase(), true));
-                            counter++;
-                        }
+                        counter++;
                     }
                 }
-                if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-                    if (mBasePackage.getName().toLowerCase().contains("pro")) {
-                        packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", true));
-                        packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", true));
-                        packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", true));
-                    } else {
-                        packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", false));
-                        packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", false));
-                        packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", false));
-                    }
-                }
-                // }
+                packages = Arrays.asList(normalPackageDetails, groupPackageDetails);
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        mRvAdapter.setPlanDetails(packageDetails);
+                        allPackages.clear();
+                        for (List<Pair<String, List<WidgetPacks>>> pair : packages) {
+                            allPackages.addAll(pair);
+                        }
+                        mRvAdapter.setRedTimPlanDetails(allPackages);
                     }
                 });
             }
         }).start();
+    }
+
+    private void initiatePopupWindow(View image, String desc) {
+        Rect location = locateView(image);
+        if (location == null) return;
+        View layout1 = LayoutInflater.from(getActivity()).inflate(R.layout.layout_all_plan_description_popup_dialog, null);
+        layout1.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        int position_x = location.centerX() - layout1.getMeasuredWidth();
+        int position_y = location.bottom - location.height() - layout1.getMeasuredHeight();
+        //if (popup == null) {
+        try {
+
+            popup = new PopupWindow(getActivity());
+            View layout = LayoutInflater.from(getActivity()).inflate(R.layout.layout_all_plan_description_popup_dialog, null);
+            popup.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.color.transparent));
+            tvDesc = layout.findViewById(R.id.tv_plan_desc);
+            tvDesc.setText(desc);
+            popup.setContentView(layout);
+            popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+            popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+            popup.setOutsideTouchable(true);
+            popup.setFocusable(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                popup.setAttachedInDecor(true);
+            }
+            if (popup.isShowing()) {
+                popup.dismiss();
+            } else {
+                popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, location.left + 10, position_y - 40);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Rect locateView(View v) {
+        int[] loc_int = new int[2];
+        if (v == null) return null;
+        try {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe) {
+            //Happens when the view doesn't exist on screen anymore.
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = location.left + v.getWidth();
+        location.bottom = location.top + v.getHeight();
+        return location;
+    }
+
+    public OnPlanDescriptionClickListener planDescriptionClickListener = new OnPlanDescriptionClickListener() {
+        @Override
+        public void onPlanClick(ImageView view, String desc) {
+            initiatePopupWindow(view, desc);
+        }
+    };
+
+    public interface OnPlanDescriptionClickListener {
+        void onPlanClick(ImageView view, String desc);
     }
 
 }

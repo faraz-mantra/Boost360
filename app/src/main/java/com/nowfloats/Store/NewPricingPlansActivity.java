@@ -102,10 +102,13 @@ public class NewPricingPlansActivity extends AppCompatActivity {
         } else {
             params.put("identifier", appId);
         }
+        params.put("identifier", Constants.clientId);
         params.put("clientId", Constants.clientId);
         params.put("fpId", mSession.getFPID());
+        //params.put("fpId", "5ab0eaec8a856e0bdccf68ac");
         params.put("country", country.toLowerCase());
         params.put("fpCategory", mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
+        //params.put("fpCategory", "F&B BAKERY");
 
         Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
             @Override

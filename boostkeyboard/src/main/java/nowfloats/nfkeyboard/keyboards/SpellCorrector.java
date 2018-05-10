@@ -36,7 +36,7 @@ public class SpellCorrector {
     private static Logger log = Logger.getLogger(SpellCorrector.class.getName());
     private static TST tst = new TST();
 
-    private int EDIT_LIMIT = 2;
+    private int EDIT_LIMIT = 3;
     private int SUGGESTED_WORD_LIST_LIMIT = 3;
     private int PRIORITY_QUEUE_SIZE_LIMIT = 3;
     private String inputString = "";
@@ -113,15 +113,15 @@ public class SpellCorrector {
             }
         });
         HashMap sortedHashMap = new LinkedHashMap();
-        for (Iterator it = list.iterator(); it.hasNext();) {
+        for (Iterator it = list.iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();
             sortedHashMap.put(entry.getKey(), entry.getValue());
         }
         ArrayList<KeywordModel> models = new ArrayList<>();
         Set set2 = sortedHashMap.entrySet();
         Iterator iterator2 = set2.iterator();
-        while(iterator2.hasNext()) {
-            Map.Entry me2 = (Map.Entry)iterator2.next();
+        while (iterator2.hasNext()) {
+            Map.Entry me2 = (Map.Entry) iterator2.next();
             KeywordModel model = new KeywordModel();
             model.setWord(me2.getKey() + "");
             model.setType(KeywordModel.CORRECTED_WORD);
