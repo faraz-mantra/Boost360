@@ -1618,7 +1618,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public void failure(RetrofitError error) {
                 stopProgressDialog();
-                hideOtpOverCallProgressDialog();
                 Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             }
         });
