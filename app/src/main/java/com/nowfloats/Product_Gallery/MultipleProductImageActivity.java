@@ -50,6 +50,7 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static android.view.Window.FEATURE_NO_TITLE;
 
@@ -81,13 +82,13 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_multiple_product_image);
 
 
-
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
+        if (bundle != null) {
             mProductId = getIntent().getExtras().getString("product_id");
+            lsProductImages = (List<ProductImageResponseModel>) getIntent().getExtras().get("cacheImages");
         }
 
         fabDeleteImage = findViewById(R.id.fab_delete_image);
@@ -122,7 +123,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         fabDeleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(progressDialog != null)
+                if (progressDialog != null)
                     progressDialog.show();
                 final int position = vpMultipleImages.getCurrentItem();
                 ProductImageResponseModel image = mAdapter.get(position);
@@ -131,23 +132,23 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                 mWebAction.delete(filter, false, new WebAction.WebActionCallback<Boolean>() {
                     @Override
                     public void onSuccess(Boolean result) {
-                        if(result) {
+                        if (result) {
                             mAdapter.removeImage(position);
                             vpMultipleImages.setAdapter(null);
                             vpMultipleImages.setAdapter(mAdapter);
                             tvCurrentCountKeeper.setText(String.format("%d of %d", vpMultipleImages.getCurrentItem() + 1, mAdapter.getCount()));
                         }
-                        if(progressDialog != null && progressDialog.isShowing()) {
+                        if (progressDialog != null && progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
-                        if(mAdapter.getCount() == 0) {
+                        if (mAdapter.getCount() == 0) {
                             tvAddImages.setVisibility(View.VISIBLE);
                         }
                     }
 
                     @Override
                     public void onFailure(WebActionError error) {
-                        if(progressDialog != null && progressDialog.isShowing()) {
+                        if (progressDialog != null && progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
                     }
@@ -163,13 +164,13 @@ public class MultipleProductImageActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 tvCurrentCountKeeper.setText(String.format("%d of %d", position + 1, mAdapter.getCount()));
-                if(position == 0) {
+                if (position == 0) {
                     ivNavLeft.setVisibility(View.INVISIBLE);
                 } else {
                     ivNavLeft.setVisibility(View.VISIBLE);
                 }
 
-                if(position == mAdapter.getCount() - 1) {
+                if (position == mAdapter.getCount() - 1) {
                     ivNavRight.setVisibility(View.INVISIBLE);
                 } else {
                     ivNavRight.setVisibility(View.VISIBLE);
@@ -186,7 +187,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         ivNavRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(vpMultipleImages.getCurrentItem() + 1 < mAdapter.getCount()) {
+                if (vpMultipleImages.getCurrentItem() + 1 < mAdapter.getCount()) {
                     vpMultipleImages.setCurrentItem(vpMultipleImages.getCurrentItem() + 1, true);
                 }
             }
@@ -195,7 +196,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         ivNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(vpMultipleImages.getCurrentItem() > 0) {
+                if (vpMultipleImages.getCurrentItem() > 0) {
                     vpMultipleImages.setCurrentItem(vpMultipleImages.getCurrentItem() - 1, true);
                 }
             }
@@ -243,10 +244,10 @@ public class MultipleProductImageActivity extends AppCompatActivity {
             if (ActivityCompat.checkSelfPermission(MultipleProductImageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED) {
 
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                    Methods.showApplicationPermissions("Storage Permission","We need this permission to enable image upload",MultipleProductImageActivity.this);
-                }else{
-                    ActivityCompat.requestPermissions(MultipleProductImageActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, galleryReqId);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", MultipleProductImageActivity.this);
+                } else {
+                    ActivityCompat.requestPermissions(MultipleProductImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, galleryReqId);
                 }
 
             } else {
@@ -269,10 +270,10 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(MultipleProductImageActivity.this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
-                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
-                    Methods.showApplicationPermissions("Camera And Storage Permission","We need these permission to enable capture and upload images",MultipleProductImageActivity.this);
-                }else{
-                    ActivityCompat.requestPermissions(MultipleProductImageActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,  Manifest.permission.CAMERA}, mediaReqId);
+                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", MultipleProductImageActivity.this);
+                } else {
+                    ActivityCompat.requestPermissions(MultipleProductImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, mediaReqId);
                 }
 
             } else {
@@ -337,27 +338,41 @@ public class MultipleProductImageActivity extends AppCompatActivity {
             }
         }
 
-        if(!TextUtils.isEmpty(path) && resultCode == RESULT_OK) {
-            progressDialog.show();
-            mWebAction.uploadFile(path, new WebAction.WebActionCallback<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    path = null;
-                    addImageData(result);
+        if (!TextUtils.isEmpty(path) && resultCode == RESULT_OK) {
+            if (TextUtils.isEmpty(mProductId)) {
+                ProductImageResponseModel imageData = new ProductImageResponseModel();
+                imageData.setId(UUID.randomUUID().toString());
+                imageData.setPid(UUID.randomUUID().toString());
+                imageData.setImage(new ProductImage(path, "Description"));
+                mAdapter.addImage(imageData);
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
                 }
+                vpMultipleImages.setCurrentItem(mAdapter.getCount() - 1, true);
+                tvAddImages.setVisibility(View.INVISIBLE);
+            } else {
 
-                @Override
-                public void onFailure(WebActionError error) {
-                    if(progressDialog != null && progressDialog.isShowing()) {
-                        progressDialog.dismiss();
+                progressDialog.show();
+                mWebAction.uploadFile(path, new WebAction.WebActionCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        path = null;
+                        addImageData(result);
                     }
-                }
-            }, new Handler(Looper.getMainLooper()));
+
+                    @Override
+                    public void onFailure(WebActionError error) {
+                        if (progressDialog != null && progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+                }, new Handler(Looper.getMainLooper()));
+            }
         }
     }
 
     private void addImageData(final String result) {
-        if(!TextUtils.isEmpty(result)) {
+        if (!TextUtils.isEmpty(result)) {
             final ProductImageRequestModel productImageRequestModel = new ProductImageRequestModel();
             productImageRequestModel._pid = mProductId;
             productImageRequestModel.image = new ProductImage(result, "Description");
@@ -369,16 +384,16 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                     imageData.setPid(mProductId);
                     imageData.setImage(productImageRequestModel.image);
                     mAdapter.addImage(imageData);
-                    if(progressDialog!= null && progressDialog.isShowing()) {
+                    if (progressDialog != null && progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
-                    vpMultipleImages.setCurrentItem(mAdapter.getCount()-1, true);
+                    vpMultipleImages.setCurrentItem(mAdapter.getCount() - 1, true);
                     tvAddImages.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
                 public void onFailure(WebActionError error) {
-                    if(progressDialog != null && progressDialog.isShowing()) {
+                    if (progressDialog != null && progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
                 }
@@ -399,36 +414,55 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         return val;
     }
 
+    List<ProductImageResponseModel> lsProductImages;
+
     private void displayImagesForProduct() {
         progressDialog = ProgressDialog.show(this, "", "Please wait...");
-        IFilter filter = new WebActionsFilter();
-        filter = filter.eq("_pid", mProductId);
-        mWebAction.findProductImages(filter, new WebAction.WebActionCallback<List<ProductImageResponseModel>>() {
-            @Override
-            public void onSuccess(List<ProductImageResponseModel> result) {
-                mAdapter.addImages(result);
-                if(progressDialog != null && progressDialog.isShowing()){
-                    progressDialog.dismiss();
+        if (TextUtils.isEmpty(mProductId)) {
+            refreshList(lsProductImages);
+        } else {
+            IFilter filter = new WebActionsFilter();
+            filter = filter.eq("_pid", mProductId);
+            mWebAction.findProductImages(filter, new WebAction.WebActionCallback<List<ProductImageResponseModel>>() {
+                @Override
+                public void onSuccess(List<ProductImageResponseModel> result) {
+                    refreshList(result);
                 }
-                tvCurrentCountKeeper.setText(String.format("%d of %d", vpMultipleImages.getCurrentItem() + 1, mAdapter.getCount()));
-                ivNavLeft.setVisibility(View.INVISIBLE);
-                if(mAdapter.getCount() == 0) {
-                    tvAddImages.setVisibility(View.VISIBLE);
-                    tvCurrentCountKeeper.setText("0 of 0");
-                }
-                if(mAdapter.getCount() < 2) {
-                    ivNavLeft.setVisibility(View.INVISIBLE);
-                    ivNavRight.setVisibility(View.INVISIBLE);
-                }
-            }
 
-            @Override
-            public void onFailure(WebActionError error) {
-                if(progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
+                @Override
+                public void onFailure(WebActionError error) {
+                    if (progressDialog != null && progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(MultipleProductImageActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(MultipleProductImageActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        }
+
+    }
+
+    private void refreshList(List<ProductImageResponseModel> result) {
+        mAdapter.addImages(result);
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        tvCurrentCountKeeper.setText(String.format("%d of %d", vpMultipleImages.getCurrentItem() + 1, mAdapter.getCount()));
+        ivNavLeft.setVisibility(View.INVISIBLE);
+        if (mAdapter.getCount() == 0) {
+            tvAddImages.setVisibility(View.VISIBLE);
+            tvCurrentCountKeeper.setText("0 of 0");
+        }
+        if (mAdapter.getCount() < 2) {
+            ivNavLeft.setVisibility(View.INVISIBLE);
+            ivNavRight.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("cacheImages", mAdapter.getImages());
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
     }
 }

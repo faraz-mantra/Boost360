@@ -51,7 +51,7 @@ public class HelpAndSupportFragment extends Fragment {
     private ProgressDialog dialog;
 
     enum MemberType {
-        CHC, WEB, DEFAULT;
+        CHC, WEB,TA, DEFAULT;
     }
 
     @Override
@@ -151,6 +151,9 @@ public class HelpAndSupportFragment extends Fragment {
                             mRiaSupportModelList.add(model);
                         } else if (MemberType.CHC.name().equals(model.getType())) {
                             mRiaSupportModelList.add(0, model);
+                        }else if (MemberType.TA.name().equals(model.getType())) {
+                            model.setType(MemberType.TA.toString());
+                            mRiaSupportModelList.add(model);
                         }
                     }
                 }

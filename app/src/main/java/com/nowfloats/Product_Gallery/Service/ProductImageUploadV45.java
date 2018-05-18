@@ -24,12 +24,14 @@ public class ProductImageUploadV45 extends AsyncTask<String,String,String>{
     public byte[] imageData;
     private boolean flag = false;
     private MaterialDialog materialProgress;
+    private String productId;
     Product_Detail_Activity_V45 activity;
 
-    public ProductImageUploadV45(String url,byte[] imageData,Product_Detail_Activity_V45 activity){
+    public ProductImageUploadV45(String url, byte[] imageData, Product_Detail_Activity_V45 activity, String productId){
         this.activity = activity;
         this.url = url;
         this.imageData = imageData;
+        this.productId = productId;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class ProductImageUploadV45 extends AsyncTask<String,String,String>{
                         try{Thread.sleep(6000);}catch(Exception e){e.printStackTrace();}
                         if (materialProgress!=null)
                             materialProgress.dismiss();
-                        activity.invokeGetProductList();
+                        activity.invokeGetProductList(productId);
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -66,7 +68,7 @@ public class ProductImageUploadV45 extends AsyncTask<String,String,String>{
                 }).start();
             }else{
                 if (false){
-                    new ProductImageUploadV45(url,imageData,activity).execute();
+                    new ProductImageUploadV45(url,imageData,activity, productId).execute();
                     activity.retryImage++;
                 }else{
                     activity.retryImage = 0;

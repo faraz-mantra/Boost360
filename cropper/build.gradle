@@ -28,10 +28,10 @@ repositories {
     mavenCentral()
 }
 
-signing {
-    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
-}
+//signing {
+//    required { hasProperty("release") && gradle.taskGraph.hasTask("uploadArchives") }
+//    sign configurations.archives
+//}
 
 task publishLocal(type: Upload) {
     configuration = configurations.archives
