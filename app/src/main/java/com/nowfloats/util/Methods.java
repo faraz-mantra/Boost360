@@ -136,8 +136,8 @@ public class Methods {
         Intent facebookIntent;
         //if(review.trim().length() == 0) {
         try {
-           context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-           facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
         } catch (Exception e) {
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
         }
@@ -200,10 +200,11 @@ public class Methods {
         }
         return accessibilityServiceEnabled;
     }
-    public static boolean isMyAppOpen(Context mContext){
+
+    public static boolean isMyAppOpen(Context mContext) {
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        if(taskInfo != null && taskInfo.size()>0) {
+        if (taskInfo != null && taskInfo.size() > 0) {
             //Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
             ComponentName componentInfo = taskInfo.get(0).topActivity;
             return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
@@ -211,7 +212,7 @@ public class Methods {
         return false;
     }
 
-    public static void showDialog(Context mContext, String title, String msg){
+    public static void showDialog(Context mContext, String title, String msg) {
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
         builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
@@ -222,24 +223,24 @@ public class Methods {
         builder.create().show();
     }
 
-    public static boolean isMyActivityAtTop(Context mContext){
+    public static boolean isMyActivityAtTop(Context mContext) {
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        if(taskInfo != null && taskInfo.size()>0) {
+        if (taskInfo != null && taskInfo.size() > 0) {
             //Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
-            return  mContext.getClass().getName().equalsIgnoreCase(taskInfo.get(0).topActivity.getClassName());
+            return mContext.getClass().getName().equalsIgnoreCase(taskInfo.get(0).topActivity.getClassName());
 //            return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
         }
         return false;
     }
 
-    public static boolean isMyActivityInStack(Context mContext){
+    public static boolean isMyActivityInStack(Context mContext) {
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        if(taskInfo != null && taskInfo.size()>0) {
+        if (taskInfo != null && taskInfo.size() > 0) {
             //Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName())
-            for (ActivityManager.RunningTaskInfo info :taskInfo)
-            return  mContext.getClass().getName().equalsIgnoreCase(info.topActivity.getClassName());
+            for (ActivityManager.RunningTaskInfo info : taskInfo)
+                return mContext.getClass().getName().equalsIgnoreCase(info.topActivity.getClassName());
 //            return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
         }
         return false;
@@ -276,7 +277,7 @@ public class Methods {
     }
 
     public static String getRealPathFromURI(Activity c, Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = c.managedQuery(contentUri, proj, null, null, null);
         int column_index = cursor
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -286,7 +287,7 @@ public class Methods {
 
     public static String getPath(Activity c, Uri uri) {
         try {
-            String[] projection = { MediaStore.Images.Media.DATA };
+            String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = c.managedQuery(uri, projection, null, null, null);
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -305,7 +306,7 @@ public class Methods {
         snackBar.show();
     }
 
-    public static void showFeatureNotAvailDialog(final Context context){
+    public static void showFeatureNotAvailDialog(final Context context) {
         new MaterialDialog.Builder(context)
                 .title(context.getString(R.string.features_not_available))
                 .content(context.getString(R.string.buy_light_house_plan))
@@ -323,10 +324,11 @@ public class Methods {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        context.startActivity(new Intent(context,NewPricingPlansActivity.class));
+                        context.startActivity(new Intent(context, NewPricingPlansActivity.class));
                     }
                 }).show();
     }
+
     public static void showSnackBarNegative(View mView, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(mView, msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));
@@ -480,10 +482,10 @@ public class Methods {
         @Override
         public int getLeadingMargin(boolean first) {
             if (first) {
-            /*
-             * Данный отступ будет применен к количеству строк
-             * возвращаемых getLeadingMarginLineCount()
-             */
+                /*
+                 * Данный отступ будет применен к количеству строк
+                 * возвращаемых getLeadingMarginLineCount()
+                 */
                 return margin;
             } else {
                 // Отступ для всех остальных строк
@@ -494,7 +496,8 @@ public class Methods {
         @Override
         public void drawLeadingMargin(Canvas c, Paint p, int x, int dir,
                                       int top, int baseline, int bottom, CharSequence text,
-                                      int start, int end, boolean first, Layout layout) {}
+                                      int start, int end, boolean first, Layout layout) {
+        }
 
         /*
          * Возвращает количество строк, к которым должен быть
@@ -523,20 +526,21 @@ public class Methods {
         return false;
     }
 
-    public static String getFormattedDate(String date, String format){
+    public static String getFormattedDate(String date, String format) {
         if (TextUtils.isEmpty(date)) {
             return "";
         }
-        return getFormattedDate(getDateMillSecond(date),format);
+        return getFormattedDate(getDateMillSecond(date), format);
     }
-    public static Long getDateMillSecond(String date){
-        String[]dateTime = null;
+
+    public static Long getDateMillSecond(String date) {
+        String[] dateTime = null;
         long dateMilliseconds = 0;
         if (date.contains("/Date")) {
-            date = date.replace("/Date(", "").replace(")/","");
+            date = date.replace("/Date(", "").replace(")/", "");
         }
 
-        if(date.contains("+")) {
+        if (date.contains("+")) {
             dateTime = date.split("\\+");
             if (dateTime[1].length() > 1) {
                 dateMilliseconds += Integer.parseInt(dateTime[1].substring(0, 2)) * 60 * 60 * 1000;
@@ -545,38 +549,41 @@ public class Methods {
                 dateMilliseconds += Integer.parseInt(dateTime[1].substring(2, 4)) * 60 * 1000;
             }
             dateMilliseconds += Long.valueOf(dateTime[0]);
-        }else{
+        } else {
             dateMilliseconds += Long.valueOf(date);
         }
         return dateMilliseconds;
     }
-    public static String getFormattedDate(long epochTime, String format){
+
+    public static String getFormattedDate(long epochTime, String format) {
         Date date1 = new Date(epochTime);
         DateFormat format1 = new SimpleDateFormat(format, Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
         format1.setTimeZone(TimeZone.getDefault());
         return format1.format(date1);
     }
-    public static void showApplicationPermissions(String title, String content, final Context appContext){
 
-            new MaterialDialog.Builder(appContext)
-                    .content(content)
-                    .title(title)
-                    .positiveColorRes(R.color.primaryColor)
-                    .negativeColorRes(R.color.light_gray)
-                    .negativeText("Cancel")
-                    .positiveText("Take Me There")
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            Intent intent = new Intent();
-                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", appContext.getPackageName(), null);
-                            intent.setData(uri);
-                            appContext.startActivity(intent);
-                        }
-                    })
-                    .build().show();
+    public static void showApplicationPermissions(String title, String content, final Context appContext) {
+
+        new MaterialDialog.Builder(appContext)
+                .content(content)
+                .title(title)
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.light_gray)
+                .negativeText("Cancel")
+                .positiveText("Take Me There")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", appContext.getPackageName(), null);
+                        intent.setData(uri);
+                        appContext.startActivity(intent);
+                    }
+                })
+                .build().show();
     }
+
     public static String getFormattedDate(String Sdate) {
         String formatted = "", dateTime = "";
         if (TextUtils.isEmpty(Sdate)) {
@@ -703,17 +710,18 @@ public class Methods {
         return isMyServiceRunning;
     }
 
-    public static boolean isUserLoggedIn(Context context){
-        DataBase db =new DataBase(context);
+    public static boolean isUserLoggedIn(Context context) {
+        DataBase db = new DataBase(context);
         Cursor cursor = db.getLoginStatus();
-        if (cursor!=null && cursor.getCount()>0){
-            if (cursor.moveToNext()){
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToNext()) {
                 String LoginStatus = cursor.getString(0);
                 return LoginStatus != null && LoginStatus.equals("true");
             }
         }
         return false;
     }
+
     public static RestAdapter createAdapter(Context context, String url) throws IOException {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -765,7 +773,7 @@ public class Methods {
 
     public static int dpToPx(int dp, Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
     }
 
     public interface SmsApi {
@@ -777,30 +785,49 @@ public class Methods {
         @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
         @GET("/protected/json/phones/verification/check")
         void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
+
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/VerifyPhoneNumberAndSendOTP")
+        void verifyPhoneNumberAndSendOTP(@QueryMap Map hashMap, Callback<VerifyPhoneNumberAndSendOTP> response);
+
+
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/VerifyOTP")
+        void verifyOTPCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
+
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/ResendOTP")
+        void reSendOTP(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
+
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/ResendOTPOverCall")
+        void resendOTPOverCall(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }
 
-    public static void makeCall(Context mContext,String number) {
+    public static void makeCall(Context mContext, String number) {
         try {
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
             callIntent.setData(Uri.parse("tel:" + number));
             mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
-        }catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(mContext, "Unable to make call", Toast.LENGTH_SHORT).show();
         }
 
     }
-    public static void sendEmail( Context context, String[] email){
+
+    public static void sendEmail(Context context, String[] email) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, email);
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
-        }else {
+        } else {
             Toast.makeText(context, "Unable to send email", Toast.LENGTH_SHORT).show();
         }
 
 
     }
+
     public static String getFormattedDate(long milliseconds) {
 
         Date date = new Date(milliseconds);
@@ -882,17 +909,19 @@ public class Methods {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(uri, options);
     }
-    public static Bitmap decodeSampledBitmap(Resources res,int resId, int reqWidth, int reqHeight) {
+
+    public static Bitmap decodeSampledBitmap(Resources res, int resId, int reqWidth, int reqHeight) {
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res,resId,options);
+        BitmapFactory.decodeResource(res, resId, options);
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         options.inDither = true;
         options.inJustDecodeBounds = false;
-        return  BitmapFactory.decodeResource(res,resId,options);
+        return BitmapFactory.decodeResource(res, resId, options);
     }
+
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -907,10 +936,10 @@ public class Methods {
         return inSampleSize;
     }
 
-    public static String convertBitmapToString(Bitmap bitmap){
+    public static String convertBitmapToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-        return Base64.encodeToString(byteArray,Base64.DEFAULT);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }

@@ -5,7 +5,7 @@ package com.thinksity;
  */
 public class Specific {
 
-    public static String clientId2 	= "7AB16D01489A45EC8F7C3ABDFE0DD95FA676C5F18B324FC48387BCA92F722DE9";
+    public static String clientId2 = "7AB16D01489A45EC8F7C3ABDFE0DD95FA676C5F18B324FC48387BCA92F722DE9";
     public static String client_ID_1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String client_ID_2_webcreatorservice = "DA92AD580F614449B2B7B8B62DFC7AE72D201733A6D74E73B8050C541579A26C";
     public static String client_ID_3_imagechunkprocessor = "BFFEB94156C24961BBF4D4B4CC3663BB883E2EFA875148CE9C08BAB702663FAE";
@@ -23,14 +23,14 @@ public class Specific {
 
     public static String access_level = "20";
     public static final String CONTACT_EMAIL_ID = "tim@redtim.com";
-    public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
+    public static final String FACEBOOK_API_KEY = "539836972828386";  // Boost
     public static final String RIA_FIREBASE_COLLECTION_NAME = "RedTimUserActivityLog";
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 
-    public static final String TWITTER_TOK 				= "qhecWhz0QK6PcGcsrCL03K8V2";
-    public static final String TWITTER_SEC 				= "MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky";
+    public static final String TWITTER_TOK = "qhecWhz0QK6PcGcsrCL03K8V2";
+    public static final String TWITTER_SEC = "MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky";
     public static final String FACEBOOK_URL = "https://www.facebook.com/RedTimApp";
     public static final String PACKAGE_NAME = "com.redtim";
     public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "read_insights", "business_management"};

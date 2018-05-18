@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <nowfloats.nfkeyboard.keyboards.ManageKeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/color_212121"
     android:paddingTop="6dp"
@@ -12,6 +11,7 @@
         android:id="@+id/keyboard_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:shadowColor="@android:color/transparent"
         android:background="@drawable/kbd_background"
         android:keyBackground="@drawable/kbd_key_bg"
         android:keyPreviewLayout="@layout/kbd_preview_text"

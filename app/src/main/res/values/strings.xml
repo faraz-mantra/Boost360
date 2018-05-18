@@ -767,6 +767,11 @@
         <item>HOW IT WORKS</item>
         <item>FAQs</item>
     </string-array>
+    <string-array name="search_report_items">
+        <item>OVERVIEW</item>
+        <item>YEARLY REPORT</item>
+        <item>MONTHLY REPORT</item>
+    </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="enquiries_title">Enquiries</string>
     <string name="payment_setting">Payment Settings</string>
@@ -1601,6 +1606,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="map_visits">Address Views</string>
     <string name="boost_keyboard">Boost Keyboard</string>
     <string name="enable_keyboard">Enable Keyboard</string>
+    <string name="otp_over_call">Tap here to get OTP Over Call</string>
 
     <string-array name="manage_content_tab_items">
         <item>My Business Profile</item>

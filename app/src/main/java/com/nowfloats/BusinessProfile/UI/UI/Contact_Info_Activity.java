@@ -1,7 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +39,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.SmsVerifyModel;
+import com.nowfloats.util.VerifyPhoneNumberAndSendOTP;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -79,7 +79,8 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     EditText otpEditText;
     private MaterialDialog otpDialog, progressbar;
     private TextView primaryTextView, alternateTextView1, alternateTextView2, alternateTextView3;
-
+    private MaterialDialog dialog;
+    private MaterialDialog sendSmsProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +92,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 .autoDismiss(false)
                 /*.backgroundColorRes(R.color.transparent)*/
                 .content("Verifying OTP")
+                .progress(true, 0)
+                .build();
+        sendSmsProgressDialog = new MaterialDialog.Builder(this)
+                .autoDismiss(false)
+                /*.backgroundColorRes(R.color.transparent)*/
+                .content("Fetching OTP from SMS inbox")
                 .progress(true, 0)
                 .build();
         bus = BusProvider.getInstance().getBus();
@@ -108,9 +115,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             @Override
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
-                if (Methods.isOnline(Contact_Info_Activity.this)){
+                if (Methods.isOnline(Contact_Info_Activity.this)) {
                     uploadContactInfo();
-                }else{
+                } else {
                     Methods.snackbarNoInternet(Contact_Info_Activity.this);
                 }
 
@@ -516,15 +523,54 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         });
     }
 
+    private void verifyPhoneNumberAndSendOTP(String phoneNumber) {
+        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("PHONE", phoneNumber);
+        hashMap.put("COUNTRYCODE", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+        smsApi.verifyPhoneNumberAndSendOTP(hashMap, new Callback<VerifyPhoneNumberAndSendOTP>() {
+            @Override
+            public void success(VerifyPhoneNumberAndSendOTP model, Response response) {
+                if (model == null) {
+                    Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!model.isPhoneNumberInUse() && model.isOTPSent()) {
+                    hideOtpDialog();
+                    otpVerifyDialog(model.getPHONE());
+                } else {
+                    if (model.isPhoneNumberInUse()) {
+                        Toast.makeText(Contact_Info_Activity.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else if (!model.isOTPSent()) {
+                        Toast.makeText(Contact_Info_Activity.this, "Please enter valid number", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void hideOtpDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
     private void showOtpDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp, null);
         final EditText number = (EditText) view.findViewById(R.id.editText);
-        MaterialDialog dialog = new MaterialDialog.Builder(this)
+        dialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
-                .titleColorRes(R.color.primary_color)
+                //.titleColorRes(R.color.primary_color)
                 .title("Change Primary Number")
                 .negativeText("Cancel")
-                .positiveText("Send OTP")
+                .positiveText("Verify & Send OTP")
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
@@ -534,8 +580,8 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String numText = number.getText().toString().trim();
                         if (numText.length() > 0) {
-                            otpVerifyDialog(numText);
-                            dialog.dismiss();
+                            verifyPhoneNumberAndSendOTP(numText);
+                            //otpVerifyDialog(numText);
                         } else {
                             Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                         }
@@ -904,7 +950,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 //                    websiteAddress.setText(session.getFPDetails(""));
 //                    facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FACEBOOK_PAGE));
 
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME,msgtxt4fbpage);
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME, msgtxt4fbpage);
             } catch (Exception ex) {
                 System.out.println();
             }
@@ -1287,43 +1333,65 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify, null);
         final EditText otp = (EditText) view.findViewById(R.id.editText);
         otpEditText = otp;
+        final TextView tvNumber = view.findViewById(R.id.tv_number);
+        tvNumber.setText("(" + number + ")");
+        TextView tvOTPOverCall = (TextView) view.findViewById(R.id.tv_get_otp_over_call);
         TextView resend = (TextView) view.findViewById(R.id.resend_tv);
-        resend.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        resend.setText(Methods.fromHtml(getString(R.string.resend)));
+       /* resend.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        resend.setText(Methods.fromHtml(getString(R.string.resend)));*/
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TextView) v).setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
+                //((TextView) v).setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
                 sendSms(number);
             }
         });
         otpDialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
-                .negativeText("Cancel")
+                //.negativeText("Cancel")
                 .autoDismiss(false)
-                .titleColorRes(R.color.primary_color)
-                .positiveText("Submit")
+                //.titleColorRes(R.color.primary_color)
+                //.positiveText("Submit")
                 .title("One Time Password")
                 .canceledOnTouchOutside(false)
-                .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        String numText = otp.getText().toString().trim();
-                        if (numText.length() > 0) {
-                            verifySms(number, numText);
-                        } else {
-                            Toast.makeText(Contact_Info_Activity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                }).show();
+                //.negativeColorRes(R.color.gray_transparent)
+                //.positiveColorRes(R.color.primary_color)
+                /* .onPositive(new MaterialDialog.SingleButtonCallback() {
+                     @Override
+                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                         String numText = otp.getText().toString().trim();
+                         if (numText.length() > 0) {
+                             verifySms(number, numText);
+                         } else {
+                             Toast.makeText(Contact_Info_Activity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
+                         }
+                     }
+                 })
+                 .onNegative(new MaterialDialog.SingleButtonCallback() {
+                     @Override
+                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                         dialog.dismiss();
+                     }
+                 })*/.show();
+
+        TextView tvSubmit = view.findViewById(R.id.tv_submit);
+        tvOTPOverCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reSendOTPOverCall(number);
+            }
+        });
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String numText = otp.getText().toString().trim();
+                if (numText.length() > 0) {
+                    verifySms(number, numText);
+                } else {
+                    Toast.makeText(Contact_Info_Activity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         final TextView positive = otpDialog.getActionButton(DialogAction.POSITIVE);
         positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
@@ -1347,29 +1415,25 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 }
             }
         });
-        sendSms(number);
+        //sendSms(number);
     }
 
-    private void sendSms(String number) {
 
+    private void reSendOTPOverCall(String number) {
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("via", "sms");
-        hashMap.put("locale", session.getFPDetails(Key_Preferences.LANGUAGE_CODE));
-        hashMap.put("phone_number", number);
-        hashMap.put("country_code", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
-        smsApi.sendSms(hashMap, new Callback<SmsVerifyModel>() {
+        hashMap.put("PHONE", number);
+        hashMap.put("COUNTRY", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
+        smsApi.resendOTPOverCall(hashMap, new Callback<SmsVerifyModel>() {
             @Override
             public void success(SmsVerifyModel model, Response response) {
                 if (model == null) {
-
                     Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (model.getSuccess()) {
+                if (model.isOTPSent()) {
 
                 } else {
-
                     Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -1377,10 +1441,43 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
             @Override
             public void failure(RetrofitError error) {
+                Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void sendSms(String number) {
+        showSendSmsProgressbar();
+        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("PHONE", number);
+        hashMap.put("COUNTRY", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
+
+        smsApi.reSendOTP(hashMap, new Callback<SmsVerifyModel>() {
+            @Override
+            public void success(SmsVerifyModel model, Response response) {
+                if (model == null) {
+                    hideSendSmsProgressbar();
+                    Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (model.isOTPValid()) {
+                    hideSendSmsProgressbar();
+
+                } else {
+                    hideSendSmsProgressbar();
+                    Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hideSendSmsProgressbar();
                 SmsVerifyModel model = (SmsVerifyModel) error.getBodyAs(SmsVerifyModel.class);
-                if(model != null){
+                if (model != null) {
                     Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     Toast.makeText(Contact_Info_Activity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
@@ -1392,10 +1489,13 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         showProgressbar();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("verification_code", otpCode);
+        /*hashMap.put("verification_code", otpCode);
         hashMap.put("phone_number", number);
-        hashMap.put("country_code", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
-        smsApi.verifySmsCode(hashMap, new Callback<SmsVerifyModel>() {
+        hashMap.put("country_code", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));*/
+        hashMap.put("OTP", otpCode);
+        hashMap.put("PHONE", number);
+        hashMap.put("COUNTRY", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
+        smsApi.verifyOTPCode(hashMap, new Callback<SmsVerifyModel>() {
             @Override
             public void success(SmsVerifyModel model, Response response) {
                 if (model == null) {
@@ -1403,13 +1503,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (model.getSuccess()) {
+                if (model.isOTPValid()) {
                     changePrimary(number);
                 } else {
                     hideProgressbar();
                     Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
 
             }
 
@@ -1430,6 +1529,18 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private void hideProgressbar() {
         if (progressbar != null && progressbar.isShowing()) {
             progressbar.dismiss();
+        }
+    }
+
+    private void showSendSmsProgressbar() {
+        if (sendSmsProgressDialog != null) {
+            sendSmsProgressDialog.show();
+        }
+    }
+
+    private void hideSendSmsProgressbar() {
+        if (sendSmsProgressDialog != null && sendSmsProgressDialog.isShowing()) {
+            sendSmsProgressDialog.dismiss();
         }
     }
 

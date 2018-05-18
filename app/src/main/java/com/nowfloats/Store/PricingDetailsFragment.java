@@ -2,6 +2,7 @@ package com.nowfloats.Store;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -78,7 +79,25 @@ public class PricingDetailsFragment extends Fragment {
         rvAllPlanDetails = (RecyclerView) pricingView.findViewById(R.id.rv_all_plan_details);
         ivPackageLogo = (ImageView) pricingView.findViewById(R.id.iv_package_logo);
         if (mBasePackage == null) return pricingView;
-        Picasso.with(getActivity()).load(mBasePackage.getPrimaryImageUri()).into(ivPackageLogo);
+        Picasso.Builder builder = new Picasso.Builder(getActivity());
+        builder.listener(new Picasso.Listener() {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        builder.build().load(mBasePackage.getPrimaryImageUri()).into(ivPackageLogo);
+       /* Picasso.with(getActivity()).load(mBasePackage.getPrimaryImageUri()).placeholder(R.drawable.default_product_image).into(ivPackageLogo, new Callback() {
+            @Override
+            public void onSuccess() {
+                Log.v(PricingDetailsFragment.class.getName(), "success");
+            }
+
+            @Override
+            public void onError() {
+                Log.v(PricingDetailsFragment.class.getName(), "failed");
+            }
+        });*/
         mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>(), getActivity());
         prepareBasePackageDetails();
 
@@ -106,7 +125,7 @@ public class PricingDetailsFragment extends Fragment {
                 List<WidgetPacks> packageItems;
                 List<WidgetPacks> normalPackageItems = new ArrayList<>();
                 //if (Constants.PACKAGE_NAME.equals("com.redtim")) {
-                normalPackageDetails.add(new Pair<>(mBasePackage.getValidityInMths() + " MONTHS PLAN", normalPackageItems));
+                normalPackageDetails.add(new Pair<>((Math.round(mBasePackage.getValidityInMths()) + " MONTHS PLAN"), normalPackageItems));
                 for (; i < mBasePackage.getWidgetPacks().size(); i++) {
                     widgetPack = mBasePackage.getWidgetPacks().get(i);
                     if (widgetPack.Name != null) {
@@ -186,7 +205,7 @@ public class PricingDetailsFragment extends Fragment {
             if (popup.isShowing()) {
                 popup.dismiss();
             } else {
-                popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, location.left + 10, position_y - 40);
+                popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, location.left + 18, position_y - 40);
             }
 
         } catch (Exception e) {

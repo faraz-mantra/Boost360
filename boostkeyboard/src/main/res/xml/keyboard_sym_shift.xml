@@ -133,7 +133,6 @@
             android:codes="-2007"
             android:isRepeatable="true"
             android:keyLabel="SPACE"
-            android:keyIcon="@drawable/round_414141"
             android:keyWidth="38.6%p" />
         <Key
             android:codes="46"
