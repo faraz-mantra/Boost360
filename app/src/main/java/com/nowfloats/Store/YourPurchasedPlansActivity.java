@@ -159,6 +159,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                         ActivePackage activePackage = new ActivePackage();
                         activePackage.setId(result.getOrderConfirmationId());
                         activePackage.setPaymentDate(result.getPaymentDate());
+                        activePackage.setCurrencyCode(result.getCurrencyCode());
                         if (result.getPackageDetails() != null && !result.getPackageDetails().isEmpty()) {
                             List<PackageDetails> packageDetailsList = new ArrayList<>();
                             for (PackageDetails packageDetail : result.getPackageDetails()) {

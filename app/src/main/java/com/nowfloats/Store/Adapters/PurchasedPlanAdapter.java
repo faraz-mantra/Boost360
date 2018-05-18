@@ -3,6 +3,7 @@ package com.nowfloats.Store.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -67,14 +68,23 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (position > 0) {
                 MyPurchasePlanOrdersHolder holder = (MyPurchasePlanOrdersHolder) myHolder;
                 ActivePackage activePackage = purchasePlans.get(position);
+                holder.tvSerialNumber.setTypeface(null, Typeface.NORMAL);
+                holder.tvPaymentDate.setTypeface(null, Typeface.NORMAL);
+                holder.tvOrderId.setTypeface(null, Typeface.NORMAL);
+                holder.tvPackageName.setTypeface(null, Typeface.NORMAL);
+                holder.tvTotalAmount.setTypeface(null, Typeface.NORMAL);
+                holder.tvCliamId.setTypeface(null, Typeface.NORMAL);
+                holder.tvPaymentStatus.setTypeface(null, Typeface.NORMAL);
                 holder.tvSerialNumber.setText(position + " ");
-                holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getToBeActivatedOn(), "DD-MM-YYYY"));
-                holder.tvPaymentDate.setText(activePackage.getPaymentDate());
+                holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getPaymentDate(), "dd-MM-yyyy"));
                 holder.tvOrderId.setText(activePackage.getId());
-                holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());
-                holder.tvSerialNumber.setText(activePackage.getPackageDetails().get(0).getNetPackagePrice() + "");
+                if (activePackage.getPackageDetails() != null && !activePackage.getPackageDetails().isEmpty()) {
+                    holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());
+                    holder.tvTotalAmount.setText(activePackage.getCurrencyCode() + " " + activePackage.getPackageDetails().get(0).getNetPackagePrice());
+                }
                 holder.tvCliamId.setText(activePackage.getClaimid() != null ? activePackage.getClaimid() : " ");
-                holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() + " ");
+                holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() < 0 ? "EXPIRED" : activePackage.getPaymentStatus() == 0 ? "DEMO"
+                        : activePackage.getPaymentStatus() > 0 ? "PAID" : " ");
             }
         }
     }

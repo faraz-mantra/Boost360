@@ -9,6 +9,7 @@
         android:id="@+id/tv_serial_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:padding="@dimen/margin_10"
         android:text="SNo" />
 
@@ -17,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_10"
+        android:textStyle="bold"
         android:text="Payment Date"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
@@ -24,6 +26,7 @@
     <TextView
         android:id="@+id/tv_order_confirmation_id"
         android:layout_width="wrap_content"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_10"
         android:text="Order Confirmation Id"
@@ -33,6 +36,7 @@
     <TextView
         android:id="@+id/tv_package_name"
         android:layout_width="wrap_content"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_10"
         android:text="Package Name"
@@ -43,6 +47,7 @@
         android:id="@+id/tv_total_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:padding="@dimen/margin_10"
         android:text="Total Amount (including taxes)"
         tools:layout_editor_absoluteX="81dp"
@@ -50,6 +55,7 @@
 
     <TextView
         android:id="@+id/tv_claim_id"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_10"
@@ -60,6 +66,7 @@
     <TextView
         android:id="@+id/tv_payment_status"
         android:layout_width="wrap_content"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_10"
         android:text="Payment Status"

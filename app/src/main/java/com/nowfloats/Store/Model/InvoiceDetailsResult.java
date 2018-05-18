@@ -21,10 +21,21 @@ public class InvoiceDetailsResult {
     @SerializedName("paymentTransactionStatus")
     @Expose
     private int paymentStatus;
+    @SerializedName("currencyCode")
+    @Expose
+    private String currencyCode;
 
     @SerializedName("packageDetails")
     @Expose
     public List<PackageDetails> packageDetails;
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 
     public List<PackageDetails> getPackageDetails() {
         return packageDetails;
