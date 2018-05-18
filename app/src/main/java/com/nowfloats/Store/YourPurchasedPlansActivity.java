@@ -153,8 +153,8 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
             @Override
             public void success(InvoiceDetailsModel invoiceDetailsModel, Response response) {
                 if (invoiceDetailsModel != null && invoiceDetailsModel.results.size() > 0) {
-                    ActivePackage header = new ActivePackage();
-                    yourOrdersItems.add(header);
+//                    ActivePackage header = new ActivePackage();
+//                    yourOrdersItems.add(header);
                     for (InvoiceDetailsResult result : invoiceDetailsModel.results) {
                         ActivePackage activePackage = new ActivePackage();
                         activePackage.setId(result.getOrderConfirmationId());

@@ -64,18 +64,18 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         if (myHolder instanceof MyPurchasePlanOrdersHolder && purchasePlans != null && !purchasePlans.isEmpty()) {
-            if (position > 0) {
-                MyPurchasePlanOrdersHolder holder = (MyPurchasePlanOrdersHolder) myHolder;
-                ActivePackage activePackage = purchasePlans.get(position);
-                holder.tvSerialNumber.setText(position + " ");
-                holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getToBeActivatedOn(), "DD-MM-YYYY"));
-                holder.tvPaymentDate.setText(activePackage.getPaymentDate());
-                holder.tvOrderId.setText(activePackage.getId());
-                holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());
-                holder.tvSerialNumber.setText(activePackage.getPackageDetails().get(0).getNetPackagePrice() + "");
-                holder.tvCliamId.setText(activePackage.getClaimid() != null ? activePackage.getClaimid() : " ");
-                holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() + " ");
-            }
+//            if (position > 0) {
+            MyPurchasePlanOrdersHolder holder = (MyPurchasePlanOrdersHolder) myHolder;
+            ActivePackage activePackage = purchasePlans.get(position);
+            holder.tvSerialNumber.setText(position + " ");
+            holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getToBeActivatedOn(), "DD-MM-YYYY"));
+            holder.tvPaymentDate.setText(activePackage.getPaymentDate());
+            holder.tvOrderId.setText(activePackage.getId());
+            holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());
+            holder.tvSerialNumber.setText(activePackage.getPackageDetails().get(0).getNetPackagePrice() + "");
+            holder.tvCliamId.setText(activePackage.getClaimid() != null ? activePackage.getClaimid() : " ");
+            holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() + " ");
+//            }
         }
     }
 
