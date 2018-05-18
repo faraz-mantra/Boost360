@@ -60,7 +60,7 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder myHolder, int position) {
         if (myHolder instanceof MyPurchasePlansHolder) {
-            myHolder.setActiveOrExpiredHolder(purchasePlans.get(position));
+            ((MyPurchasePlansHolder) myHolder).setActiveOrExpiredHolder(purchasePlans.get(position));
         } else if (myHolder instanceof MyPurchasePlanOrdersHolder) {
 
         }
@@ -109,7 +109,7 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
             topUpTv.setOnClickListener(this);
         }
 
-        void setActiveOrExpiredHolder(ActivePackage activePlan) {
+        public void setActiveOrExpiredHolder(ActivePackage activePlan) {
             this.activePlan = activePlan;
             renewTv.setVisibility(View.VISIBLE);
             if (activePlan.getProductClassification().getPackType() == 1) {
