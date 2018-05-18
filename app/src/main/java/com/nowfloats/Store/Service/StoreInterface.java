@@ -3,6 +3,7 @@ package com.nowfloats.Store.Service;
 import com.nowfloats.Store.Model.ChequePaymentModel;
 import com.nowfloats.Store.Model.EnablePackageResponse;
 import com.nowfloats.Store.Model.InitiateModel;
+import com.nowfloats.Store.Model.InvoiceDetailsModel;
 import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.Model.MarkAsPaidModel;
 import com.nowfloats.Store.Model.OPCModels.UpdateDraftInvoiceModel;
@@ -42,6 +43,9 @@ public interface StoreInterface {
 
     @GET("/Support/v5/floatingpoint/getpackages")
     void getStoreList(@QueryMap Map<String,String> map, Callback<PricingPlansModel> callback);
+
+    @GET("/Support/v1/FloatingPoint/GetInvoiceDetailsByFPTag")
+    void getInvoiceDetailsByFPTag(@QueryMap Map<String,String> map, Callback<InvoiceDetailsModel> callback);
 
     //https://api.withfloats.com/Discover/v1/floatingPoint/5406bd254ec0a40d409f2b2b/requestplan?
     // clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21&plantype=mach3

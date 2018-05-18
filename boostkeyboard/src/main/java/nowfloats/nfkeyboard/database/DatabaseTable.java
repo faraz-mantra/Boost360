@@ -24,7 +24,7 @@ public class DatabaseTable {
             query = query.replace("'", "''");
         }
         //String selection = COL_WORD + " like '" + query + "%'";
-        String selection = COL_WORD + " like '" + query + "%'";
+        String selection = COL_WORD + " like '" + "%" + query + "%'";
         ArrayList<KeywordModel> modelList = new ArrayList<>();
         Cursor cursor = null;
         boolean isQueryWordExisting = false;

@@ -102,7 +102,6 @@ public class NewPricingPlansActivity extends AppCompatActivity {
         } else {
             params.put("identifier", appId);
         }
-        params.put("identifier", Constants.clientId);
         params.put("clientId", Constants.clientId);
         params.put("fpId", mSession.getFPID());
         //params.put("fpId", "5ab0eaec8a856e0bdccf68ac");

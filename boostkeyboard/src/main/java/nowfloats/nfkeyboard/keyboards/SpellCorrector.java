@@ -3,15 +3,9 @@ package nowfloats.nfkeyboard.keyboards;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,7 +34,7 @@ public class SpellCorrector {
     private int SUGGESTED_WORD_LIST_LIMIT = 3;
     private int PRIORITY_QUEUE_SIZE_LIMIT = 3;
     private String inputString = "";
-    private PriorityQueue<PQElement> suggestedWords = new PriorityQueue<>(PRIORITY_QUEUE_SIZE_LIMIT);
+    private PriorityQueue<PQElement> suggestedWordsStack = new PriorityQueue<>(PRIORITY_QUEUE_SIZE_LIMIT);
 
     // create the ternary search tree and populate with words.
 
@@ -89,7 +83,7 @@ public class SpellCorrector {
      * @throws IllegalArgumentException
      */
     public ArrayList<KeywordModel> correct(String str) throws IllegalArgumentException {
-        suggestedWords.clear();
+        suggestedWordsStack.clear();
         if (str == null || str.equals("")) {
             log.log(Level.FINE, "Input word is empty.");
             //throw new IllegalArgumentException("Input string is blank.");
@@ -99,41 +93,20 @@ public class SpellCorrector {
 
         // adding words to linkedHashMap for output.
         LinkedHashMap<String, Integer> outputMap = new LinkedHashMap<String, Integer>();
-        for (int i = 0; suggestedWords != null && suggestedWords.isEmpty() == false && i < SUGGESTED_WORD_LIST_LIMIT; i++) {
-            PQElement element = suggestedWords.poll();
+        for (int i = 0; suggestedWordsStack != null && suggestedWordsStack.isEmpty() == false && i < SUGGESTED_WORD_LIST_LIMIT; i++) {
+            PQElement element = suggestedWordsStack.poll();
             if (element != null) {
                 outputMap.put(element.getWord(), element.getDistance());
             }
         }
-        Set<Map.Entry<String, Integer>> set = outputMap.entrySet();
-        List<Map.Entry<String, Integer>> list = new ArrayList<>(set);
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-        HashMap sortedHashMap = new LinkedHashMap();
-        for (Iterator it = list.iterator(); it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            sortedHashMap.put(entry.getKey(), entry.getValue());
-        }
         ArrayList<KeywordModel> models = new ArrayList<>();
-        Set set2 = sortedHashMap.entrySet();
-        Iterator iterator2 = set2.iterator();
-        while (iterator2.hasNext()) {
-            Map.Entry me2 = (Map.Entry) iterator2.next();
-            KeywordModel model = new KeywordModel();
-            model.setWord(me2.getKey() + "");
-            model.setType(KeywordModel.CORRECTED_WORD);
-            models.add(model);
-        }
-       /* List<String> results = new ArrayList<>(outputMap.keySet());
+        List<String> results = new ArrayList<>(outputMap.keySet());
         for (String result : results) {
             KeywordModel model = new KeywordModel();
             model.setWord(result.trim());
             model.setType(KeywordModel.CORRECTED_WORD);
             models.add(model);
-        }*/
+        }
 
         return models;
     }
@@ -160,8 +133,8 @@ public class SpellCorrector {
                 traverse(root.getLeft(), str);
                 if (root.getIsEnd() == true && distance <= EDIT_LIMIT) {
                     PQElement element = new PQElement(str + root.getData(), distance, root.getFrequency());
-                    if (element != null && suggestedWords != null) {
-                        suggestedWords.add(element);
+                    if (element != null && suggestedWordsStack != null) {
+                        suggestedWordsStack.add(element);
                     }
                 }
                 traverse(root.getEqual(), str + root.getData());

@@ -23,7 +23,7 @@ public class PurchasePlanFragment extends Fragment {
     private Context mContext;
     private YourPurchasedPlansActivity.PlansType planType;
 
-    public static PurchasePlanFragment getInstance(Bundle bundle){
+    public static PurchasePlanFragment getInstance(Bundle bundle) {
         PurchasePlanFragment frag = new PurchasePlanFragment();
         frag.setArguments(bundle);
         return frag;
@@ -32,7 +32,7 @@ public class PurchasePlanFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
+        if (getArguments() != null) {
             planType = YourPurchasedPlansActivity.PlansType.getPlanType(getArguments().getInt("pos"));
         }
     }
@@ -46,7 +46,7 @@ public class PurchasePlanFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_purchase_plan,container,false);
+        return inflater.inflate(R.layout.fragment_purchase_plan, container, false);
     }
 
     @Override
@@ -55,11 +55,11 @@ public class PurchasePlanFragment extends Fragment {
 
         if (!isAdded() || isDetached()) return;
         TextView aboutPlan = view.findViewById(R.id.tv_about_plan);
-        switch (planType){
+        switch (planType) {
             case ACTIVE_PLANS:
                 aboutPlan.setText("The following plan(s) is/are currently in use");
                 break;
-            case PROCESS_PLANS:
+            case YOUR_ORDERS:
                 aboutPlan.setText("The following plan(s) is/are not verified to use");
                 break;
             case TO_BE_ACTIVATED_PLANS:
@@ -73,13 +73,13 @@ public class PurchasePlanFragment extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        if (mContext instanceof AdapterCallback){
-            mRecyclerView.setAdapter(((AdapterCallback)mContext).getAdapter(planType));
+        if (mContext instanceof AdapterCallback) {
+            mRecyclerView.setAdapter(((AdapterCallback) mContext).getAdapter(planType));
         }
 
     }
 
-    public interface AdapterCallback{
+    public interface AdapterCallback {
         PurchasedPlanAdapter getAdapter(YourPurchasedPlansActivity.PlansType pos);
     }
 }

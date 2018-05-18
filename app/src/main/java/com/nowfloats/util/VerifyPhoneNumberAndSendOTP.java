@@ -8,17 +8,10 @@ import com.google.gson.annotations.SerializedName;
  * Created by Admin on 16-05-2017.
  */
 
-public class SmsVerifyModel {
-    private boolean IsOTPValid;
+public class VerifyPhoneNumberAndSendOTP {
+    private String PHONE;
+    private boolean IsPhoneNumberInUse;
     private boolean IsOTPSent;
-
-    public boolean isOTPValid() {
-        return IsOTPValid;
-    }
-
-    public boolean isOTPSent() {
-        return IsOTPSent;
-    }
 
     @SerializedName("error_code")
     @Expose
@@ -32,6 +25,18 @@ public class SmsVerifyModel {
     @SerializedName("success")
     @Expose
     private Boolean success;
+
+    public String getPHONE() {
+        return PHONE;
+    }
+
+    public boolean isPhoneNumberInUse() {
+        return IsPhoneNumberInUse;
+    }
+
+    public boolean isOTPSent() {
+        return IsOTPSent;
+    }
 
     public String getErrorCode() {
         return errorCode;

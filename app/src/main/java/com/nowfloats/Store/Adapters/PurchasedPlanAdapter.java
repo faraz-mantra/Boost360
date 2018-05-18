@@ -23,34 +23,47 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
+import static com.nowfloats.Store.YourPurchasedPlansActivity.PlansType.YOUR_ORDERS;
+
 /**
  * Created by Admin on 01-02-2018.
  */
 
-public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdapter.MyPurchasePlansHolder>{
+public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private YourPurchasedPlansActivity.PlansType mPlansType;
     private ArrayList<ActivePackage> purchasePlans;
-    public PurchasedPlanAdapter(Context context, YourPurchasedPlansActivity.PlansType planType){
+
+    public PurchasedPlanAdapter(Context context, YourPurchasedPlansActivity.PlansType planType) {
         mContext = context;
         mPlansType = planType;
 
     }
 
-    public void setPlansList(ArrayList<ActivePackage> plans){
+    public void setPlansList(ArrayList<ActivePackage> plans) {
         purchasePlans = plans;
     }
-    @Override
-    public MyPurchasePlansHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_active_plans,parent,false);
-        return new MyPurchasePlansHolder(view);
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == YOUR_ORDERS.ordinal()) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_plan_orders, parent, false);
+            return new MyPurchasePlanOrdersHolder(view);
+        } else {
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_active_plans, parent, false);
+            return new MyPurchasePlansHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(MyPurchasePlansHolder myHolder, int position) {
-        myHolder.setActiveOrExpiredHolder(purchasePlans.get(position));
+    public void onBindViewHolder(RecyclerView.ViewHolder myHolder, int position) {
+        if (myHolder instanceof MyPurchasePlansHolder) {
+            myHolder.setActiveOrExpiredHolder(purchasePlans.get(position));
+        } else if (myHolder instanceof MyPurchasePlanOrdersHolder) {
+
+        }
     }
 
     @Override
@@ -60,15 +73,23 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
 
     @Override
     public int getItemViewType(int position) {
-        return  mPlansType.ordinal();
+        return mPlansType.ordinal();
+    }
+
+    class MyPurchasePlanOrdersHolder extends RecyclerView.ViewHolder {
+
+        public MyPurchasePlanOrdersHolder(View itemView) {
+            super(itemView);
+        }
     }
 
     class MyPurchasePlansHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView validityTv,visibleDetails, detailsTv, numberTv, statusTv, dateTv, renewTv,topUpTv;
+        private TextView validityTv, visibleDetails, detailsTv, numberTv, statusTv, dateTv, renewTv, topUpTv;
         private ImageView planImV, topUpImV;
         private ActivePackage activePlan;
         private View mImagDivider;
+
         MyPurchasePlansHolder(View itemView) {
             super(itemView);
             mImagDivider = itemView.findViewById(R.id.view_divider);
@@ -88,25 +109,25 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
             topUpTv.setOnClickListener(this);
         }
 
-        void setActiveOrExpiredHolder(ActivePackage activePlan){
+        void setActiveOrExpiredHolder(ActivePackage activePlan) {
             this.activePlan = activePlan;
             renewTv.setVisibility(View.VISIBLE);
-            if(activePlan.getProductClassification().getPackType() == 1){
+            if (activePlan.getProductClassification().getPackType() == 1) {
                 planImV.setVisibility(View.GONE);
                 mImagDivider.setVisibility(View.GONE);
                 validityTv.setText(Methods.fromHtml(String.format("<b><font color=%s>%s</font></b>",
-                        ContextCompat.getColor(mContext,R.color.gray), activePlan.getName())));
+                        ContextCompat.getColor(mContext, R.color.gray), activePlan.getName())));
                 topUpImV.setVisibility(View.VISIBLE);
                 topUpTv.setVisibility(View.INVISIBLE);
-            }else{
+            } else {
 
-                topUpTv.setVisibility(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?View.VISIBLE:View.INVISIBLE);
+                topUpTv.setVisibility(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? View.VISIBLE : View.INVISIBLE);
                 Glide.with(mContext).load(activePlan.getPrimaryImageUri()).into(planImV);
-                if (activePlan.getName().toLowerCase().contains("lite")){
+                if (activePlan.getName().toLowerCase().contains("lite")) {
                     //planImV.setImageResource(R.drawable.boost_lite_logo);
-                }else if (activePlan.getName().toLowerCase().contains("pro")){
+                } else if (activePlan.getName().toLowerCase().contains("pro")) {
                     //planImV.setImageResource(R.drawable.boost_pro_logo);
-                }else if (activePlan.getName().toLowerCase().contains("light")){
+                } else if (activePlan.getName().toLowerCase().contains("light")) {
                     //planImV.setImageResource(R.drawable.lighthouse);
                     renewTv.setVisibility(View.INVISIBLE);
                 }
@@ -114,44 +135,44 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
                 planImV.setVisibility(View.VISIBLE);
                 topUpImV.setVisibility(View.GONE);
                 validityTv.setText(Methods.fromHtml(String.format("Validity: <b><font color=%s>%s</font></b>",
-                        ContextCompat.getColor(mContext,R.color.gray),activePlan.getTotalMonthsValidity()+" Months")));
+                        ContextCompat.getColor(mContext, R.color.gray), activePlan.getTotalMonthsValidity() + " Months")));
             }
-            if (activePlan.isExpanded()){
+            if (activePlan.isExpanded()) {
                 detailsTv.setText("Hide Plan Details");
                 visibleDetails.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 detailsTv.setText("Show Plan Details");
                 visibleDetails.setVisibility(View.GONE);
             }
 
             visibleDetails.setText(activePlan.getFeatures());
-            switch (activePlan.getActiveStatus()){
+            switch (activePlan.getActiveStatus()) {
                 case "Expired":
                     statusTv.setText(Methods.fromHtml(String.format("Status: <font color=%s>%s</font>",
-                            ContextCompat.getColor(mContext,R.color.red),activePlan.getActiveStatus())));
+                            ContextCompat.getColor(mContext, R.color.red), activePlan.getActiveStatus())));
                     break;
                 case "Not Active":
                 case "Active":
                 default:
                     statusTv.setText(Methods.fromHtml(String.format("Status: <font color=%s>%s</font>",
-                            ContextCompat.getColor(mContext,R.color.gray),activePlan.getActiveStatus())));
+                            ContextCompat.getColor(mContext, R.color.gray), activePlan.getActiveStatus())));
                     break;
             }
             numberTv.setText(Methods.fromHtml(String.format("Invoice Number: <font color=%s>%s</font>",
-                    ContextCompat.getColor(mContext,R.color.gray), TextUtils.isEmpty(activePlan.getNfInternalERPId())? "NA":activePlan.getNfInternalERPId())));
+                    ContextCompat.getColor(mContext, R.color.gray), TextUtils.isEmpty(activePlan.getNfInternalERPId()) ? "NA" : activePlan.getNfInternalERPId())));
             dateTv.setText(Methods.fromHtml(String.format("Activated on: <font color=%s>%s</font>",
-                    ContextCompat.getColor(mContext,R.color.gray), Methods.getFormattedDate(activePlan.getToBeActivatedOn(),"dd MMM yyyy"))));
+                    ContextCompat.getColor(mContext, R.color.gray), Methods.getFormattedDate(activePlan.getToBeActivatedOn(), "dd MMM yyyy"))));
         }
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.tv_details:
-                    if (!activePlan.isExpanded()){
+                    if (!activePlan.isExpanded()) {
                         detailsTv.setText("Hide Plan Details");
                         visibleDetails.setVisibility(View.VISIBLE);
                         activePlan.setExpanded(true);
-                    }else{
+                    } else {
                         detailsTv.setText("Show Plan Details");
                         visibleDetails.setVisibility(View.GONE);
                         activePlan.setExpanded(false);
@@ -167,11 +188,11 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<PurchasedPlanAdap
         }
 
         private void showRenewPlans() {
-            if (activePlan.getProductClassification().getPackType() == 0){
+            if (activePlan.getProductClassification().getPackType() == 0) {
                 Intent i = new Intent(mContext, NewPricingPlansActivity.class);
-                i.putExtra("fragmentName","BasePlans");
+                i.putExtra("fragmentName", "BasePlans");
                 mContext.startActivity(i);
-            }else{
+            } else {
                 showTopUps();
             }
         }

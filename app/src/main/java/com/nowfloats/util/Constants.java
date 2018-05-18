@@ -112,7 +112,8 @@ public class Constants {
     //Retrofit Single Instance
     public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
     public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();
-    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+    //public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://onboarding-boost.withfloats.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
@@ -373,9 +374,10 @@ public class Constants {
     public static String PrimaryNumberClientId = "726F12B41F6242CC9A2B23BF101199B54449370AD7F44B069C9B5E7CC4A7A20D";
 
     public enum SubscriberStatus {
-        UNSUBSCRIBED(30), SUBSCRIBED(20),REQUESTED(10);
+        UNSUBSCRIBED(30), SUBSCRIBED(20), REQUESTED(10);
         public int value;
-        SubscriberStatus(int i){
+
+        SubscriberStatus(int i) {
             value = i;
         }
     }
@@ -477,7 +479,7 @@ public class Constants {
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
-    public static String SUPPORT_EMAIL_ID=Specific.CONTACT_EMAIL_ID;
+    public static String SUPPORT_EMAIL_ID = Specific.CONTACT_EMAIL_ID;
 
     public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
     public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGE_ID;

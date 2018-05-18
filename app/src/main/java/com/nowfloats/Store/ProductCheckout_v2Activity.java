@@ -74,7 +74,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.product_checkout_toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -114,18 +114,18 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 //startActivity(new Intent(ProductCheckoutActivity.this, PaymentOptionsActivity.class));
 
-                if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
+                if (!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
                     Intent i = new Intent(ProductCheckout_v2Activity.this, PaymentOptionsActivity.class);
                     mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
                             mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                            mFinalAmount , mNewPackage.substring(0, mNewPackage.length() - 4),
+                            mFinalAmount, mNewPackage.substring(0, mNewPackage.length() - 4),
                             mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
                             "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
                     i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                    i.putExtra("packageList",new Gson().toJson(mPurchasePlans));
-                    startActivityForResult(i,DIRECT_REQUEST_CODE);
+                    i.putExtra("packageList", new Gson().toJson(mPurchasePlans));
+                    startActivityForResult(i, DIRECT_REQUEST_CODE);
                     //write logic for with and without opc cases
-                }else {
+                } else {
                     Methods.showSnackBarNegative(ProductCheckout_v2Activity.this, "Error in processing Amount");
                 }
             }
@@ -140,20 +140,20 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
         String appId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
         String country = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
         Map<String, String> params = new HashMap<>();
-        if (accId.length()>0){
+        if (accId.length() > 0) {
             params.put("identifier", accId);
-        }else{
+        } else {
             params.put("identifier", appId);
         }
         params.put("clientId", Constants.clientId);
         params.put("fpId", mSessionManager.getFPID());
-        params.put("country",country.toLowerCase());
+        params.put("country", country.toLowerCase());
         params.put("fpCategory", mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
 
         Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
             @Override
             public void success(PricingPlansModel storeMainModel, Response response) {
-                if(storeMainModel != null){
+                if (storeMainModel != null) {
                     preProcessAndDispatchPlans(storeMainModel);
                 }
             }
@@ -166,15 +166,15 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
 
     }
 
-    private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel){
+    private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 List<PackageDetails> packageDetailsList = new ArrayList<>();
-                if(mPackageIds == null)
+                if (mPackageIds == null)
                     return;
-                for(AllPackage packageType : storeMainModel.allPackages){
-                    for(PackageDetails packDetail : packageType.getValue()){
+                for (AllPackage packageType : storeMainModel.allPackages) {
+                    for (PackageDetails packDetail : packageType.getValue()) {
                         for (String item : mPackageIds) {
                             if (packDetail.getId().equalsIgnoreCase(item)) {
                                 packageDetailsList.add(packDetail);
@@ -185,7 +185,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
                 }
                 mPurchasePlans = packageDetailsList;
                 List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
-                for(PackageDetails packageDetail : mPurchasePlans) {
+                for (PackageDetails packageDetail : mPurchasePlans) {
                     PurchaseDetail purchaseDetail = new PurchaseDetail();
                     String clientId;
                     if (!Util.isNullOrEmpty(mSessionManager.getSourceClientId())) {
@@ -194,7 +194,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
                         clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
                     }
                     double totalTax = 0;
-                    if(packageDetail.getTaxes() != null) {
+                    if (packageDetail.getTaxes() != null) {
                         for (TaxDetail taxData : packageDetail.getTaxes()) {
                             totalTax += taxData.getValue();
                         }
@@ -203,7 +203,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
                     purchaseDetail.setClientId(clientId);
                     purchaseDetail.setDurationInMnths(packageDetail.getValidityInMths());
                     purchaseDetail.setFPId(mSessionManager.getFPID());
-                    purchaseDetail.setMRP(packageDetail.getPrice() + (packageDetail.getPrice()*totalTax)/100);
+                    purchaseDetail.setMRP(packageDetail.getPrice() + (packageDetail.getPrice() * totalTax) / 100);
                     purchaseDetail.setMRPCurrencyCode(packageDetail.getCurrencyCode());
                     purchaseDetail.setPackageId(packageDetail.getId());
                     purchaseDetail.setPackageName(packageDetail.getName());
@@ -230,36 +230,38 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
             setResult(RESULT_OK, data);
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        }else{
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
     // showing list of products with discount, if opc added
     private void initializeVal(final ReceiveDraftInvoiceModel invoiceData, boolean showDiscount) {
-        if(invoiceData==null || mPurchasePlans == null){
+        if (invoiceData == null || mPurchasePlans == null) {
             return;
         }
         tvUserName.setText(mSessionManager.getFpTag().toLowerCase());
         tvUserEmail.setText(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         tvPhoneNumber.setText(mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        if(showDiscount) {
+        if (showDiscount) {
             trTanNo.setVisibility(View.VISIBLE);
             tvTanNo.setText(invoiceData.getTanNumber() + "");
         }
         double netAmount = 0;
-        for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
-            if(data.getDiscount()==null) {
+        for (PurchaseDetail data : invoiceData.getPurchaseDetails()) {
+            if (data.getDiscount() == null) {
                 netAmount += data.getBasePrice();
-            }else {
-                netAmount += (data.getBasePrice()-(data.getBasePrice()*data.getDiscount().value/100.0));
+            } else {
+                netAmount += (data.getBasePrice() - (data.getBasePrice() * data.getDiscount().value / 100.0));
             }
         }
         netAmount = Math.round((netAmount * 100) / 100.0);
-        tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(netAmount)+ " /-");
+        if (invoiceData != null && invoiceData.getPurchaseDetails() != null && !invoiceData.getPurchaseDetails().isEmpty()) {
+            tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
+                    NumberFormat.getIntegerInstance(Locale.US).format(netAmount) + " /-");
+        }
         float taxVal = 0;
-        StringBuilder taxNames= new StringBuilder();
+        StringBuilder taxNames = new StringBuilder();
 
         for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
             taxVal += taxData.getValue();
@@ -267,24 +269,24 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
         }
 
         double taxAmount = 0;
-        if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
+        if (invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType() == 0) {
             taxAmount = (netAmount * taxVal) / 100.0;
-        }else {
-            taxAmount =(int) taxVal;
+        } else {
+            taxAmount = (int) taxVal;
         }
         taxAmount = Math.round((taxAmount * 100) / 100.0);
         tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
-        if(showDiscount) {
+        if (showDiscount) {
             trTdsAmount.setVisibility(View.VISIBLE);
             tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + invoiceData.getTdsAmount());
         }
 
         tvAmountToBePaid.setText(mPurchasePlans.get(0).getCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100) + " /-");
-        String packages="";
-        for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
-            packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
+        String packages = "";
+        for (int i = 0; i < invoiceData.getPurchaseDetails().size(); i++) {
+            packages += invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
         }
         mNewPackage = packages;
         mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100);
@@ -300,7 +302,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }

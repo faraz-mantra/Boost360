@@ -19,6 +19,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.PurchasedPlanAdapter;
 import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.Model.AllPackage;
+import com.nowfloats.Store.Model.InvoiceDetailsModel;
 import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.Model.WidgetPacks;
@@ -61,7 +62,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
            case ACTIVE_PLANS:
                adapter.setPlansList(activePlans);
                break;
-           case PROCESS_PLANS:
+           case YOUR_ORDERS:
                throw  new RuntimeException("You can not use PROCESS_PLANS type of ENUM");
            case TO_BE_ACTIVATED_PLANS:
                adapter.setPlansList(toBeActivatedPlans);
@@ -79,13 +80,13 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         ACTIVE_PLANS,
         TO_BE_ACTIVATED_PLANS,
         EXPIRED_PLANS,
-        PROCESS_PLANS;
+        YOUR_ORDERS;
         public static String getName(int pos){
             switch (pos){
                 case 0:
                     return "ACTIVE PLANS";
                 case 3:
-                    return "PLANS IN PROCESS";
+                    return "YOUR ORDERS";
                 case 1:
                     return "PLANS TO BE ACTIVATED";
                 case 2:
@@ -99,7 +100,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                 case 0:
                     return ACTIVE_PLANS;
                 case 3:
-                   return PROCESS_PLANS;
+                   return YOUR_ORDERS;
                 case 1:
                     return TO_BE_ACTIVATED_PLANS;
                 case 2:
@@ -132,6 +133,35 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
 
         mSession = new UserSessionManager(this, this);
         getPricingPlanDetails();
+        getInvoiceDetailsByFPTag();
+    }
+
+    private void getInvoiceDetailsByFPTag() {
+        Map<String, String> params = new HashMap<>();
+        params.put("clientId", Constants.clientId);
+        params.put("FpTag", mSession.getFpTag());
+        params.put("offset","0");
+        params.put("pagesize","1000");
+        params.put("saleType","-1");
+
+        Constants.restAdapter.create(StoreInterface.class).getInvoiceDetailsByFPTag(params, new Callback<InvoiceDetailsModel>() {
+            @Override
+            public void success(InvoiceDetailsModel invoiceDetailsModel, Response response) {
+                if(invoiceDetailsModel != null){
+
+                }else{
+                    Toast.makeText(YourPurchasedPlansActivity.this,getString(R.string.something_went_wrong_try_again),Toast.LENGTH_SHORT).show();
+                    hideDialog();
+                }
+                // zeroth screen
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hideDialog();
+                Log.d("Test", error.getMessage());
+            }
+        });
     }
 
     private void getPricingPlanDetails() {
