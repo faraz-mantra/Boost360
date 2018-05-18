@@ -285,7 +285,6 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
                 MixPanelController.track("SearchQueriesDetailedView", null);
                 Intent q = new Intent(getActivity(), SearchQueriesActivity.class);
-                //Intent q = new Intent(getActivity(), SearchQueriesActivityNew.class);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

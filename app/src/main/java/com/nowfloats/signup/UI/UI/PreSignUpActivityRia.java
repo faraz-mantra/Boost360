@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.location.Address;
@@ -200,7 +199,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private String citytext = "";
     public ProgressDialog pd;
     private PopupWindow popup;
-    private MaterialDialog otpOverCallProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,13 +229,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 .content("Fetching OTP from SMS inbox")
                 .progress(true, 0)
                 .build();
-        otpOverCallProgressDialog = new MaterialDialog.Builder(this)
-                .autoDismiss(false)
-                /*.backgroundColorRes(R.color.transparent)*/
-                .content("Fetching OTP from SMS inbox")
-                .progress(true, 0)
-                .build();
-
         bus = BusProvider.getInstance().getBus();
         businessNameEditText = (EditText) findViewById(R.id.editText_businessName);
         businessCategoryEditText = (EditText) findViewById(R.id.editText_businessCategory);
@@ -675,18 +666,21 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!model.isPhoneNumberInUse()) {
+                if (!model.isPhoneNumberInUse() && model.isOTPSent()) {
                     stopProgressDialog();
-                    if (numberDialog != null && numberDialog.isShowing()) {
+                    if (numberDialog != null) {
                         numberDialog.dismiss();
                     }
                     otpVerifyDialog(model.getPHONE());
 
                 } else {
                     stopProgressDialog();
-                    //PreSignUpDialog.showDialog_WebSiteCreation(activity,"Number Already Registered. . .","Try Again . . .");
-                    //Toast.makeText(PreSignUpActivityRia.this, model.getMessage(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
+                    if (model.isPhoneNumberInUse()) {
+                        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else if (!model.isOTPSent()) {
+                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid number", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
@@ -1514,15 +1508,11 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         //call send otp api
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify, null);
         final TextView tvNumber = view.findViewById(R.id.tv_number);
-        tvNumber.setText(number);
+        tvNumber.setText("(" + number + ")");
         final EditText otp = (EditText) view.findViewById(R.id.editText);
         otpEditText = otp;
         TextView tvOTPOverCall = (TextView) view.findViewById(R.id.tv_get_otp_over_call);
         TextView resend = (TextView) view.findViewById(R.id.resend_tv);
-        resend.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        resend.setText(Methods.fromHtml(getString(R.string.resend)));
-        tvOTPOverCall.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        tvOTPOverCall.setText(Methods.fromHtml(getString(R.string.otp_over_call)));
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1605,7 +1595,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void reSendOTPOverCall(String number) {
-        showOtpOverCallProgressDialog();
+        showProgressbar();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("PHONE", number);
@@ -1614,15 +1604,12 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public void success(SmsVerifyModel model, Response response) {
                 if (model == null) {
-                    hideOtpOverCallProgressDialog();
                     Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (model.isOTPSent()) {
-                    hideOtpOverCallProgressDialog();
 
                 } else {
-                    hideOtpOverCallProgressDialog();
                     Toast.makeText(PreSignUpActivityRia.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -1631,6 +1618,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public void failure(RetrofitError error) {
                 stopProgressDialog();
+                hideOtpOverCallProgressDialog();
                 Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             }
         });
@@ -1784,19 +1772,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     private void stopProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
-
-    private void showOtpOverCallProgressDialog() {
-        if (otpOverCallProgressDialog != null) {
-            progressDialog.show();
-        }
-    }
-
-
-    private void hideOtpOverCallProgressDialog() {
-        if (otpOverCallProgressDialog != null && otpOverCallProgressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }

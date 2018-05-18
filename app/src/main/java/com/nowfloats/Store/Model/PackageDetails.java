@@ -11,7 +11,7 @@ import java.util.List;
  * Created by NowFloats on 16-10-2017.
  */
 
-public class PackageDetails implements Comparable<PackageDetails>{
+public class PackageDetails implements Comparable<PackageDetails> {
     @SerializedName("CurrencyCode")
     @Expose
     private String currencyCode;
@@ -99,8 +99,30 @@ public class PackageDetails implements Comparable<PackageDetails>{
     @SerializedName("NetAmount")
     @Expose
     private Double netAmount;
+    @SerializedName("packageName")
+    @Expose
+    private String packageName;
+    @SerializedName("netPackagePrice")
+    @Expose
+    private Double netPackagePrice;
 
     private List<String> featureList;
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public Double getNetPackagePrice() {
+        return netPackagePrice;
+    }
+
+    public void setNetPackagePrice(Double netPackagePrice) {
+        this.netPackagePrice = netPackagePrice;
+    }
 
     public List<String> getFeatureList() {
         return featureList;

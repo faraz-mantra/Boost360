@@ -3,25 +3,36 @@ package com.nowfloats.Store.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class InvoiceDetailsResult {
+import java.util.List;
+
+public class InvoiceDetailsResult {
     @SerializedName("_id")
     @Expose
     private String orderConfirmationId;
     @SerializedName("createdOn")
     @Expose
     private String paymentDate;
-    @SerializedName("packageName")
-    @Expose
-    private String packageName;
     @SerializedName("netPackagePrice")
     @Expose
-    private int netPackagePrice;
+    private Double netPackagePrice;
     @SerializedName("_nfInternalClaimId")
     @Expose
-    private String claimid;
+    private String claimId;
     @SerializedName("paymentTransactionStatus")
     @Expose
     private int paymentStatus;
+
+    @SerializedName("packageDetails")
+    @Expose
+    public List<PackageDetails> packageDetails;
+
+    public List<PackageDetails> getPackageDetails() {
+        return packageDetails;
+    }
+
+    public void setPackageDetails(List<PackageDetails> packageDetails) {
+        this.packageDetails = packageDetails;
+    }
 
     public String getOrderConfirmationId() {
         return orderConfirmationId;
@@ -39,28 +50,20 @@ class InvoiceDetailsResult {
         this.paymentDate = paymentDate;
     }
 
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
-    }
-
-    public int getNetPackagePrice() {
+    public Double getNetPackagePrice() {
         return netPackagePrice;
     }
 
-    public void setNetPackagePrice(int netPackagePrice) {
+    public void setNetPackagePrice(Double netPackagePrice) {
         this.netPackagePrice = netPackagePrice;
     }
 
     public String getClaimid() {
-        return claimid;
+        return claimId;
     }
 
     public void setClaimid(String claimid) {
-        this.claimid = claimid;
+        this.claimId = claimid;
     }
 
     public int getPaymentStatus() {

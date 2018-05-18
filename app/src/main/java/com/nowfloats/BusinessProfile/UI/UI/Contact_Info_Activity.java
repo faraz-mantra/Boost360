@@ -1,7 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -82,8 +81,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private TextView primaryTextView, alternateTextView1, alternateTextView2, alternateTextView3;
     private MaterialDialog dialog;
     private MaterialDialog sendSmsProgressDialog;
-    private MaterialDialog otpOverCallProgressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,12 +95,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 .progress(true, 0)
                 .build();
         sendSmsProgressDialog = new MaterialDialog.Builder(this)
-                .autoDismiss(false)
-                /*.backgroundColorRes(R.color.transparent)*/
-                .content("Fetching OTP from SMS inbox")
-                .progress(true, 0)
-                .build();
-        otpOverCallProgressDialog = new MaterialDialog.Builder(this)
                 .autoDismiss(false)
                 /*.backgroundColorRes(R.color.transparent)*/
                 .content("Fetching OTP from SMS inbox")
@@ -551,7 +542,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     if (model.isPhoneNumberInUse()) {
                         Toast.makeText(Contact_Info_Activity.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
-                    }else if (!model.isOTPSent()){
+                    } else if (!model.isOTPSent()) {
                         Toast.makeText(Contact_Info_Activity.this, "Please enter valid number", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -1343,13 +1334,11 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         final EditText otp = (EditText) view.findViewById(R.id.editText);
         otpEditText = otp;
         final TextView tvNumber = view.findViewById(R.id.tv_number);
-        tvNumber.setText(number);
+        tvNumber.setText("(" + number + ")");
         TextView tvOTPOverCall = (TextView) view.findViewById(R.id.tv_get_otp_over_call);
         TextView resend = (TextView) view.findViewById(R.id.resend_tv);
        /* resend.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         resend.setText(Methods.fromHtml(getString(R.string.resend)));*/
-        tvOTPOverCall.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        tvOTPOverCall.setText(Methods.fromHtml(getString(R.string.otp_over_call)));
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1431,7 +1420,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
 
     private void reSendOTPOverCall(String number) {
-        showOtpOverCallProgressbar();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("PHONE", number);
@@ -1439,7 +1427,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         smsApi.resendOTPOverCall(hashMap, new Callback<SmsVerifyModel>() {
             @Override
             public void success(SmsVerifyModel model, Response response) {
-                hideOtpOverCallProgressbar();
                 if (model == null) {
                     Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
@@ -1454,7 +1441,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
             @Override
             public void failure(RetrofitError error) {
-                hideOtpOverCallProgressbar();
                 Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             }
         });
@@ -1555,18 +1541,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private void hideSendSmsProgressbar() {
         if (sendSmsProgressDialog != null && sendSmsProgressDialog.isShowing()) {
             sendSmsProgressDialog.dismiss();
-        }
-    }
-
-    private void showOtpOverCallProgressbar() {
-        if (otpOverCallProgressDialog != null) {
-            otpOverCallProgressDialog.show();
-        }
-    }
-
-    private void hideOtpOverCallProgressbar() {
-        if (otpOverCallProgressDialog != null && otpOverCallProgressDialog.isShowing()) {
-            otpOverCallProgressDialog.dismiss();
         }
     }
 

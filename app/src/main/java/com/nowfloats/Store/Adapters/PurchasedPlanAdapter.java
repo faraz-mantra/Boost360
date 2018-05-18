@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.Store.Model.ActivePackage;
+import com.nowfloats.Store.Model.InvoiceDetailsResult;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.TopUpPlansActivity;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
@@ -34,11 +35,11 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
     private Context mContext;
     private YourPurchasedPlansActivity.PlansType mPlansType;
     private ArrayList<ActivePackage> purchasePlans;
+    private ArrayList<InvoiceDetailsResult> planOrderItems;
 
     public PurchasedPlanAdapter(Context context, YourPurchasedPlansActivity.PlansType planType) {
         mContext = context;
         mPlansType = planType;
-
     }
 
     public void setPlansList(ArrayList<ActivePackage> plans) {
@@ -47,28 +48,40 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
         if (viewType == YOUR_ORDERS.ordinal()) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_plan_orders, parent, false);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_plan_orders, parent, false);
             return new MyPurchasePlanOrdersHolder(view);
         } else {
-            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_active_plans, parent, false);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_active_plans, parent, false);
             return new MyPurchasePlansHolder(view);
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder myHolder, int position) {
-        if (myHolder instanceof MyPurchasePlansHolder) {
+        if (myHolder instanceof MyPurchasePlansHolder && purchasePlans != null && !purchasePlans.isEmpty()) {
             ((MyPurchasePlansHolder) myHolder).setActiveOrExpiredHolder(purchasePlans.get(position));
-        } else if (myHolder instanceof MyPurchasePlanOrdersHolder) {
+        }
 
+        if (myHolder instanceof MyPurchasePlanOrdersHolder && purchasePlans != null && !purchasePlans.isEmpty()) {
+            if (position > 0) {
+                MyPurchasePlanOrdersHolder holder = (MyPurchasePlanOrdersHolder) myHolder;
+                ActivePackage activePackage = purchasePlans.get(position);
+                holder.tvSerialNumber.setText(position + " ");
+                holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getToBeActivatedOn(), "DD-MM-YYYY"));
+                holder.tvPaymentDate.setText(activePackage.getPaymentDate());
+                holder.tvOrderId.setText(activePackage.getId());
+                holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());
+                holder.tvSerialNumber.setText(activePackage.getPackageDetails().get(0).getNetPackagePrice() + "");
+                holder.tvCliamId.setText(activePackage.getClaimid() != null ? activePackage.getClaimid() : " ");
+                holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() + " ");
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return purchasePlans.size();
+        return purchasePlans != null ? purchasePlans.size() : 0;
     }
 
     @Override
@@ -78,8 +91,23 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class MyPurchasePlanOrdersHolder extends RecyclerView.ViewHolder {
 
+        private final TextView tvSerialNumber;
+        private final TextView tvPaymentDate;
+        private final TextView tvOrderId;
+        private final TextView tvPackageName;
+        private final TextView tvTotalAmount;
+        private final TextView tvCliamId;
+        private final TextView tvPaymentStatus;
+
         public MyPurchasePlanOrdersHolder(View itemView) {
             super(itemView);
+            tvSerialNumber = itemView.findViewById(R.id.tv_serial_number);
+            tvPaymentDate = itemView.findViewById(R.id.tv_payment_date);
+            tvOrderId = itemView.findViewById(R.id.tv_order_confirmation_id);
+            tvPackageName = itemView.findViewById(R.id.tv_package_name);
+            tvTotalAmount = itemView.findViewById(R.id.tv_total_amount);
+            tvCliamId = itemView.findViewById(R.id.tv_claim_id);
+            tvPaymentStatus = itemView.findViewById(R.id.tv_payment_status);
         }
     }
 

@@ -72,7 +72,13 @@ public class PurchasePlanFragment extends Fragment {
 
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+       /* if (planType.equals(YourPurchasedPlansActivity.PlansType.YOUR_ORDERS)) {
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        } else {
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        }*/
+        mRecyclerView.setLayoutManager(layoutManager);
         if (mContext instanceof AdapterCallback) {
             mRecyclerView.setAdapter(((AdapterCallback) mContext).getAdapter(planType));
         }
