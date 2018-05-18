@@ -998,6 +998,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="error_in_uploading">Error in Uploading</string>
     <string name="uploaded_and">Uploaded and</string>
     <string name="uploading_image">Uploading Image</string>
+    <string name="uploading_other_image">Uploading Other Images</string>
     <string name="product_removed">Product is removed&#8230;</string>
     <string name="replacing_image">Replacing image&#8230;.</string>
     <string name="product_image_replaced_successfully">Product image replaced successfully</string>

@@ -1,6 +1,7 @@
 package com.nowfloats.Product_Gallery.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
@@ -13,6 +14,7 @@ import com.nowfloats.Product_Gallery.Model.ProductImageResponseModel;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +57,21 @@ public class ProductImageListAdapter extends PagerAdapter {
         return mList.size();
     }
 
+    public ArrayList<ProductImageResponseModel> getImages() {
+        return (ArrayList<ProductImageResponseModel>) mList;
+    }
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = mLayoutInflater.inflate(R.layout.product_images_pager_layout, container, false);
         ImageView productImage = view.findViewById(R.id.iv_product_image);
-        Picasso.with(mContext).load(mList.get(position).getImage().url).into(productImage);
+        if (mList.get(position).getImage().url.startsWith("http")) {
+            Picasso.with(mContext).load(mList.get(position).getImage().url).into(productImage);
+        } else {
+            Uri uri = Uri.fromFile(new File(mList.get(position).getImage().url));
+            Picasso.with(mContext).load(uri).into(productImage);
+        }
         container.addView(view);
         return view;
     }

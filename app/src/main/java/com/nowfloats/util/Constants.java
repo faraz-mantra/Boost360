@@ -51,6 +51,7 @@ public class Constants {
     public static boolean IS_FRIDAY_CHECKED = false;
     public static boolean IS_SATURDAY_CHECKED = false;
     public static final int GALLERY_PHOTO = 100;
+    public static final int CHOSEN_PHOTO = 1908;
     public static final int CAMERA_PHOTO = 1888;
     public static String UserId = "";
     public static Typeface hel_bold, hel_roman;

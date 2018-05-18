@@ -18,6 +18,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -43,7 +45,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
@@ -51,6 +52,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.Adapter.InventoryListAdapter;
+import com.nowfloats.Product_Gallery.Model.ProductImageRequestModel;
+import com.nowfloats.Product_Gallery.Model.ProductImageResponseModel;
 import com.nowfloats.Product_Gallery.Model.ProductKeywordReqModel;
 import com.nowfloats.Product_Gallery.Model.ProductKeywordResponseModel;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
@@ -78,6 +81,7 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
 import com.nowfloats.webactions.WebAction;
 import com.nowfloats.webactions.WebActionsFilter;
+import com.nowfloats.webactions.models.ProductImage;
 import com.nowfloats.webactions.models.WebActionError;
 import com.nowfloats.webactions.models.WebActionVisibility;
 import com.nowfloats.webactions.webactioninterfaces.IFilter;
@@ -93,6 +97,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -140,7 +145,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     private WebAction webAction;
     private InventoryListAdapter mInventoryAdapter;
     private List<com.nowfloats.webactions.models.WebAction> mInventoryWebActionList = new ArrayList<>();
-
+    private int keyWordCount = 0, imageCount = 0;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -162,7 +167,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         save = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
         TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.add_product):"Add "+session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+        title.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)) ? getString(R.string.add_product) : "Add " + session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
         save.setImageResource(R.drawable.product_tick);
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
@@ -257,7 +262,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 if (product_data != null) {
                     replaceImage = true;
                     save.setVisibility(View.GONE);
-                    title.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.edit_product):"Edit "+session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+                    title.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)) ? getString(R.string.edit_product) : "Edit " + session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
                     getShippingMetrix(product_data._id);
                     //load image
 
@@ -374,9 +379,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                     save.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                                 Methods.showFeatureNotAvailDialog(Product_Detail_Activity_V45.this);
-                            }else {
+                            } else {
                                 MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATE, null);
                                 try {
                                     if (mIsApEnabled && (TextUtils.isEmpty(etNetAmount.getText().toString().trim()) ||
@@ -424,7 +429,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                                                             @Override
                                                             public void run() {
                                                                 materialProgress.dismiss();
-                                                                invokeGetProductList();
+                                                                invokeGetProductList(product_data._id);
                                                                 Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
                                                             }
                                                         });
@@ -546,7 +551,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                         if (flag) {
                             productInterface.addProduct(values, new Callback<String>() {
                                 @Override
-                                public void success(String productId, Response response) {
+                                public void success(final String productId, Response response) {
                                     if (mRiaNodedata != null) {
                                         RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
                                                 mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
@@ -555,20 +560,36 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                                         mRiaNodedata = null;
                                     }
                                     Log.i("PRODUCT ID__", "" + productId);
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            materialProgress.dismiss();
+
+
+                                    if (createKeywordList != null && createKeywordList.size() > 0) {
+                                        keyWordCount = 0;
+                                        for (Tag tag : createKeywordList) {
+                                            final ProductKeywordReqModel reqData = new ProductKeywordReqModel();
+                                            reqData._pid = productId;
+                                            reqData.keyword = tag.text;
+                                            webAction.insert(session.getFpTag(), reqData, new WebAction.WebActionCallback<String>() {
+                                                @Override
+                                                public void onSuccess(String result) {
+                                                    keyWordCount++;
+                                                    if (keyWordCount == createKeywordList.size()) {
+                                                        afterExecutingKeywords(productId);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(WebActionError error) {
+                                                    keyWordCount++;
+                                                    if (keyWordCount == createKeywordList.size()) {
+                                                        afterExecutingKeywords(productId);
+                                                    }
+                                                }
+                                            });
                                         }
-                                    });
-                                    if (mIsApEnabled) {
-                                        if (mShippingMetrix != null) {
-                                            mShippingMetrix.setProductId(productId);
-                                        }
-                                        addShippingMetric(mShippingMetrix, false);
                                     } else {
-                                        uploadProductImage(productId);
+                                        afterExecutingKeywords(productId);
                                     }
+
                                 }
 
                                 @Override
@@ -612,11 +633,12 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         webAction = new WebAction.WebActionBuilder()
                 .setAuthHeader("58ede4d4ee786c1604f6c535")
                 .build();
-        if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
-            displayAssociatedWebActions();
-        } else {
-            lvInventoryData.setVisibility(View.GONE);
-        }
+
+//        if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
+        displayAssociatedWebActions();
+//        } else {
+//            lvInventoryData.setVisibility(View.GONE);
+//        }
 
         lvInventoryData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -624,6 +646,24 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 showInventoryDataDialog(mInventoryAdapter.getItem(i), i);
             }
         });
+    }
+
+    private void afterExecutingKeywords(String productId) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                materialProgress.dismiss();
+            }
+        });
+        createKeywordList.clear();
+        if (mIsApEnabled) {
+            if (mShippingMetrix != null) {
+                mShippingMetrix.setProductId(productId);
+            }
+            addShippingMetric(mShippingMetrix, false);
+        } else {
+            uploadProductImage(productId);
+        }
     }
 
     private void showInventoryDataDialog(com.nowfloats.webactions.models.WebAction item, int position) {
@@ -639,15 +679,25 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     }
 
     private void showProductImages() {
-        if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
-            Intent i = new Intent(this, MultipleProductImageActivity.class);
+//        if (product_data != null && !TextUtils.isEmpty(product_data._id)) {
+        Intent i = new Intent(this, MultipleProductImageActivity.class);
+        if (product_data != null && !TextUtils.isEmpty(product_data._id)) {
             i.putExtra("product_id", product_data._id);
-            startActivity(i);
         } else {
-            Toast.makeText(this, "Please save the Product first", Toast.LENGTH_SHORT).show();
+            i.putExtra("product_id", "");
         }
+        if (lsProductImages == null) {
+            lsProductImages = new ArrayList<>();
+        }
+        i.putExtra("cacheImages", lsProductImages);
+        startActivityForResult(i, Constants.CHOSEN_PHOTO);
+//        } else {
+//            Toast.makeText(this, "Please save the Product first", Toast.LENGTH_SHORT).show();
+//        }
 
     }
+
+    List<Tag> createKeywordList = new ArrayList<>();
 
     private void showProductKeywordDialog() {
         webAction.setWebActionName("product_keywords");
@@ -663,7 +713,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         Dialog dialog = builder.create();
         dialog.show();
         final List<Tag> keywordList = new ArrayList<>();
-        if(product_data != null) {
+        if (product_data != null) {
             IFilter filter = new WebActionsFilter();
             filter = filter.eq("_pid", product_data._id);
             pbKeywordLoader.setVisibility(View.VISIBLE);
@@ -671,9 +721,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 @Override
                 public void onSuccess(List<ProductKeywordResponseModel> result) {
                     pbKeywordLoader.setVisibility(View.INVISIBLE);
-                    if(result != null && result.size() > 0) {
+                    if (result != null && result.size() > 0) {
 
-                        for (ProductKeywordResponseModel productKeyword: result) {
+                        for (ProductKeywordResponseModel productKeyword : result) {
                             Tag tag = new Tag(productKeyword.getKeyword(), productKeyword.getId());
                             keywordList.add(tag);
                         }
@@ -691,14 +741,20 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                     pbKeywordLoader.setVisibility(View.INVISIBLE);
                 }
             });
+        } else {
+            keywordList.addAll(this.createKeywordList);
+            tvProductKeyword.addTags(keywordList);
+            if (keywordList == null || keywordList.size() == 0) {
+                tvAddKeywords.setVisibility(View.VISIBLE);
+            }
         }
 
         btnAddKeyword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!TextUtils.isEmpty(etKeywordInput.getText().toString()) &&
+                if (!TextUtils.isEmpty(etKeywordInput.getText().toString()) &&
                         pbAddingKeyword.getVisibility() != View.VISIBLE) {
-                    if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
+                    if (product_data != null && !TextUtils.isEmpty(product_data._id)) {
                         btnAddKeyword.setText("");
                         pbAddingKeyword.setVisibility(View.VISIBLE);
                         final ProductKeywordReqModel reqData = new ProductKeywordReqModel();
@@ -710,7 +766,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                                 pbAddingKeyword.setVisibility(View.INVISIBLE);
                                 btnAddKeyword.setText("Add");
 
-                                if(!TextUtils.isEmpty(result)) {
+                                if (!TextUtils.isEmpty(result)) {
                                     tvProductKeyword.addTag(new Tag(reqData.keyword, result));
                                 }
                                 etKeywordInput.setText("");
@@ -725,7 +781,19 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                             }
                         });
                     } else {
-                        Toast.makeText(Product_Detail_Activity_V45.this, "Please save the Product First", Toast.LENGTH_SHORT).show();
+
+                        btnAddKeyword.setText("");
+                        final ProductKeywordReqModel reqData = new ProductKeywordReqModel();
+                        reqData._pid = UUID.randomUUID().toString();
+                        reqData.keyword = etKeywordInput.getText().toString();
+
+                        Tag tag = new Tag(reqData.keyword, UUID.randomUUID().toString());
+                        btnAddKeyword.setText("Add");
+                        tvProductKeyword.addTag(tag);
+                        etKeywordInput.setText("");
+                        tvAddKeywords.setVisibility(View.INVISIBLE);
+                        createKeywordList.add(tag);
+//                        Toast.makeText(Product_Detail_Activity_V45.this, "Please save the Product First", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -735,25 +803,34 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         tvProductKeyword.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
             @Override
             public void onTagDeleted(TagView view, Tag tag, final int position) {
-                IFilter filter = new WebActionsFilter();
-                filter = filter.eq("_id", tag.tagId);
-                webAction.delete(filter, false, new WebAction.WebActionCallback<Boolean>() {
-                    @Override
-                    public void onSuccess(Boolean result) {
-                        if(result){
-                            tvProductKeyword.remove(position);
-                            if(tvProductKeyword.getTagsCount() == 0) {
-                                tvAddKeywords.setVisibility(View.VISIBLE);
+                if (product_data != null && !TextUtils.isEmpty(product_data._id)) {
+                    IFilter filter = new WebActionsFilter();
+                    filter = filter.eq("_id", tag.tagId);
+                    webAction.delete(filter, false, new WebAction.WebActionCallback<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean result) {
+                            if (result) {
+                                tvProductKeyword.remove(position);
+                                if (tvProductKeyword.getTagsCount() == 0) {
+                                    tvAddKeywords.setVisibility(View.VISIBLE);
+                                }
                             }
+
                         }
 
-                    }
+                        @Override
+                        public void onFailure(WebActionError error) {
 
-                    @Override
-                    public void onFailure(WebActionError error) {
-
+                        }
+                    });
+                } else {
+                    tvProductKeyword.remove(position);
+                    createKeywordList.remove(position);
+                    if (tvProductKeyword.getTagsCount() == 0) {
+                        tvAddKeywords.setVisibility(View.VISIBLE);
                     }
-                });
+                }
+
             }
         });
 
@@ -764,7 +841,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         webAction.getAllWebActions("INVENTORY", WebActionVisibility.NONE, new WebAction.WebActionCallback<List<com.nowfloats.webactions.models.WebAction>>() {
             @Override
             public void onSuccess(List<com.nowfloats.webactions.models.WebAction> result) {
-                if(result == null)
+                if (result == null)
                     return;
                 mInventoryAdapter.addAll(result);
                 ViewGroup.LayoutParams lp = lvInventoryData.getLayoutParams();
@@ -901,7 +978,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         boolean flag = true;
         String desc = "description", disc = "discountAmount", link = "buyOnlineLink", name = "name",
                 price = "price", currency = "currencyCode", avail = "isAvailable", ship = "shipmentDuration",
-                freeShipment = "isFreeShipmentAvailable", priority = "priority",availableUnits ="availableUnits";
+                freeShipment = "isFreeShipmentAvailable", priority = "priority", availableUnits = "availableUnits";
         if (keyCheck) {
             desc = desc.toUpperCase();
             disc = "DISCOUNTPRICE";
@@ -961,7 +1038,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
 
         if (productPrice != null && productPrice.getText().toString().trim().length() > 0) {
             values.put(price, productPrice.getText().toString().trim());
-        } else if (flag){
+        } else if (flag) {
             YoYo.with(Techniques.Shake).playOn(productPrice);
             Methods.showSnackBarNegative(activity, getString(R.string.enter_product_price));
             flag = false;
@@ -1009,7 +1086,72 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         });
     }
 
-    public void invokeGetProductList() {
+    public void invokeGetProductList(final String productId) {
+        if (lsProductImages != null && lsProductImages.size() > 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    materialProgress = new MaterialDialog.Builder(activity)
+                            .widgetColorRes(R.color.accentColor)
+                            .content(getString(R.string.uploading_other_image))
+                            .progress(true, 0).show();
+                    materialProgress.setCancelable(false);
+                }
+            });
+
+            webAction.setWebActionName("product_images");
+            imageCount = 0;
+            for (ProductImageResponseModel productImageResponseModel : lsProductImages) {
+                webAction.uploadFile(productImageResponseModel.getImage().url, new WebAction.WebActionCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        addImageData(productId, result);
+                    }
+
+                    @Override
+                    public void onFailure(WebActionError error) {
+                        imageCount++;
+                        if (imageCount == lsProductImages.size()) {
+                            navigateToProductDetail();
+                        }
+                    }
+                }, new Handler(Looper.getMainLooper()));
+            }
+        } else {
+            navigateToProductDetail();
+        }
+
+    }
+
+    private void addImageData(String productId, String result) {
+        final ProductImageRequestModel productImageRequestModel = new ProductImageRequestModel();
+        productImageRequestModel._pid = productId;
+        productImageRequestModel.image = new ProductImage(result, "Description");
+        webAction.insert(session.getFpTag(), productImageRequestModel, new WebAction.WebActionCallback<String>() {
+            @Override
+            public void onSuccess(String id) {
+                imageCount++;
+                if (imageCount == lsProductImages.size()) {
+                    navigateToProductDetail();
+                }
+            }
+
+            @Override
+            public void onFailure(WebActionError error) {
+                imageCount++;
+                if (imageCount == lsProductImages.size()) {
+                    navigateToProductDetail();
+                }
+            }
+        });
+    }
+
+    private void navigateToProductDetail() {
+        if (materialProgress.isShowing())
+            materialProgress.dismiss();
+        if (lsProductImages != null && lsProductImages.size() > 0) {
+            lsProductImages.clear();
+        }
         values = new HashMap<>();
         values.put("clientId", Constants.clientId);
         values.put("skipBy", "0");
@@ -1027,7 +1169,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                     + "&totalChunks=1&currentChunkNumber=1&productId=" + productId;
             String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" + valuesStr;
             byte[] imageBytes = Methods.compressToByte(path, activity);
-            new ProductImageUploadV45(url, imageBytes, Product_Detail_Activity_V45.this).execute();
+            new ProductImageUploadV45(url, imageBytes, Product_Detail_Activity_V45.this, productId).execute();
         } catch (Exception e) {
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
@@ -1098,9 +1240,15 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         return currencyType;
     }
 
+    private ArrayList<ProductImageResponseModel> lsProductImages;
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mIsImagePicking = false;
-        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
+        if (resultCode == RESULT_OK && (Constants.CHOSEN_PHOTO == requestCode)) {
+            if (data != null) {
+                lsProductImages = (ArrayList<ProductImageResponseModel>) data.getExtras().get("cacheImages");
+            }
+        } else if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
                 if (picUri == null) {
@@ -1209,13 +1357,13 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
-                Methods.showApplicationPermissions("Camera And Storage Permission","We need these permission to enable capture and upload images",Product_Detail_Activity_V45.this);
+                Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", Product_Detail_Activity_V45.this);
             }
 
         } else if (requestCode == gallery_req_id) {
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED) {
-                Methods.showApplicationPermissions("Storage Permission","We need this permission to enable image upload",Product_Detail_Activity_V45.this);
+                Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
             }
         }
     }
@@ -1225,10 +1373,10 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED) {
 
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                    Methods.showApplicationPermissions("Storage Permission","We need this permission to enable image upload",Product_Detail_Activity_V45.this);
-                }else{
-                    ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},gallery_req_id);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
+                } else {
+                    ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
                 }
 
             } else {
@@ -1251,11 +1399,11 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
-                        ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.CAMERA)){
-                    Methods.showApplicationPermissions("Camera And Storage Permission","We need these permission to enable capture and upload images",Product_Detail_Activity_V45.this);
-                }else{
-                    ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,  Manifest.permission.CAMERA},media_req_id);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
+                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", Product_Detail_Activity_V45.this);
+                } else {
+                    ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
                 }
 
             } else {

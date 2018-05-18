@@ -4,11 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.nowfloats.webactions.models.ProductImage;
 
+import java.io.Serializable;
+
 /**
  * Created by NowFloats on 17-04-2018.
  */
 
-public class ProductImageResponseModel {
+public class ProductImageResponseModel implements Serializable{
     @SerializedName("_id")
     @Expose
     private String id;
