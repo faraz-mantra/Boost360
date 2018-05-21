@@ -12,9 +12,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.apxor.androidsdk.ApxorSDK;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.nowfloats.util.Constants;
+import com.thinksity.BuildConfig;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 
 import java.io.File;
@@ -26,7 +28,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static AppController mInstance ;
-
+    private String APXOR_BUNDLED_ID = "cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -41,9 +43,12 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             //Fabric.with(this, new Crashlytics());
         }catch(Exception e){e.printStackTrace();}
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        if(BuildConfig.DEBUG){
 
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        ApxorSDK.initialize(APXOR_BUNDLED_ID,getApplicationContext());
         String deviceId = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
 
         //Log.d("Device ID","Device ID : "+deviceId);

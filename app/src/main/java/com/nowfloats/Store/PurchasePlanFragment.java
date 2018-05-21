@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nowfloats.Store.Adapters.PurchasedPlanAdapter;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 /**
@@ -55,12 +57,19 @@ public class PurchasePlanFragment extends Fragment {
 
         if (!isAdded() || isDetached()) return;
         TextView aboutPlan = view.findViewById(R.id.tv_about_plan);
+        LinearLayout orderHeader = view.findViewById(R.id.orderHeader);
+        orderHeader.setVisibility(View.GONE);
+        RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
+
         switch (planType) {
             case ACTIVE_PLANS:
                 aboutPlan.setText("The following plan(s) is/are currently in use");
                 break;
             case YOUR_ORDERS:
-                aboutPlan.setText("The following plan(s) is/are not verified to use");
+                orderHeader.setVisibility(View.VISIBLE);
+                aboutPlan.setText("");
+                int pixels = Methods.dpToPx(20, getActivity());
+                mRecyclerView.setPadding(pixels, 0, pixels, pixels);
                 break;
             case TO_BE_ACTIVATED_PLANS:
                 aboutPlan.setText("The following plan(s) is/are not in use");
@@ -70,7 +79,6 @@ public class PurchasePlanFragment extends Fragment {
                 break;
         }
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
        /* if (planType.equals(YourPurchasedPlansActivity.PlansType.YOUR_ORDERS)) {

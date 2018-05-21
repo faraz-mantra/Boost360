@@ -65,7 +65,7 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         if (myHolder instanceof MyPurchasePlanOrdersHolder && purchasePlans != null && !purchasePlans.isEmpty()) {
-            if (position > 0) {
+
                 MyPurchasePlanOrdersHolder holder = (MyPurchasePlanOrdersHolder) myHolder;
                 ActivePackage activePackage = purchasePlans.get(position);
                 holder.tvSerialNumber.setTypeface(null, Typeface.NORMAL);
@@ -85,7 +85,7 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
                 holder.tvCliamId.setText(activePackage.getClaimid() != null ? activePackage.getClaimid() : " ");
                 holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() < 0 ? "EXPIRED" : activePackage.getPaymentStatus() == 0 ? "DEMO"
                         : activePackage.getPaymentStatus() > 0 ? "PAID" : " ");
-            }
+
         }
     }
 
