@@ -21,7 +21,7 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     @Override
     public void onCreate() {
         super.onCreate();
-        mPresenter = new ImePresenterImpl(this,this);
+        mPresenter = new ImePresenterImpl(this, this);
     }
 
     @Override
@@ -36,11 +36,12 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
 
     @Override
     public void setCandidatesView(View view) {
-        if (view.getParent() != null){
-            ((ViewGroup)view.getParent()).removeView(view);
+        if (view.getParent() != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
         }
         super.setCandidatesView(view);
     }
+
     @Override
     public void onComputeInsets(Insets outInsets) {
         super.onComputeInsets(outInsets);
@@ -48,6 +49,7 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
             outInsets.contentTopInsets = outInsets.visibleTopInsets;
         }
     }
+
     @Override
     public View onCreateCandidatesView() {
         return mPresenter.getCandidateView();
@@ -56,7 +58,7 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     @Override
     public void onStartInputView(EditorInfo info, boolean restarting) {
         super.onStartInputView(info, restarting);
-        mPresenter.onStartInputView(info,restarting);
+        mPresenter.onStartInputView(info, restarting);
         //mPresenter.setSuggestions(KeyboardUtils.CandidateType.TEXT_LIST,modelArrayList);
         //setExtractViewShown(true);
     }
@@ -69,6 +71,11 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     @Override
     public InputConnection getImeCurrentInputConnection() {
         return getCurrentInputConnection();
+    }
+
+    @Override
+    public void onFinishInput() {
+        super.onFinishInput();
     }
 
     @Override
@@ -91,5 +98,12 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     public void onDestroy() {
         mPresenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd) {
+        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
+        mPresenter.showWordSuggestions(getImeCurrentInputConnection());
+
     }
 }

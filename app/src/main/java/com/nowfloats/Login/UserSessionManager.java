@@ -85,6 +85,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_Subcribers_Count = "subcribersCount";
     private String KEY_Search_Count = "SearchQueryCount";
     private String KEY_Enq_Count = "EnquiryCount";
+    private String KEY_Map_Visits_Count = "MapVisitsCount";
     private String KEY_Call_Count = "VmnCallCount";
     private String KEY_LATEST_ENQ_COUNT = "LatestEnquiryCount";
     private String KEY_LS = "local_store";
@@ -203,7 +204,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void setSearchCount(String cnt)
     {
         editor.putString(KEY_Search_Count , cnt);
-        editor.commit();
+        editor.apply();
     }
     public String getSearchCount()
     {
@@ -212,15 +213,23 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void setEnquiryCount(String count){
         editor.putString(KEY_Enq_Count , count);
-        editor.commit();
+        editor.apply();
     }
 
     public String getEnquiryCount(){
         return pref.getString(KEY_Enq_Count,"");
     }
+    public void setMapVisitsCount(String count){
+        editor.putString(KEY_Map_Visits_Count , count);
+        editor.apply();
+    }
+
+    public String getMapVisitsCount(){
+        return pref.getString(KEY_Map_Visits_Count,"");
+    }
  public void setVmnCallsCount(String count){
         editor.putString(KEY_Call_Count , count);
-        editor.commit();
+        editor.apply();
     }
 
     public String getVmnCallsCount(){
@@ -229,7 +238,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void setLatestEnqCount(String count){
         editor.putString(KEY_LATEST_ENQ_COUNT , count);
-        editor.commit();
+        editor.apply();
     }
 
     public String getLatestEnqCount(){
@@ -240,11 +249,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void setLocalStorePurchase(String cnt)
     {
         editor.putString(KEY_LS, cnt);
-        editor.commit();
+        editor.apply();
     }
     public void storeFpTag(String tag){
         editor.putString(KEY_FP_TAG, tag);
-        editor.commit();
+        editor.apply();
     }
 
     public String getLocalStorePurchase()
@@ -254,17 +263,17 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void setWebsiteshare(boolean cnt)
     {
-        editor.putBoolean(KEY_website , cnt);
-        editor.commit();
+        editor.putBoolean(Key_Preferences.WEBSITE_SHARE , cnt);
+        editor.apply();
     }
     public Boolean getWebsiteshare()
     {
-        return pref.getBoolean(KEY_website,false);
+        return pref.getBoolean(Key_Preferences.WEBSITE_SHARE,false);
     }
     public void setBusinessHours(boolean cnt)
     {
         editor.putBoolean(KEY_BUSINESS_HOURS , cnt);
-        editor.commit();
+        editor.apply();
     }
     public Boolean getBusinessHours()
     {
@@ -274,7 +283,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void setSignUpFromFacebook(String isSignUpFromFacebook)
     {
         editor.putString(KEY_IS_SIGNUP_FROM_FACEBOOK,isSignUpFromFacebook);
-        editor.commit();
+        editor.apply();
     }
 
     public String getIsSignUpFromFacebook()
@@ -285,7 +294,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeSourceClientId(String val)
     {
         editor.putString(KEY_sourceClientId,val);
-        editor.commit();
+        editor.apply();
     }
 
     public String getSourceClientId()
@@ -312,7 +321,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeISEnterprise(String isEnterprise)
     {
         editor.putString(KEY_IS_ENTERPRISE , isEnterprise);
-        editor.commit();
+        editor.apply();
     }
 
     public String getISEnterprise()
@@ -324,7 +333,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeIsRestricted(String isRestricted)
     {
         editor.putString(KEY_IS_RESTRICTED , isRestricted);
-        editor.commit();
+        editor.apply();
     }
 
         public String getIsRestricted()
@@ -336,7 +345,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeIsThinksity(String isThinksity)
     {
         editor.putString(KEY_IS_THINKSITY , isThinksity);
-        editor.commit();
+        editor.apply();
     }
 
     public String getIsThinksity()
@@ -349,7 +358,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeIsAutoPostEnabled(String isEnabled)
     {
         editor.putString(KEY_IS_AUTO_POST_ENABLED , isEnabled);
-        editor.commit();
+        editor.apply();
     }
 
     public String getIsAutoPostEnabled()
@@ -362,7 +371,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storePageAccessToken(String pageAccessToken)
     {
         editor.putString(KEY_PAGE_ACCESS_TOKEN , pageAccessToken);
-        editor.commit();
+        editor.apply();
     }
 
     public String getPageAccessToken()
@@ -373,7 +382,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeUserAccessToken(String userAccessToken)
     {
         editor.putString(KEY_USER_ACCESS_TOKEN , userAccessToken);
-        editor.commit();
+        editor.apply();
     }
 
     public String getUserAccessToken()
@@ -385,7 +394,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFBLikeBoxInfo(String isFBLikeBoxPresent)
     {
         editor.putString(KEY_FB_LIKE , isFBLikeBoxPresent);
-        editor.commit();
+        editor.apply();
     }
 
     public String getStoreFBLikeBoxInfo()
@@ -397,7 +406,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeShowUpdates(boolean showUpdates)
     {
         editor.putBoolean(KEY_SHOW_UPDATES, showUpdates);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getShowUpdates()
@@ -408,14 +417,14 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void setShowUpdates(boolean val)
     {
         editor.putBoolean(KEY_SHOW_UPDATES, val);
-        editor.commit();
+        editor.apply();
     }
 
 
     public void storeFacebookName(String facebookName)
     {
         editor.putString(KEY_FACEBOOK_NAME , facebookName);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFacebookName()
@@ -447,7 +456,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFacebookPage(String facebookName)
     {
         editor.putString(KEY_FACEBOOK_PAGE , facebookName);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFacebookPage()
@@ -458,7 +467,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFacebookPageID(String id)
     {
         editor.putString(KEY_FACEBOOK_PAGE_ID , id);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFacebookPageID()
@@ -468,7 +477,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFPEmail(String fpEmail)
     {
         editor.putString(KEY_FP_EMAIL , fpEmail);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFPEmail()
@@ -479,13 +488,13 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeLogoURI(String fpLogoURI)
     {
         editor.putString(KEY_LOGO_URI,fpLogoURI);
-        editor.commit();
+        editor.apply();
     }
 
     public void storeMondayChecked(boolean value)
     {
         editor.putBoolean(KEY_MONDAY, value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getMonayChecked()
@@ -496,7 +505,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeTuesdayChecked(boolean value)
     {
         editor.putBoolean(KEY_TUESDAY,value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getTuesdayChecked()
@@ -507,7 +516,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeWednesdayChecked(boolean value)
     {
         editor.putBoolean(KEY_WEDNESDAY,value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getWednesdayChecked()
@@ -518,7 +527,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeThursdayChecked(boolean value)
     {
         editor.putBoolean(KEY_THURSDAY,value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getThursdayChecked()
@@ -529,7 +538,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFridayChecked(boolean value)
     {
         editor.putBoolean(KEY_FRIDAY,value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getFridayChecked()
@@ -540,7 +549,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeSaturdayChecked(boolean value)
     {
         editor.putBoolean(KEY_SATURDAY,value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getSaturdayChecked()
@@ -550,7 +559,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeSundayChecked(boolean value)
     {
         editor.putBoolean(KEY_SUNDAY,value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean getSundayChecked()
@@ -562,7 +571,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeStartTime(String startTime)
     {
         editor.putString(KEY_START_TIME,startTime);
-        editor.commit();
+        editor.apply();
     }
 
     public String getStartTime()
@@ -573,7 +582,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeEndTime(String startTime)
     {
         editor.putString(KEY_END_TIME,startTime);
-        editor.commit();
+        editor.apply();
     }
 
     public String getEndTime()
@@ -591,7 +600,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         String fpId = fpID.replaceAll("\"","");
        // fpId = fpId.replace
         editor.putString(KEY_FP_ID , fpId);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFPID()
@@ -603,7 +612,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFacebookPageURL(String imageURL)
     {
         editor.putString(KEY_FACEBOOK_IMAGE_URL,imageURL);
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -615,7 +624,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFacebookProfileDescription(String description)
     {
         editor.putString(KEY_FACEBOOK_PROFILE_DESCRIPTION,description);
-        editor.commit();
+        editor.apply();
     }
     public String getFacebookProfileDescription()
     {
@@ -625,7 +634,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeIsFreeDomainDisplayed(String isFreeDomain) {
 
         editor.putString(KEY_IS_FREE_DOMAIN,isFreeDomain);
-        editor.commit();
+        editor.apply();
     }
 
     public String getIsFreeDomainDisplayed()
@@ -636,7 +645,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void savePackageStatus(String packegeId, boolean val){
         try{
             editor.putBoolean(packegeId,val);
-            editor.commit();
+            editor.apply();
         }catch(Exception e){e.printStackTrace();}
 
     }
@@ -654,7 +663,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFPDetails(String key,String value)
     {   try{
             editor.putString(key.trim(),value == null ?"":value.trim());
-            editor.commit();
+            editor.apply();
         }catch(Exception e){e.printStackTrace();}
     }
 
@@ -690,7 +699,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void storeGalleryImages(String imagePath) {
         editor.putString(KEY_GALLLERY_IMAGES,imagePath);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFPLogo()
@@ -701,7 +710,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void storeFPLogo(String logo)
     {
         editor.putString(KEY_FP_LOGO,logo);
-        editor.commit();
+        editor.apply();
     }
 
     public ArrayList<String> getStoredGalleryImages()
@@ -795,7 +804,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void store_FIRST_TIME(boolean value)
     {
         editor.putBoolean(KEY_FIRST_TIME_Details, value);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean get_FIRST_TIME()
@@ -806,7 +815,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void store_SHOW_POP_UP_TIME(long time)
     {
         editor.putLong(KEY_LAST_TIME, time);
-        editor.commit();
+        editor.apply();
     }
 
     public long get_SHOW_POP_UP_TIME()
@@ -926,7 +935,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
     public void setSiteAppearanceShown(boolean val){
         editor.putBoolean(Key_Preferences.IS_FP_SITE_APPEARNCE_SHOWN, true);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -961,5 +970,35 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void sendFetched(FloatsMessageModel jsonObject) {}
 
 
+    public void setSiteHealth(int siteMeterTotalWeight) {
+        editor.putInt(Key_Preferences.SITE_HEALTH,siteMeterTotalWeight).apply();
+    }
 
+    public int getSiteHealth(){
+        return pref.getInt(Key_Preferences.SITE_HEALTH,0);
+    }
+
+    public void setProductsCount(int size) {
+        editor.putInt(Key_Preferences.PRODUCTS_COUNT, size).apply();
+    }
+
+    public int getProductsCount(){
+        return pref.getInt(Key_Preferences.PRODUCTS_COUNT,0);
+    }
+
+    public void setOnBoardingStatus(boolean flag) {
+        editor.putBoolean(Key_Preferences.ON_BOARDING_STATUS, flag).apply();
+    }
+
+    public boolean getOnBoardingStatus(){
+        return pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false);
+    }
+
+    public void setCustomPageCount(int size) {
+        editor.putInt(Key_Preferences.CUSTOM_PAGE, size).apply();
+    }
+
+    public int getCustomPageCount(){
+        return pref.getInt(Key_Preferences.CUSTOM_PAGE,0);
+    }
 }

@@ -49,16 +49,16 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class NewPricingPlansActivity extends AppCompatActivity{
+public class NewPricingPlansActivity extends AppCompatActivity {
 
     TextView tvCategory, tvToolBarTitle;
     UserSessionManager mSession;
     Toolbar toolbar;
     ImageView ivHistory;
     List<PackageDetails> mBasePackages;
-    List<PackageDetails>  mTopUps;
+    List<PackageDetails> mTopUps;
     private static final int NUM_OF_FEATURES = 5;
-    private final int DIRECT_REQUEST_CODE = 2013;
+    public static final int DIRECT_REQUEST_CODE = 2013;
 
     MaterialDialog materialProgress;
 
@@ -90,25 +90,32 @@ public class NewPricingPlansActivity extends AppCompatActivity{
         showDialog();
         String accId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
         String appId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
-        String country = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
+        String country;
+        if (Constants.PACKAGE_NAME.equals("com.redtim")) {
+            country = "UNITED STATES";
+        } else {
+            country = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
+        }
         Map<String, String> params = new HashMap<>();
-        if (accId.length()>0){
+        if (accId.length() > 0) {
             params.put("identifier", accId);
-        }else{
+        } else {
             params.put("identifier", appId);
         }
         params.put("clientId", Constants.clientId);
         params.put("fpId", mSession.getFPID());
-        params.put("country",country.toLowerCase());
+        //params.put("fpId", "5ab0eaec8a856e0bdccf68ac");
+        params.put("country", country.toLowerCase());
         params.put("fpCategory", mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
+        //params.put("fpCategory", "F&B BAKERY");
 
         Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
             @Override
             public void success(PricingPlansModel storeMainModel, Response response) {
-                if(storeMainModel != null){
+                if (storeMainModel != null) {
                     preProcessAndDispatchPlans(storeMainModel);
-                }else{
-                   hideDialog();
+                } else {
+                    hideDialog();
                 }
             }
 
@@ -121,12 +128,12 @@ public class NewPricingPlansActivity extends AppCompatActivity{
 
     }
 
-    private void showPlanFragments(){
+    private void showPlanFragments() {
         hideDialog();
         Fragment frag;
         String fragmentName = getIntent().getStringExtra("fragmentName");
         if (fragmentName == null) fragmentName = "";
-        switch (fragmentName){
+        switch (fragmentName) {
             case "Dictate":
                 frag = new DictateFragment();
                 break;
@@ -143,19 +150,20 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                 allFrag.setTopUps(mTopUps);
                 frag = allFrag;
                 break;
-                //empty screen
+            //empty screen
         }
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_pricing_plans, frag)
                 .commit();
     }
-    private void hideDialog(){
+
+    private void hideDialog() {
         if (materialProgress.isShowing())
             materialProgress.dismiss();
     }
 
-    private void showDialog(){
-        if (materialProgress == null){
+    private void showDialog() {
+        if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(this)
                     .widgetColorRes(R.color.accentColor)
                     .content("Please Wait...")
@@ -168,9 +176,10 @@ public class NewPricingPlansActivity extends AppCompatActivity{
             materialProgress.show();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -185,8 +194,8 @@ public class NewPricingPlansActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==DIRECT_REQUEST_CODE && resultCode==RESULT_OK){
-            if(data==null){
+        if (requestCode == DIRECT_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data == null) {
                 return;
             }
             final boolean success = data.getBooleanExtra(com.romeo.mylibrary.Constants.RESULT_SUCCESS_KEY, false);
@@ -199,8 +208,8 @@ public class NewPricingPlansActivity extends AppCompatActivity{
             final String tobeActivatedOn = data.getStringExtra("toBeActivatedOn");
             //sendEmail(success, status, message, paymentId, transactionId, amount);
             BoostLog.d("TransaCtionId", transactionId);
-            if(success) {
-                if(status.equals("Success")) {
+            if (success) {
+                if (status.equals("Success")) {
 
                     MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
 
@@ -208,51 +217,60 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                             "The Payment ID for your transaction is " + paymentId +". Your package will be activated within 24 hours. \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
                     showDialog(status, msg);*/
-                    pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn);
+                    pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn, 0);
                 }
-            }else {
-                if(status.equals("Pending")){
+            } else {
+                if (status.equals("Pending")) {
                     String msg = "Alert! \n" +
-                            "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment ID for your transaction is " + paymentId +" . \n" +
+                            "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment ID for your transaction is " + paymentId + " . \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                    Methods.showDialog(NewPricingPlansActivity.this,status, msg);
-                }else if (status.equals("Failure")){
+                    Methods.showDialog(NewPricingPlansActivity.this, status, msg);
+                } else if (status.equals("Failure")) {
                     String msg = "Sorry! \n" +
                             "This transaction failed. To retry, please go to the Store and pay again. \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                    Methods.showDialog(NewPricingPlansActivity.this,status, msg);
+                    Methods.showDialog(NewPricingPlansActivity.this, status, msg);
                 }
             }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
 
-
-    private void pollServerForStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn) {
-        if(!materialProgress.isShowing()) {
+    private void pollServerForStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn, final int pollCount) {
+        if (!materialProgress.isShowing()) {
             materialProgress.show();
         }
-        String url = Constants.NOW_FLOATS_API_URL + "/payment/v1/floatingpoint/getPaymentStatus?clientId=" + Constants.clientId +"&paymentRequestId=" + transactionId;
-        JsonObjectRequest request  =new JsonObjectRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+        String url = Constants.NOW_FLOATS_API_URL + "/payment/v1/floatingpoint/getPaymentStatus?clientId=" + Constants.clientId + "&paymentRequestId=" + transactionId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     if (response.getString("Result").equals("SUCCESS")) {
-                        if(materialProgress!=null) {
+                        if (materialProgress != null) {
                             materialProgress.dismiss();
                         }
-                        if(!showTobeActivatedOn) {
+                        if (!showTobeActivatedOn) {
                             String msg = "Thank you! \n" +
                                     "The Payment ID for your transaction is " + paymentid + ". Your package will be activated within 24 hours. \n" +
                                     "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                            Methods.showDialog(NewPricingPlansActivity.this,status, msg);
+                            Methods.showDialog(NewPricingPlansActivity.this, status, msg);
                         }
                         getPricingPlanDetails();
 
-                    }else {
-                        pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn);
+                    } else {
+                        if (pollCount < 5) {
+                            pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn, pollCount + 1);
+                        } else {
+                            String msg = "Alert! \n" +
+                                    "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment Request ID for your transaction is " + transactionId + " . \n" +
+                                    "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                            Methods.showDialog(NewPricingPlansActivity.this, status, msg);
+                        }
+
                     }
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                     materialProgress.dismiss();
                 }
@@ -264,7 +282,7 @@ public class NewPricingPlansActivity extends AppCompatActivity{
             public void onErrorResponse(VolleyError error) {
                 String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
                 materialProgress.dismiss();
-                Methods.showDialog(NewPricingPlansActivity.this,status, msg);
+                Methods.showDialog(NewPricingPlansActivity.this, status, msg);
             }
         });
         AppController.getInstance().addToRequstQueue(request);
@@ -275,14 +293,14 @@ public class NewPricingPlansActivity extends AppCompatActivity{
             @Override
             public void run() {
 
-                for(AllPackage allPackage : storeMainModel.allPackages){
-                    if(allPackage.getKey().equals("TopUp")){
+                for (AllPackage allPackage : storeMainModel.allPackages) {
+                    if (allPackage.getKey().equals("TopUp")) {
                         mTopUps = allPackage.getValue();
-                        for(PackageDetails topUp : mTopUps) {
+                        for (PackageDetails topUp : mTopUps) {
                             List<String> featuresList = new ArrayList<>();
                             int count = 0;
-                            for(WidgetPacks widget : topUp.getWidgetPacks()){
-                                if(widget.Name!=null) {
+                            for (WidgetPacks widget : topUp.getWidgetPacks()) {
+                                if (widget.Name != null) {
                                     featuresList.add(widget.Name);
                                     count++;
                                     if (count >= 8) {
@@ -292,13 +310,13 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                             }
                             topUp.setFeatureList(featuresList);
                         }
-                    } else if(allPackage.getKey().equals("Base")){
+                    } else if (allPackage.getKey().equals("Base")) {
                         mBasePackages = allPackage.getValue();
-                        for(PackageDetails basePackage : mBasePackages) {
+                        for (PackageDetails basePackage : mBasePackages) {
                             List<String> featuresList = new ArrayList<>();
                             int count = 0;
-                            for(WidgetPacks widget : basePackage.getWidgetPacks()){
-                                if(widget.Name!=null) {
+                            for (WidgetPacks widget : basePackage.getWidgetPacks()) {
+                                if (widget.Name != null) {
                                     featuresList.add(widget.Name);
                                     count++;
                                     if (count >= 8) {
@@ -314,13 +332,11 @@ public class NewPricingPlansActivity extends AppCompatActivity{
                     @Override
                     public void run() {
 
-                        if(mBasePackages == null && mTopUps == null){
-                            return;
-                        }
-                        if(mBasePackages == null){
+
+                        if (mBasePackages == null) {
                             mBasePackages = new ArrayList<PackageDetails>();
                         }
-                        if(mTopUps == null) {
+                        if (mTopUps == null) {
                             mTopUps = new ArrayList<PackageDetails>();
                         }
                         Collections.sort(mBasePackages);

@@ -3,11 +3,22 @@ package com.nowfloats.util;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Admin on 16-05-2017.
  */
 
 public class SmsVerifyModel {
+    private boolean IsOTPValid;
+    private boolean IsOTPSent;
+
+    public boolean isOTPValid() {
+        return IsOTPValid;
+    }
+
+    public boolean isOTPSent() {
+        return IsOTPSent;
+    }
 
     @SerializedName("error_code")
     @Expose

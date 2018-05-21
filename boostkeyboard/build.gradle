@@ -10,7 +10,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -43,9 +43,9 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.jakewharton.timber:timber:4.6.1'
     implementation project(':supernova-emoji-library')
 }

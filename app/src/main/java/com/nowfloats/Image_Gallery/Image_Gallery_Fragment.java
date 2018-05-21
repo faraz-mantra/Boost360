@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import com.melnykov.fab.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -36,7 +37,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.GetGalleryImagesAsyncTask_Interface;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -370,7 +370,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 }
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();
-                // Check if the specified image exists.
+                // CHEQUE if the specified image exists.
             } catch (Exception e) {
                 e.printStackTrace();
             } catch (OutOfMemoryError E) {

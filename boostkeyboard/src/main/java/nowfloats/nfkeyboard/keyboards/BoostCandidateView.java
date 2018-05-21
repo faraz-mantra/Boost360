@@ -1,12 +1,12 @@
 package nowfloats.nfkeyboard.keyboards;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import nowfloats.nfkeyboard.R;
@@ -16,8 +16,7 @@ import nowfloats.nfkeyboard.util.SharedPrefUtil;
  * Created by Admin on 26-02-2018.
  */
 
-public class BoostCandidateView extends LinearLayout implements View.OnClickListener {
-    private OnClickListener listener;
+public class BoostCandidateView extends BaseCandidateView{
     private int currentView;
     private Context mContext;
     public BoostCandidateView(Context context) {
@@ -70,9 +69,15 @@ public class BoostCandidateView extends LinearLayout implements View.OnClickList
         findViewById(R.id.tv_updates).setOnClickListener(this);
         findViewById(R.id.tv_products).setOnClickListener(this);
     }
-    public void setItemClickListener(OnClickListener listener){
-        this.listener = listener;
+
+    @Override
+    void setCandidateData(Bundle bundle) {
+
     }
+
+   /* public void setItemClickListener(OnClickListener listener){
+        this.listener = listener;
+    }*/
     @Override
     public void onClick(View view) {
         if (currentView == view.getId()){
@@ -83,6 +88,6 @@ public class BoostCandidateView extends LinearLayout implements View.OnClickList
         findViewById(R.id.tv_products).setBackgroundResource(view.getId() == R.id.tv_products ? R.drawable.round_414141:android.R.color.transparent);
         findViewById(R.id.img_settings).setBackgroundResource(view.getId() == R.id.img_settings ? R.drawable.round_414141:android.R.color.transparent);
         findViewById(R.id.img_nowfloats).setBackgroundResource(view.getId() == R.id.img_nowfloats ? R.drawable.round_414141:android.R.color.transparent);
-        listener.onClick(view);
+        listener.onKeyboardTabClick(view);
     }
 }

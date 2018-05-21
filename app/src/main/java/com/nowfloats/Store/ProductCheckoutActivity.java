@@ -14,13 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
 import com.nowfloats.Store.Model.AllPackage;
@@ -66,20 +66,18 @@ public class ProductCheckoutActivity extends AppCompatActivity {
     Toolbar toolbar;
     MaterialDialog materialProgress;
     TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes,
-             tvAmountToBePaid, tvTanNo, tvTdsAmount;
+             tvAmountToBePaid, tvTanNo, tvTdsAmount,btnPayNow, btnOpcApply;
     RecyclerView rvItems;
-    Button btnPayNow, btnOpcApply;
     EditText etOpc;
 
     TableRow trTanNo, trTdsAmount;
 
     ArrayList<ReceiveDraftInvoiceModel.KeyValuePair> mOpcDetails;
 
-
-    private UserSessionManager mSession;
     private List<PackageDetails> mPurchasePlans;
-    private final int DIRECT_REQUEST_CODE = 1;
+    private final int DIRECT_REQUEST_CODE = 2013;
     private final int OPC_REQUEST_CODE = 2;
+    private final int PADDLE_REQUEST_CODE = 3;
     private String[] mPackageIds;
     
 
@@ -96,12 +94,10 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         }
 
         mPackageIds = getIntent().getExtras().getStringArray("package_ids");
-        mSession = new UserSessionManager(this, this);
+        mSessionManager = new UserSessionManager(this, this);
 
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText(getResources().getString(R.string.product_checkout));
-
-        mSessionManager = new UserSessionManager(getApplicationContext(), this);
 
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
@@ -125,11 +121,13 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         trTanNo = (TableRow) findViewById(R.id.tr_tan_no);
         trTdsAmount = (TableRow) findViewById(R.id.tr_tds_amount);
 
-        btnPayNow = (Button) findViewById(R.id.btn_pay_now);
-        btnOpcApply = (Button) findViewById(R.id.btnOpcApply);
+        btnPayNow = findViewById(R.id.btn_pay_now);
+        btnOpcApply = findViewById(R.id.btnOpcApply);
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //startActivity(new Intent(ProductCheckoutActivity.this, PaymentOptionsActivity.class));
+
                 if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
                     Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
                     mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
@@ -138,6 +136,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                             mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
                             "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
                     i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+                    i.putExtra("packageList",new Gson().toJson(mPurchasePlans));
                     //write logic for with and without opc cases
                     if(!etOpc.isEnabled()) {
                         if(mOpcDetails==null) {
@@ -198,9 +197,9 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     private void getPricingPlanDetails() {
 
-        String accId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
-        String appId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
-        String country = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
+        String accId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+        String appId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
+        String country = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
         Map<String, String> params = new HashMap<>();
         if (accId.length()>0){
             params.put("identifier", accId);
@@ -208,9 +207,9 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             params.put("identifier", appId);
         }
         params.put("clientId", Constants.clientId);
-        params.put("fpId", mSession.getFPID());
+        params.put("fpId", mSessionManager.getFPID());
         params.put("country",country.toLowerCase());
-        params.put("fpCategory", mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
+        params.put("fpCategory", mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
 
         Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
             @Override
@@ -411,8 +410,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK) {
+        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE || requestCode == PADDLE_REQUEST_CODE && resultCode==RESULT_OK) {
             if (data == null) {
                 return;
             }
@@ -425,6 +423,8 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             setResult(RESULT_OK, data);
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -450,22 +450,38 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if(materialProgress!=null && !materialProgress.isShowing()){
                 materialProgress.show();
             }
+            if(method != null)
+            {
+                method.RedirectUri = "https://hello.nowfloats.com";
+            }
+
             storeInterface.initiatePaymentProcess(params, method, new Callback<PaymentTokenResult>() {
                 @Override
                 public void success(PaymentTokenResult paymentTokenResult, Response response) {
+                    if (materialProgress!=null){
+                        materialProgress.dismiss();
+                    }
                     if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
-                        i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
-                        i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                        i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
-                        if (materialProgress!=null){
-                            materialProgress.dismiss();
+                        switch (paymentTokenResult.getResult().getPaymentMethodType())
+                        {
+                            case "INSTAMOJO":
+                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
+                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
+                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+
+                                startActivityForResult(i, OPC_REQUEST_CODE);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                break;
+                            case "PADDLE":
+                                Intent paddleIntent = new Intent(ProductCheckoutActivity.this, PaddleCheckoutActivity.class);
+                                paddleIntent.putExtra("paymentUrl", paymentTokenResult.getResult().getTargetPaymentCollectionUri());
+                                startActivityForResult(paddleIntent, PADDLE_REQUEST_CODE);
+                                break;
+                            default:
+                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
                         }
-                        startActivityForResult(i, OPC_REQUEST_CODE);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                     }else {
-                        if(materialProgress!=null && materialProgress.isShowing()){
-                            materialProgress.dismiss();
-                        }
                         Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
                     }
                 }

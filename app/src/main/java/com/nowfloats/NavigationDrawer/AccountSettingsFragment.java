@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,7 +38,6 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
-import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -90,9 +90,13 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
-        String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
-        int[] adapterImages = {R.drawable.ic_site_apperance, R.drawable.ic_domain_enad_emails,
-                R.drawable.ic_your_plan, R.drawable.icon_change_password,R.drawable.icon_logout};
+        final String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
+        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.account_settings);
+        int[] adapterImages = new int[adapterTexts.length];
+        for (int i = 0; i<adapterTexts.length;i++){
+            adapterImages[i] = imagesArray.getResourceId(i,-1);
+        }
+        imagesArray.recycle();
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
@@ -100,11 +104,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-                switch(pos){
-                    case 0:
+                switch(adapterTexts[pos]){
+                    case "Site Appearance":
                         intent = new Intent(mContext, SiteAppearanceActivity.class);
                         break;
-                    case 1:
+                    case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
                         if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
@@ -135,13 +139,13 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
-                    case 2:
+                    case "Your Plans":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         break;
-                    case 3:
+                    case "Change Password":
                         changePassword();
                         return;
-                    case 4:
+                    case "Log out":
                         logoutAlertDialog_Material();
                         return;
                     default:
@@ -254,7 +258,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 confirmCheckerActive = true;
                 if (confirmPwd.equals(newPwd)) {
                     confirmChecker.setVisibility(View.VISIBLE);
-                    confirmChecker.setImageResource(R.drawable.domain_available);
+                    confirmChecker.setImageResource(R.drawable.green_check);
                 } else {
                     confirmChecker.setVisibility(View.VISIBLE);
                     confirmChecker.setImageResource(R.drawable.domain_not_available);
@@ -457,43 +461,37 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
     }
+
+
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
-//        domainDetails = null;
         hideLoader();
-
+        if (!isAdded() || getActivity() == null) return;
         if(!isAlreadyCalled) {
-            if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
-                Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
-            } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
-                isDomainDetailsAvali = true;
-                if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
-                    showCustomDialog(getString(R.string.domain_booking_failed),
-                            Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()) && Integer.parseInt(domainDetails.getProcessingStatus())<=16){
-
-                    showCustomDialog(getString(R.string.domain_booking_process),
-                            getString(R.string.domain_booking_process_message),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else
-                {
-                    showLoader(getString(R.string.please_wait));
-                    domainApiService.getDomainFPDetails(sessionManager.getFPID(), getDomainDetailsParam());
-                }
-
-            }
-            else if (!TextUtils.isEmpty(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
-                showCustomDialog("Domain Details", "You have linked your domain to " +
-                                sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
+            if(domainDetails == null && sessionManager.getRootAliasURI() != null) {
+                showCustomDialog(getString(R.string.domain_linking_success),
+                        getString(R.string.domain_linked),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else if(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")) {
-                showExpiryDialog(LIGHT_HOUSE_EXPIRED);
-            }else if (Methods.isOnline(getActivity())){
-                showLoader(getString(R.string.please_wait));
-                domainApiService.getDomainFPDetails(sessionManager.getFPID(), getDomainDetailsParam());
-            }else{
-                Methods.snackbarNoInternet(getActivity());
+                return;
+            }
+            if (domainDetails == null){
+                Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
+            } else if(domainDetails.isFailed()){
+                showCustomDialog(getString(R.string.domain_booking_failed),
+                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
+                                getString(R.string.drop_us_contact):domainDetails.getErrorMessage()).toString(),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
+            }else if(domainDetails.isPending()){
+
+                showCustomDialog(getString(R.string.domain_booking_process),
+                        getString(R.string.domain_booking_process_message),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
+            } else if(!domainDetails.isHasDomain() && sessionManager.getRootAliasURI() != null){
+                showCustomDialog(getString(R.string.domain_linking_success),
+                        getString(R.string.domain_linked),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
+            } else {
+                showDomainDetails();
             }
         }
     }
@@ -514,63 +512,22 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     }
 
     @Override
-    public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
+    public void domainAvailabilityStatus(String domainName, String domainType, DomainApiService.DomainAPI domainAPI) {
 
     }
+
 
     @Override
     public void domainBookStatus(String response) {
 
     }
 
-    private static final String PAYMENT_STATE_SUCCESS = "1";
-    private static final String ROOT_ALIAS_URI = "nowfloats";
-    private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
-    private Get_FP_Details_Model get_fp_details_model;
     private boolean isAlreadyCalled = false;
-    private boolean isDomainDetailsAvali = false;
 
-    @Override
-    public void getFpDetails(Get_FP_Details_Model get_fp_details_model) {
-        hideLoader();
-        this.get_fp_details_model = get_fp_details_model;
-        if (TextUtils.isEmpty(get_fp_details_model.response)) {
-
-            if (isDomainDetailsAvali){
-                showDomainDetails();
-            }
-            else if (TextUtils.isEmpty(get_fp_details_model.getEmail())
-                    || get_fp_details_model.getContacts() == null) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update your Email Address.").toString(),
-                        "Update Email Address", null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
-
-            } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update your Business Category.").toString(),
-                        "Update Business Category", null, DialogFrom.CATEGORY_REQUIRED);
-            } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
-                    || TextUtils.isEmpty(get_fp_details_model.getLat())
-                    || TextUtils.isEmpty(get_fp_details_model.getLng())
-                    || get_fp_details_model.getLat().equalsIgnoreCase("0")
-                    || get_fp_details_model.getLng().equalsIgnoreCase("0")
-                    ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update you Business Address.").toString(),
-                        "Update Business Address", null, DialogFrom.ADDRESS_REQUIRED);
-            } else {
-                showDomainDetails();
-            }
-
-        } else {
-            Methods.showSnackBarNegative(getActivity(), get_fp_details_model.response);
-        }
-    }
 
     private void showDomainDetails() {
         isAlreadyCalled = true;
         Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
-        domainIntent.putExtra("get_fp_details_model", get_fp_details_model);
         startActivity(domainIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }

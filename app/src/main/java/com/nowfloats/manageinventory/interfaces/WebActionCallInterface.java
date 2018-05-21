@@ -25,7 +25,7 @@ public interface WebActionCallInterface {
 
     @GET("/users3/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
-    void getUser(@Query("query") String query, @Query("limit") int limit, Callback<WebActionModel<UserModel>> callback);
+    void getUser(@Query("id") String id, @Query("limit") int limit, Callback<WebActionModel<UserModel>> callback);
 
     @GET("/products3/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})

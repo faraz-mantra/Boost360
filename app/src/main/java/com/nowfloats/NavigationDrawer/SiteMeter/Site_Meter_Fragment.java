@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -30,6 +29,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
@@ -42,7 +42,7 @@ import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
-import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
+import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -65,22 +65,22 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Site_Meter_Fragment extends Fragment implements DomainApiService.DomainCallback{
-    private static int businessNameWeight = 5;
-    private static int businessDescriptionWeight = 10;
-    private static int businessCategoryWeight = 5;
-    private static int featuredImageWeight = 10;
-    private static int phoneWeight = 5;
-    private static int emailWeight = 5;
-    private static int businessAddressWeight = 10;
-    private static int businessHoursWeight = 5;
-    private static int businessTimingWeight = 5;
-    private static int facebookWeight = 10;
-    private static int twitterWeight = 10;
-    private static int logoWeight = 5;
-    private static int firstUpdatesWeight = 5;
-    private static int siteMeterTotalWeight = 0;
-    private static boolean fiveUpdatesDone = false;
-    private static int onUpdate = 4;
+    public final static int businessNameWeight = 5;
+    public final static int businessDescriptionWeight = 10;
+    public final static int businessCategoryWeight = 5;
+    public final static int featuredImageWeight = 10;
+    public final static int phoneWeight = 5;
+    public final static int emailWeight = 5;
+    public final static int businessAddressWeight = 10;
+    public final static int businessHoursWeight = 5;
+    public final static int businessTimingWeight = 5;
+    public final static int facebookWeight = 10;
+    public final static int twitterWeight = 10;
+    public final static int logoWeight = 5;
+    public final static int firstUpdatesWeight = 5;
+    int siteMeterTotalWeight = 0;
+    boolean fiveUpdatesDone = false;
+    public final static int onUpdate = 4;
     UserSessionManager session;
     private RecyclerView recyclerView;
     private SiteMeterAdapter adapter;
@@ -417,6 +417,11 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
+            session.setSiteHealth(siteMeterTotalWeight);
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("site_health:%s",siteMeterTotalWeight));
+        }
+
         MixPanelController.setProperties("SiteHealth", "" + siteMeterTotalWeight);
     }
 
@@ -450,11 +455,14 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             case social:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_SOCIAL, null);
                 if (!(Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false))) {
-                    if(activity instanceof HomeActivity)
-                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
-                    else{
-                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
-                    }
+                    Intent in = new Intent(activity, Social_Sharing_Activity.class);
+                    startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                    if(activity instanceof HomeActivity)
+//                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
+//                    else{
+//                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                    }
                     /*Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
@@ -576,6 +584,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         }
     }
 
+
     private void showExpiryDialog(int showDialog) {
 
         String callUsButtonText, cancelButtonText, dialogTitle, dialogMessage;
@@ -655,6 +664,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         super.onStop();
     }
 
+
     /*
      * Domain Details Param
      */
@@ -693,40 +703,21 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 //        domainDetails = null;
         hideLoader();
 
-
         if(!isAlreadyCalled) {
-            isAlreadyCalled = true;
-            if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
+            if (domainDetails == null){
                 Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
-            } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
-                isDomainDetailsAvali = true;
-                if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
-                    showCustomDialog(getString(R.string.domain_booking_failed),
-                            Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()) && Integer.parseInt(domainDetails.getProcessingStatus())<=16){
-
-                    showCustomDialog(getString(R.string.domain_booking_process),
-                            getString(R.string.domain_booking_process_message),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else
-                {
-                    showLoader(getString(R.string.please_wait));
-                    domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
-                }
-
-            }
-            else if (!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
-                showCustomDialog("Domain Details", "You have linked your domain to " +
-                                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
+            } else if(domainDetails.isFailed()){
+                showCustomDialog(getString(R.string.domain_booking_failed),
+                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
+                                getString(R.string.drop_us_contact):domainDetails.getErrorMessage()).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")) {
-                showExpiryDialog(LIGHT_HOUSE_EXPIRED);
-            }else if (Methods.isOnline(activity)){
-                showLoader(getString(R.string.please_wait));
-                domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+            }else if(domainDetails.isPending()){
+
+                showCustomDialog(getString(R.string.domain_booking_process),
+                        getString(R.string.domain_booking_process_message),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
             }else{
-                Methods.snackbarNoInternet(activity);
+                showDomainDetails();
             }
         }
 
@@ -748,7 +739,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     }
 
     @Override
-    public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
+    public void domainAvailabilityStatus(String domainName, String domainType, DomainApiService.DomainAPI domainAPI) {
 
     }
 
@@ -797,62 +788,10 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
              Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
          }
      }*/
-    private static final String PAYMENT_STATE_SUCCESS = "1";
-    private static final String ROOT_ALIAS_URI = "nowfloats";
-    private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
-    private Get_FP_Details_Model get_fp_details_model;
-
-    @Override
-    public void getFpDetails(Get_FP_Details_Model get_fp_details_model) {
-        hideLoader();
-        this.get_fp_details_model = get_fp_details_model;
-        if (TextUtils.isEmpty(get_fp_details_model.response)) {
-
-            /*if (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
-                    && get_fp_details_model.getFPWebWidgets() != null
-                    && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {*/
-            if (isDomainDetailsAvali){
-                showDomainDetails();
-            }
-            else if (TextUtils.isEmpty(get_fp_details_model.getEmail())
-                    || get_fp_details_model.getContacts() == null) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update your Email Address.").toString(),
-                        "Update Email Address", null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
-
-            } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update your Business Category.").toString(),
-                        "Update Business Category", null, DialogFrom.CATEGORY_REQUIRED);
-            } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
-                    || TextUtils.isEmpty(get_fp_details_model.getLat())
-                    || TextUtils.isEmpty(get_fp_details_model.getLng())
-                    || get_fp_details_model.getLat().equalsIgnoreCase("0")
-                    || get_fp_details_model.getLng().equalsIgnoreCase("0")
-                    ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
-                showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml("Insufficient data to book domain. Please update you Business Address.").toString(),
-                        "Update Business Address", null, DialogFrom.ADDRESS_REQUIRED);
-            } else {
-                showDomainDetails();
-            }
-           /* }
-            else
-            {
-                showCustomDialog(getString(R.string.buy_a_domain),
-                        Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }*/
-
-        } else {
-            Methods.showSnackBarNegative(getActivity(), get_fp_details_model.response);
-        }
-    }
 
     private void showDomainDetails() {
 
         Intent domainIntent = new Intent(activity, DomainDetailsActivity.class);
-        domainIntent.putExtra("get_fp_details_model", get_fp_details_model);
         domainIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(domainIntent);
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

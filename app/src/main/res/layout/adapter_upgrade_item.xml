@@ -84,7 +84,7 @@
             android:padding="15dp"
             android:text="Check base plans"
             android:textAllCaps="true"
-            android:textColor="@color/primary_color_dark"
+            android:textColor="@color/primary_color"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

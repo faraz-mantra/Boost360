@@ -473,6 +473,9 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             response = null;
+        } catch (OutOfMemoryError e){
+            e.printStackTrace();
+            Methods.showSnackBar(appContext,"Image is too large");
         }
 
 

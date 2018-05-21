@@ -60,6 +60,9 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.webactions.WebAction;
+import com.nowfloats.webactions.models.WebActionError;
+import com.nowfloats.webactions.models.WebActionVisibility;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.thinksity.R;
 
@@ -137,6 +140,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
     private int mSelectedPosition = 0;
     private boolean mIsImageChosen = false;
     private boolean mIsImageDeleted = false;
+    private WebAction mWebAction;
 
     //private ImageView ivImageTest;
 
@@ -540,6 +544,25 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 save.setVisibility(View.VISIBLE);
             }
         });
+        mWebAction = new WebAction.WebActionBuilder()
+                .setAuthHeader("58ede4d4ee786c1604f6c535")
+                .build();
+        displayAssociatedWebActions();
+    }
+
+    private void displayAssociatedWebActions() {
+        mWebAction.getAllWebActions("INVENTORY", WebActionVisibility.NONE, new WebAction.WebActionCallback<List<com.nowfloats.webactions.models.WebAction>>() {
+            @Override
+            public void onSuccess(List<com.nowfloats.webactions.models.WebAction> result) {
+
+            }
+
+            @Override
+            public void onFailure(WebActionError error) {
+
+            }
+        });
+
     }
 
     private void showOptions(View itemView, final int position) {

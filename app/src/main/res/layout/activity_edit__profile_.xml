@@ -3,6 +3,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
@@ -269,21 +270,29 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/select_businessprofileimage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/camfab"
-            android:layout_marginTop="150dp"
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="155dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:tint="@color/primaryColor"
+            android:src="@drawable/circle_bakground" />
+        <ImageView
+            android:id="@+id/select_businessprofileimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="155dp"
             android:layout_marginRight="10dp"
-            android:scaleType="centerCrop"
-            fab:fab_colorNormal="@color/primaryColor"
-            fab:fab_colorPressed="@color/tabOnclickColor"
-            fab:fab_colorRipple="@color/primaryColor" />
-        </RelativeLayout>
+            android:layout_alignParentTop="true"
+            android:padding="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/ic_camera" />
+    </RelativeLayout>
+
 </FrameLayout>
     </ScrollView>
 

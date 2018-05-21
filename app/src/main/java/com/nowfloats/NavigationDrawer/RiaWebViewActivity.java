@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -91,7 +92,10 @@ public class RiaWebViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         wbRiaContent.setWebChromeClient(new MyWebChromeClient());
         wbRiaContent.setWebViewClient(new MyWebViewClient());
-        if(url.endsWith(".pdf")){
+        if (TextUtils.isEmpty(url)){
+            finish();
+        }
+        else if(url.endsWith(".pdf")){
             wbRiaContent.loadUrl(Constants.PDF_LOADER_URL+url);
         }else {
             wbRiaContent.loadUrl(url);

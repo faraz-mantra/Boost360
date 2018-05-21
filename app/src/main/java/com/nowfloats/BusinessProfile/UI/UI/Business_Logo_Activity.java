@@ -8,7 +8,6 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuffColorFilter;
@@ -356,7 +355,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
                 try {
                     CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                    imageUrl = getRealPathFromURI(imageUri);
+                    imageUrl = Methods.getRealPathFromURI(this, imageUri);
                     path = imageUrl;
                     path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
                 } catch (Exception e) {
@@ -377,7 +376,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
-                        path = getPath(picUri);
+                        path = Methods.getPath(this, picUri);
                         path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
                         if (!Util.isNullOrEmpty(path)) {
                             editImage();
@@ -403,29 +402,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         in.putExtra("isFixedAspectRatio",true);
         startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
     }
-    public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
 
-    public String getPath(Uri uri) {
-        try {
-            String[] projection = { MediaStore.Images.Media.DATA };
-            Cursor cursor = managedQuery(uri, projection, null, null, null);
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-
-        } catch (Exception e) {
-
-        }
-        return null;
-    }
 
     public void uploadPrimaryPicture(String path) {
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());

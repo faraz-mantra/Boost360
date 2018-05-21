@@ -1,107 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        app:cardElevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_website"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_cross_platform"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:scaleType="fitXY"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_keyboard" />
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/keyboard_switch"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Keyboard"
-                android:paddingLeft="25dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:textAllCaps="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5"
-                android:src="@drawable/right_arrow" />
+                android:layout_height="wrap_content">
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/storage_switch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Storage Permission"
-                android:background="@color/f3f3f3"
-                android:paddingLeft="25dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:textAllCaps="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/keyboard_switch"
-                android:src="@drawable/right_arrow" />
+                <TextView
+                    android:id="@+id/tv_website_interactions"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="24dp"
+                    android:text="Website\nInteractions"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_laptop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/img_laptop"
+                    app:layout_constraintTop_toTopOf="@+id/img_laptop" />
 
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/storage_switch" />
+                <ImageView
+                    android:id="@+id/img_laptop"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_manage_website" />
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/microphone_switch"
+                <ImageView
+                    android:id="@+id/img_info1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/icon_info"
+                    android:tint="@color/light_gray"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/ll_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/f3f3f3"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_laptop">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_weight="1"
+                        android:text="Orders"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/right_arrow" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_order" />
+
+                <LinearLayout
+                    android:id="@+id/ll_enquiry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/f3f3f3"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_weight="1"
+                        android:text="Enquiries"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_enquiries_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/right_arrow" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_enquiry" />
+
+                <LinearLayout
+                    android:id="@+id/ll_calls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/f3f3f3"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_weight="1"
+                        android:text="Calls"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_calls_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/right_arrow" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_subscriber" />
+
+                <LinearLayout
+                    android:id="@+id/ll_subscriber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/f3f3f3"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_weight="1"
+                        android:text="Subscribers"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_subscriber_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/right_arrow" />
+
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+
+            <io.codetail.widget.RevealFrameLayout
+                android:id="@+id/rfl_overlay1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Microphone Permission"
-                android:textAllCaps="true"
-                android:paddingLeft="25dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:background="@color/f3f3f3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider4"
-                android:src="@drawable/right_arrow" />
-        </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+                android:layout_height="match_parent"
+                android:background="@color/transparent">
+
+                <include
+                    layout="@layout/mc_info_layout"
+                    android:visibility="invisible" />
+            </io.codetail.widget.RevealFrameLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
+            android:visibility="visible"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_cross_platform"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/gray"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/boost_keyboard"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_keyboard" />
+
+                <ImageView
+                    android:id="@+id/keyboard_info"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/icon_info"
+                    android:tint="@color/light_gray"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/ll_enable_keyboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/f3f3f3"
+                    android:padding="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView5">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_weight="1"
+                        android:text="@string/enable_keyboard"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/right_arrow" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <io.codetail.widget.RevealFrameLayout
+                android:id="@+id/enable_keyboard_rfl_overlay1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent">
+
+                <include
+                    layout="@layout/mc_info_layout"
+                    android:visibility="invisible" />
+            </io.codetail.widget.RevealFrameLayout>
+        </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

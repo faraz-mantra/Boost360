@@ -18,7 +18,7 @@
 -keep class twitter4j.** { *; }
 -dontwarn com.darsh.multipleimageselect.adapters.**
 -dontwarn twitter4j.**
-
+-dontwarn com.apxor.**
 -dontwarn org.apache.commons.codec.binary.Base64
 
 #-dontwarn com.demach.konotor
@@ -364,3 +364,5 @@
 -keepnames class com.anachat.chatsdk.** { *; }
 -dontwarn com.anachat.chatsdk.uimodule.**
 -keepclassmembers class com.anachat.chatsdk.** { *; }
+
+-dontwarn org.apache.http.**

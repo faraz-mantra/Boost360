@@ -24,7 +24,7 @@ import retrofit.http.QueryMap;
 
 public interface DomainInterface {
     @Headers({"Content-Type: application/json"})
-    @GET("/DomainService/v1/GetDomainDetailsForFloatingPoint/{fpTag}")
+    @GET("/DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}")
     public void getDomainDetailsForFloatingPoint(@Path("fpTag") String fpTag, @QueryMap Map<String, String> map, Callback<DomainDetails> callback);
 
     @Headers({"Content-Type: application/json"})
@@ -40,7 +40,7 @@ public interface DomainInterface {
     public void linkDomain(@QueryMap Map<String, String> map,@Body Map<String,String> bodyMap, Callback<Boolean> callback);
 
     @Headers({"Content-Type: application/json"})
-    @PUT("/DomainService/v1/domainWithWebsite/create")
+    @PUT("/DomainService/v2/DomainWithWebsite/create")
     public void buyDomain(@Body Map<String,String> bodyMap, Callback<String> callback);
 
     @GET("/Discover/v3/floatingPoint/nf-app/{fpid}")

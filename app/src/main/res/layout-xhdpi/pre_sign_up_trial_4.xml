@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:inputType="textCapWords"
+                    android:inputType="textCapWords|textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
@@ -91,6 +91,7 @@
                     android:id="@+id/et_street_address"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
+                    android:inputType="textNoSuggestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
@@ -136,6 +137,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:maxLines="1"
+                        android:inputType="textNoSuggestions"
                         android:drawableRight="@drawable/dropselect"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
@@ -187,6 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
@@ -206,6 +209,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
@@ -326,9 +330,11 @@
 
                 <ImageView
                     android:id="@+id/ivPhoneStatus"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:padding="4dp"
                     android:layout_gravity="bottom"
+                    android:src="@drawable/icon_info"
                     android:layout_marginBottom="@dimen/margin_10"
                     android:layout_marginLeft="@dimen/margin_5" />
             </LinearLayout>

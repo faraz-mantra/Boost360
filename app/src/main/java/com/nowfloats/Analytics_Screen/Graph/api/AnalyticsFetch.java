@@ -24,6 +24,9 @@ public class AnalyticsFetch {
 
         @GET("/Dashboard/v1/{FPTAG}/totalvisitdetails")
         void getTotalVisits(@Path("FPTAG") String tag, @QueryMap Map<String, String> mapData, Callback<VisitsModel> response);
+
+        @GET("/Dashboard/v1/{FPTAG}/totaladdressviewdetails")
+        void getMapVisits(@Path("FPTAG") String tag, @QueryMap Map<String, String> mapData, Callback<VisitsModel> response);
     }
 
 }

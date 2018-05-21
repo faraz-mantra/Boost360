@@ -15,6 +15,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -111,6 +113,7 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
+
         MixPanelController.track(EventKeysWL.HOME_SCREEN, null);
         BoostLog.d("Home_Main_Fragment","onResume : "+session.getFPName());
         getActivity().setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -228,10 +231,19 @@ public class Home_Main_Fragment extends Fragment implements
         bus = BusProvider.getInstance().getBus();
         bus.register(this);
         current_Activity = getActivity();
+        session = new UserSessionManager(getActivity(),getActivity());
+
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -239,7 +251,6 @@ public class Home_Main_Fragment extends Fragment implements
         View mainView ;
         mainView =  inflater.inflate(R.layout.fragment_home__main_, container, false);
         fetch_home_data = new Fetch_Home_Data(getActivity(),0);
-        session = new UserSessionManager(getActivity().getApplicationContext(),getActivity());
 
         HomeActivity.StorebizFloats.clear();
         progressCrd = (CardView)mainView.findViewById(R.id.progressCard);
@@ -247,8 +258,6 @@ public class Home_Main_Fragment extends Fragment implements
         retryLayout = (LinearLayout)mainView.findViewById(R.id.postRetryLayout);
         emptyMsgLayout = (LinearLayout)mainView.findViewById(R.id.emptymsglayout);
         emptyMsgLayout.setVisibility(View.GONE);
-
-
 
 
         ImageView retryPost = (ImageView)mainView.findViewById(R.id.retryPost);
@@ -487,6 +496,7 @@ public class Home_Main_Fragment extends Fragment implements
         Create_Message_Activity.path = "";
         Constants.createMsg = false;
         loadDataFromDb(skip, isNewMessage);
+        bus.post(new UpdateFetchAfterPost());
     }
 
     @Override

@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,13 +40,14 @@ import static com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragm
 public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisitorsFragment.ViewCallback, View.OnClickListener {
 
 
-    private TextView tvMonth, tvWeek, tvYear;
+    private TextView tvMonth, tvWeek;
+    AppCompatTextView tvYear;
     private UniqueVisitorsFragment.BatchType currentTabType;
     private PopupWindow popup;
     public static final String VISITS_TYPE = "visits_type";
     private VisitsType mVisitsType;
     public enum VisitsType{
-        UNIQUE, TOTAL;
+        UNIQUE, TOTAL, MAP_VISITS;
     }
 
     @Override
@@ -64,10 +67,13 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
 
         switch (mVisitsType){
             case UNIQUE:
-                setTitle("Unique Visitors");
+                setTitle(getString(R.string.unique_visitors));
                 break;
             case TOTAL:
-                setTitle("Total Visits");
+                setTitle(getString(R.string.overall_visits));
+                break;
+            case MAP_VISITS:
+                setTitle(getString(R.string.map_visits));
                 break;
             default:
                 finish();
@@ -75,7 +81,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         tvMonth = findViewById(R.id.tv_month_tab);
         tvWeek = findViewById(R.id.tv_week_tab);
         tvYear = findViewById(R.id.tv_year_tab);
-
+        tvYear.setCompoundDrawablesWithIntrinsicBounds(null, null, AppCompatResources.getDrawable(this,R.drawable.ic_drop_down_white),null);
         tvMonth.setOnClickListener(this);
         tvWeek.setOnClickListener(this);
         tvYear.setOnClickListener(this);

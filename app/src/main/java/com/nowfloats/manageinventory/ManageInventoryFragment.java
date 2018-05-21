@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -145,6 +147,7 @@ public class ManageInventoryFragment extends Fragment {
             tvPaymentSetting.setTypeface(robotoMedium);
 
             tvProductGallery = (TextView) mainView.findViewById(R.id.tvProductGallery);
+            tvProductGallery.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
             tvProductGallery.setTypeface(robotoMedium);
 
             tvSellerAnalytics = (TextView) mainView.findViewById(R.id.tvSellerAnalytics);

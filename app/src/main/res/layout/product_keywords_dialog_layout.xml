@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <com.nowfloats.Product_Gallery.widgets.TagView
+        android:id="@+id/tv_product_keyword"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+    </com.nowfloats.Product_Gallery.widgets.TagView>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:id="@+id/pb_keyword_loader"
+        app:layout_constraintEnd_toEndOf="@id/tv_product_keyword"
+        app:layout_constraintStart_toStartOf="@id/tv_product_keyword"
+        app:layout_constraintTop_toTopOf="@id/tv_product_keyword"
+        app:layout_constraintBottom_toBottomOf="@id/tv_product_keyword"/>
+
+    <TextView
+        android:id="@+id/tv_add_product_keywords"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Keywords\nto your Product"
+        android:gravity="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_product_keyword"
+        app:layout_constraintStart_toStartOf="@id/tv_product_keyword"
+        app:layout_constraintTop_toTopOf="@id/tv_product_keyword"
+        app:layout_constraintBottom_toBottomOf="@id/tv_product_keyword"/>
+
+    <EditText
+        android:id="@+id/et_keyword_input"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:inputType="text"
+        android:background="@drawable/et_bg"
+        android:hint="Enter Product Keyword"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_keyword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_keyword" />
+
+    <ProgressBar
+        android:id="@+id/pb_adding_keyword"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:translationZ="3dp"
+        android:progressTint="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="@id/btn_add_keyword"
+        app:layout_constraintRight_toRightOf="@id/btn_add_keyword"
+        app:layout_constraintBottom_toBottomOf="@id/btn_add_keyword"
+        app:layout_constraintTop_toTopOf="@id/btn_add_keyword"/>
+
+    <Button
+        android:id="@+id/btn_add_keyword"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:text="Add"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/btn_bg"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_keyword" />
+
+</android.support.constraint.ConstraintLayout>

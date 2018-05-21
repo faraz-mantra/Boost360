@@ -34,6 +34,7 @@ import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.accessbility.BubbleInAppDialog;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -350,6 +351,10 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             e.printStackTrace();
             System.gc();
         }
+        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
+            session.setProductsCount(productItemModelList.size());
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
+        }
     }
 
     private static final String PRODUCT_SEARCH = "PRODUCT_SEARCH";
@@ -436,6 +441,11 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
             }
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+        }
+
+        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
+            session.setProductsCount(productItemModelList.size());
+            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
         }
     }
 

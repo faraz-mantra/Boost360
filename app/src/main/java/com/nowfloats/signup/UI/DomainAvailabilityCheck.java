@@ -71,6 +71,7 @@ public class DomainAvailabilityCheck {
                                     }
                                 } else {
 //                                label.setText(getString(R.string.enter_valid_website_name));
+                                    callBack.onDomainNotAvailable();
                                     domainCheck = false;
                                 }
                             }

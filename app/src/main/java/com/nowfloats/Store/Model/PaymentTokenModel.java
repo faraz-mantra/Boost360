@@ -17,6 +17,9 @@ public class PaymentTokenModel {
     @SerializedName("TargetPaymentCollectionUri")
     @Expose
     private String targetPaymentCollectionUri;
+    @SerializedName("PaymentMethodType")
+    @Expose
+    public String paymentMethodType;
 
     /**
      *
@@ -70,5 +73,13 @@ public class PaymentTokenModel {
      */
     public void setTargetPaymentCollectionUri(String targetPaymentCollectionUri) {
         this.targetPaymentCollectionUri = targetPaymentCollectionUri;
+    }
+
+    public String getPaymentMethodType() {
+        return paymentMethodType;
+    }
+
+    public void setPaymentMethodType(String paymentMethodType) {
+        this.paymentMethodType = paymentMethodType;
     }
 }

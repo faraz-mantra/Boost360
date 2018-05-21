@@ -21,8 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
+import com.nowfloats.Analytics_Screen.Fragments.FacebookLoginFragment;
 import com.nowfloats.Analytics_Screen.Fragments.ProcessFacebookDataFragment;
-import com.nowfloats.Analytics_Screen.Fragments.LoginFragment;
 import com.nowfloats.Analytics_Screen.Fragments.PostFacebookUpdateFragment;
 import com.nowfloats.Analytics_Screen.model.GetFacebookAnalyticsData;
 import com.nowfloats.Login.UserSessionManager;
@@ -45,7 +45,7 @@ import retrofit.client.Response;
  * Created by Abhi on 12/1/2016.
  */
 
-public class SocialAnalytics extends AppCompatActivity implements LoginFragment.OpenNextScreen, View.OnClickListener {
+public class SocialAnalytics extends AppCompatActivity implements FacebookLoginFragment.OpenNextScreen, View.OnClickListener {
 
     private int facebookStatus = 0;
     private final static int FETCH_DATA = 20,POST_UPDATE = 10,LOGIN_FACEBOOK = 30;
@@ -101,27 +101,27 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
         }else{
             addFragment(LOGIN_FACEBOOK,FACEBOOK);
         }
-
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            spinner.setVisibility(View.GONE);
-        }else {
-            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-            //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
-            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-                for (String category : quikrArray) {
-                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                        spinner.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                }
-            }
-            spinner.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    initiatePopupWindow(spinner);
-                }
-            });
-        }
+        spinner.setVisibility(View.GONE);
+//        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            spinner.setVisibility(View.GONE);
+//        }else {
+//            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+//            //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+//            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+//                for (String category : quikrArray) {
+//                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+//                        spinner.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//                }
+//            }
+//            spinner.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    initiatePopupWindow(spinner);
+//                }
+//            });
+//        }
 
     }
     private void initiatePopupWindow(View image) {
@@ -280,11 +280,11 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
                 transaction.replace(R.id.linearlayout,frag,"PostFacebookUpdate").commit();
                 break;
             case LOGIN_FACEBOOK:
-                frag = manager.findFragmentByTag("LoginFragment");
+                frag = manager.findFragmentByTag("FacebookLoginFragment");
                 if(frag == null)
-                    frag = LoginFragment.getInstance(facebookStatus);
+                    frag = FacebookLoginFragment.getInstance(facebookStatus);
 
-                transaction.replace(R.id.linearlayout,frag,"LoginFragment").commit();
+                transaction.replace(R.id.linearlayout,frag,"FacebookLoginFragment").commit();
                 break;
         }
     }

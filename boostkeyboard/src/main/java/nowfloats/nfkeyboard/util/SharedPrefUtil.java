@@ -2,9 +2,6 @@ package nowfloats.nfkeyboard.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-
-import timber.log.Timber;
 
 /**
  * Created by NowFloats on 26-02-2018.
@@ -25,13 +22,10 @@ public class SharedPrefUtil {
         return  sPrefUtil;
     }
     public SharedPrefUtil getsBoostPref(Context context){
-        try {
-            Context boostContext = context.createPackageContext("com.biz2.nowfloats", 0);
-            sBoostPref =  boostContext.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
 
-        }catch (PackageManager.NameNotFoundException ex) {
-            Timber.d(ex.getMessage());
-        }
+//            Context boostContext = context.createPackageContext("com.biz2.nowfloats", 0);
+        sBoostPref =  context.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
+
         return sPrefUtil;
     }
     public String getFpId() {

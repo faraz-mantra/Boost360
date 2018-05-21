@@ -28,13 +28,15 @@ public class NfxFacebbokAnalytics {
 
         @Headers({
                 "key:78234i249123102398",
-                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)"})
+                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)",
+                "Content-Type:application/json"})
         @GET("/dataexchange/v1/fetch/analytics")
         void nfxFetchFacebookData(@Query("nowfloats_id") String id, @Query("identifier") String facebook, Callback<GetFacebookAnalyticsData> response);
 
         @Headers({
                 "key:78234i249123102398",
-                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)"})
+                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)",
+                "Content-Type:application/json"})
         @GET("/dataexchange/v1/getAccessTokens")
         void nfxGetSocialTokens(@Query("nowfloats_id") String id, Callback<NfxGetTokensResponse> callback);
 

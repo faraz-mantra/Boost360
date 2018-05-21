@@ -12,16 +12,18 @@ import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
-import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.signup.UI.Model.ProcessFPDetails;
 import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -48,7 +50,7 @@ public class Get_FP_Details_Service {
         getFPDetails.post_getFPDetails(fpID, map, new Callback<Get_FP_Details_Model>() {
             @Override
             public void success(Get_FP_Details_Model get_fp_details_model, final Response response) {
-                try{
+                try {
                     if (get_fp_details_model != null) {
                         ProcessFPDetails.storeFPDetails(activity, get_fp_details_model);
                         bus.post(new Get_FP_Details_Event(get_fp_details_model));
@@ -71,7 +73,7 @@ public class Get_FP_Details_Service {
                         });
                         bus.post(response);
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -97,8 +99,10 @@ public class Get_FP_Details_Service {
                         }
                     });
 
+                    MixPanelController.track(EventKeysWL.GET_FP_FAILURE_EVENT, null);
+
                     bus.post(error);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -144,13 +148,13 @@ public class Get_FP_Details_Service {
             @Override
             public void success(NfxGetTokensResponse nfxGetTokensResponse, Response response) {
 
-                if (nfxGetTokensResponse == null || activity == null || activity.isFinishing()){
+                if (nfxGetTokensResponse == null || activity == null || activity.isFinishing()) {
                     bus.post(new NfxGetTokensResponse());
                     return;
                 }
                 SharedPreferences pref = activity.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
                 List<String> regexList = nfxGetTokensResponse.getSmsRegex();
-                if(regexList != null && regexList.size()>0){
+                if (regexList != null && regexList.size() > 0) {
                     String s = TextUtils.join(",", regexList);
                     pref.edit().putString(SMS_REGEX, s).apply();
                     pref.edit().putString(CALL_LOG_TIME_INTERVAL, nfxGetTokensResponse.getCallLogTimeInterval()).apply();
@@ -184,7 +188,7 @@ public class Get_FP_Details_Service {
 
                         }
                     });
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -241,7 +245,7 @@ public class Get_FP_Details_Service {
                 twitterPrefEditor.apply();
             } else if (model.getType().equalsIgnoreCase("quikr")) {
                 pref.edit().putInt("quikrStatus", Integer.parseInt(model.getStatus())).apply();
-            }else if(model.getType().equalsIgnoreCase("facebookchat")){
+            } else if (model.getType().equalsIgnoreCase("facebookchat")) {
                 pref.edit().putInt("facebookChatStatus", Integer.parseInt(model.getStatus())).apply();
             }
         }

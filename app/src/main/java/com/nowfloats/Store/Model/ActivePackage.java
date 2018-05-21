@@ -64,7 +64,29 @@ public class ActivePackage {
     @SerializedName("isActive")
     @Expose
     private Boolean isActive;
-    private String activeStatus="";
+    @SerializedName("createdOn")
+    @Expose
+    private String paymentDate;
+    @SerializedName("_nfInternalClaimId")
+    @Expose
+    private String claimid;
+    @SerializedName("paymentTransactionStatus")
+    @Expose
+    private int paymentStatus;
+
+    @SerializedName("packageDetails")
+    @Expose
+    public List<PackageDetails> packageDetails;
+
+    public List<PackageDetails> getPackageDetails() {
+        return packageDetails;
+    }
+
+    public void setPackageDetails(List<PackageDetails> packageDetails) {
+        this.packageDetails = packageDetails;
+    }
+
+    private String activeStatus = "";
     private boolean isExpanded;
 
     private String features;
@@ -243,6 +265,30 @@ public class ActivePackage {
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public String getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(String paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getClaimid() {
+        return claimid;
+    }
+
+    public void setClaimid(String claimid) {
+        this.claimid = claimid;
+    }
+
+    public int getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(int paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public class ProductClassification {

@@ -1,10 +1,12 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nowfloats.NavigationDrawer.API.MessageTag_Async_Task;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -47,7 +50,7 @@ public class Card_Full_View_Fragment extends Fragment {
     public static final String DateTextKey = "dateText";
     public static final String MessageIdKey = "messageIdTag";
     public static final String UrlKey = "UrlKey";
-
+    private static final int STORAGE_CODE = 120;
     static View.OnClickListener mylongOnClickListener;
     private Activity appContext;
 
@@ -211,6 +214,15 @@ public class Card_Full_View_Fragment extends Fragment {
         mainView.findViewById(R.id.shareData).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                        Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
+                    }else{
+                        ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
+                    }
+                    return;
+                }
                 MixPanelController.track("SharePost", null);
                 // final Intent shareIntent = null;
                 final ProgressDialog pd = ProgressDialog.show(appContext, "", "Sharing . . .");
@@ -326,7 +338,7 @@ public class Card_Full_View_Fragment extends Fragment {
         {
             imageView.setVisibility(View.VISIBLE);
             baseName = imageUri ;
-            Picasso.with(getActivity()).load(baseName).noPlaceholder().into(imageView);
+            Glide.with(this).load(baseName).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
         }
     }

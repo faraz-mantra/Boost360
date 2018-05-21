@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nowfloats.Store.Adapters.PurchasedPlanAdapter;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 /**
@@ -23,7 +25,7 @@ public class PurchasePlanFragment extends Fragment {
     private Context mContext;
     private YourPurchasedPlansActivity.PlansType planType;
 
-    public static PurchasePlanFragment getInstance(Bundle bundle){
+    public static PurchasePlanFragment getInstance(Bundle bundle) {
         PurchasePlanFragment frag = new PurchasePlanFragment();
         frag.setArguments(bundle);
         return frag;
@@ -32,7 +34,7 @@ public class PurchasePlanFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
+        if (getArguments() != null) {
             planType = YourPurchasedPlansActivity.PlansType.getPlanType(getArguments().getInt("pos"));
         }
     }
@@ -46,7 +48,7 @@ public class PurchasePlanFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_purchase_plan,container,false);
+        return inflater.inflate(R.layout.fragment_purchase_plan, container, false);
     }
 
     @Override
@@ -55,12 +57,19 @@ public class PurchasePlanFragment extends Fragment {
 
         if (!isAdded() || isDetached()) return;
         TextView aboutPlan = view.findViewById(R.id.tv_about_plan);
-        switch (planType){
+        LinearLayout orderHeader = view.findViewById(R.id.orderHeader);
+        orderHeader.setVisibility(View.GONE);
+        RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
+
+        switch (planType) {
             case ACTIVE_PLANS:
                 aboutPlan.setText("The following plan(s) is/are currently in use");
                 break;
-            case PROCESS_PLANS:
-                aboutPlan.setText("The following plan(s) is/are not verified to use");
+            case YOUR_ORDERS:
+                orderHeader.setVisibility(View.VISIBLE);
+                aboutPlan.setText("");
+                int pixels = Methods.dpToPx(20, getActivity());
+                mRecyclerView.setPadding(pixels, 0, pixels, pixels);
                 break;
             case TO_BE_ACTIVATED_PLANS:
                 aboutPlan.setText("The following plan(s) is/are not in use");
@@ -70,16 +79,21 @@ public class PurchasePlanFragment extends Fragment {
                 break;
         }
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        if (mContext instanceof AdapterCallback){
-            mRecyclerView.setAdapter(((AdapterCallback)mContext).getAdapter(planType));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+       /* if (planType.equals(YourPurchasedPlansActivity.PlansType.YOUR_ORDERS)) {
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        } else {
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        }*/
+        mRecyclerView.setLayoutManager(layoutManager);
+        if (mContext instanceof AdapterCallback) {
+            mRecyclerView.setAdapter(((AdapterCallback) mContext).getAdapter(planType));
         }
 
     }
 
-    public interface AdapterCallback{
+    public interface AdapterCallback {
         PurchasedPlanAdapter getAdapter(YourPurchasedPlansActivity.PlansType pos);
     }
 }

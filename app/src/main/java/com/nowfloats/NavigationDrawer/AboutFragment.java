@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.riachatsdk.ChatManager;
@@ -48,10 +48,13 @@ public class AboutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
 
-        String[] adapterTexts = getResources().getStringArray(R.array.about_tab_items);
-        int[] adapterImages = {R.drawable.ic_nowfloats_gray, R.drawable.ic_faq, R.drawable.ic_feedback,
-                R.drawable.ic_facebook_circle,R.drawable.ic_twitter_circle,R.drawable.ic_rate_us,R.drawable.ic_term_cond
-        ,R.drawable.ic_privacy};
+        final String[] adapterTexts = getResources().getStringArray(R.array.about_tab_items);
+        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.about_sidepanel);
+        final int[] adapterImages = new int[adapterTexts.length];
+        for (int i = 0; i<adapterTexts.length;i++){
+            adapterImages[i] = imagesArray.getResourceId(i,-1);
+        }
+        imagesArray.recycle();
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
@@ -59,26 +62,27 @@ public class AboutFragment extends Fragment {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-                switch(pos){
-                    case 0:
+                switch(adapterTexts[pos]){
+                    case "About NowFloats":
+                    case "About RedTim":
                         MixPanelController.track(EventKeysWL.EVENT_ABOUT_US, null);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
-                        intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_about_us_link));
+                        intent.putExtra("WEBSITE_NAME", getString(R.string.settings_about_us_link));
                         break;
-                    case 1:
+                    case "FAQs":
                         MixPanelController.track(EventKeysWL.EVENT_FAQs, null);
-                        intent = new Intent(mContext, FAQMainAcivity.class);
-                        intent.putExtra("array", getResources().getStringArray(R.array.faqmain));
+                        intent = new Intent(mContext, Mobile_Site_Activity.class);
+                        intent.putExtra("WEBSITE_NAME",getString(R.string.setting_faq_url));
                         break;
-                    case 2:
+                    case "Feedback":
                         MixPanelController.track("ChatFeedback", null);
                         ChatManager.getInstance(getActivity()).startChat(ChatManager.ChatType.FEEDBACK);
                         return;
-                    case 3:
+                    case "Like us on Facebook":
                         MixPanelController.track(EventKeysWL.EVENT_RATE_US_ON_FACEBOOK,null);
                         Methods.likeUsFacebook(mContext, "");
                         return;
-                    case 4:
+                    case "Follow us on Twitter":
                         MixPanelController.track(EventKeysWL.EVENT_RATE_ON_TWITTER,null);
                         intent = new Intent(Intent.ACTION_VIEW);
                         try {
@@ -90,7 +94,7 @@ public class AboutFragment extends Fragment {
                         }
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         break;
-                    case 5:
+                    case "Rate us on Play Store":
                         MixPanelController.track(EventKeysWL.EVENT_RATE_US_ON_PLAYSTORE, null);
                         Uri uri = Uri.parse("market://details?id=" + Constants.PACKAGE_NAME);
                         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
@@ -104,12 +108,12 @@ public class AboutFragment extends Fragment {
                             intent.putExtra("WEBSITE_NAME", url);
                         }
                         break;
-                    case 6:
+                    case "Terms of Use":
                         MixPanelController.track(EventKeysWL.EVENT_TERM_OF_USE, null);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_tou_url));
                         break;
-                    case 7:
+                    case "Privacy Policy":
                         MixPanelController.track(EventKeysWL.EVENT_PRIVACY_POLICY, null);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_privacy_url));
@@ -134,4 +138,5 @@ public class AboutFragment extends Fragment {
             HomeActivity.headerText.setText(getString(R.string.about));
         }
     }
+
 }

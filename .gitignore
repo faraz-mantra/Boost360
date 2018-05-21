@@ -1,5 +1,5 @@
 .gradle
-/*/local.properties
+local.properties
 .DS_Store
 /*/build
 .idea
@@ -47,3 +47,5 @@ build
 *.swp
 bubblebutton/
 mobihelp_sdk_android_v1.5.4/
+mixpanel/
+local.properties

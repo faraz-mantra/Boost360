@@ -1,6 +1,7 @@
 package com.nowfloats.Analytics_Screen.API;
 
 import com.google.gson.JsonObject;
+import com.nowfloats.Analytics_Screen.model.SearchAnalyticsSummaryForFP;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
 import com.nowfloats.Analytics_Screen.model.SearchRankModel;
 
@@ -23,4 +24,8 @@ public interface SearchQueryApi {
 
     @GET("/market/api/KeywordRank/KeywordRankFinder")
     void getKeyWordRanks(@Query("fpTag") String fpTag, Callback<List<SearchRankModel>> response);
-}
+
+    @GET("/market/api/SearchAnalytics/GetSearchAnalyticsSummaryForFP")
+    void GetSearchAnalyticsSummaryForFP(@Query("fpTag") String fpTag, Callback<SearchAnalyticsSummaryForFP> response);
+
+  }

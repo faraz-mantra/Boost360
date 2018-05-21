@@ -56,6 +56,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -172,20 +173,20 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         arrowTextView = (TextView) view.findViewById(R.id.guidelines_arrow_text);
         //Quikr added
         CardView card = (CardView) view.findViewById(R.id.quikr_card);
-
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            card.setVisibility(View.GONE);
-        } else {
-            final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-                for (String category : quikrArray) {
-                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                        card.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                }
-            }
-        }
+        card.setVisibility(View.GONE);
+//        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            card.setVisibility(View.GONE);
+//        } else {
+//            final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+//            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+//                for (String category : quikrArray) {
+//                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+//                        card.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
 
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);
@@ -215,7 +216,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (facebookPageCheckBox.isChecked()) {
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                    facebookPageCheckBox.setChecked(false);
+                    Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
+                }else if (facebookPageCheckBox.isChecked()) {
 
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
@@ -247,7 +251,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookHomeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (facebookHomeCheckBox.isChecked()) {
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                    facebookHomeCheckBox.setChecked(false);
+                    Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
+                }else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -293,7 +300,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-                if (paymentState.equals("-1")) {
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                    facebookautopost.setChecked(false);
+                    Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
+                }else if (paymentState.equals("-1")) {
                     try {
 
                         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
@@ -826,7 +836,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     private void showLoader(final String message) {
-
+        if (getActivity() == null || !isAdded()) return;
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setCanceledOnTouchOutside(false);
@@ -1144,7 +1154,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public void nfxCallBack(String response, int callType, String name) {
         hideLoader();
         if (response.equals("error")) {
-            Toast.makeText(getActivity(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
             return;
         }
         BoostLog.d("ggg: ", response + callType + ":");

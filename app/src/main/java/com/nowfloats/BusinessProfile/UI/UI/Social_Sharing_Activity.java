@@ -58,6 +58,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -178,20 +179,20 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         arrowTextView = (TextView) findViewById(R.id.guidelines_arrow_text);
         //Quikr added
         CardView card = (CardView) findViewById(R.id.quikr_card);
-
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            card.setVisibility(View.GONE);
-        } else {
-            final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-                for (String category : quikrArray) {
-                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                        card.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                }
-            }
-        }
+        card.setVisibility(View.GONE);
+//        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            card.setVisibility(View.GONE);
+//        } else {
+//            final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+//            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+//                for (String category : quikrArray) {
+//                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+//                        card.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
 
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);
@@ -221,7 +222,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (facebookPageCheckBox.isChecked()) {
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                    facebookPageCheckBox.setChecked(false);
+                    Toast.makeText(Social_Sharing_Activity.this, "Facebook is not working", Toast.LENGTH_SHORT).show();
+                }else if (facebookPageCheckBox.isChecked()) {
                     //Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
@@ -255,7 +259,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         facebookHomeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (facebookHomeCheckBox.isChecked()) {
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                    facebookHomeCheckBox.setChecked(false);
+                    Toast.makeText(Social_Sharing_Activity.this, "Facebook is not working", Toast.LENGTH_SHORT).show();
+                }else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -301,7 +308,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
                 String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-                if (paymentState.equals("-1")) {
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                    facebookautopost.setChecked(false);
+                    Toast.makeText(Social_Sharing_Activity.this, "Facebook is not working", Toast.LENGTH_SHORT).show();
+                }else  if (paymentState.equals("-1")) {
                     try {
 
                         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
@@ -850,30 +860,20 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
     private void showLoader(final String message) {
-
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(activity);
-                    progressDialog.setCanceledOnTouchOutside(false);
-                }
-                progressDialog.setMessage(message);
-                progressDialog.show();
-            }
-        });
+        if(isFinishing()) return;
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.setMessage(message);
+        progressDialog.show();
     }
 
     private void hideLoader() {
 
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-            }
-        });
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
     private void getFacebookProfile(final AccessToken accessToken, final int from) {
         Bundle parameters = new Bundle();

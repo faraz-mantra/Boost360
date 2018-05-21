@@ -11,4 +11,6 @@ public class WidgetPacks {
     public String Name;
     public Object Properties;
     public String WidgetKey;
+    public String Group;
+    public int Priority;
 }

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -48,6 +49,9 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
+import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
+import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
+import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
@@ -63,6 +67,7 @@ import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
+import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
@@ -77,6 +82,7 @@ import com.thinksity.R;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -93,15 +99,16 @@ import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYP
  */
 public class Analytics_Fragment extends Fragment {
     View rootView = null;
-    public static TextView visitCount, visitorsCount, subscriberCount, vmnTotalCallCount, searchQueriesCount, businessEnqCount, facebokImpressions;
+    public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount, searchQueriesCount, businessEnqCount, facebokImpressions;
     private int noOfSearchQueries = 0;
-    public static ProgressBar visits_progressBar, visitors_progressBar, vmnProgressBar, subscriber_progress, search_query_progress, businessEnqProgress;
+    public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, subscriber_progress, search_query_progress, businessEnqProgress;
     UserSessionManager session;
     private Context context;
     private Bus bus;
-    CardView cvRiaCard,vmnCallCard ;
+    CardView cvRiaCard, vmnCallCard;
     Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
+    LinearLayout mLockLayout;
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
     private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
     private static final String BUTTON_TYPE_NEXT_NODE = "NextNode";
@@ -119,8 +126,9 @@ public class Analytics_Fragment extends Fragment {
     private String mButtonId;
     private String mNextNodeId;
     LinearLayout llTwoButtons, llSingleButtonLayout;
-    private String vmnMissedCalls, vmnTotalCalls, vmnReceivedCalls;
-
+    private String vmnTotalCalls;
+    SharedPreferences pref;
+    OnBoardingManager onBoardingManager;
 
     @Override
     public void onResume() {
@@ -128,6 +136,14 @@ public class Analytics_Fragment extends Fragment {
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
+        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false)
+                && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
+            //onBoardingManager.getOnBoardingData(session.getFpTag());
+            mLockLayout.setVisibility(View.VISIBLE);
+        } else {
+            mLockLayout.setVisibility(View.GONE);
+        }
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
             visitorsCount.setText(session.getVisitorsCount());
@@ -140,6 +156,9 @@ public class Analytics_Fragment extends Fragment {
         }
         if (!Util.isNullOrEmpty(session.getEnquiryCount())) {
             businessEnqCount.setText(session.getEnquiryCount());
+        }
+        if (!Util.isNullOrEmpty(session.getMapVisitsCount())) {
+            mapVisitsCount.setText(session.getMapVisitsCount());
         }
         if (!Util.isNullOrEmpty(session.getFacebookImpressions())) {
             facebokImpressions.setText(session.getFacebookImpressions());
@@ -178,13 +197,17 @@ public class Analytics_Fragment extends Fragment {
             e.printStackTrace();
         }
         this.context = context;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         session = new UserSessionManager(getActivity(), getActivity());
         bus = BusProvider.getInstance().getBus();
+        pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        onBoardingManager = new OnBoardingManager(getContext());
 //        if(Util.isNullOrEmpty(session.getVisitorsCount()) || Util.isNullOrEmpty(session.getSubcribersCount())){
         try {
             //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);
@@ -192,12 +215,61 @@ public class Analytics_Fragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 //        }
     }
 
-    //    private void getFPDetails(Activity activity, String fpId, String clientId, Bus bus) {
-//        new Get_FP_Details_Service(activity,fpId,clientId,bus);
-//    }
+    private void getMapVisitsCount() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("batchType", UniqueVisitorsFragment.BatchType.yy.name());
+        map.put("startDate", Methods.getFormattedDate(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON), UniqueVisitorsFragment.pattern));
+        map.put("endDate", Methods.getFormattedDate(Calendar.getInstance().getTimeInMillis(), UniqueVisitorsFragment.pattern));
+        map.put("clientId", Constants.clientId);
+        map.put("scope", session.getISEnterprise().equals("true") ? "Enterprise" : "Store");
+        Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class).getMapVisits(session.getFpTag(), map, new Callback<VisitsModel>() {
+            @Override
+            public void success(VisitsModel visitsModel, Response response) {
+                int totalCount = 0;
+                if (visitsModel != null) {
+                    for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
+                        totalCount += data.getDataCount();
+                    }
+                }
+                session.setMapVisitsCount(String.valueOf(totalCount));
+                if (isAdded() && getActivity() != null) {
+                    map_progressbar.setVisibility(View.GONE);
+                    mapVisitsCount.setVisibility(View.VISIBLE);
+                    mapVisitsCount.setText(String.valueOf(totalCount));
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (isAdded() && getActivity() != null) {
+                    map_progressbar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void setAnalyticsLockScreen() {
+        ((ImageView) mLockLayout.findViewById(R.id.image1)).setImageResource(R.drawable.ic_lock);
+        TextView actionButton = mLockLayout.findViewById(R.id.btn_action);
+        TextView title = mLockLayout.findViewById(R.id.main_text1);
+        title.setText("SEO DISABLED");
+        TextView message = mLockLayout.findViewById(R.id.message_text2);
+        title.setTextColor(ContextCompat.getColor(context, R.color.white));
+        message.setTextColor(ContextCompat.getColor(context, R.color.white));
+        message.setText("Complete onboarding to unlock analytics ");
+        actionButton.setText("Resume Onboarding");
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBoardingManager.getOnBoardingData(session.getFpTag());
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
@@ -206,6 +278,8 @@ public class Analytics_Fragment extends Fragment {
         llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
         btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
         vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
+        mLockLayout = rootView.findViewById(R.id.lock_analytics);
+        setAnalyticsLockScreen();
         queryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,6 +322,21 @@ public class Analytics_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        LinearLayout mapVisitsLinearLayout = (LinearLayout) rootView.findViewById(R.id.mapVisitsLinearLayout);
+        mapVisitsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MixPanelController.track("MapVisitsDetailedView", null);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.MAP_VISITS);
+                startActivity(q);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+        if (session.getISEnterprise().equals("true")) {
+            rootView.findViewById(R.id.map_card).setVisibility(View.GONE);
+        }
         LinearLayout subscribeLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscribers_details);
         subscribeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,7 +353,7 @@ public class Analytics_Fragment extends Fragment {
                /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
                 } else {*/
-                SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+
                 int status = pref.getInt("fbPageStatus", 0);
 
                 Intent i = new Intent(getActivity(), SocialAnalytics.class);
@@ -305,6 +394,7 @@ public class Analytics_Fragment extends Fragment {
 
         PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
+        ImageView mapBack = (ImageView) rootView.findViewById(R.id.map_visits_img);
         ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
         ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
         ImageView businessEnqBg = (ImageView) rootView.findViewById(R.id.business_enq_bg);
@@ -316,6 +406,7 @@ public class Analytics_Fragment extends Fragment {
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
+        mapBack.setColorFilter(porterDuffColorFilter);
         subsBack.setColorFilter(porterDuffColorFilter);
         searchBack.setColorFilter(porterDuffColorFilter);
         businessEnqBg.setColorFilter(porterDuffColorFilter);
@@ -326,6 +417,7 @@ public class Analytics_Fragment extends Fragment {
         wildfireBack.setColorFilter(porterDuffColorFilter);
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
+        mapVisitsCount = (TextView) rootView.findViewById(R.id.analytics_screen_map_count);
         visitorsCount = (TextView) rootView.findViewById(R.id.visitors_count);
         subscriberCount = (TextView) rootView.findViewById(R.id.analytics_screen_subscriber_count);
         searchQueriesCount = (TextView) rootView.findViewById(R.id.analytics_screen_search_queries_count);
@@ -335,6 +427,8 @@ public class Analytics_Fragment extends Fragment {
         searchQueriesCount.setVisibility(View.INVISIBLE);
         visits_progressBar = (ProgressBar) rootView.findViewById(R.id.visits_progressBar);
         visits_progressBar.setVisibility(View.VISIBLE);
+        map_progressbar = (ProgressBar) rootView.findViewById(R.id.map_progressBar);
+        map_progressbar.setVisibility(View.VISIBLE);
         visitors_progressBar = (ProgressBar) rootView.findViewById(R.id.visitors_progressBar);
         visitors_progressBar.setVisibility(View.VISIBLE);
         subscriber_progress = (ProgressBar) rootView.findViewById(R.id.subscriber_progressBar);
@@ -351,6 +445,7 @@ public class Analytics_Fragment extends Fragment {
         String subscribetotal = session.getSubcribersCount();
         String searchQueryCount = session.getSearchCount();
         String enquiryCount = session.getEnquiryCount();
+        String mapCount = session.getMapVisitsCount();
 //        String Str_noOfSearchQueries = "";
 
         try {
@@ -372,6 +467,14 @@ public class Analytics_Fragment extends Fragment {
         } else {
             visits_progressBar.setVisibility(View.VISIBLE);
             visitCount.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(mapCount)) {
+            map_progressbar.setVisibility(View.GONE);
+            mapVisitsCount.setVisibility(View.VISIBLE);
+            mapVisitsCount.setText(mapCount);
+        } else {
+            map_progressbar.setVisibility(View.VISIBLE);
+            mapVisitsCount.setVisibility(View.GONE);
         }
         if (visitortotal != null && visitortotal.trim().length() > 0) {
             visitors_progressBar.setVisibility(View.GONE);
@@ -410,12 +513,12 @@ public class Analytics_Fragment extends Fragment {
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-        if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             vmnCallCard.setVisibility(View.GONE);
-        }else if(isVmnEnable){
+        } else if (isVmnEnable) {
             setVmnTotalCallCount();
             vmnCallCard.setVisibility(View.VISIBLE);
-        }else  if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+        } else if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
             vmnCallCard.setVisibility(View.VISIBLE);
             //request
         }
@@ -423,15 +526,15 @@ public class Analytics_Fragment extends Fragment {
         vmnCallCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isVmnEnable){
-                    if(vmnTotalCallCount.getVisibility() == View.VISIBLE){
+                if (isVmnEnable) {
+                    if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
                         Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     } else {
                         Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -440,6 +543,9 @@ public class Analytics_Fragment extends Fragment {
             }
         });
         initRiaCard();
+        if (!session.getISEnterprise().equalsIgnoreCase("true")) {
+            getMapVisitsCount();
+        }
         return rootView;
     }
 
@@ -832,7 +938,7 @@ public class Analytics_Fragment extends Fragment {
                 if (jsonObject == null || response.getStatus() != 200) {
                     return;
                 }
-                if(jsonObject.has("TotalCalls")) {
+                if (jsonObject.has("TotalCalls")) {
                     vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
                     vmnTotalCallCount.setText(vmnTotalCalls);
                     session.setVmnCallsCount(vmnTotalCalls);

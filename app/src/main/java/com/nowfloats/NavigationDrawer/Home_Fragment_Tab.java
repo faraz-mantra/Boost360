@@ -21,6 +21,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -50,6 +51,7 @@ public class Home_Fragment_Tab extends Fragment {
     private MaterialDialog materialDialog;
     LinearLayout bubbleOverlay;
     SharedPreferences pref;
+    OnBoardingManager onBoardingManager;
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
     private MaterialDialog overLayDialog;
 
@@ -60,6 +62,7 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         bus.register(this);
         if (headerText != null){
             headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -95,6 +98,7 @@ public class Home_Fragment_Tab extends Fragment {
 
             }
         }).start();*/
+        onBoardingManager = new OnBoardingManager(getContext());
     }
 
     @Override
@@ -438,6 +442,12 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false)
+                && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
+            onBoardingManager.getOnBoardingData(session.getFpTag());
+        }
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
             if (Integer.parseInt(alertCountVal)>99){
                 alertCountTv.setText("99+");

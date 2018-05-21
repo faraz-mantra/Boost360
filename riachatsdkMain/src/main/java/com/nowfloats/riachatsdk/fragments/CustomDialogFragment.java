@@ -124,6 +124,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (mResultListener == null) return;
                         mResultListener.createmysite();
                     }
                 });
@@ -156,6 +157,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (mResultListener == null) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -163,6 +165,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNegative.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (mResultListener == null) return;
                         mResultListener.createmysite();
                     }
                 });
@@ -185,6 +188,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (mResultListener == null) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -192,6 +196,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (mResultListener == null) return;
                         mResultListener.finishActivity();
 
                     }

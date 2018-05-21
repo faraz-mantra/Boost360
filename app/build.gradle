@@ -35,39 +35,41 @@ allprojects {
 }
 
 android {
-//    signingConfigs {
-//        config {
-//            keyAlias 'nfmanage'
-//            keyPassword 'NowFloatsManage2013'
-//            storeFile file('D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\keystore\\boost\\my-release-key.keystore')
-//            storePassword 'NowFloatsManage2013'
-//        }
-//    }
     compileSdkVersion 27
     buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy'
+
     lintOptions {
-        abortOnError false
+        abortOnError true
+        checkReleaseBuilds false
     }
+
     defaultConfig {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2018030014
+        versionCode 2018050016
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
-//        release {
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
-//            proguardFile 'D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\ap\\proguard-rules.pro'
-//        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
+//    signingConfigs {
+//        debug {
+//            storeFile file(System.properties['user.home']+"/.android/custom_debug.keystore")
+//            storePassword ''
+//            keyAlias 'nfmanage'
+//            keyPassword ''
+//        }
+//    }
     flavorDimensions "default"
     productFlavors {
+
         parttwo {
             versionName "4.4.9"
             applicationId "com.sibername"
@@ -98,12 +100,16 @@ android {
             applicationId "com.sukere"
             dimension "default"
         }
+
+        nowfloats_us {
+            versionName "1.0.0"
+            applicationId "com.redtim"
+            dimension "default"
+        }
         partone {
-            versionName "4.9.3"
+            versionName "4.9.9"
             applicationId "com.biz2.nowfloats"
             dimension "default"
-//            proguardFile 'D:\\NFProjects\\NFProject\\Boost v4.4.8\\Boost\\ap\\proguard-rules.pro'
-//            signingConfig signingConfigs.config
         }
     }
     packagingOptions {
@@ -111,6 +117,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/DEPENDENCIES'
     }
+
     dexOptions {
         jumboMode true
         preDexLibraries false
@@ -131,7 +138,7 @@ dependencies {
     implementation project(':boostkeyboard')
     implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
-        transitive = true;
+        transitive = true
     }
     compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
@@ -151,7 +158,7 @@ dependencies {
     implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
     implementation 'com.kitsune:anachatsdk:1.18.11@aar'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
-    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'com.melnykov:floatingactionbutton:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
@@ -182,6 +189,10 @@ dependencies {
     implementation 'com.android.support:gridlayout-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.webengage:android-sdk:2.+'
+    implementation ('com.apxor.android:apxor-android-sdk-rta-fcm:1.7.8@aar') {
+        exclude group: 'com.google.firebase'
+    }
+
 }
 
 apply plugin: 'com.google.gms.google-services'

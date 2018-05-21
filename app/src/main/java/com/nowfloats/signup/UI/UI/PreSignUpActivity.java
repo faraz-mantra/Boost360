@@ -45,7 +45,8 @@ public class PreSignUpActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
 
-        if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")){
+        if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")
+                || Constants.PACKAGE_NAME.equals("com.redtim")){
             setContentView(R.layout.activity_pre_sign_up__main_v3);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();

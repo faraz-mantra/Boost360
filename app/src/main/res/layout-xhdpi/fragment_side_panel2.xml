@@ -216,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/versionCodeName"
                 android:layout_toRightOf="@id/poweredBy"
-                android:text="@string/nowfloats" />
+                android:text="@string/powered_by_company" />
         </LinearLayout>
 
 

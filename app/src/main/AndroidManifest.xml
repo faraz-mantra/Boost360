@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017090018"
-    android:versionName="4.8.1"
     android:sharedUserId="com.nowfloats.kb.boostapp.sharedkey"
-    android:sharedUserLabel="@string/shared_user_label">
+    android:sharedUserLabel="@string/shared_user_label"
+    android:versionCode="2017090018"
+    android:versionName="4.8.1">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -48,7 +48,6 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
             android:screenOrientation="portrait" />
@@ -76,19 +75,12 @@
         <service android:name="com.webengage.sdk.android.ExecutorService" />
         <service android:name="com.webengage.sdk.android.EventLogService" />
 
-        <activity
-            android:name="com.webengage.sdk.android.actions.render.WebEngageActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@android:style/Theme.Translucent" />
-
         <meta-data
             android:name="com.webengage.sdk.android.small_icon"
             android:resource="@drawable/app_launcher2" />
-
         <meta-data
             android:name="com.webengage.sdk.android.large_icon"
             android:resource="@drawable/app_launcher" />
-
         <meta-data
             android:name="com.webengage.sdk.android.accent_color"
             android:value="@color/primary" />
@@ -96,10 +88,10 @@
         <receiver android:name="com.webengage.sdk.android.WebEngageReceiver">
             <intent-filter>
                 <action android:name="com.webengage.sdk.android.intent.ACTION" />
+
                 <category android:name="${applicationId}" /> <!-- Replace with your package name -->
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.webengage.sdk.android.InstallTracker"
             android:exported="true">
@@ -181,18 +173,18 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.Analytics_Screen.SearchQueriesActivityNew"
+            android:label=""
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.Analytics_Screen.SubscriberDetailsActivity"
             android:label=""
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
-            android:label="@string/title_activity_business_profile"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity"
             android:label=""
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity" />
@@ -205,12 +197,14 @@
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
         </activity>
 
-       <!-- <service android:name="com.nowfloats.bubble.BubblesService" />
+        <!--
+        <service android:name="com.nowfloats.bubble.BubblesService" />
         <service
             android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
             android:exported="true"
-            android:stopWithTask="false" />-->
+            android:stopWithTask="false" />
+        -->
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
@@ -348,9 +342,11 @@
             android:label="@string/title_activity_create__message_"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="create_update"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="create_update" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.NavigationDrawer.HomeActivity" />
@@ -367,10 +363,12 @@
             <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -407,8 +405,7 @@
 
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
-            android:value="com.biz2.nowfloats" />
-
+            android:value="@string/package_name" />
         <meta-data
             android:name="com.semusi.analytics.appid"
             android:value="574bc887b794654d042aac89" />
@@ -485,8 +482,7 @@
 
         <activity
             android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.ShowVmnCallActivity"
             android:screenOrientation="portrait" />
@@ -524,23 +520,31 @@
         <activity
             android:name="com.nowfloats.Image_Gallery.ImageGalleryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Store.ProductCheckoutActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"
-            android:screenOrientation="portrait"/>
-
-      <!--  <service
+        <!--
+        <service
             android:name="com.nowfloats.accessbility.DataAccessibilityServiceV8"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter android:priority="2147483647">
@@ -550,109 +554,147 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service" />
-        </service>-->
+        </service>
+        -->
 
-        <!--<activity-->
-            <!--android:name="com.nowfloats.accessbility.BubbleDialog"-->
-            <!--android:autoRemoveFromRecents="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleInstance"-->
-            <!--android:noHistory="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.custom"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
-        <!--<activity-->
-            <!--android:name="com.nowfloats.accessbility.BubbleInAppDialog"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.bubbleInApp"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
-        <!--<activity-->
-            <!--android:name="com.nowfloats.accessbility.WhatsAppBubbleCloseDialog"-->
-            <!--android:autoRemoveFromRecents="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleInstance"-->
-            <!--android:noHistory="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.bubbleInApp"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
-        <!--<activity-->
-            <!--android:name="com.nowfloats.accessbility.WhatsAppDialog"-->
-            <!--android:autoRemoveFromRecents="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleInstance"-->
-            <!--android:noHistory="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.custom"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
-        <!--<activity-->
-            <!--android:name="com.nowfloats.customerassistant.CustomerAssistantActivity"-->
-            <!--android:autoRemoveFromRecents="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleInstance"-->
-            <!--android:noHistory="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Transparent"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
-        <!--<activity-->
-            <!--android:name="com.nowfloats.accessbility.OverlayDialog"-->
-            <!--android:autoRemoveFromRecents="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleInstance"-->
-            <!--android:noHistory="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.custom"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
-        <!--<activity-->
-            <!--android:name="com.nowfloats.accessbility.TempDisplayDialog"-->
-            <!--android:autoRemoveFromRecents="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleInstance"-->
-            <!--android:noHistory="true"-->
-            <!--android:theme="@style/Theme.custom"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
-        <!--<activity-->
-            <!--android:name="com.nowfloats.customerassistant.SuggestionsActivity"-->
-            <!--android:autoRemoveFromRecents="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleInstance"-->
-            <!--android:noHistory="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.custom"-->
-            <!--android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />-->
+
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.accessbility.BubbleDialog" -->
+        <!-- android:autoRemoveFromRecents="true" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleInstance" -->
+        <!-- android:noHistory="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Theme.custom" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.accessbility.BubbleInAppDialog" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Theme.bubbleInApp" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.accessbility.WhatsAppBubbleCloseDialog" -->
+        <!-- android:autoRemoveFromRecents="true" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleInstance" -->
+        <!-- android:noHistory="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Theme.bubbleInApp" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.accessbility.WhatsAppDialog" -->
+        <!-- android:autoRemoveFromRecents="true" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleInstance" -->
+        <!-- android:noHistory="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Theme.custom" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.customerassistant.CustomerAssistantActivity" -->
+        <!-- android:autoRemoveFromRecents="true" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleInstance" -->
+        <!-- android:noHistory="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Transparent" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.accessbility.OverlayDialog" -->
+        <!-- android:autoRemoveFromRecents="true" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleInstance" -->
+        <!-- android:noHistory="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Theme.custom" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.accessbility.TempDisplayDialog" -->
+        <!-- android:autoRemoveFromRecents="true" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleInstance" -->
+        <!-- android:noHistory="true" -->
+        <!-- android:theme="@style/Theme.custom" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.customerassistant.SuggestionsActivity" -->
+        <!-- android:autoRemoveFromRecents="true" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleInstance" -->
+        <!-- android:noHistory="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Theme.custom" -->
+        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"
-            android:screenOrientation="portrait"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.manageinventory.OrderListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.manageinventory.OrderDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Store.NewPricingPlansActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.FacebookWildFireActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.GoogleWildFireActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.WildFireAdsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.Store.YourPurchasedPlansActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.Store.TopUpPlansActivity" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.FacebookWildFireActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.GoogleWildFireActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.WildFireAdsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Store.YourPurchasedPlansActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Store.TopUpPlansActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.nowfloats.on_boarding.OnBoardingActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name="com.nowfloats.Store.PaymentOptionsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Store.ProductCheckout_v2Activity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.enablekeyboard.BoostKeyboardActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Product_Gallery.MultipleProductImageActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
+
+        </activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -64,6 +65,8 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.io.File;
@@ -124,12 +127,14 @@ public class Create_Message_Activity extends AppCompatActivity {
     private ImageView deleteButton,editButton, ivSpeakUpdate;
     private boolean isMsgChanged = false,isImageChanged = false;
     public static final String SHORTCUT_ID = "create_update";
+    private ProgressDialog progressDialog;
+    private Bus mBusEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create__message_v2);
-
+        mBusEvent = BusProvider.getInstance().getBus();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         activity = Create_Message_Activity.this;
@@ -194,7 +199,6 @@ public class Create_Message_Activity extends AppCompatActivity {
 
                     }
 
-                    if (Home_Main_Fragment.bus==null){Home_Main_Fragment.bus = BusProvider.getInstance().getBus();}
                     Constants.createMsg = true;
                     String socialShare = "";
                     if(mFbProfileShare==1){
@@ -209,7 +213,8 @@ public class Create_Message_Activity extends AppCompatActivity {
                     if(mQuikrShare == 1){
                         socialShare+="QUIKR.";
                     }
-                    Home_Main_Fragment.bus.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
+                    showLoader("Uploading...");
+                    mBusEvent.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
                     if (path!=null && path.trim().length()>0){
                         //Log.v("ggg",path+" path for upadte");
                         new AlertArchive(Constants.alertInterface,"FEATURE IMAGE",session.getFPID());
@@ -222,8 +227,6 @@ public class Create_Message_Activity extends AppCompatActivity {
                                 mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
                         mRiaNodedata = null;
                     }
-                    finish();
-                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 } else {
                     YoYo.with(Techniques.Shake).playOn(msg);
                     Methods.showSnackBarNegative(Create_Message_Activity.this,getString(R.string.enter_message));
@@ -490,19 +493,20 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
         LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            layout.setVisibility(View.GONE);
-        }else {
-            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-                for (String category : quikrArray) {
-                    if (category.equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                        layout.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                }
-            }
-        }
+        layout.setVisibility(View.GONE);
+//        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            layout.setVisibility(View.GONE);
+//        }else {
+//            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+//            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+//                for (String category : quikrArray) {
+//                    if (category.equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+//                        layout.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
         showUpdateKeywords();
         ivSpeakUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -511,7 +515,22 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
     }
+    private void showLoader(final String message) {
+        if(isFinishing()) return;
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.setMessage(message);
+        progressDialog.show();
+    }
 
+    private void hideLoader() {
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
     private void showUpdateKeywords(){
 
         Constants.riaMemoryRestAdapter
@@ -609,6 +628,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        mBusEvent.unregister(this);
         if(mRiaNodedata!=null && !mIsImagePicking){
             RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
                     mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
@@ -683,6 +703,15 @@ public class Create_Message_Activity extends AppCompatActivity {
             Methods.showSnackBarNegative(activity,errorMessage);
         }
     }
+
+    @Subscribe
+    public void ImageUploadCheck(UpdateFetchAfterPost event){
+        hideLoader();
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
@@ -933,7 +962,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        mBusEvent.register(this);
         if(!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1) {
             facbookEnabled = true;
             mFbProfileShare = 1;
@@ -968,6 +997,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         super.onPause();
 
     }
+
 
     @Override
     public void onDestroy() {

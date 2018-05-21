@@ -155,7 +155,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 //    private StringBuilder mStringBuilder;
 
-    private Handler mHandler;
+    private Handler mHandler = new Handler(Looper.getMainLooper());;
 
     private Button mCurrButton, mDefaultButton;
 
@@ -655,8 +655,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private void goBack() {
 
-        if (mHandler != null)
-            mHandler.removeCallbacksAndMessages(null);
+
+        mHandler.removeCallbacksAndMessages(null);
         hideSoftKeyboard();
 
         switch (chatType) {
@@ -1169,8 +1169,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private void skip() {
 
-        if (mHandler != null)
-            mHandler.removeCallbacksAndMessages(null);
+
+        mHandler.removeCallbacksAndMessages(null);
 
         if (mCurrButton != null) {
 
@@ -1225,8 +1225,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private void login() {
 
-        if (mHandler != null)
-            mHandler.removeCallbacksAndMessages(null);
+
+        mHandler.removeCallbacksAndMessages(null);
 
         Intent intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("com.biz2.nowfloats://com.riasdk.login/riachat"));
@@ -1290,7 +1290,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         etChatInput.setHint("");
         ChatLogger.getInstance(chatType).logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId, appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
         mCurrVarName = null;
-        mHandler = new Handler(Looper.getMainLooper());
         if (node.getVariableName() != null) {
             mCurrVarName = node.getVariableName();
         }
@@ -1979,7 +1978,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         rvButtonsContainer.setLayoutManager(buttonsLayoutManager);
         rvButtonsContainer.setAdapter(mButtonsAdapter);
-
         startChat(mAllNodes.get(0));
     }
 

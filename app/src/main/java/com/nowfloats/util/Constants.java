@@ -8,6 +8,7 @@ import android.location.Address;
 import android.util.DisplayMetrics;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.GsonBuilder;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
@@ -27,11 +28,13 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
+import retrofit.android.AndroidLog;
 import retrofit.client.OkClient;
+import retrofit.converter.GsonConverter;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = true;
+    public static final boolean APK_MODE_RELEASE = false;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
@@ -48,6 +51,7 @@ public class Constants {
     public static boolean IS_FRIDAY_CHECKED = false;
     public static boolean IS_SATURDAY_CHECKED = false;
     public static final int GALLERY_PHOTO = 100;
+    public static final int CHOSEN_PHOTO = 1908;
     public static final int CAMERA_PHOTO = 1888;
     public static String UserId = "";
     public static Typeface hel_bold, hel_roman;
@@ -109,19 +113,20 @@ public class Constants {
     //Retrofit Single Instance
     public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
     public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();
-    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+    //public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://onboarding-boost.withfloats.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
-
+    public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
-    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
+    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
     public static final RestAdapter createMessageAdapter = new RestAdapter.Builder().setEndpoint(Constants.CREATE_MESSAGE_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter riaMemoryRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
-    public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response"))*/.build();
+    public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL).setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response"))*/.build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
@@ -370,9 +375,10 @@ public class Constants {
     public static String PrimaryNumberClientId = "726F12B41F6242CC9A2B23BF101199B54449370AD7F44B069C9B5E7CC4A7A20D";
 
     public enum SubscriberStatus {
-        UNSUBSCRIBED(30), SUBSCRIBED(20),REQUESTED(10);
+        UNSUBSCRIBED(30), SUBSCRIBED(20), REQUESTED(10);
         public int value;
-        SubscriberStatus(int i){
+
+        SubscriberStatus(int i) {
             value = i;
         }
     }
@@ -474,7 +480,7 @@ public class Constants {
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
-    public static String SUPPORT_EMAIL_ID=Specific.CONTACT_EMAIL_ID;
+    public static String SUPPORT_EMAIL_ID = Specific.CONTACT_EMAIL_ID;
 
     public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
     public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGE_ID;

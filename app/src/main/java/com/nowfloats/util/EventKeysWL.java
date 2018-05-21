@@ -107,6 +107,7 @@ public interface EventKeysWL
     String STORE_IN_APP_PURCHASE_INITIATION = "InAppPurchaseInitiation";
     String STORE_IN_APP_PURCHASE_SUCCESS = "InAppPurchaseSuccess";
     String STORE_IN_APP_PURCHASE_FAILURE = "InAppPurchaseFailure";
+    String GET_FP_FAILURE_EVENT = "GetFPFail";
     String STORE_IN_APP_PURCHASE_PACKAGE_ACTIVATION = "InAppPurchasePackageActivation";
 
     String PRODUCT_GALLERY_ADD ="AddProduct";
@@ -131,6 +132,9 @@ public interface EventKeysWL
     String KEYBOARD_SWITCH_CLICKED = "KeyboardSwitchClicked";
     String STORAGE_SWITCH_CLICKED = "StoragePermissionSwitchClicked";
     String MICROPHONE_SWITCH_CLICKED = "MicrophonePermissionSwitchClicked";
+    String ALLOW_ACCESS_SWITCH_CLICKED = "AllowPermissionSwitchClicked";
+    String MERCHANT_EDUCATION_BOOST_KEYBOARD = "MerchantEducationBoostKeyboard";
+    String MERCHANT_EDUCATION_MANAGE_CUSTOMERS = "MerchantEducationManageCustomers";
 
     // PRODUCT_GALLERY_
 
