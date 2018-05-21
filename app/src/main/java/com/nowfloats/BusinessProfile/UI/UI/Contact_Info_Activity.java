@@ -81,6 +81,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private TextView primaryTextView, alternateTextView1, alternateTextView2, alternateTextView3;
     private MaterialDialog dialog;
     private MaterialDialog sendSmsProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1420,6 +1421,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
 
     private void reSendOTPOverCall(String number) {
+        Toast.makeText(Contact_Info_Activity.this, "You will receive a call shortly", Toast.LENGTH_SHORT).show();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("PHONE", number);
@@ -1461,12 +1463,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (model.isOTPValid()) {
+                if (model.isOTPSent()) {
                     hideSendSmsProgressbar();
 
                 } else {
                     hideSendSmsProgressbar();
-                    Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -1507,7 +1509,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     changePrimary(number);
                 } else {
                     hideProgressbar();
-                    Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Contact_Info_Activity.this, "Please enter valid OTP", Toast.LENGTH_SHORT).show();
                 }
 
             }
