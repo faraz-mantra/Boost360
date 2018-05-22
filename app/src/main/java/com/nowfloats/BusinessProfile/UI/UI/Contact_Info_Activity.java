@@ -544,7 +544,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                         Toast.makeText(Contact_Info_Activity.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                     } else if (!model.isOTPSent()) {
-                        Toast.makeText(Contact_Info_Activity.this, "Please enter valid number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Contact_Info_Activity.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
                     }
                 }
 

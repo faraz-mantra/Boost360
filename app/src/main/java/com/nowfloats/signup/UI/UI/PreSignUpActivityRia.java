@@ -679,7 +679,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                         Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                     } else if (!model.isOTPSent()) {
-                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -1595,7 +1595,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void reSendOTPOverCall(String number) {
-        showProgressbar();
+       // showProgressbar();
         Toast.makeText(PreSignUpActivityRia.this, "You will receive a call shortly", Toast.LENGTH_SHORT).show();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
