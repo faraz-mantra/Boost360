@@ -1275,6 +1275,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="put_your_nowfloats_website_as_a_sub_domain">
         Put your NowFloats website as a sub domain.
     </string>
+
+    <!-- Caller Info -->
+
+    <string name="missed_calls">Missed Calls </string>
+    <string name="dismiss">DISMISS</string>
+    <string name="received_calls">Received Calls </string>
+
     <string-array name="priority_list">
         <item>DEFAULT</item>
         <item>HIGH</item>
@@ -1324,6 +1331,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
              <li>Milk</li>
          </ul>
      </string>-->
+
     <string-array name="quikr_tip_points">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update along with a clear image</item>

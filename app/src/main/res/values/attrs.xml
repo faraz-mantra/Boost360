@@ -106,4 +106,13 @@
         <attr name="textPaddingTop" format="dimension" />
         <attr name="textPaddingBottom" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ExpandableCardView">
+        <attr name="title" format="string" />
+        <attr name="icon" format="reference" />
+        <attr name="inner_view" format="reference" />
+        <attr name="expandOnClick" format="boolean" />
+        <attr name="animationDuration" format="integer" />
+    </declare-styleable>
+
 </resources>

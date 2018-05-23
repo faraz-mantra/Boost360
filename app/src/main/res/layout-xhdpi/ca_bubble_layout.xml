@@ -21,7 +21,7 @@
 
     <!--  <include
           android:id="@+id/swoosh_dots"
-          layout="@layout/trigger"
+      layoutyoulayoutyout/trigger"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:visibility="visible" />-->

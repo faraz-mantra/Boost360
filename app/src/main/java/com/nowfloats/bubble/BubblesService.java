@@ -77,7 +77,8 @@ public class BubblesService extends Service {
         HOME_ACTIVITY,
         WHATSAPP,
         WHATSAPP_DIALOG,
-        LAUNCHER_HOME_ACTIVITY
+        LAUNCHER_HOME_ACTIVITY,
+        CALLER_INFO_ACTIVITY
     }
 
     BroadcastReceiver resetReceiver = new BroadcastReceiver() {
