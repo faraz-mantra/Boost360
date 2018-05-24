@@ -49,7 +49,7 @@ public class CallerInfoDialog extends AppCompatActivity {
     private void initialize() {
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int screenHeight = (int) (metrics.heightPixels * 0.90);
+        int screenHeight = (int) (metrics.heightPixels * 1);
         int screenWidth = (int) (metrics.widthPixels * 1);
         getWindow().setGravity(Gravity.CENTER);
         getWindow().setLayout(screenWidth, screenHeight);

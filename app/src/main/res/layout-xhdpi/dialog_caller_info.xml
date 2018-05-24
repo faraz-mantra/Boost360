@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/light_gray"
     android:orientation="vertical">
 
 
@@ -17,5 +16,12 @@
         app:inner_view="@layout/adapter_caller_info"
         app:title="Calls (2)" />
 
+    <com.nowfloats.managenotification.ExpandableCardView
+        android:id="@+id/ecvEnquires"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:expandOnClick="true"
+        app:inner_view="@layout/adapter_enquiries_info"
+        app:title="Enquiries (2)" />
 
 </LinearLayout>
