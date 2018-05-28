@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -38,34 +39,30 @@ import java.util.Map;
 public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     public static String deepLinkUrl;
-    private SharedPreferences pref;
+//    private SharedPreferences pref;
 
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+//        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        Map<String,String> mapResult = remoteMessage.getData();
+        Map<String, String> mapResult = remoteMessage.getData();
+        BoostLog.d("onMessageReceived", "onMessageReceived");
         if (mapResult.containsKey("payload")) {
             AnaCore.handlePush(this, mapResult.get("payload"));
-        }else{
-
+        } else {
             sendNotification(mapResult);
             Constants.GCM_Msg = true;
         }
 
-
-        Log.v("Message", "received bubble");
     }
 
     private static final String SAM_BUBBLE_MSG = "I have Got some data";
     private static final String SAM_BUBBLE_MSG_KEY = "100";
 
-    //This method is only generating push notification
-    //It is same as we did in earlier posts
     private void sendNotification(Map<String, String> message) {
 
-        Log.d("Message", message.toString());
+        BoostLog.d("Message", message.toString());
 
         if (message == null || message.size() == 0) {
 
@@ -81,25 +78,30 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         startService(bubbleIntent);
                     }
                 }*/
-                message.put("url","thirdPartyQueries");
-                message.put("mp_message","You have new enquires from Third Party, check now.");
+                message.put("url", "thirdPartyQueries");
+                message.put("mp_message", "You have new enquires from Third Party, check now.");
             }
 
             deepLinkUrl = message.get("url");
+            BoostLog.d("Message", deepLinkUrl);
+
             if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
                 return;
             }
             if (Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
                 MixPanelController.track("$campaign_received", null);
             }
-            String title = message.get("title");
-            Intent intent = null;
+
+
+            final PackageManager manager = getPackageManager();
+            Intent intent = manager.getLaunchIntentForPackage(getPackageName());
+            if (intent == null) return;
+            intent.putExtra("from", "notification");
+            intent.putExtra("url", deepLinkUrl);
+
+            //******************** to override showing notifications **************************
             if (!Util.isNullOrEmpty(deepLinkUrl)) {
-                final PackageManager manager = getPackageManager();
-                intent = manager.getLaunchIntentForPackage(getPackageName());
-                if (intent == null) return;
-                intent.putExtra("from", "notification");
-                intent.putExtra("url", deepLinkUrl);
+
                 if (deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
                     pref.edit().putBoolean("IsNewFacebookMessage", true).apply();
@@ -119,21 +121,30 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             }
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
+
+            String title = message.get("title");
+            String notiMessage = message.get("mp_message");
+            String channelId = "0001";
+
+            BoostLog.d("Message-3", title + "----" + notiMessage);
+
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                     .setSmallIcon(R.drawable.app_launcher2)
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
-                    .setContentText(message.get("mp_message"))
+                    .setContentText(notiMessage)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
                     .setColor(ContextCompat.getColor(this, R.color.primaryColor))
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("mp_message")))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(notiMessage))
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
+
             if (!Util.isNullOrEmpty(title)) {
                 notificationBuilder.setContentTitle(title);
             } else {
                 notificationBuilder.setContentTitle(getResources().getString(R.string.app_name));
             }
+
             if (pendingIntent != null) {
                 notificationBuilder.setContentIntent(pendingIntent);
             }
@@ -142,8 +153,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel channel = null;
             if (notificationManager != null) {
+                BoostLog.d("Message-4", "fsdf");
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    channel = new NotificationChannel("0001", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
+                    channel = new NotificationChannel(channelId, getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
                     notificationManager.createNotificationChannel(channel);
                 }
 
@@ -154,6 +166,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     }
                 } else {
                     notificationManager.notify(0, notificationBuilder.build());
+                    BoostLog.d("Message-", "fsdf");
+
                 }
             }
         }

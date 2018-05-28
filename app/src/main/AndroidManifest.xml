@@ -76,6 +76,10 @@
         <service android:name="com.webengage.sdk.android.EventLogService" />
 
         <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/app_launcher2" />
+
+        <meta-data
             android:name="com.webengage.sdk.android.small_icon"
             android:resource="@drawable/app_launcher2" />
         <meta-data
@@ -197,14 +201,12 @@
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
         </activity>
 
-        <!--
-        <service android:name="com.nowfloats.bubble.BubblesService" />
+        <!-- <service android:name="com.nowfloats.bubble.BubblesService" />-->
         <service
             android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false" />
-        -->
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"

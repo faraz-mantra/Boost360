@@ -9,19 +9,43 @@
 
 
     <com.nowfloats.managenotification.ExpandableCardView
-        android:id="@+id/ecvMissedCalls"
+        android:id="@+id/ecvCalls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:expandOnClick="true"
-        app:inner_view="@layout/adapter_caller_info"
+        app:inner_view="@layout/list_caller_info"
         app:title="Calls (2)" />
 
+    <TextView
+        android:id="@+id/tvDismissCalls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:gravity="left"
+        android:padding="@dimen/margin_10"
+        android:text="@string/dismiss"
+        android:textColor="@color/primaryColor"
+        android:textSize="@dimen/medium_text_size"
+        android:textStyle="bold" />
+
     <com.nowfloats.managenotification.ExpandableCardView
-        android:id="@+id/ecvEnquires"
+        android:id="@+id/ecvEnquiries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:expandOnClick="true"
-        app:inner_view="@layout/adapter_enquiries_info"
+        app:inner_view="@layout/list_caller_info"
         app:title="Enquiries (2)" />
+
+    <TextView
+        android:id="@+id/tvDismissEnquiries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:gravity="left"
+        android:padding="@dimen/margin_10"
+        android:text="@string/dismiss"
+        android:textColor="@color/primaryColor"
+        android:textSize="@dimen/medium_text_size"
+        android:textStyle="bold" />
 
 </LinearLayout>

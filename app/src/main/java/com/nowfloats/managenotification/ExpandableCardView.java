@@ -23,12 +23,10 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thinksity.R;
-
 
 public class ExpandableCardView extends LinearLayout {
 
@@ -38,7 +36,7 @@ public class ExpandableCardView extends LinearLayout {
     private ViewGroup containerView;
 
     private ImageButton arrowBtn;
-    private ImageView headerIcon;
+    //    private ImageButton headerIcon;
     private TextView textViewTitle;
 
     private TypedArray typedArray;
@@ -61,6 +59,8 @@ public class ExpandableCardView extends LinearLayout {
     private int previousHeight = 0;
 
     private OnExpandedListener listener;
+    private Context mContext;
+
 
     private OnClickListener defaultClickListener = new OnClickListener() {
         @Override
@@ -81,6 +81,7 @@ public class ExpandableCardView extends LinearLayout {
         initView(context);
     }
 
+
     public ExpandableCardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -90,9 +91,11 @@ public class ExpandableCardView extends LinearLayout {
 
     private void initView(Context context) {
         //Inflating View
+        this.mContext = context;
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.expandable_cardview, this);
+        previousHeight = (int) convertDpToPixels(mContext, 100);
     }
 
     private void initAttributes(Context context, AttributeSet attrs) {
@@ -112,19 +115,17 @@ public class ExpandableCardView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        //Una volta che la view è inflatata setto tutto
-
         arrowBtn = findViewById(R.id.arrow);
         textViewTitle = findViewById(R.id.title);
-        headerIcon = findViewById(R.id.icon);
+//        headerIcon = findViewById(R.id.icon);
 
         //Setting attributes
         if (!TextUtils.isEmpty(title)) textViewTitle.setText(title);
 
-        if (iconDrawable != null) {
-            headerIcon.setVisibility(VISIBLE);
-            headerIcon.setBackground(iconDrawable);
-        }
+//        if (iconDrawable != null) {
+//            headerIcon.setVisibility(VISIBLE);
+//            headerIcon.setBackground(iconDrawable);
+//        }
 
         card = findViewById(R.id.card);
 
@@ -135,7 +136,7 @@ public class ExpandableCardView extends LinearLayout {
         setElevation(convertDpToPixels(getContext(), 20));
 
         if (expandOnClick) {
-            card.setOnClickListener(defaultClickListener);
+//            card.setOnClickListener(defaultClickListener);
             arrowBtn.setOnClickListener(defaultClickListener);
         }
 
@@ -143,14 +144,14 @@ public class ExpandableCardView extends LinearLayout {
 
     public void expand() {
 
-        final int initialHeight = card.getHeight();
+        final int initialHeight = (int) convertDpToPixels(mContext, 100);
 
         if (!isMoving()) {
             previousHeight = initialHeight;
         }
 
         card.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        int targetHeight = card.getMeasuredHeight();
+        int targetHeight = (int) convertDpToPixels(mContext, 300);
 
         if (targetHeight - initialHeight != 0) {
             animateViews(initialHeight,
@@ -160,6 +161,7 @@ public class ExpandableCardView extends LinearLayout {
     }
 
     public void collapse() {
+
         int initialHeight = card.getMeasuredHeight();
 
         if (initialHeight - previousHeight != 0) {
@@ -186,9 +188,9 @@ public class ExpandableCardView extends LinearLayout {
 
                     if (listener != null) {
                         if (animationType == EXPANDING) {
-                            listener.onExpandChanged(card, true);
+                            listener.onExpandChanged(getId(), card, true);
                         } else {
-                            listener.onExpandChanged(card, false);
+                            listener.onExpandChanged(getId(), card, false);
                         }
                     }
                 }
@@ -260,18 +262,18 @@ public class ExpandableCardView extends LinearLayout {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void setIcon(Drawable drawable) {
-        if (headerIcon != null) {
-            headerIcon.setBackground(drawable);
-            iconDrawable = drawable;
-        }
+//        if (headerIcon != null) {
+//            headerIcon.setBackground(drawable);
+        iconDrawable = drawable;
+//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void setIcon(int resId) {
-        if (headerIcon != null) {
-            iconDrawable = ContextCompat.getDrawable(getContext(), resId);
-            headerIcon.setBackground(iconDrawable);
-        }
+//        if (headerIcon != null) {
+        iconDrawable = ContextCompat.getDrawable(getContext(), resId);
+//            headerIcon.setBackground(iconDrawable);
+//        }
     }
 
     private void setInnerView(int resId) {
@@ -312,10 +314,11 @@ public class ExpandableCardView extends LinearLayout {
 
     public interface OnExpandedListener {
 
-        void onExpandChanged(View v, boolean isExpanded);
+        void onExpandChanged(int id, View v, boolean isExpanded);
 
     }
 
 }
+
 
 

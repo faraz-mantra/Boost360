@@ -2,9 +2,11 @@ package com.nowfloats.NavigationDrawer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -89,6 +91,7 @@ import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.UpgradesFragment;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
@@ -508,13 +511,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         super.onStop();
         bus.unregister(this);
 
-       /* ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         if (am.getRunningTasks(1) != null && am.getRunningTasks(1).size() > 0) {
             ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
             if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
                 sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
             }
-        }*/
+        }
 
         Constants.fromLogin = false;
         isExpiredCheck = false;
@@ -765,11 +768,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //mDeepLinkUrl = null;
 
 //        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-//            checkCustomerAssistantService();
+        checkCustomerAssistantService();
 //        }
     }
 
-//    private void getCustomerAssistantSuggestions() {
+    //    private void getCustomerAssistantSuggestions() {
 //        CustomerAssistantApi suggestionsApi = new CustomerAssistantApi(bus);
 //        if (Utils.isNetworkConnected(this)) {
 //            String appVersion = "";
@@ -798,16 +801,20 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //        }
 //    }
 //
-//    private void checkCustomerAssistantService() {
-//        if (Methods.hasOverlayPerm(HomeActivity.this)) {
-//
-//            if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
-//                Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-//                startService(bubbleIntent);
-//            }
-//        }
-//        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
-//    }
+    private void checkCustomerAssistantService() {
+        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
+        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+
+            if (Methods.hasOverlayPerm(HomeActivity.this)) {
+
+                if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
+                    Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                    startService(bubbleIntent);
+                }
+            }
+            sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
+        }
+    }
 
     private void checkExpiry1() {
         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
@@ -1582,7 +1589,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         });
 
 //        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-//            checkCustomerAssistantService();
+        checkCustomerAssistantService();
 //        } else {
 //            getCustomerAssistantSuggestions();
 //        }
