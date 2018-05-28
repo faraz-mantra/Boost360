@@ -598,9 +598,9 @@ public class ImePresenterImpl implements ItemClickListener,
 
 
     public void showWordSuggestions(InputConnection inputConnection) {
-        if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+        //if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
 
-            //if (currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+        if (currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
             CharSequence inputSequence = inputConnection.getTextBeforeCursor(1000, 0);
             if (inputSequence != null && inputSequence.length() > 0) {
                 text = inputSequence.toString();
@@ -756,7 +756,7 @@ public class ImePresenterImpl implements ItemClickListener,
                 case KEY_SPACE:
                     primaryCode = 32;
                     Log.v(" isSelectedKeyboardItem - > ", isSelectedKeyboardItem + " mSuggestions size : " + mSuggestions.size());
-                    if (!isSelectedKeyboardItem && mSuggestions != null && !mSuggestions.isEmpty()) {
+                    /*if (!isSelectedKeyboardItem && mSuggestions != null && !mSuggestions.isEmpty()) {
                         StringBuilder builder1 = new StringBuilder();
                         for (KeywordModel model : mSuggestions) {
                             builder1.append(model.getWord() + ",");
@@ -792,7 +792,7 @@ public class ImePresenterImpl implements ItemClickListener,
                         }).start();
                     }
                     previousText = text;
-                    Log.v(" outside entered text - > ", enteredText != null ? enteredText.trim() : " empty");
+                    Log.v(" outside entered text - > ", enteredText != null ? enteredText.trim() : " empty");*/
 
                 default:
                     if (isSelectedKeyboardEdited && primaryCode == KEY_SPACE) {
@@ -899,7 +899,7 @@ public class ImePresenterImpl implements ItemClickListener,
         @Override
         protected ArrayList<KeywordModel> doInBackground(String... strings) {
             mSuggestions.clear();
-            //mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
+            mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
             if (mSuggestions != null && mSuggestions.size() < 3) {
                 corrector.setSuggestedWordListLimit(3 - mSuggestions.size());
                 mSuggestions.addAll(corrector.correct(text.trim()));
