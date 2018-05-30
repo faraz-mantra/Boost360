@@ -131,9 +131,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
                 if (Methods.isOnline(Contact_Info_Activity.this)) {
                     Toast.makeText(getApplicationContext(),"Google My Business Profile updated.",Toast.LENGTH_LONG).show();
-
-
-
                     uploadContactInfo();
                 } else {
                     Methods.snackbarNoInternet(Contact_Info_Activity.this);

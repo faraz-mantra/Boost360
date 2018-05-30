@@ -2,7 +2,7 @@ package com.nowfloats.GMB.Adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
+import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
 import org.json.JSONArray;
@@ -57,7 +59,7 @@ public class BuilderAdapterBusiness extends RecyclerView.Adapter<BuilderAdapterB
                 @Override
                 public void onClick(View view) {
 
-                    GMBGateway.GMBUpdateAccessToken(locationId,locationName);
+                    GMBGateway.GMBUpdateAccessTokenViaHandler(locationId,locationName);
 
                     GMBGateway.closer();
 
@@ -67,7 +69,7 @@ public class BuilderAdapterBusiness extends RecyclerView.Adapter<BuilderAdapterB
         } catch (JSONException e) {
             e.printStackTrace();
         }catch (ArrayIndexOutOfBoundsException e){
-            Log.e("android23235616",e.toString()+" : Invalid response ");
+            BoostLog.i(Constants.LogTag,e.toString()+" : Invalid response ");
         }
 
     }

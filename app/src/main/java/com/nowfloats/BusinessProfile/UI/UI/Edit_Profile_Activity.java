@@ -196,15 +196,10 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                                 mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
                                 mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
                         mRiaNodeDataModel = null;
+
                     }
 
-                    Toast.makeText(getApplicationContext(),"Google My Business Profile Updated",Toast.LENGTH_LONG).show();
 
-                    try {
-                        GMBHandler.sendDetailsToGMB();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
                 } else {
                     Methods.snackbarNoInternet(Edit_Profile_Activity.this);
@@ -574,14 +569,18 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         if (allBoundaryCondtn && flag4category) {
             SetBusinessCategoryAsyncTask buzcat = new SetBusinessCategoryAsyncTask(Edit_Profile_Activity.this, msgtxtcategory, flag4category, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             buzcat.execute();
+            uploadToGMB();
         }
 
         if (allBoundaryCondtn && !flag4category) {
             UploadProfileAsyncTask upa = new UploadProfileAsyncTask(this, offerObj, profilesattr);
             upa.execute();
+            uploadToGMB();
         } else {
             allBoundaryCondtn = true;
         }
+
+
         //update alert archive
         new AlertArchive(Constants.alertInterface, "PROFILE", session.getFPID());
     }
@@ -812,5 +811,15 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         //Picasso.with(Edit_Profile_Activity.this).load(path).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
         uploadIMAGEURI uploadAsyncTask = new uploadIMAGEURI(Edit_Profile_Activity.this, path, session.getFPID());
         uploadAsyncTask.execute();
+    }
+
+    private void uploadToGMB(){
+        Toast.makeText(getApplicationContext(),"Google My Business Profile Updated",Toast.LENGTH_LONG).show();
+
+        try {
+            GMBHandler.sendDetailsToGMB();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,7 +3,7 @@ package com.nowfloats.GMB.Adapter;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
@@ -62,11 +63,8 @@ public class BuilderAdapter extends RecyclerView.Adapter<BuilderAdapter.MyViewHo
 
              accountnumber = (name.split("/"))[1];
 
+            BoostLog.i(Constants.LogTag,accountnumber);
 
-
-            Log.i("android23235616",accountnumber);
-
-            edit.putString(Constants.GMBAccountId,accountnumber);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -80,7 +78,7 @@ public class BuilderAdapter extends RecyclerView.Adapter<BuilderAdapter.MyViewHo
 
                 closer.GMBSetAccountIdandAccountName(accountnumber,account_name);
 
-                closer.getLocations(accountnumber);
+                closer.getLocationsViaGMBHandler();
                 closer.closer();
 
                 closer.showLoader("Getting your businesses.");
