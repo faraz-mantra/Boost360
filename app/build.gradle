@@ -34,7 +34,7 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy'
 
@@ -46,8 +46,8 @@ android {
     defaultConfig {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 2018050021
+        targetSdkVersion 26
+        versionCode 2018050029
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -106,7 +106,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.9.10"
+            versionName "4.9.11"
             applicationId "com.biz2.nowfloats"
             dimension "default"
         }

@@ -25,6 +25,8 @@
 package com.nowfloats.bubble;
 
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -32,13 +34,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -46,6 +53,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.accessbility.TempDisplayDialog;
 import com.nowfloats.accessbility.WhatsAppBubbleCloseDialog;
 import com.nowfloats.managenotification.CallerInfoDialog;
@@ -58,6 +66,9 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
+import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
 
 
 public class CustomerAssistantService extends Service {
@@ -73,7 +84,7 @@ public class CustomerAssistantService extends Service {
     private IntentFilter moveRightIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL);
     private IntentFilter moveSpecificIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL_CARDS);
 
-    private float initAplha = 0.5f;
+    private float initAplha = 0.7f;
 
     public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
     public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
@@ -82,8 +93,11 @@ public class CustomerAssistantService extends Service {
 
     public static final String ACTION_ADD_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_ADD_BUBBLE";
     public static final String ACTION_REMOVE_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_REMOVE_BUBBLE";
+    public static final String ACTION_REFRESH_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_REFRESH_DIALOG";
 
     private PowerManager.WakeLock cpuWakeLock = null;
+
+    private final static int FOREGROUND_ID = 999;
 
     BroadcastReceiver resetReceiver = new BroadcastReceiver() {
         @Override
@@ -219,6 +233,11 @@ public class CustomerAssistantService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+
+        PendingIntent pendingIntent = createPendingIntent();
+        Notification notification = createNotification(pendingIntent);
+        startForeground(FOREGROUND_ID, notification);
+
         if (intent == null) {
             return Service.START_STICKY;
         } else {
@@ -238,7 +257,7 @@ public class CustomerAssistantService extends Service {
         x_pos = display.getWidth();
         y_Pos = (display.getHeight() * 20) / 100;
 
-        initAplha = 0.5f;
+        initAplha = 0.7f;
 
         if (Methods.hasOverlayPerm(CustomerAssistantService.this)) {
             if (bubbles == null || bubbles.size() == 0) {
@@ -270,6 +289,11 @@ public class CustomerAssistantService extends Service {
                 repostionBubble();
             }
         }
+    }
+
+    private PendingIntent createPendingIntent() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        return PendingIntent.getActivity(this, 0, intent, 0);
     }
 
 
@@ -372,7 +396,26 @@ public class CustomerAssistantService extends Service {
 
     public void removeBubble(BubbleLayout bubble) {
         MixPanelController.track(MixPanelController.BUBBLE_CLOSED, null);
+        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).commit();
+        pref.edit().putString(PREF_NOTI_CALL_LOGS, "").commit();
+        pref.edit().putString(PREF_NOTI_ENQUIRIES, "").commit();
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
         stopSelf();
+    }
+
+
+    private Notification createNotification(PendingIntent intent) {
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "0001")
+                .setSmallIcon(R.drawable.app_launcher2)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
+                .setContentText("You have new notifications")
+                .setContentTitle(getString(R.string.app_name))
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setColor(ContextCompat.getColor(this, R.color.primaryColor))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText("You have new notifications"))
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+        return notificationBuilder.build();
     }
 }

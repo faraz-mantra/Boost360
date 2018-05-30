@@ -11,21 +11,23 @@
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:id="@+id/viewContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/viewContainer"
+            android:id="@+id/llHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:layout_marginLeft="@dimen/margin_5"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -66,7 +68,6 @@
                         android:paddingBottom="@dimen/margin_5"
                         android:paddingRight="@dimen/margin_10"
                         android:paddingTop="@dimen/margin_2"
-                        android:text="Reach out to these customers before they go somewhere else!"
                         android:textColor="@color/biz_msg_txt_color"
                         android:textSize="@dimen/medium_text_size" />
                 </LinearLayout>
@@ -87,16 +88,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/primaryColor" />
-
-
-            <ViewStub
-                android:id="@+id/viewStub"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inflatedId="@+id/innerView" />
-
-
         </LinearLayout>
+
+        <ViewStub
+            android:id="@+id/viewStub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inflatedId="@+id/innerView" />
+        <!--
+                <TextView
+                    android:id="@+id/tvDismiss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#EEEEEE"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin_15"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:paddingRight="@dimen/margin_10"
+                    android:paddingTop="@dimen/margin_10"
+                    android:text="@string/dismiss"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/medium_text_size"
+                    android:textStyle="bold" />-->
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

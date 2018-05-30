@@ -69,6 +69,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -584,6 +585,10 @@ public class Methods {
                 .build().show();
     }
 
+
+    public static final String ISO_8601_24H_FULL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static TimeZone UTC;
+
     public static String getFormattedDate(String Sdate) {
         String formatted = "", dateTime = "";
         if (TextUtils.isEmpty(Sdate)) {
@@ -593,7 +598,21 @@ public class Methods {
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
         }
 
-        Long epochTime = Long.parseLong(Sdate);
+        Long epochTime = null;
+        try {
+            epochTime = Long.parseLong(Sdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            UTC = TimeZone.getTimeZone("UTC");
+            final SimpleDateFormat sdf = new SimpleDateFormat(ISO_8601_24H_FULL_FORMAT);
+            sdf.setTimeZone(UTC);
+            try {
+                epochTime = sdf.parse(Sdate).getTime();
+            } catch (ParseException parseExecption) {
+                parseExecption.printStackTrace();
+            }
+        }
         Date date = new Date(epochTime);
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
         format.setTimeZone(TimeZone.getDefault());

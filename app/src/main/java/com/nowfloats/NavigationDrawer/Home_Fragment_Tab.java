@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -319,24 +320,26 @@ public class Home_Fragment_Tab extends Fragment {
 //    }
 
     public void checkOverlay(DrawOverLay from) {
-        if (!isAdded() || getActivity() == null) {
-            return;
-        }
+//        if (!isAdded() || getActivity() == null) {
+//            return;
+//        }
+//
+//
+//        Calendar calendar = Calendar.getInstance();
+//        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
+//        long newTime = calendar.getTimeInMillis();
+//        long diff = 3 * 24 * 60 * 60 * 1000;
+//        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
+//            return;
+//        } else {
 
-
-        Calendar calendar = Calendar.getInstance();
-        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
-        long newTime = calendar.getTimeInMillis();
-        long diff = 3 * 24 * 60 * 60 * 1000;
-        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
-            return;
-        } else {
-
+        if (getActivity() != null) {
             if (!Methods.hasOverlayPerm(getActivity())) {
                 dialogForOverlayPath(from);
             }
         }
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
+//        }
+//        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
     }
 
     private void dialogForOverlayPath(DrawOverLay from) {
@@ -412,10 +415,20 @@ public class Home_Fragment_Tab extends Fragment {
     }
 
     private void checkCustomerAssistantService() {
+//        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
+        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
 
-        if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
-            Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
-            getActivity().startService(bubbleIntent);
+            if (Methods.hasOverlayPerm(getActivity())) {
+
+                if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        getActivity().startForegroundService(new Intent(getActivity(), CustomerAssistantService.class));
+                    } else {
+                        Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+                        getActivity().startService(bubbleIntent);
+                    }
+                }
+            }
         }
         getActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }

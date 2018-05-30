@@ -9,8 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -21,16 +24,37 @@ import com.anachat.chatsdk.AnaCore;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.nowfloats.Analytics_Screen.model.VmnCallModel;
+import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
+import com.nowfloats.Business_Enquiries.Model.Entity_model;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
+import com.nowfloats.manageinventory.models.MerchantProfileModel;
+import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
+import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
 
 /**
  * Created by NowFloats on 05-10-2016.
@@ -39,12 +63,11 @@ import java.util.Map;
 public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     public static String deepLinkUrl;
-//    private SharedPreferences pref;
-
+    private SharedPreferences pref;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-//        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
         Map<String, String> mapResult = remoteMessage.getData();
         BoostLog.d("onMessageReceived", "onMessageReceived");
@@ -86,7 +109,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             BoostLog.d("Message", deepLinkUrl);
 
             if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
-                return;
+                if (!deepLinkUrl.contains(Constants.DEFAULT_PACKAGE_NAME_WEB_ERROR))
+                    return;
             }
             if (Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
                 MixPanelController.track("$campaign_received", null);
@@ -126,6 +150,12 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             String notiMessage = message.get("mp_message");
             String channelId = "0001";
 
+            String jsonData = "";
+
+            if (message.containsKey("json_data")) {
+                jsonData = message.get("json_data");
+            }
+
             BoostLog.d("Message-3", title + "----" + notiMessage);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -159,13 +189,96 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     notificationManager.createNotificationChannel(channel);
                 }
 
+                if (!Util.isNullOrEmpty(deepLinkUrl) && !TextUtils.isEmpty(jsonData)) {
+
+                    final Gson gson = new Gson();
+                    if (deepLinkUrl.contains(getString(R.string.deep_link_call_tracker))) {
+
+
+                        ArrayList<VmnCallModel> vmnList = new ArrayList<>();
+
+                        VmnCallModel vmnCallModel = gson.fromJson(jsonData,
+                                new TypeToken<VmnCallModel>() {
+                                }.getType());
+
+                        String oldData = pref.getString(PREF_NOTI_CALL_LOGS, "");
+
+                        if (!TextUtils.isEmpty(oldData)) {
+                            Type type = new TypeToken<List<VmnCallModel>>() {
+                            }.getType();
+                            vmnList = gson.fromJson(oldData, type);
+                        }
+
+                        vmnList.add(vmnCallModel);
+
+                        if (vmnCallModel.getCallStatus().equalsIgnoreCase("MISSED")) {
+                            notificationBuilder.setContentTitle("Missed Call");
+                        } else {
+                            notificationBuilder.setContentTitle("Received Call");
+                        }
+
+
+                        notificationBuilder.setContentText("" + vmnCallModel.getCallerNumber());
+                        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("" + vmnCallModel.getCallerNumber()));
+
+                        String json = gson.toJson(vmnList);
+                        pref.edit().putString(PREF_NOTI_CALL_LOGS, json).commit();
+                        BoostLog.e("deepLinkUrl", jsonData);
+
+
+                    } else if (deepLinkUrl.contains(getResources().getString(R.string.deeplink_bizenquiry)) || deepLinkUrl.contains("enquiries")) {
+
+                        ArrayList<Business_Enquiry_Model> eqList = new ArrayList<>();
+
+                        Business_Enquiry_Model entity_model = gson.fromJson(jsonData,
+                                new TypeToken<Business_Enquiry_Model>() {
+                                }.getType());
+
+                        String oldData = pref.getString(PREF_NOTI_ENQUIRIES, "");
+
+                        if (!TextUtils.isEmpty(oldData)) {
+                            Type type = new TypeToken<List<Business_Enquiry_Model>>() {
+                            }.getType();
+                            eqList = gson.fromJson(oldData, type);
+                        }
+
+                        eqList.add(entity_model);
+
+                        String json = gson.toJson(eqList);
+                        pref.edit().putString(PREF_NOTI_ENQUIRIES, json).commit();
+                        BoostLog.e("deepLinkUrl", jsonData);
+
+                        notificationBuilder.setContentTitle("Business Enquiry");
+                        notificationBuilder.setContentText("" + entity_model.getMessage());
+                        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(entity_model.getMessage()));
+
+                    }
+
+                    pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
+                    if (Methods.hasOverlayPerm(this)) {
+                        if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                startForegroundService(new Intent(this, CustomerAssistantService.class));
+                            } else {
+                                Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                                startService(bubbleIntent);
+                            }
+
+
+                        }
+
+                        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REFRESH_DIALOG));
+                    }
+                }
+
                 if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
                     if (data.getId() != null) {
                         notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
                     }
                 } else {
-                    notificationManager.notify(0, notificationBuilder.build());
+                    notificationManager.notify(createID(), notificationBuilder.build());
                     BoostLog.d("Message-", "fsdf");
 
                 }
@@ -173,4 +286,11 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         }
 
     }
+
+    public int createID() {
+        Date now = new Date();
+        int id = Integer.parseInt(new SimpleDateFormat("ddHHmmss", Locale.US).format(now));
+        return id;
+    }
+
 }

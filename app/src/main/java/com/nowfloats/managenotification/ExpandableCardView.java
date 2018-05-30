@@ -30,14 +30,14 @@ import com.thinksity.R;
 
 public class ExpandableCardView extends LinearLayout {
 
-    private String title;
+    private String title, message;
 
     private View innerView;
     private ViewGroup containerView;
 
     private ImageButton arrowBtn;
     //    private ImageButton headerIcon;
-    private TextView textViewTitle;
+    private TextView textViewTitle, tvMsg;
 
     private TypedArray typedArray;
     private int innerViewRes;
@@ -56,10 +56,11 @@ public class ExpandableCardView extends LinearLayout {
     private boolean isCollapsing = false;
     private boolean expandOnClick = false;
 
-    private int previousHeight = 0;
+    private int previousHeight = 0, initHeight = 0, totalHeight = 0;
 
     private OnExpandedListener listener;
     private Context mContext;
+    private LinearLayout llHeader;
 
 
     private OnClickListener defaultClickListener = new OnClickListener() {
@@ -95,13 +96,34 @@ public class ExpandableCardView extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.expandable_cardview, this);
-        previousHeight = (int) convertDpToPixels(mContext, 100);
+        llHeader = findViewById(R.id.llHeader);
+        card = findViewById(R.id.card);
+        llHeader.post(new Runnable() {
+            public void run() {
+                previousHeight = initHeight = llHeader.getHeight() + 20;
+                card.post(new Runnable() {
+                    public void run() {
+                        totalHeight = card.getHeight();
+                        if (isInitCollapse)
+                            collapse();
+                    }
+                });
+            }
+        });
+
+    }
+
+    private boolean isInitCollapse = false;
+
+    public void setInitCollapse(boolean isInitCollapse) {
+        this.isInitCollapse = isInitCollapse;
     }
 
     private void initAttributes(Context context, AttributeSet attrs) {
         //Ottengo attributi
         typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableCardView);
         title = typedArray.getString(R.styleable.ExpandableCardView_title);
+        message = typedArray.getString(R.styleable.ExpandableCardView_message);
         iconDrawable = typedArray.getDrawable(R.styleable.ExpandableCardView_icon);
         innerViewRes = typedArray.getResourceId(R.styleable.ExpandableCardView_inner_view, View.NO_ID);
         expandOnClick = typedArray.getBoolean(R.styleable.ExpandableCardView_expandOnClick, false);
@@ -117,10 +139,14 @@ public class ExpandableCardView extends LinearLayout {
 
         arrowBtn = findViewById(R.id.arrow);
         textViewTitle = findViewById(R.id.title);
+        tvMsg = findViewById(R.id.tvMsg);
 //        headerIcon = findViewById(R.id.icon);
 
         //Setting attributes
         if (!TextUtils.isEmpty(title)) textViewTitle.setText(title);
+
+        //Setting attributes
+        if (!TextUtils.isEmpty(message)) tvMsg.setText(message);
 
 //        if (iconDrawable != null) {
 //            headerIcon.setVisibility(VISIBLE);
@@ -138,21 +164,23 @@ public class ExpandableCardView extends LinearLayout {
         if (expandOnClick) {
 //            card.setOnClickListener(defaultClickListener);
             arrowBtn.setOnClickListener(defaultClickListener);
+            llHeader.setOnClickListener(defaultClickListener);
         }
 
     }
 
     public void expand() {
 
-        final int initialHeight = (int) convertDpToPixels(mContext, 100);
+        final int initialHeight = initHeight;//(int) convertDpToPixels(mContext, 100);
 
         if (!isMoving()) {
             previousHeight = initialHeight;
         }
 
         card.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        int targetHeight = (int) convertDpToPixels(mContext, 300);
+        int targetHeight = totalHeight;//(int) convertDpToPixels(mContext, 300);
 
+        isExpanded = true;
         if (targetHeight - initialHeight != 0) {
             animateViews(initialHeight,
                     targetHeight - initialHeight,
@@ -164,6 +192,7 @@ public class ExpandableCardView extends LinearLayout {
 
         int initialHeight = card.getMeasuredHeight();
 
+        isExpanded = false;
         if (initialHeight - previousHeight != 0) {
             animateViews(initialHeight,
                     initialHeight - previousHeight,
@@ -286,6 +315,7 @@ public class ExpandableCardView extends LinearLayout {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         if (arrowBtn != null) arrowBtn.setOnClickListener(l);
+        if (llHeader != null) llHeader.setOnClickListener(l);
         super.setOnClickListener(l);
     }
 
@@ -306,6 +336,12 @@ public class ExpandableCardView extends LinearLayout {
 
     public static float convertDpToPixels(Context context, float dp) {
         return dp * context.getResources().getDisplayMetrics().density;
+    }
+
+    public void setMaxHeight(int maxHeight) {
+        card.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        if (card.getMeasuredHeight() > maxHeight)
+            card.getLayoutParams().height = maxHeight;
     }
 
     /**

@@ -55,6 +55,7 @@ import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
+import com.nowfloats.Analytics_Screen.ShowVmnCallActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
@@ -385,6 +386,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")) {
                 Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
                 startActivity(queries);
+            } else if (url.contains(getString(R.string.deep_link_call_tracker))) {
+                Intent callLogs = new Intent(HomeActivity.this, ShowVmnCallActivity.class);
+                startActivity(callLogs);
             } else if (url.contains("store") || url.contains(getResources().getString(R.string.deeplink_store)) ||
                     url.contains(getResources().getString(R.string.deeplink_propack)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreseo)) ||
@@ -802,18 +806,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //    }
 //
     private void checkCustomerAssistantService() {
-        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
+//        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
         if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
 
             if (Methods.hasOverlayPerm(HomeActivity.this)) {
 
                 if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
-                    Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-                    startService(bubbleIntent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        startForegroundService(new Intent(this, CustomerAssistantService.class));
+                    } else {
+                        Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                        startService(bubbleIntent);
+                    }
                 }
             }
-            sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
         }
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     private void checkExpiry1() {
@@ -1254,7 +1262,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private static boolean newer_version_available(String local_version_string, String online_version_string) {
+    private static boolean newer_version_available(String local_version_string, String
+            online_version_string) {
         DefaultArtifactVersion local_version_mvn = new DefaultArtifactVersion(local_version_string);
         DefaultArtifactVersion online_version_mvn = new DefaultArtifactVersion(online_version_string);
         return local_version_mvn.compareTo(online_version_mvn) == -1 && !local_version_string.equals(new String());
