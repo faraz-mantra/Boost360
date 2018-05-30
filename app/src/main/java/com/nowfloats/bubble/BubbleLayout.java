@@ -271,7 +271,6 @@ public class BubbleLayout extends BubbleBaseLayout {
     public void applyAlpha() {
         ivBubble.setAlpha(initAlpha);
         ivBubble.invalidate();
-
     }
 
     private class MoveAnimator implements Runnable {

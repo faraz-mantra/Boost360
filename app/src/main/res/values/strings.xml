@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="noti_msg_calls">Reach out to these customers before they go somewhere else!</string>
+    <string name="noti_msg_enquires">Respond to these enquiries before it\'s too late!</string>
     <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
     <string name="google_map_key">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>
@@ -1275,6 +1277,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="put_your_nowfloats_website_as_a_sub_domain">
         Put your NowFloats website as a sub domain.
     </string>
+
+    <!-- Caller Info -->
+
+    <string name="missed_calls">Missed Calls </string>
+    <string name="dismiss">DISMISS</string>
+    <string name="received_calls">Received Calls </string>
+
     <string-array name="priority_list">
         <item>DEFAULT</item>
         <item>HIGH</item>
@@ -1324,6 +1333,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
              <li>Milk</li>
          </ul>
      </string>-->
+
     <string-array name="quikr_tip_points">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update along with a clear image</item>
@@ -1447,6 +1457,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="required_overlay_permission">Give us this permission to see our new features</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="call_tracker">Call Tracker</string>
+    <string name="deep_link_call_tracker">callTracker</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
