@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "87687526880-s4if6cli267r20pq80shi31ucgl979l54.apps.googleusercontent.com",
+          "client_id": "87687526880-4if6cli267r20pq80shi31ucgl979l54.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -81,37 +81,6 @@
         "mobilesdk_app_id": "1:87687526880:android:3aa8f1a632ef0d18",
         "android_client_info": {
           "package_name": "com.capture"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "87687526880-4if6cli267r20pq80shi31ucgl979l54.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBg1hVuRPhFJkKkIqZdfkGaglzPeky-eBg"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:87687526880:android:df0e6f2d32e4ba67",
-        "android_client_info": {
-          "package_name": "com.demo"
         }
       },
       "oauth_client": [

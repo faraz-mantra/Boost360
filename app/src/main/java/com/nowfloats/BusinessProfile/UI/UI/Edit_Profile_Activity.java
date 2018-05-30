@@ -198,6 +198,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 }
 
                 //UploadProfileAsyncTask upload = new UploadProfileAsyncTask(Edit_Profile_Activity.this,)
+
+
             }
         });
 

@@ -1,5 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
+import android.accounts.Account;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,15 +9,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcel;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +35,13 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -39,13 +52,32 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+import com.nowfloats.GMB.Adapter.BuilderAdapter;
+import com.nowfloats.GMB.Adapter.BuilderAdapterBusiness;
+
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BoostLog;
@@ -66,33 +98,54 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult {
+public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
+    private int GMBRequestCode = 7135;
+    private String GMBTokenExpiry = "";
+
+    private String GMBUserAccountName = "";
+
+    private String GMBRefreshtoken = "";
+
+    private int GMBPollinCount = 0;
+
+    private GoogleSignInAccount gmail;
     int size = 0;
+    public static String TAG = Constants.LogTag;
     boolean[] checkedPages;
+
+    AlertDialog Builder;
     UserSessionManager session;
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
 
+
     TextView connectTextView, topFeatureTextView;
     //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     private SharedPreferences pref = null;
-    SharedPreferences.Editor prefsEditor;
+    private SharedPreferences.Editor prefsEditor;
     private ImageView facebookHome;
     private ImageView facebookPage;
     private ImageView twitter;
+
     private ImageView ivFbPageAutoPull;
+    private String GMBAuthToken = "";
+
     private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
-    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
+    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox, gmbCheckBox;
     private CheckBox facebookautopost;
     ArrayList<String> items;
     private int numberOfUpdates = 0;
@@ -110,8 +163,12 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private final int FBPAGETYPE = 1;
     private final int TWITTERTYPE = 2;
     private final int FB_DECTIVATION = 3;
+    private GoogleSignInOptions googleSignInOptions;
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleSignInClient googleSignInClient;
     private final int FB_PAGE_DEACTIVATION = 4;
     private final int TWITTER_DEACTIVATION = 11;
+    private String GMBAccountId = "";
     private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
     private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private final int FROM_AUTOPOST = 1;
@@ -122,6 +179,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private TextView arrowTextView;
     private TwitterConnection twitterConnection;
     private String fpPageName;
+    private int showLocations = 2323, showAccounts = 345345;
     Handler handler = new Handler();
 
     @Override
@@ -136,8 +194,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             FacebookSdk.sdkInitialize(getApplicationContext());
         }
 
-        callbackManager = CallbackManager.Factory.create();
+        if (mGoogleApiClient == null) {
+            setUpGoogleSignIn();
+        }
 
+        callbackManager = CallbackManager.Factory.create();
         session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_getActivity().this,session.getFPID());
         Methods.isOnline(getActivity());
@@ -197,6 +258,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookPageCheckBox = (CheckBox) view.findViewById(R.id.social_sharing_facebook_page_checkbox);
         twitterCheckBox = (CheckBox) view.findViewById(R.id.social_sharing_twitter_checkbox);
         facebookautopost = (CheckBox) view.findViewById(R.id.social_sharing_facebook_page_auto_post);
+        gmbCheckBox = (CheckBox) view.findViewById(R.id.social_gmb_profile_checkbox);
+
+        gmbCheckBox.setChecked(checkifSignedIn());
+
 
         connectTextView.setTypeface(myCustomFont_Medium);
         //autoPostTextView.setTypeface(myCustomFont);
@@ -216,10 +281,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookPageCheckBox.setChecked(false);
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
-                }else if (facebookPageCheckBox.isChecked()) {
+                } else if (facebookPageCheckBox.isChecked()) {
 
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
@@ -243,18 +308,50 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             .setmName("");
                     requestClient.connectNfx();
 
-                   showLoader(getString(R.string.wait_while_unsubscribing));
+                    showLoader(getString(R.string.wait_while_unsubscribing));
                 }
             }
         });
 
+
+        gmbCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                refreshGMB();
+
+                if (gmbCheckBox.isChecked()) {
+
+                    GMBPollinCount = 0;
+                    Intent signInIntent = googleSignInClient.getSignInIntent();
+                    startActivityForResult(signInIntent, GMBRequestCode);
+
+                } else {
+
+                    GMBRemoveUser();
+
+                    googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            Toast.makeText(getContext(), "Signed out", Toast.LENGTH_LONG).show();
+
+                            prefsEditor.putBoolean(Constants.GMBSharedPref, false).apply();
+
+                        }
+                    });
+                }
+            }
+        });
+
+
         facebookHomeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookHomeCheckBox.setChecked(false);
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
-                }else if (facebookHomeCheckBox.isChecked()) {
+                } else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -288,7 +385,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             .setmCallType(FB_PAGE_DEACTIVATION)
                             .setmName("");
                     pageRequestClient.connectNfx();
-                   showLoader(getString(R.string.wait_while_unsubscribing));
+                    showLoader(getString(R.string.wait_while_unsubscribing));
 
                 }
             }
@@ -300,10 +397,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookautopost.setChecked(false);
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
-                }else if (paymentState.equals("-1")) {
+                } else if (paymentState.equals("-1")) {
                     try {
 
                         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
@@ -373,6 +470,12 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 showDialog("Tip!", message, "Done");
             }
         });
+    }
+
+    private boolean checkifSignedIn() {
+
+        return pref.getBoolean(Constants.GMBSharedPref, false);
+
     }
 
     @Override
@@ -563,14 +666,130 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         //facebook.authorizeCallback(requestCode, resultCode, data);//removed
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GMBRequestCode) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+
+                showLoader("Syncing with Google My Business");
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                String authCode = account.getServerAuthCode();
+                Log.i(Constants.LogTag, authCode);
+                getAuthCodeFromServer(session.getFPID(), authCode);
+                prefsEditor.putBoolean(Constants.GMBSharedPref, true).commit();
+                Log.i(Constants.LogTag, authCode);
+
+            } catch (ApiException e) {
+                prefsEditor.putBoolean(Constants.GMBSharedPref, false).commit();
+                e.printStackTrace();
+                Log.i(Constants.LogTag, "" + e.toString());
+                CloseDialogBoxes();
+            }
+
+
+        }
+
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
     //added
 
+
+    private void GMBGetAccountNumber(String at) {
+
+        if (at.length() > 0) {
+
+
+            JsonObjectRequest sr = new JsonObjectRequest(Constants.GMBCallbackUrl + "?access_token=" + at, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.i(Constants.LogTag, response.toString());
+
+                            try {
+                                JSONArray arr = response.getJSONArray("accounts");
+
+                                CloseDialogBoxes();
+
+                                showBuilder(arr, showAccounts);
+
+                            } catch (JSONException e) {
+                                Log.e(Constants.LogTag, "Accounts Not Found");
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Log.i(Constants.LogTag, error.toString());
+                    CloseDialogBoxes();
+                }
+            }
+
+
+            ) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/x-www-form-urlencoded";
+                }
+            };
+
+            Volley.newRequestQueue(getContext()).add(sr);
+        } else {
+            CloseDialogBoxes();
+            Log.e(Constants.LogTag, "invalid token");
+        }
+    }
+
+    private void showBuilder(JSONArray arr, int mode) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialogView = inflater.inflate(R.layout.builder_layout, null);
+
+
+        RecyclerView recyclerView = dialogView.findViewById(R.id.GMBBuilderRecyclerView);
+
+        if (mode == showAccounts) {
+
+            BuilderAdapter adapter = new BuilderAdapter(arr, this);
+
+            recyclerView.setAdapter(adapter);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        } else {
+
+            BuilderAdapterBusiness adapter = new BuilderAdapterBusiness(arr, this);
+
+            recyclerView.setAdapter(adapter);
+
+            LinearLayoutManager layoutManager
+                    = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+            recyclerView.setLayoutManager(layoutManager);
+
+        }
+
+        alertDialog.setView(dialogView);
+
+        this.Builder = alertDialog.create();
+
+        this.Builder.show();
+
+    }
+
+    //used to close the dialogbox from fragments
+
+    public void closer() {
+        if (Builder != null) {
+            Builder.cancel();
+        }
+    }
 
     public void getFacebookPages(AccessToken accessToken, final int from) {
         GraphRequest request = GraphRequest.newGraphPathRequest(
@@ -835,7 +1054,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
 
-    private void showLoader(final String message) {
+    public void showLoader(final String message) {
         if (getActivity() == null || !isAdded()) return;
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());
@@ -845,12 +1064,17 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         progressDialog.show();
     }
 
+    private void DisplayToast(String s) {
+        //  Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
+    }
+
     private void hideLoader() {
 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
+
     private void getFacebookProfile(final AccessToken accessToken, final int from) {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email");
@@ -875,8 +1099,25 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         meRequest.executeAsync();
     }
 
+    private void setUpGoogleSignIn() {
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().requestServerAuthCode(Constants.GMBClientId,true).requestScopes(new Scope(Constants.GMBScope))
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .enableAutoManage(getActivity(), this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .build();
+
+        mGoogleApiClient.registerConnectionCallbacks(this);
+
+        mGoogleApiClient.registerConnectionFailedListener(this);
+
+        googleSignInClient = GoogleSignIn.getClient(getContext(), googleSignInOptions);
+    }
+
     private void saveFbLoginResults(String userName, String accessToken, String id) {
-        //String FACEBOOK_USER_NAME = Profile.getCurrentProfile().getName();
+
         Constants.FACEBOOK_USER_ACCESS_ID = accessToken;
         Constants.FACEBOOK_USER_ID = id;
         NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
@@ -1070,6 +1311,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }
     }
 
+
     public void logoutFromTwitter() {
         SharedPreferences.Editor e = mTwitterPreferences.edit();
         e.remove(TwitterConnection.PREF_KEY_OAUTH_TOKEN);
@@ -1138,9 +1380,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     private void addSiteHealth() {
-        if(getActivity() instanceof HomeActivity)
+        if (getActivity() instanceof HomeActivity)
             ((HomeActivity) getActivity()).onClick(getString(R.string.title_activity_social__sharing_));
-        else{
+        else {
             Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
@@ -1230,8 +1472,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                     builder.dismiss();
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                                    }else{
-                                        Methods.materialDialog(getActivity(), "Alert","This feature is available to paid customers only.");
+                                    } else {
+                                        Methods.materialDialog(getActivity(), "Alert", "This feature is available to paid customers only.");
                                     }
                                 }
                             });
@@ -1384,6 +1626,43 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }
     }
 
+
+    public void getLocations(String accountId) {
+
+        StringRequest sr = new StringRequest(Request.Method.GET, Constants.GMBgetLocationUrl + accountId
+                + "/locations?access_token=" + GMBAuthToken, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.i(Constants.LogTag, response);
+
+                try {
+                    JSONArray arr = new JSONObject(response).getJSONArray("locations");
+                    showBuilder(arr, showLocations);
+                    CloseDialogBoxes();
+
+                } catch (JSONException e) {
+                    Builder.cancel();
+                    e.printStackTrace();
+                    CloseDialogBoxes();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i(Constants.LogTag, error.toString());
+                CloseDialogBoxes();
+
+
+            }
+        });
+        Volley.newRequestQueue(getContext()).add(sr);
+
+    }
+
+
     @Override
     public void onTwitterConnected(Result<TwitterSession> result) {
         if (result == null) {
@@ -1393,4 +1672,385 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             saveTwitterInformation(twitter);
         }
     }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+
+        Log.i(Constants.LogTag, "Google Api Connected");
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+        Log.i(Constants.LogTag, "on connection suspended");
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+        Log.i(Constants.LogTag, "Connection Failed : " + connectionResult.getErrorMessage());
+
+    }
+
+    private void continueProcessForGMB(final String np_id, final String auth_code) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET
+                , Constants.NFXgetAcessToken+"?nowfloats_id=" + np_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+
+                Log.i(Constants.LogTag, response);
+
+                Log.i(Constants.LogTag, auth_code);
+
+
+                try {
+                    JSONObject object = new JSONObject(response);
+
+                    JSONArray arr = object.getJSONArray("NFXAccessTokens");
+
+                    JSONObject childObject = arr.getJSONObject(0);
+
+                    String refresh_token = childObject.getString("refresh_token");
+
+                    GMBRefreshtoken = refresh_token;
+
+                    prefsEditor.putString(Constants.GMBSharedReferenceToken, refresh_token).commit();
+
+                    String auth_token = childObject.getJSONObject("token_response").getString("access_token");
+
+                    GMBTokenExpiry = childObject.getString("token_expiry");
+
+                    GMBAuthToken = auth_token;
+                    prefsEditor.putString(Constants.GMBSharedAuthToken, auth_token);
+
+                    Log.i(Constants.LogTag, "refresh_token: " + refresh_token + "\n" + "auth_code: " + auth_token);
+
+                    GMBGetAccountNumber(auth_token);
+
+                    CloseDialogBoxes();
+
+
+                } catch (JSONException e) {
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            GMBPollinCount++;
+
+                            if (GMBPollinCount < 15) {
+
+                                continueProcessForGMB(np_id, auth_code);
+
+                                Log.i(Constants.LogTag, "Polling Count : " + GMBPollinCount + " , trying again");
+
+                            } else {
+                                CloseDialogBoxes();
+                            }
+                        }
+                    }, 2000);
+
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // DisplayIm(error.toString());
+
+                Log.i(Constants.LogTag, error.toString());
+                CloseDialogBoxes();
+            }
+        });
+
+        Volley.newRequestQueue(getContext()).add(stringRequest);
+    }
+
+
+    private void getAuthCodeFromServer(final String np_id, final String auth_code) {
+
+        JSONObject child = new JSONObject();
+
+        try {
+            child.put("nowfloats_client_id", Constants.clientId);
+            child.put("nowfloats_id", np_id);
+            child.put("operation", "create");
+            child.put("filter", "access_token");
+            child.put("boost_priority", 9);
+            child.put("callback_url", "https://bookshaukeen.nowfloats.com/");
+            JSONArray arr = new JSONArray();
+            arr.put(0, "googlemybusiness");
+            JSONObject social_data = new JSONObject();
+            social_data.put("authorization_code", auth_code);
+            child.put("social_data", social_data);
+            child.put("identifiers", arr);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            CloseDialogBoxes();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.NFXProcessUrl, child,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.i(Constants.LogTag, response.toString());
+
+                        continueProcessForGMB(np_id, auth_code);
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i(Constants.LogTag, error.toString());
+
+                CloseDialogBoxes();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String> map = new HashMap<>();
+
+                map.put("Content-type", "application/json");
+                map.put("key", "78234i249123102398");
+                map.put("pwd", "JYUYTJH*(*&BKJ787686876bbbhl");
+
+                return map;
+            }
+        };
+
+        Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
+    }
+
+    public SharedPreferences getFragmentSharedPreference() {
+
+        return pref;
+
+    }
+
+    public void GMBSetAccountIdandAccountName(String accountId, String accountName) {
+        this.GMBAccountId = accountId;
+        this.GMBUserAccountName = accountName;
+    }
+
+    public void GMBUpdateAccessToken(String locationId, final String locationName) {
+
+        showLoader("Finishing up.");
+
+        JSONObject parent = new JSONObject();
+
+        JSONObject accessTokenJson = new JSONObject();
+
+        try {
+            accessTokenJson.put("Type", "googlemybusiness");
+
+            accessTokenJson.put("UserAccountId", "accounts/"+GMBAccountId);
+
+            accessTokenJson.put("UserAccountName", GMBUserAccountName);
+
+            accessTokenJson.put("LocationId", "accounts/"+GMBAccountId+"/locations/"+locationId);
+
+            accessTokenJson.put("LocationName", locationName);
+
+            accessTokenJson.put("token_expiry", GMBTokenExpiry);
+
+            accessTokenJson.put("invalid", false);
+
+            JSONObject token_response = new JSONObject();
+
+            token_response.put("access_token", GMBAuthToken);
+
+            token_response.put("token_type", "Bearer");
+
+            token_response.put("expires_in", 3600);
+
+            token_response.put("refresh_token", GMBRefreshtoken);
+
+            accessTokenJson.put("token_response", token_response);
+
+            accessTokenJson.put("refresh_token", GMBRefreshtoken);
+
+            accessTokenJson.put("UserAccessTokenKey", GMBAuthToken);
+
+            parent.put("floatingPointId", session.getFPID());
+
+            parent.put("clientId", Constants.clientId);
+
+            parent.put("accessToken", accessTokenJson);
+
+            Log.i(TAG, parent.toString());
+
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.NFXUpdateAcessToken, parent,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            Log.i(Constants.LogTag, response.toString());
+
+                            if (progressDialog != null) {
+                                if (progressDialog.isShowing()) {
+                                    progressDialog.cancel();
+                                }
+                            }
+
+
+                            Toast.makeText(getContext(), "Your business " + "has been synced with Google My Bussiness", Toast.LENGTH_LONG).show();
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Log.i(Constants.LogTag, error.toString());
+                    if (progressDialog != null) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.cancel();
+                        }
+                    }
+
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    Map<String, String> map = new HashMap<>();
+
+                    map.put("Content-type", "application/json");
+
+
+                    return map;
+                }
+            };
+
+            Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void refreshGMB() {
+        GMBUserAccountName = "";
+        GMBAccountId = "";
+        GMBAuthToken = "";
+        GMBRefreshtoken = "";
+    }
+
+    //Removing the user by submitting blank access token
+
+    private void GMBRemoveUser() {
+
+   JSONObject mainObject = new JSONObject();
+
+        try {
+            mainObject.put("floatingPointId",session.getFPID());
+
+            mainObject.put("clientId",Constants.clientId);
+
+            JSONObject accessToken = new JSONObject();
+
+            accessToken.put("Type", "googlemybusiness");
+
+            accessToken.put("UserAccountId","");
+
+            accessToken.put("UserAccountName","");
+
+            accessToken.put("LocationId","");
+
+            accessToken.put("LocationName","");
+
+            accessToken.put("token_expiry","");
+
+            accessToken.put("invalid",false);
+
+            JSONObject tokenResponse = new JSONObject();
+
+            tokenResponse.put("access_token","");
+
+            tokenResponse.put("token_type","");
+
+            tokenResponse.put("expires_in",3600);
+
+            tokenResponse.put("refresh_token","");
+
+            accessToken.put("token_response",tokenResponse);
+
+            accessToken.put("token_type","");
+
+            accessToken.put("UserAccessTokenKey","");
+
+            mainObject.put("accessToken",accessToken);
+
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.NFXUpdateAcessToken, mainObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.i(Constants.LogTag, response.toString());
+
+                        CloseDialogBoxes();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i(Constants.LogTag, error.toString());
+                CloseDialogBoxes();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String> map = new HashMap<>();
+
+                map.put("Content-type", "application/json");
+
+
+                return map;
+            }
+        };
+
+        Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
+
+
+    }
+
+
+    private void CloseDialogBoxes() {
+        if (progressDialog != null) {
+            if (progressDialog.isShowing()) {
+                progressDialog.cancel();
+            }
+        }
+
+
+    }
+
 }
+

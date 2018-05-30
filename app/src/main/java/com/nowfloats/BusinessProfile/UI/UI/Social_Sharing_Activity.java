@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ import com.facebook.login.LoginResult;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
@@ -83,6 +85,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
+
 
     TextView connectTextView, topFeatureTextView;
     //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
@@ -140,6 +143,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         callbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.activity_social_sharing2);
+
+
 
         session = new UserSessionManager(getApplicationContext(), Social_Sharing_Activity.this);
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_Activity.this,session.getFPID());
@@ -204,6 +209,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         twitterCheckBox = (CheckBox) findViewById(R.id.social_sharing_twitter_checkbox);
         facebookautopost = (CheckBox) findViewById(R.id.social_sharing_facebook_page_auto_post);
 
+
         connectTextView.setTypeface(myCustomFont_Medium);
         //autoPostTextView.setTypeface(myCustomFont);
         topFeatureTextView.setTypeface(myCustomFont_Medium);
@@ -216,12 +222,16 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
+
             }
         });
 
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//
+                Display("HEllo WWorld");
+
                 if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
                     facebookPageCheckBox.setChecked(false);
                     Toast.makeText(Social_Sharing_Activity.this, "Facebook is not working", Toast.LENGTH_SHORT).show();
@@ -342,6 +352,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             }
         });
 
+
+
+
+
         twitterCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -384,6 +398,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
         InitShareResources();
         setStatus();
+    }
+
+    private void Display(String s){
+        Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
 
     private void showDialog1(int showDialog, float days) {
