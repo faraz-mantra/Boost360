@@ -27,6 +27,12 @@ public class GMBUtils {
 
     Context context;
 
+    private final String content_type = "application/json";
+
+    private final String Pwd = "78234i249123102398";
+
+    private final String Key = "JYUYTJH*(*&BKJ787686876bbbhl";
+
     UserSessionManager sessionManager;
 
     public GMBUtils(Context context, UserSessionManager sessionManager){
@@ -100,9 +106,9 @@ public class GMBUtils {
 
                 Map<String, String> map = new HashMap<>();
 
-                map.put("Content-type", "application/json");
-                map.put("key", "78234i249123102398");
-                map.put("pwd", "JYUYTJH*(*&BKJ787686876bbbhl");
+                map.put("Content-type", content_type);
+                map.put("key", Key);
+                map.put("pwd", Pwd);
 
                 return map;
             }
