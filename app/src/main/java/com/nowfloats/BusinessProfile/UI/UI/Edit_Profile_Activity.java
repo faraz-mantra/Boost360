@@ -193,6 +193,9 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                                 mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
                         mRiaNodeDataModel = null;
                     }
+
+                    Toast.makeText(getApplicationContext(),"Google My Business Profile Updated",Toast.LENGTH_LONG).show();
+
                 } else {
                     Methods.snackbarNoInternet(Edit_Profile_Activity.this);
                 }

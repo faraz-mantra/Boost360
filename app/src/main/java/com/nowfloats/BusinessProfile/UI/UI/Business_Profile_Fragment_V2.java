@@ -103,9 +103,6 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         domainApiService = new DomainApiService(this);
-
-
-
         return mainView;
     }
 

@@ -112,8 +112,13 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
-    private int GMBRequestCode = 7135;
+
+    boolean GMBSuccess = false;
+
+    boolean GMBsuccess = false;
     private String GMBTokenExpiry = "";
+
+    private int GMBRequestCode = 12323;
 
     private String GMBUserAccountName = "";
 
@@ -260,7 +265,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookautopost = (CheckBox) view.findViewById(R.id.social_sharing_facebook_page_auto_post);
         gmbCheckBox = (CheckBox) view.findViewById(R.id.social_gmb_profile_checkbox);
 
-        gmbCheckBox.setChecked(checkifSignedIn());
+        gmbCheckBox.setChecked(checkIfGMBisSynced(session.getFPID()));
 
 
         connectTextView.setTypeface(myCustomFont_Medium);
@@ -2048,6 +2053,65 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 progressDialog.cancel();
             }
         }
+
+
+    }
+
+    private boolean checkIfGMBisSynced(String np_id){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET
+                , Constants.NFXgetAcessToken + "?nowfloats_id=" + np_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject responseObject = new JSONObject(response);
+
+                    JSONArray arr = responseObject.getJSONArray("NFXAccessTokens");
+
+                    JSONObject childObject = arr.getJSONObject(0);
+
+                    String refresh_token = childObject.getString("refresh_token");
+
+                    GMBSuccess = true;
+
+                    Log.i(Constants.LogTag,"its synced");
+
+                    gmbCheckBox.setChecked(GMBSuccess);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    GMBSuccess = false;
+
+                    gmbCheckBox.setChecked(GMBSuccess);
+
+                    Log.i(Constants.LogTag,"its not synced");
+
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i(Constants.LogTag,"its not synced "+error.toString());
+
+                GMBSuccess = false;
+
+                gmbCheckBox.setChecked(GMBSuccess);
+
+            }
+        });
+
+        Volley.newRequestQueue(getContext()).add(stringRequest);
+
+
+
+        return GMBSuccess;
+
 
 
     }
