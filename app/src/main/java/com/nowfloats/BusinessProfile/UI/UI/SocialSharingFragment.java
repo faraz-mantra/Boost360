@@ -1626,6 +1626,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     public void GMBUpdateAccessTokenViaHandler(String locationId, final String locationName) {
+        GMBHandler.setLocationId(locationId);
+        GMBHandler.setLocationName(locationName);
         GMBHandler.GMBUpdateAccessToken(getFragmentInstance(),session);
     }
     

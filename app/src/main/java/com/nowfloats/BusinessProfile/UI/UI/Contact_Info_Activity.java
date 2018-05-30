@@ -33,6 +33,7 @@ import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.GMB.GMBUtils;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -130,8 +131,17 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
                 if (Methods.isOnline(Contact_Info_Activity.this)) {
+
+
                     Toast.makeText(getApplicationContext(),"Google My Business Profile updated.",Toast.LENGTH_LONG).show();
                     uploadContactInfo();
+
+                    try {
+                        GMBHandle.sendDetailsToGMB();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        BoostLog.e("android23235616",e.toString());
+                    }
                 } else {
                     Methods.snackbarNoInternet(Contact_Info_Activity.this);
                 }

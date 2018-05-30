@@ -69,9 +69,6 @@ public class GMBUtils {
                 +session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME)+"\n"
                 +session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)+"\n"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
                 + session.getFPDetails(GET_FP_DETAILS_CATEGORY)+"\n"+session.getFPDetails(GET_FP_DETAILS_CITY));*/
-
-
-
         JSONObject parent = new JSONObject();
 
         parent.put("nowfloats_client_id", Constants.clientId);
