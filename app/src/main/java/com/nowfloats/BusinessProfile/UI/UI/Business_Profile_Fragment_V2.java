@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +20,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+import com.nowfloats.GMB.GMBUtils;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
@@ -56,16 +49,12 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
-import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CITY;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -83,6 +72,9 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
     private DomainApiService domainApiService;
+
+    private GMBUtils GmbHandler;
+
     private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
 
 
@@ -92,6 +84,8 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+
+
     }
 
     @Override
@@ -103,15 +97,18 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         domainApiService = new DomainApiService(this);
+        GmbHandler = new GMBUtils(getContext(),session);
+
+        try {
+            GmbHandler.sendDetailsToGMB();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return mainView;
     }
 
-    private void DisplayLog(String s){
-       // Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
-        
-        Log.i("android323235616",s);
-        
-    }
+
 
     @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
@@ -707,88 +704,10 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                 businessInfoTextView.setText(session.getFacebookProfileDescription());
         }
 
-        //uploading data to GMB
-
-        try {
-            sendDetailsToGMB();
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
         
-    }
-
-    public void sendDetailsToGMB() throws JSONException {
-
-        DisplayLog(session.getFPDetails(Key_Preferences.LATITUDE)+"\n"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)+"\n"
-                +session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME)+"\n"
-                +session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)+"\n"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
-                + session.getFPDetails(GET_FP_DETAILS_CATEGORY)+"\n"+session.getFPDetails(GET_FP_DETAILS_CITY));
-
-
-        JSONObject parent = new JSONObject();
-
-        parent.put("nowfloats_client_id",Constants.clientId);
-
-        parent.put("nowfloats_id",session.getFPID());
-
-        parent.put("operation","create");
-
-        parent.put("filter","updatepage");
-
-        parent.put("boost_priority",9);
-
-        parent.put("callback_url",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
-
-        JSONArray identifiers = new JSONArray();
-
-        identifiers.put(0,"googlemybusiness");
-
-        JSONObject social_data = new JSONObject();
-
-        social_data.put("name",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-
-        social_data.put("phone",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-
-        social_data.put("description",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
-
-        social_data.put("website",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
-
-        parent.put("identifiers",identifiers);
-
-        parent.put("social_data",social_data);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.NFXProcessUrl, parent,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        Log.i(Constants.LogTag, response.toString());
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.i(Constants.LogTag, error.toString());
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                Map<String, String> map = new HashMap<>();
-
-                map.put("Content-type", "application/json");
-                map.put("key", "78234i249123102398");
-                map.put("pwd", "JYUYTJH*(*&BKJ787686876bbbhl");
-
-                return map;
-            }
-        };
-
-        Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
     }
 
 

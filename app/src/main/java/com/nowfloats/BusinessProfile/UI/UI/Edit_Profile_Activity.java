@@ -42,6 +42,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
+import com.nowfloats.GMB.GMBUtils;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -92,6 +93,9 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     private final int media_req_id = 5;
     private final int gallery_req_id = 6;
     private RiaNodeDataModel mRiaNodeDataModel;
+
+    private GMBUtils GMBHandler;
+
     private ArrayList<String> categories;
     private boolean isChangedProductCategory;
 
@@ -108,7 +112,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(), Edit_Profile_Activity.this);
         editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
         select_pic = (ImageView) findViewById(R.id.select_businessprofileimage);
-
+        GMBHandler = new GMBUtils(this,session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
         category = (EditText) findViewById(R.id.businessCategory);
@@ -195,6 +199,12 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                     }
 
                     Toast.makeText(getApplicationContext(),"Google My Business Profile Updated",Toast.LENGTH_LONG).show();
+
+                    try {
+                        GMBHandler.sendDetailsToGMB();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 } else {
                     Methods.snackbarNoInternet(Edit_Profile_Activity.this);

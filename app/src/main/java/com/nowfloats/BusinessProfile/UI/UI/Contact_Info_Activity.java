@@ -30,6 +30,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.API.Business_Info_Upload_Service;
 import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
+import com.nowfloats.GMB.GMBUtils;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
@@ -45,6 +46,7 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -61,6 +63,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
     private Toolbar toolbar;
     public static TextView saveTextView;
+
+    private GMBUtils GMBHandle;
+
     UserSessionManager session;
     Bus bus;
     ImageView ivProtoColSpinner;
@@ -102,6 +107,15 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 .build();
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), Contact_Info_Activity.this);
+
+        GMBHandle = new GMBUtils(this,session);
+
+        try {
+            GMBHandle.sendDetailsToGMB();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.contact__info));
        /* progressDialog = new MaterialDialog.Builder(this)
@@ -117,6 +131,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
                 if (Methods.isOnline(Contact_Info_Activity.this)) {
                     Toast.makeText(getApplicationContext(),"Google My Business Profile updated.",Toast.LENGTH_LONG).show();
+
+
+
                     uploadContactInfo();
                 } else {
                     Methods.snackbarNoInternet(Contact_Info_Activity.this);
