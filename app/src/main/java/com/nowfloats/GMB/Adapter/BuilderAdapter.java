@@ -1,6 +1,5 @@
 package com.nowfloats.GMB.Adapter;
 
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
@@ -11,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
@@ -21,28 +21,23 @@ import org.json.JSONObject;
 
 public class BuilderAdapter extends RecyclerView.Adapter<BuilderAdapter.MyViewHolder> {
 
-    JSONArray arr ;
+    private JSONArray arr;
 
-    SocialSharingFragment closer;
+    private SocialSharingFragment socialSharingFragment;
 
-    String account_name;
+    private String accountId = "", accountName = "";
 
-    String accountnumber = "";
 
-    SharedPreferences sharedPreferences;
-
-    public BuilderAdapter(JSONArray arr, SocialSharingFragment f){
+    public BuilderAdapter(JSONArray arr, SocialSharingFragment socialSharingFragment) {
         this.arr = arr;
-        closer = f;
+        this.socialSharingFragment = socialSharingFragment;
     }
 
     @NonNull
     @Override
     public BuilderAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gmb_builder_row,parent,false);
-
-        sharedPreferences = closer.getFragmentSharedPreference();
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gmb_builder_row, parent, false);
 
         return new MyViewHolder(v);
     }
@@ -50,20 +45,19 @@ public class BuilderAdapter extends RecyclerView.Adapter<BuilderAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull BuilderAdapter.MyViewHolder holder, int position) {
 
-        SharedPreferences.Editor edit = sharedPreferences.edit();
 
         try {
             JSONObject child = arr.getJSONObject(holder.getAdapterPosition());
 
-             account_name = child.getString("accountName");
+            accountName = child.getString("accountName");
 
-            holder.account_name.setText(account_name);
+            holder.account_name.setText(accountName);
 
             String name = child.getString("name");
 
-             accountnumber = (name.split("/"))[1];
+            accountId = (name.split("/"))[1];
 
-            BoostLog.i(Constants.LogTag,accountnumber);
+            BoostLog.i(Constants.LogTag, accountId);
 
 
         } catch (JSONException e) {
@@ -76,13 +70,12 @@ public class BuilderAdapter extends RecyclerView.Adapter<BuilderAdapter.MyViewHo
             @Override
             public void onClick(View view) {
 
-                closer.GMBSetAccountIdandAccountName(accountnumber,account_name);
+                socialSharingFragment.getGmbHandler().setAccountId(accountId);
+                socialSharingFragment.getGmbHandler().setAccountName(accountName);
 
-                closer.getLocationsViaGMBHandler();
-                closer.closer();
-
-                closer.showLoader("Getting your businesses.");
-
+                socialSharingFragment.getGmbHandler().getLocations(socialSharingFragment);
+                socialSharingFragment.closeDialog();
+                socialSharingFragment.showLoader("Getting your businesses.");
 
             }
         });
@@ -94,7 +87,7 @@ public class BuilderAdapter extends RecyclerView.Adapter<BuilderAdapter.MyViewHo
         return arr.length();
     }
 
-    protected class MyViewHolder extends RecyclerView.ViewHolder{
+    protected class MyViewHolder extends RecyclerView.ViewHolder {
 
         CheckBox checkBox;
         TextView account_name;

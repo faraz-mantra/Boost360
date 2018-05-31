@@ -92,6 +92,7 @@ import java.util.List;
 
 import java.util.Set;
 
+import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -104,7 +105,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private String TAG = Constants.LogTag;
     boolean[] checkedPages;
 
-    AlertDialog Builder;
+    private AlertDialog alertDialog;
     UserSessionManager session;
 
     private final int LIGHT_HOUSE_EXPIRE = 0;
@@ -173,7 +174,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         if (mGoogleApiClient == null) {
             setUpGoogleSignIn();
         }
-        
+
         callbackManager = CallbackManager.Factory.create();
         session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_getActivity().this,session.getFPID());
@@ -182,9 +183,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         prefsEditor = pref.edit();
         mTwitterPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
-        if(gmbHandler ==null){
-            gmbHandler = new GMBHandler(getContext(),session);
-            checkIfGMBisSyncedViaHandler(session.getFPID());
+        if (gmbHandler == null) {
+            gmbHandler = new GMBHandler(getContext(), session);
+            gmbHandler.isSynced(this);
         }
 
         return mainView;
@@ -295,20 +296,15 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             public void onClick(View view) {
 
                 gmbHandler.refreshGMB();
-                
-                
-                 
-                if (gmbCheckBox.isChecked()) {
-                    
-                    Intent signInIntent = googleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent, gmbHandler.getRequestCode());
 
+
+                if (gmbCheckBox.isChecked()) {
+                    Intent signInIntent = googleSignInClient.getSignInIntent();
+                    startActivityForResult(signInIntent, GMBHandler.REQUEST_CODE);
                 } else {
 
-                    gmbHandler.GMBRemoveUser(getContext(),session,getFragmentInstance());
-
-
-                    GMBSignOutUserfromGoogle(true);
+                    gmbHandler.removeUser(SocialSharingFragment.this);
+                    gmbSignOutUserfromGoogle(true);
 
                 }
             }
@@ -442,29 +438,24 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         });
     }
 
-    public void GMBSignOutUserfromGoogle(final boolean print) {
+    public void gmbSignOutUserfromGoogle(final boolean print) {
 
-        if(googleSignInClient!=null) {
+        if (googleSignInClient != null) {
 
             googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-
-                    if(print)
-
-                    Toast.makeText(getContext(), "Signed out", Toast.LENGTH_LONG).show();
-
-
+                    if (print)
+                        Toast.makeText(getContext(), "Signed out", Toast.LENGTH_LONG).show();
                 }
             });
 
-        }else{
+        } else {
             setUpGoogleSignIn();
-            GMBSignOutUserfromGoogle(print);
+            gmbSignOutUserfromGoogle(print);
 
         }
     }
-
 
 
     @Override
@@ -660,31 +651,29 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == gmbHandler.getRequestCode()) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
+        if (requestCode == GMBHandler.REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
 
-                showLoader("Syncing with Google My Business");
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                String authCode = account.getServerAuthCode();
-                BoostLog.i(Constants.LogTag, authCode);
-                getAuthCodeFromServerViaGBMHandler(session.getFPID(), authCode);
-                prefsEditor.putBoolean(Constants.GMBSharedPref, true).commit();
-                BoostLog.i(Constants.LogTag, authCode);
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
 
-            } catch (ApiException e) {
-                prefsEditor.putBoolean(Constants.GMBSharedPref, false).commit();
-                e.printStackTrace();
-                BoostLog.i(Constants.LogTag, "" + e.toString());
-                CloseDialogBoxes();
+                    showLoader(getString(R.string.syncing_with_gmb));
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    String authCode = account.getServerAuthCode();
+                    BoostLog.i(Constants.LogTag, authCode);
+                    gmbHandler.postAuthCodeFromServer(authCode, this);
+
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                    BoostLog.i(Constants.LogTag, "" + e.toString());
+                }
             }
-
-
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-    
+
     public void showBuilder(JSONArray arr, int mode) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -717,17 +706,16 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
         alertDialog.setView(dialogView);
 
-        this.Builder = alertDialog.create();
+        this.alertDialog = alertDialog.create();
 
-        this.Builder.show();
+        this.alertDialog.show();
 
     }
 
-    //used to close the dialogbox from fragments
-
-    public void closer() {
-        if (Builder != null) {
-            Builder.cancel();
+    public void closeDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.cancel();
+            alertDialog.dismiss();
         }
     }
 
@@ -1004,11 +992,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         progressDialog.show();
     }
 
-    private void DisplayToast(String s) {
-        //  Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
-    }
-
-    private void hideLoader() {
+    public void hideLoader() {
 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
@@ -1041,7 +1025,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     private void setUpGoogleSignIn() {
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail().requestServerAuthCode(Constants.GMBClientId,true).requestScopes(new Scope(Constants.GMBScope))
+                .requestEmail().requestServerAuthCode(Constants.GMBClientId, true).requestScopes(new Scope(Constants.GMBScope))
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -1566,12 +1550,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }
     }
 
-
-    public void getLocationsViaGMBHandler() {
-        gmbHandler.getLocations(this, gmbHandler.getShowLocations());
-    }
-
-
     @Override
     public void onTwitterConnected(Result<TwitterSession> result) {
         if (result == null) {
@@ -1584,76 +1562,25 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
-
         BoostLog.i(Constants.LogTag, "Google Api Connected");
-
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
         BoostLog.i(Constants.LogTag, "on connection suspended");
-
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
         BoostLog.i(Constants.LogTag, "Connection Failed : " + connectionResult.getErrorMessage());
-
     }
 
-    
-    private void getAuthCodeFromServerViaGBMHandler(final String np_id, final String auth_code) {
-        
-        gmbHandler.getAuthCodeFromServer(getContext(),np_id,auth_code,this);
-
-    }
-
-    public SharedPreferences getFragmentSharedPreference() {
-        return pref;
-    }
-    public void GMBSetAccountIdandAccountName(String accountId, String accountName) {
-       
-        gmbHandler.setGMBAccountId(accountId);
-
-        gmbHandler.setGMBUserAccountName(accountName);
-
-    }
-
-    public void GMBUpdateAccessTokenViaHandler(String locationId, final String locationName) {
-        gmbHandler.setLocationId(locationId);
-        gmbHandler.setLocationName(locationName);
-        gmbHandler.GMBUpdateAccessToken(this,session);
-    }
-    
-
-
-   
-
-    //Removing the user by submitting blank access token
-
-    public void CloseDialogBoxes() {
-        if (progressDialog != null) {
-            if (progressDialog.isShowing()) {
-                progressDialog.cancel();
-            }
-        }
-    }
-
-    private void checkIfGMBisSyncedViaHandler(String fp_id){
-        gmbHandler.checkIfGMBisSynced(fp_id,this);
-    }
-
-
-    public void handleGMBCheckbox(boolean value){
+    public void handleGMBCheckbox(boolean value) {
         gmbCheckBox.setChecked(value);
     }
 
-    public AlertDialog getBuilder(){
-        return Builder;
+    public GMBHandler getGmbHandler() {
+        return gmbHandler;
     }
-
 }
 

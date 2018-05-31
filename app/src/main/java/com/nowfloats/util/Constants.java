@@ -170,7 +170,6 @@ public class Constants {
     public static String deleteGalleryImgs = NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/removeSecondaryImage";
     public static String addwidget = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/addwidget";
     public static String addFbLikeBoxwidget = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/addFpWidget";
-    public static String GMBSharedPref = "akjgdkaDHGKAdshgAD";
 
     public static String GMBSharedAuthToken = ",jUSSHADHlasjdakGDJadhds";
 

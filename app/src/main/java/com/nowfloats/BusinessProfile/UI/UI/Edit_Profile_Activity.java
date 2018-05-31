@@ -94,7 +94,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     private final int gallery_req_id = 6;
     private RiaNodeDataModel mRiaNodeDataModel;
 
-    private com.nowfloats.GMB.GMBHandler GMBHandler;
+    private GMBHandler gmbHandler;
 
     private ArrayList<String> categories;
     private boolean isChangedProductCategory;
@@ -112,7 +112,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(), Edit_Profile_Activity.this);
         editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
         select_pic = (ImageView) findViewById(R.id.select_businessprofileimage);
-        GMBHandler = new GMBHandler(this,session);
+        gmbHandler = new GMBHandler(this,session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
         category = (EditText) findViewById(R.id.businessCategory);
@@ -817,7 +817,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 
         try {
-            GMBHandler.sendDetailsToGMB(Edit_Profile_Activity.this,true);
+            gmbHandler.sendDetailsToGMB(true);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -8,6 +8,7 @@
     <string name="google_map_key">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>
     <string name="app_name">Thinksity</string>
     <string name="action_settings">Settings</string>
+    <string name="syncing_with_gmb">Syncing with Google My Business</string>
     <string name="next">Next</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
