@@ -23,6 +23,7 @@ import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.lang.reflect.Type;
@@ -97,6 +98,7 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.BUBBLE_CALL_TRACKER, null);
 
                         ArrayList<VmnCallModel> vmnList = new ArrayList<>(mCallList);
                         vmnList.remove(vmnCallModel);
@@ -126,6 +128,7 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.BUBBLE_ENQUIRY, null);
 
                         ArrayList<Business_Enquiry_Model> eqList = new ArrayList<>(mEnquiryList);
                         eqList.remove(entity_model);
