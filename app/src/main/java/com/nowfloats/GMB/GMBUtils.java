@@ -18,6 +18,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.thinksity.R;
 
 
 import org.json.JSONArray;
@@ -63,13 +64,15 @@ public class GMBUtils {
     }
 
 
-    public void sendDetailsToGMB() throws JSONException {
+    public void sendDetailsToGMB(final Context context, final boolean display) throws JSONException {
 
      /*   DisplayLog(session.getFPDetails(Key_Preferences.LATITUDE)+"\n"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)+"\n"
                 +session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME)+"\n"
                 +session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)+"\n"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
                 + session.getFPDetails(GET_FP_DETAILS_CATEGORY)+"\n"+session.getFPDetails(GET_FP_DETAILS_CITY));*/
         JSONObject parent = new JSONObject();
+
+
 
         parent.put("nowfloats_client_id", Constants.clientId);
 
@@ -107,6 +110,10 @@ public class GMBUtils {
                     public void onResponse(JSONObject response) {
 
                         BoostLog.i(Constants.LogTag, response.toString());
+
+                        if(display)
+
+                        Toast.makeText(context,context.getString(R.string.gmb_upload_data),Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
@@ -193,8 +200,8 @@ public class GMBUtils {
 
                             socialSharingFragment.CloseDialogBoxes();
 
+                            Toast.makeText(context, context.getString(R.string.gmb_integration_Successful), Toast.LENGTH_LONG).show();
 
-                            Toast.makeText(context, "Your business " + "has been synced with Google My Business", Toast.LENGTH_LONG).show();
 
                         }
                     }, new Response.ErrorListener() {

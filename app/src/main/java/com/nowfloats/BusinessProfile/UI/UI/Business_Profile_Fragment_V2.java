@@ -100,7 +100,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         GmbHandler = new GMBUtils(getContext(),session);
 
         try {
-            GmbHandler.sendDetailsToGMB();
+            GmbHandler.sendDetailsToGMB(getContext(),false);
         } catch (JSONException e) {
             e.printStackTrace();
         }

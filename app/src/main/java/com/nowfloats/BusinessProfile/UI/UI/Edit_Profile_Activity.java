@@ -814,10 +814,10 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     }
 
     private void uploadToGMB(){
-        Toast.makeText(getApplicationContext(),"Google My Business Profile Updated",Toast.LENGTH_LONG).show();
+
 
         try {
-            GMBHandler.sendDetailsToGMB();
+            GMBHandler.sendDetailsToGMB(Edit_Profile_Activity.this,true);
         } catch (JSONException e) {
             e.printStackTrace();
         }

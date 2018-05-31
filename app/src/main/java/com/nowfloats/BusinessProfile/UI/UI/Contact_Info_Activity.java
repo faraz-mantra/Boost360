@@ -112,7 +112,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         GMBHandle = new GMBUtils(this,session);
 
         try {
-            GMBHandle.sendDetailsToGMB();
+            GMBHandle.sendDetailsToGMB(this,false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -133,11 +133,11 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if (Methods.isOnline(Contact_Info_Activity.this)) {
 
 
-                    Toast.makeText(getApplicationContext(),"Google My Business Profile updated.",Toast.LENGTH_LONG).show();
+
                     uploadContactInfo();
 
                     try {
-                        GMBHandle.sendDetailsToGMB();
+                        GMBHandle.sendDetailsToGMB(Contact_Info_Activity.this,true);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         BoostLog.e("android23235616",e.toString());
