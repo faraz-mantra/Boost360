@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -157,6 +158,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private TextView arrowTextView;
     private TwitterConnection twitterConnection;
     private String fpPageName;
+    private LinearLayout linearLayout;
 
     Handler handler = new Handler();
 
@@ -206,6 +208,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookPage = (ImageView) view.findViewById(R.id.social_sharing_facebook_page_image);
         twitter = (ImageView) view.findViewById(R.id.social_sharing_twitter_image);
         ivFbPageAutoPull = (ImageView) view.findViewById(R.id.auto_pull_facebook_page_image);
+        linearLayout= view.findViewById(R.id.parent_layout);
 
         facebookHomeStatus = (TextView) view.findViewById(R.id.social_sharing_facebook_profile_flag_text);
         facebookPageStatus = (TextView) view.findViewById(R.id.social_sharing_facebook_page_flag_text);
@@ -231,6 +234,13 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 //                }
 //            }
 //        }
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);
@@ -298,21 +308,12 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 gmbHandler.refreshGMB();
 
-
                 if (gmbCheckBox.isChecked()) {
 
                     showLoader("Loading...");
 
                     gmbCheckBox.setChecked(false);
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            hideLoader();
-
-                        }
-                    },6000);
 
                     Intent signInIntent = googleSignInClient.getSignInIntent();
                     startActivityForResult(signInIntent, GMBHandler.REQUEST_CODE);
@@ -778,6 +779,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         super.onResume();
         if (HomeActivity.headerText != null)
             HomeActivity.headerText.setText("Social Sharing");
+
+        if(googleSignInClient!=null){
+            mGoogleApiClient.registerConnectionFailedListener(this);
+            mGoogleApiClient.registerConnectionCallbacks(this);
+        }
     }
 
     private void processGraphResponse(final GraphResponse response, final int from) {
@@ -1627,6 +1633,15 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     public GMBHandler getGmbHandler() {
         return gmbHandler;
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
+        mGoogleApiClient.unregisterConnectionCallbacks(this);
+        mGoogleApiClient.unregisterConnectionFailedListener(this);
     }
 }
 
