@@ -31,7 +31,7 @@ import java.util.Map;
 
 
 
-public class GMBUtils {
+public class GMBHandler {
 
 
     Context context;
@@ -55,7 +55,7 @@ public class GMBUtils {
 
     UserSessionManager sessionManager;
 
-    public GMBUtils(Context context, UserSessionManager sessionManager){
+    public GMBHandler(Context context, UserSessionManager sessionManager){
 
         this.context = context;
 
@@ -234,7 +234,7 @@ public class GMBUtils {
 
     }
 
-    public void checkIfGMBisSynced(Context context,String fp_id,final SocialSharingFragment socialSharingFragment){
+    public void checkIfGMBisSynced(String fp_id,final SocialSharingFragment socialSharingFragment){
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET
                 , Constants.NFXgetAcessToken + "?nowfloats_id=" + fp_id, new Response.Listener<String>() {
@@ -296,7 +296,7 @@ public class GMBUtils {
     }
 
 
-    public void getLocations(Context context,final SocialSharingFragment socialSharingFragment,final int showLocations) {
+    public void getLocations(final SocialSharingFragment socialSharingFragment,final int showLocations) {
 
 
 

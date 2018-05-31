@@ -60,7 +60,7 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.GMB.Adapter.BuilderAdapter;
 import com.nowfloats.GMB.Adapter.BuilderAdapterBusiness;
 
-import com.nowfloats.GMB.GMBUtils;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
@@ -98,7 +98,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
 
-    private GMBUtils GMBHandler;
+    private GMBHandler gmbHandler;
     int size = 0;
 
     private String TAG = Constants.LogTag;
@@ -111,7 +111,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
 
-
     TextView connectTextView, topFeatureTextView;
     //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     private SharedPreferences pref = null;
@@ -121,7 +120,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private ImageView twitter;
 
     private ImageView ivFbPageAutoPull;
-    private String GMBAuthToken = "";
 
     private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
     private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox, gmbCheckBox;
@@ -147,7 +145,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private GoogleSignInClient googleSignInClient;
     private final int FB_PAGE_DEACTIVATION = 4;
     private final int TWITTER_DEACTIVATION = 11;
-    private String GMBAccountId = "";
     private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
     private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private final int FROM_AUTOPOST = 1;
@@ -185,8 +182,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         prefsEditor = pref.edit();
         mTwitterPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
-        if(GMBHandler==null){
-            GMBHandler = new GMBUtils(getContext(),session);
+        if(gmbHandler ==null){
+            gmbHandler = new GMBHandler(getContext(),session);
             checkIfGMBisSyncedViaHandler(session.getFPID());
         }
 
@@ -297,18 +294,18 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             @Override
             public void onClick(View view) {
 
-                GMBHandler.refreshGMB();
+                gmbHandler.refreshGMB();
                 
                 
                  
                 if (gmbCheckBox.isChecked()) {
                     
                     Intent signInIntent = googleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent, GMBHandler.getRequestCode());
+                    startActivityForResult(signInIntent, gmbHandler.getRequestCode());
 
                 } else {
 
-                    GMBHandler.GMBRemoveUser(getContext(),session,getFragmentInstance());
+                    gmbHandler.GMBRemoveUser(getContext(),session,getFragmentInstance());
 
 
                     GMBSignOutUserfromGoogle(true);
@@ -663,7 +660,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GMBHandler.getRequestCode()) {
+        if (requestCode == gmbHandler.getRequestCode()) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
 
@@ -698,7 +695,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
         RecyclerView recyclerView = dialogView.findViewById(R.id.GMBBuilderRecyclerView);
 
-        if (mode == GMBHandler.getShowAccounts()) {
+        if (mode == gmbHandler.getShowAccounts()) {
 
             BuilderAdapter adapter = new BuilderAdapter(arr, this);
 
@@ -1571,7 +1568,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
 
     public void getLocationsViaGMBHandler() {
-        GMBHandler.getLocations(getContext(),getFragmentInstance(),GMBHandler.getShowLocations());
+        gmbHandler.getLocations(this, gmbHandler.getShowLocations());
     }
 
 
@@ -1610,7 +1607,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     
     private void getAuthCodeFromServerViaGBMHandler(final String np_id, final String auth_code) {
         
-        GMBHandler.getAuthCodeFromServer(getContext(),np_id,auth_code,getFragmentInstance());
+        gmbHandler.getAuthCodeFromServer(getContext(),np_id,auth_code,this);
 
     }
 
@@ -1619,16 +1616,16 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
     public void GMBSetAccountIdandAccountName(String accountId, String accountName) {
        
-        GMBHandler.setGMBAccountId(accountId);
+        gmbHandler.setGMBAccountId(accountId);
 
-        GMBHandler.setGMBUserAccountName(accountName);
+        gmbHandler.setGMBUserAccountName(accountName);
 
     }
 
     public void GMBUpdateAccessTokenViaHandler(String locationId, final String locationName) {
-        GMBHandler.setLocationId(locationId);
-        GMBHandler.setLocationName(locationName);
-        GMBHandler.GMBUpdateAccessToken(getFragmentInstance(),session);
+        gmbHandler.setLocationId(locationId);
+        gmbHandler.setLocationName(locationName);
+        gmbHandler.GMBUpdateAccessToken(this,session);
     }
     
 
@@ -1645,18 +1642,13 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }
     }
 
-    private void checkIfGMBisSyncedViaHandler(String np_id){
-        GMBHandler.checkIfGMBisSynced(getContext(),np_id,getFragmentInstance());
+    private void checkIfGMBisSyncedViaHandler(String fp_id){
+        gmbHandler.checkIfGMBisSynced(fp_id,this);
     }
 
 
     public void handleGMBCheckbox(boolean value){
         gmbCheckBox.setChecked(value);
-    }
-
-
-    private SocialSharingFragment getFragmentInstance(){
-        return this;
     }
 
     public AlertDialog getBuilder(){

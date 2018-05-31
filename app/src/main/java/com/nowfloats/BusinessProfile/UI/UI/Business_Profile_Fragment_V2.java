@@ -26,7 +26,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
-import com.nowfloats.GMB.GMBUtils;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
@@ -73,7 +73,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     private Activity activity;
     private DomainApiService domainApiService;
 
-    private GMBUtils GmbHandler;
+    private GMBHandler GmbHandler;
 
     private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
 
@@ -97,7 +97,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         domainApiService = new DomainApiService(this);
-        GmbHandler = new GMBUtils(getContext(),session);
+        GmbHandler = new GMBHandler(getContext(),session);
 
         try {
             GmbHandler.sendDetailsToGMB(getContext(),false);

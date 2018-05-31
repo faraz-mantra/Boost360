@@ -30,7 +30,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.API.Business_Info_Upload_Service;
 import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
-import com.nowfloats.GMB.GMBUtils;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -65,7 +65,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private Toolbar toolbar;
     public static TextView saveTextView;
 
-    private GMBUtils GMBHandle;
+    private GMBHandler GMBHandle;
 
     UserSessionManager session;
     Bus bus;
@@ -109,7 +109,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), Contact_Info_Activity.this);
 
-        GMBHandle = new GMBUtils(this,session);
+        GMBHandle = new GMBHandler(this,session);
 
         try {
             GMBHandle.sendDetailsToGMB(this,false);

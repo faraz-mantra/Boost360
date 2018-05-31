@@ -42,7 +42,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
-import com.nowfloats.GMB.GMBUtils;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -94,7 +94,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     private final int gallery_req_id = 6;
     private RiaNodeDataModel mRiaNodeDataModel;
 
-    private GMBUtils GMBHandler;
+    private com.nowfloats.GMB.GMBHandler GMBHandler;
 
     private ArrayList<String> categories;
     private boolean isChangedProductCategory;
@@ -112,7 +112,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(), Edit_Profile_Activity.this);
         editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
         select_pic = (ImageView) findViewById(R.id.select_businessprofileimage);
-        GMBHandler = new GMBUtils(this,session);
+        GMBHandler = new GMBHandler(this,session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
         category = (EditText) findViewById(R.id.businessCategory);
