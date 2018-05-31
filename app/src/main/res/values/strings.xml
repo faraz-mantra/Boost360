@@ -8,6 +8,7 @@
     <string name="google_map_key">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>
     <string name="app_name">Thinksity</string>
     <string name="action_settings">Settings</string>
+    <string name="syncing_with_gmb">Syncing with Google My Business</string>
     <string name="next">Next</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -34,6 +35,8 @@
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
+    <string name="gmb_error_message">Sorry you don\'t have a Google My Business Account</string>
+
     <string name="ps_sc2_lbl2">Creation</string>
     <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
     <string name="ps_sc3_lbl1">Connect to</string>

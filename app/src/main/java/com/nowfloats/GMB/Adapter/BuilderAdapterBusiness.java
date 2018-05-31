@@ -20,21 +20,20 @@ import org.json.JSONObject;
 
 public class BuilderAdapterBusiness extends RecyclerView.Adapter<BuilderAdapterBusiness.MyViewHolder> {
 
-    JSONArray locations;
+    private JSONArray locations;
 
-    SocialSharingFragment GMBGateway;
+    private SocialSharingFragment socialSharingFragment;
 
-
-    public BuilderAdapterBusiness(JSONArray array, SocialSharingFragment GMBGateway){
+    public BuilderAdapterBusiness(JSONArray array, SocialSharingFragment socialSharingFragment) {
         this.locations = array;
-        this.GMBGateway = GMBGateway;
+        this.socialSharingFragment = socialSharingFragment;
     }
 
     @NonNull
     @Override
     public BuilderAdapterBusiness.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.builder_layout_business,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.builder_layout_business, parent, false);
 
         return new MyViewHolder(v);
     }
@@ -59,17 +58,19 @@ public class BuilderAdapterBusiness extends RecyclerView.Adapter<BuilderAdapterB
                 @Override
                 public void onClick(View view) {
 
-                    GMBGateway.GMBUpdateAccessTokenViaHandler(locationId,locationName);
+                    socialSharingFragment.getGmbHandler().setLocationId(locationId);
+                    socialSharingFragment.getGmbHandler().setLocationName(locationName);
+                    socialSharingFragment.getGmbHandler().updateAccessToken(socialSharingFragment);
 
-                    GMBGateway.closer();
+                    socialSharingFragment.closeDialog();
 
                 }
             });
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }catch (ArrayIndexOutOfBoundsException e){
-            BoostLog.i(Constants.LogTag,e.toString()+" : Invalid response ");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            BoostLog.i(Constants.LogTag, e.toString() + " : Invalid response ");
         }
 
     }
@@ -80,7 +81,7 @@ public class BuilderAdapterBusiness extends RecyclerView.Adapter<BuilderAdapterB
     }
 
 
-    protected class MyViewHolder extends RecyclerView.ViewHolder{
+    protected class MyViewHolder extends RecyclerView.ViewHolder {
 
         CheckBox checkBox;
 

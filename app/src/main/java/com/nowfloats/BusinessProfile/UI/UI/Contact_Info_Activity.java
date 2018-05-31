@@ -65,7 +65,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private Toolbar toolbar;
     public static TextView saveTextView;
 
-    private GMBHandler GMBHandle;
+    private GMBHandler gmbHandler;
 
     UserSessionManager session;
     Bus bus;
@@ -87,6 +87,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private TextView primaryTextView, alternateTextView1, alternateTextView2, alternateTextView3;
     private MaterialDialog dialog;
     private MaterialDialog sendSmsProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +110,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), Contact_Info_Activity.this);
 
-        GMBHandle = new GMBHandler(this,session);
-
+        gmbHandler = new GMBHandler(this, session);
         try {
-            GMBHandle.sendDetailsToGMB(this,false);
+            gmbHandler.sendDetailsToGMB(false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -131,21 +131,17 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
                 if (Methods.isOnline(Contact_Info_Activity.this)) {
-
-
-
                     uploadContactInfo();
 
                     try {
-                        GMBHandle.sendDetailsToGMB(Contact_Info_Activity.this,true);
+                        gmbHandler.sendDetailsToGMB(true);
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        BoostLog.e("android23235616",e.toString());
+                        BoostLog.e("android23235616", e.toString());
                     }
                 } else {
                     Methods.snackbarNoInternet(Contact_Info_Activity.this);
                 }
-
 
 
             }
@@ -913,10 +909,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         return offerObj;
     }
 
-
-    public void uploadContactInfo_version2() {
-
-    }
 
     public void uploadContactInfo() {
         Constants.StoreFbPage = msgtxt4fbpage;

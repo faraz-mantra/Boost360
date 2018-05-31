@@ -1,6 +1,5 @@
 package com.nowfloats.GMB;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Handler;
 
@@ -29,33 +28,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-
-
 public class GMBHandler {
 
 
-    Context context;
+    private Context context;
 
-    private int requestCode = 332;
+    public static int REQUEST_CODE = 332;
 
     private final String content_type = "application/json";
 
     private final String Pwd = "78234i249123102398";
 
     private String TAG = "android23235616";
-    
+
     private final String Key = "JYUYTJH*(*&BKJ787686876bbbhl";
+
+    private int pollingCount = 0;
 
     private int showLocations = 2323, showAccounts = 345345;
 
-    private int GMBPollinCount = 0;
+    private String locationId, locationName, accountId, accountName, refreshToken,
+            authToken, tokenExpiry;
 
-    private String locationId, locationName, GMBAccountId, GMBUserAccountName,GMBRefreshtoken,
-    GMBAuthToken,GMBTokenExpiry;
+    private UserSessionManager sessionManager;
 
-    UserSessionManager sessionManager;
-
-    public GMBHandler(Context context, UserSessionManager sessionManager){
+    public GMBHandler(Context context, UserSessionManager sessionManager) {
 
         this.context = context;
 
@@ -64,7 +61,7 @@ public class GMBHandler {
     }
 
 
-    public void sendDetailsToGMB(final Context context, final boolean display) throws JSONException {
+    public void sendDetailsToGMB(final boolean display) throws JSONException {
 
      /*   DisplayLog(session.getFPDetails(Key_Preferences.LATITUDE)+"\n"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)+"\n"
                 +session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME)+"\n"
@@ -73,36 +70,38 @@ public class GMBHandler {
         JSONObject parent = new JSONObject();
 
 
-
         parent.put("nowfloats_client_id", Constants.clientId);
 
-        parent.put("nowfloats_id",sessionManager.getFPID());
+        parent.put("nowfloats_id", sessionManager.getFPID());
 
-        parent.put("operation","create");
+        parent.put("operation", "create");
 
-        parent.put("filter","updatepage");
+        parent.put("filter", "updatepage");
 
-        parent.put("boost_priority",9);
+        parent.put("boost_priority", 9);
 
-        parent.put("callback_url",sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
+        parent.put("callback_url", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
 
         JSONArray identifiers = new JSONArray();
 
-        identifiers.put(0,"googlemybusiness");
+        identifiers.put(0, "googlemybusiness");
 
         JSONObject social_data = new JSONObject();
 
-        social_data.put("name",sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        social_data.put("name", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
-        social_data.put("phone",sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+        social_data.put("phone", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
 
-        social_data.put("description",sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
+        social_data.put("description", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
 
-        social_data.put("website",sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
+        social_data.put("website", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
 
-        parent.put("identifiers",identifiers);
+        parent.put("identifiers", identifiers);
 
-        parent.put("social_data",social_data);
+        parent.put("social_data", social_data);
+
+
+        BoostLog.i(Constants.LogTag,parent.toString());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.NFXProcessUrl, parent,
                 new Response.Listener<JSONObject>() {
@@ -111,9 +110,8 @@ public class GMBHandler {
 
                         BoostLog.i(Constants.LogTag, response.toString());
 
-                        if(display)
-
-                        Toast.makeText(context,context.getString(R.string.gmb_upload_data),Toast.LENGTH_LONG).show();
+                        if (display)
+                            Toast.makeText(context, context.getString(R.string.gmb_upload_data), Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
@@ -141,9 +139,7 @@ public class GMBHandler {
     }
 
 
-
-
-    public void GMBUpdateAccessToken(final SocialSharingFragment socialSharingFragment, UserSessionManager session) {
+    public void updateAccessToken(final SocialSharingFragment socialSharingFragment) {
 
         socialSharingFragment.showLoader("Finishing up.");
 
@@ -154,35 +150,35 @@ public class GMBHandler {
         try {
             accessTokenJson.put("Type", "googlemybusiness");
 
-            accessTokenJson.put("UserAccountId", "accounts/"+GMBAccountId);
+            accessTokenJson.put("UserAccountId", "accounts/" + accountId);
 
-            accessTokenJson.put("UserAccountName", GMBUserAccountName);
+            accessTokenJson.put("UserAccountName", accountName);
 
-            accessTokenJson.put("LocationId", "accounts/"+GMBAccountId+"/locations/"+locationId);
+            accessTokenJson.put("LocationId", "accounts/" + accountId + "/locations/" + locationId);
 
             accessTokenJson.put("LocationName", locationName);
 
-            accessTokenJson.put("token_expiry", GMBTokenExpiry);
+            accessTokenJson.put("token_expiry", tokenExpiry);
 
             accessTokenJson.put("invalid", false);
 
             JSONObject token_response = new JSONObject();
 
-            token_response.put("access_token", GMBAuthToken);
+            token_response.put("access_token", authToken);
 
             token_response.put("token_type", "Bearer");
 
             token_response.put("expires_in", 3600);
 
-            token_response.put("refresh_token", GMBRefreshtoken);
+            token_response.put("refresh_token", refreshToken);
 
             accessTokenJson.put("token_response", token_response);
 
-            accessTokenJson.put("refresh_token", GMBRefreshtoken);
+            accessTokenJson.put("refresh_token", refreshToken);
 
-            accessTokenJson.put("UserAccessTokenKey", GMBAuthToken);
+            accessTokenJson.put("UserAccessTokenKey", authToken);
 
-            parent.put("floatingPointId", session.getFPID());
+            parent.put("floatingPointId", sessionManager.getFPID());
 
             parent.put("clientId", Constants.clientId);
 
@@ -198,9 +194,11 @@ public class GMBHandler {
 
                             BoostLog.i(Constants.LogTag, response.toString());
 
-                            socialSharingFragment.CloseDialogBoxes();
+                            socialSharingFragment.hideLoader();
 
                             Toast.makeText(context, context.getString(R.string.gmb_integration_Successful), Toast.LENGTH_LONG).show();
+
+                            socialSharingFragment.handleGMBCheckbox(true);
 
 
                         }
@@ -209,7 +207,8 @@ public class GMBHandler {
                 public void onErrorResponse(VolleyError error) {
 
                     BoostLog.i(Constants.LogTag, error.toString());
-                  socialSharingFragment.CloseDialogBoxes();
+                    socialSharingFragment.hideLoader();
+                    socialSharingFragment.handleGMBCheckbox(false);
 
                 }
             }) {
@@ -230,14 +229,15 @@ public class GMBHandler {
 
         } catch (JSONException e) {
             e.printStackTrace();
+            socialSharingFragment.handleGMBCheckbox(false);
         }
 
     }
 
-    public void checkIfGMBisSynced(String fp_id,final SocialSharingFragment socialSharingFragment){
+    public void isSynced(final SocialSharingFragment socialSharingFragment) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET
-                , Constants.NFXgetAcessToken + "?nowfloats_id=" + fp_id, new Response.Listener<String>() {
+                , Constants.NFXgetAcessToken + "?nowfloats_id=" + sessionManager.getFPID(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -252,17 +252,16 @@ public class GMBHandler {
 
                     socialSharingFragment.handleGMBCheckbox(true);
 
-                    BoostLog.i(Constants.LogTag,"its synced");
-
+                    BoostLog.i(Constants.LogTag, "its synced");
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    BoostLog.i(Constants.LogTag,"its not synced");
+                    BoostLog.i(Constants.LogTag, "its not synced");
 
                     socialSharingFragment.handleGMBCheckbox(false);
 
-                    socialSharingFragment.GMBSignOutUserfromGoogle(false);
+                    socialSharingFragment.gmbSignOutUserfromGoogle(false);
 
 
                 }
@@ -273,35 +272,31 @@ public class GMBHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                BoostLog.i(Constants.LogTag,"its not synced "+error.toString());
+                BoostLog.i(Constants.LogTag, "its not synced " + error.toString());
 
                 socialSharingFragment.handleGMBCheckbox(false);
 
-                socialSharingFragment.GMBSignOutUserfromGoogle(false);
+                socialSharingFragment.gmbSignOutUserfromGoogle(false);
 
             }
         });
-
         Volley.newRequestQueue(context).add(stringRequest);
-
-
     }
 
-    public int getShowLocations(){
+    public int getShowLocations() {
         return showLocations;
     }
 
-    public int getShowAccounts(){
+    public int getShowAccounts() {
         return showAccounts;
     }
 
 
-    public void getLocations(final SocialSharingFragment socialSharingFragment,final int showLocations) {
+    public void getLocations(final SocialSharingFragment socialSharingFragment) {
 
 
-
-        StringRequest sr = new StringRequest(Request.Method.GET, Constants.GMBgetLocationUrl + GMBAccountId
-                + "/locations?access_token=" + GMBAuthToken, new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.GET, Constants.GMBgetLocationUrl + accountId
+                + "/locations?access_token=" + authToken, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -309,15 +304,16 @@ public class GMBHandler {
 
                 try {
                     JSONArray arr = new JSONObject(response).getJSONArray("locations");
-                    socialSharingFragment.showBuilder(arr,showLocations);
-                    socialSharingFragment.CloseDialogBoxes();
+                    socialSharingFragment.showBuilder(arr, showLocations);
+                    socialSharingFragment.hideLoader();
 
                 } catch (JSONException e) {
-
-                    AlertDialog builder = socialSharingFragment.getBuilder();
-                    builder.cancel();
+                    Toast.makeText(context,context.getString(R.string.gmb_error_message),Toast.LENGTH_LONG).show();
+                    socialSharingFragment.closeDialog();
                     e.printStackTrace();
-                    socialSharingFragment.CloseDialogBoxes();
+                    socialSharingFragment.hideLoader();
+                    socialSharingFragment.handleGMBCheckbox(false);
+                    removeUser(socialSharingFragment);
                 }
 
             }
@@ -325,11 +321,12 @@ public class GMBHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                BoostLog.i(Constants.LogTag, "here 3"+ error.toString()+" "+GMBAuthToken);
+                BoostLog.i(Constants.LogTag, "here 3" + error.toString() + " " + authToken);
 
 
+                socialSharingFragment.hideLoader();
 
-                socialSharingFragment.CloseDialogBoxes();
+                socialSharingFragment.handleGMBCheckbox(false);
 
 
             }
@@ -339,51 +336,48 @@ public class GMBHandler {
     }
 
 
-    public void GMBRemoveUser(Context context, UserSessionManager session, final SocialSharingFragment socialSharingFragment) {
+    public void removeUser(final SocialSharingFragment socialSharingFragment) {
 
         JSONObject mainObject = new JSONObject();
 
         try {
-            mainObject.put("floatingPointId",session.getFPID());
+            mainObject.put("floatingPointId", sessionManager.getFPID());
 
-            mainObject.put("clientId",Constants.clientId);
+            mainObject.put("clientId", Constants.clientId);
 
             JSONObject accessToken = new JSONObject();
 
             accessToken.put("Type", "googlemybusiness");
 
-            accessToken.put("UserAccountId","");
+            accessToken.put("UserAccountId", "");
 
-            accessToken.put("UserAccountName","");
+            accessToken.put("UserAccountName", "");
 
-            accessToken.put("LocationId","");
+            accessToken.put("LocationId", "");
 
-            accessToken.put("LocationName","");
+            accessToken.put("LocationName", "");
 
-            accessToken.put("token_expiry","");
+            accessToken.put("token_expiry", "");
 
-            accessToken.put("invalid",false);
+            accessToken.put("invalid", false);
 
             JSONObject tokenResponse = new JSONObject();
 
-            tokenResponse.put("access_token","");
+            tokenResponse.put("access_token", "");
 
-            tokenResponse.put("token_type","");
+            tokenResponse.put("token_type", "");
 
-            tokenResponse.put("expires_in",3600);
+            tokenResponse.put("expires_in", 3600);
 
-            tokenResponse.put("refresh_token","");
+            tokenResponse.put("refresh_token", "");
 
-            accessToken.put("token_response",tokenResponse);
+            accessToken.put("token_response", tokenResponse);
 
-            accessToken.put("token_type","");
+            accessToken.put("token_type", "");
 
-            accessToken.put("UserAccessTokenKey","");
+            accessToken.put("UserAccessTokenKey", "");
 
-            mainObject.put("accessToken",accessToken);
-
-
-
+            mainObject.put("accessToken", accessToken);
 
 
         } catch (JSONException e) {
@@ -397,7 +391,7 @@ public class GMBHandler {
 
                         BoostLog.i(Constants.LogTag, response.toString());
 
-                        socialSharingFragment.CloseDialogBoxes();
+                        socialSharingFragment.hideLoader();
 
                     }
                 }, new Response.ErrorListener() {
@@ -405,7 +399,7 @@ public class GMBHandler {
             public void onErrorResponse(VolleyError error) {
 
                 BoostLog.i(Constants.LogTag, error.toString());
-                socialSharingFragment.CloseDialogBoxes();
+                socialSharingFragment.hideLoader();
 
             }
         }) {
@@ -427,41 +421,13 @@ public class GMBHandler {
     }
 
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
-    }
-
-    public void setGMBAuthToken(String GMBAuthToken) {
-        this.GMBAuthToken = GMBAuthToken;
-    }
-
-    public void setGMBTokenExpiry(String GMBTokenExpiry) {
-        this.GMBTokenExpiry = GMBTokenExpiry;
-    }
-
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public void setGMBAccountId(String GMBAccountId) {
-        this.GMBAccountId = GMBAccountId;
-    }
-
-    public void setGMBUserAccountName(String GMBUserAccountName) {
-        this.GMBUserAccountName = GMBUserAccountName;
-    }
-
-    public void setGMBRefreshtoken(String GMBRefreshtoken) {
-        this.GMBRefreshtoken = GMBRefreshtoken;
-    }
-
-    public void getAuthCodeFromServer(final Context context, final String np_id, final String auth_code, final SocialSharingFragment socialSharingFragment) {
+    public void postAuthCodeFromServer(final String authCode, final SocialSharingFragment socialSharingFragment) {
 
         JSONObject child = new JSONObject();
 
         try {
             child.put("nowfloats_client_id", Constants.clientId);
-            child.put("nowfloats_id", np_id);
+            child.put("nowfloats_id", sessionManager.getFPID());
             child.put("operation", "create");
             child.put("filter", "access_token");
             child.put("boost_priority", 9);
@@ -469,15 +435,13 @@ public class GMBHandler {
             JSONArray arr = new JSONArray();
             arr.put(0, "googlemybusiness");
             JSONObject social_data = new JSONObject();
-            social_data.put("authorization_code", auth_code);
+            social_data.put("authorization_code", authCode);
             child.put("social_data", social_data);
             child.put("identifiers", arr);
 
-
         } catch (JSONException e) {
             e.printStackTrace();
-
-            socialSharingFragment.CloseDialogBoxes();
+            socialSharingFragment.hideLoader();
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.NFXProcessUrl, child,
@@ -487,7 +451,7 @@ public class GMBHandler {
 
                         BoostLog.i(Constants.LogTag, response.toString());
 
-                        continueProcessForGMB(context,np_id, auth_code,socialSharingFragment);
+                        continueProcess(authCode, socialSharingFragment);
 
                     }
                 }, new Response.ErrorListener() {
@@ -496,7 +460,7 @@ public class GMBHandler {
 
                 BoostLog.i(Constants.LogTag, error.toString());
 
-                socialSharingFragment.CloseDialogBoxes();
+                socialSharingFragment.hideLoader();
 
             }
         }) {
@@ -516,18 +480,20 @@ public class GMBHandler {
         Volley.newRequestQueue(context).add(jsonObjectRequest);
     }
 
-    public void continueProcessForGMB(final Context context, final String np_id, final String auth_code, final SocialSharingFragment socialSharingFragment) {
+    public void continueProcess(final String authCode, final SocialSharingFragment socialSharingFragment) {
+
+
+        BoostLog.i(Constants.LogTag,sessionManager.getFPID());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET
-                , Constants.NFXgetAcessToken+"?nowfloats_id=" + np_id, new Response.Listener<String>() {
+                , Constants.NFXgetAcessToken + "?nowfloats_id=" + sessionManager.getFPID(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
 
-
                 BoostLog.i(Constants.LogTag, response);
 
-                BoostLog.i(Constants.LogTag, auth_code);
+                BoostLog.i(Constants.LogTag, authCode);
 
 
                 try {
@@ -535,25 +501,42 @@ public class GMBHandler {
 
                     JSONArray arr = object.getJSONArray("NFXAccessTokens");
 
-                    JSONObject childObject = arr.getJSONObject(0);
+                    //JSONObject childObject = arr.getJSONObject(0);
 
-                    String refresh_token = childObject.getString("refresh_token");
+                    JSONObject childObject = new JSONObject();
 
-                    GMBRefreshtoken = refresh_token;
+
+                    for(int i=0; i<arr.length(); i++){
+                        childObject = arr.getJSONObject(i);
+                        if(childObject.getString("Type").equals("googlemybusiness")){
+
+                            break;
+                        }else{
+                            if(pollingCount>15){
+                                Toast.makeText(context,context.getString(R.string.gmb_error_message),Toast.LENGTH_LONG).show();
+                                socialSharingFragment.hideLoader();
+                            }
+                        }
+                    }
+                    //String refresh_token = childObject.getString("refresh_token");
+
+                    //efreshToken = refresh_token;
 
                     String auth_token = childObject.getJSONObject("token_response").getString("access_token");
 
-                    GMBTokenExpiry = childObject.getString("token_expiry");
+                    String refresh_token = childObject.getJSONObject("token_response").getString("refresh_token");
 
-                    GMBAuthToken = auth_token;
+                    refreshToken = refresh_token;
+
+                    tokenExpiry = childObject.getString("token_expiry");
+
+                    authToken = auth_token;
 
                     BoostLog.i(Constants.LogTag, "refresh_token: " + refresh_token + "\n" + "auth_code: " + auth_token);
 
+                    socialSharingFragment.hideLoader();
 
-
-                    GMBGetAccountNumber(context,auth_token,socialSharingFragment);
-
-                    socialSharingFragment.CloseDialogBoxes();
+                    getAccountNumber(auth_token, socialSharingFragment);
 
 
                 } catch (JSONException e) {
@@ -562,16 +545,17 @@ public class GMBHandler {
                         @Override
                         public void run() {
 
+                            pollingCount++;
 
 
-                            if (GMBPollinCount < 15) {
+                            if (pollingCount < 15) {
 
-                                continueProcessForGMB(context,np_id, auth_code,socialSharingFragment);
+                                continueProcess(authCode, socialSharingFragment);
 
-                                BoostLog.i(Constants.LogTag, "Polling Count : " + GMBPollinCount + " , trying again");
+                                BoostLog.i(Constants.LogTag, "Polling Count : " + pollingCount + " , trying again");
 
                             } else {
-                                socialSharingFragment.CloseDialogBoxes();
+                                socialSharingFragment.hideLoader();
                             }
                         }
                     }, 2000);
@@ -583,10 +567,10 @@ public class GMBHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-              
+
 
                 BoostLog.i(Constants.LogTag, error.toString());
-                socialSharingFragment.CloseDialogBoxes();
+                socialSharingFragment.hideLoader();
             }
         });
 
@@ -594,17 +578,16 @@ public class GMBHandler {
     }
 
     public void refreshGMB() {
-        GMBUserAccountName = "";
-        GMBAccountId = "";
-        GMBAuthToken = "";
-        GMBRefreshtoken = "";
-        GMBPollinCount=0;
+        accountName = "";
+        accountId = "";
+        authToken = "";
+        refreshToken = "";
+        pollingCount = 0;
     }
 
-    public void GMBGetAccountNumber(Context context, String at, final SocialSharingFragment socialSharingFragment) {
+    public void getAccountNumber(String at, final SocialSharingFragment socialSharingFragment) {
 
         if (at.length() > 0) {
-
 
             JsonObjectRequest sr = new JsonObjectRequest(Constants.GMBCallbackUrl + "?access_token=" + at, null,
                     new Response.Listener<JSONObject>() {
@@ -615,13 +598,15 @@ public class GMBHandler {
                             try {
                                 JSONArray arr = response.getJSONArray("accounts");
 
-                                socialSharingFragment.CloseDialogBoxes();
+                                socialSharingFragment.hideLoader();
 
                                 socialSharingFragment.showBuilder(arr, showAccounts);
 
                             } catch (JSONException e) {
                                 BoostLog.i(Constants.LogTag, "Accounts Not Found");
+                                socialSharingFragment.handleGMBCheckbox(false);
                             }
+
 
                         }
                     }, new Response.ErrorListener() {
@@ -629,7 +614,8 @@ public class GMBHandler {
                 public void onErrorResponse(VolleyError error) {
 
                     BoostLog.i(Constants.LogTag, error.toString());
-                    socialSharingFragment.CloseDialogBoxes();
+                    socialSharingFragment.hideLoader();
+                    socialSharingFragment.handleGMBCheckbox(false);
                 }
             }
 
@@ -639,16 +625,40 @@ public class GMBHandler {
 
             Volley.newRequestQueue(context).add(sr);
         } else {
-            socialSharingFragment.CloseDialogBoxes();
+            socialSharingFragment.hideLoader();
             BoostLog.i(Constants.LogTag, "invalid token");
         }
     }
 
-    public void setRequestCode(int requestCode) {
-        this.requestCode = requestCode;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public int getRequestCode() {
-        return requestCode;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 }
