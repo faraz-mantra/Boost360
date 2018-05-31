@@ -1630,7 +1630,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     
 
 
-   
+
 
     //Removing the user by submitting blank access token
 
