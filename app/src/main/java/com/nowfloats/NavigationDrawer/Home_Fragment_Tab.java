@@ -5,7 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -13,23 +18,29 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 import static com.nowfloats.bubble.BubblesService.ACTION_KILL_DIALOG;
@@ -64,7 +75,7 @@ public class Home_Fragment_Tab extends Fragment {
         super.onResume();
 
         bus.register(this);
-        if (headerText != null){
+        if (headerText != null) {
             headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         }
         if (viewPager != null) {
@@ -111,9 +122,9 @@ public class Home_Fragment_Tab extends Fragment {
     @Subscribe
     public void getalertCountEvent(AlertCountEvent ev) {
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
-            if (Integer.parseInt(alertCountVal)>99){
+            if (Integer.parseInt(alertCountVal) > 99) {
                 alertCountTv.setText("99+");
-            }else{
+            } else {
                 alertCountTv.setText(alertCountVal);
             }
 
@@ -149,8 +160,7 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv.setVisibility(View.GONE);
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
-       /* if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") *//*&& "1".equals(paymentState)*//*) {
-            getProducts();
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -159,7 +169,7 @@ public class Home_Fragment_Tab extends Fragment {
                 }
             }, 8000);
 
-        }*/
+        }
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -229,12 +239,12 @@ public class Home_Fragment_Tab extends Fragment {
             }
         });
         // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(viewPager,ContextCompat.getColorStateList(getActivity(),R.color.selector));
+        tabs.setViewPager(viewPager, ContextCompat.getColorStateList(getActivity(), R.color.selector));
 
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0")) {
-            if (Integer.parseInt(alertCountVal)>99){
+            if (Integer.parseInt(alertCountVal) > 99) {
                 alertCountTv.setText("99+");
-            }else{
+            } else {
                 alertCountTv.setText(alertCountVal);
             }
             alertCountTv.setVisibility(View.VISIBLE);
@@ -309,32 +319,27 @@ public class Home_Fragment_Tab extends Fragment {
 //
 //    }
 
-    /*public void checkOverlay(DrawOverLay from) {
-        if (!isAdded() || getActivity() == null) {
-            return;
-        }
+    public void checkOverlay(DrawOverLay from) {
+//        if (!isAdded() || getActivity() == null) {
+//            return;
+//        }
+//
+//
+//        Calendar calendar = Calendar.getInstance();
+//        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
+//        long newTime = calendar.getTimeInMillis();
+//        long diff = 3 * 24 * 60 * 60 * 1000;
+//        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
+//            return;
+//        } else {
 
-        boolean checkAccessibility = true;
-
-
-        Calendar calendar = Calendar.getInstance();
-        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
-        long newTime = calendar.getTimeInMillis();
-        long diff = 3 * 24 * 60 * 60 * 1000;
-        //Log.v("ggg", oldTime + "");
-//Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
-        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
-            return;
-        } else {
-
+        if (getActivity() != null) {
             if (!Methods.hasOverlayPerm(getActivity())) {
-                checkAccessibility = false;
                 dialogForOverlayPath(from);
             }
         }
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
-        if (checkAccessibility)
-            checkForAccessibility();
+//        }
+//        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
     }
 
     private void dialogForOverlayPath(DrawOverLay from) {
@@ -342,8 +347,8 @@ public class Home_Fragment_Tab extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         try {
-            GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
-            Glide.with(getContext()).load(R.drawable.overlay_gif).into(target);
+//            GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
+            Glide.with(getContext()).load(R.drawable.overlay_gif).into(image);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -385,11 +390,11 @@ public class Home_Fragment_Tab extends Fragment {
             startActivity(new Intent(Settings.ACTION_SETTINGS));
         }
     }
-*/
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       /* if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
+        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
 
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
@@ -402,56 +407,59 @@ public class Home_Fragment_Tab extends Fragment {
                                 checkCustomerAssistantService();
                             }
 
-                            checkForAccessibility();
                         }
                     }
                 }
             }, 1000);
-        }*/
+        }
     }
 
-   /* private void checkCustomerAssistantService() {
+    private void checkCustomerAssistantService() {
+//        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
+        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
 
-        if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
-            Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
-            getActivity().startService(bubbleIntent);
+            if (Methods.hasOverlayPerm(getActivity())) {
+
+                if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        getActivity().startForegroundService(new Intent(getActivity(), CustomerAssistantService.class));
+                    } else {
+                        Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+                        getActivity().startService(bubbleIntent);
+                    }
+                }
+            }
         }
         getActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
-    private void checkForAccessibility() {
-        if (getActivity() == null) return;
-        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
-            showBubble();
-        }
-    }
 
-    private void addOverlay() {
-        bubbleOverlay.setVisibility(View.VISIBLE);
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bubbleOverlay.removeAllViews();
-                bubbleOverlay.setVisibility(View.GONE);
-                //layout.setOnClickListener(null);
-            }
-        });
-    }*/
+//    private void addOverlay() {
+//        bubbleOverlay.setVisibility(View.VISIBLE);
+//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                bubbleOverlay.removeAllViews();
+//                bubbleOverlay.setVisibility(View.GONE);
+//                //layout.setOnClickListener(null);
+//            }
+//        });
+//    }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false)
+        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false)
                 && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
             onBoardingManager.getOnBoardingData(session.getFpTag());
         }
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
-            if (Integer.parseInt(alertCountVal)>99){
+            if (Integer.parseInt(alertCountVal) > 99) {
                 alertCountTv.setText("99+");
-            }else{
+            } else {
                 alertCountTv.setText(alertCountVal);
             }
 

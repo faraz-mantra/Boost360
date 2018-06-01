@@ -34,7 +34,7 @@ import retrofit.converter.GsonConverter;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = false;
+    public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
@@ -135,7 +135,7 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient())./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
@@ -243,6 +243,8 @@ public class Constants {
     public static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
     public static final String PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin";
     public static final String PREF_USER_NAME = "twitter_user_name";
+    public static final String PREF_NOTI_CALL_LOGS = "noti_call_logs";
+    public static final String PREF_NOTI_ENQUIRIES = "noti_enquiries";
     public static final String SYNCED = "synced";
 
 
@@ -508,6 +510,7 @@ public class Constants {
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
+    public static String DEFAULT_PACKAGE_NAME_WEB_ERROR = "com.biz.nowfloats";
     public static String SUPPORT_EMAIL_ID = Specific.CONTACT_EMAIL_ID;
 
     public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;

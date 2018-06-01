@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="noti_msg_calls">Reach out to these customers before they go somewhere else!</string>
+    <string name="noti_msg_enquires">Respond to these enquiries before it\'s too late!</string>
 
     <string name="gmb_integration_Successful">Your business has been synced with Google My Business</string>
     <string name="gmb_upload_data" >Google My Business Profile updated.</string>
@@ -1284,6 +1286,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="put_your_nowfloats_website_as_a_sub_domain">
         Put your NowFloats website as a sub domain.
     </string>
+
+    <!-- Caller Info -->
+
+    <string name="missed_calls">Missed Calls </string>
+    <string name="dismiss">DISMISS</string>
+    <string name="received_calls">Received Calls </string>
+
     <string-array name="priority_list">
         <item>DEFAULT</item>
         <item>HIGH</item>
@@ -1456,6 +1465,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="required_overlay_permission">Give us this permission to see our new features</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="call_tracker">Call Tracker</string>
+    <string name="deep_link_call_tracker">callTracker</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>

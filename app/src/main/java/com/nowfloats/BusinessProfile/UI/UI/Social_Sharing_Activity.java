@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -229,9 +228,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
-                Display("HEllo WWorld");
-
                 if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
                     facebookPageCheckBox.setChecked(false);
                     Toast.makeText(Social_Sharing_Activity.this, "Facebook is not working", Toast.LENGTH_SHORT).show();
@@ -398,10 +394,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
         InitShareResources();
         setStatus();
-    }
-
-    private void Display(String s){
-        Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
 
     private void showDialog1(int showDialog, float days) {

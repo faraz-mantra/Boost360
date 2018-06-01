@@ -205,5 +205,5 @@
         android:layout_below="@+id/containerDrawerImage"/>
 
 
-</RelativeLayout><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/res/layout-xhdpi/fragment_side_panel2.xml -->
+</RelativeLayout><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/layoutyout-xhdpi/fragment_side_panel2.xml -->
 </ScrollView>

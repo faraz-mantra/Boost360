@@ -93,12 +93,9 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int PAGE_NO_FOUND = 404;
-    private boolean GMBLoader = true;
     private static final int FB_PAGE_CREATION = 101;
-
     private GMBHandler gmbHandler;
     int size = 0;
-
     private String TAG = Constants.LogTag;
     boolean[] checkedPages;
 
@@ -153,8 +150,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private TextView arrowTextView;
     private TwitterConnection twitterConnection;
     private String fpPageName;
-    private LinearLayout linearLayout;
-
     Handler handler = new Handler();
 
 //    private int lastGoogleAccounts = 0;
@@ -205,7 +200,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookPage = (ImageView) view.findViewById(R.id.social_sharing_facebook_page_image);
         twitter = (ImageView) view.findViewById(R.id.social_sharing_twitter_image);
         ivFbPageAutoPull = (ImageView) view.findViewById(R.id.auto_pull_facebook_page_image);
-        linearLayout = view.findViewById(R.id.parent_layout);
 
         facebookHomeStatus = (TextView) view.findViewById(R.id.social_sharing_facebook_profile_flag_text);
         facebookPageStatus = (TextView) view.findViewById(R.id.social_sharing_facebook_page_flag_text);
@@ -231,14 +225,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 //                }
 //            }
 //        }
-
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);
         twitterStatus.setTypeface(myCustomFont);

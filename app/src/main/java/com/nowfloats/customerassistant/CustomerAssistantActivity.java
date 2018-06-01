@@ -1,6 +1,7 @@
 package com.nowfloats.customerassistant;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -67,6 +68,8 @@ public class CustomerAssistantActivity extends Activity {
     public static final String TAG_FRAGMENT = "customer_assistant";
 
     private String appVersion = "";
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

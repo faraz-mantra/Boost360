@@ -9,14 +9,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -27,13 +25,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.viewHolder.MyViewHolder;
+import com.nowfloats.managenotification.CallerTempDisplayDialog;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -52,28 +49,27 @@ import java.util.List;
 public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     private static final int STORAGE_CODE = 120;
-    private final int VIEW_TYPE_WELCOME 		= 0;
-    private final int VIEW_TYPE_IMAGE_TEXT 		= 1;
+    private final int VIEW_TYPE_WELCOME = 0;
+    private final int VIEW_TYPE_IMAGE_TEXT = 1;
     String imageUri = "";
 
     private LayoutInflater mInflater;
-    public HomeActivity appContext ;
+    public HomeActivity appContext;
     FloatsMessageModel data;
     String msg = "", date = "";
     private boolean imagePresent;
     UserSessionManager session;
-    Target targetMap =null;
+    Target targetMap = null;
 
-    static ProgressDialog pd ;
+    static ProgressDialog pd;
 
-    public interface Permission{
-         void getPermission();
+    public interface Permission {
+        void getPermission();
     }
 
-    public CardAdapter_V3(Activity appContext, UserSessionManager session)
-    {
-        Log.d("CardAdapter_V3","Constructor");
-        this.appContext = (HomeActivity) appContext ;
+    public CardAdapter_V3(Activity appContext, UserSessionManager session) {
+        Log.d("CardAdapter_V3", "Constructor");
+        this.appContext = (HomeActivity) appContext;
         this.session = session;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -81,39 +77,35 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View convertView;
-        MyViewHolder.WelcomeViewHolder welcomeViewHolder = null ;
-        MyViewHolder.Image_Text_ViewHolder image_text_viewHolder = null ;
+        MyViewHolder.WelcomeViewHolder welcomeViewHolder = null;
+        MyViewHolder.Image_Text_ViewHolder image_text_viewHolder = null;
 
-        if(viewType == VIEW_TYPE_WELCOME)
-        {
+        if (viewType == VIEW_TYPE_WELCOME) {
 
             convertView = mInflater.inflate(R.layout.card_welcome, parent, false);
             welcomeViewHolder = new MyViewHolder.WelcomeViewHolder(convertView);
 
-            if (Home_Main_Fragment.emptyMsgLayout!=null)
+            if (Home_Main_Fragment.emptyMsgLayout != null)
                 Home_Main_Fragment.emptyMsgLayout.setVisibility(View.GONE);
 
-              return welcomeViewHolder ;
-        }
-        else
-        {
-            convertView = mInflater.inflate(R.layout.cards_layout,parent,false);
+            return welcomeViewHolder;
+        } else {
+            convertView = mInflater.inflate(R.layout.cards_layout, parent, false);
             image_text_viewHolder = new MyViewHolder.Image_Text_ViewHolder(convertView);
 
             convertView.setOnClickListener(Home_Main_Fragment.myOnClickListener);
-            return image_text_viewHolder ;
+            return image_text_viewHolder;
         }
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        Log.d("CardAdapter_V3","onBindViewHolder");
-        if( holder instanceof MyViewHolder.WelcomeViewHolder)
-        {
+        Log.d("CardAdapter_V3", "onBindViewHolder");
+        if (holder instanceof MyViewHolder.WelcomeViewHolder) {
             TextView welcomeTextView = holder.welcomeTextView;
-            TextView congratsTextView = holder.congratsTitleTextView ;
-            Typeface robotoMedium = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
-            Typeface robotoLight = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Light.ttf");
+            TextView congratsTextView = holder.congratsTitleTextView;
+            Typeface robotoMedium = Typeface.createFromAsset(appContext.getAssets(), "Roboto-Medium.ttf");
+            Typeface robotoLight = Typeface.createFromAsset(appContext.getAssets(), "Roboto-Light.ttf");
 
             ImageView welcomeScreenShowWebsite = holder.welcomeScreenCreateWebsiteImage;
             PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(appContext.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_OUT);
@@ -123,8 +115,8 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             congratsTextView.setTypeface(robotoLight);
 
             ImageView cancelImageView = holder.cancelCardImageView;
-            final CardView initialCard = holder.initialCardView ;
-            if (Home_Main_Fragment.emptyMsgLayout!=null)
+            final CardView initialCard = holder.initialCardView;
+            if (Home_Main_Fragment.emptyMsgLayout != null)
                 Home_Main_Fragment.emptyMsgLayout.setVisibility(View.GONE);
 
             // Button showWebSiteButton = holder.showWebSiteButton;
@@ -135,43 +127,43 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     Constants.isWelcomScreenToBeShown = false;
                     initialCard.setVisibility(View.GONE);
 
-                    if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0){
-                        if (Home_Main_Fragment.emptyMsgLayout!=null)
+                    if (HomeActivity.StorebizFloats != null && HomeActivity.StorebizFloats.size() == 0) {
+                        if (Home_Main_Fragment.emptyMsgLayout != null)
                             Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
                     }
                 }
             });
 
-            Button showWebSiteButton = holder.showWebSiteButton ;
+            Button showWebSiteButton = holder.showWebSiteButton;
             showWebSiteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MixPanelController.track(EventKeysWL.SHOW_MOBILE_WEB_SITE,null);
+                    MixPanelController.track(EventKeysWL.SHOW_MOBILE_WEB_SITE, null);
                     String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
                     if (!Util.isNullOrEmpty(url)) {
                         url = url.toLowerCase();
-                    }else{
-                        url = "http://"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                    } else {
+                        url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
                                 + appContext.getResources().getString(R.string.tag_for_partners);
                     }
 
                     Constants.isWelcomScreenToBeShown = false;
 
                     initialCard.setVisibility(View.GONE);
-                    Intent showWebSiteIntent = new Intent(appContext,Mobile_Site_Activity.class);
+                    Intent showWebSiteIntent = new Intent(appContext, Mobile_Site_Activity.class);
                     showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     showWebSiteIntent.putExtra("WEBSITE_NAME", url);
                     appContext.startActivity(showWebSiteIntent);
 
-                    if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0){
-                        if (Home_Main_Fragment.emptyMsgLayout!=null)
+                    if (HomeActivity.StorebizFloats != null && HomeActivity.StorebizFloats.size() == 0) {
+                        if (Home_Main_Fragment.emptyMsgLayout != null)
                             Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
                     }
                 }
             });
         } else {
-            final TextView textView1 = holder.textView ;
-            TextView dateText = holder.dateText ;
+            final TextView textView1 = holder.textView;
+            TextView dateText = holder.dateText;
             ImageView imageView = holder.imageView;
             ImageView shareImageView = holder.shareImageView;
 
@@ -181,102 +173,118 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 @Override
                 public void onClick(View v) {
                     MixPanelController.track("SharePost", null);
-                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                            Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
-                        }else{
-                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
+                        } else {
+                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
                         }
                         return;
                     }
                     // final Intent shareIntent = null;
-                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
+//                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
+//
+//                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
+//                        if (Methods.isOnline(appContext)) {
+//                            String url;
+//                            if (imageShare.contains("BizImages")) {
+//                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+//                            } else {
+//                                url = imageShare;
+//                            }
+//                            Target target = new Target(){
+//
+//
+//                                @Override
+//                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+//                                    pd.dismiss();
+//                                    targetMap= null;
+//                                    try {
+//                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+//                                        View view = new View(appContext);
+//                                        view.draw(new Canvas(mutableBitmap));
+//                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+//                                        BoostLog.d("Path is:", path);
+//                                        Uri uri = Uri.parse(path);
+//                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+//                                                HomeActivity.StorebizFloats.get(position).url);
+//                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+//                                        shareIntent.setType("image/*");
+//
+//                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+//                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+//                                        } else {
+//                                            Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
+//                                        }
+//                                    }catch(OutOfMemoryError e){
+//                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+//                                    } catch (Exception e) {
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onBitmapFailed(Drawable errorDrawable) {
+//                                    pd.dismiss();
+//                                    targetMap= null;
+//                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+//
+//                                }
+//
+//                                @Override
+//                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                                }
+//                            };
+//                            targetMap = target;
+//                            Picasso.with(appContext)
+//                                    .load(url)
+//                                    .into(target);
+//
+//
+//                        } else {
+//                            pd.dismiss();
+//                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+//                        }
+//
+//
+//                    } else {
+//                        pd.dismiss();
+//                        shareIntent.setType("text/plain");
+//                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+//                                HomeActivity.StorebizFloats.get(position).url);
+//                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+//                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+//                        } else {
+//                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+//                        }
+//
+//                    }
 
-                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
-                        if (Methods.isOnline(appContext)) {
-                            String url;
-                            if (imageShare.contains("BizImages")) {
-                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
-                            } else {
-                                url = imageShare;
-                            }
-                            Target target = new Target(){
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            appContext.runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+                    Intent intent = new Intent(appContext, CallerTempDisplayDialog.class).
+                            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    appContext.startActivity(intent);
+//                }
+//                            });
+//
+//                        }
+//                    },3000);
 
-
-                                @Override
-                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                                    pd.dismiss();
-                                    targetMap= null;
-                                    try {
-                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                        View view = new View(appContext);
-                                        view.draw(new Canvas(mutableBitmap));
-                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-                                        BoostLog.d("Path is:", path);
-                                        Uri uri = Uri.parse(path);
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                                HomeActivity.StorebizFloats.get(position).url);
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                        shareIntent.setType("image/*");
-
-                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
-                                        } else {
-                                            Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
-                                        }
-                                    }catch(OutOfMemoryError e){
-                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-                                    } catch (Exception e) {
-
-                                    }
-                                }
-
-                                @Override
-                                public void onBitmapFailed(Drawable errorDrawable) {
-                                    pd.dismiss();
-                                    targetMap= null;
-                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-
-                                }
-
-                                @Override
-                                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                }
-                            };
-                            targetMap = target;
-                            Picasso.with(appContext)
-                                    .load(url)
-                                    .into(target);
-
-
-                        } else {
-                            pd.dismiss();
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
-                        }
-
-
-                    } else {
-                        pd.dismiss();
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                HomeActivity.StorebizFloats.get(position).url);
-                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
-                        } else {
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                        }
-
-                    }
                 }
 
             });
 
-            if(Constants.isWelcomScreenToBeShown) {
-                Constants.isWelcomScreenToBeShown = false ;
+            if (Constants.isWelcomScreenToBeShown) {
+                Constants.isWelcomScreenToBeShown = false;
                 data = HomeActivity.StorebizFloats.get(position - 1);
             } else {
                 data = HomeActivity.StorebizFloats.get(position);
@@ -292,33 +300,26 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     textView1.setText(msg);
                     dateText.setText(date);
 
-                    if(Util.isNullOrEmpty(imageUri) || imageUri.contains("deal.png"))
-                    {
-                        imagePresent = false ;
+                    if (Util.isNullOrEmpty(imageUri) || imageUri.contains("deal.png")) {
+                        imagePresent = false;
                         imageView.setVisibility(View.GONE);
-                    }
-                    else if(imageUri.contains("BizImages") )
-                    {
-                        imagePresent = true ;
+                    } else if (imageUri.contains("BizImages")) {
+                        imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = Constants.BASE_IMAGE_URL + imageUri;
-                        Picasso.with(appContext).load(baseName).resize(450,450).placeholder(R.drawable.default_product_image).into(imageView);
+                        Picasso.with(appContext).load(baseName).resize(450, 450).placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
-                    }
-                    else if(imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard") )
-                    {
+                    } else if (imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard")) {
                         imagePresent = true;
 
                         imageView.setVisibility(View.VISIBLE);
-                        Bitmap bmp = Util.getBitmap(imageUri,appContext);
+                        Bitmap bmp = Util.getBitmap(imageUri, appContext);
                         imageView.setImageBitmap(bmp);
-                    }
-                    else
-                    {
+                    } else {
                         imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
-                        baseName = imageUri ;
-                        Picasso.with(appContext).load(baseName).resize(450,450).placeholder(R.drawable.default_product_image).into(imageView);
+                        baseName = imageUri;
+                        Picasso.with(appContext).load(baseName).resize(450, 450).placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }
                 }
@@ -326,11 +327,13 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 e.printStackTrace();
             }
         }
+
     }
 
-    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("MyAdapter", "onActivityResult");
     }
+
     private void shareIntentToPackages(String type, String subject, Uri uri) {
         List<Intent> targetShareIntents = new ArrayList<Intent>();
         Intent shareIntent = new Intent();
@@ -342,14 +345,13 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             for (ResolveInfo resInfo : resInfos) {
                 String packageName = resInfo.activityInfo.packageName;
                 Log.i("Package Name", packageName);
-                if (!packageName.contains("com.twitter.android") && !packageName.contains("com.facebook.katana") )
-                {
+                if (!packageName.contains("com.twitter.android") && !packageName.contains("com.facebook.katana")) {
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
                     intent.setAction(Intent.ACTION_SEND);
                     intent.setType(type);
                     intent.putExtra(Intent.EXTRA_TEXT, subject);
-                    if(uri != null)
+                    if (uri != null)
                         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 
                     intent.setPackage(packageName);
@@ -377,15 +379,16 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     }
 
 
-    private List<String> getShareApplication(){
-        List<String> mList=new ArrayList<String>();
+    private List<String> getShareApplication() {
+        List<String> mList = new ArrayList<String>();
         mList.add("com.facebook.katana");
         mList.add("com.twitter.android");
         mList.add("com.google.android.gm");
         return mList;
 
     }
-    private void Share(List<String> PackageName,String Text) {
+
+    private void Share(List<String> PackageName, String Text) {
         try {
             List<Intent> targetedShareIntents = new ArrayList<Intent>();
             Intent share = new Intent(android.content.Intent.ACTION_SEND);
@@ -410,9 +413,10 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         }
 
     }
+
     @Override
     public int getItemViewType(int position) {
-        if(Constants.isWelcomScreenToBeShown) {
+        if (Constants.isWelcomScreenToBeShown) {
             return VIEW_TYPE_WELCOME;
         } else {
             return VIEW_TYPE_IMAGE_TEXT;
@@ -421,11 +425,9 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(Constants.isWelcomScreenToBeShown)
-        {
+        if (Constants.isWelcomScreenToBeShown) {
             return 1;
-        }
-        else {
+        } else {
             return HomeActivity.StorebizFloats.size();
         }
     }
