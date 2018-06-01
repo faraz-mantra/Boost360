@@ -19,7 +19,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -60,7 +58,6 @@ import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.GMB.Adapter.BuilderAdapter;
 import com.nowfloats.GMB.Adapter.BuilderAdapterBusiness;
-
 import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
@@ -88,9 +85,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.List;
-
 import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
@@ -162,6 +157,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     Handler handler = new Handler();
 
+//    private int lastGoogleAccounts = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -208,7 +205,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookPage = (ImageView) view.findViewById(R.id.social_sharing_facebook_page_image);
         twitter = (ImageView) view.findViewById(R.id.social_sharing_twitter_image);
         ivFbPageAutoPull = (ImageView) view.findViewById(R.id.auto_pull_facebook_page_image);
-        linearLayout= view.findViewById(R.id.parent_layout);
+        linearLayout = view.findViewById(R.id.parent_layout);
 
         facebookHomeStatus = (TextView) view.findViewById(R.id.social_sharing_facebook_profile_flag_text);
         facebookPageStatus = (TextView) view.findViewById(R.id.social_sharing_facebook_page_flag_text);
@@ -309,12 +306,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 gmbHandler.refreshGMB();
 
                 if (gmbCheckBox.isChecked()) {
-
                     showLoader("Loading...");
-
                     gmbCheckBox.setChecked(false);
-
-
+//                    getGoogleAccounts();
                     Intent signInIntent = googleSignInClient.getSignInIntent();
                     startActivityForResult(signInIntent, GMBHandler.REQUEST_CODE);
                 } else {
@@ -481,6 +475,61 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         setStatus();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+//
+//    private void getGoogleAccounts() {
+//
+//        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.GET_ACCOUNTS}, 33);
+//        } else {
+//            fetchAccountInfo();
+//        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (ContextCompat.checkSelfPermission(getActivity(),
+//                    android.Manifest.permission.GET_ACCOUNTS)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//
+//                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+//                        android.Manifest.permission.GET_ACCOUNTS)) {
+//
+//                } else {
+//                    fetchAccountInfo();
+//                }
+//            } else {
+//                ActivityCompat.requestPermissions(getActivity(),
+//                        new String[]{android.Manifest.permission.GET_ACCOUNTS},
+//                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//            }
+//
+//        } else {
+//            fetchAccountInfo();
+//        }
+
+
+//    }
+
+//    private void fetchAccountInfo() {
+//        Account[] googleAccounts = AccountManager.get(getActivity()).getAccountsByType("com.google");
+//
+//        if (googleAccounts != null && googleAccounts.length > 0) {
+//            if (lastGoogleAccounts == 0) {
+//                lastGoogleAccounts = googleAccounts.length;
+//            } else {
+//                if (googleAccounts.length > lastGoogleAccounts) {
+//                    if (mainView != null) {
+////                        mainView.performClick();
+//                        mainView.dispatchTouchEvent(MotionEvent.obtain(
+//                                SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+//                                MotionEvent.ACTION_DOWN, 0, 0, 0));
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private void showDialog1(int showDialog, float days) {
 
@@ -663,17 +712,13 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
 
-    private void showLoader3(String msg){
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         hideLoader();
         if (requestCode == GMBHandler.REQUEST_CODE) {
-            if (resultCode == RESULT_OK||true) {
+            if (resultCode == RESULT_OK || true) {
 
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 try {
@@ -689,23 +734,23 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     e.printStackTrace();
                     BoostLog.i(Constants.LogTag, "" + e.toString());
 
-                    if(e.toString().contains("ApiException: 8")){
+                    if (e.toString().contains("ApiException: 8")) {
 
-                        BoostLog.e("android23235616","here 2");
+                        BoostLog.e("android23235616", "here 2");
 
                         gmbCheckBox.setChecked(false);
                         gmbCheckBox.performClick();
 
-                    }else{
+                    } else {
 
-                       gmbHandler.removeUser(this);
+                        gmbHandler.removeUser(this);
 
-                        BoostLog.e("android23235616","here 3");
-
+                        BoostLog.e("android23235616", "here 3");
+                        Toast.makeText(getActivity(), getString(R.string.retry_add_gmb), Toast.LENGTH_LONG).show();
                         gmbCheckBox.setChecked(false);
                     }
                 }
-            }else{
+            } else {
 
             }
         } else {
@@ -780,7 +825,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         if (HomeActivity.headerText != null)
             HomeActivity.headerText.setText("Social Sharing");
 
-        if(googleSignInClient!=null){
+        if (googleSignInClient != null) {
             mGoogleApiClient.registerConnectionFailedListener(this);
             mGoogleApiClient.registerConnectionCallbacks(this);
         }
@@ -917,7 +962,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }).start();
     }
 
-    public void pageSeleted(int id, final String pageName, String pageID, String pageAccessToken) {
+    public void pageSeleted(int id, final String pageName, String pageID, String
+            pageAccessToken) {
         String s = "";
         JSONObject obj;
         session.storeFacebookPage(pageName);
@@ -1040,7 +1086,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     public void hideLoader() {
 
-        BoostLog.i(Constants.LogTag,"Logger hidden");
+        BoostLog.i(Constants.LogTag, "Logger hidden");
 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
@@ -1626,7 +1672,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public void handleGMBCheckbox(boolean value) {
         gmbCheckBox.setChecked(value);
 
-        if(!value){
+        if (!value) {
             gmbSignOutUserfromGoogle(false);
         }
     }
@@ -1636,7 +1682,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         mGoogleApiClient.stopAutoManage(getActivity());
         mGoogleApiClient.disconnect();
