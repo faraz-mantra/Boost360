@@ -145,6 +145,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
         tvDismissCalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MixPanelController.track(MixPanelController.BUBBLE_DISMISS_CALL_TRACKER, null);
                 ecvCalls.setVisibility(View.GONE);
                 tvDismissCalls.setVisibility(View.GONE);
                 pref.edit().putString(PREF_NOTI_CALL_LOGS, "").commit();
@@ -157,6 +158,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
         tvDismissEnquiries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MixPanelController.track(MixPanelController.BUBBLE_DISMISS_ENQUIRY, null);
                 tvDismissEnquiries.setVisibility(View.GONE);
                 ecvEnquiries.setVisibility(View.GONE);
                 pref.edit().putString(PREF_NOTI_ENQUIRIES, "").commit();
