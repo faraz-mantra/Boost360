@@ -1607,6 +1607,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="boost_keyboard">Boost Keyboard</string>
     <string name="enable_keyboard">Enable Keyboard</string>
     <string name="otp_over_call">Tap here to get OTP Over Call</string>
+    <string name="sent_through">sent through</string>
+    <string name="enquired_on_sam">enquired on Sam</string>
 
     <string-array name="manage_content_tab_items">
         <item>My Business Profile</item>
