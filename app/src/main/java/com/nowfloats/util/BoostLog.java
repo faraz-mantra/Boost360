@@ -22,39 +22,39 @@ public class BoostLog {
 
     public static void v(String tag, String msg) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
         }
     }
 
     public static void v(String tag, String msg, Throwable tr) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
             tr.printStackTrace();
         }
     }
 
     public static void d(String tag, String msg) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
         }
     }
 
     public static void d(String tag, String msg, Throwable tr) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
             getStackTraceString(tr);
         }
     }
 
     public static void i(String tag, String msg) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
         }
     }
 
     public static void i(String tag, String msg, Throwable tr) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
             getStackTraceString(tr);
         }
     }
@@ -62,32 +62,32 @@ public class BoostLog {
 
     public static void w(String tag, String msg) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
         }
     }
 
     public static void w(String tag, String msg, Throwable tr) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
             getStackTraceString(tr);
         }
     }
 
     public static void w(String tag, Throwable tr) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+getStackTraceString(tr));
+            Log.v(Constants.APP_TAG, tag + getStackTraceString(tr));
         }
     }
 
     public static void e(String tag, String msg) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
         }
     }
 
     public static void e(String tag, String msg, Throwable tr) {
         if (!Constants.APK_MODE_RELEASE) {
-            Log.v(Constants.APP_TAG,tag+msg);
+            Log.v(Constants.APP_TAG, tag + msg);
             getStackTraceString(tr);
         }
     }

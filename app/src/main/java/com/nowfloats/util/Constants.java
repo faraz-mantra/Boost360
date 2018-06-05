@@ -34,7 +34,7 @@ import retrofit.converter.GsonConverter;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = false;
+    public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
@@ -60,6 +60,23 @@ public class Constants {
     public static String clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D";
 
     public static String clientId = Specific.clientId2;
+
+    public static String GMBClientId = "534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com";
+
+    public static String GMBCallbackUrl = "https://mybusiness.googleapis.com/v4/accounts";
+
+    public static String NFXUpdateAcessToken = "https://nfx.withfloats.com/dataexchange/v1/updateAccessTokens";
+
+    public static String NFXProcessUrl = "https://nfx.withfloats.com/dataexchange/v1/process";
+
+    public static String GMBScope = "https://www.googleapis.com/auth/plus.business.manage";
+
+    public static String NFXgetAcessToken = "https://nfx.withfloats.com/dataexchange/v1/getAccessTokens";
+
+    public static String GMBgetLocationUrl = "https://mybusiness.googleapis.com/v4/accounts/";
+
+    public static String LogTag = "android23235616";
+
     public static String deviceId = "123456789";
     public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
@@ -118,7 +135,7 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient())./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
@@ -153,6 +170,17 @@ public class Constants {
     public static String deleteGalleryImgs = NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/removeSecondaryImage";
     public static String addwidget = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/addwidget";
     public static String addFbLikeBoxwidget = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/addFpWidget";
+
+    public static String GMBSharedAuthToken = ",jUSSHADHlasjdakGDJadhds";
+
+    public static String GMBSharedReferenceToken = ".KAHGSDKAjdghKAJHgads";
+
+    public static String GMBAccountNumber= "ajhdgakdsghaksdhgaksdhgaksjdh";
+    public static String GMBAuthCode= "jalskdh9879a8sd7";
+    public static String GMBAccountName= "jalskdh987.aksdjklakdsjasd9a8sd7";
+
+    public static String GMBAccountId = "lkjasjdsaldalskjdslaksjd";
+
     public static String ChangePassword = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/changePassword";
     public static String domainSearch = NOW_FLOATS_API_URL + "/DomainService/v1/checkAvailability/";
     public static String domainPurchase = NOW_FLOATS_API_URL + "/domainservice/v1/requestdomainpurchase";
@@ -215,6 +243,8 @@ public class Constants {
     public static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
     public static final String PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin";
     public static final String PREF_USER_NAME = "twitter_user_name";
+    public static final String PREF_NOTI_CALL_LOGS = "noti_call_logs";
+    public static final String PREF_NOTI_ENQUIRIES = "noti_enquiries";
     public static final String SYNCED = "synced";
 
 
@@ -480,6 +510,7 @@ public class Constants {
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
+    public static String DEFAULT_PACKAGE_NAME_WEB_ERROR = "com.biz.nowfloats";
     public static String SUPPORT_EMAIL_ID = Specific.CONTACT_EMAIL_ID;
 
     public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
