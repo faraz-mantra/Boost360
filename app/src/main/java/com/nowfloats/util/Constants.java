@@ -60,6 +60,23 @@ public class Constants {
     public static String clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D";
 
     public static String clientId = Specific.clientId2;
+
+    public static String GMBClientId = "534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com";
+
+    public static String GMBCallbackUrl = "https://mybusiness.googleapis.com/v4/accounts";
+
+    public static String NFXUpdateAcessToken = "https://nfx.withfloats.com/dataexchange/v1/updateAccessTokens";
+
+    public static String NFXProcessUrl = "https://nfx.withfloats.com/dataexchange/v1/process";
+
+    public static String GMBScope = "https://www.googleapis.com/auth/plus.business.manage";
+
+    public static String NFXgetAcessToken = "https://nfx.withfloats.com/dataexchange/v1/getAccessTokens";
+
+    public static String GMBgetLocationUrl = "https://mybusiness.googleapis.com/v4/accounts/";
+
+    public static String LogTag = "android23235616";
+
     public static String deviceId = "123456789";
     public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
@@ -153,6 +170,17 @@ public class Constants {
     public static String deleteGalleryImgs = NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/removeSecondaryImage";
     public static String addwidget = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/addwidget";
     public static String addFbLikeBoxwidget = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/addFpWidget";
+
+    public static String GMBSharedAuthToken = ",jUSSHADHlasjdakGDJadhds";
+
+    public static String GMBSharedReferenceToken = ".KAHGSDKAjdghKAJHgads";
+
+    public static String GMBAccountNumber= "ajhdgakdsghaksdhgaksdhgaksjdh";
+    public static String GMBAuthCode= "jalskdh9879a8sd7";
+    public static String GMBAccountName= "jalskdh987.aksdjklakdsjasd9a8sd7";
+
+    public static String GMBAccountId = "lkjasjdsaldalskjdslaksjd";
+
     public static String ChangePassword = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/changePassword";
     public static String domainSearch = NOW_FLOATS_API_URL + "/DomainService/v1/checkAvailability/";
     public static String domainPurchase = NOW_FLOATS_API_URL + "/domainservice/v1/requestdomainpurchase";

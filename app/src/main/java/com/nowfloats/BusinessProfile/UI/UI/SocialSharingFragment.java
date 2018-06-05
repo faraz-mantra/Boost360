@@ -16,6 +16,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +42,23 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+import com.nowfloats.GMB.Adapter.BuilderAdapter;
+import com.nowfloats.GMB.Adapter.BuilderAdapterBusiness;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
@@ -71,14 +88,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult {
+public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
+    private GMBHandler gmbHandler;
     int size = 0;
+    private String TAG = Constants.LogTag;
     boolean[] checkedPages;
+
+    private AlertDialog alertDialog;
     UserSessionManager session;
+
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
@@ -86,13 +109,15 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     TextView connectTextView, topFeatureTextView;
     //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     private SharedPreferences pref = null;
-    SharedPreferences.Editor prefsEditor;
+    private SharedPreferences.Editor prefsEditor;
     private ImageView facebookHome;
     private ImageView facebookPage;
     private ImageView twitter;
+
     private ImageView ivFbPageAutoPull;
+
     private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
-    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
+    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox, gmbCheckBox;
     private CheckBox facebookautopost;
     ArrayList<String> items;
     private int numberOfUpdates = 0;
@@ -110,6 +135,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private final int FBPAGETYPE = 1;
     private final int TWITTERTYPE = 2;
     private final int FB_DECTIVATION = 3;
+    private GoogleSignInOptions googleSignInOptions;
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleSignInClient googleSignInClient;
     private final int FB_PAGE_DEACTIVATION = 4;
     private final int TWITTER_DEACTIVATION = 11;
     private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
@@ -124,6 +152,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private String fpPageName;
     Handler handler = new Handler();
 
+//    private int lastGoogleAccounts = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -136,14 +166,22 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             FacebookSdk.sdkInitialize(getApplicationContext());
         }
 
-        callbackManager = CallbackManager.Factory.create();
+        if (mGoogleApiClient == null) {
+            setUpGoogleSignIn();
+        }
 
+        callbackManager = CallbackManager.Factory.create();
         session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_getActivity().this,session.getFPID());
         Methods.isOnline(getActivity());
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         prefsEditor = pref.edit();
         mTwitterPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
+
+        if (gmbHandler == null) {
+            gmbHandler = new GMBHandler(getContext(), session);
+            gmbHandler.isSynced(this);
+        }
 
         return mainView;
     }
@@ -187,17 +225,15 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 //                }
 //            }
 //        }
-
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);
         twitterStatus.setTypeface(myCustomFont);
         fbPullStatus.setTypeface(myCustomFont);
-
         facebookHomeCheckBox = (CheckBox) view.findViewById(R.id.social_sharing_facebook_profile_checkbox);
         facebookPageCheckBox = (CheckBox) view.findViewById(R.id.social_sharing_facebook_page_checkbox);
         twitterCheckBox = (CheckBox) view.findViewById(R.id.social_sharing_twitter_checkbox);
         facebookautopost = (CheckBox) view.findViewById(R.id.social_sharing_facebook_page_auto_post);
-
+        gmbCheckBox = (CheckBox) view.findViewById(R.id.social_gmb_profile_checkbox);
         connectTextView.setTypeface(myCustomFont_Medium);
         //autoPostTextView.setTypeface(myCustomFont);
         topFeatureTextView.setTypeface(myCustomFont_Medium);
@@ -216,10 +252,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookPageCheckBox.setChecked(false);
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
-                }else if (facebookPageCheckBox.isChecked()) {
+                } else if (facebookPageCheckBox.isChecked()) {
 
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
@@ -243,18 +279,41 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             .setmName("");
                     requestClient.connectNfx();
 
-                   showLoader(getString(R.string.wait_while_unsubscribing));
+                    showLoader(getString(R.string.wait_while_unsubscribing));
                 }
             }
         });
 
+
+        gmbCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                gmbHandler.refreshGMB();
+
+                if (gmbCheckBox.isChecked()) {
+                    showLoader("Loading...");
+                    gmbCheckBox.setChecked(false);
+//                    getGoogleAccounts();
+                    Intent signInIntent = googleSignInClient.getSignInIntent();
+                    startActivityForResult(signInIntent, GMBHandler.REQUEST_CODE);
+                } else {
+
+                    gmbHandler.removeUser(SocialSharingFragment.this);
+                    gmbSignOutUserfromGoogle(true);
+
+                }
+            }
+        });
+
+
         facebookHomeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookHomeCheckBox.setChecked(false);
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
-                }else if (facebookHomeCheckBox.isChecked()) {
+                } else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -288,7 +347,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             .setmCallType(FB_PAGE_DEACTIVATION)
                             .setmName("");
                     pageRequestClient.connectNfx();
-                   showLoader(getString(R.string.wait_while_unsubscribing));
+                    showLoader(getString(R.string.wait_while_unsubscribing));
 
                 }
             }
@@ -300,10 +359,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookautopost.setChecked(false);
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
-                }else if (paymentState.equals("-1")) {
+                } else if (paymentState.equals("-1")) {
                     try {
 
                         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
@@ -375,6 +434,26 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         });
     }
 
+    public void gmbSignOutUserfromGoogle(final boolean print) {
+
+        if (googleSignInClient != null) {
+
+            googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (print)
+                        Toast.makeText(getContext(), "Signed out", Toast.LENGTH_LONG).show();
+                }
+            });
+
+        } else {
+            setUpGoogleSignIn();
+            gmbSignOutUserfromGoogle(print);
+
+        }
+    }
+
+
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -382,6 +461,61 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         setStatus();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+//
+//    private void getGoogleAccounts() {
+//
+//        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.GET_ACCOUNTS}, 33);
+//        } else {
+//            fetchAccountInfo();
+//        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (ContextCompat.checkSelfPermission(getActivity(),
+//                    android.Manifest.permission.GET_ACCOUNTS)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//
+//                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+//                        android.Manifest.permission.GET_ACCOUNTS)) {
+//
+//                } else {
+//                    fetchAccountInfo();
+//                }
+//            } else {
+//                ActivityCompat.requestPermissions(getActivity(),
+//                        new String[]{android.Manifest.permission.GET_ACCOUNTS},
+//                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//            }
+//
+//        } else {
+//            fetchAccountInfo();
+//        }
+
+
+//    }
+
+//    private void fetchAccountInfo() {
+//        Account[] googleAccounts = AccountManager.get(getActivity()).getAccountsByType("com.google");
+//
+//        if (googleAccounts != null && googleAccounts.length > 0) {
+//            if (lastGoogleAccounts == 0) {
+//                lastGoogleAccounts = googleAccounts.length;
+//            } else {
+//                if (googleAccounts.length > lastGoogleAccounts) {
+//                    if (mainView != null) {
+////                        mainView.performClick();
+//                        mainView.dispatchTouchEvent(MotionEvent.obtain(
+//                                SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+//                                MotionEvent.ACTION_DOWN, 0, 0, 0));
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private void showDialog1(int showDialog, float days) {
 
@@ -563,14 +697,98 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         //facebook.authorizeCallback(requestCode, resultCode, data);//removed
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        hideLoader();
+        if (requestCode == GMBHandler.REQUEST_CODE) {
+            if (resultCode == RESULT_OK || true) {
+
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
+
+
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    String authCode = account.getServerAuthCode();
+                    BoostLog.i(Constants.LogTag, authCode);
+                    gmbHandler.postAuthCodeFromServer(authCode, this);
+                    showLoader(getString(R.string.syncing_with_gmb));
+
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                    BoostLog.i(Constants.LogTag, "" + e.toString());
+
+                    if (e.toString().contains("ApiException: 8")) {
+
+                        BoostLog.e("android23235616", "here 2");
+
+                        gmbCheckBox.setChecked(false);
+                        gmbCheckBox.performClick();
+
+                    } else {
+
+                        gmbHandler.removeUser(this);
+
+                        BoostLog.e("android23235616", "here 3");
+                        Toast.makeText(getActivity(), getString(R.string.retry_add_gmb), Toast.LENGTH_LONG).show();
+                        gmbCheckBox.setChecked(false);
+                    }
+                }
+            } else {
+
+            }
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
-    //added
+    public void showBuilder(JSONArray arr, int mode) {
 
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialogView = inflater.inflate(R.layout.builder_layout, null);
+
+
+        RecyclerView recyclerView = dialogView.findViewById(R.id.GMBBuilderRecyclerView);
+
+        if (mode == gmbHandler.getShowAccounts()) {
+
+            BuilderAdapter adapter = new BuilderAdapter(arr, this);
+
+            recyclerView.setAdapter(adapter);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        } else {
+
+            BuilderAdapterBusiness adapter = new BuilderAdapterBusiness(arr, this);
+
+            recyclerView.setAdapter(adapter);
+
+            LinearLayoutManager layoutManager
+                    = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+            recyclerView.setLayoutManager(layoutManager);
+
+        }
+
+        alertDialog.setView(dialogView);
+
+        this.alertDialog = alertDialog.create();
+
+        this.alertDialog.show();
+
+    }
+
+    public void closeDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.cancel();
+            alertDialog.dismiss();
+        }
+    }
 
     public void getFacebookPages(AccessToken accessToken, final int from) {
         GraphRequest request = GraphRequest.newGraphPathRequest(
@@ -592,6 +810,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         super.onResume();
         if (HomeActivity.headerText != null)
             HomeActivity.headerText.setText("Social Sharing");
+
+        if (googleSignInClient != null) {
+            mGoogleApiClient.registerConnectionFailedListener(this);
+            mGoogleApiClient.registerConnectionCallbacks(this);
+        }
     }
 
     private void processGraphResponse(final GraphResponse response, final int from) {
@@ -725,7 +948,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }).start();
     }
 
-    public void pageSeleted(int id, final String pageName, String pageID, String pageAccessToken) {
+    public void pageSeleted(int id, final String pageName, String pageID, String
+            pageAccessToken) {
         String s = "";
         JSONObject obj;
         session.storeFacebookPage(pageName);
@@ -835,22 +1059,26 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
 
-    private void showLoader(final String message) {
+    public void showLoader(final String message) {
         if (getActivity() == null || !isAdded()) return;
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCancelable(false);
         }
         progressDialog.setMessage(message);
         progressDialog.show();
     }
 
-    private void hideLoader() {
+    public void hideLoader() {
+
+        BoostLog.i(Constants.LogTag, "Logger hidden");
 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
+
     private void getFacebookProfile(final AccessToken accessToken, final int from) {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email");
@@ -875,8 +1103,25 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         meRequest.executeAsync();
     }
 
+    private void setUpGoogleSignIn() {
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().requestServerAuthCode(Constants.GMBClientId, true).requestScopes(new Scope(Constants.GMBScope))
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .enableAutoManage(getActivity(), this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .build();
+
+        mGoogleApiClient.registerConnectionCallbacks(this);
+
+        mGoogleApiClient.registerConnectionFailedListener(this);
+
+        googleSignInClient = GoogleSignIn.getClient(getContext(), googleSignInOptions);
+    }
+
     private void saveFbLoginResults(String userName, String accessToken, String id) {
-        //String FACEBOOK_USER_NAME = Profile.getCurrentProfile().getName();
+
         Constants.FACEBOOK_USER_ACCESS_ID = accessToken;
         Constants.FACEBOOK_USER_ID = id;
         NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
@@ -1070,6 +1315,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }
     }
 
+
     public void logoutFromTwitter() {
         SharedPreferences.Editor e = mTwitterPreferences.edit();
         e.remove(TwitterConnection.PREF_KEY_OAUTH_TOKEN);
@@ -1138,9 +1384,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     private void addSiteHealth() {
-        if(getActivity() instanceof HomeActivity)
+        if (getActivity() instanceof HomeActivity)
             ((HomeActivity) getActivity()).onClick(getString(R.string.title_activity_social__sharing_));
-        else{
+        else {
             Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
@@ -1230,8 +1476,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                     builder.dismiss();
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                                    }else{
-                                        Methods.materialDialog(getActivity(), "Alert","This feature is available to paid customers only.");
+                                    } else {
+                                        Methods.materialDialog(getActivity(), "Alert", "This feature is available to paid customers only.");
                                     }
                                 }
                             });
@@ -1393,4 +1639,41 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             saveTwitterInformation(twitter);
         }
     }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        BoostLog.i(Constants.LogTag, "Google Api Connected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        BoostLog.i(Constants.LogTag, "on connection suspended");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        BoostLog.i(Constants.LogTag, "Connection Failed : " + connectionResult.getErrorMessage());
+    }
+
+    public void handleGMBCheckbox(boolean value) {
+        gmbCheckBox.setChecked(value);
+
+        if (!value) {
+            gmbSignOutUserfromGoogle(false);
+        }
+    }
+
+    public GMBHandler getGmbHandler() {
+        return gmbHandler;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
+        mGoogleApiClient.unregisterConnectionCallbacks(this);
+        mGoogleApiClient.unregisterConnectionFailedListener(this);
+    }
 }
+

@@ -55,6 +55,8 @@
                         <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
                     </LinearLayout>
 
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -363,7 +365,10 @@
                                 android:buttonTint="@color/grey" />
                         </LinearLayout>
 
+
                     </LinearLayout>
+
+
 
                 </LinearLayout>
 
@@ -573,6 +578,146 @@
                     android:textSize="12sp"
                     android:text="Updates will reflect on your website one hour after getting posted on the Facebook Page. Do not select this option if you are using social share from your website."/>
             </LinearLayout>-->
+
+
+            <android.support.v7.widget.CardView
+
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+
+
+                android:id="@+id/gmbCardView"
+                app:cardCornerRadius="5dp"
+                android:elevation="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:background="#808080"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/gmbTextHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:text="Auto-Sync\nBusiness Profile"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="Business\nProfile"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/social_share_to_bg"
+                        android:gravity="center"
+                        android:text="@string/to"
+                        android:textSize="13sp"
+                        android:textStyle="italic" />
+
+                    <ImageView
+                        android:id="@+id/social_sharing_gmb_profile_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/mybusiness" />
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/gmbProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:text="Google My Business"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/social_sharing_gmb_profile_flag_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:maxLines="2"
+                            android:text="@string/disconnected"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            >
+
+                        <CheckBox
+
+                            android:id="@+id/social_gmb_profile_checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:buttonTint="@color/grey" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            </android.support.v7.widget.CardView>
+
+
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -165,6 +165,7 @@ public class NfxRequestClient {
     public NfxRequestClient setmName(String mName) {
         this.mName = mName;
         return this;
+
     }
 
     public void connectNfx(){

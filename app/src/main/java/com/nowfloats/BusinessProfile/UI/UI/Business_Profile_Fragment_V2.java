@@ -26,6 +26,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
@@ -48,8 +49,12 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -67,6 +72,9 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
     private DomainApiService domainApiService;
+
+    private GMBHandler GmbHandler;
+
     private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
 
 
@@ -76,6 +84,8 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+
+
     }
 
     @Override
@@ -87,8 +97,18 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         domainApiService = new DomainApiService(this);
+        GmbHandler = new GMBHandler(getContext(),session);
+
+        try {
+            GmbHandler.sendDetailsToGMB(false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return mainView;
     }
+
+
 
     @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
@@ -174,7 +194,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
                             category = (TextView) mainView.findViewById(R.id.categoryTextView_ProfileV2);
                             category.setTypeface(robotoLight);
-                            category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
+                            category.setText(session.getFPDetails(GET_FP_DETAILS_CATEGORY));
 
                             businessInfoTextView = (TextView) mainView.findViewById(R.id.businessInfoTextView_ProfileV2);
                             businessInfoTextView.setTypeface(robotoLight);
@@ -252,6 +272,8 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             businessAddressLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+
+
 
                                     MixPanelController.track(EventKeysWL.BUSINESS_ADDRESS, null);
                                     Intent businessAddress = new Intent(activity, Business_Address_Activity.class);
@@ -665,6 +687,8 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         tvMessage.setText(message);
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -679,7 +703,14 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
             if (businessInfoTextView != null)
                 businessInfoTextView.setText(session.getFacebookProfileDescription());
         }
+
+
+
+
+        
     }
+
+
 
     @Override
     public void onDetach() {

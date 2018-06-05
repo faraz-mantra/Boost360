@@ -42,6 +42,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
+import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -92,6 +93,9 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     private final int media_req_id = 5;
     private final int gallery_req_id = 6;
     private RiaNodeDataModel mRiaNodeDataModel;
+
+    private GMBHandler gmbHandler;
+
     private ArrayList<String> categories;
     private boolean isChangedProductCategory;
 
@@ -108,7 +112,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(), Edit_Profile_Activity.this);
         editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
         select_pic = (ImageView) findViewById(R.id.select_businessprofileimage);
-
+        gmbHandler = new GMBHandler(this,session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
         category = (EditText) findViewById(R.id.businessCategory);
@@ -192,12 +196,18 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                                 mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
                                 mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
                         mRiaNodeDataModel = null;
+
                     }
+
+
+
                 } else {
                     Methods.snackbarNoInternet(Edit_Profile_Activity.this);
                 }
 
                 //UploadProfileAsyncTask upload = new UploadProfileAsyncTask(Edit_Profile_Activity.this,)
+
+
             }
         });
 
@@ -559,14 +569,18 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         if (allBoundaryCondtn && flag4category) {
             SetBusinessCategoryAsyncTask buzcat = new SetBusinessCategoryAsyncTask(Edit_Profile_Activity.this, msgtxtcategory, flag4category, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             buzcat.execute();
+            uploadToGMB();
         }
 
         if (allBoundaryCondtn && !flag4category) {
             UploadProfileAsyncTask upa = new UploadProfileAsyncTask(this, offerObj, profilesattr);
             upa.execute();
+            uploadToGMB();
         } else {
             allBoundaryCondtn = true;
         }
+
+
         //update alert archive
         new AlertArchive(Constants.alertInterface, "PROFILE", session.getFPID());
     }
@@ -797,5 +811,15 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         //Picasso.with(Edit_Profile_Activity.this).load(path).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
         uploadIMAGEURI uploadAsyncTask = new uploadIMAGEURI(Edit_Profile_Activity.this, path, session.getFPID());
         uploadAsyncTask.execute();
+    }
+
+    private void uploadToGMB(){
+
+
+        try {
+            gmbHandler.sendDetailsToGMB(true);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

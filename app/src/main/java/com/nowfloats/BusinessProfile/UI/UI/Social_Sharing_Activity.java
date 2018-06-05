@@ -44,6 +44,7 @@ import com.facebook.login.LoginResult;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
@@ -83,6 +84,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
+
 
     TextView connectTextView, topFeatureTextView;
     //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
@@ -140,6 +142,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         callbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.activity_social_sharing2);
+
+
 
         session = new UserSessionManager(getApplicationContext(), Social_Sharing_Activity.this);
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_Activity.this,session.getFPID());
@@ -204,6 +208,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         twitterCheckBox = (CheckBox) findViewById(R.id.social_sharing_twitter_checkbox);
         facebookautopost = (CheckBox) findViewById(R.id.social_sharing_facebook_page_auto_post);
 
+
         connectTextView.setTypeface(myCustomFont_Medium);
         //autoPostTextView.setTypeface(myCustomFont);
         topFeatureTextView.setTypeface(myCustomFont_Medium);
@@ -215,6 +220,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 intent.putExtra("array", getResources().getStringArray(R.array.quikr_tip_points));
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
 
             }
         });
@@ -341,6 +347,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
             }
         });
+
+
+
+
 
         twitterCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
