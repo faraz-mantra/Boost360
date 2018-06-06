@@ -1,8 +1,10 @@
 package com.nowfloats.Analytics_Screen.Graph.api;
 
+import com.nowfloats.Analytics_Screen.Graph.model.BotVisitResponse;
 import com.nowfloats.Analytics_Screen.Graph.model.DashboardResponse;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -15,7 +17,7 @@ import retrofit.http.QueryMap;
  */
 
 public class AnalyticsFetch {
-    public interface FetchDetails{
+    public interface FetchDetails {
         @GET("/Dashboard/v1/{FPTAG}/details")
         void getDataCount(@Path("FPTAG") String tag, @QueryMap Map<String, String> data, Callback<DashboardResponse> response);
 
@@ -27,6 +29,9 @@ public class AnalyticsFetch {
 
         @GET("/Dashboard/v1/{FPTAG}/totaladdressviewdetails")
         void getMapVisits(@Path("FPTAG") String tag, @QueryMap Map<String, String> mapData, Callback<VisitsModel> response);
+
+        @GET("/Dashboard/v1/{FPTAG}/botVisitsAnalytics")
+        void getBotVisitAnalytics(@Path("FPTAG") String tag, @QueryMap Map<String, String> mapData, Callback<List<BotVisitResponse>> response);
     }
 
 }

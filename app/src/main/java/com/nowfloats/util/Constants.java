@@ -102,6 +102,7 @@ public class Constants {
     public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = Specific.FACEBOOK_PUBLISH_PERMISSIONS;
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
+    public final static String NOW_FLOATS_APIV2_DEV_URL = "http://api2.nowfloatsdev.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String CREATE_MESSAGE_URL = "http://api.nowfloatsdev.com/akash";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
@@ -136,6 +137,7 @@ public class Constants {
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient())./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+    public static final RestAdapter restAdapterApiV2 = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_APIV2_DEV_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();

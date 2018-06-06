@@ -384,6 +384,17 @@ public class Analytics_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+        CardView otherInsights = rootView.findViewById(R.id.card_view_other_insights);
+        otherInsights.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MixPanelController.track("OtherInsights", null);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.OTHER_INSIGHTS);
+                startActivity(q);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
 
         cvRiaCard = (CardView) rootView.findViewById(R.id.cvRiaCard);
