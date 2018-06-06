@@ -106,7 +106,7 @@
                                     android:layout_marginTop="2dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="enquired by"
+                                    android:text="@string/enquired_by"
                                     android:textColor="@color/white"
                                     android:textSize="12sp"
                                     tools:ignore="MissingPrefix" />
@@ -118,7 +118,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="3dp"
-                                    android:text="Sam"
+                                    android:text="@string/sam"
                                     android:textColor="@color/white"
                                     android:textSize="12sp"
                                     tools:ignore="MissingPrefix" />

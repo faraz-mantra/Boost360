@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:textColor="@color/black"
-        android:text="Sam is the chatbot you enabled on your website"/>
+        android:text="@string/sam_chatbot_description"/>
 
 </android.support.constraint.ConstraintLayout>
