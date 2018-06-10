@@ -16,7 +16,7 @@
         android:layout_gravity="center_vertical"
         android:background="?android:selectableItemBackground"
         android:src="@drawable/icon_action_back"/>
-    <TextView
+    <ImageView
         android:id="@+id/tv_updates"
         android:layout_width="0dp"
         android:layout_weight="1"

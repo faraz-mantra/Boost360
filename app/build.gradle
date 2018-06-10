@@ -50,6 +50,15 @@ android {
         versionCode 2018060001
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+    }
+    sourceSets {
+        aaptOptions {
+            noCompress ".dict"
+        }
+
     }
     buildTypes {
         release {
@@ -143,7 +152,6 @@ dependencies {
         transitive = true
     }
     implementation 'com.google.firebase:firebase-core:11.8.0'
-
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.android.volley:volley:1.0.0'
@@ -191,7 +199,7 @@ dependencies {
     implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.7.8@aar') {
         exclude group: 'com.google.firebase'
     }
-
+    implementation project(':agahkeyboard')
 }
 
 apply plugin: 'com.google.gms.google-services'

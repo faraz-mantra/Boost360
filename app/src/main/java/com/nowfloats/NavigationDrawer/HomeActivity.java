@@ -48,6 +48,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.AnaCore;
+import com.android.inputmethod.latin.utils.JniUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -203,6 +204,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        JniUtils.loadNativeLibrary();
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         BoostLog.d("HomeActivity ONcreate", "onCreate");
         bus = BusProvider.getInstance().getBus();

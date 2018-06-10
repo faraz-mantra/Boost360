@@ -80,8 +80,8 @@ public class ImePresenterImpl implements ItemClickListener,
         CandidateToPresenterInterface,
         CandidateViewItemClickListener,
         UrlToBitmapInterface {
-    private final DatabaseTable mDatabaseTable;
-    private final SpellCorrector corrector;
+    private DatabaseTable mDatabaseTable;
+    private SpellCorrector corrector;
     private ExecutorService mExecutorService;
     private CandidateViewBaseImpl mCandidateView;
     private KeyboardViewBaseImpl mKeyboardView;
@@ -120,6 +120,7 @@ public class ImePresenterImpl implements ItemClickListener,
         return mTabType;
     }
 
+
     @Override
     public void onSpeechResult(String speech) {
         if (!TextUtils.isEmpty(speech)) {
@@ -154,18 +155,20 @@ public class ImePresenterImpl implements ItemClickListener,
     public void onResourcesReady(Bitmap bitmap, String text, String imageId) {
         Uri uri = MethodUtils.getImageUri(mContext, bitmap, TextUtils.isEmpty(imageId) ?
                 UUID.randomUUID().toString() : imageId);
-        if (uri == null) {
-            if (imeListener.getImeCurrentInputConnection() != null)
-                imeListener.getImeCurrentInputConnection().commitText(text, 1);
-        } else {
-            doCommitContent(text, "image/png", uri);
+        if (imeListener != null) {
+            if (uri == null) {
+                if (imeListener.getImeCurrentInputConnection() != null)
+                    imeListener.getImeCurrentInputConnection().commitText(text, 1);
+            } else {
+                doCommitContent(text, "image/png", uri);
+            }
         }
     }
 
     @Override
     public void onItemClick(KeywordModel word) {
         isSelectedKeyboardItem = true;
-        if (word.getType().equalsIgnoreCase(KeywordModel.NEW_WORD)) {
+        if (word.getType().equalsIgnoreCase(KeywordModel.NEW_WORD) && mDatabaseTable != null) {
             mDatabaseTable.saveWordToDatabase(word.getWord().trim());
         }
         ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
@@ -229,7 +232,7 @@ public class ImePresenterImpl implements ItemClickListener,
         LOCKED, CAPITAL, NORMAL;
     }
 
-    ImePresenterImpl(Context context, PresenterToImeInterface imeListener) {
+    public ImePresenterImpl(Context context, PresenterToImeInterface imeListener) {
         mHandler = new Handler(context.getMainLooper());
         mDatabaseTable = new DatabaseTable(context);
         corrector = new SpellCorrector(context);
@@ -245,6 +248,11 @@ public class ImePresenterImpl implements ItemClickListener,
         }
         mExecutorService = Executors.newSingleThreadExecutor();
         mSuggestions = new ArrayList<>();
+    }
+
+
+    public ImePresenterImpl(Context context) {
+        mContext = context;
     }
 
     @Override
@@ -480,38 +488,40 @@ public class ImePresenterImpl implements ItemClickListener,
     private void doCommitContent(@NonNull String description, @NonNull String mimeType,
                                  @NonNull Uri uri) {
 
-        final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
+        if (imeListener != null) {
+            final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
 
-        if (!validatePackageName(editorInfo)) {
-            return;
-        }
-        final int flag;
-        if (Build.VERSION.SDK_INT >= 25) {
-            flag = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
-        } else {
-            flag = 0;
-            try {
-                mContext.grantUriPermission(
-                        editorInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } catch (Exception e) {
-                Timber.e("grantUriPermission failed packageName=" + editorInfo.packageName
-                        + " contentUri=" + uri);
+            if (!validatePackageName(editorInfo)) {
+                return;
             }
-        }
+            final int flag;
+            if (Build.VERSION.SDK_INT >= 25) {
+                flag = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
+            } else {
+                flag = 0;
+                try {
+                    mContext.grantUriPermission(
+                            editorInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } catch (Exception e) {
+                    Timber.e("grantUriPermission failed packageName=" + editorInfo.packageName
+                            + " contentUri=" + uri);
+                }
+            }
 
-        imeListener.getImeCurrentInputConnection().commitText(description, 1);
-        if (isCommitContentSupported(editorInfo, mimeType)) {
-            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_IMAGE_SHARING, null);
-            final InputContentInfoCompat inputContentInfoCompat = new InputContentInfoCompat(
-                    uri,
-                    new ClipDescription(description, new String[]{mimeType}),
-                    null /* linkUrl */);
-            InputConnectionCompat.commitContent(
-                    imeListener.getImeCurrentInputConnection(),
-                    imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
-                    flag, null);
-        } else if (mimeType.equalsIgnoreCase("image/png")) {
-            Toast.makeText(mContext, "Image not supported", Toast.LENGTH_SHORT).show();
+            imeListener.getImeCurrentInputConnection().commitText(description, 1);
+            if (isCommitContentSupported(editorInfo, mimeType)) {
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_IMAGE_SHARING, null);
+                final InputContentInfoCompat inputContentInfoCompat = new InputContentInfoCompat(
+                        uri,
+                        new ClipDescription(description, new String[]{mimeType}),
+                        null /* linkUrl */);
+                InputConnectionCompat.commitContent(
+                        imeListener.getImeCurrentInputConnection(),
+                        imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
+                        flag, null);
+            } else if (mimeType.equalsIgnoreCase("image/png")) {
+                Toast.makeText(mContext, "Image not supported", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
@@ -610,9 +620,11 @@ public class ImePresenterImpl implements ItemClickListener,
                 if (spellCorrectorAsyncTask != null) {
                     spellCorrectorAsyncTask.cancel(true);
                 }
-                spellCorrectorAsyncTask = new SpellCorrectorAsyncTask();
-                spellCorrectorAsyncTask.execute(text);
-                //mExecutorService.execute(new Thread(searchKeywordRunnable));
+                if (mDatabaseTable != null) {
+                    spellCorrectorAsyncTask = new SpellCorrectorAsyncTask();
+                    spellCorrectorAsyncTask.execute(text);
+                    //mExecutorService.execute(new Thread(searchKeywordRunnable));
+                }
             }
         }
     }

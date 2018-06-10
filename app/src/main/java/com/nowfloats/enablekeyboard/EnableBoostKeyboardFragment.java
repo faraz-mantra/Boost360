@@ -33,7 +33,7 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import nowfloats.nfkeyboard.keyboards.ImeKeyboardService;
+import io.separ.neural.inputmethod.indic.LatinIME;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -135,7 +135,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
                     }
                     break;
                 case R.id.storage_switch:
-                    MixPanelController.track(EventKeysWL.ALLOW_ACCESS_SWITCH_CLICKED,null);
+                    MixPanelController.track(EventKeysWL.ALLOW_ACCESS_SWITCH_CLICKED, null);
                     getPermissions();
                    /* if (!storageSwitchTv.isChecked()) {
                         if (isInputMethodActivated() && isInputMethodEnabled()) {
@@ -250,7 +250,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
 
     private boolean isInputMethodActivated() {
         List<InputMethodInfo> list = imeManager.getEnabledInputMethodList();
-        ComponentName myInputMethod = new ComponentName(mContext, ImeKeyboardService.class);
+        ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
         for (InputMethodInfo info : list) {
             if (myInputMethod.equals(info.getComponent())) {
                 return true;
@@ -264,7 +264,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
 
         ComponentName defaultInputMethod = ComponentName.unflattenFromString(id);
 
-        ComponentName myInputMethod = new ComponentName(mContext, ImeKeyboardService.class);
+        ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
 
         return myInputMethod.equals(defaultInputMethod);
     }

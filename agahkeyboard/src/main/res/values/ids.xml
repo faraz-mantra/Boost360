@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="auth">false</item>
+    <item type="id" name="enable">false</item>
+    <item type="id" name="select_keyboard">false</item>
+    <item type="id" name="language_button">false</item>
+    <item type="id" name="webber">false</item>
+    <item type="id" name="auth_checkbox">false</item>
+    <item type="id" name="copy">false</item>
+    <item type="id" name="cut">false</item>
+    <item type="id" name="paste">false</item>
+    <item type="id" name="select">false</item>
+    <item type="id" name="keyboard_top_area">false</item>
+    <item type="id" name="suggestion_strip_hacky_container">false</item>
+    <item type="id" name="suggestion_source_results">false</item>
+    <item type="id" name="services_bar">false</item>
+    <item type="id" name="header">false</item>
+    <item type="id" name="hsv_color_picker">false</item>
+    <item type="id" name="connect_button">false</item>
+    <item type="id" name="item_image">false</item>
+</resources>
