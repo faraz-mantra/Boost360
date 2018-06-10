@@ -299,7 +299,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     public void setProductShareKeyboardFrame(final ImePresenterImpl.TabType tabType) {
         this.mTabType = tabType;
         mRecyclerView.setVisibility(View.VISIBLE);
-        mKeyboardView.setVisibility(View.GONE);
+        mKeyboardView.setVisibility(View.INVISIBLE);
         mRichMediaView.setGone();
         //EventBusExt.getDefault().post(new ShowActionRowEvent());
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
@@ -484,8 +484,17 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 R.layout.input_view, null);
         apiCallPresenter = new ApiCallPresenter(mThemeContext, this);
         mMainKeyboardFrame = mCurrentInputView.findViewById(R.id.main_keyboard_frame);
+        mRichMediaView = (RichMediaView) mCurrentInputView.findViewById(R.id.rich_media_view);
+        mRichMediaView.setUp(mCurrentInputView, isHardwareAcceleratedDrawingEnabled, mLatinIME);
+
+        mKeyboardView = (MainKeyboardView) mCurrentInputView.findViewById(R.id.keyboard_view);
+        mKeyboardView.setHardwareAcceleratedDrawingEnabled(isHardwareAcceleratedDrawingEnabled);
+        mKeyboardView.setKeyboardActionListener(mLatinIME);
+        mActionRowView = (ActionRowView) mCurrentInputView.findViewById(R.id.action_row);
+        mActionRowView.setListener(this.mLatinIME);
         if (mRecyclerView == null) {
             mRecyclerView = (RecyclerView) mCurrentInputView.findViewById(R.id.product_share_rv_list);
+            mRecyclerView.setMinimumHeight(mKeyboardView.getHeight());
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mThemeContext, LinearLayoutManager.HORIZONTAL, false));
             shareAdapter = new MainAdapter(mThemeContext, this);
@@ -514,14 +523,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 }
             });
         }
-        mRichMediaView = (RichMediaView) mCurrentInputView.findViewById(R.id.rich_media_view);
-        mRichMediaView.setUp(mCurrentInputView, isHardwareAcceleratedDrawingEnabled, mLatinIME);
-
-        mKeyboardView = (MainKeyboardView) mCurrentInputView.findViewById(R.id.keyboard_view);
-        mKeyboardView.setHardwareAcceleratedDrawingEnabled(isHardwareAcceleratedDrawingEnabled);
-        mKeyboardView.setKeyboardActionListener(mLatinIME);
-        mActionRowView = (ActionRowView) mCurrentInputView.findViewById(R.id.action_row);
-        mActionRowView.setListener(this.mLatinIME);
         //mActionRowView.setCircleIndicator((CircleIndicator) mCurrentInputView.findViewById(R.id.actionrow_page_indicator));
         return mCurrentInputView;
     }

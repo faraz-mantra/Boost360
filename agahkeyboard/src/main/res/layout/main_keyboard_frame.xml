@@ -74,6 +74,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="#212121"
         android:layout_height="match_parent">
 
         <com.android.inputmethod.keyboard.MainKeyboardView
