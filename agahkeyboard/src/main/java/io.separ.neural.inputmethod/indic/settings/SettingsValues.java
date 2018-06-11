@@ -18,7 +18,6 @@ package io.separ.neural.inputmethod.indic.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
@@ -27,7 +26,6 @@ import android.view.inputmethod.EditorInfo;
 
 import com.android.inputmethod.latin.utils.AsyncResultHolder;
 import com.android.inputmethod.latin.utils.ResourceUtils;
-import com.android.inputmethod.latin.utils.TargetPackageInfoGetterTask;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -111,7 +109,7 @@ public final class SettingsValues {
     public final float mKeyPreviewDismissEndYScale;
 
     public SettingsValues(final Context context, final SharedPreferences prefs, final Resources res,
-            final InputAttributes inputAttributes) {
+                          final InputAttributes inputAttributes) {
         mLocale = res.getConfiguration().locale;
         // Get the resources
         mDelayInMillisecondsToUpdateOldSuggestions =
@@ -141,7 +139,7 @@ public final class SettingsValues {
                 res.getString(R.string.auto_correction_threshold_mode_index_modest));
         mIncludesOtherImesInLanguageSwitchList = !Settings.ENABLE_SHOW_LANGUAGE_SWITCH_KEY_SETTINGS || prefs.getBoolean(Settings.PREF_INCLUDE_OTHER_IMES_IN_LANGUAGE_SWITCH_LIST, false) /* forcibly */;
         mShowsLanguageSwitchKey = !Settings.ENABLE_SHOW_LANGUAGE_SWITCH_KEY_SETTINGS || Settings.readShowsLanguageSwitchKey(prefs) /* forcibly */;
-        mUseContactsDict  = prefs.getBoolean(Settings.PREF_KEY_USE_CONTACTS_DICT, true) && ContextCompat.checkSelfPermission(context, "android.permission.READ_CONTACTS") == 0;
+        mUseContactsDict = prefs.getBoolean(Settings.PREF_KEY_USE_CONTACTS_DICT, true) && ContextCompat.checkSelfPermission(context, "android.permission.READ_CONTACTS") == 0;
         mUsePersonalizedDicts = prefs.getBoolean(Settings.PREF_KEY_USE_PERSONALIZED_DICTS, true);
         mUseDoubleSpacePeriod = prefs.getBoolean(Settings.PREF_KEY_USE_DOUBLE_SPACE_PERIOD, true)
                 && inputAttributes.mIsGeneralTextInput;
@@ -198,6 +196,7 @@ public final class SettingsValues {
                 defaultKeyPreviewDismissEndScale);
         mDisplayOrientation = res.getConfiguration().orientation;
         mAppWorkarounds = new AsyncResultHolder<>();
+       /*
         final PackageInfo packageInfo = TargetPackageInfoGetterTask.getCachedPackageInfo(
                 mInputAttributes.mTargetApplicationPackageName);
         if (null != packageInfo) {
@@ -205,7 +204,7 @@ public final class SettingsValues {
         } else {
             new TargetPackageInfoGetterTask(context, mAppWorkarounds)
                     .execute(mInputAttributes.mTargetApplicationPackageName);
-        }
+        }*/
     }
 
     public boolean isApplicationSpecifiedCompletionsOn() {
@@ -213,8 +212,9 @@ public final class SettingsValues {
     }
 
     public boolean needsToLookupSuggestions() {
-        return mInputAttributes.mShouldShowSuggestions
-                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
+        return true;
+//        mInputAttributes.mShouldShowSuggestions
+//                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
     }
 
     public boolean isSuggestionsEnabledPerUserSettings() {
@@ -251,11 +251,12 @@ public final class SettingsValues {
             return false;
         }
         final RichInputMethodManager imm = RichInputMethodManager.getInstance();
-        if (mIncludesOtherImesInLanguageSwitchList) {
-            return imm.hasMultipleEnabledIMEsOrSubtypes(false /* include aux subtypes */);
+        /*if (mIncludesOtherImesInLanguageSwitchList) {
+            return imm.hasMultipleEnabledIMEsOrSubtypes(false *//* include aux subtypes *//*);
         } else {
-            return imm.hasMultipleEnabledSubtypesInThisIme(false /* include aux subtypes */);
-        }
+            return imm.hasMultipleEnabledSubtypesInThisIme(false *//* include aux subtypes *//*);
+        }*/
+        return true;
     }
 
     public boolean isSameInputType(final EditorInfo editorInfo) {
@@ -289,17 +290,19 @@ public final class SettingsValues {
                     .putBoolean(Settings.PREF_SHOW_SUGGESTIONS, !alwaysHide)
                     .apply();
         }
-        return prefs.getBoolean(Settings.PREF_SHOW_SUGGESTIONS, true);
+        //return prefs.getBoolean(Settings.PREF_SHOW_SUGGESTIONS, true);
+        return true;
     }
 
     private static boolean readBigramPredictionEnabled(final SharedPreferences prefs,
-            final Resources res) {
-        return prefs.getBoolean(Settings.PREF_BIGRAM_PREDICTIONS, res.getBoolean(
-                R.bool.config_default_next_word_prediction));
+                                                       final Resources res) {
+       /* return prefs.getBoolean(Settings.PREF_BIGRAM_PREDICTIONS, res.getBoolean(
+                R.bool.config_default_next_word_prediction));*/
+        return true;
     }
 
     private static float readAutoCorrectionThreshold(final Resources res,
-            final String currentAutoCorrectionSetting) {
+                                                     final String currentAutoCorrectionSetting) {
         final String[] autoCorrectionThresholdValues = res.getStringArray(
                 R.array.auto_correction_threshold_values);
         // When autoCorrectionThreshold is greater than 1.0, it's like auto correction is off.
@@ -330,7 +333,7 @@ public final class SettingsValues {
     }
 
     private static boolean needsToShowVoiceInputKey(final SharedPreferences prefs,
-            final Resources res) {
+                                                    final Resources res) {
         // Migrate preference from {@link Settings#PREF_VOICE_MODE_OBSOLETE} to
         // {@link Settings#PREF_VOICE_INPUT_KEY}.
         if (prefs.contains(Settings.PREF_VOICE_MODE_OBSOLETE)) {
