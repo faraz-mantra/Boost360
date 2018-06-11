@@ -198,14 +198,14 @@ public final class SettingsValues {
                 defaultKeyPreviewDismissEndScale);
         mDisplayOrientation = res.getConfiguration().orientation;
         mAppWorkarounds = new AsyncResultHolder<>();
-        final PackageInfo packageInfo = TargetPackageInfoGetterTask.getCachedPackageInfo(
-                mInputAttributes.mTargetApplicationPackageName);
-        if (null != packageInfo) {
-            mAppWorkarounds.set(new AppWorkaroundsUtils(packageInfo));
-        } else {
-            new TargetPackageInfoGetterTask(context, mAppWorkarounds)
-                    .execute(mInputAttributes.mTargetApplicationPackageName);
-        }
+//        final PackageInfo packageInfo = TargetPackageInfoGetterTask.getCachedPackageInfo(
+//                mInputAttributes.mTargetApplicationPackageName);
+//        if (null != packageInfo) {
+//            mAppWorkarounds.set(new AppWorkaroundsUtils(packageInfo));
+//        } else {
+//            new TargetPackageInfoGetterTask(context, mAppWorkarounds)
+//                    .execute(mInputAttributes.mTargetApplicationPackageName);
+//        }
     }
 
     public boolean isApplicationSpecifiedCompletionsOn() {
@@ -213,8 +213,9 @@ public final class SettingsValues {
     }
 
     public boolean needsToLookupSuggestions() {
-        return mInputAttributes.mShouldShowSuggestions
-                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
+        return true;
+//        mInputAttributes.mShouldShowSuggestions
+//                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
     }
 
     public boolean isSuggestionsEnabledPerUserSettings() {
