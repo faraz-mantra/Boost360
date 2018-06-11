@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -18,32 +17,27 @@
 */
 -->
 
-<merge
-    xmlns:latin="http://schemas.android.com/apk/res-auto"
-    >
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
     <switch>
         <!-- for transliteration -->
         <case
+            latin:keyboardLayoutSet="qwerty"
             latin:languageCode="be|gu|hi|ml|or|ta|te"
-            latin:languageSwitchKeyEnabled="true"
-            latin:keyboardLayoutSet="qwerty" >
-            <Key
-                latin:keyStyle="languageSwitchKeyStyle" />
+            latin:languageSwitchKeyEnabled="true">
+            <Key latin:keyStyle="languageSwitchKeyStyle" />
             <Key
                 latin:keyStyle="spaceKeyStyle"
                 latin:keyWidth="30%p" />
-            <Key
-                latin:keyStyle="zwnjKeyStyle" />
+            <Key latin:keyStyle="zwnjKeyStyle" />
         </case>
         <case
+            latin:keyboardLayoutSet="qwerty"
             latin:languageCode="ml|hi|as|kn|te"
-            latin:languageSwitchKeyEnabled="false"
-            latin:keyboardLayoutSet="qwerty" >
+            latin:languageSwitchKeyEnabled="false">
             <Key
                 latin:keyStyle="spaceKeyStyle"
                 latin:keyWidth="40%p" />
-            <Key
-                latin:keyStyle="zwnjKeyStyle" />
+            <Key latin:keyStyle="zwnjKeyStyle" />
         </case>
         <!-- fa: Perisan
              kn: Kannada
@@ -51,34 +45,26 @@
              te: Telugu -->
         <case
             latin:languageCode="fa|kn|ne|te"
-            latin:languageSwitchKeyEnabled="true"
-            >
-            <Key
-                latin:keyStyle="languageSwitchKeyStyle" />
+            latin:languageSwitchKeyEnabled="true">
+            <Key latin:keyStyle="languageSwitchKeyStyle" />
             <Key
                 latin:keyStyle="spaceKeyStyle"
                 latin:keyWidth="30%p" />
-            <Key
-                latin:keyStyle="zwnjKeyStyle" />
+            <Key latin:keyStyle="zwnjKeyStyle" />
         </case>
         <case
             latin:languageCode="fa|kn|ne|te"
-            latin:languageSwitchKeyEnabled="false"
-            >
+            latin:languageSwitchKeyEnabled="false">
             <Key
                 latin:keyStyle="spaceKeyStyle"
                 latin:keyWidth="40%p" />
-            <Key
-                latin:keyStyle="zwnjKeyStyle" />
+            <Key latin:keyStyle="zwnjKeyStyle" />
         </case>
-        <case
-            latin:languageSwitchKeyEnabled="true"
-            >
-            <Key
-                latin:keyStyle="languageSwitchKeyStyle" />
+        <case latin:languageSwitchKeyEnabled="true">
+            <Key latin:keyStyle="languageSwitchKeyStyle" />
             <Key
                 latin:keyStyle="spaceKeyStyle"
-                latin:keyWidth="40%p" />
+                latin:keyWidth="38%p" />
         </case>
         <!-- languageSwitchKeyEnabled="false" -->
         <default>

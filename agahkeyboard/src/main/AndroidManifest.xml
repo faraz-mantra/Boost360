@@ -2,6 +2,9 @@
     package="io.separ.neural.inputmethod.indic">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
+
     <application
         android:name="io.separ.neural.inputmethod.slash.NeuralApplication"
         android:allowBackup="true"
