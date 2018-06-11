@@ -46,7 +46,6 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Updates"
-                    android:textAllCaps="true"
                     android:textColor="@color/white_70" />
 
                 <TextView
@@ -59,7 +58,6 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Products"
-                    android:textAllCaps="true"
                     android:textColor="@color/white_70" />
 
                 <TextView
@@ -72,7 +70,6 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Photos"
-                    android:textAllCaps="true"
                     android:textColor="@color/white_70" />
 
                 <TextView
@@ -85,7 +82,6 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Details"
-                    android:textAllCaps="true"
                     android:textColor="@color/white_70" />
 
             </LinearLayout>

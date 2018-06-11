@@ -947,6 +947,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (modelList.size() < 10) {
             onCompleted(PHOTOS);
         }
+        imagesList.addAll(modelList);
         shareAdapter1.setSuggestionModels(modelList);
         recyclerViewPhotos.setLayoutManager(gridLayoutManager);
         selectionLayout.setVisibility(View.VISIBLE);
