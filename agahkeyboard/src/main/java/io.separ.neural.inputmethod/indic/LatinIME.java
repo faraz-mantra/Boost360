@@ -1787,9 +1787,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         }
 
         //final boolean shouldShowImportantNotice = ImportantNoticeUtils.shouldShowImportantNotice(this);
-        final boolean shouldShowSuggestionCandidates =
-                currentSettingsValues.mInputAttributes.mShouldShowSuggestions
-                        && currentSettingsValues.isSuggestionsEnabledPerUserSettings();
+        final boolean shouldShowSuggestionCandidates = true;
+
         final boolean shouldShowSuggestionsStripUnlessPassword = /*shouldShowImportantNotice
                 || currentSettingsValues.mShowsVoiceInputKey
                 ||*/ shouldShowSuggestionCandidates

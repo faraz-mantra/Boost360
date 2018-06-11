@@ -18,7 +18,6 @@ package io.separ.neural.inputmethod.indic.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
@@ -27,7 +26,6 @@ import android.view.inputmethod.EditorInfo;
 
 import com.android.inputmethod.latin.utils.AsyncResultHolder;
 import com.android.inputmethod.latin.utils.ResourceUtils;
-import com.android.inputmethod.latin.utils.TargetPackageInfoGetterTask;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -214,8 +212,9 @@ public final class SettingsValues {
     }
 
     public boolean needsToLookupSuggestions() {
-        return mInputAttributes.mShouldShowSuggestions
-                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
+        return true;
+//        mInputAttributes.mShouldShowSuggestions
+//                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
     }
 
     public boolean isSuggestionsEnabledPerUserSettings() {
