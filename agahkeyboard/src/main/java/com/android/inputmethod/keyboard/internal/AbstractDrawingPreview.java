@@ -16,6 +16,7 @@
 
 package com.android.inputmethod.keyboard.internal;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
 
@@ -71,9 +72,10 @@ public abstract class AbstractDrawingPreview {
 
     /**
      * Draws the preview
+     * @param context
      * @param canvas The canvas where the preview is drawn.
      */
-    public abstract void drawPreview(@Nonnull final Canvas canvas);
+    public abstract void drawPreview(Context context, @Nonnull final Canvas canvas);
 
     /**
      * Set the position of the preview.

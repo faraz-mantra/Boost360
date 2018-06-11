@@ -150,5 +150,7 @@ public class TopDisplayController {
         mSuggestionsStripView.setVisibility(GONE);
         mActionRowView.findViewById(R.id.tv_products).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
         mActionRowView.findViewById(R.id.tv_updates).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        mActionRowView.findViewById(R.id.tv_photos).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        mActionRowView.findViewById(R.id.tv_details).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
     }
 }
