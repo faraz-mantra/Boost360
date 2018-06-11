@@ -16,6 +16,7 @@
 
 package com.android.inputmethod.keyboard.internal;
 
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -92,8 +93,8 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
         mOffscreenCanvas.translate(0, mOffscreenOffsetY);
     }
 
-    private boolean drawGestureTrails(final Canvas offscreenCanvas, final Paint paint,
-            final Rect dirtyRect) {
+    private boolean drawGestureTrails(Context context, final Canvas offscreenCanvas, final Paint paint,
+                                      final Rect dirtyRect) {
         // Clear previous dirty rectangle.
         if (!dirtyRect.isEmpty()) {
             paint.setColor(Color.TRANSPARENT);
@@ -108,7 +109,7 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
             final int trailsCount = mGestureTrails.size();
             for (int index = 0; index < trailsCount; index++) {
                 final GestureTrailDrawingPoints trail = mGestureTrails.valueAt(index);
-                needsUpdatingGestureTrail |= trail.drawGestureTrail(offscreenCanvas, paint,
+                needsUpdatingGestureTrail |= trail.drawGestureTrail(context,offscreenCanvas, paint,
                         mGestureTrailBoundsRect, mDrawingParams);
                 // {@link #mGestureTrailBoundsRect} has bounding box of the trail.
                 dirtyRect.union(mGestureTrailBoundsRect);
@@ -125,16 +126,17 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
 
     /**
      * Draws the preview
+     * @param context
      * @param canvas The canvas where the preview is drawn.
      */
     @Override
-    public void drawPreview(@NonNull final Canvas canvas) {
+    public void drawPreview(Context context, @NonNull final Canvas canvas) {
         if (!isPreviewEnabled()) {
             return;
         }
         mayAllocateOffscreenBuffer();
         // Draw gesture trails to offscreen buffer.
-        final boolean needsUpdatingGestureTrail = drawGestureTrails(
+        final boolean needsUpdatingGestureTrail = drawGestureTrails(context,
                 mOffscreenCanvas, mGesturePaint, mDirtyRect);
         if (needsUpdatingGestureTrail) {
             mDrawingHandler.removeCallbacks(this);

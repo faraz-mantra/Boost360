@@ -16,6 +16,7 @@
 
 package com.android.inputmethod.keyboard.internal;
 
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -135,10 +136,11 @@ public class GestureFloatingTextDrawingPreview extends AbstractDrawingPreview {
 
     /**
      * Draws gesture preview text
+     * @param context
      * @param canvas The canvas where preview text is drawn.
      */
     @Override
-    public void drawPreview(@NonNull final Canvas canvas) {
+    public void drawPreview(Context context, @NonNull final Canvas canvas) {
         if (!isPreviewEnabled() || mSuggestedWords.isEmpty()
                 || TextUtils.isEmpty(mSuggestedWords.getWord(0))) {
             return;

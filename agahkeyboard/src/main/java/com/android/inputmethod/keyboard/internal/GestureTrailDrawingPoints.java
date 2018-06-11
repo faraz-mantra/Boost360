@@ -16,6 +16,7 @@
 
 package com.android.inputmethod.keyboard.internal;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -27,11 +28,12 @@ import com.android.inputmethod.latin.utils.ResizableIntArray;
 
 import io.separ.neural.inputmethod.Utils.ColorUtils;
 import io.separ.neural.inputmethod.indic.Constants;
+import io.separ.neural.inputmethod.indic.R;
 
 /**
  * This class holds drawing points to represent a gesture trail. The gesture trail may contain
  * multiple non-contiguous gesture strokes and will be animated asynchronously from gesture input.
- *
+ * <p>
  * On the other hand, {@link GestureStrokeDrawingPoints} class holds drawing points of each gesture
  * stroke. This class holds drawing points of those gesture strokes to draw as a gesture trail.
  * Drawing points in this class will be asynchronously removed when fading out animation goes.
@@ -98,7 +100,7 @@ final class GestureTrailDrawingPoints {
         mLastInterpolatedDrawIndex = stroke.interpolateStrokeAndReturnStartIndexOfLastSegment(
                 lastInterpolatedIndex, mEventTimes, mXCoordinates, mYCoordinates, mPointTypes);
         if (strokeId != mCurrentStrokeId) {
-            final int elapsedTime = (int)(downTime - mCurrentTimeBase);
+            final int elapsedTime = (int) (downTime - mCurrentTimeBase);
             for (int i = mTrailStartIndex; i < trailSize; i++) {
                 // Decay the previous strokes' event times.
                 eventTimes[i] -= elapsedTime;
@@ -117,7 +119,7 @@ final class GestureTrailDrawingPoints {
      * passed, a trail becomes fully transparent.
      *
      * @param elapsedTime the elapsed time since a trail has been made.
-     * @param params gesture trail display parameters
+     * @param params      gesture trail display parameters
      * @return the width of a gesture trail
      */
     private static int getAlpha(final int elapsedTime, final GestureTrailDrawingParams params) {
@@ -136,7 +138,7 @@ final class GestureTrailDrawingPoints {
      * to the elapsed time. After mTrailEndWidth has been passed, the width becomes mTraiLEndWidth.
      *
      * @param elapsedTime the elapsed time since a trail has been made.
-     * @param params gesture trail display parameters
+     * @param params      gesture trail display parameters
      * @return the width of a gesture trail
      */
     private static float getWidth(final int elapsedTime, final GestureTrailDrawingParams params) {
@@ -149,20 +151,22 @@ final class GestureTrailDrawingPoints {
 
     /**
      * Draw gesture trail
-     * @param canvas The canvas to draw the gesture trail
-     * @param paint The paint object to be used to draw the gesture trail
+     *
+     * @param context
+     * @param canvas        The canvas to draw the gesture trail
+     * @param paint         The paint object to be used to draw the gesture trail
      * @param outBoundsRect the bounding box of this gesture trail drawing
-     * @param params The drawing parameters of gesture trail
+     * @param params        The drawing parameters of gesture trail
      * @return true if some gesture trails remain to be drawn
      */
-    public boolean drawGestureTrail(final Canvas canvas, final Paint paint,
-            final Rect outBoundsRect, final GestureTrailDrawingParams params) {
+    public boolean drawGestureTrail(Context context, final Canvas canvas, final Paint paint,
+                                    final Rect outBoundsRect, final GestureTrailDrawingParams params) {
         synchronized (mEventTimes) {
-            return drawGestureTrailLocked(canvas, paint, outBoundsRect, params);
+            return drawGestureTrailLocked(context, canvas, paint, outBoundsRect, params);
         }
     }
 
-    private boolean drawGestureTrailLocked(Canvas canvas, Paint paint, Rect outBoundsRect, GestureTrailDrawingParams params) {
+    private boolean drawGestureTrailLocked(Context context, Canvas canvas, Paint paint, Rect outBoundsRect, GestureTrailDrawingParams params) {
         outBoundsRect.setEmpty();
         int trailSize = this.mEventTimes.getLength();
         if (trailSize == 0) {
@@ -201,6 +205,7 @@ final class GestureTrailDrawingPoints {
                         }
                         outBoundsRect.union(this.mRoundedLineBounds);
                         paint.setAlpha(getAlpha(elapsedTime, params));
+                        paint.setColor(context.getResources().getColor(R.color.primaryColor));
                         canvas.drawPath(path, paint);
                     }
                 }
@@ -226,7 +231,7 @@ final class GestureTrailDrawingPoints {
     }
 
     private void debugDrawPoints(final Canvas canvas, final int startIndex, final int endIndex,
-            final Paint paint) {
+                                 final Paint paint) {
         final int[] xCoords = mXCoordinates.getPrimitiveArray();
         final int[] yCoords = mYCoordinates.getPrimitiveArray();
         final int[] pointTypes = mPointTypes.getPrimitiveArray();

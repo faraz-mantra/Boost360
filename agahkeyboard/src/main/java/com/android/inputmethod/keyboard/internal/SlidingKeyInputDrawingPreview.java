@@ -16,6 +16,7 @@
 
 package com.android.inputmethod.keyboard.internal;
 
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -78,10 +79,11 @@ public final class SlidingKeyInputDrawingPreview extends AbstractDrawingPreview 
 
     /**
      * Draws the preview
+     * @param context
      * @param canvas The canvas where the preview is drawn.
      */
     @Override
-    public void drawPreview(@NonNull final Canvas canvas) {
+    public void drawPreview(Context context, @NonNull final Canvas canvas) {
         if (!isPreviewEnabled() || !mShowsSlidingKeyInputPreview) {
             return;
         }
