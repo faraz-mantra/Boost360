@@ -590,9 +590,11 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
         String dateFormatter(int hours) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
+            calendar.add(Calendar.MINUTE, -330);
             calendar.add(Calendar.HOUR_OF_DAY, hours);
             String date = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String time = new SimpleDateFormat("HH:mm:ss").format(calendar.getTime());
+            Log.d("here", date+time);
             return date + "T" + time;
         }
 

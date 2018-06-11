@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -80,7 +81,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     private final ViewGroup mSuggestionsStrip;
     private final ImageButton mVoiceKey;
-    private final ImageButton mServicesKey;
+    private final ImageView mServicesKey;
     private final ViewGroup mAddToDictionaryStrip;
     //private final View mImportantNoticeStrip;
     MainKeyboardView mMainKeyboardView;
@@ -160,7 +161,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
         mSuggestionsStrip = (ViewGroup) findViewById(R.id.suggestions_strip);
         mVoiceKey = (ImageButton) findViewById(R.id.suggestions_strip_voice_key);
-        mServicesKey = (ImageButton) findViewById(R.id.suggestions_strip_services_key);
+        mServicesKey = (ImageView) findViewById(R.id.suggestions_strip_services_key);
         mAddToDictionaryStrip = (ViewGroup) findViewById(R.id.add_to_dictionary_strip);
         //mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,

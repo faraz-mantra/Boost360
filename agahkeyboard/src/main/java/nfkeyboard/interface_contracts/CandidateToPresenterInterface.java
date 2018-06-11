@@ -14,4 +14,6 @@ public interface CandidateToPresenterInterface extends ItemClickListener, Emojic
     ImePresenterImpl.TabType getTabType();
 
     void onSpeechResult(String speech);
+
+    boolean imagesSupported();
 }
