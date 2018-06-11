@@ -11,4 +11,6 @@ public interface UrlToBitmapInterface {
     Context getContext();
 
     void onResourcesReady(Bitmap bitmap, String text, String imageId);
+
+    void onResorceMultipleReady(Bitmap bitmap, String imageId, int size, int current);
 }

@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import nfkeyboard.interface_contracts.CandidateViewItemClickListener;
-import nfkeyboard.models.KeywordModel;
-import nowfloats.nfkeyboard.R;
+import nowfloats.nfkeyboard.interface_contracts.CandidateViewItemClickListener;
+import nowfloats.nfkeyboard.models.KeywordModel;
 
 /**
  * Created by Admin on 02-04-2018.
@@ -31,7 +30,7 @@ public class TextSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_dictionary_text_suggestions, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.layout_dictionary_text_suggestions, parent, false);
         return new TextSuggestionHolder(view);
     }
 
@@ -65,7 +64,7 @@ public class TextSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public TextSuggestionHolder(View itemView) {
             super(itemView);
-            mTextView = itemView.findViewById(R.id.tv_suggestion);
+            mTextView = itemView.findViewById(nowfloats.nfkeyboard.R.id.tv_suggestion);
             mTextView.setOnClickListener(this);
 
         }

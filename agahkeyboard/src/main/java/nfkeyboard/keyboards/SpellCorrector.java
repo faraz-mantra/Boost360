@@ -1,5 +1,6 @@
 package nfkeyboard.keyboards;
 
+
 import android.content.Context;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class SpellCorrector {
     }
 
 
-    private static Logger log = Logger.getLogger(SpellCorrector.class.getName());
+    private static Logger log = Logger.getLogger(nowfloats.nfkeyboard.keyboards.SpellCorrector.class.getName());
     private static TST tst = new TST();
 
     private int EDIT_LIMIT = 3;

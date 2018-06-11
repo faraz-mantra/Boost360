@@ -1,6 +1,6 @@
 package nfkeyboard.keyboards.models;
 
-public class PQElement implements Comparable<PQElement> {
+public class PQElement implements Comparable<nowfloats.nfkeyboard.keyboards.models.PQElement> {
     private String word;
     private int editDistance;
     private String frequency;
@@ -35,7 +35,7 @@ public class PQElement implements Comparable<PQElement> {
         this.frequency = frequency;
     }
 
-    public int compareTo(PQElement element) {
+    public int compareTo(nowfloats.nfkeyboard.keyboards.models.PQElement element) {
         if (element != null && element.getFrequency() != null) {
             if (this.getDistance() > element.getDistance()) {
                 return 1;

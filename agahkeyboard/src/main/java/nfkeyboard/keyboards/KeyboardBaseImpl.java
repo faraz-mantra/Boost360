@@ -3,7 +3,7 @@ package nfkeyboard.keyboards;
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
 
-import nfkeyboard.interface_contracts.KeyboardInterface;
+import nowfloats.nfkeyboard.interface_contracts.KeyboardInterface;
 
 /**
  * Created by Admin on 21-02-2018.

@@ -2,8 +2,6 @@ package nfkeyboard.util;
 
 import android.view.inputmethod.EditorInfo;
 
-import nowfloats.nfkeyboard.R;
-
 /**
  * Created by Admin on 20-02-2018.
  */
@@ -16,16 +14,16 @@ public class KeyboardUtils {
         public static int getXml(KeyboardType type){
             switch (type){
                 case NUMBERS:
-                    return R.xml.keyboard_numbers;
+                    return nowfloats.nfkeyboard.R.xml.keyboard_numbers;
                 case SYMBOLS:
-                    return  R.xml.keyboard_sym;
+                    return  nowfloats.nfkeyboard.R.xml.keyboard_sym;
                 case SYMBOLS_SHIFT:
-                    return R.xml.keyboard_sym_shift;
+                    return nowfloats.nfkeyboard.R.xml.keyboard_sym_shift;
                 case EMAIL_ADDRESS:
-                    return R.xml.keyboard_email;
+                    return nowfloats.nfkeyboard.R.xml.keyboard_email;
                 case QWERTY_LETTERS:
                 default:
-                    return  R.xml.keyboard_qwrty;
+                    return  nowfloats.nfkeyboard.R.xml.keyboard_qwrty;
             }
         }
     }
@@ -51,12 +49,12 @@ public class KeyboardUtils {
         public static int getXml(CandidateType type){
             switch (type){
                 case TEXT_LIST:
-                    return R.layout.text_suggestions_candidate_view;
+                    return nowfloats.nfkeyboard.R.layout.text_suggestions_candidate_view;
                 case BOOST_SHARE1:
-                    return R.layout.boost_share_candidate_view1;
+                    return nowfloats.nfkeyboard.R.layout.boost_share_candidate_view1;
                 case BOOST_SHARE:
                 default:
-                    return R.layout.boost_share_candidate_view;
+                    return nowfloats.nfkeyboard.R.layout.boost_share_candidate_view;
             }
         }
     }

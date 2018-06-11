@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -23,13 +24,16 @@ import nfkeyboard.database.DatabaseTable;
 import nfkeyboard.interface_contracts.UrlToBitmapInterface;
 import nfkeyboard.models.KeywordModel;
 
-import static nowfloats.nfkeyboard.database.DatabaseOpenHelper.COL_WORD;
+import static nfkeyboard.database.DatabaseOpenHelper.COL_WORD;
 
 /**
  * Created by Admin on 26-02-2018.
  */
 
 public class MethodUtils {
+
+    static int i;
+
     public static Spanned fromHtml(String html) {
         Spanned result;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -56,11 +60,26 @@ public class MethodUtils {
                 .load(imageUrl)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable com.bumptech.glide.request.transition.Transition<? super Bitmap> transition) {
-                        listener.onResourcesReady(resource, text, imageId);
-                    }
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
 
+                        listener.onResourcesReady(resource, text, imageId);
+
+                    }
                 });
+    }
+
+    public static void onGlideBitmapMultipleReady(final UrlToBitmapInterface listener, final String imageUrl, final String imageId, final int size, final int current) {
+
+        Glide.with(listener.getContext())
+                .asBitmap()
+                .load(imageUrl)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        listener.onResorceMultipleReady(resource, imageId, size, current);
+                    }
+                });
+
     }
 
     public static void startBoostActivity(Context mContext) {

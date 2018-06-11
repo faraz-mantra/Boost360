@@ -16,7 +16,7 @@ import nfkeyboard.models.AllSuggestionModel;
 public class BaseAdapterManager {
     public enum SectionTypeEnum {
 
-        ImageAndText(0), Text(1), Product(2),EmptyList(3), Login(4), loader(5);
+        ImageAndText(0), Text(1), Product(2), EmptyList(3), Login(4), loader(5), ImageShare(6), DetailsShare(7);
 
         private final int val;
 
@@ -30,6 +30,7 @@ public class BaseAdapterManager {
     }
 
     private ArrayList<BaseAdapter<AllSuggestionModel>> adapterList;
+
     public BaseAdapterManager(Context context, ItemClickListener listener) {
         adapterList = new ArrayList<>();
         makeSectionAdapterList(context, listener);
@@ -46,12 +47,14 @@ public class BaseAdapterManager {
         adapterList.get(position).onBindViewHolder(holder, node);
     }
 
-    private void makeSectionAdapterList(Context context, ItemClickListener listener){
+    private void makeSectionAdapterList(Context context, ItemClickListener listener) {
         adapterList.add(new ImageAdapter(context, listener));
         adapterList.add(new TextAdapter(context, listener));
         adapterList.add(new ProductAdapter(context, listener));
         adapterList.add(new EmptyListAdapter(context, listener));
         adapterList.add(new LoginAdapter(context, listener));
         adapterList.add(new LoaderAdapter(context, listener));
+        adapterList.add(new ImageShareAdapter(context, listener));
+        adapterList.add(new DetailsAdapter(context, listener));
     }
 }

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
-import nowfloats.nfkeyboard.R;
 
 /**
  * Created by Admin on 01-03-2018.
@@ -18,34 +17,35 @@ import nowfloats.nfkeyboard.R;
 public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
 
     EmptyListAdapter(Context context, ItemClickListener listener) {
-        super(context,listener);
+        super(context, listener);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_text,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_text, parent, false);
         return new EmptyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, AllSuggestionModel suggestion) {
-        if (holder instanceof EmptyHolder){
+        if (holder instanceof EmptyHolder) {
             EmptyHolder myHolder = (EmptyHolder) holder;
             myHolder.setModelData(suggestion);
         }
     }
 
-    class EmptyHolder extends RecyclerView.ViewHolder{
+    class EmptyHolder extends RecyclerView.ViewHolder {
         TextView suggestionTv;
         AllSuggestionModel dataModel;
+
         public EmptyHolder(View itemView) {
             super(itemView);
             linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
             itemView.setLayoutParams(linLayoutParams);
-            suggestionTv = itemView.findViewById(R.id.textView);
+            suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
         }
 
-        void setModelData(AllSuggestionModel model){
+        void setModelData(AllSuggestionModel model) {
             dataModel = model;
             suggestionTv.setText(model.getText());
         }

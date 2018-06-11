@@ -75,7 +75,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="#212121"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.android.inputmethod.keyboard.MainKeyboardView
             android:id="@+id/keyboard_view"
@@ -83,14 +83,13 @@
             android:layout_height="wrap_content"
             android:visibility="visible" />
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/product_share_rv_list"
+        <include
+            android:id="@+id/sharelayout"
+            layout="@layout/layout_boost_share_keyboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:background="#212121"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
             android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

@@ -8,4 +8,14 @@ import nfkeyboard.models.AllSuggestionModel;
 
 public interface ItemClickListener {
     void onItemClick(AllSuggestionModel model);
+
+    String onCopyClick(AllSuggestionModel model);
+
+    String onCreateProductOfferClick(AllSuggestionModel model);
+
+    String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url);
+
+    void onClick(AllSuggestionModel model, boolean selected);
+
+    void onDetailsClick(AllSuggestionModel model);
 }

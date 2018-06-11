@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<nowfloats.nfkeyboard.keyboards.BoostShareCandidateView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:background="#424242"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/img_back"
@@ -18,28 +17,89 @@
         android:padding="7dp"
         android:src="@drawable/icon_action_back" />
 
-    <TextView
-        android:id="@+id/tv_updates"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:text="Updates"
-        android:textAllCaps="true"
-        android:textColor="@color/white" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_products"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:text="Products"
-        android:textAllCaps="true"
-        android:textColor="@color/white" />
+        <HorizontalScrollView
+            android:id="@+id/horizontal_scroll_view"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarSize="2dp"
+            android:scrollbarThumbHorizontal="@color/white"
+            android:scrollbars="horizontal">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_updates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="28dp"
+                    android:paddingTop="5dp"
+                    android:text="Updates"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white_70" />
+
+                <TextView
+                    android:id="@+id/tv_products"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="28dp"
+                    android:paddingTop="5dp"
+                    android:text="Products"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white_70" />
+
+                <TextView
+                    android:id="@+id/tv_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="28dp"
+                    android:paddingTop="5dp"
+                    android:text="Photos"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white_70" />
+
+                <TextView
+                    android:id="@+id/tv_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="28dp"
+                    android:paddingTop="5dp"
+                    android:text="Details"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white_70" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <View
+            android:id="@+id/tab_horizontal"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+</nowfloats.nfkeyboard.keyboards.BoostShareCandidateView>

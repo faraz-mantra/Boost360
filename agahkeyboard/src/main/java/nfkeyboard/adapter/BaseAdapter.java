@@ -15,13 +15,14 @@ import nfkeyboard.models.AllSuggestionModel;
  * Created by Admin on 23-02-2018.
  */
 
-public abstract class BaseAdapter <T extends AllSuggestionModel> {
+public abstract class BaseAdapter<T extends AllSuggestionModel> {
     final int leftSpace, topSpace, padding, paddingTop;
     final Context mContext;
     final DisplayMetrics metrics;
     private ItemClickListener mItemClickListener;
     LinearLayout.LayoutParams linLayoutParams;
-    BaseAdapter(Context context){
+
+    BaseAdapter(Context context) {
         mContext = context;
         metrics = mContext.getResources().getDisplayMetrics();
         leftSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
@@ -31,20 +32,27 @@ public abstract class BaseAdapter <T extends AllSuggestionModel> {
         linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 75 / 100,
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, metrics));
     }
-    BaseAdapter(Context context, ItemClickListener listener){
+
+    BaseAdapter(Context context, ItemClickListener listener) {
         this(context);
         mItemClickListener = listener;
     }
-    public void setViewLayoutSize(View itemView){
+
+    public void setViewLayoutSize(View itemView) {
         linLayoutParams.setMargins(leftSpace, topSpace, leftSpace, topSpace);
         itemView.setLayoutParams(linLayoutParams);
         itemView.setPadding(padding, paddingTop, padding, padding);
     }
+
     public abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent);
 
     public abstract void onBindViewHolder(RecyclerView.ViewHolder holder, T suggestion);
 
-    void onItemClicked(AllSuggestionModel model){
+    String onCopyClick(AllSuggestionModel model) {
+        return mItemClickListener.onCopyClick(model);
+    }
+
+    void onItemClicked(AllSuggestionModel model) {
         mItemClickListener.onItemClick(model);
     }
 }

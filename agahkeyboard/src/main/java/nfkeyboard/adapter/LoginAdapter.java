@@ -11,7 +11,6 @@ import android.widget.TextView;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.util.MethodUtils;
-import nowfloats.nfkeyboard.R;
 
 /**
  * Created by Admin on 01-03-2018.
@@ -20,31 +19,32 @@ import nowfloats.nfkeyboard.R;
 public class LoginAdapter extends BaseAdapter<AllSuggestionModel> {
 
     LoginAdapter(Context context, ItemClickListener listener) {
-        super(context,listener);
+        super(context, listener);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_text,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_text, parent, false);
         return new LoginHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, AllSuggestionModel suggestion) {
-        if (holder instanceof LoginHolder){
+        if (holder instanceof LoginHolder) {
             LoginHolder myHolder = (LoginHolder) holder;
             myHolder.setModelData(suggestion);
         }
     }
 
-    class LoginHolder extends RecyclerView.ViewHolder{
+    class LoginHolder extends RecyclerView.ViewHolder {
         TextView suggestionTv;
         AllSuggestionModel dataModel;
+
         public LoginHolder(View itemView) {
             super(itemView);
             linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
             itemView.setLayoutParams(linLayoutParams);
-            suggestionTv = itemView.findViewById(R.id.textView);
+            suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
             suggestionTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -54,14 +54,14 @@ public class LoginAdapter extends BaseAdapter<AllSuggestionModel> {
             });
         }
 
-        void setModelData(AllSuggestionModel model){
+        void setModelData(AllSuggestionModel model) {
             dataModel = model;
             suggestionTv.setText(model.getText());
             suggestionTv.setTextSize(16);
             suggestionTv.setAllCaps(true);
-            suggestionTv.setTextColor(ContextCompat.getColor(mContext,R.color.white));
-            suggestionTv.setPadding(2*leftSpace,leftSpace,2*leftSpace,leftSpace);
-            suggestionTv.setBackgroundResource(R.drawable.yellow_button_bg);
+            suggestionTv.setTextColor(ContextCompat.getColor(mContext, nowfloats.nfkeyboard.R.color.white));
+            suggestionTv.setPadding(2 * leftSpace, leftSpace, 2 * leftSpace, leftSpace);
+            suggestionTv.setBackgroundResource(nowfloats.nfkeyboard.R.drawable.yellow_button_bg);
         }
     }
 }

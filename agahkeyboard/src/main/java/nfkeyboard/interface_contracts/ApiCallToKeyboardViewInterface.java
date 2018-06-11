@@ -11,6 +11,8 @@ import nfkeyboard.models.AllSuggestionModel;
 
 public interface ApiCallToKeyboardViewInterface {
     void onLoadMore(ImePresenterImpl.TabType type, List<AllSuggestionModel> models);
+
     void onError(ImePresenterImpl.TabType type);
+
     void onCompleted(ImePresenterImpl.TabType type);
 }

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
-import nowfloats.nfkeyboard.R;
 
 /**
  * Created by Admin on 23-02-2018.
@@ -18,30 +17,31 @@ import nowfloats.nfkeyboard.R;
 public class TextAdapter extends BaseAdapter<AllSuggestionModel> {
 
     TextAdapter(Context context, ItemClickListener listener) {
-        super(context,listener);
+        super(context, listener);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_text,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_text, parent, false);
         return new TextHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, AllSuggestionModel suggestion) {
-        if (holder instanceof TextHolder){
+        if (holder instanceof TextHolder) {
             TextHolder myHolder = (TextHolder) holder;
             myHolder.setModelData(suggestion);
         }
     }
 
-    class TextHolder extends RecyclerView.ViewHolder{
+    class TextHolder extends RecyclerView.ViewHolder {
         TextView suggestionTv;
         AllSuggestionModel dataModel;
+
         public TextHolder(View itemView) {
             super(itemView);
             setViewLayoutSize(itemView);
-            suggestionTv = itemView.findViewById(R.id.textView);
+            suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -50,7 +50,7 @@ public class TextAdapter extends BaseAdapter<AllSuggestionModel> {
             });
         }
 
-        void setModelData(AllSuggestionModel model){
+        void setModelData(AllSuggestionModel model) {
             dataModel = model;
             suggestionTv.setText(model.getText());
         }

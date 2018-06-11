@@ -15,7 +15,6 @@ import nfkeyboard.interface_contracts.CandidateViewInterface;
 import nfkeyboard.interface_contracts.CandidateViewItemClickListener;
 import nfkeyboard.models.KeywordModel;
 import nfkeyboard.util.KeyboardUtils;
-import nowfloats.nfkeyboard.R;
 
 /**
  * Created by Admin on 22-02-2018.
@@ -42,7 +41,7 @@ public class CandidateViewBaseImpl extends FrameLayout implements CandidateViewI
     }
 
     public void setcandidateItemClickListener(CandidateViewItemClickListener listener) {
-        setBackgroundResource(R.color.kbd_key_color);
+        setBackgroundResource(nowfloats.nfkeyboard.R.color.kbd_key_color);
         onClickListener = listener;
     }
 

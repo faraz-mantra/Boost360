@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -95,4 +94,9 @@
     <color name="slash_dark_background">#ff212121</color>
     <color name="key_background_color">#212121</color>
     <color name="kbd_key_color">#424242</color>
+    <color name="white_70">#B3ffffff</color>
+    <color name="white_30">#4dffffff</color>
+    <color name="gray_40">#66212121</color>
+    <color name="dark_gray">#141414</color>
+    <color name="black_10">#1a000000</color>
 </resources>

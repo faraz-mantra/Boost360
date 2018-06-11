@@ -16,19 +16,26 @@
 
 package com.android.inputmethod.keyboard;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.inputmethod.keyboard.KeyboardLayoutSet.KeyboardLayoutSetException;
@@ -37,6 +44,9 @@ import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +65,25 @@ import nfkeyboard.adapter.BaseAdapterManager;
 import nfkeyboard.adapter.MainAdapter;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
 import nfkeyboard.interface_contracts.CandidateToPresenterInterface;
+import nfkeyboard.interface_contracts.GetGalleryImagesAsyncTask_Interface;
 import nfkeyboard.interface_contracts.ItemClickListener;
+import nfkeyboard.interface_contracts.UrlToBitmapInterface;
 import nfkeyboard.keyboards.ImePresenterImpl;
 import nfkeyboard.models.AllSuggestionModel;
+import nfkeyboard.models.networkmodels.Photo;
 import nfkeyboard.network.ApiCallPresenter;
+import nfkeyboard.util.Constants;
+import nfkeyboard.util.MethodUtils;
+import nfkeyboard.util.MixPanelUtils;
 import nfkeyboard.util.SharedPrefUtil;
 
 import static com.android.inputmethod.keyboard.internal.AlphabetShiftState.IS_SHIFTED;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.DETAILS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PHOTOS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PRODUCTS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 
-public final class KeyboardSwitcher implements KeyboardState.SwitchActions, ItemClickListener, ApiCallToKeyboardViewInterface {
+public final class KeyboardSwitcher implements KeyboardState.SwitchActions, ItemClickListener, ApiCallToKeyboardViewInterface, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
     private static final String TAG = KeyboardSwitcher.class.getSimpleName();
 
     private SubtypeSwitcher mSubtypeSwitcher;
@@ -83,8 +103,18 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private MainAdapter shareAdapter;
     private ApiCallPresenter apiCallPresenter;
     private CandidateToPresenterInterface presenterListener;
-    boolean isProductCompleted, isUpdatesCompleted;
     private ImePresenterImpl.TabType mTabType;
+    private ConstraintLayout shareLayout, selectionLayout;
+    private RecyclerView recyclerViewPhotos;
+    private MainAdapter shareAdapter1;
+    private PagerSnapHelper snapHelper;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
+    private TextView totalImagesTv;
+    private Button shareBtn, deselectBtn;
+    private UrlToBitmapInterface urlToBitmapInterface;
+    private GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface galleryImagesListener;
+    boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
 
     public LatinIME getmLatinIME() {
         return mLatinIME;
@@ -96,7 +126,11 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     private KeyboardTheme mKeyboardTheme;
     private Context mThemeContext;
-    private ArrayList<AllSuggestionModel> updatesList = new ArrayList<>(), productList = new ArrayList<>();
+    private ArrayList<AllSuggestionModel> updatesList = new ArrayList<>(),
+            productList = new ArrayList<>(),
+            imagesList = new ArrayList<>(),
+            selectedImages = new ArrayList<>(),
+            detailsList = new ArrayList<>();
 
     private static final KeyboardSwitcher sInstance = new KeyboardSwitcher();
 
@@ -284,21 +318,21 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private void setMainKeyboardFrame(final SettingsValues settingsValues) {
         mMainKeyboardFrame.setVisibility(
                 settingsValues.mHasHardwareKeyboard ? View.GONE : View.VISIBLE);
-        mRecyclerView.setVisibility(View.GONE);
+        shareLayout.setVisibility(View.GONE);
         mRichMediaView.setGone();
     }
 
     public void showKeyboardFrame() {
         mKeyboardView.setVisibility(View.VISIBLE);
         mRichMediaView.setGone();
-        if (mRecyclerView != null) {
-            mRecyclerView.setVisibility(View.INVISIBLE);
+        if (shareLayout != null) {
+            shareLayout.setVisibility(View.INVISIBLE);
         }
     }
 
     public void setProductShareKeyboardFrame(final ImePresenterImpl.TabType tabType) {
         this.mTabType = tabType;
-        mRecyclerView.setVisibility(View.VISIBLE);
+        shareLayout.setVisibility(View.VISIBLE);
         mKeyboardView.setVisibility(View.INVISIBLE);
         mRichMediaView.setGone();
         //EventBusExt.getDefault().post(new ShowActionRowEvent());
@@ -307,21 +341,89 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         } else {
             switch (tabType) {
                 case UPDATES:
+                    snapHelper.attachToRecyclerView(mRecyclerView);
+                    mRecyclerView.setLayoutManager(linearLayoutManager);
+                    selectionLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    recyclerViewPhotos.setVisibility(View.GONE);
                     if (updatesList.size() > 0) {
                         shareAdapter.setSuggestionModels(updatesList);
                     } else {
-                        callLoadingApi(ImePresenterImpl.TabType.UPDATES);
+                        callLoadingApi(UPDATES);
                     }
                     break;
                 case PRODUCTS:
+                    snapHelper.attachToRecyclerView(mRecyclerView);
+                    selectionLayout.setVisibility(View.GONE);
+                    mRecyclerView.setLayoutManager(linearLayoutManager);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    recyclerViewPhotos.setVisibility(View.GONE);
                     if (productList.size() > 0) {
                         shareAdapter.setSuggestionModels(productList);
                     } else {
-                        callLoadingApi(ImePresenterImpl.TabType.PRODUCTS);
+                        callLoadingApi(PRODUCTS);
+                    }
+                    break;
+                case PHOTOS:
+                    deselectImages();
+                    mRecyclerView.setVisibility(View.GONE);
+                    recyclerViewPhotos.setVisibility(View.VISIBLE);
+                    selectionLayout.setVisibility(View.VISIBLE);
+                    if (imagesList.size() > 0 && imagesList.get(imagesList.size() - 1).getTypeEnum()
+                            != BaseAdapterManager.SectionTypeEnum.loader) {
+                        shareAdapter1.setSuggestionModels(imagesList);
+                    } else {
+                        callLoadingApi(PHOTOS);
+                    }
+                    break;
+                case DETAILS:
+                    snapHelper.attachToRecyclerView(mRecyclerView);
+                    selectionLayout.setVisibility(View.GONE);
+                    mRecyclerView.setLayoutManager(linearLayoutManager);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    recyclerViewPhotos.setVisibility(View.GONE);
+                    if (detailsList.size() > 0) {
+                        shareAdapter.setSuggestionModels(detailsList);
+                    } else {
+                        callLoadingApi(DETAILS);
                     }
                     break;
             }
         }
+    }
+
+
+    private void deselectImages() {
+        selectedImages.clear();
+        shareBtn.setText(mThemeContext.getResources().getString(R.string.share));
+        recyclerViewPhotos.removeAllViews();
+        recyclerViewPhotos.setAdapter(shareAdapter1);
+        shareAdapter1.setSuggestionModels(imagesList);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(shareBtn, View.ALPHA, 0, 1f);
+        objectAnimator.setDuration(100);
+        objectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                shareBtn.setEnabled(false);
+                shareBtn.setBackgroundResource(R.drawable.rounded_button_stroke);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        objectAnimator.start();
     }
 
     private void callLoadingApi(final ImePresenterImpl.TabType type) {
@@ -333,24 +435,44 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         if (isProductCompleted) {
                             return;
                         }
-                        if (productList.size() > 0 && productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+                        if (productList.size() > 0 && productList.get(productList.size() - 1).getTypeEnum()
+                                == BaseAdapterManager.SectionTypeEnum.loader) {
                             return;
                         }
                         productList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
                         shareAdapter.setSuggestionModels(productList);
-                        apiCallPresenter.loadMore(productList.size() - 1, ImePresenterImpl.TabType.PRODUCTS);
+                        apiCallPresenter.loadMore(productList.size() - 1, ImePresenterImpl.TabType.PRODUCTS, null);
                         break;
                     case UPDATES:
                         if (isUpdatesCompleted) {
                             return;
                         }
-                        if (updatesList.size() > 0 && updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+                        if (updatesList.size() > 0 && updatesList.get(updatesList.size() - 1).getTypeEnum() ==
+                                BaseAdapterManager.SectionTypeEnum.loader) {
                             return;
                         }
                         updatesList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
                         shareAdapter.setSuggestionModels(updatesList);
-                        apiCallPresenter.loadMore(updatesList.size() - 1, ImePresenterImpl.TabType.UPDATES);
+                        apiCallPresenter.loadMore(updatesList.size() - 1, UPDATES, null);
                         break;
+                    case PHOTOS:
+                        if (isPhotosCompleted) {
+                            return;
+                        }
+                        apiCallPresenter.loadMore(imagesList.size() - 1, PHOTOS, galleryImagesListener);
+                        selectionLayout.setVisibility(View.VISIBLE);
+                    case DETAILS:
+                        if (isDetailsCompleted) {
+                            return;
+                        }
+                        if (detailsList.size() > 0 && detailsList.get(detailsList.size() - 1).getTypeEnum() ==
+                                BaseAdapterManager.SectionTypeEnum.loader) {
+                            return;
+                        }
+                        detailsList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
+                        shareAdapter.setSuggestionModels(detailsList);
+                        detailsList = apiCallPresenter.getAllDetails();
+                        shareAdapter.setSuggestionModels(detailsList);
                     default:
                         break;
                 }
@@ -487,19 +609,40 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         mRichMediaView = (RichMediaView) mCurrentInputView.findViewById(R.id.rich_media_view);
         mRichMediaView.setUp(mCurrentInputView, isHardwareAcceleratedDrawingEnabled, mLatinIME);
 
-        mKeyboardView = (MainKeyboardView) mCurrentInputView.findViewById(R.id.keyboard_view);
+        mKeyboardView = mCurrentInputView.findViewById(R.id.keyboard_view);
         mKeyboardView.setHardwareAcceleratedDrawingEnabled(isHardwareAcceleratedDrawingEnabled);
         mKeyboardView.setKeyboardActionListener(mLatinIME);
-        mActionRowView = (ActionRowView) mCurrentInputView.findViewById(R.id.action_row);
+        mActionRowView = mCurrentInputView.findViewById(R.id.action_row);
         mActionRowView.setListener(this.mLatinIME);
+        shareLayout = mCurrentInputView.findViewById(R.id.sharelayout);
+        shareLayout.setMinimumHeight(mKeyboardView.getHeight());
+        selectionLayout = shareLayout.findViewById(R.id.cl_selection_layout);
+
+        totalImagesTv = shareLayout.findViewById(R.id.tv_total);
+        shareBtn = shareLayout.findViewById(R.id.btn_share);
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("here", "clicked");
+                onShareClick();
+                deselectImages();
+            }
+        });
+        deselectBtn = shareLayout.findViewById(R.id.btn_deselect_all);
+        deselectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deselectImages();
+            }
+        });
         if (mRecyclerView == null) {
-            mRecyclerView = (RecyclerView) mCurrentInputView.findViewById(R.id.product_share_rv_list);
-            mRecyclerView.setMinimumHeight(mKeyboardView.getHeight());
+            mRecyclerView = shareLayout.findViewById(R.id.product_share_rv_list);
             mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(mThemeContext, LinearLayoutManager.HORIZONTAL, false));
+            linearLayoutManager = new LinearLayoutManager(mThemeContext, LinearLayoutManager.HORIZONTAL, false);
+            mRecyclerView.setLayoutManager(linearLayoutManager);
             shareAdapter = new MainAdapter(mThemeContext, this);
             mRecyclerView.setAdapter(shareAdapter);
-            SnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -517,13 +660,20 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
                             shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
                         } else {
-                            callLoadingApi(ImePresenterImpl.TabType.UPDATES);
+                            callLoadingApi(mTabType);
                         }
                     }
                 }
             });
         }
-        //mActionRowView.setCircleIndicator((CircleIndicator) mCurrentInputView.findViewById(R.id.actionrow_page_indicator));
+        if (recyclerViewPhotos == null) {
+            recyclerViewPhotos = shareLayout.findViewById(R.id.rv_list_photos);
+            recyclerViewPhotos.setHasFixedSize(true);
+            shareAdapter1 = new MainAdapter(mThemeContext, this);
+            recyclerViewPhotos.setAdapter(shareAdapter1);
+            gridLayoutManager = new GridLayoutManager(mThemeContext, 2, GridLayoutManager.HORIZONTAL, false);
+            recyclerViewPhotos.setLayoutManager(gridLayoutManager);
+        }
         return mCurrentInputView;
     }
 
@@ -557,6 +707,28 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         }
     }
 
+
+    void onShareClick() {
+
+        AllSuggestionModel model;
+
+        for (int i = 0; i < selectedImages.size(); i++) {
+            model = selectedImages.get(i);
+            JSONObject object = new JSONObject();
+            try {
+                object.put("id", model.getId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (model.getTypeEnum() == BaseAdapterManager.SectionTypeEnum.ImageShare) {
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
+                MethodUtils.onGlideBitmapMultipleReady(urlToBitmapInterface, model.getImageUri(), model.getId(), selectedImages.size(), i);
+            }
+
+        }
+    }
+
     public int getCurrentKeyboardScriptId() {
         if (null == mKeyboardLayoutSet) {
             return ScriptUtils.SCRIPT_UNKNOWN;
@@ -572,8 +744,117 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     }
 
+
+    @Override
+    public String onCopyClick(AllSuggestionModel model) {
+        if (presenterListener != null) {
+            return presenterListener.onCopyClick(model);
+        } else
+            return "";
+    }
+
+    @Override
+    public String onCreateProductOfferClick(AllSuggestionModel model) {
+        createProductOffers(model);
+        return null;
+    }
+
+    public void createProductOffers(AllSuggestionModel model) {
+        apiCallPresenter.createProductOffers(model, presenterListener);
+    }
+
+    @Override
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+        return null;
+    }
+
+    @Override
+    public void onClick(AllSuggestionModel model, boolean selected) {
+        if (selected) {
+            selectedImages.add(model);
+        } else {
+            for (int i = 0; i < selectedImages.size(); i++) {
+                if (selectedImages.get(i).getImageUri().equalsIgnoreCase(model.getImageUri())) {
+                    selectedImages.remove(i);
+                }
+            }
+        }
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(shareBtn, View.ALPHA, 0, 1f);
+        objectAnimator.setDuration(100);
+        if (selectedImages.size() == 0) {
+            objectAnimator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                    shareBtn.setEnabled(false);
+                    shareBtn.setText(mThemeContext.getResources().getString(R.string.share));
+                    shareBtn.setBackgroundResource(R.drawable.rounded_button_stroke);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+            objectAnimator.start();
+        } else {
+            shareBtn.setText(mThemeContext.getResources().getString(R.string.share) + " " + Integer.toString(selectedImages.size()));
+            if (selectedImages.size() == 1 && selected) {
+                objectAnimator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                        shareBtn.setEnabled(true);
+                        shareBtn.setBackgroundResource(R.drawable.rounded_button_filled_primarycolor);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+                objectAnimator.start();
+            }
+        }
+    }
+
+    @Override
+    public void onDetailsClick(AllSuggestionModel model) {
+        if (presenterListener != null) {
+            presenterListener.onDetailsClick(model);
+        }
+    }
+
     public void setPresenterListener(CandidateToPresenterInterface mImePresenter) {
         this.presenterListener = mImePresenter;
+    }
+
+
+    public void setUrlToBitmapInterface(UrlToBitmapInterface urlToBitmapInterface) {
+        this.urlToBitmapInterface = urlToBitmapInterface;
+    }
+
+    public void setGalleryImageListener(GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface listener) {
+        this.galleryImagesListener = listener;
     }
 
 
@@ -636,5 +917,39 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 isProductCompleted = true;
                 break;
         }
+    }
+
+    @Override
+    public void imagesReceived() {
+        onCompleted(PHOTOS);
+        ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
+        modelList.clear();
+        DisplayMetrics metrics = mThemeContext.getResources().getDisplayMetrics();
+        int margins = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, metrics);
+        int viewWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 88, metrics);
+        int windowWidth = (int) metrics.widthPixels - margins;
+        int lengthOfItems = 2 * (windowWidth / viewWidth);
+        if (Constants.storeActualSecondaryImages != null && !Constants.storeActualSecondaryImages.isEmpty()) {
+            for (int i = 0; i < Constants.storeSecondaryImages.size(); i++) {
+                Photo photo = new Photo();
+                photo.setImageUri(Constants.storeActualSecondaryImages.get(i));
+                modelList.add(photo.toAllSuggestion());
+            }
+            if (lengthOfItems > Constants.storeSecondaryImages.size()) {
+                for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
+                    Photo photo = new Photo();
+                    photo.setImageUri(null);
+                    modelList.add(photo.toAllSuggestion());
+                }
+            }
+            totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
+        }
+        if (modelList.size() < 10) {
+            onCompleted(PHOTOS);
+        }
+        shareAdapter1.setSuggestionModels(modelList);
+        recyclerViewPhotos.setLayoutManager(gridLayoutManager);
+        selectionLayout.setVisibility(View.VISIBLE);
+        onLoadMore(PHOTOS, modelList);
     }
 }

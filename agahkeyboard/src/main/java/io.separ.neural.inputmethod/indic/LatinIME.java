@@ -352,6 +352,16 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             this.mKeyboardSwitcher.setProductShareKeyboardFrame(ImePresenterImpl.TabType.PRODUCTS);
             return;
         }
+
+        if (serviceId.equals(ImePresenterImpl.TabType.PHOTOS.name())) {
+            this.mKeyboardSwitcher.setProductShareKeyboardFrame(ImePresenterImpl.TabType.PHOTOS);
+            return;
+        }
+
+        if (serviceId.equals(ImePresenterImpl.TabType.DETAILS.name())) {
+            this.mKeyboardSwitcher.setProductShareKeyboardFrame(ImePresenterImpl.TabType.DETAILS);
+            return;
+        }
         this.mInputLogic.startSearchingResults();
         this.mTopDisplayController.runSearch(serviceId, mInputLogic.mConnection.getmComposingText().toString());
     }
@@ -714,8 +724,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mSettings = Settings.getInstance();
         mSubtypeSwitcher = SubtypeSwitcher.getInstance();
         mKeyboardSwitcher = KeyboardSwitcher.getInstance();
-        mImePresenter = new ImePresenterImpl(this, this);
+        mImePresenter = new ImePresenterImpl(this, this, mKeyboardSwitcher);
         mKeyboardSwitcher.setPresenterListener(mImePresenter);
+        mKeyboardSwitcher.setUrlToBitmapInterface(mImePresenter);
+        mKeyboardSwitcher.setGalleryImageListener(mImePresenter);
         mSpecialKeyDetector = new SpecialKeyDetector(this);
         mIsHardwareAcceleratedDrawingEnabled =
                 InputMethodServiceCompatUtils.enableHardwareAcceleration(this);

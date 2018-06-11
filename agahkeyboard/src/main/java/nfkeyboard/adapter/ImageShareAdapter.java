@@ -1,0 +1,103 @@
+package nfkeyboard.adapter;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
+import io.separ.neural.inputmethod.indic.R;
+import nfkeyboard.interface_contracts.ItemClickListener;
+import nfkeyboard.models.AllSuggestionModel;
+
+/**
+ * Created by Shimona on 01-06-2018.
+ */
+
+public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
+
+    private final ItemClickListener listener;
+
+    ViewGroup parent;
+
+    private Context mContext;
+
+    ImageShareAdapter(Context context, ItemClickListener listener) {
+        super(context, listener);
+        this.mContext = context;
+        this.listener = listener;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+        this.parent = parent;
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_photos, parent, false);
+        return new ImageHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, AllSuggestionModel suggestion) {
+        if (holder instanceof ImageHolder) {
+            ImageHolder myHolder = (ImageHolder) holder;
+            myHolder.setImageView(suggestion);
+        }
+    }
+
+    class ImageHolder extends RecyclerView.ViewHolder {
+
+        private ImageView imageView, checkedIv;
+        private AllSuggestionModel model;
+        private View overlayView, checkedBgView;
+        private boolean selected;
+
+        ImageHolder(View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
+            checkedIv = itemView.findViewById(R.id.iv_checked);
+            overlayView = itemView.findViewById(R.id.overlay);
+            checkedBgView = itemView.findViewById(R.id.view_background_checked);
+            checkedIv.setVisibility(View.GONE);
+            overlayView.setVisibility(View.GONE);
+            checkedBgView.setVisibility(View.GONE);
+            selected = false;
+        }
+
+        void setImageView(AllSuggestionModel suggestionModel) {
+            model = suggestionModel;
+            if (model.getImageUri() != null) {
+                Glide.with(mContext).load(suggestionModel.getImageUri()).into(imageView);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selected = !selected;
+                        model.setSelected(selected);
+                        if (selected) {
+                            checkedIv.setVisibility(View.VISIBLE);
+                            overlayView.setVisibility(View.VISIBLE);
+                            checkedBgView.setVisibility(View.VISIBLE);
+                        } else {
+                            checkedIv.setVisibility(View.GONE);
+                            overlayView.setVisibility(View.GONE);
+                            checkedBgView.setVisibility(View.GONE);
+                        }
+                        listener.onClick(model, selected);
+                    }
+                });
+                selected = model.getSelected();
+                if (selected) {
+                    checkedIv.setVisibility(View.VISIBLE);
+                    overlayView.setVisibility(View.VISIBLE);
+                    checkedBgView.setVisibility(View.VISIBLE);
+                } else {
+                    checkedIv.setVisibility(View.GONE);
+                    overlayView.setVisibility(View.GONE);
+                    checkedBgView.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+}

@@ -39,11 +39,15 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,9 +56,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import hani.momanii.supernova_emoji_library.emoji.Emojicon;
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.database.DatabaseTable;
 import nfkeyboard.interface_contracts.CandidateToPresenterInterface;
 import nfkeyboard.interface_contracts.CandidateViewItemClickListener;
+import nfkeyboard.interface_contracts.GetGalleryImagesAsyncTask_Interface;
 import nfkeyboard.interface_contracts.ImeToPresenterInterface;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.interface_contracts.PresenterToImeInterface;
@@ -65,7 +71,6 @@ import nfkeyboard.util.KeyboardUtils;
 import nfkeyboard.util.MethodUtils;
 import nfkeyboard.util.MixPanelUtils;
 import nfkeyboard.util.SharedPrefUtil;
-import nowfloats.nfkeyboard.R;
 
 import static android.text.InputType.TYPE_TEXT_FLAG_AUTO_CORRECT;
 
@@ -77,7 +82,9 @@ public class ImePresenterImpl implements ItemClickListener,
         ImeToPresenterInterface,
         CandidateToPresenterInterface,
         CandidateViewItemClickListener,
-        UrlToBitmapInterface {
+        UrlToBitmapInterface,
+        GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
+    private final KeyboardSwitcher mKeyboardSwitcher;
     private DatabaseTable mDatabaseTable;
     private SpellCorrector corrector;
     private ExecutorService mExecutorService;
@@ -112,12 +119,16 @@ public class ImePresenterImpl implements ItemClickListener,
     private Future longRunningTaskFuture;
     private String enteredText;
     private SpellCorrectorAsyncTask spellCorrectorAsyncTask;
+    private ArrayList<Uri> uris = new ArrayList<>();
+    int numberOfSelected = 0;
+
+    private int flag;
+    private InputContentInfoCompat inputContentInfoCompat;
 
     @Override
     public TabType getTabType() {
         return mTabType;
     }
-
 
     @Override
     public void onSpeechResult(String speech) {
@@ -162,9 +173,23 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
+    public void onResorceMultipleReady(Bitmap bitmap, String imageId, int size, int current) {
+
+        if (current == 0) {
+            uris.clear();
+        }
+        uris.add(MethodUtils.getImageUri(mContext, bitmap, TextUtils.isEmpty(imageId) ?
+                UUID.randomUUID().toString() : imageId));
+
+        if (size == uris.size()) {
+            doCommitContentMultiple("image/png", uris);
+        }
+    }
+
+    @Override
     public void onItemClick(KeywordModel word) {
         isSelectedKeyboardItem = true;
-        if (word.getType().equalsIgnoreCase(KeywordModel.NEW_WORD) && mDatabaseTable != null) {
+        if (word.getType().equalsIgnoreCase(KeywordModel.NEW_WORD)) {
             mDatabaseTable.saveWordToDatabase(word.getWord().trim());
         }
         ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
@@ -209,6 +234,18 @@ public class ImePresenterImpl implements ItemClickListener,
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_VOICE_INPUT, null);
             }
 
+        } else if (view.getId() == R.id.tv_photos) {
+            if (mTabType != TabType.PHOTOS) {
+                mTabType = TabType.PHOTOS;
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SHOW_PHOTOS, null);
+                manageKeyboardView.showShareLayout(mTabType);
+            }
+        } else if (view.getId() == R.id.tv_details) {
+            if (mTabType != TabType.DETAILS) {
+                mTabType = TabType.DETAILS;
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SHOW_DETAILS, null);
+                manageKeyboardView.showShareLayout(mTabType);
+            }
         } else if (view.getId() == R.id.img_back) {
             mTabType = TabType.KEYBOARD;
             setCurrentKeyboard();
@@ -220,15 +257,90 @@ public class ImePresenterImpl implements ItemClickListener,
         return mKeyboardView;
     }
 
+    @Override
+    public String onCopyClick(AllSuggestionModel model) {
+
+        permissions();
+
+        /*
+
+            send broadcast
+
+         */
+
+        return onClickRegister(model);
+    }
+
+    @Override
+    public String onCreateProductOfferClick(AllSuggestionModel model) {
+        return null;
+    }
+
+    @Override
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
+            //MethodUtils.getPermissions(mContext);
+            return null;
+        }
+        if (Url == null) {
+            Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        Log.d("here", createdOn + " " + expiresOn);
+        long diffHours = 24;
+
+        try {
+            createdOn = createdOn.replace("T", " ");
+            expiresOn = expiresOn.replace("T", " ");
+            Log.d("here", createdOn + " " + expiresOn);
+            Date createdDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createdOn);
+            Date expireDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(expiresOn);
+
+            long diff = expireDate.getTime() - createdDate.getTime();
+            diffHours = diff / (60 * 60 * 1000);
+            Log.d("here", Long.toString(diffHours));
+
+        } catch (Exception e) {
+            Log.e("here", e.getMessage());
+        }
+
+        doCommitContent("Offer on: " + name + "\n\nOld Price: " + Double.toString(oldPrice) + "\nOffer Price: " + Double.toString(newPrice)
+                + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" + Url, "text/plain", null);
+        return Url;
+    }
+
+    @Override
+    public void onClick(AllSuggestionModel model, boolean selected) {
+
+    }
+
+    @Override
+    public void onDetailsClick(AllSuggestionModel model) {
+
+        permissions();
+
+        onClickRegister(model);
+    }
+
+    @Override
+    public void imagesReceived() {
+        Log.d("here", "hello");
+        mKeyboardSwitcher.imagesReceived();
+
+    }
+
     public enum TabType {
-        PRODUCTS, UPDATES, KEYBOARD, SETTINGS, BACK, NO_TAB;
+        PRODUCTS, UPDATES, KEYBOARD, SETTINGS, BACK, NO_TAB, PHOTOS, DETAILS;
     }
 
     private enum ShiftType {
         LOCKED, CAPITAL, NORMAL;
     }
 
-   /* public ImePresenterImpl(Context context, PresenterToImeInterface imeListener) {
+     /* public ImePresenterImpl(Context context, PresenterToImeInterface imeListener) {
         mHandler = new Handler(context.getMainLooper());
         mDatabaseTable = new DatabaseTable(context);
         corrector = new SpellCorrector(context);
@@ -247,15 +359,18 @@ public class ImePresenterImpl implements ItemClickListener,
     }*/
 
 
-    public ImePresenterImpl(Context context, PresenterToImeInterface mImeListener) {
+    public ImePresenterImpl(Context context, PresenterToImeInterface mImeListener, KeyboardSwitcher mKeyboardSwitcher) {
         mContext = context;
         this.imeListener = mImeListener;
+        this.mKeyboardSwitcher = mKeyboardSwitcher;
     }
 
     @Override
     public View onCreateInputView() {
         manageKeyboardView = (ManageKeyboardView) LayoutInflater.from(mContext).inflate(R.layout.keyboard_view, null);
         manageKeyboardView.setPresenterListener(this);
+        manageKeyboardView.setUrlToBitmapInterface(this);
+        manageKeyboardView.setGalleryImageListener(this);
         mKeyboardView = manageKeyboardView.getKeyboard();
         setCurrentKeyboard(mKeyboardTypeCurrent);
         mKeyboardView.setOnKeyboardActionListener(new KeyboardListener());
@@ -483,97 +598,98 @@ public class ImePresenterImpl implements ItemClickListener,
     private void doCommitContent(@NonNull String description, @NonNull String mimeType,
                                  @NonNull Uri uri) {
 
-        if (imeListener != null) {
-            final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
+        final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
 
-            if (!validatePackageName(editorInfo)) {
-                return;
+        if (!validatePackageName(editorInfo)) {
+            return;
+        }
+        final int flag;
+        if (Build.VERSION.SDK_INT >= 25) {
+            flag = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
+        } else {
+            flag = 0;
+            try {
+                mContext.grantUriPermission(
+                        editorInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } catch (Exception e) {
             }
-            final int flag;
-            if (Build.VERSION.SDK_INT >= 25) {
-                flag = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
-            } else {
-                flag = 0;
-                try {
-                    mContext.grantUriPermission(
-                            editorInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                } catch (Exception e) {
-                    Log.e("grantUriPermission failed packageName=" + editorInfo.packageName
-                            , " contentUri=" + uri);
+        }
+
+        imeListener.getImeCurrentInputConnection().commitText(description + (description.equals("") ? "" : "\n"), 1);
+        if (isCommitContentSupported(editorInfo, mimeType)) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_IMAGE_SHARING, null);
+            inputContentInfoCompat = new InputContentInfoCompat(
+                    uri,
+                    new ClipDescription(description, new String[]{mimeType}),
+                    null /* linkUrl */);
+
+            InputConnectionCompat.commitContent(
+                    imeListener.getImeCurrentInputConnection(),
+                    imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
+                    flag, null);
+
+        } else if (mimeType.equalsIgnoreCase("image/png")) {
+
+            Toast.makeText(mContext, "Image not supported", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    private void doCommitContentMultiple(@NonNull String mimeType,
+                                         @NonNull ArrayList<Uri> uris) {
+
+        final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
+
+        if (!validatePackageName(editorInfo)) {
+            return;
+        }
+
+        if (isCommitContentSupported(editorInfo, mimeType)) {
+
+            Log.d("here", "here200");
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_IMAGE_SHARING, null);
+
+            imeListener.getImeCurrentInputConnection().beginBatchEdit();
+            for (int i = 0; i < uris.size(); i++) {
+                if (Build.VERSION.SDK_INT >= 25) {
+                    flag = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
+                } else {
+                    flag = 0;
+                    try {
+                        mContext.grantUriPermission(
+                                editorInfo.packageName, uris.get(i), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    } catch (Exception e) {
+                    }
                 }
-            }
-
-            imeListener.getImeCurrentInputConnection().commitText(description, 1);
-            if (isCommitContentSupported(editorInfo, mimeType)) {
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_IMAGE_SHARING, null);
-                final InputContentInfoCompat inputContentInfoCompat = new InputContentInfoCompat(
-                        uri,
-                        new ClipDescription(description, new String[]{mimeType}),
+                inputContentInfoCompat = new InputContentInfoCompat(
+                        uris.get(i),
+                        new ClipDescription("", new String[]{mimeType}),
                         null /* linkUrl */);
                 InputConnectionCompat.commitContent(
                         imeListener.getImeCurrentInputConnection(),
                         imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
                         flag, null);
-            } else if (mimeType.equalsIgnoreCase("image/png")) {
-                Toast.makeText(mContext, "Image not supported", Toast.LENGTH_SHORT).show();
+
+                imeListener.getImeCurrentInputConnection().endBatchEdit();
             }
+
+        }
+
+        if (!isCommitContentSupported(editorInfo, mimeType) && mimeType.equalsIgnoreCase("image/png")) {
+
+            Toast.makeText(mContext, "Image not supported", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     @Override
     public void onItemClick(final AllSuggestionModel model) {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
-            //MethodUtils.getPermissions(mContext);
-            return;
-        }
-        if (model == null) {
-            Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id", model.getId());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Uri uri = null;
-        String shareUrl = null;
-        try {
-            if (!TextUtils.isEmpty(model.getUrl())) {
-                uri = Uri.parse(model.getUrl()).buildUpon().appendQueryParameter(UTM_SOURCE, "bk")
-                        .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
-            }
-        } catch (Exception e) {
+        permissions();
 
-        }
-        if (uri != null) {
-            shareUrl = uri.toString();
-        }
+        onClickRegister(model);
 
-        switch (model.getTypeEnum()) {
-
-            case ImageAndText:
-
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
-                MethodUtils.onGlideBitmapReady(this, model.getText() + ",\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
-                break;
-            case Product:
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
-                MethodUtils.onGlideBitmapReady(this, "Name: " + model.getText() + ",\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
-                break;
-            case Text:
-
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
-                doCommitContent(model.getText() + ",\nUrl: " + shareUrl, "text/plain", null);
-                break;
-            default:
-                break;
-        }
     }
 
 
@@ -603,9 +719,9 @@ public class ImePresenterImpl implements ItemClickListener,
 
 
     public void showWordSuggestions(InputConnection inputConnection) {
-        //if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+        if (mPrimaryCode != 32 && mPrimaryCode != -2007 && currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
 
-        if (currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
+            //if (currentCandidateType.equals(KeyboardUtils.CandidateType.TEXT_LIST)) {
             CharSequence inputSequence = inputConnection.getTextBeforeCursor(1000, 0);
             if (inputSequence != null && inputSequence.length() > 0) {
                 text = inputSequence.toString();
@@ -615,11 +731,9 @@ public class ImePresenterImpl implements ItemClickListener,
                 if (spellCorrectorAsyncTask != null) {
                     spellCorrectorAsyncTask.cancel(true);
                 }
-                if (mDatabaseTable != null) {
-                    spellCorrectorAsyncTask = new SpellCorrectorAsyncTask();
-                    spellCorrectorAsyncTask.execute(text);
-                    //mExecutorService.execute(new Thread(searchKeywordRunnable));
-                }
+                spellCorrectorAsyncTask = new SpellCorrectorAsyncTask();
+                spellCorrectorAsyncTask.execute(text);
+                //mExecutorService.execute(new Thread(searchKeywordRunnable));
             }
         }
     }
@@ -762,44 +876,6 @@ public class ImePresenterImpl implements ItemClickListener,
                     break;
                 case KEY_SPACE:
                     primaryCode = 32;
-                    Log.v(" isSelectedKeyboardItem - > ", isSelectedKeyboardItem + " mSuggestions size : " + mSuggestions.size());
-                    /*if (!isSelectedKeyboardItem && mSuggestions != null && !mSuggestions.isEmpty()) {
-                        StringBuilder builder1 = new StringBuilder();
-                        for (KeywordModel model : mSuggestions) {
-                            builder1.append(model.getWord() + ",");
-                        }
-                        ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
-                        int selectionStart = et.selectionEnd;
-                        CharSequence inputSequence = imeListener.getImeCurrentInputConnection().getTextBeforeCursor(1000, 0);
-                        int index = inputSequence.toString().trim().lastIndexOf(" ");
-                        String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
-                        imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().trim().indexOf(" ") != -1 ?
-                                oldText.length() - 1 : oldText.length(), 0);
-                        //if (mSuggestions.size() > 0 && mSuggestedWordlist.containsKey(text.trim().toLowerCase())) {
-                        enteredText = mSuggestions.size() > 0 ? isSelectedKeyboardEdited ? text.trim() :
-                                mSuggestedWordlist.containsKey(text.trim().toLowerCase()) ? text.trim() :
-                                        mSuggestions.get(0).getType().equalsIgnoreCase(KeywordModel.NEW_WORD) ?
-                                                mSuggestions.size() > 1 ? mSuggestions.get(1).getWord().trim() :
-                                                        mSuggestions.get(0).getWord().trim() : mSuggestions.get(0).getWord().trim() : text.trim();
-                        Log.v(" inside entered text - > ", enteredText != null ? enteredText.trim() : " empty");
-                        imeListener.getImeCurrentInputConnection().commitText(enteredText.trim(), 1);
-
-                        //text = "a";
-                        // mExecutorService.execute(new Thread(searchKeywordRunnable));
-                        isSelectedKeyboardEdited = false;
-                        isSelectedKeyboardItem = true;
-                        //}
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (isSelectedKeyboardEdited) {
-                                    mDatabaseTable.saveWordToDatabase(enteredText);
-                                }
-                            }
-                        }).start();
-                    }
-                    previousText = text;
-                    Log.v(" outside entered text - > ", enteredText != null ? enteredText.trim() : " empty");*/
 
                 default:
                     if (isSelectedKeyboardEdited && primaryCode == KEY_SPACE) {
@@ -906,7 +982,7 @@ public class ImePresenterImpl implements ItemClickListener,
         @Override
         protected ArrayList<KeywordModel> doInBackground(String... strings) {
             mSuggestions.clear();
-            mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
+            //mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
             if (mSuggestions != null && mSuggestions.size() < 3) {
                 corrector.setSuggestedWordListLimit(3 - mSuggestions.size());
                 mSuggestions.addAll(corrector.correct(text.trim()));
@@ -941,4 +1017,74 @@ public class ImePresenterImpl implements ItemClickListener,
             mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
         }
     }
+
+    public void permissions() {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
+            //MethodUtils.getPermissions(mContext);
+            return;
+        }
+    }
+
+    public String onClickRegister(AllSuggestionModel model) {
+
+        if (model == null) {
+            Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id", model.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Uri uri = null;
+        String shareUrl = null;
+        try {
+            if (!TextUtils.isEmpty(model.getUrl())) {
+                uri = Uri.parse(model.getUrl()).buildUpon().appendQueryParameter(UTM_SOURCE, "bk")
+                        .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
+            }
+        } catch (Exception e) {
+
+        }
+        if (uri != null) {
+            shareUrl = uri.toString();
+        }
+
+        switch (model.getTypeEnum()) {
+
+            case ImageAndText:
+
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
+                MethodUtils.onGlideBitmapReady(this, model.getText() + ",\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
+                break;
+            case Product:
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
+                MethodUtils.onGlideBitmapReady(this, "Name: " + model.getText() + ",\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
+                break;
+            case DetailsShare:
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
+                String description = model.getName() + "\n" + model.getBusinessName() + "\n"
+                        + model.getPhoneNumber() + "\n\nWebsite: " + model.getWebsite() + "\nEmail: " + model.getEmail() +
+                        "\n\nAddress: " + model.getAddress() + "\nLocation: " + model.getLocation();
+                doCommitContent(description, "text/plain", null);
+                break;
+            case Text:
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
+                doCommitContent(model.getText() + ",\nUrl: " + shareUrl, "text/plain", null);
+                break;
+            case ImageShare:
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
+                MethodUtils.onGlideBitmapReady(this, "", model.getImageUri(), model.getId());
+            default:
+                break;
+        }
+
+        return shareUrl;
+    }
+
 }

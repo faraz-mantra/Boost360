@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import nowfloats.nfkeyboard.R;
-
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String COL_WORD = "word";
     public static final String COL_COUNT = "count";
@@ -58,7 +56,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private void loadWords() throws IOException {
         final Resources resources = mHelperContext.getResources();
-        InputStream inputStream = resources.openRawResource(R.raw.saved_words);
+        InputStream inputStream = resources.openRawResource(nowfloats.nfkeyboard.R.raw.saved_words);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         try {
             String line;

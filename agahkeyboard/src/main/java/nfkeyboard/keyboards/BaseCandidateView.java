@@ -16,9 +16,10 @@ import nfkeyboard.interface_contracts.CandidateViewItemClickListener;
  * Created by Admin on 26-02-2018.
  */
 
-public abstract class BaseCandidateView extends LinearLayout implements View.OnClickListener{
+public abstract class BaseCandidateView extends LinearLayout implements View.OnClickListener {
     CandidateViewItemClickListener listener;
     Context mContext;
+
     public BaseCandidateView(Context context) {
         super(context);
         mContext = context;
@@ -39,9 +40,11 @@ public abstract class BaseCandidateView extends LinearLayout implements View.OnC
         super(context, attrs, defStyleAttr, defStyleRes);
         mContext = context;
     }
-    public void setItemClickListener(CandidateViewItemClickListener listener){
+
+    public void setItemClickListener(CandidateViewItemClickListener listener) {
         this.listener = listener;
     }
+
     abstract void addCandidateView(ViewGroup parent, ImePresenterImpl.TabType tabType);
 
     abstract void setCandidateData(Bundle bundle);

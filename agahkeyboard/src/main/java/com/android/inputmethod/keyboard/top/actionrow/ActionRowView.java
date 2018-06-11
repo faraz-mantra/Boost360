@@ -25,7 +25,11 @@ import io.separ.neural.inputmethod.colors.ColorProfile;
 import io.separ.neural.inputmethod.indic.AudioAndHapticFeedbackManager;
 import io.separ.neural.inputmethod.indic.R;
 import io.separ.neural.inputmethod.slash.EventBusExt;
-import nowfloats.nfkeyboard.keyboards.ImePresenterImpl;
+
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.DETAILS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PHOTOS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PRODUCTS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 
 /**
  * Created by sepehr on 2/24/17.
@@ -59,6 +63,10 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
                     == R.id.tv_updates ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
             findViewById(R.id.tv_products).setBackgroundResource(v.getId()
                     == R.id.tv_products ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
+            findViewById(R.id.tv_photos).setBackgroundResource(v.getId()
+                    == R.id.tv_photos ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
+            findViewById(R.id.tv_details).setBackgroundResource(v.getId()
+                    == R.id.tv_details ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
             mListener.onServiceClicked(DEFAULT_SERVICES[serviceId]);
         }
     }
@@ -160,7 +168,7 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
                 R.id.contacts_service_action_button, R.id.foursquare_service_action_button, R.id.customization_service_action_button, R.id.go_to_emoji};
         //DEFAULT_SERVICES = new String[] {"giphy","maps","google","contacts","foursquare","customization","emoji"};
         // DEFAULT_SERVICES = new String[]{"maps", "google", "contacts", "foursquare", "customization", "emoji"};
-        DEFAULT_SERVICES = new String[]{ImePresenterImpl.TabType.UPDATES.name(), ImePresenterImpl.TabType.PRODUCTS.name()};
+        DEFAULT_SERVICES = new String[]{UPDATES.name(), PRODUCTS.name(), PHOTOS.name(), DETAILS.name()};
     }
 
     public ActionRowView(Context context) {
@@ -266,6 +274,10 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
         tvUpdates.setOnClickListener(new serviceClickListener(0));
         TextView tvProducts = layout.findViewById(R.id.tv_products);
         tvProducts.setOnClickListener(new serviceClickListener(1));
+        TextView tvPhotos = layout.findViewById(R.id.tv_photos);
+        tvPhotos.setOnClickListener(new serviceClickListener(2));
+        TextView tvDetails = layout.findViewById(R.id.tv_details);
+        tvDetails.setOnClickListener(new serviceClickListener(3));
         return layout;
     }
 

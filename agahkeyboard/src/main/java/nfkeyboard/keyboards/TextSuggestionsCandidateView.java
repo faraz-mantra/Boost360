@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.adapter.TextSuggestionAdapter;
 import nfkeyboard.models.KeywordModel;
-import nowfloats.nfkeyboard.R;
 
 /**
  * Created by Admin on 02-04-2018.

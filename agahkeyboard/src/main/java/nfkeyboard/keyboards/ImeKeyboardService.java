@@ -8,7 +8,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputBinding;
 import android.view.inputmethod.InputConnection;
 
-import nfkeyboard.interface_contracts.PresenterToImeInterface;
+import nowfloats.nfkeyboard.interface_contracts.PresenterToImeInterface;
+import nowfloats.nfkeyboard.keyboards.ImePresenterImpl;
 
 /**
  * Created by Admin on 20-02-2018.

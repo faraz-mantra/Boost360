@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import nfkeyboard.models.KeywordModel;
 
-import static nowfloats.nfkeyboard.database.DatabaseOpenHelper.COL_COUNT;
-import static nowfloats.nfkeyboard.database.DatabaseOpenHelper.COL_WORD;
-import static nowfloats.nfkeyboard.database.DatabaseOpenHelper.FTS_VIRTUAL_TABLE;
+import static nfkeyboard.database.DatabaseOpenHelper.COL_COUNT;
+import static nfkeyboard.database.DatabaseOpenHelper.COL_WORD;
+import static nfkeyboard.database.DatabaseOpenHelper.FTS_VIRTUAL_TABLE;
 
 public class DatabaseTable {
     private final DatabaseOpenHelper mDatabaseOpenHelper;

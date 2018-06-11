@@ -12,5 +12,6 @@ public interface CandidateToPresenterInterface extends ItemClickListener, Emojic
         EmojiconsPopup.OnEmojiconBackspaceClickedListener {
 
     ImePresenterImpl.TabType getTabType();
+
     void onSpeechResult(String speech);
 }

@@ -4,7 +4,7 @@ public class Node {
 
     private char data = ' ';
     private boolean isEnd = false; // end of a word?
-    private Node left = null, equal = null, right = null;
+    private nfkeyboard.keyboards.models.Node left = null, equal = null, right = null;
     private String frequency = null;
 
     public Node(char data) {
@@ -31,23 +31,23 @@ public class Node {
         return left;
     }
 
-    public void setLeft(Node left) {
+    public void setLeft(nfkeyboard.keyboards.models.Node left) {
         this.left = left;
     }
 
-    public Node getEqual() {
+    public nfkeyboard.keyboards.models.Node getEqual() {
         return equal;
     }
 
-    public void setEqual(Node equal) {
+    public void setEqual(nfkeyboard.keyboards.models.Node equal) {
         this.equal = equal;
     }
 
-    public Node getRight() {
+    public nfkeyboard.keyboards.models.Node getRight() {
         return right;
     }
 
-    public void setRight(Node right) {
+    public void setRight(nfkeyboard.keyboards.models.Node right) {
         this.right = right;
     }
 

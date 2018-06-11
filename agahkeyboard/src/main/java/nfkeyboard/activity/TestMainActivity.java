@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import nfkeyboard.interface_contracts.SpellCheckerInterface;
-import nowfloats.nfkeyboard.R;
+import nowfloats.nfkeyboard.activity.SpellCheckerManager;
+import nowfloats.nfkeyboard.interface_contracts.SpellCheckerInterface;
 
 public class TestMainActivity extends AppCompatActivity{
 
@@ -17,8 +17,8 @@ public class TestMainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_test);
-        query = findViewById(R.id.edit_query);
+        setContentView(nowfloats.nfkeyboard.R.layout.activity_main_test);
+        query = findViewById(nowfloats.nfkeyboard.R.id.edit_query);
         spellCheckerManager = new SpellCheckerManager(this,getLifecycle(), new SpellCheckerInterface() {
             @Override
             public void onSuggestion(String[] text) {

@@ -1,5 +1,7 @@
 package nfkeyboard.network;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +9,10 @@ import java.util.Map;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import nfkeyboard.interface_contracts.GetGalleryImagesAsyncTask_Interface;
+import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.models.networkmodels.Product;
+import nfkeyboard.util.SharedPrefUtil;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkAdapter {
     private INowFloatsApi mNfApi;
+    private INowFloatsApi mCreateOfferApi;
 
     public NetworkAdapter() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -27,6 +33,14 @@ public class NetworkAdapter {
                 .build();
 
         mNfApi = retrofit.create(INowFloatsApi.class);
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl("https://assuredpurchase.withfloats.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        mCreateOfferApi = retrofit1.create(INowFloatsApi.class);
     }
 
     public void getAllProducts(String fpTag, String clientId, int skipBy, String identifierType,
@@ -73,4 +87,65 @@ public class NetworkAdapter {
                 });
     }
 
+    public void createProductOffer(AllSuggestionModel model, final CallBack<CreatedOffer> createOfferCallback) {
+        CreateOrderRequest request = new CreateOrderRequest();
+        request.setProductId(model.getP_id());
+        Log.d("here", "Product id " + model.getP_id());
+        request.setSalePrice(model.getAmount());
+        Log.d("here", "price " + model.getAmount());
+        request.setQuantity(model.getQuantity());
+        Log.d("here", "quantity " + model.getQuantity());
+        request.setExpiresOn(model.getLinkExpiryDateTime());
+        Log.d("here", "expiry " + model.getLinkExpiryDateTime());
+        request.setMaxQuantityPerOrder(model.getMaxUsage());
+        Log.d("here", "maxu " + model.getMaxUsage());
+        CreateOrderRequest.Seller seller = new CreateOrderRequest.Seller();
+        seller.setIdentifier(model.getFpTag());
+        Log.d("here", "id " + model.getFpTag());
+        CreateOrderRequest.Seller.ContactDetails contactDetails = new CreateOrderRequest.Seller.ContactDetails();
+        contactDetails.setFullName(SharedPrefUtil.fromBoostPref().getName());
+        Log.d("here", "name " + contactDetails.getFullName());
+        contactDetails.setEmailId(SharedPrefUtil.fromBoostPref().getEmail());
+        Log.d("here", "email " + contactDetails.getEmailId());
+        contactDetails.setSecondaryContactNumber(null);
+        Log.d("here", "numbersec " + contactDetails.getSecondaryContactNumber());
+        contactDetails.setPrimaryContactNumber(SharedPrefUtil.fromBoostPref().getPhoneNumber());
+        Log.d("here", "number " + contactDetails.getPrimaryContactNumber());
+        CreateOrderRequest.Seller.Address address = new CreateOrderRequest.Seller.Address();
+        address.setCity(SharedPrefUtil.fromBoostPref().getCity());
+        Log.d("here", "city " + address.getCity());
+        address.setCountry(SharedPrefUtil.fromBoostPref().getCountry());
+        Log.d("here", "country " + address.getCountry());
+        address.setAddressLine1(SharedPrefUtil.fromBoostPref().getAddress());
+        Log.d("here", "line1 " + address.getAddressLine1());
+        address.setZipcode(SharedPrefUtil.fromBoostPref().getZipcode());
+        Log.d("here", "zip " + address.getZipcode());
+        address.setAddressLine2("");
+        address.setRegion("");
+        seller.setAddresses(address);
+        seller.setContactDetails(contactDetails);
+        request.setSellers(seller);
+        mCreateOfferApi.createProductOffers(request).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CreatedOffer>() {
+                    @Override
+                    public void accept(CreatedOffer response) throws Exception {
+                        createOfferCallback.onSuccess(response);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d("here", "errored");
+                        Log.d("here", throwable.getStackTrace() + " " + throwable.getMessage() + " " + throwable.getCause());
+                        createOfferCallback.onError(throwable);
+                    }
+                });
+
+    }
+
+    public void getAllImageList(GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface galleryImagesListener, String fpId) {
+        GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface();
+        gallery.setGalleryInterfaceListener(galleryImagesListener,fpId);
+        gallery.execute();
+    }
 }

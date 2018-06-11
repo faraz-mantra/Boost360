@@ -1,16 +1,22 @@
 package nfkeyboard.network;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
+import nfkeyboard.interface_contracts.CandidateToPresenterInterface;
+import nfkeyboard.interface_contracts.GetGalleryImagesAsyncTask_Interface;
 import nfkeyboard.keyboards.ImePresenterImpl;
 import nfkeyboard.models.AllSuggestionModel;
+import nfkeyboard.models.networkmodels.Details;
 import nfkeyboard.models.networkmodels.Product;
 import nfkeyboard.util.SharedPrefUtil;
-import nowfloats.nfkeyboard.R;
 
 /**
  * Created by Admin on 28-03-2018.
@@ -20,28 +26,32 @@ public class ApiCallPresenter {
     private NetworkAdapter adapter = new NetworkAdapter();
     private Context mContext;
     private ApiCallToKeyboardViewInterface apiCallListener;
+    private CandidateToPresenterInterface presenterListener;
 
-    public ApiCallPresenter(Context context, ApiCallToKeyboardViewInterface apiCallListener){
+    public ApiCallPresenter(Context context, ApiCallToKeyboardViewInterface apiCallListener) {
         mContext = context;
         this.apiCallListener = apiCallListener;
     }
-    public void loadMore(int skipBy, ImePresenterImpl.TabType tabType){
-        switch (tabType){
+
+    public void loadMore(int skipBy, ImePresenterImpl.TabType tabType, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface getGalleryImagesInterface) {
+        switch (tabType) {
             case PRODUCTS:
-                adapter.getAllProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(),mContext.getString(R.string.client_id),skipBy,"SINGLE",productCallback);
+                adapter.getAllProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(nowfloats.nfkeyboard.R.string.client_id), skipBy, "SINGLE", productCallback);
                 break;
             case UPDATES:
-                adapter.getAllUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId(),mContext.getString(R.string.client_id),skipBy,10,updateCallback);
+                adapter.getAllUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId(), mContext.getString(nowfloats.nfkeyboard.R.string.client_id), skipBy, 10, updateCallback);
                 break;
+            case PHOTOS:
+                adapter.getAllImageList(getGalleryImagesInterface, SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId());
             default:
                 break;
         }
-
     }
 
 
     private CallBack<List<Product>> productCallback = new CallBack<List<Product>>() {
         ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
+
         @Override
         public void onSuccess(List<Product> data) {
             modelList.clear();
@@ -50,10 +60,10 @@ public class ApiCallPresenter {
                     modelList.add(product.toAllSuggestion());
                 }
             }
-            if (modelList.size()<10){
+            if (modelList.size() < 10) {
                 apiCallListener.onCompleted(ImePresenterImpl.TabType.PRODUCTS);
             }
-            apiCallListener.onLoadMore(ImePresenterImpl.TabType.PRODUCTS,modelList);
+            apiCallListener.onLoadMore(ImePresenterImpl.TabType.PRODUCTS, modelList);
         }
 
         @Override
@@ -63,18 +73,19 @@ public class ApiCallPresenter {
     };
     private CallBack<Updates> updateCallback = new CallBack<Updates>() {
         ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
+
         @Override
         public void onSuccess(Updates data) {
             modelList.clear();
-            if (data != null && data.getFloats()!= null) {
+            if (data != null && data.getFloats() != null) {
                 for (Float update : data.getFloats()) {
                     modelList.add(update.toAllSuggestion());
                 }
             }
-            if (modelList.size()<10){
+            if (modelList.size() < 10) {
                 apiCallListener.onCompleted(ImePresenterImpl.TabType.UPDATES);
             }
-            apiCallListener.onLoadMore(ImePresenterImpl.TabType.UPDATES,modelList);
+            apiCallListener.onLoadMore(ImePresenterImpl.TabType.UPDATES, modelList);
         }
 
         @Override
@@ -82,4 +93,61 @@ public class ApiCallPresenter {
             apiCallListener.onError(ImePresenterImpl.TabType.UPDATES);
         }
     };
+
+    private CallBack<CreatedOffer> createOfferCallback = new CallBack<CreatedOffer>() {
+        @Override
+        public void onSuccess(CreatedOffer data) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            String time = new SimpleDateFormat("HH:mm:ss").format(calendar.getTime());
+            data.getData().setCreatedOn(date + "T" + time);
+            presenterListener.onCreateProductOfferResponse(
+                    data.getData().getProduct().getName(),
+                    data.getData().getProduct().getPrice(),
+                    data.getData().getPrice(),
+                    data.getData().getCreatedOn(),
+                    data.getData().getExpiresOn(),
+                    data.getData().getUrl()
+            );
+        }
+
+        @Override
+        public void onError(Throwable t) {
+            Log.d("here", t.toString());
+        }
+    };
+
+    private String getName(String product) {
+        int start = product.indexOf(" Name=");
+        int end = product.indexOf(",", start);
+        return product.substring(start + 6, end);
+    }
+
+    private String getPriceOriginal(String product) {
+        int start = product.indexOf(" Price=");
+        int end = product.indexOf(",", start);
+        return product.substring(start + 7, end);
+    }
+
+    public void createProductOffers(AllSuggestionModel model, CandidateToPresenterInterface presenterListener) {
+        adapter.createProductOffer(model, createOfferCallback);
+        this.presenterListener = presenterListener;
+    }
+
+    public ArrayList<AllSuggestionModel> getAllDetails() {
+        ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
+        modelList.clear();
+        Details details = new Details();
+        details.setName(SharedPrefUtil.fromBoostPref().getName());
+        details.setBusinessName(SharedPrefUtil.fromBoostPref().getBusinessName());
+        details.setPhoneNumber(SharedPrefUtil.fromBoostPref().getPhoneNumber());
+        details.setEmail(SharedPrefUtil.fromBoostPref().getEmail());
+        details.setWebsite(SharedPrefUtil.fromBoostPref().getWebsite());
+        details.setAddress(SharedPrefUtil.fromBoostPref().getAddress());
+        String location = "http://maps.google.com/maps?q=loc:" + SharedPrefUtil.fromBoostPref().getLat() + "," + SharedPrefUtil.fromBoostPref().getLong();
+        details.setLocation(location);
+        modelList.add(details.toAllSuggestion());
+        return modelList;
+    }
 }

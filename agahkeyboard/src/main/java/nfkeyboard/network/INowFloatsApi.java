@@ -5,7 +5,9 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import nfkeyboard.models.networkmodels.Product;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
 /**
@@ -18,4 +20,7 @@ public interface INowFloatsApi {
 
     @GET("/Discover/v3/floatingPoint/bizFloats")
     Observable<Updates> getAllUpdates(@QueryMap Map<String, String> queries);
+
+    @POST("/api/Offers/CreateOffer")
+    Observable<CreatedOffer> createProductOffers(@Body CreateOrderRequest request);
 }

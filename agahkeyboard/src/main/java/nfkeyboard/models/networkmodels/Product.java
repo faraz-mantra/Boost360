@@ -345,12 +345,18 @@ public class Product {
     }
 
     public AllSuggestionModel toAllSuggestion() {
-        AllSuggestionModel model =  new AllSuggestionModel(name, imageUri);
+        AllSuggestionModel model = new AllSuggestionModel(name, imageUri);
         model.setDescription(description);
         model.setDiscount(discountAmount);
         model.setPrice(price);
         model.setUrl(productUrl);
+        model.setAvailableUnits(availableUnits);
         model.setId(id);
+        model.setFpTag(fPTag);
+        model.setClientId(applicationId);
+        model.setCurrencyCode(currencyCode);
+        model.setMaxUsage((availableUnits > 0) ? availableUnits : 10);
+        model.setP_id(id);
         model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Product);
         return model;
     }

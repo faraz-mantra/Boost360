@@ -13,7 +13,7 @@ import android.view.textservice.SuggestionsInfo;
 import android.view.textservice.TextInfo;
 import android.view.textservice.TextServicesManager;
 
-import nfkeyboard.interface_contracts.SpellCheckerInterface;
+import nowfloats.nfkeyboard.interface_contracts.SpellCheckerInterface;
 
 /**
  * Created by Admin on 30-03-2018.

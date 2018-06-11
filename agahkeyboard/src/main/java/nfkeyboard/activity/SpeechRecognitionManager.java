@@ -22,14 +22,14 @@ public class SpeechRecognitionManager implements RecognitionListener {
     private SpeechRecognitionResultInterface mSpeechListener;
     private boolean isListening;
 
-    public SpeechRecognitionManager(Context context, SpeechRecognitionResultInterface listener){
+    public SpeechRecognitionManager(Context context, SpeechRecognitionResultInterface listener) {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
         speechRecognizer.setRecognitionListener(this);
         mContext = context;
         mSpeechListener = listener;
     }
 
-    public void startListening(){
+    public void startListening() {
         if (recognizerIntent == null) {
             recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
@@ -39,27 +39,30 @@ public class SpeechRecognitionManager implements RecognitionListener {
             recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 5000);
             recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         }
-        if (isListening){
+        if (isListening) {
             stopListening();
         }
         isListening = true;
         speechRecognizer.startListening(recognizerIntent);
     }
 
-    public boolean isListening(){
+    public boolean isListening() {
         return isListening;
     }
-    public void stopListening(){
-        if (isListening){
+
+    public void stopListening() {
+        if (isListening) {
             speechRecognizer.stopListening();
         }
         isListening = false;
 
     }
-    public void onCancel(){
+
+    public void onCancel() {
         isListening = false;
         speechRecognizer.destroy();
     }
+
     @Override
     public void onReadyForSpeech(Bundle bundle) {
         Log.i(LOG_TAG, "onReadyForSpeech");
