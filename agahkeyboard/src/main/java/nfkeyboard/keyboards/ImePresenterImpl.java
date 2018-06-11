@@ -277,7 +277,7 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
-    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -300,15 +300,16 @@ public class ImePresenterImpl implements ItemClickListener,
             Date expireDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(expiresOn);
 
             long diff = expireDate.getTime() - createdDate.getTime();
-            diffHours = diff / (60 * 60 * 1000);
+            diffHours = (diff / (60 * 60 * 1000)) + 1;
             Log.d("here", Long.toString(diffHours));
 
         } catch (Exception e) {
             Log.e("here", e.getMessage());
         }
 
-        doCommitContent("Offer on: " + name + "\n\nOld Price: " + Double.toString(oldPrice) + "\nOffer Price: " + Double.toString(newPrice)
-                + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" + Url, "text/plain", null);
+        doCommitContent("Offer on: " + name + "\nPrice: " + currency + " " + Double.toString(oldPrice) + "\n\nOffer Price: "
+                + currency + " " + Double.toString(newPrice) + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" +
+                "Click to Buy: " + Url, "text/plain", null);
         return Url;
     }
 

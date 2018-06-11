@@ -204,7 +204,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         productList.clear();
         isProductCompleted = isUpdatesCompleted = false;
         if (shareAdapter != null)
-            shareAdapter.setSuggestionModels(null);
+            shareAdapter.setSuggestionModels(null, mRecyclerView);
     }
 
     public void saveKeyboardState() {
@@ -347,7 +347,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     mRecyclerView.setVisibility(View.VISIBLE);
                     recyclerViewPhotos.setVisibility(View.GONE);
                     if (updatesList.size() > 0) {
-                        shareAdapter.setSuggestionModels(updatesList);
+                        shareAdapter.setSuggestionModels(updatesList, mRecyclerView);
                     } else {
                         callLoadingApi(UPDATES);
                     }
@@ -359,7 +359,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     mRecyclerView.setVisibility(View.VISIBLE);
                     recyclerViewPhotos.setVisibility(View.GONE);
                     if (productList.size() > 0) {
-                        shareAdapter.setSuggestionModels(productList);
+                        shareAdapter.setSuggestionModels(productList, mRecyclerView);
                     } else {
                         callLoadingApi(PRODUCTS);
                     }
@@ -371,7 +371,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     selectionLayout.setVisibility(View.VISIBLE);
                     if (imagesList.size() > 0 && imagesList.get(imagesList.size() - 1).getTypeEnum()
                             != BaseAdapterManager.SectionTypeEnum.loader) {
-                        shareAdapter1.setSuggestionModels(imagesList);
+                        shareAdapter1.setSuggestionModels(imagesList, recyclerViewPhotos);
                     } else {
                         callLoadingApi(PHOTOS);
                     }
@@ -383,7 +383,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     mRecyclerView.setVisibility(View.VISIBLE);
                     recyclerViewPhotos.setVisibility(View.GONE);
                     if (detailsList.size() > 0) {
-                        shareAdapter.setSuggestionModels(detailsList);
+                        shareAdapter.setSuggestionModels(detailsList, mRecyclerView);
                     } else {
                         callLoadingApi(DETAILS);
                     }
@@ -397,8 +397,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         selectedImages.clear();
         shareBtn.setText(mThemeContext.getResources().getString(R.string.share));
         recyclerViewPhotos.removeAllViews();
+        shareAdapter1.setSuggestionModels(imagesList, recyclerViewPhotos);
         recyclerViewPhotos.setAdapter(shareAdapter1);
-        shareAdapter1.setSuggestionModels(imagesList);
+        shareAdapter1.notifyDataSetChanged();
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(shareBtn, View.ALPHA, 0, 1f);
         objectAnimator.setDuration(100);
         objectAnimator.addListener(new Animator.AnimatorListener() {
@@ -440,7 +441,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                             return;
                         }
                         productList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
-                        shareAdapter.setSuggestionModels(productList);
+                        shareAdapter.setSuggestionModels(productList, mRecyclerView);
                         apiCallPresenter.loadMore(productList.size() - 1, ImePresenterImpl.TabType.PRODUCTS, null);
                         break;
                     case UPDATES:
@@ -452,7 +453,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                             return;
                         }
                         updatesList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
-                        shareAdapter.setSuggestionModels(updatesList);
+                        shareAdapter.setSuggestionModels(updatesList, mRecyclerView);
                         apiCallPresenter.loadMore(updatesList.size() - 1, UPDATES, null);
                         break;
                     case PHOTOS:
@@ -470,9 +471,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                             return;
                         }
                         detailsList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
-                        shareAdapter.setSuggestionModels(detailsList);
+                        shareAdapter.setSuggestionModels(detailsList, mRecyclerView);
                         detailsList = apiCallPresenter.getAllDetails();
-                        shareAdapter.setSuggestionModels(detailsList);
+                        shareAdapter.setSuggestionModels(detailsList, mRecyclerView);
                     default:
                         break;
                 }
@@ -764,7 +765,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     @Override
-    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
         return null;
     }
 
@@ -882,7 +883,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 break;
         }
         if (type == mTabType) {
-            shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList);
+            shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList, mRecyclerView);
         }
     }
 
@@ -903,7 +904,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 break;
         }
         if (type == mTabType) {
-            shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList);
+            shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList, mRecyclerView);
         }
     }
 
@@ -947,7 +948,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (modelList.size() < 10) {
             onCompleted(PHOTOS);
         }
-        shareAdapter1.setSuggestionModels(modelList);
+        shareAdapter1.setSuggestionModels(modelList, recyclerViewPhotos);
         recyclerViewPhotos.setLayoutManager(gridLayoutManager);
         selectionLayout.setVisibility(View.VISIBLE);
         onLoadMore(PHOTOS, modelList);

@@ -168,9 +168,8 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     private void deselectImages() {
         selectedImages.clear();
         shareBtn.setText(getResources().getString(R.string.share));
-        recyclerViewPhotos.removeAllViews();
+        shareAdapter1.setSuggestionModels(imagesList, recyclerViewPhotos);
         recyclerViewPhotos.setAdapter(shareAdapter1);
-        shareAdapter1.setSuggestionModels(imagesList);
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(shareBtn, View.ALPHA, 0, 1f);
         objectAnimator.setDuration(100);
         objectAnimator.addListener(new Animator.AnimatorListener() {
@@ -204,7 +203,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         imagesList.clear();
         isProductCompleted = isUpdatesCompleted = isPhotosCompleted = false;
         if (shareAdapter != null)
-            shareAdapter.setSuggestionModels(null);
+            shareAdapter.setSuggestionModels(null, mRecyclerView);
     }
 
     public void showShareLayout(final ImePresenterImpl.TabType type) {
@@ -265,7 +264,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                     mRecyclerView.setVisibility(VISIBLE);
                     recyclerViewPhotos.setVisibility(GONE);
                     if (updatesList.size() > 0) {
-                        shareAdapter.setSuggestionModels(updatesList);
+                        shareAdapter.setSuggestionModels(updatesList, mRecyclerView);
                     } else {
                         callLoadingApi(UPDATES);
                     }
@@ -277,7 +276,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                     mRecyclerView.setVisibility(VISIBLE);
                     recyclerViewPhotos.setVisibility(GONE);
                     if (productList.size() > 0) {
-                        shareAdapter.setSuggestionModels(productList);
+                        shareAdapter.setSuggestionModels(productList, mRecyclerView);
                     } else {
                         callLoadingApi(PRODUCTS);
                     }
@@ -288,7 +287,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                     recyclerViewPhotos.setVisibility(VISIBLE);
                     selectionLayout.setVisibility(VISIBLE);
                     if (imagesList.size() > 0 && imagesList.get(imagesList.size() - 1).getTypeEnum() != BaseAdapterManager.SectionTypeEnum.loader) {
-                        shareAdapter1.setSuggestionModels(imagesList);
+                        shareAdapter1.setSuggestionModels(imagesList, recyclerViewPhotos);
                     } else {
                         callLoadingApi(PHOTOS);
                     }
@@ -300,7 +299,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                     mRecyclerView.setVisibility(VISIBLE);
                     recyclerViewPhotos.setVisibility(GONE);
                     if (detailsList.size() > 0) {
-                        shareAdapter.setSuggestionModels(detailsList);
+                        shareAdapter.setSuggestionModels(detailsList, mRecyclerView);
                     } else {
                         callLoadingApi(DETAILS);
                     }
@@ -336,7 +335,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                             return;
                         }
                         productList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
-                        shareAdapter.setSuggestionModels(productList);
+                        shareAdapter.setSuggestionModels(productList, mRecyclerView);
                         apiCallPresenter.loadMore(productList.size() - 1, PRODUCTS, null);
                         break;
                     case UPDATES:
@@ -347,7 +346,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                             return;
                         }
                         updatesList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
-                        shareAdapter.setSuggestionModels(updatesList);
+                        shareAdapter.setSuggestionModels(updatesList, mRecyclerView);
                         apiCallPresenter.loadMore(updatesList.size() - 1, UPDATES, null);
                         break;
                     case PHOTOS:
@@ -364,9 +363,9 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                             return;
                         }
                         detailsList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
-                        shareAdapter.setSuggestionModels(detailsList);
+                        shareAdapter.setSuggestionModels(detailsList, mRecyclerView);
                         detailsList = apiCallPresenter.getAllDetails();
-                        shareAdapter.setSuggestionModels(detailsList);
+                        shareAdapter.setSuggestionModels(detailsList, mRecyclerView);
                     default:
                         break;
                 }
@@ -436,7 +435,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
 
     @Override
-    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
         return null;
     }
 
@@ -768,7 +767,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 }
         }
         if (type == presenterListener.getTabType()) {
-            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
+            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList, mRecyclerView);
         }
     }
 
@@ -797,7 +796,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 break;
         }
         if (type == presenterListener.getTabType()) {
-            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : (type == PRODUCTS ? productList : imagesList));
+            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList, mRecyclerView);
             mRecyclerView.setLayoutManager(type == UPDATES ? linearLayoutManager : (type == PRODUCTS ? linearLayoutManager : linearLayoutManager));
 
         }
@@ -846,7 +845,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         if (modelList.size() < 10) {
             onCompleted(PHOTOS);
         }
-        shareAdapter1.setSuggestionModels(modelList);
+        shareAdapter1.setSuggestionModels(modelList, recyclerViewPhotos);
         recyclerViewPhotos.setLayoutManager(gridLayoutManager);
         selectionLayout.setVisibility(VISIBLE);
         onLoadMore(PHOTOS, modelList);

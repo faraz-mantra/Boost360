@@ -108,7 +108,8 @@ public class ApiCallPresenter {
                     data.getData().getPrice(),
                     data.getData().getCreatedOn(),
                     data.getData().getExpiresOn(),
-                    data.getData().getUrl()
+                    data.getData().getUrl(),
+                    data.getData().getProduct().getCurrencyCode()
             );
         }
 

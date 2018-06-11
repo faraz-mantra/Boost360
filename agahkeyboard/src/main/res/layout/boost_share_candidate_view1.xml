@@ -29,7 +29,7 @@
             android:layout_gravity="top"
             android:scrollbarAlwaysDrawHorizontalTrack="true"
             android:scrollbarSize="2dp"
-            android:scrollbarThumbHorizontal="@color/white"
+            android:scrollbarThumbHorizontal="@color/white_30"
             android:scrollbars="horizontal">
 
             <LinearLayout

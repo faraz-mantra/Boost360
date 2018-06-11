@@ -398,7 +398,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 Glide.with(mContext).load(model.getImageUrl()).into(productIv);
             }
             priceTv.setText(MethodUtils.fromHtml(String.format("Price: %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
-            productPriceTv.setText(MethodUtils.fromHtml(String.format("Price: %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
+            productPriceTv.setText(MethodUtils.fromHtml(String.format("Price:<br> %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
             discountTv.setText(MethodUtils.fromHtml(String.format("Discount: %s <b>%s</b>", model.getCurrencyCode(), model.getDiscount())));
             descriptionTv.setText(MethodUtils.fromHtml(String.format("Description: <b>%s</b>", model.getDescription())));
             nameTv.setText(MethodUtils.fromHtml(String.format("Name: <b>%s</b>", model.getText())));

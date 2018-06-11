@@ -46,7 +46,8 @@ public class MainAdapter extends RecyclerView.Adapter {
         return mSuggestionModels.get(position).getTypeEnum().getValue();
     }
 
-    public void setSuggestionModels(final ArrayList<AllSuggestionModel> models) {
+    public void setSuggestionModels(final ArrayList<AllSuggestionModel> models, RecyclerView recyclerView) {
+        //mRecyclerView = recyclerView;
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
