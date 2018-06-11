@@ -52,7 +52,7 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
         mDrawingParams = new GestureTrailDrawingParams(mainKeyboardViewAttr);
         final Paint gesturePaint = new Paint();
         gesturePaint.setAntiAlias(true);
-        //gesturePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+        gesturePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         mGesturePaint = gesturePaint;
     }
 
