@@ -893,10 +893,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 }
                 productList.addAll(models);
                 if (productList.size() == 0) {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    selectionLayout.setVisibility(View.GONE);
-                    recyclerViewPhotos.setVisibility(View.INVISIBLE);
-                    productList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                    productList.add(createSuggestionModel("Click to add a product", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 break;
         }

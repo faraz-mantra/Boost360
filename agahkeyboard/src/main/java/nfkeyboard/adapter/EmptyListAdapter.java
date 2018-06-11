@@ -43,6 +43,12 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
             linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
             itemView.setLayoutParams(linLayoutParams);
             suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    
+                }
+            });
         }
 
         void setModelData(AllSuggestionModel model) {
