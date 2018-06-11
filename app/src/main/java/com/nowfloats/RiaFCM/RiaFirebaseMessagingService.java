@@ -79,7 +79,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             sendNotification(mapResult);
             Constants.GCM_Msg = true;
         }
-        ApxorSDK.logAppEvent("onMessageReceived", (HashMap<String, String>) mapResult);
+        ApxorSDK.logAppEvent("onMessageReceived", new HashMap<String, String>());
     }
 
     private static final String SAM_BUBBLE_MSG = "I have Got some data";
