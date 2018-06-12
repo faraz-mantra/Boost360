@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <nowfloats.nfkeyboard.keyboards.BoostShareCandidateView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="45dp"
     android:background="#424242"
     android:clickable="true"
     android:focusable="true"
@@ -25,11 +25,11 @@
         <HorizontalScrollView
             android:id="@+id/horizontal_scroll_view"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_gravity="top"
             android:scrollbarAlwaysDrawHorizontalTrack="true"
             android:scrollbarSize="2dp"
-            android:scrollbarThumbHorizontal="@color/white_30"
+            android:scrollbarThumbHorizontal="@color/light_gray"
             android:scrollbars="horizontal">
 
             <LinearLayout
@@ -46,7 +46,8 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Updates"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_products"
@@ -58,7 +59,8 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Products"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_photos"
@@ -70,7 +72,8 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Photos"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_details"
@@ -82,7 +85,8 @@
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Details"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

@@ -24,13 +24,13 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/emoji_palettes_view"
-        layout="@layout/emoji_palettes_view" />
+        android:id="@+id/sticker_view"
+        layout="@layout/sticker_view"
+        android:visibility="gone" />
 
     <include
-        android:visibility="gone"
-        android:id="@+id/sticker_view"
-        layout="@layout/sticker_view" />
+        android:id="@+id/emoji_palettes_view"
+        layout="@layout/emoji_palettes_view" />
 
     <include
         android:id="@+id/media_bottom_bar"

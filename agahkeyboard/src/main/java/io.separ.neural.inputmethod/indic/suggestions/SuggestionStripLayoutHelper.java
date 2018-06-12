@@ -636,9 +636,9 @@ final class SuggestionStripLayoutHelper {
         mColorAutoCorrect = colorProfile.getTextColor();
         mColorSuggested = colorProfile.getTextColor();*/
 
-        mColorValidTypedWord = Color.WHITE;
-        mColorTypedWord = Color.WHITE;
-        mColorAutoCorrect = Color.WHITE;
-        mColorSuggested = Color.WHITE;
+        mColorValidTypedWord = Color.parseColor("#cacaca");
+        mColorTypedWord = Color.parseColor("#cacaca");
+        mColorAutoCorrect = Color.parseColor("#cacaca");
+        mColorSuggested = Color.parseColor("#cacaca");
     }
 }

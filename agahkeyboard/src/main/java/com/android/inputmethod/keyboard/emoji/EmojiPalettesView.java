@@ -20,10 +20,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -32,7 +35,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -156,9 +158,9 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         // The main keyboard expands to the entire this {@link KeyboardView}.
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
-        final int height = ResourceUtils.getDefaultKeyboardHeight(res)
-                // res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
-                + getPaddingTop() + getPaddingBottom();
+        final int height = ResourceUtils.getDefaultKeyboardHeight(res) /*-
+                res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)*/
+                + getPaddingTop() + getPaddingBottom() - 40;
         setMeasuredDimension(width, height);
     }
 
@@ -294,7 +296,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         tspec.setContent(R.id.emoji_keyboard_dummy);
         final ImageView iconView = (ImageView) LayoutInflater.from(getContext()).inflate(
                 R.layout.emoji_keyboard_tab_icon, null);
-        iconView.setBackgroundColor(mCategoryPageIndicatorBackground);
+        //iconView.setBackgroundColor(mCategoryPageIndicatorBackground);
         iconView.setImageResource(mEmojiCategory.getCategoryTabIcon(categoryId));
         iconView.setContentDescription(mEmojiCategory.getAccessibilityDescription(categoryId));
         tspec.setIndicator(iconView);
@@ -344,6 +346,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
 
         mDeleteKey = (ImageView) findViewById(R.id.emoji_keyboard_delete);
+        mDeleteKey.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(),
+                nowfloats.nfkeyboard.R.color.light_gray), PorterDuff.Mode.SRC_IN));
         mDeleteKey.setTag(Constants.CODE_DELETE);
         mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);
 
@@ -410,15 +414,18 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
             TabWidget tabWidget = mTabHost.getTabWidget();
             for (int i = 0; i < tabWidget.getChildCount(); ++i) {
                 ImageView currentTab = (ImageView) tabWidget.getChildTabViewAt(i);
-                currentTab.setBackgroundColor(secondary);
-                currentTab.setColorFilter(newProfile.getIconOnSecondary());
+                // currentTab.setBackgroundColor(secondary);
+                currentTab.setBackgroundColor(Color.parseColor("#212121"));
+                currentTab.setColorFilter(Color.parseColor("#cacaca"));
             }
-            tabWidget.setBackgroundColor(secondary);
+            // tabWidget.setBackgroundColor(secondary);
+            tabWidget.setBackgroundColor(Color.parseColor("#212121"));
         }
         if (mEmojiTopBar != null)
-            mEmojiTopBar.setBackgroundColor(secondary);
-        mEmojiPager.setBackgroundColor(newProfile.getPrimary());
-        mEmojiPalettesAdapter.updateColor(newProfile.getPrimary());
+            mEmojiTopBar.setBackgroundColor(Color.parseColor("#212121"));
+        mTabHost.setBackgroundColor(Color.parseColor("#212121"));
+        mEmojiPager.setBackgroundColor(Color.parseColor("#212121"));
+        mEmojiPalettesAdapter.updateColor(Color.parseColor("#212121"));
     }
 
     @Override

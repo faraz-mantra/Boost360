@@ -29,6 +29,7 @@
         android:id="@+id/emoji_top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
+        android:background="#212121"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
@@ -71,8 +72,15 @@
             android:src="@drawable/ic_backspace_arrow" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/emoji_keyboard_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#212121"
+        android:visibility="visible" />
 </com.android.inputmethod.keyboard.emoji.EmojiPalettesView>

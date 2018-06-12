@@ -24,11 +24,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -409,8 +411,12 @@ public class KeyboardView extends View {
     // Draw key background.
     protected void onDrawKeyBackground(final Key key, final Canvas canvas,
                                        Drawable background) {
-        if (key.getLabel() != null && !key.getLabel().equals("?123")) {//-103246
-            background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+        if (key.getLabel() != null && !key.getLabel().equals("?123") && !key.getLabel().equals("ABC")) {//-103246
+            if (key.getCode() == -1) {
+                background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
+            } else {
+                background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+            }
         } else {
             if (key.getCode() == -10 || key.getCode() == 32) {
                 background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
@@ -508,7 +514,7 @@ public class KeyboardView extends View {
            /* Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
-            paint.setColor(Color.WHITE);
+            paint.setColor(Color.parseColor("#cacaca"));
             canvas.drawText(label, 0, label.length(), labelX, labelBaseline, paint);
             // Turn off drop shadow and reset x-scale.
             paint.clearShadowLayer();
@@ -605,8 +611,9 @@ public class KeyboardView extends View {
                             final int y, final int width, final int height) {
         icon.clearColorFilter();
         icon.setColorFilter(null);
-        if (code == -1 && AlphabetShiftState.IS_SHIFTED) {
-            icon.setColorFilter(getContext().getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        if (code == -1) {
+            icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), AlphabetShiftState.IS_SHIFTED ?
+                    nowfloats.nfkeyboard.R.color.primaryColor : nowfloats.nfkeyboard.R.color.white), PorterDuff.Mode.SRC_IN));
         } else {
             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }
