@@ -62,8 +62,9 @@ public class ApiCallPresenter {
             }
             if (modelList.size() < 10) {
                 apiCallListener.onCompleted(ImePresenterImpl.TabType.PRODUCTS);
+            } else {
+                apiCallListener.onLoadMore(ImePresenterImpl.TabType.PRODUCTS, modelList);
             }
-            apiCallListener.onLoadMore(ImePresenterImpl.TabType.PRODUCTS, modelList);
         }
 
         @Override
@@ -84,8 +85,9 @@ public class ApiCallPresenter {
             }
             if (modelList.size() < 10) {
                 apiCallListener.onCompleted(ImePresenterImpl.TabType.UPDATES);
+            } else {
+                apiCallListener.onLoadMore(ImePresenterImpl.TabType.UPDATES, modelList);
             }
-            apiCallListener.onLoadMore(ImePresenterImpl.TabType.UPDATES, modelList);
         }
 
         @Override

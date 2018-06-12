@@ -339,67 +339,73 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
             shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
         } else {
-            switch (tabType) {
-                case UPDATES:
-                    imagesNotSupportedTv.setVisibility(View.GONE);
-                    snapHelper.attachToRecyclerView(mRecyclerView);
-                    mRecyclerView.setLayoutManager(linearLayoutManager);
-                    selectionLayout.setVisibility(View.GONE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    recyclerViewPhotos.setVisibility(View.GONE);
-                    if (updatesList.size() > 0) {
-                        shareAdapter.setSuggestionModels(updatesList);
-                    } else {
-                        callLoadingApi(UPDATES);
-                    }
-                    break;
-                case PRODUCTS:
-                    imagesNotSupportedTv.setVisibility(View.GONE);
-                    snapHelper.attachToRecyclerView(mRecyclerView);
-                    selectionLayout.setVisibility(View.GONE);
-                    mRecyclerView.setLayoutManager(linearLayoutManager);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    recyclerViewPhotos.setVisibility(View.GONE);
-                    if (productList.size() > 0) {
-                        shareAdapter.setSuggestionModels(productList);
-                    } else {
-                        callLoadingApi(PRODUCTS);
-                    }
-                    break;
-                case PHOTOS:
-                    if (presenterListener.imagesSupported()) {
+
+            if (MethodUtils.isOnline(mThemeContext)) {
+                switch (tabType) {
+                    case UPDATES:
                         imagesNotSupportedTv.setVisibility(View.GONE);
-                        deselectImages();
-                        mRecyclerView.setVisibility(View.GONE);
-                        recyclerViewPhotos.setVisibility(View.VISIBLE);
-                        selectionLayout.setVisibility(View.VISIBLE);
-                        if (imagesList.size() > 0 && imagesList.get(imagesList.size() - 1).getTypeEnum()
-                                != BaseAdapterManager.SectionTypeEnum.loader) {
-                            shareAdapter1.setSuggestionModels(imagesList);
-                        } else {
-                            callLoadingApi(PHOTOS);
-                        }
-                    } else {
-                        imagesNotSupportedTv.setVisibility(View.VISIBLE);
-                        mRecyclerView.setVisibility(View.INVISIBLE);
+                        snapHelper.attachToRecyclerView(mRecyclerView);
+                        mRecyclerView.setLayoutManager(linearLayoutManager);
                         selectionLayout.setVisibility(View.GONE);
-                        recyclerViewPhotos.setVisibility(View.INVISIBLE);
-                    }
-                    break;
-                case DETAILS:
-                    imagesNotSupportedTv.setVisibility(View.GONE);
-                    snapHelper.attachToRecyclerView(mRecyclerView);
-                    selectionLayout.setVisibility(View.GONE);
-                    mRecyclerView.setLayoutManager(linearLayoutManager);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    recyclerViewPhotos.setVisibility(View.GONE);
-                    if (detailsList.size() > 0) {
-                        shareAdapter.setSuggestionModels(detailsList);
-                    } else {
-                        callLoadingApi(DETAILS);
-                    }
-                    break;
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        recyclerViewPhotos.setVisibility(View.GONE);
+                        if (updatesList.size() > 0) {
+                            shareAdapter.setSuggestionModels(updatesList);
+                        } else {
+                            callLoadingApi(UPDATES);
+                        }
+                        break;
+                    case PRODUCTS:
+                        imagesNotSupportedTv.setVisibility(View.GONE);
+                        snapHelper.attachToRecyclerView(mRecyclerView);
+                        selectionLayout.setVisibility(View.GONE);
+                        mRecyclerView.setLayoutManager(linearLayoutManager);
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        recyclerViewPhotos.setVisibility(View.GONE);
+                        if (productList.size() > 0) {
+                            shareAdapter.setSuggestionModels(productList);
+                        } else {
+                            callLoadingApi(PRODUCTS);
+                        }
+                        break;
+                    case PHOTOS:
+                        if (presenterListener.imagesSupported()) {
+                            imagesNotSupportedTv.setVisibility(View.GONE);
+                            deselectImages();
+                            mRecyclerView.setVisibility(View.GONE);
+                            recyclerViewPhotos.setVisibility(View.VISIBLE);
+                            selectionLayout.setVisibility(View.VISIBLE);
+                            if (imagesList.size() > 0 && imagesList.get(imagesList.size() - 1).getTypeEnum()
+                                    != BaseAdapterManager.SectionTypeEnum.loader) {
+                                shareAdapter1.setSuggestionModels(imagesList);
+                            } else {
+                                callLoadingApi(PHOTOS);
+                            }
+                        } else {
+                            imagesNotSupportedTv.setVisibility(View.VISIBLE);
+                            mRecyclerView.setVisibility(View.INVISIBLE);
+                            selectionLayout.setVisibility(View.GONE);
+                            recyclerViewPhotos.setVisibility(View.INVISIBLE);
+                        }
+                        break;
+                    case DETAILS:
+                        imagesNotSupportedTv.setVisibility(View.GONE);
+                        snapHelper.attachToRecyclerView(mRecyclerView);
+                        selectionLayout.setVisibility(View.GONE);
+                        mRecyclerView.setLayoutManager(linearLayoutManager);
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        recyclerViewPhotos.setVisibility(View.GONE);
+                        if (detailsList.size() > 0) {
+                            shareAdapter.setSuggestionModels(detailsList);
+                        } else {
+                            callLoadingApi(DETAILS);
+                        }
+                        break;
+                }
+            } else {
+                Toast.makeText(mThemeContext, "Check your Network Connection", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 
@@ -892,9 +898,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     productList.remove(productList.size() - 1);
                 }
                 productList.addAll(models);
-                if (productList.size() == 0) {
-                    productList.add(createSuggestionModel("Click to add a product", BaseAdapterManager.SectionTypeEnum.EmptyList));
-                }
                 break;
         }
         if (type == mTabType) {
@@ -931,6 +934,13 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 break;
             case PRODUCTS:
                 isProductCompleted = true;
+                if (productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+                    productList.remove(productList.size() - 1);
+                }
+                if (productList.size() == 0) {
+                    productList.add(createSuggestionModel("No products available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                }
+                shareAdapter.setSuggestionModels(productList);
                 break;
         }
     }

@@ -1,9 +1,12 @@
 package nfkeyboard.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -107,5 +110,28 @@ public class MethodUtils {
     public static ArrayList<KeywordModel> fetchWordsFromDatabase(DatabaseTable mDatabaseTable, String text) {
         ArrayList<KeywordModel> suggestions = mDatabaseTable.getWordMatches(text, new String[]{COL_WORD});
         return suggestions;
+    }
+
+    public static boolean isOnline(Context context) {
+        boolean status = false;
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = connectivityManager.getNetworkInfo(0);
+            if (netInfo != null
+                    && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                status = true;
+            } else {
+                netInfo = connectivityManager.getNetworkInfo(1);
+                if (netInfo != null
+                        && netInfo.getState() == NetworkInfo.State.CONNECTED)
+                    status = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return status;
     }
 }

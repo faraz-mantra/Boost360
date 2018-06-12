@@ -1,6 +1,9 @@
 package nfkeyboard.adapter;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +49,20 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    
+                    if (suggestionTv.getText().toString().
+                            equalsIgnoreCase("No products available.")) {
+                        final PackageManager manager = mContext.getPackageManager();
+                        Intent intent = manager.getLaunchIntentForPackage(mContext.getPackageName());
+                        if (intent == null) return;
+                        intent.putExtra("from", "notification");
+                        intent.putExtra("url", "addProduct");
+                        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                        try {
+                            pendingIntent.send(mContext, 0, intent);
+                        } catch (PendingIntent.CanceledException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
         }

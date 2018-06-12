@@ -25,8 +25,8 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:background="@android:color/black"
         android:id="@+id/emoji_top_bar"
-        style="?attr/suggestionStripViewStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
         android:baselineAligned="false"
