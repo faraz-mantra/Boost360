@@ -1,6 +1,7 @@
 package com.android.inputmethod.keyboard;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,6 +11,7 @@ import com.android.inputmethod.keyboard.emoji.MediaBottomBar;
 import com.android.inputmethod.keyboard.internal.KeyVisualAttributes;
 import com.android.inputmethod.keyboard.internal.KeyboardIconsSet;
 import com.android.inputmethod.keyboard.sticker.StickerView;
+import com.android.inputmethod.latin.utils.ResourceUtils;
 
 import io.separ.neural.inputmethod.colors.ColorManager;
 import io.separ.neural.inputmethod.indic.R;
@@ -18,7 +20,7 @@ import io.separ.neural.inputmethod.indic.R;
  * Created by sepehr on 3/5/17.
  */
 
-public class RichMediaView extends LinearLayout implements ChangeRichModeListener{
+public class RichMediaView extends LinearLayout implements ChangeRichModeListener {
     private EmojiPalettesView mEmojiPalettesView;
     private MediaBottomBar mMediaBottomBar;
     private StickerView mStickerView;
@@ -31,12 +33,12 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
         mEmojiPalettesView.stopEmojiPalettes();
     }
 
-    public void changeLayout(){
-        if(emojiIsActive) {
+    public void changeLayout() {
+        if (emojiIsActive) {
             mEmojiPalettesView.startEmojiPalettes();
             mEmojiPalettesView.setVisibility(VISIBLE);
             mStickerView.setVisibility(GONE);
-        }else {
+        } else {
             mEmojiPalettesView.setVisibility(View.GONE);
             mStickerView.setVisibility(VISIBLE);
         }
@@ -44,16 +46,16 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
 
     public void setEmojiKeyboard(String switchToAlpha, KeyVisualAttributes keyVisualAttributes, KeyboardIconsSet keyboardIconsSet) {
         changeLayout();
-        mMediaBottomBar.setVisibility(View.VISIBLE);
+        mMediaBottomBar.setVisibility(View.GONE);
         mMediaBottomBar.startMediaBottomBar(switchToAlpha, keyVisualAttributes, keyboardIconsSet);
     }
 
     public boolean isShowingEmojiPalettes() {
-        return (mStickerView != null && mStickerView.isShown())||(mEmojiPalettesView != null && mEmojiPalettesView.isShown());
+        return (mStickerView != null && mStickerView.isShown()) || (mEmojiPalettesView != null && mEmojiPalettesView.isShown());
     }
 
     public View getVisibleKeyboardView() {
-        if(emojiIsActive)
+        if (emojiIsActive)
             return mEmojiPalettesView;
         return mStickerView;
     }
@@ -67,7 +69,7 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
         super(context, attrs);
     }
 
-    public void setUp(View view, boolean hardwareAccelerated, KeyboardActionListener actionListener){
+    public void setUp(View view, boolean hardwareAccelerated, KeyboardActionListener actionListener) {
         mEmojiPalettesView = (EmojiPalettesView) this.findViewById(R.id.emoji_palettes_view);
         mMediaBottomBar = (MediaBottomBar) view.findViewById(R.id.media_bottom_bar);
         mEmojiPalettesView.setHardwareAcceleratedDrawingEnabled(hardwareAccelerated);
@@ -82,20 +84,18 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
     }
 
     @Override
-    public int change(String to){
-        if(to == null)
+    public int change(String to) {
+        if (to == null)
             return 0;
-        if(to.equals("rich_emoji_mode")) {
+        if (to.equals("rich_emoji_mode")) {
             emojiIsActive = true;
             changeLayout();
             return 1;
-        }
-        else if(to.equals("rich_sticker_mode")) {
+        } else if (to.equals("rich_sticker_mode")) {
             emojiIsActive = false;
             changeLayout();
             return 2;
-        }
-        else
+        } else
             return 0;
     }
 

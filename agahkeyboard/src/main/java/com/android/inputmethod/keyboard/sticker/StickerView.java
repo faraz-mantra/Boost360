@@ -26,7 +26,7 @@ import io.separ.neural.inputmethod.indic.R;
 /**
  * Created by sepehr on 3/5/17.
  */
-public class StickerView extends LinearLayout implements ColorManager.OnColorChange{
+public class StickerView extends LinearLayout implements ColorManager.OnColorChange {
     private LinearLayout mStickerTopBar;
     private TabHost mTabHost;
     private ViewPager mStickerPager;
@@ -37,7 +37,7 @@ public class StickerView extends LinearLayout implements ColorManager.OnColorCha
     private final int mCategoryPageIndicatorBackground;
 
     public static final List<StickerPageModel> PAGES = Arrays.asList(
-            new StickerPageModel("gopher", R.attr.iconEmojiCategory1Tab, new String[] {"angry.png", "ok.png", "sigh.png", "no.png", "hot.png", "ninja.png", "good_morning.png", "balloon.png", "thank_you.png", "work.png", "run_away.png", "hot_spring.png", "scare.png", "beer.png", "tehepero.png", "hide_away.png", "awake.png", "hungry.png", "baseball.png", "hide.png", "cry.png", "hi.png", "lovely.png", "cook.png", "cold.png", "cheer.png", "faint.png", "sleepy.png", "sorry.png", "spring.png", "embarrass.png", "bye.png", "question.png", "autumn.png", "surprise.png", "sleeping.png"})
+            new StickerPageModel("gopher", R.attr.iconEmojiCategory1Tab, new String[]{"angry.png", "ok.png", "sigh.png", "no.png", "hot.png", "ninja.png", "good_morning.png", "balloon.png", "thank_you.png", "work.png", "run_away.png", "hot_spring.png", "scare.png", "beer.png", "tehepero.png", "hide_away.png", "awake.png", "hungry.png", "baseball.png", "hide.png", "cry.png", "hi.png", "lovely.png", "cook.png", "cold.png", "cheer.png", "faint.png", "sleepy.png", "sorry.png", "spring.png", "embarrass.png", "bye.png", "question.png", "autumn.png", "surprise.png", "sleeping.png"})
     );
 
     /*private void addTab(final TabHost host, final StickerPageModel currentPage) {
@@ -78,7 +78,7 @@ public class StickerView extends LinearLayout implements ColorManager.OnColorCha
                     }
                 });*/
 
-        mStickerPager = (ViewPager)findViewById(R.id.sticker_keyboard_pager);
+        mStickerPager = (ViewPager) findViewById(R.id.sticker_keyboard_pager);
         mStickerPager.setAdapter(mStickerPalettesAdapter);
         //mStickerPager.setOnPageChangeListener(this);//TODO
         mStickerPager.setOffscreenPageLimit(0);
@@ -86,21 +86,20 @@ public class StickerView extends LinearLayout implements ColorManager.OnColorCha
         //setCurrentCategoryId(mEmojiCategory.getCurrentCategoryId(), true /* force */);//TODO
     }
 
-    public static class StickerPagerAdapter extends PagerAdapter
-    {
-        private Context                context;
+    public static class StickerPagerAdapter extends PagerAdapter {
+        private Context context;
         //private EmojiPageView.EmojiSelectionListener listener;
 
         public StickerPagerAdapter(@NonNull Context context)
-                                 //@Nullable EmojiPageView.EmojiSelectionListener listener)
+        //@Nullable EmojiPageView.EmojiSelectionListener listener)
         {
             super();
-            this.context  = context;
+            this.context = context;
             //this.listener = listener;
         }
 
         @Override
-        public CharSequence getPageTitle(int index){
+        public CharSequence getPageTitle(int index) {
             return "Text";
         }
 
@@ -120,7 +119,7 @@ public class StickerView extends LinearLayout implements ColorManager.OnColorCha
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View)object);
+            container.removeView((View) object);
         }
 
         @Override
@@ -140,20 +139,20 @@ public class StickerView extends LinearLayout implements ColorManager.OnColorCha
         }
     }
 
-    public void onColorChange(ColorProfile newProfile){
+    public void onColorChange(ColorProfile newProfile) {
         int primary = newProfile.getPrimary();
         int secondary = newProfile.getSecondary();
         int iconColor = newProfile.getIconOnSecondary();
-        if(mTabHost != null){
+        if (mTabHost != null) {
             TabWidget tabWidget = mTabHost.getTabWidget();
-            for(int i=0; i<tabWidget.getChildCount(); ++i) {
-                ImageView currentTab = (ImageView)tabWidget.getChildTabViewAt(i);
+            for (int i = 0; i < tabWidget.getChildCount(); ++i) {
+                ImageView currentTab = (ImageView) tabWidget.getChildTabViewAt(i);
                 currentTab.setBackgroundColor(secondary);
                 currentTab.setColorFilter(iconColor);
             }
             tabWidget.setBackgroundColor(secondary);
         }
-        if(mStickerTopBar != null)
+        if (mStickerTopBar != null)
             mStickerTopBar.setBackgroundColor(secondary);
         mStickerPager.setBackgroundColor(primary);
         mStickerPalettesAdapter.updateColor(primary);

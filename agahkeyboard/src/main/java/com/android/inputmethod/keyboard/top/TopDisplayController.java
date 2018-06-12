@@ -2,6 +2,8 @@ package com.android.inputmethod.keyboard.top;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
@@ -29,6 +31,8 @@ public class TopDisplayController {
     private final ActionRowView mActionRowView;
     private final View mSuggestionsStripHackyContainer;
     private final SuggestionStripView mSuggestionsStripView;
+    private final ImageButton mVoiceKey;
+    private final ImageView mServicesKey;
     private ServiceResultsView mServiceResultsView;
     private final View mDimOtherView;
     //private final View mActionRowContainer;
@@ -115,6 +119,8 @@ public class TopDisplayController {
         holderLayout = (LinearLayout) parent.findViewById(R.id.keyboard_top_area);
         mActionRowView = (ActionRowView) parent.findViewById(R.id.action_row);
         mSuggestionsStripView = (SuggestionStripView) parent.findViewById(R.id.suggestion_strip_view);
+        mVoiceKey = (ImageButton) mSuggestionsStripView.findViewById(R.id.suggestions_strip_voice_key);
+        mServicesKey = (ImageView) mSuggestionsStripView.findViewById(R.id.suggestions_strip_services_key);
         ColorManager.addObserverAndCall(mSuggestionsStripView);
         mSuggestionsStripHackyContainer = parent.findViewById(R.id.suggestion_strip_hacky_container);
         mSuggestionsStripHackyContainer.setVisibility(GONE);
@@ -140,6 +146,8 @@ public class TopDisplayController {
         this.mSuggestionsStripHackyContainer.setVisibility(View.VISIBLE);
         //mActionRowView.postDelayed(this.hideSuggestionAfter, 5000);
         mSuggestionsStripView.setVisibility(View.VISIBLE);
+        mVoiceKey.setVisibility(View.VISIBLE);
+        mServicesKey.setVisibility(View.VISIBLE);
     }
 
     public void showActionRow(Context context) {

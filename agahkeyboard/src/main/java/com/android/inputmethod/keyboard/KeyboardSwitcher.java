@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.android.inputmethod.keyboard.KeyboardLayoutSet.KeyboardLayoutSetException;
 import com.android.inputmethod.keyboard.internal.KeyboardState;
 import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
+import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
@@ -61,6 +62,7 @@ import io.separ.neural.inputmethod.indic.SubtypeSwitcher;
 import io.separ.neural.inputmethod.indic.WordComposer;
 import io.separ.neural.inputmethod.indic.settings.Settings;
 import io.separ.neural.inputmethod.indic.settings.SettingsValues;
+import io.separ.neural.inputmethod.slash.EventBusExt;
 import nfkeyboard.adapter.BaseAdapterManager;
 import nfkeyboard.adapter.MainAdapter;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
@@ -318,6 +320,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private void setMainKeyboardFrame(final SettingsValues settingsValues) {
         mMainKeyboardFrame.setVisibility(
                 settingsValues.mHasHardwareKeyboard ? View.GONE : View.VISIBLE);
+        EventBusExt.getDefault().post(new ShowSuggestionsEvent());
         shareLayout.setVisibility(View.GONE);
         mRichMediaView.setGone();
     }
@@ -491,7 +494,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     @Override
     public void setEmojiKeyboard() {
         final Keyboard keyboard = mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET);
-        mMainKeyboardFrame.setVisibility(View.GONE);
+        mKeyboardView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.GONE);
         mRichMediaView.setEmojiKeyboard(mKeyboardTextsSet.getText(KeyboardTextsSet.SWITCH_TO_ALPHA_KEY_LABEL), mKeyboardView.getKeyVisualAttribute(), keyboard.mIconsSet);
     }
@@ -616,6 +619,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         mActionRowView.setListener(this.mLatinIME);
         shareLayout = mCurrentInputView.findViewById(R.id.sharelayout);
         shareLayout.setMinimumHeight(mKeyboardView.getHeight());
+        //mRichMediaView.setMinimumHeight(mKeyboardView.getHeight());
         selectionLayout = shareLayout.findViewById(R.id.cl_selection_layout);
 
         totalImagesTv = shareLayout.findViewById(R.id.tv_total);

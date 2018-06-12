@@ -19,6 +19,7 @@ package com.android.inputmethod.keyboard.emoji;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -133,9 +134,9 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         // The main keyboard expands to the entire this {@link KeyboardView}.
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
-        final int height = ResourceUtils.getDefaultKeyboardHeight(res)
-                // res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
-                + getPaddingTop() + getPaddingBottom();
+        final int height = ResourceUtils.getDefaultKeyboardHeight(res) /*-
+                res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)*/
+                + getPaddingTop() + getPaddingBottom() -40;
         setMeasuredDimension(width, height);
     }
 
@@ -143,7 +144,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         final String tabId = EmojiCategory.getCategoryName(categoryId, 0 /* categoryPageId */);
         final TabHost.TabSpec tspec = host.newTabSpec(tabId);
         tspec.setContent(R.id.emoji_keyboard_dummy);
-        final ImageView iconView = (ImageView)LayoutInflater.from(getContext()).inflate(
+        final ImageView iconView = (ImageView) LayoutInflater.from(getContext()).inflate(
                 R.layout.emoji_keyboard_tab_icon, null);
         iconView.setBackgroundColor(mCategoryPageIndicatorBackground);
         iconView.setImageResource(mEmojiCategory.getCategoryTabIcon(categoryId));
@@ -154,8 +155,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     @Override
     protected void onFinishInflate() {
-        mEmojiTopBar = (LinearLayout)findViewById(R.id.emoji_top_bar);
-        mTabHost = (TabHost)findViewById(R.id.emoji_category_tabhost);
+        mEmojiTopBar = (LinearLayout) findViewById(R.id.emoji_top_bar);
+        mTabHost = (TabHost) findViewById(R.id.emoji_category_tabhost);
         mTabHost.setup();
         for (final EmojiCategory.CategoryProperties properties
                 : mEmojiCategory.getShownCategories()) {
@@ -182,7 +183,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
                     }
                 });
 
-        mEmojiPager = (ViewPager)findViewById(R.id.emoji_keyboard_pager);
+        mEmojiPager = (ViewPager) findViewById(R.id.emoji_keyboard_pager);
         mEmojiPager.setAdapter(mEmojiPalettesAdapter);
         if (recentModel.getEmoji().length == 0)
             mEmojiPager.setCurrentItem(1);
@@ -194,24 +195,22 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         setCurrentCategoryId(mEmojiCategory.getCurrentCategoryId(), true /* force */);
     }
 
-    public static class EmojiPagerAdapter extends PagerAdapter
-    {
-        private Context                context;
-        private List<EmojiPageModel>   pages;
+    public static class EmojiPagerAdapter extends PagerAdapter {
+        private Context context;
+        private List<EmojiPageModel> pages;
         private EmojiPageView.EmojiSelectionListener listener;
 
         public EmojiPagerAdapter(@NonNull Context context,
                                  @NonNull List<EmojiPageModel> pages,
-                                 @Nullable EmojiPageView.EmojiSelectionListener listener)
-        {
+                                 @Nullable EmojiPageView.EmojiSelectionListener listener) {
             super();
-            this.context  = context;
-            this.pages    = pages;
+            this.context = context;
+            this.pages = pages;
             this.listener = listener;
         }
 
         @Override
-        public CharSequence getPageTitle(int index){
+        public CharSequence getPageTitle(int index) {
             return "Text";
         }
 
@@ -231,7 +230,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View)object);
+            container.removeView((View) object);
         }
 
         @Override
@@ -251,21 +250,22 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         }
     }
 
-    public void onColorChange(ColorProfile newProfile){
+    public void onColorChange(ColorProfile newProfile) {
         int secondary = newProfile.getSecondary();
-        if(mTabHost != null){
+        if (mTabHost != null) {
             TabWidget tabWidget = mTabHost.getTabWidget();
-            for(int i=0; i<tabWidget.getChildCount(); ++i) {
-                ImageView currentTab = (ImageView)tabWidget.getChildTabViewAt(i);
+            for (int i = 0; i < tabWidget.getChildCount(); ++i) {
+                ImageView currentTab = (ImageView) tabWidget.getChildTabViewAt(i);
                 currentTab.setBackgroundColor(secondary);
                 currentTab.setColorFilter(newProfile.getIconOnSecondary());
             }
             tabWidget.setBackgroundColor(secondary);
         }
-        if(mEmojiTopBar != null)
-            mEmojiTopBar.setBackgroundColor(secondary);
-        mEmojiPager.setBackgroundColor(newProfile.getPrimary());
-        mEmojiPalettesAdapter.updateColor(newProfile.getPrimary());
+        if (mEmojiTopBar != null)
+            mEmojiTopBar.setBackgroundColor(Color.parseColor("#424242"));
+            mTabHost.setBackgroundColor(Color.parseColor("#424242"));
+        mEmojiPager.setBackgroundColor(Color.parseColor("#424242"));
+        mEmojiPalettesAdapter.updateColor(Color.parseColor("#212121"));
     }
 
     @Override
@@ -297,7 +297,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     @Override
     public void onPageScrolled(final int position, final float positionOffset,
-            final int positionOffsetPixels) {
+                               final int positionOffsetPixels) {
     }
 
     /**

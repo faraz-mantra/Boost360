@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.android.inputmethod.keyboard.emoji.MediaBottomBar
-    android:orientation="horizontal"
+<com.android.inputmethod.keyboard.emoji.MediaBottomBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:visibility="gone"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="horizontal">
+
     <TextView
         android:id="@+id/emoji_keyboard_alphabet_left"
         android:layout_width="0dip"
+        android:layout_height="match_parent"
         android:layout_weight="0.125"
         android:gravity="center"
-        android:layout_height="match_parent"
         android:hapticFeedbackEnabled="false"
-        android:textStyle="bold"
-        android:soundEffectsEnabled="false"/>
+        android:soundEffectsEnabled="false"
+        android:textStyle="bold" />
+
     <ImageButton
         android:id="@+id/switch_to_emoji"
         android:layout_width="0dip"
@@ -21,7 +23,9 @@
         android:gravity="center"
         android:hapticFeedbackEnabled="false"
         android:soundEffectsEnabled="false"
-        android:src="@drawable/ic_emoji_smile"/>
+        android:src="@drawable/ic_emoji_smile"
+        android:visibility="invisible" />
+
     <ImageButton
         android:id="@+id/switch_to_sticker"
         android:layout_width="0dip"
@@ -30,13 +34,15 @@
         android:gravity="center"
         android:hapticFeedbackEnabled="false"
         android:soundEffectsEnabled="false"
-        android:src="@drawable/ic_sticker"/>
+        android:src="@drawable/ic_sticker"
+        android:visibility="invisible" />
+
     <ImageButton
         android:id="@+id/emoji_keyboard_delete"
         android:layout_width="0dip"
-        android:layout_weight="0.125"
         android:layout_height="match_parent"
+        android:layout_weight="0.125"
+        android:contentDescription="@string/spoken_description_delete"
         android:hapticFeedbackEnabled="false"
-        android:soundEffectsEnabled="false"
-        android:contentDescription="@string/spoken_description_delete" />
+        android:soundEffectsEnabled="false" />
 </com.android.inputmethod.keyboard.emoji.MediaBottomBar>
