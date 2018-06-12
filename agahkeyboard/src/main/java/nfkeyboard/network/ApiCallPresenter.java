@@ -97,18 +97,14 @@ public class ApiCallPresenter {
     private CallBack<CreatedOffer> createOfferCallback = new CallBack<CreatedOffer>() {
         @Override
         public void onSuccess(CreatedOffer data) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date());
-            String date = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
-            String time = new SimpleDateFormat("HH:mm:ss").format(calendar.getTime());
-            data.getData().setCreatedOn(date + "T" + time);
             presenterListener.onCreateProductOfferResponse(
                     data.getData().getProduct().getName(),
                     data.getData().getProduct().getPrice(),
                     data.getData().getPrice(),
                     data.getData().getCreatedOn(),
                     data.getData().getExpiresOn(),
-                    data.getData().getUrl()
+                    data.getData().getUrl(),
+                    data.getData().getProduct().getCurrencyCode()
             );
         }
 

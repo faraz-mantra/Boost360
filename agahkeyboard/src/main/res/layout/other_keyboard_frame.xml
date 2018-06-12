@@ -25,8 +25,8 @@
 
     <include
         android:id="@+id/sticker_view"
-        android:visibility="gone"
-        layout="@layout/sticker_view" />
+        layout="@layout/sticker_view"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/emoji_palettes_view"
@@ -34,6 +34,6 @@
 
     <include
         android:id="@+id/media_bottom_bar"
-        android:visibility="gone"
-        layout="@layout/media_bottom_bar" />
+        layout="@layout/media_bottom_bar"
+        android:visibility="gone" />
 </com.android.inputmethod.keyboard.RichMediaView>

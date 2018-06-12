@@ -144,6 +144,15 @@ public class CreatedOffer {
             @SerializedName("DiscountAmount")
             @Expose
             double discountAmount;
+
+            public String getCurrencyCode() {
+                return currencyCode;
+            }
+
+            public void setCurrencyCode(String currencyCode) {
+                this.currencyCode = currencyCode;
+            }
+
             @SerializedName("CurrencyCode")
             @Expose
             String currencyCode;

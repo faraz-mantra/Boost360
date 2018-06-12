@@ -40,7 +40,7 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
             mStickerView.setVisibility(GONE);
         } else {
             mEmojiPalettesView.setVisibility(View.GONE);
-            mStickerView.setVisibility(VISIBLE);
+            mStickerView.setVisibility(GONE);
         }
     }
 

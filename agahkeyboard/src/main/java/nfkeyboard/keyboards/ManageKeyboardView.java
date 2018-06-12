@@ -168,9 +168,8 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     private void deselectImages() {
         selectedImages.clear();
         shareBtn.setText(getResources().getString(R.string.share));
-        recyclerViewPhotos.removeAllViews();
-        recyclerViewPhotos.setAdapter(shareAdapter1);
         shareAdapter1.setSuggestionModels(imagesList);
+        recyclerViewPhotos.setAdapter(shareAdapter1);
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(shareBtn, View.ALPHA, 0, 1f);
         objectAnimator.setDuration(100);
         objectAnimator.addListener(new Animator.AnimatorListener() {
@@ -436,7 +435,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
 
     @Override
-    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
         return null;
     }
 
@@ -797,7 +796,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 break;
         }
         if (type == presenterListener.getTabType()) {
-            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : (type == PRODUCTS ? productList : imagesList));
+            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
             mRecyclerView.setLayoutManager(type == UPDATES ? linearLayoutManager : (type == PRODUCTS ? linearLayoutManager : linearLayoutManager));
 
         }

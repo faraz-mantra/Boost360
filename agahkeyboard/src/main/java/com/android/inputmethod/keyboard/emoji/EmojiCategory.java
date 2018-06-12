@@ -66,6 +66,7 @@ final class EmojiCategory {
     public static final class CategoryProperties {
         public final int mCategoryId;
         public final int mPageCount;
+
         public CategoryProperties(final int categoryId, final int pageCount) {
             mCategoryId = categoryId;
             mPageCount = pageCount;
@@ -89,7 +90,7 @@ final class EmojiCategory {
             "objects2",
             "symbols2",
             "flags2",
-            "smiley & people2" };
+            "smiley & people2"};
 
     private static final int[] sCategoryTabIconAttr = {
             R.styleable.EmojiPalettesView_iconEmojiRecentsTab,
@@ -108,7 +109,7 @@ final class EmojiCategory {
             R.styleable.EmojiPalettesView_iconEmojiCategory13Tab,
             R.styleable.EmojiPalettesView_iconEmojiCategory14Tab,
             R.styleable.EmojiPalettesView_iconEmojiCategory15Tab,
-            R.styleable.EmojiPalettesView_iconEmojiCategory16Tab };
+            R.styleable.EmojiPalettesView_iconEmojiCategory16Tab};
 
     private static final int[] sAccessibilityDescriptionResourceIdsForCategories = {
             R.string.spoken_descrption_emoji_category_recents,
@@ -127,7 +128,7 @@ final class EmojiCategory {
             R.string.spoken_descrption_emoji_category_objects,
             R.string.spoken_descrption_emoji_category_symbols,
             R.string.spoken_descrption_emoji_category_flags,
-            R.string.spoken_descrption_emoji_category_eight_smiley_people };
+            R.string.spoken_descrption_emoji_category_eight_smiley_people};
 
     private static final int[] sCategoryElementId = {
             KeyboardId.ELEMENT_EMOJI_RECENTS,
@@ -146,7 +147,7 @@ final class EmojiCategory {
             KeyboardId.ELEMENT_EMOJI_CATEGORY13,
             KeyboardId.ELEMENT_EMOJI_CATEGORY14,
             KeyboardId.ELEMENT_EMOJI_CATEGORY15,
-            KeyboardId.ELEMENT_EMOJI_CATEGORY16 };
+            KeyboardId.ELEMENT_EMOJI_CATEGORY16};
 
     private final SharedPreferences mPrefs;
     private final Resources mRes;
@@ -161,7 +162,7 @@ final class EmojiCategory {
     private int mCurrentCategoryId = EmojiCategory.ID_UNSPECIFIED;
 
     public EmojiCategory(final SharedPreferences prefs, final Resources res,
-            final KeyboardLayoutSet layoutSet, final TypedArray emojiPaletteViewAttr) {
+                         final KeyboardLayoutSet layoutSet, final TypedArray emojiPaletteViewAttr) {
         mPrefs = prefs;
         mRes = res;
         mMaxPageKeyCount = res.getInteger(R.integer.config_emoji_keyboard_max_page_key_count);
@@ -177,10 +178,9 @@ final class EmojiCategory {
         addShownCategoryId(defaultCategoryId);
         if (BuildCompatUtils.EFFECTIVE_SDK_INT >= Build.VERSION_CODES.KITKAT) {
             addShownCategoryId(EmojiCategory.ID_EIGHT_FOOD_DRINK);
-            addShownCategoryId(EmojiCategory.ID_EIGHT_ANIMALS_NATURE);
-            addShownCategoryId(EmojiCategory.ID_EIGHT_TRAVEL_PLACES);
+            addShownCategoryId(EmojiCategory.ID_NATURE);
             addShownCategoryId(EmojiCategory.ID_EIGHT_SYMBOLS);
-            addShownCategoryId(EmojiCategory.ID_EIGHT_FLAGS);
+            addShownCategoryId(EmojiCategory.ID_EIGHT_TRAVEL_PLACES);
         }
 
         DynamicGridKeyboard recentsKbd =

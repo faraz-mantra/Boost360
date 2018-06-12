@@ -28,8 +28,8 @@
         android:id="@+id/emoji_top_bar"
         style="?attr/suggestionStripViewStyle"
         android:layout_width="match_parent"
-        android:background="#212121"
         android:layout_height="@dimen/config_suggestions_strip_height"
+        android:background="#212121"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
@@ -37,7 +37,7 @@
             android:id="@+id/emoji_category_tabhost"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="87.5">
+            android:layout_weight="1">
 
             <TabWidget
                 android:id="@android:id/tabs"
@@ -59,6 +59,17 @@
                     android:visibility="gone" />
             </FrameLayout>
         </TabHost>
+
+        <ImageView
+            android:id="@+id/emoji_keyboard_delete"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.125"
+            android:contentDescription="@string/spoken_description_delete"
+            android:hapticFeedbackEnabled="false"
+            android:padding="7dip"
+            android:soundEffectsEnabled="false"
+            android:src="@drawable/ic_backspace_arrow" />
     </LinearLayout>
 
     <View
@@ -69,7 +80,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/emoji_keyboard_pager"
         android:layout_width="match_parent"
-        android:background="#212121"
         android:layout_height="wrap_content"
+        android:background="#212121"
         android:visibility="visible" />
 </com.android.inputmethod.keyboard.emoji.EmojiPalettesView>

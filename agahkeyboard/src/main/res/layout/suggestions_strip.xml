@@ -33,7 +33,7 @@
         android:layout_marginBottom="2dp"
         android:elevation="3dp"
         android:padding="4dip"
-        android:src="@drawable/ic_nowfloats_circle" />
+        android:src="@drawable/app_launcher" />
     <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
          We just need to ignore the system's audio and haptic feedback settings. -->
     <LinearLayout

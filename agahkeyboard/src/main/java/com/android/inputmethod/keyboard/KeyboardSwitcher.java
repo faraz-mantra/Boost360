@@ -112,7 +112,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private PagerSnapHelper snapHelper;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
-    private TextView totalImagesTv;
+    private TextView totalImagesTv, imagesNotSupportedTv;
     private Button shareBtn, deselectBtn;
     private UrlToBitmapInterface urlToBitmapInterface;
     private GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface galleryImagesListener;
@@ -344,6 +344,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         } else {
             switch (tabType) {
                 case UPDATES:
+                    imagesNotSupportedTv.setVisibility(View.GONE);
                     snapHelper.attachToRecyclerView(mRecyclerView);
                     mRecyclerView.setLayoutManager(linearLayoutManager);
                     selectionLayout.setVisibility(View.GONE);
@@ -356,6 +357,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     }
                     break;
                 case PRODUCTS:
+                    imagesNotSupportedTv.setVisibility(View.GONE);
                     snapHelper.attachToRecyclerView(mRecyclerView);
                     selectionLayout.setVisibility(View.GONE);
                     mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -368,18 +370,27 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     }
                     break;
                 case PHOTOS:
-                    deselectImages();
-                    mRecyclerView.setVisibility(View.GONE);
-                    recyclerViewPhotos.setVisibility(View.VISIBLE);
-                    selectionLayout.setVisibility(View.VISIBLE);
-                    if (imagesList.size() > 0 && imagesList.get(imagesList.size() - 1).getTypeEnum()
-                            != BaseAdapterManager.SectionTypeEnum.loader) {
-                        shareAdapter1.setSuggestionModels(imagesList);
+                    if (presenterListener.imagesSupported()) {
+                        imagesNotSupportedTv.setVisibility(View.GONE);
+                        deselectImages();
+                        mRecyclerView.setVisibility(View.GONE);
+                        recyclerViewPhotos.setVisibility(View.VISIBLE);
+                        selectionLayout.setVisibility(View.VISIBLE);
+                        if (imagesList.size() > 0 && imagesList.get(imagesList.size() - 1).getTypeEnum()
+                                != BaseAdapterManager.SectionTypeEnum.loader) {
+                            shareAdapter1.setSuggestionModels(imagesList);
+                        } else {
+                            callLoadingApi(PHOTOS);
+                        }
                     } else {
-                        callLoadingApi(PHOTOS);
+                        imagesNotSupportedTv.setVisibility(View.VISIBLE);
+                        mRecyclerView.setVisibility(View.INVISIBLE);
+                        selectionLayout.setVisibility(View.GONE);
+                        recyclerViewPhotos.setVisibility(View.INVISIBLE);
                     }
                     break;
                 case DETAILS:
+                    imagesNotSupportedTv.setVisibility(View.GONE);
                     snapHelper.attachToRecyclerView(mRecyclerView);
                     selectionLayout.setVisibility(View.GONE);
                     mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -400,8 +411,13 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         selectedImages.clear();
         shareBtn.setText(mThemeContext.getResources().getString(R.string.share));
         recyclerViewPhotos.removeAllViews();
-        recyclerViewPhotos.setAdapter(shareAdapter1);
+        for (int i = 0; i < imagesList.size(); i++) {
+            if (imagesList.get(i).getSelected()) {
+                imagesList.get(i).setSelected(false);
+            }
+        }
         shareAdapter1.setSuggestionModels(imagesList);
+        shareAdapter1.notifyDataSetChanged();
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(shareBtn, View.ALPHA, 0, 1f);
         objectAnimator.setDuration(100);
         objectAnimator.addListener(new Animator.AnimatorListener() {
@@ -463,7 +479,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                             return;
                         }
                         apiCallPresenter.loadMore(imagesList.size() - 1, PHOTOS, galleryImagesListener);
-                        selectionLayout.setVisibility(View.VISIBLE);
                     case DETAILS:
                         if (isDetailsCompleted) {
                             return;
@@ -622,6 +637,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         //mRichMediaView.setMinimumHeight(mKeyboardView.getHeight());
         selectionLayout = shareLayout.findViewById(R.id.cl_selection_layout);
 
+        imagesNotSupportedTv = shareLayout.findViewById(R.id.tv_images_not_supported);
         totalImagesTv = shareLayout.findViewById(R.id.tv_total);
         shareBtn = shareLayout.findViewById(R.id.btn_share);
         shareBtn.setOnClickListener(new View.OnClickListener() {
@@ -768,7 +784,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     @Override
-    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
         return null;
     }
 
@@ -881,7 +897,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 }
                 productList.addAll(models);
                 if (productList.size() == 0) {
-                    productList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                    productList.add(createSuggestionModel("Click to add a product", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 break;
         }

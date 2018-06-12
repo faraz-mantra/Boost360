@@ -398,7 +398,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 Glide.with(mContext).load(model.getImageUrl()).into(productIv);
             }
             priceTv.setText(MethodUtils.fromHtml(String.format("Price: %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
-            productPriceTv.setText(MethodUtils.fromHtml(String.format("Price: %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
+            productPriceTv.setText(MethodUtils.fromHtml(String.format("Price:<br> %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
             discountTv.setText(MethodUtils.fromHtml(String.format("Discount: %s <b>%s</b>", model.getCurrencyCode(), model.getDiscount())));
             descriptionTv.setText(MethodUtils.fromHtml(String.format("Description: <b>%s</b>", model.getDescription())));
             nameTv.setText(MethodUtils.fromHtml(String.format("Name: <b>%s</b>", model.getText())));
@@ -590,9 +590,11 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
         String dateFormatter(int hours) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
+            calendar.add(Calendar.MINUTE, -330);
             calendar.add(Calendar.HOUR_OF_DAY, hours);
             String date = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String time = new SimpleDateFormat("HH:mm:ss").format(calendar.getTime());
+            Log.d("here", date+time);
             return date + "T" + time;
         }
 

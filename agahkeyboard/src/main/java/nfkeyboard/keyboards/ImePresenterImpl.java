@@ -145,6 +145,19 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
+    public boolean imagesSupported() {
+        final EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
+        if (!validatePackageName(editorInfo)) {
+            return false;
+        }
+
+        if (isCommitContentSupported(editorInfo, "image/png")) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onEmojiconClicked(Emojicon emojicon) {
         if (imeListener.getImeCurrentInputConnection() != null)
             imeListener.getImeCurrentInputConnection().commitText(emojicon.getEmoji(), 1);
@@ -277,7 +290,7 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
-    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url) {
+    public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -289,26 +302,24 @@ public class ImePresenterImpl implements ItemClickListener,
             Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
             return null;
         }
-        Log.d("here", createdOn + " " + expiresOn);
         long diffHours = 24;
 
         try {
             createdOn = createdOn.replace("T", " ");
             expiresOn = expiresOn.replace("T", " ");
-            Log.d("here", createdOn + " " + expiresOn);
             Date createdDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createdOn);
             Date expireDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(expiresOn);
 
             long diff = expireDate.getTime() - createdDate.getTime();
-            diffHours = diff / (60 * 60 * 1000);
-            Log.d("here", Long.toString(diffHours));
+            diffHours = (diff / (60 * 60 * 1000));
 
         } catch (Exception e) {
             Log.e("here", e.getMessage());
         }
 
-        doCommitContent("Offer on: " + name + "\n\nOld Price: " + Double.toString(oldPrice) + "\nOffer Price: " + Double.toString(newPrice)
-                + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" + Url, "text/plain", null);
+        doCommitContent("Offer on: " + name + "\nPrice: " + currency + " " + Double.toString(oldPrice) + "\n\nOffer Price: "
+                + currency + " " + Double.toString(newPrice) + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" +
+                "Click to Buy: " + appendedUrl(Url), "text/plain", null);
         return Url;
     }
 
@@ -1041,30 +1052,18 @@ public class ImePresenterImpl implements ItemClickListener,
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Uri uri = null;
-        String shareUrl = null;
-        try {
-            if (!TextUtils.isEmpty(model.getUrl())) {
-                uri = Uri.parse(model.getUrl()).buildUpon().appendQueryParameter(UTM_SOURCE, "bk")
-                        .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
-            }
-        } catch (Exception e) {
-
-        }
-        if (uri != null) {
-            shareUrl = uri.toString();
-        }
+        String shareUrl = appendedUrl(model.getUrl());
 
         switch (model.getTypeEnum()) {
 
             case ImageAndText:
-
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
                 MethodUtils.onGlideBitmapReady(this, model.getText() + ",\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
                 break;
             case Product:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
-                MethodUtils.onGlideBitmapReady(this, "Name: " + model.getText() + ",\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
+                MethodUtils.onGlideBitmapReady(this, "Product: " + model.getText() +
+                        "\nPrice: " + model.getCurrencyCode() + " " + model.getPrice() +"\n\nClick to Buy: " + shareUrl, model.getImageUrl(), model.getId());
                 break;
             case DetailsShare:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
@@ -1082,6 +1081,24 @@ public class ImePresenterImpl implements ItemClickListener,
                 MethodUtils.onGlideBitmapReady(this, "", model.getImageUri(), model.getId());
             default:
                 break;
+        }
+
+        return shareUrl;
+    }
+
+    String appendedUrl(String url) {
+        Uri uri = null;
+        String shareUrl = null;
+        try {
+            if (!TextUtils.isEmpty(url)) {
+                uri = Uri.parse(url).buildUpon().appendQueryParameter(UTM_SOURCE, "bk")
+                        .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
+            }
+        } catch (Exception e) {
+
+        }
+        if (uri != null) {
+            shareUrl = uri.toString();
         }
 
         return shareUrl;

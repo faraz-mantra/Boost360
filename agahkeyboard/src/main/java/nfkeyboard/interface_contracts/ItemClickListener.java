@@ -13,7 +13,7 @@ public interface ItemClickListener {
 
     String onCreateProductOfferClick(AllSuggestionModel model);
 
-    String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url);
+    String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency);
 
     void onClick(AllSuggestionModel model, boolean selected);
 
