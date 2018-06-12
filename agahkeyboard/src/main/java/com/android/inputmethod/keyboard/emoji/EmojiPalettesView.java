@@ -20,10 +20,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -343,6 +346,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
 
         mDeleteKey = (ImageView) findViewById(R.id.emoji_keyboard_delete);
+        mDeleteKey.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(),
+                nowfloats.nfkeyboard.R.color.light_gray), PorterDuff.Mode.SRC_IN));
         mDeleteKey.setTag(Constants.CODE_DELETE);
         mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);
 

@@ -24,11 +24,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -609,8 +611,9 @@ public class KeyboardView extends View {
                             final int y, final int width, final int height) {
         icon.clearColorFilter();
         icon.setColorFilter(null);
-        if (code == -1 && AlphabetShiftState.IS_SHIFTED) {
-            icon.setColorFilter(getContext().getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        if (code == -1) {
+            icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), AlphabetShiftState.IS_SHIFTED ?
+                    nowfloats.nfkeyboard.R.color.primaryColor : nowfloats.nfkeyboard.R.color.white), PorterDuff.Mode.SRC_IN));
         } else {
             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }

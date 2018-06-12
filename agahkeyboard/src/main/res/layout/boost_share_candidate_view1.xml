@@ -29,11 +29,7 @@
             android:layout_gravity="top"
             android:scrollbarAlwaysDrawHorizontalTrack="true"
             android:scrollbarSize="2dp"
-<<<<<<< HEAD
             android:scrollbarThumbHorizontal="@color/light_gray"
-=======
-            android:scrollbarThumbHorizontal="@color/white_30"
->>>>>>> 2293fca15dba35411e751fc023ed9c6c821b8b04
             android:scrollbars="horizontal">
 
             <LinearLayout
@@ -47,11 +43,11 @@
                     android:gravity="center"
                     android:paddingBottom="5dp"
                     android:paddingLeft="28dp"
-                    android:textSize="14sp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Updates"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_products"
@@ -59,12 +55,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingBottom="5dp"
-                    android:textSize="14sp"
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Products"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_photos"
@@ -72,12 +68,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingBottom="5dp"
-                    android:textSize="14sp"
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Photos"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_details"
@@ -85,12 +81,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingBottom="5dp"
-                    android:textSize="14sp"
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
                     android:text="Details"
-                    android:textColor="@color/white_70" />
+                    android:textColor="@color/white_70"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
