@@ -64,7 +64,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/white" />
+        android:background="@color/light_gray" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/emoji_keyboard_pager"

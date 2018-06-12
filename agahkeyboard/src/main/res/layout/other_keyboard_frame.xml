@@ -25,6 +25,7 @@
 
     <include
         android:id="@+id/sticker_view"
+        android:visibility="gone"
         layout="@layout/sticker_view" />
 
     <include

@@ -409,8 +409,12 @@ public class KeyboardView extends View {
     // Draw key background.
     protected void onDrawKeyBackground(final Key key, final Canvas canvas,
                                        Drawable background) {
-        if (key.getLabel() != null && !key.getLabel().equals("?123")) {//-103246
-            background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+        if (key.getLabel() != null && !key.getLabel().equals("?123") && !key.getLabel().equals("ABC")) {//-103246
+            if (key.getCode() == -1) {
+                background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
+            } else {
+                background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+            }
         } else {
             if (key.getCode() == -10 || key.getCode() == 32) {
                 background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
@@ -508,7 +512,7 @@ public class KeyboardView extends View {
            /* Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
-            paint.setColor(Color.WHITE);
+            paint.setColor(Color.parseColor("#cacaca"));
             canvas.drawText(label, 0, label.length(), labelX, labelBaseline, paint);
             // Turn off drop shadow and reset x-scale.
             paint.clearShadowLayer();
