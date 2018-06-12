@@ -313,15 +313,15 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
             addTab(mTabHost, properties.mCategoryId);
         }
         mTabHost.setOnTabChangedListener(this); //TODO
-        final TabWidget tabWidget = mTabHost.getTabWidget();
-        tabWidget.setStripEnabled(mCategoryIndicatorEnabled);
-        if (mCategoryIndicatorEnabled) {
-            // On TabWidget's strip, what looks like an indicator is actually a background.
-            // And what looks like a background are actually left and right drawables.
-            tabWidget.setBackgroundResource(mCategoryIndicatorDrawableResId);
-            tabWidget.setLeftStripDrawable(mCategoryIndicatorBackgroundResId);
-            tabWidget.setRightStripDrawable(mCategoryIndicatorBackgroundResId);
-        }
+//        final TabWidget tabWidget = mTabHost.getTabWidget();
+//        tabWidget.setStripEnabled(mCategoryIndicatorEnabled);
+//        if (mCategoryIndicatorEnabled) {
+//            // On TabWidget's strip, what looks like an indicator is actually a background.
+//            // And what looks like a background are actually left and right drawables.
+//            tabWidget.setBackgroundResource(mCategoryIndicatorDrawableResId);
+//            tabWidget.setLeftStripDrawable(mCategoryIndicatorBackgroundResId);
+//            tabWidget.setRightStripDrawable(mCategoryIndicatorBackgroundResId);
+//        }
 
         mEmojiPalettesAdapter = new EmojiPagerAdapter(getContext(),
                 models,

@@ -65,7 +65,6 @@ final class EmojiLayoutParams {
     public void setPagerProperties(final ViewPager vp) {
         final LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) vp.getLayoutParams();
         lp.height = mEmojiKeyboardHeight;
-        lp.bottomMargin = mEmojiPagerBottomMargin;
         vp.setLayoutParams(lp);
     }
 

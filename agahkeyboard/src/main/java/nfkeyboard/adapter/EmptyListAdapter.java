@@ -4,6 +4,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,16 +53,28 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
                 public void onClick(View view) {
                     if (suggestionTv.getText().toString().
                             equalsIgnoreCase("No products available.")) {
+
                         final PackageManager manager = mContext.getPackageManager();
-                        Intent intent = manager.getLaunchIntentForPackage(mContext.getPackageName());
-                        if (intent == null) return;
+//                        Intent intent = manager.getLaunchIntentForPackage(mContext.getPackageName());
+//                        if (intent == null) return;
+//                        intent.putExtra("from", "notification");
+//                        intent.putExtra("url", "addProduct");
+//                        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//                        try {
+//                            pendingIntent.send(mContext, 0, intent);
+//                        } catch (PendingIntent.CanceledException e) {
+//                            e.printStackTrace();
+//                        }
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/addproduct"));
                         intent.putExtra("from", "notification");
                         intent.putExtra("url", "addProduct");
-                        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-                        try {
-                            pendingIntent.send(mContext, 0, intent);
-                        } catch (PendingIntent.CanceledException e) {
-                            e.printStackTrace();
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setAction(Intent.ACTION_VIEW);
+                        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                            mContext.startActivity(intent);
                         }
                     }
                 }

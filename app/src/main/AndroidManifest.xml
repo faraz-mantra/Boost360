@@ -224,7 +224,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="${applicationId}" />
+                <data
+                    android:host="${applicationId}.keyboard.home"
+                    android:pathPrefix="/"
+                    android:scheme="nowfloats" />
             </intent-filter>
         </activity>
         <activity
