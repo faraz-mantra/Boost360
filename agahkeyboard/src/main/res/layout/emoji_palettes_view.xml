@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -18,38 +17,37 @@
 */
 -->
 
-<com.android.inputmethod.keyboard.emoji.EmojiPalettesView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.inputmethod.keyboard.emoji.EmojiPalettesView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/emojiPalettesViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:orientation="vertical"
-    style="?attr/emojiPalettesViewStyle"
->
+    android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/emoji_top_bar"
-        android:orientation="horizontal"
+        style="?attr/suggestionStripViewStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
-        style="?attr/suggestionStripViewStyle"
         android:baselineAligned="false"
-    >
+        android:orientation="horizontal">
+
         <TabHost
             android:id="@+id/emoji_category_tabhost"
             android:layout_width="0dip"
-            android:layout_weight="87.5"
             android:layout_height="match_parent"
-        >
+            android:layout_weight="1">
+
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@null" />
+
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="0dip"
-                android:layout_height="0dip"
-            >
+                android:layout_height="0dip">
                 <!-- Empty placeholder that TabHost requires. But we don't use it to actually
                      display anything. We monitor the tab changes and change the ViewPager.
                      Similarly the ViewPager swipes are intercepted and passed to the TabHost. -->
@@ -60,7 +58,19 @@
                     android:visibility="gone" />
             </FrameLayout>
         </TabHost>
+
+        <ImageView
+            android:id="@+id/emoji_keyboard_delete"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.125"
+            android:contentDescription="@string/spoken_description_delete"
+            android:hapticFeedbackEnabled="false"
+            android:padding="7dip"
+            android:soundEffectsEnabled="false"
+            android:src="@drawable/ic_backspace_arrow" />
     </LinearLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/emoji_keyboard_pager"
         android:layout_width="match_parent"

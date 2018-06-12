@@ -38,13 +38,13 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
             mStickerView.setVisibility(GONE);
         }else {
             mEmojiPalettesView.setVisibility(View.GONE);
-            mStickerView.setVisibility(VISIBLE);
+            mStickerView.setVisibility(GONE);
         }
     }
 
     public void setEmojiKeyboard(String switchToAlpha, KeyVisualAttributes keyVisualAttributes, KeyboardIconsSet keyboardIconsSet) {
         changeLayout();
-        mMediaBottomBar.setVisibility(View.VISIBLE);
+        mMediaBottomBar.setVisibility(View.GONE);
         mMediaBottomBar.startMediaBottomBar(switchToAlpha, keyVisualAttributes, keyboardIconsSet);
     }
 

@@ -19,6 +19,8 @@ package com.android.inputmethod.keyboard.emoji;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -47,9 +50,11 @@ import com.android.inputmethod.latin.utils.ResourceUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.separ.neural.inputmethod.colors.ColorManager;
 import io.separ.neural.inputmethod.colors.ColorProfile;
+import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.R;
 import io.separ.neural.inputmethod.indic.SubtypeSwitcher;
 
@@ -69,6 +74,9 @@ import static io.separ.neural.inputmethod.indic.Constants.NOT_A_COORDINATE;
 public final class EmojiPalettesView extends LinearLayout implements OnTabChangeListener,
         ViewPager.OnPageChangeListener, View.OnClickListener, View.OnTouchListener,
         ColorManager.OnColorChange {
+
+    private final DeleteKeyOnTouchListener mDeleteKeyOnTouchListener;
+
     private final boolean mCategoryIndicatorEnabled;
     private final int mCategoryIndicatorDrawableResId;
     private final int mCategoryIndicatorBackgroundResId;
@@ -76,6 +84,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     private EmojiPagerAdapter mEmojiPalettesAdapter;
     private final EmojiLayoutParams mEmojiLayoutParams;
+    private ImageView mDeleteKey;
 
     private LinearLayout mEmojiTopBar;
     private TabHost mTabHost;
@@ -88,6 +97,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
     private KeyboardActionListener mKeyboardActionListener = KeyboardActionListener.EMPTY_LISTENER;
 
     private final EmojiCategory mEmojiCategory;
+
+    private final int mFunctionalKeyBackgroundId;
 
     public EmojiPalettesView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.emojiPalettesViewStyle);
@@ -116,6 +127,18 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mCategoryPageIndicatorBackground = emojiPalettesViewAttr.getColor(
                 R.styleable.EmojiPalettesView_categoryPageIndicatorBackground, 0);
         emojiPalettesViewAttr.recycle();
+
+
+        final TypedArray keyboardViewAttr = getContext().obtainStyledAttributes(attrs,
+                R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
+
+        final int keyBackgroundId = keyboardViewAttr.getResourceId(
+                R.styleable.KeyboardView_keyBackground, 0);
+        mFunctionalKeyBackgroundId = keyboardViewAttr.getResourceId(
+                R.styleable.KeyboardView_functionalKeyBackground, keyBackgroundId);
+
+        mDeleteKeyOnTouchListener = new DeleteKeyOnTouchListener(context);
+
         initializePageModels();
     }
 
@@ -139,11 +162,137 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         setMeasuredDimension(width, height);
     }
 
+    private static class DeleteKeyOnTouchListener implements OnTouchListener {
+        static final long MAX_REPEAT_COUNT_TIME = TimeUnit.SECONDS.toMillis(30);
+        final long mKeyRepeatStartTimeout;
+        final long mKeyRepeatInterval;
+
+        public DeleteKeyOnTouchListener(Context context) {
+            final Resources res = context.getResources();
+            mKeyRepeatStartTimeout = res.getInteger(R.integer.config_key_repeat_start_timeout);
+            mKeyRepeatInterval = res.getInteger(R.integer.config_key_repeat_interval);
+            mTimer = new CountDownTimer(MAX_REPEAT_COUNT_TIME, mKeyRepeatInterval) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    final long elapsed = MAX_REPEAT_COUNT_TIME - millisUntilFinished;
+                    if (elapsed < mKeyRepeatStartTimeout) {
+                        return;
+                    }
+                    onKeyRepeat();
+                }
+
+                @Override
+                public void onFinish() {
+                    onKeyRepeat();
+                }
+            };
+        }
+
+        /**
+         * Key-repeat state.
+         */
+        private static final int KEY_REPEAT_STATE_INITIALIZED = 0;
+        // The key is touched but auto key-repeat is not started yet.
+        private static final int KEY_REPEAT_STATE_KEY_DOWN = 1;
+        // At least one key-repeat event has already been triggered and the key is not released.
+        private static final int KEY_REPEAT_STATE_KEY_REPEAT = 2;
+
+        private KeyboardActionListener mKeyboardActionListener =
+                KeyboardActionListener.EMPTY_LISTENER;
+
+        // TODO: Do the same things done in PointerTracker
+        private final CountDownTimer mTimer;
+        private int mState = KEY_REPEAT_STATE_INITIALIZED;
+        private int mRepeatCount = 0;
+
+        public void setKeyboardActionListener(final KeyboardActionListener listener) {
+            mKeyboardActionListener = listener;
+        }
+
+        @Override
+        public boolean onTouch(final View v, final MotionEvent event) {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    onTouchDown(v);
+                    return true;
+                case MotionEvent.ACTION_MOVE:
+                    final float x = event.getX();
+                    final float y = event.getY();
+                    if (x < 0.0f || v.getWidth() < x || y < 0.0f || v.getHeight() < y) {
+                        // Stop generating key events once the finger moves away from the view area.
+                        onTouchCanceled(v);
+                    }
+                    return true;
+                case MotionEvent.ACTION_CANCEL:
+                case MotionEvent.ACTION_UP:
+                    onTouchUp(v);
+                    return true;
+            }
+            return false;
+        }
+
+        private void handleKeyDown() {
+            mKeyboardActionListener.onPressKey(
+                    Constants.CODE_DELETE, mRepeatCount, true /* isSinglePointer */);
+        }
+
+        private void handleKeyUp() {
+            mKeyboardActionListener.onCodeInput(Constants.CODE_DELETE,
+                    NOT_A_COORDINATE, NOT_A_COORDINATE, false /* isKeyRepeat */);
+            mKeyboardActionListener.onReleaseKey(
+                    Constants.CODE_DELETE, false /* withSliding */);
+            ++mRepeatCount;
+        }
+
+        private void onTouchDown(final View v) {
+            mTimer.cancel();
+            mRepeatCount = 0;
+            handleKeyDown();
+            v.setPressed(true /* pressed */);
+            mState = KEY_REPEAT_STATE_KEY_DOWN;
+            mTimer.start();
+        }
+
+        private void onTouchUp(final View v) {
+            mTimer.cancel();
+            if (mState == KEY_REPEAT_STATE_KEY_DOWN) {
+                handleKeyUp();
+            }
+            v.setPressed(false /* pressed */);
+            mState = KEY_REPEAT_STATE_INITIALIZED;
+        }
+
+        private void onTouchCanceled(final View v) {
+            mTimer.cancel();
+            v.setBackgroundColor(Color.TRANSPARENT);
+            mState = KEY_REPEAT_STATE_INITIALIZED;
+        }
+
+        // Called by {@link #mTimer} in the UI thread as an auto key-repeat signal.
+        void onKeyRepeat() {
+            switch (mState) {
+                case KEY_REPEAT_STATE_INITIALIZED:
+                    // Basically this should not happen.
+                    break;
+                case KEY_REPEAT_STATE_KEY_DOWN:
+                    // Do not call {@link #handleKeyDown} here because it has already been called
+                    // in {@link #onTouchDown}.
+                    handleKeyUp();
+                    mState = KEY_REPEAT_STATE_KEY_REPEAT;
+                    break;
+                case KEY_REPEAT_STATE_KEY_REPEAT:
+                    handleKeyDown();
+                    handleKeyUp();
+                    break;
+            }
+        }
+    }
+
     private void addTab(final TabHost host, final int categoryId) {
         final String tabId = EmojiCategory.getCategoryName(categoryId, 0 /* categoryPageId */);
         final TabHost.TabSpec tspec = host.newTabSpec(tabId);
         tspec.setContent(R.id.emoji_keyboard_dummy);
-        final ImageView iconView = (ImageView)LayoutInflater.from(getContext()).inflate(
+        final ImageView iconView = (ImageView) LayoutInflater.from(getContext()).inflate(
                 R.layout.emoji_keyboard_tab_icon, null);
         iconView.setBackgroundColor(mCategoryPageIndicatorBackground);
         iconView.setImageResource(mEmojiCategory.getCategoryTabIcon(categoryId));
@@ -154,8 +303,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     @Override
     protected void onFinishInflate() {
-        mEmojiTopBar = (LinearLayout)findViewById(R.id.emoji_top_bar);
-        mTabHost = (TabHost)findViewById(R.id.emoji_category_tabhost);
+        mEmojiTopBar = (LinearLayout) findViewById(R.id.emoji_top_bar);
+        mTabHost = (TabHost) findViewById(R.id.emoji_category_tabhost);
         mTabHost.setup();
         for (final EmojiCategory.CategoryProperties properties
                 : mEmojiCategory.getShownCategories()) {
@@ -182,7 +331,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
                     }
                 });
 
-        mEmojiPager = (ViewPager)findViewById(R.id.emoji_keyboard_pager);
+        mEmojiPager = (ViewPager) findViewById(R.id.emoji_keyboard_pager);
         mEmojiPager.setAdapter(mEmojiPalettesAdapter);
         if (recentModel.getEmoji().length == 0)
             mEmojiPager.setCurrentItem(1);
@@ -192,26 +341,30 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mEmojiLayoutParams.setPagerProperties(mEmojiPager);
 
         setCurrentCategoryId(mEmojiCategory.getCurrentCategoryId(), true /* force */);
+
+
+        mDeleteKey = (ImageView) findViewById(R.id.emoji_keyboard_delete);
+        mDeleteKey.setTag(Constants.CODE_DELETE);
+        mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);
+
     }
 
-    public static class EmojiPagerAdapter extends PagerAdapter
-    {
-        private Context                context;
-        private List<EmojiPageModel>   pages;
+    public static class EmojiPagerAdapter extends PagerAdapter {
+        private Context context;
+        private List<EmojiPageModel> pages;
         private EmojiPageView.EmojiSelectionListener listener;
 
         public EmojiPagerAdapter(@NonNull Context context,
                                  @NonNull List<EmojiPageModel> pages,
-                                 @Nullable EmojiPageView.EmojiSelectionListener listener)
-        {
+                                 @Nullable EmojiPageView.EmojiSelectionListener listener) {
             super();
-            this.context  = context;
-            this.pages    = pages;
+            this.context = context;
+            this.pages = pages;
             this.listener = listener;
         }
 
         @Override
-        public CharSequence getPageTitle(int index){
+        public CharSequence getPageTitle(int index) {
             return "Text";
         }
 
@@ -231,7 +384,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View)object);
+            container.removeView((View) object);
         }
 
         @Override
@@ -251,18 +404,18 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         }
     }
 
-    public void onColorChange(ColorProfile newProfile){
+    public void onColorChange(ColorProfile newProfile) {
         int secondary = newProfile.getSecondary();
-        if(mTabHost != null){
+        if (mTabHost != null) {
             TabWidget tabWidget = mTabHost.getTabWidget();
-            for(int i=0; i<tabWidget.getChildCount(); ++i) {
-                ImageView currentTab = (ImageView)tabWidget.getChildTabViewAt(i);
+            for (int i = 0; i < tabWidget.getChildCount(); ++i) {
+                ImageView currentTab = (ImageView) tabWidget.getChildTabViewAt(i);
                 currentTab.setBackgroundColor(secondary);
                 currentTab.setColorFilter(newProfile.getIconOnSecondary());
             }
             tabWidget.setBackgroundColor(secondary);
         }
-        if(mEmojiTopBar != null)
+        if (mEmojiTopBar != null)
             mEmojiTopBar.setBackgroundColor(secondary);
         mEmojiPager.setBackgroundColor(newProfile.getPrimary());
         mEmojiPalettesAdapter.updateColor(newProfile.getPrimary());
@@ -297,7 +450,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     @Override
     public void onPageScrolled(final int position, final float positionOffset,
-            final int positionOffsetPixels) {
+                               final int positionOffsetPixels) {
     }
 
     /**
@@ -360,6 +513,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     public void setKeyboardActionListener(final KeyboardActionListener listener) {
         mKeyboardActionListener = listener;
+        mDeleteKeyOnTouchListener.setKeyboardActionListener(mKeyboardActionListener);
     }
 
     private void setCurrentCategoryId(final int categoryId, final boolean force) {
