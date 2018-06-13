@@ -955,13 +955,13 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 break;
             case PHOTOS:
                 isPhotosCompleted = true;
-                if (imagesList.get(imagesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+                /*if (imagesList.get(imagesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     imagesList.remove(imagesList.size() - 1);
                 }
                 if (imagesList.size() == 0) {
                     imagesList.add(createSuggestionModel("No photos available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
-                shareAdapter1.setSuggestionModels(imagesList);
+                shareAdapter1.setSuggestionModels(imagesList);*/
                 break;
         }
     }
