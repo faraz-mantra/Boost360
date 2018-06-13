@@ -91,5 +91,13 @@
             android:layout_gravity="bottom"
             android:background="#212121"
             android:visibility="gone" />
+
+
+        <ProgressBar
+            android:id="@+id/pb_offer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

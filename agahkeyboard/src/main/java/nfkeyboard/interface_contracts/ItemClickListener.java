@@ -11,11 +11,13 @@ public interface ItemClickListener {
 
     String onCopyClick(AllSuggestionModel model);
 
-    String onCreateProductOfferClick(AllSuggestionModel model);
+    void onCreateProductOfferClick(AllSuggestionModel model);
 
     String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency);
 
     void onClick(AllSuggestionModel model, boolean selected);
 
     void onDetailsClick(AllSuggestionModel model);
+
+    void onError();
 }

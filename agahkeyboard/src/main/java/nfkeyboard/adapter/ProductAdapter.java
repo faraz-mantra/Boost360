@@ -274,7 +274,8 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                             if (!(editText.getText().length() == 1 && editText.getText().toString().charAt(0) == '0')) {
                                 String offerPrice = editText.getText().toString();
                                 int i = 0;
-                                while (offerPrice.length() != 0 && offerPrice.charAt(i) == '0' && i < offerPrice.length()) {
+                                while (offerPrice.length() != 0 && offerPrice.charAt(i) == '0' && i < offerPrice.length() - 1 &&
+                                        offerPrice.charAt(i + 1) != '.') {
                                     i++;
                                 }
                                 offerPriceEt.setText(offerPrice.substring(i, offerPrice.length()));
@@ -594,7 +595,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             calendar.add(Calendar.HOUR_OF_DAY, hours);
             String date = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String time = new SimpleDateFormat("HH:mm:ss").format(calendar.getTime());
-            Log.d("here", date+time);
+            Log.d("here", date + time);
             return date + "T" + time;
         }
 

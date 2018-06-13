@@ -114,6 +114,7 @@ public class ApiCallPresenter {
         @Override
         public void onError(Throwable t) {
             Log.d("here", t.toString());
+            presenterListener.onError();
         }
     };
 

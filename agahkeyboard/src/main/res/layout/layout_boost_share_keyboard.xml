@@ -102,7 +102,7 @@
         android:id="@+id/tv_images_not_supported"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Images not supported!"
+        android:text="@string/image_not_supported"
         android:gravity="center"
         android:visibility="gone"
         android:textColor="@color/white"

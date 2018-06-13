@@ -40,7 +40,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.inputmethod.keyboard.KeyboardSwitcher;
-import com.android.inputmethod.keyboard.emoji.models.Emojicon;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -285,8 +284,7 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
-    public String onCreateProductOfferClick(AllSuggestionModel model) {
-        return null;
+    public void onCreateProductOfferClick(AllSuggestionModel model) {
     }
 
     @Override
@@ -320,6 +318,7 @@ public class ImePresenterImpl implements ItemClickListener,
         doCommitContent("Offer on: " + name + "\nPrice: " + currency + " " + Double.toString(oldPrice) + "\n\nOffer Price: "
                 + currency + " " + Double.toString(newPrice) + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" +
                 "Click to Buy: " + appendedUrl(Url), "text/plain", null);
+        mKeyboardSwitcher.hideProgressbar();
         return Url;
     }
 
@@ -334,6 +333,11 @@ public class ImePresenterImpl implements ItemClickListener,
         permissions();
 
         onClickRegister(model);
+    }
+
+    @Override
+    public void onError() {
+        mKeyboardSwitcher.hideProgressbar();
     }
 
     @Override
@@ -1058,7 +1062,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
             case ImageAndText:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
-                MethodUtils.onGlideBitmapReady(this, model.getText() + ",\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
+                MethodUtils.onGlideBitmapReady(this, model.getText() + "\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
                 break;
             case Product:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
@@ -1074,7 +1078,7 @@ public class ImePresenterImpl implements ItemClickListener,
                 break;
             case Text:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
-                doCommitContent(model.getText() + ",\nUrl: " + shareUrl, "text/plain", null);
+                doCommitContent(model.getText() + "\nUrl: " + shareUrl, "text/plain", null);
                 break;
             case ImageShare:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);

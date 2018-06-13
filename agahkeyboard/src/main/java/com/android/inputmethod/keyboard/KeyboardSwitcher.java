@@ -35,12 +35,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.inputmethod.keyboard.KeyboardLayoutSet.KeyboardLayoutSetException;
 import com.android.inputmethod.keyboard.internal.KeyboardState;
 import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
+import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
@@ -61,6 +63,7 @@ import io.separ.neural.inputmethod.indic.SubtypeSwitcher;
 import io.separ.neural.inputmethod.indic.WordComposer;
 import io.separ.neural.inputmethod.indic.settings.Settings;
 import io.separ.neural.inputmethod.indic.settings.SettingsValues;
+import io.separ.neural.inputmethod.slash.EventBusExt;
 import nfkeyboard.adapter.BaseAdapterManager;
 import nfkeyboard.adapter.MainAdapter;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
@@ -115,6 +118,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private UrlToBitmapInterface urlToBitmapInterface;
     private GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface galleryImagesListener;
     boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
+    private ProgressBar pbOffers;
 
     public LatinIME getmLatinIME() {
         return mLatinIME;
@@ -319,6 +323,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private void setMainKeyboardFrame(final SettingsValues settingsValues) {
         mMainKeyboardFrame.setVisibility(
                 settingsValues.mHasHardwareKeyboard ? View.GONE : View.VISIBLE);
+        mKeyboardView.setVisibility(View.VISIBLE);
         //EventBusExt.getDefault().post(new ShowSuggestionsEvent());
         shareLayout.setVisibility(View.GONE);
         mRichMediaView.setGone();
@@ -520,6 +525,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         final Keyboard keyboard = mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET);
         mKeyboardView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.GONE);
+        EventBusExt.getDefault().post(new ShowActionRowEvent());
         mRichMediaView.setEmojiKeyboard(mKeyboardTextsSet.getText(KeyboardTextsSet.SWITCH_TO_ALPHA_KEY_LABEL), mKeyboardView.getKeyVisualAttribute(), keyboard.mIconsSet);
     }
 
@@ -642,6 +648,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         mActionRowView = mCurrentInputView.findViewById(R.id.action_row);
         mActionRowView.setListener(this.mLatinIME);
         shareLayout = mCurrentInputView.findViewById(R.id.sharelayout);
+        pbOffers = (ProgressBar) mCurrentInputView.findViewById(R.id.pb_offer);
         shareLayout.setMinimumHeight(mKeyboardView.getHeight());
         //mRichMediaView.setMinimumHeight(mKeyboardView.getHeight());
         selectionLayout = shareLayout.findViewById(R.id.cl_selection_layout);
@@ -783,14 +790,11 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     @Override
-    public String onCreateProductOfferClick(AllSuggestionModel model) {
-        createProductOffers(model);
-        return null;
-    }
-
-    public void createProductOffers(AllSuggestionModel model) {
+    public void onCreateProductOfferClick(AllSuggestionModel model) {
+        pbOffers.setVisibility(View.VISIBLE);
         apiCallPresenter.createProductOffers(model, presenterListener);
     }
+
 
     @Override
     public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
@@ -871,6 +875,11 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (presenterListener != null) {
             presenterListener.onDetailsClick(model);
         }
+    }
+
+    @Override
+    public void onError() {
+        Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
     }
 
     public void setPresenterListener(CandidateToPresenterInterface mImePresenter) {
@@ -1006,5 +1015,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         } else {
             onLoadMore(PHOTOS, modelList);
         }
+    }
+
+    public void hideProgressbar() {
+        pbOffers.setVisibility(View.GONE);
     }
 }
