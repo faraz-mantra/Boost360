@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 
@@ -22,7 +23,7 @@ public class TextAdapter extends BaseAdapter<AllSuggestionModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_text, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_text, parent, false);
         return new TextHolder(view);
     }
 
@@ -41,7 +42,7 @@ public class TextAdapter extends BaseAdapter<AllSuggestionModel> {
         public TextHolder(View itemView) {
             super(itemView);
             setViewLayoutSize(itemView);
-            suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
+            suggestionTv = itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

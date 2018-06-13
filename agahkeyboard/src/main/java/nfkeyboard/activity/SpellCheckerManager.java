@@ -13,7 +13,6 @@ import android.view.textservice.SuggestionsInfo;
 import android.view.textservice.TextInfo;
 import android.view.textservice.TextServicesManager;
 
-import nowfloats.nfkeyboard.interface_contracts.SpellCheckerInterface;
 
 /**
  * Created by Admin on 30-03-2018.
@@ -21,11 +20,10 @@ import nowfloats.nfkeyboard.interface_contracts.SpellCheckerInterface;
 
 public class SpellCheckerManager implements LifecycleObserver, SpellCheckerSession.SpellCheckerSessionListener {
     private SpellCheckerSession mSpellChecker;
-    private SpellCheckerInterface spellListener;
+//    private SpellCheckerInterface spellListener;
     private Lifecycle mLifeCycle;
     private Context mContext;
-    public SpellCheckerManager(Context context, Lifecycle lifeCycle, SpellCheckerInterface listener){
-        spellListener = listener;
+    public SpellCheckerManager(Context context, Lifecycle lifeCycle){
         mLifeCycle = lifeCycle;
         mContext = context;
     }

@@ -99,4 +99,12 @@
     <color name="gray_40">#66212121</color>
     <color name="dark_gray">#141414</color>
     <color name="black_10">#1a000000</color>
+
+
+    <color name="color_212121">#212121</color>
+    <color name="kbd_shift_key_color">#cc2d2d2d</color>
+    <color name="light_gray">#CACACA</color>
+    <color name="yellow">#ffb900</color>
+    <color name="gray">#AAAAAA</color>
+
 </resources>

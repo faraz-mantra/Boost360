@@ -1,6 +1,6 @@
 package nfkeyboard.keyboards.models;
 
-public class PQElement implements Comparable<nowfloats.nfkeyboard.keyboards.models.PQElement> {
+public class PQElement {
     private String word;
     private int editDistance;
     private String frequency;
@@ -35,19 +35,19 @@ public class PQElement implements Comparable<nowfloats.nfkeyboard.keyboards.mode
         this.frequency = frequency;
     }
 
-    public int compareTo(nowfloats.nfkeyboard.keyboards.models.PQElement element) {
-        if (element != null && element.getFrequency() != null) {
-            if (this.getDistance() > element.getDistance()) {
-                return 1;
-            } else if (this.getDistance() < element.getDistance()) {
-                return -1;
-            } else if (this.getFrequency().length() < element.getFrequency().length()) {
-                return 1;
-            } else if (this.getFrequency().length() > element.getFrequency().length()) {
-                return -1;
-            }
-            return element.getFrequency().compareTo(this.getFrequency());
-        }
-        return 0;
-    }
+//    public int compareTo(nowfloats.nfkeyboard.keyboards.models.PQElement element) {
+//        if (element != null && element.getFrequency() != null) {
+//            if (this.getDistance() > element.getDistance()) {
+//                return 1;
+//            } else if (this.getDistance() < element.getDistance()) {
+//                return -1;
+//            } else if (this.getFrequency().length() < element.getFrequency().length()) {
+//                return 1;
+//            } else if (this.getFrequency().length() > element.getFrequency().length()) {
+//                return -1;
+//            }
+//            return element.getFrequency().compareTo(this.getFrequency());
+//        }
+//        return 0;
+//    }
 }

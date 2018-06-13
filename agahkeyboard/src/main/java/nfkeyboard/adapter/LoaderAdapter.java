@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 
@@ -21,7 +22,7 @@ class LoaderAdapter extends BaseAdapter<AllSuggestionModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_loader, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_loader, parent, false);
         return new MyHolder(view);
     }
 

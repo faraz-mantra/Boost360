@@ -18,6 +18,7 @@ import android.widget.PopupWindow;
 import java.util.HashMap;
 import java.util.List;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.KeyboardViewInterface;
 import nfkeyboard.util.KeyboardUtils;
 
@@ -56,27 +57,27 @@ public class KeyboardViewBaseImpl extends KeyboardView implements KeyboardViewIn
             for (Keyboard.Key key : keys) {
                 switch (key.codes[0]) {
                     case Keyboard.KEYCODE_DELETE:
-                        dr = (Drawable) mContext.getResources().getDrawable(nowfloats.nfkeyboard.R.drawable.round_light_grey);
+                        dr = (Drawable) mContext.getResources().getDrawable(R.drawable.round_light_grey);
                         dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                         dr.draw(canvas);
-                        key.icon = AppCompatResources.getDrawable(mContext, nowfloats.nfkeyboard.R.drawable.ic_backspace_arrow);
+                        key.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_backspace_arrow);
 
                         key.icon.setBounds(key.x + key.width / 4, key.y + key.height / 4, key.x + 3 * key.width / 4, key.y + 3 * key.height / 4);
                         key.icon.draw(canvas);
                         break;
                     case -1:
-                        dr = (Drawable) mContext.getResources().getDrawable(nowfloats.nfkeyboard.R.drawable.round_light_grey);
+                        dr = (Drawable) mContext.getResources().getDrawable(R.drawable.round_light_grey);
                         dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                         dr.draw(canvas);
-                        key.icon = AppCompatResources.getDrawable(mContext, nowfloats.nfkeyboard.R.drawable.ic_arrow_up);
-                        key.icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, isShifted ? nowfloats.nfkeyboard.R.color.primaryColor : nowfloats.nfkeyboard.R.color.white), PorterDuff.Mode.SRC_IN));
+                        key.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_arrow_up);
+                        key.icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, isShifted ? R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN));
                         key.icon.setBounds(key.x + key.width / 4, key.y + key.height / 4, key.x + 3 * key.width / 4, key.y + 3 * key.height / 4);
                         key.icon.draw(canvas);
                         break;
                     case -2001:
                     case -2003:
                     case -2002:
-                        dr = (Drawable) mContext.getResources().getDrawable(nowfloats.nfkeyboard.R.drawable.round_light_grey);
+                        dr = (Drawable) mContext.getResources().getDrawable(R.drawable.round_light_grey);
                         dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                         dr.draw(canvas);
                         Paint paintBackground = new Paint();
@@ -88,18 +89,18 @@ public class KeyboardViewBaseImpl extends KeyboardView implements KeyboardViewIn
                                 key.y + (int) (key.height / 1.5), paintBackground);
                         break;
                     case KEY_EMOJI:
-                        dr = (Drawable) mContext.getResources().getDrawable(nowfloats.nfkeyboard.R.drawable.round_light_grey);
+                        dr = (Drawable) mContext.getResources().getDrawable(R.drawable.round_light_grey);
                         dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                         dr.draw(canvas);
-                        key.icon = AppCompatResources.getDrawable(mContext, nowfloats.nfkeyboard.R.drawable.emoji_happiness);
+                        key.icon = AppCompatResources.getDrawable(mContext, R.drawable.emoji_happiness);
                         key.icon.setBounds(key.x + key.width / 8, key.y + key.height / 4, key.x + 7 * key.width / 8, key.y + 3 * key.height / 4);
                         key.icon.draw(canvas);
                         break;
                     case -2006:
-                        dr = (Drawable) mContext.getResources().getDrawable(nowfloats.nfkeyboard.R.drawable.round_light_grey);
+                        dr = (Drawable) mContext.getResources().getDrawable(R.drawable.round_light_grey);
                         dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                         dr.draw(canvas);
-                        key.icon = AppCompatResources.getDrawable(mContext, nowfloats.nfkeyboard.R.drawable.ic_enter_arrow);
+//                        key.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_enter_arrow);
                         key.icon.setBounds(key.x + key.width / 4, key.y + key.height / 4, key.x + 3 * key.width / 4, key.y + 3 * key.height / 4);
                         key.icon.draw(canvas);
                         break;
@@ -128,7 +129,7 @@ public class KeyboardViewBaseImpl extends KeyboardView implements KeyboardViewIn
         this.isShifted = bol;
         if (mCurrentKeyboard.getShiftKeyIndex() != -1) {
             Keyboard.Key key = mCurrentKeyboard.getKeys().get(mCurrentKeyboard.getShiftKeyIndex());
-            key.icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, bol ? nowfloats.nfkeyboard.R.color.primaryColor : nowfloats.nfkeyboard.R.color.white), PorterDuff.Mode.SRC_IN));
+            key.icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, bol ? R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN));
         }
 
         return super.setShifted(bol);

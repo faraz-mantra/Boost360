@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.util.SharedPrefUtil;
 
 /**
@@ -37,38 +38,38 @@ public class BoostCandidateView extends BaseCandidateView {
     public void addCandidateView(ViewGroup parent, ImePresenterImpl.TabType tabType) {
         String productTab = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getProductVerb();
         if (!TextUtils.isEmpty(productTab)) {
-            ((TextView) findViewById(nowfloats.nfkeyboard.R.id.tv_products)).setText(productTab.trim());
+            ((TextView) findViewById(R.id.tv_products)).setText(productTab.trim());
         }
         switch (tabType) {
             case UPDATES:
-                currentView = nowfloats.nfkeyboard.R.id.tv_updates;
+                currentView = R.id.tv_updates;
                 break;
             case KEYBOARD:
-                currentView = nowfloats.nfkeyboard.R.id.img_nowfloats;
+                currentView = R.id.img_nowfloats;
                 break;
             case PRODUCTS:
-                currentView = nowfloats.nfkeyboard.R.id.tv_products;
+                currentView = R.id.tv_products;
                 break;
             case SETTINGS:
-                currentView = nowfloats.nfkeyboard.R.id.img_settings;
+                currentView = R.id.img_settings;
                 break;
             default:
                 currentView = View.NO_ID;
                 break;
         }
         parent.addView(this);
-        findViewById(nowfloats.nfkeyboard.R.id.tv_updates).setBackgroundResource(android.R.color.transparent);
-        findViewById(nowfloats.nfkeyboard.R.id.tv_products).setBackgroundResource(android.R.color.transparent);
-        findViewById(nowfloats.nfkeyboard.R.id.img_settings).setBackgroundResource(android.R.color.transparent);
-        findViewById(nowfloats.nfkeyboard.R.id.img_nowfloats).setBackgroundResource(android.R.color.transparent);
-        if (currentView != View.NO_ID) {
-            findViewById(currentView).setBackgroundResource(nowfloats.nfkeyboard.R.drawable.round_414141);
-        }
+        findViewById(R.id.tv_updates).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.tv_products).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.img_settings).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.img_nowfloats).setBackgroundResource(android.R.color.transparent);
+//        if (currentView != View.NO_ID) {
+//            findViewById(currentView).setBackgroundResource(R.drawable.round_414141);
+//        }
 
-        findViewById(nowfloats.nfkeyboard.R.id.img_nowfloats).setOnClickListener(this);
-        findViewById(nowfloats.nfkeyboard.R.id.img_settings).setOnClickListener(this);
-        findViewById(nowfloats.nfkeyboard.R.id.tv_updates).setOnClickListener(this);
-        findViewById(nowfloats.nfkeyboard.R.id.tv_products).setOnClickListener(this);
+        findViewById(R.id.img_nowfloats).setOnClickListener(this);
+        findViewById(R.id.img_settings).setOnClickListener(this);
+        findViewById(R.id.tv_updates).setOnClickListener(this);
+        findViewById(R.id.tv_products).setOnClickListener(this);
     }
 
     @Override
@@ -85,10 +86,10 @@ public class BoostCandidateView extends BaseCandidateView {
             return;
         }
         currentView = view.getId();
-        findViewById(nowfloats.nfkeyboard.R.id.tv_updates).setBackgroundResource(view.getId() == nowfloats.nfkeyboard.R.id.tv_updates ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
-        findViewById(nowfloats.nfkeyboard.R.id.tv_products).setBackgroundResource(view.getId() == nowfloats.nfkeyboard.R.id.tv_products ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
-        findViewById(nowfloats.nfkeyboard.R.id.img_settings).setBackgroundResource(view.getId() == nowfloats.nfkeyboard.R.id.img_settings ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
-        findViewById(nowfloats.nfkeyboard.R.id.img_nowfloats).setBackgroundResource(view.getId() == nowfloats.nfkeyboard.R.id.img_nowfloats ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
+//        findViewById(R.id.tv_updates).setBackgroundResource(view.getId() == R.id.tv_updates ? R.drawable.round_414141 : android.R.color.transparent);
+//        findViewById(R.id.tv_products).setBackgroundResource(view.getId() == R.id.tv_products ? R.drawable.round_414141 : android.R.color.transparent);
+//        findViewById(R.id.img_settings).setBackgroundResource(view.getId() == R.id.img_settings ? R.drawable.round_414141 : android.R.color.transparent);
+//        findViewById(R.id.img_nowfloats).setBackgroundResource(view.getId() == R.id.img_nowfloats ? R.drawable.round_414141 : android.R.color.transparent);
         listener.onKeyboardTabClick(view);
     }
 }

@@ -347,7 +347,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
         mDeleteKey = (ImageView) findViewById(R.id.emoji_keyboard_delete);
         mDeleteKey.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(),
-                nowfloats.nfkeyboard.R.color.light_gray), PorterDuff.Mode.SRC_IN));
+                R.color.light_gray), PorterDuff.Mode.SRC_IN));
         mDeleteKey.setTag(Constants.CODE_DELETE);
         mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);
 

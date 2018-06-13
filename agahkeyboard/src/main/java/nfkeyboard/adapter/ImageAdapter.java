@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 
@@ -24,7 +25,7 @@ class ImageAdapter extends BaseAdapter<AllSuggestionModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_image, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_image, parent, false);
         return new ImageHolder(view);
     }
 
@@ -44,8 +45,8 @@ class ImageAdapter extends BaseAdapter<AllSuggestionModel> {
         public ImageHolder(View itemView) {
             super(itemView);
             setViewLayoutSize(itemView);
-            suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
-            suggestionImage = itemView.findViewById(nowfloats.nfkeyboard.R.id.imageView);
+            suggestionTv = itemView.findViewById(R.id.textView);
+            suggestionImage = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

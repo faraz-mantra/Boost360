@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 
@@ -27,7 +28,7 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_text, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_text, parent, false);
         return new EmptyHolder(view);
     }
 
@@ -47,31 +48,45 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
             super(itemView);
             linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
             itemView.setLayoutParams(linLayoutParams);
-            suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
+            suggestionTv = itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (suggestionTv.getText().toString().
                             equalsIgnoreCase("No products available.")) {
 
-                        final PackageManager manager = mContext.getPackageManager();
-//                        Intent intent = manager.getLaunchIntentForPackage(mContext.getPackageName());
-//                        if (intent == null) return;
-//                        intent.putExtra("from", "notification");
-//                        intent.putExtra("url", "addProduct");
-//                        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-//                        try {
-//                            pendingIntent.send(mContext, 0, intent);
-//                        } catch (PendingIntent.CanceledException e) {
-//                            e.printStackTrace();
-//                        }
-
                         Intent intent = new Intent(Intent.ACTION_VIEW,
                                 Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/addproduct"));
                         intent.putExtra("from", "notification");
                         intent.putExtra("url", "addProduct");
                         intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setAction(Intent.ACTION_VIEW);
+                        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                            mContext.startActivity(intent);
+                        }
+                    } else if (suggestionTv.getText().toString().
+                            equalsIgnoreCase("No updates available.")) {
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/update"));
+                        intent.putExtra("from", "notification");
+                        intent.putExtra("url", "update");
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setAction(Intent.ACTION_VIEW);
+                        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                            mContext.startActivity(intent);
+                        }
+                    } else if (suggestionTv.getText().toString().
+                            equalsIgnoreCase("No photos available.")) {
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/photos"));
+                        intent.putExtra("from", "notification");
+                        intent.putExtra("url", "imagegallery");
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.setAction(Intent.ACTION_VIEW);
                         if (intent.resolveActivity(mContext.getPackageManager()) != null) {
                             mContext.startActivity(intent);
