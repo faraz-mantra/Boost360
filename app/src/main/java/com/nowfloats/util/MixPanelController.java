@@ -183,8 +183,11 @@ public class MixPanelController {
 //            } else {
 //
 //            }
-            if (value instanceof String)
+            if (value instanceof String) {
+                if (key.contains("$"))
+                    key = key.replace("$", "");
                 map.put(key, String.valueOf(value));
+            }
         }
         return map;
     }
