@@ -320,7 +320,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private void setMainKeyboardFrame(final SettingsValues settingsValues) {
         mMainKeyboardFrame.setVisibility(
                 settingsValues.mHasHardwareKeyboard ? View.GONE : View.VISIBLE);
-        EventBusExt.getDefault().post(new ShowSuggestionsEvent());
+        //EventBusExt.getDefault().post(new ShowSuggestionsEvent());
         shareLayout.setVisibility(View.GONE);
         mRichMediaView.setGone();
     }
@@ -346,6 +346,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             if (MethodUtils.isOnline(mThemeContext)) {
                 switch (tabType) {
                     case UPDATES:
+                        mActionRowView.findViewById(R.id.tv_updates).setBackground(mThemeContext.getResources().getDrawable(R.drawable.round_414141));
                         imagesNotSupportedTv.setVisibility(View.GONE);
                         snapHelper.attachToRecyclerView(mRecyclerView);
                         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -359,6 +360,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         }
                         break;
                     case PRODUCTS:
+                        mActionRowView.findViewById(R.id.tv_products).setBackground(mThemeContext.getResources().getDrawable(R.drawable.round_414141));
                         imagesNotSupportedTv.setVisibility(View.GONE);
                         snapHelper.attachToRecyclerView(mRecyclerView);
                         selectionLayout.setVisibility(View.GONE);
@@ -372,6 +374,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         }
                         break;
                     case PHOTOS:
+                        mActionRowView.findViewById(R.id.tv_photos).setBackground(mThemeContext.getResources().getDrawable(R.drawable.round_414141));
                         if (presenterListener.imagesSupported()) {
                             imagesNotSupportedTv.setVisibility(View.GONE);
                             deselectImages();
@@ -392,6 +395,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         }
                         break;
                     case DETAILS:
+                        mActionRowView.findViewById(R.id.tv_details).setBackground(mThemeContext.getResources().getDrawable(R.drawable.round_414141));
                         imagesNotSupportedTv.setVisibility(View.GONE);
                         snapHelper.attachToRecyclerView(mRecyclerView);
                         selectionLayout.setVisibility(View.GONE);

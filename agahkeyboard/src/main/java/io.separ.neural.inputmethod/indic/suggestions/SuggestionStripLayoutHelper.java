@@ -292,9 +292,10 @@ final class SuggestionStripLayoutHelper {
      * Layout suggestions to the suggestions strip. And returns the start index of more
      * suggestions.
      *
-     * @param suggestedWords suggestions to be shown in the suggestions strip.
-     * @param stripView      the suggestions strip view.
-     * @param placerView     the view where the debug info will be placed.
+     * @param shouldShowSuggestionsStrip
+     * @param suggestedWords             suggestions to be shown in the suggestions strip.
+     * @param stripView                  the suggestions strip view.
+     * @param placerView                 the view where the debug info will be placed.
      * @return the start index of more suggestions.
      */
     public int layoutAndReturnStartIndexOfMoreSuggestions(final SuggestedWords suggestedWords,

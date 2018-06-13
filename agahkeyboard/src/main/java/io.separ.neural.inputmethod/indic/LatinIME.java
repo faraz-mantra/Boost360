@@ -238,6 +238,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     private NavManager navManager;
 
     private TopDisplayController mTopDisplayController;
+    private ImePresenterImpl.TabType serviceTab;
 
     @Override
     public void onCopy() {
@@ -344,21 +345,25 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         }
 
         if (serviceId.equals(ImePresenterImpl.TabType.UPDATES.name())) {
+            this.serviceTab = ImePresenterImpl.TabType.UPDATES;
             this.mKeyboardSwitcher.setProductShareKeyboardFrame(ImePresenterImpl.TabType.UPDATES);
             return;
         }
 
         if (serviceId.equals(ImePresenterImpl.TabType.PRODUCTS.name())) {
+            this.serviceTab = ImePresenterImpl.TabType.PRODUCTS;
             this.mKeyboardSwitcher.setProductShareKeyboardFrame(ImePresenterImpl.TabType.PRODUCTS);
             return;
         }
 
         if (serviceId.equals(ImePresenterImpl.TabType.PHOTOS.name())) {
+            this.serviceTab = ImePresenterImpl.TabType.PHOTOS;
             this.mKeyboardSwitcher.setProductShareKeyboardFrame(ImePresenterImpl.TabType.PHOTOS);
             return;
         }
 
         if (serviceId.equals(ImePresenterImpl.TabType.DETAILS.name())) {
+            this.serviceTab = ImePresenterImpl.TabType.DETAILS;
             this.mKeyboardSwitcher.setProductShareKeyboardFrame(ImePresenterImpl.TabType.DETAILS);
             return;
         }
@@ -1246,6 +1251,13 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         if (this.navManager != null) {
             this.navManager.show();
         }
+        /*if (mTopDisplayController.isActionViewVisible() && serviceTab != null) {
+            EventBusExt.getDefault().post(new ShowActionRowEvent());
+            this.mKeyboardSwitcher.setProductShareKeyboardFrame(serviceTab);
+        } else {
+            EventBusExt.getDefault().post(new ShowSuggestionsEvent());
+        }*/
+        EventBusExt.getDefault().post(new ShowSuggestionsEvent());
     }
 
     @Override
@@ -1796,16 +1808,17 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         boolean shouldShowSuggestionsStrip = shouldShowSuggestionsStripUnlessPassword
                 && !currentSettingsValues.mInputAttributes.mIsPasswordField
                 && !mKeyboardSwitcher.isShowingEmojiPalettes();
-        shouldShowSuggestionsStrip =true;
-        //&& mKeyboardSwitcher.getKeyboard().mId.mElementId<=ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED;
-        mSuggestionStripView.updateVisibility(shouldShowSuggestionsStrip, isFullscreenMode());
         if (!shouldShowSuggestionsStrip) {
+            mTopDisplayController.showActionRow(getApplicationContext());
             return;
         }
+        //shouldShowSuggestionsStrip = true;
+        //&& mKeyboardSwitcher.getKeyboard().mId.mElementId<=ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED;
+        mSuggestionStripView.updateVisibility(shouldShowSuggestionsStrip, isFullscreenMode());
 
-        final boolean isEmptyApplicationSpecifiedCompletions =
-                currentSettingsValues.isApplicationSpecifiedCompletionsOn()
-                        && suggestedWords.isEmpty();
+
+        final boolean isEmptyApplicationSpecifiedCompletions = currentSettingsValues.isApplicationSpecifiedCompletionsOn()
+                && suggestedWords.isEmpty();
         final boolean noSuggestionsFromDictionaries = (SuggestedWords.EMPTY == suggestedWords)
                 || suggestedWords.isPunctuationSuggestions()
                 || isEmptyApplicationSpecifiedCompletions;
@@ -1929,8 +1942,20 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         if (inputTransaction.didAffectContents()) {
             mSubtypeState.setCurrentSubtypeHasBeenUsed();
         }
-        if ((inputTransaction.mEvent.mKeyCode >= 0 || inputTransaction.mEvent.mKeyCode == Constants.CODE_DELETE) && mTopDisplayController != null && showSuggest)
+        if ((inputTransaction.mEvent.mKeyCode >= 0 || inputTransaction.mEvent.mKeyCode == Constants.CODE_DELETE) && mTopDisplayController != null && showSuggest) {
+            SettingsValues currentSettingsValues = mSettings.getCurrent();
+
+            final boolean shouldShowSuggestionsStripUnlessPassword =
+                    currentSettingsValues.mShowsVoiceInputKey
+                            || currentSettingsValues.isApplicationSpecifiedCompletionsOn();
+            boolean shouldShowSuggestionsStrip = shouldShowSuggestionsStripUnlessPassword
+                    && !currentSettingsValues.mInputAttributes.mIsPasswordField
+                    && !mKeyboardSwitcher.isShowingEmojiPalettes();
+            if (!shouldShowSuggestionsStrip) {
+                return;
+            }
             mTopDisplayController.showSuggestions();
+        }
     }
 
     /**

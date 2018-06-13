@@ -90,8 +90,8 @@ public class TopDisplayController {
     }
 
     public void updateBarVisibility() {
-        mActionRowView.setVisibility(View.VISIBLE);
-        mSuggestionsStripHackyContainer.setVisibility(GONE);
+        mActionRowView.setVisibility(View.GONE);
+        mSuggestionsStripHackyContainer.setVisibility(View.VISIBLE);
     }
 
     public void drop() {
@@ -156,9 +156,15 @@ public class TopDisplayController {
         mActionRowView.removeCallbacks(this.hideSuggestionAfter);
         //mActionRowView.postDelayed(this.hideSuggestionAfter, 20000);
         mSuggestionsStripView.setVisibility(GONE);
-        mActionRowView.findViewById(R.id.tv_products).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-        mActionRowView.findViewById(R.id.tv_updates).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-        mActionRowView.findViewById(R.id.tv_photos).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-        mActionRowView.findViewById(R.id.tv_details).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        if (mActionRowView.findViewById(R.id.tv_products) != null) {
+            mActionRowView.findViewById(R.id.tv_products).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+            mActionRowView.findViewById(R.id.tv_updates).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+            mActionRowView.findViewById(R.id.tv_photos).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+            mActionRowView.findViewById(R.id.tv_details).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        }
+    }
+
+    public boolean isActionViewVisible() {
+        return mActionRowView.getVisibility() == View.VISIBLE;
     }
 }
