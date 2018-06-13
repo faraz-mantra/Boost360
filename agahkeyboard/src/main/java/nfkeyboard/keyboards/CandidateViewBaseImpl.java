@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import java.util.HashMap;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.CandidateViewInterface;
 import nfkeyboard.interface_contracts.CandidateViewItemClickListener;
 import nfkeyboard.models.KeywordModel;
@@ -41,7 +42,7 @@ public class CandidateViewBaseImpl extends FrameLayout implements CandidateViewI
     }
 
     public void setcandidateItemClickListener(CandidateViewItemClickListener listener) {
-        setBackgroundResource(nowfloats.nfkeyboard.R.color.kbd_key_color);
+        setBackgroundResource(R.color.kbd_key_color);
         onClickListener = listener;
     }
 

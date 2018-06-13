@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<nowfloats.nfkeyboard.keyboards.BoostShareCandidateView xmlns:android="http://schemas.android.com/apk/res/android"
+<nfkeyboard.keyboards.BoostShareCandidateView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="#424242"
@@ -102,4 +102,4 @@
 
     </LinearLayout>
 
-</nowfloats.nfkeyboard.keyboards.BoostShareCandidateView>
+</nfkeyboard.keyboards.BoostShareCandidateView>

@@ -56,7 +56,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private void loadWords() throws IOException {
         final Resources resources = mHelperContext.getResources();
-        InputStream inputStream = resources.openRawResource(nowfloats.nfkeyboard.R.raw.saved_words);
+        InputStream inputStream = null;//resources.openRawResource(R.raw.saved_words);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         try {
             String line;

@@ -60,13 +60,13 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
 
             findViewById(R.id.tv_updates).setBackgroundResource(v.getId()
-                    == R.id.tv_updates ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
+                    == R.id.tv_updates ? R.drawable.round_414141 : android.R.color.transparent);
             findViewById(R.id.tv_products).setBackgroundResource(v.getId()
-                    == R.id.tv_products ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
+                    == R.id.tv_products ? R.drawable.round_414141 : android.R.color.transparent);
             findViewById(R.id.tv_photos).setBackgroundResource(v.getId()
-                    == R.id.tv_photos ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
+                    == R.id.tv_photos ? R.drawable.round_414141 : android.R.color.transparent);
             findViewById(R.id.tv_details).setBackgroundResource(v.getId()
-                    == R.id.tv_details ? nowfloats.nfkeyboard.R.drawable.round_414141 : android.R.color.transparent);
+                    == R.id.tv_details ? R.drawable.round_414141 : android.R.color.transparent);
             mListener.onServiceClicked(DEFAULT_SERVICES[serviceId]);
         }
     }

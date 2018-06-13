@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<nowfloats.nfkeyboard.keyboards.BoostShareCandidateView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.inputmethod.keyboard.RichMediaView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center_vertical"
+    android:layout_height="40dp"
     android:background="#424242"
     android:clickable="true"
     android:focusable="true"
-    android:layout_height="40dp">
+    android:gravity="center_vertical">
+
     <ImageView
         android:id="@+id/img_back"
         android:layout_width="70dp"
         android:layout_height="match_parent"
-        android:padding="7dp"
-        android:elevation="3dp"
         android:layout_gravity="center_vertical"
         android:background="?android:selectableItemBackground"
-        android:src="@drawable/icon_action_back"/>
+        android:elevation="3dp"
+        android:padding="7dp"
+        android:src="@drawable/icon_action_back" />
+
     <ImageView
         android:id="@+id/tv_updates"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="@color/white"
-        android:layout_height="match_parent"
+        android:paddingTop="5dp"
+        android:text="Updates"
         android:textAllCaps="true"
-        android:text="Updates"/>
+        android:textColor="@color/white" />
+
     <TextView
         android:id="@+id/tv_products"
         android:layout_width="0dp"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:textColor="@color/white"
-        android:textAllCaps="true"
         android:layout_height="match_parent"
-        android:text="Products"/>
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="Products"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
 
-</nowfloats.nfkeyboard.keyboards.BoostShareCandidateView>
+</com.android.inputmethod.keyboard.RichMediaView>

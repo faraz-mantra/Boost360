@@ -41,7 +41,6 @@ import java.util.List;
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
 import io.separ.neural.inputmethod.indic.LatinIME;
-import nowfloats.nfkeyboard.keyboards.ImeKeyboardService;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;

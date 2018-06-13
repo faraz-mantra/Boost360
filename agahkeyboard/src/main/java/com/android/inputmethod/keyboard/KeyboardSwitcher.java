@@ -935,6 +935,13 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         switch (type) {
             case UPDATES:
                 isUpdatesCompleted = true;
+                if (updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+                    updatesList.remove(updatesList.size() - 1);
+                }
+                if (updatesList.size() == 0) {
+                    updatesList.add(createSuggestionModel("No updates available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                }
+                shareAdapter.setSuggestionModels(updatesList);
                 break;
             case PRODUCTS:
                 isProductCompleted = true;
@@ -945,6 +952,16 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     productList.add(createSuggestionModel("No products available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 shareAdapter.setSuggestionModels(productList);
+                break;
+            case PHOTOS:
+                isPhotosCompleted = true;
+                if (imagesList.get(imagesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+                    imagesList.remove(imagesList.size() - 1);
+                }
+                if (imagesList.size() == 0) {
+                    imagesList.add(createSuggestionModel("No photos available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                }
+                shareAdapter1.setSuggestionModels(imagesList);
                 break;
         }
     }
@@ -974,13 +991,16 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             }
             totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
         }
-        if (modelList.size() < 10) {
-            onCompleted(PHOTOS);
-        }
+
         imagesList.addAll(modelList);
         shareAdapter1.setSuggestionModels(modelList);
         recyclerViewPhotos.setLayoutManager(gridLayoutManager);
         selectionLayout.setVisibility(View.VISIBLE);
-        onLoadMore(PHOTOS, modelList);
+
+        if (modelList.size() < 10) {
+            onCompleted(PHOTOS);
+        } else {
+            onLoadMore(PHOTOS, modelList);
+        }
     }
 }

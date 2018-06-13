@@ -31,7 +31,7 @@
 
     <!-- Option to play back sound on keypress in soft keyboard -->
     <string name="sound_on_keypress">Sound on keypress</string>
-
+    <string name="client_id">2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21</string>
     <!-- Option to control whether or not to show a popup with a larger font on each key press. -->
     <string name="popup_on_keypress">Popup on keypress</string>
 

@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import io.separ.neural.inputmethod.indic.R;
+
 import static android.view.Gravity.NO_GRAVITY;
 
 /**
@@ -24,9 +26,9 @@ public class PopUpView {
     PopUpView(Context context) {
         mContext = context;
         mPopUpWindow = new PopupWindow(mContext);
-        View layout = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.layout_key_pop_up, null);
+        View layout = LayoutInflater.from(mContext).inflate(R.layout.layout_key_pop_up, null);
         mPopUpWindow.setContentView(layout);
-        mTextView = layout.findViewById(nowfloats.nfkeyboard.R.id.text2);
+        mTextView = layout.findViewById(R.id.text2);
         setPopUpWindow();
     }
 
@@ -46,7 +48,7 @@ public class PopUpView {
         try {
             mPopUpWindow.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
             mPopUpWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-            mPopUpWindow.setBackgroundDrawable(ContextCompat.getDrawable(mContext, nowfloats.nfkeyboard.R.drawable.key_pop_up_bg));
+            mPopUpWindow.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.key_pop_up_bg));
             mPopUpWindow.setOutsideTouchable(true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mPopUpWindow.setElevation(2f);

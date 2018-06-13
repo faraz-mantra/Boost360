@@ -8,9 +8,11 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
+import io.separ.neural.inputmethod.indic.R;
+
 public class WordTree {
 
-    private static Logger log = Logger.getLogger(nowfloats.nfkeyboard.keyboards.models.WordTree.class.getName());
+    private static Logger log = Logger.getLogger(WordTree.class.getName());
 
     public static Node createTree(Context mContext, TST tst) {
         long startTime = System.currentTimeMillis();
@@ -38,6 +40,7 @@ public class WordTree {
     }
 
     private static InputStream getWordListFile(Context mContext) throws URISyntaxException {
-        return mContext.getResources().openRawResource(nowfloats.nfkeyboard.R.raw.word_freq_en);
+//        return mContext.getResources().openRawResource(R.raw.word_freq_en);
+        return null;
     }
 }

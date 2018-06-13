@@ -613,7 +613,7 @@ public class KeyboardView extends View {
         icon.setColorFilter(null);
         if (code == -1) {
             icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), AlphabetShiftState.IS_SHIFTED ?
-                    nowfloats.nfkeyboard.R.color.primaryColor : nowfloats.nfkeyboard.R.color.white), PorterDuff.Mode.SRC_IN));
+                    R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN));
         } else {
             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }

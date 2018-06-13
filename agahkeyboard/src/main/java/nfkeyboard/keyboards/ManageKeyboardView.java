@@ -3,7 +3,6 @@ package nfkeyboard.keyboards;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.NonNull;
@@ -17,15 +16,11 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,22 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import hani.momanii.supernova_emoji_library.Helper.EmojiconGridView;
-import hani.momanii.supernova_emoji_library.Helper.EmojiconRecents;
-import hani.momanii.supernova_emoji_library.Helper.EmojiconRecentsGridView;
-import hani.momanii.supernova_emoji_library.Helper.EmojiconRecentsManager;
-import hani.momanii.supernova_emoji_library.Helper.EmojiconsPopup;
-import hani.momanii.supernova_emoji_library.emoji.Cars;
-import hani.momanii.supernova_emoji_library.emoji.Electr;
-import hani.momanii.supernova_emoji_library.emoji.Emojicon;
-import hani.momanii.supernova_emoji_library.emoji.Food;
-import hani.momanii.supernova_emoji_library.emoji.Nature;
-import hani.momanii.supernova_emoji_library.emoji.People;
-import hani.momanii.supernova_emoji_library.emoji.Sport;
-import hani.momanii.supernova_emoji_library.emoji.Symbols;
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.activity.SpeechRecognitionManager;
 import nfkeyboard.adapter.BaseAdapterManager;
@@ -61,9 +42,7 @@ import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.interface_contracts.SpeechRecognitionResultInterface;
 import nfkeyboard.interface_contracts.UrlToBitmapInterface;
 import nfkeyboard.models.AllSuggestionModel;
-import nfkeyboard.models.networkmodels.Photo;
 import nfkeyboard.network.ApiCallPresenter;
-import nfkeyboard.util.Constants;
 import nfkeyboard.util.MethodUtils;
 import nfkeyboard.util.MixPanelUtils;
 import nfkeyboard.util.SharedPrefUtil;
@@ -96,7 +75,6 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             imagesList = new ArrayList<>(),
             selectedImages = new ArrayList<>(),
             detailsList = new ArrayList<>();
-    private EmojiconRecentsManager mRecentsManager;
     private int mEmojiTabLastSelectedIndex = -1;
     boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private Button shareBtn, deselectBtn;
@@ -142,7 +120,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     private void init() {
         speechLayout = findViewById(R.id.speech_layout);
         shareLayout = findViewById(R.id.sharelayout);
-        emojiLayout = findViewById(R.id.emoji_layout);
+//        emojiLayout = findViewById(R.id.emoji_layout);
         mSpeechMessageTv = findViewById(R.id.tv_message);
         selectionLayout = findViewById(R.id.cl_selection_layout);
         totalImagesTv = findViewById(R.id.tv_total);
@@ -214,7 +192,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         if (mRecyclerView == null) {
 
             recyclerViewPhotos = shareLayout.findViewById(R.id.rv_list_photos);
-            mRecyclerView = shareLayout.findViewById(R.id.rv_list);
+//            mRecyclerView = shareLayout.findViewById(R.id.rv_list);
             mRecyclerView.setHasFixedSize(true);
             shareAdapter1 = new MainAdapter(mContext, this);
             shareAdapter = new MainAdapter(mContext, this);
@@ -606,249 +584,269 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         shareLayout.setVisibility(GONE);
         if (emojisPager == null) {
             emojiLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mKeyboardView.getMeasuredHeight()));
-            emojisPager = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_pager);
-            LinearLayout tabs = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab);
-
-            ViewPager.OnPageChangeListener pagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                }
-
-                @Override
-                public void onPageSelected(int i) {
-                    if (mEmojiTabLastSelectedIndex == i) {
-                        return;
-                    }
-                    switch (i) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-
-                            if (mEmojiTabLastSelectedIndex >= 0 && mEmojiTabLastSelectedIndex < mEmojiTabs.length) {
-                                mEmojiTabs[mEmojiTabLastSelectedIndex].setSelected(false);
-                            }
-                            mEmojiTabs[i].setSelected(true);
-                            mEmojiTabLastSelectedIndex = i;
-                            mRecentsManager.setRecentPage(i);
-                            break;
-                    }
-
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            };
-
-            emojisPager.setOnPageChangeListener(pagerPageChangeListener);
-
-            EmojiconRecents recents = new EmojiconRecents() {
-                @Override
-                public void addRecentEmoji(Context context, Emojicon emojicon) {
-                    EmojiconRecentsGridView fragment = ((EmojiconsPopup.EmojisPagerAdapter) emojisPager.getAdapter()).getRecentFragment();
-                    fragment.addRecentEmoji(context, emojicon);
-                }
-            };
-
-
-            mEmojisAdapter = new EmojiconsPopup.EmojisPagerAdapter(
-                    Arrays.asList(
-                            new EmojiconRecentsGridView(mContext, null, null, presenterListener, true),
-                            new EmojiconGridView(mContext, People.DATA, recents, presenterListener, true),
-                            new EmojiconGridView(mContext, Nature.DATA, recents, presenterListener, true),
-                            new EmojiconGridView(mContext, Food.DATA, recents, presenterListener, true),
-                            new EmojiconGridView(mContext, Sport.DATA, recents, presenterListener, true),
-                            new EmojiconGridView(mContext, Cars.DATA, recents, presenterListener, true),
-                            new EmojiconGridView(mContext, Electr.DATA, recents, presenterListener, true),
-                            new EmojiconGridView(mContext, Symbols.DATA, recents, presenterListener, true)
-
-                    )
-            );
-            emojisPager.setAdapter(mEmojisAdapter);
-            mEmojiTabs = new View[8];
-
-            mEmojiTabs[0] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_0_recents);
-            mEmojiTabs[1] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_1_people);
-            mEmojiTabs[2] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_2_nature);
-            mEmojiTabs[3] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_3_food);
-            mEmojiTabs[4] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_4_sport);
-            mEmojiTabs[5] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_5_cars);
-            mEmojiTabs[6] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_6_elec);
-            mEmojiTabs[7] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_7_sym);
-            for (int i = 0; i < mEmojiTabs.length; i++) {
-                final int position = i;
-                mEmojiTabs[i].setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        emojisPager.setCurrentItem(position);
-                    }
-                });
-            }
-
-
-            emojisPager.setBackgroundColor(Color.parseColor(backgroundColor));
-            tabs.setBackgroundColor(Color.parseColor(tabsColor));
-            for (int x = 0; x < mEmojiTabs.length; x++) {
-                ImageButton btn = (ImageButton) mEmojiTabs[x];
-                btn.setColorFilter(Color.parseColor(iconPressedColor));
-            }
-
-            ImageButton imgBtn = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_backspace);
-            imgBtn.setColorFilter(Color.parseColor(iconPressedColor));
-            imgBtn.setBackgroundColor(Color.parseColor(backgroundColor));
-
-
-            findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_backspace).setOnTouchListener(new EmojiconsPopup.RepeatListener(500, 50, new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                /*if(onEmojiconBackspaceClickedListener != null)
-                    onEmojiconBackspaceClickedListener.onEmojiconBackspaceClicked(v);*/
-                    if (presenterListener != null)
-                        presenterListener.onEmojiconBackspaceClicked(v);
-                }
-            }));
-
-            // get last selected page
-            mRecentsManager = EmojiconRecentsManager.getInstance(getContext());
-            int page = mRecentsManager.getRecentPage();
-            // last page was recents, check if there are recents to use
-            // if none was found, go to page 1
-            if (page == 0 && mRecentsManager.size() == 0) {
-                page = 1;
-            }
-
-            if (page == 0) {
-                pagerPageChangeListener.onPageSelected(page);
-            } else {
-                emojisPager.setCurrentItem(page, false);
-            }
+//            emojisPager = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_pager);
+//            LinearLayout tabs = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab);
+//
+//            ViewPager.OnPageChangeListener pagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+//                @Override
+//                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//                }
+//
+//                @Override
+//                public void onPageSelected(int i) {
+//                    if (mEmojiTabLastSelectedIndex == i) {
+//                        return;
+//                    }
+//                    switch (i) {
+//                        case 0:
+//                        case 1:
+//                        case 2:
+//                        case 3:
+//                        case 4:
+//                        case 5:
+//                        case 6:
+//                        case 7:
+//
+//                            if (mEmojiTabLastSelectedIndex >= 0 && mEmojiTabLastSelectedIndex < mEmojiTabs.length) {
+//                                mEmojiTabs[mEmojiTabLastSelectedIndex].setSelected(false);
+//                            }
+//                            mEmojiTabs[i].setSelected(true);
+//                            mEmojiTabLastSelectedIndex = i;
+//                            mRecentsManager.setRecentPage(i);
+//                            break;
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onPageScrollStateChanged(int state) {
+//
+//                }
+//            };
+//
+//            emojisPager.setOnPageChangeListener(pagerPageChangeListener);
+//
+//            EmojiconRecents recents = new EmojiconRecents() {
+//                @Override
+//                public void addRecentEmoji(Context context, Emojicon emojicon) {
+//                    EmojiconRecentsGridView fragment = ((EmojiconsPopup.EmojisPagerAdapter) emojisPager.getAdapter()).getRecentFragment();
+//                    fragment.addRecentEmoji(context, emojicon);
+//                }
+//            };
+//
+//
+//            mEmojisAdapter = new EmojiconsPopup.EmojisPagerAdapter(
+//                    Arrays.asList(
+//                            new EmojiconRecentsGridView(mContext, null, null, presenterListener, true),
+//                            new EmojiconGridView(mContext, People.DATA, recents, presenterListener, true),
+//                            new EmojiconGridView(mContext, Nature.DATA, recents, presenterListener, true),
+//                            new EmojiconGridView(mContext, Food.DATA, recents, presenterListener, true),
+//                            new EmojiconGridView(mContext, Sport.DATA, recents, presenterListener, true),
+//                            new EmojiconGridView(mContext, Cars.DATA, recents, presenterListener, true),
+//                            new EmojiconGridView(mContext, Electr.DATA, recents, presenterListener, true),
+//                            new EmojiconGridView(mContext, Symbols.DATA, recents, presenterListener, true)
+//
+//                    )
+//            );
+//            emojisPager.setAdapter(mEmojisAdapter);
+//            mEmojiTabs = new View[8];
+//
+//            mEmojiTabs[0] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_0_recents);
+//            mEmojiTabs[1] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_1_people);
+//            mEmojiTabs[2] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_2_nature);
+//            mEmojiTabs[3] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_3_food);
+//            mEmojiTabs[4] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_4_sport);
+//            mEmojiTabs[5] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_5_cars);
+//            mEmojiTabs[6] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_6_elec);
+//            mEmojiTabs[7] = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_tab_7_sym);
+//            for (int i = 0; i < mEmojiTabs.length; i++) {
+//                final int position = i;
+//                mEmojiTabs[i].setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        emojisPager.setCurrentItem(position);
+//                    }
+//                });
+//            }
+//
+//
+//            emojisPager.setBackgroundColor(Color.parseColor(backgroundColor));
+//            tabs.setBackgroundColor(Color.parseColor(tabsColor));
+//            for (int x = 0; x < mEmojiTabs.length; x++) {
+//                ImageButton btn = (ImageButton) mEmojiTabs[x];
+//                btn.setColorFilter(Color.parseColor(iconPressedColor));
+//            }
+//
+//            ImageButton imgBtn = findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_backspace);
+//            imgBtn.setColorFilter(Color.parseColor(iconPressedColor));
+//            imgBtn.setBackgroundColor(Color.parseColor(backgroundColor));
+//
+//
+//            findViewById(hani.momanii.supernova_emoji_library.R.id.emojis_backspace).setOnTouchListener(new EmojiconsPopup.RepeatListener(500, 50, new OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                /*if(onEmojiconBackspaceClickedListener != null)
+//                    onEmojiconBackspaceClickedListener.onEmojiconBackspaceClicked(v);*/
+//                    if (presenterListener != null)
+//                        presenterListener.onEmojiconBackspaceClicked(v);
+//                }
+//            }));
+//
+//            // get last selected page
+//            mRecentsManager = EmojiconRecentsManager.getInstance(getContext());
+//            int page = mRecentsManager.getRecentPage();
+//            // last page was recents, check if there are recents to use
+//            // if none was found, go to page 1
+//            if (page == 0 && mRecentsManager.size() == 0) {
+//                page = 1;
+//            }
+//
+//            if (page == 0) {
+//                pagerPageChangeListener.onPageSelected(page);
+//            } else {
+//                emojisPager.setCurrentItem(page, false);
+//            }
+//        }
+//        emojiLayout.setVisibility(VISIBLE);
         }
-        emojiLayout.setVisibility(VISIBLE);
+
+//    @Override
+//    public void onLoadMore(final ImePresenterImpl.TabType type, List<AllSuggestionModel> models) {
+//
+//        switch (type) {
+//            case UPDATES:
+//                selectionLayout.setVisibility(GONE);
+//                if (updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+//                    updatesList.remove(updatesList.size() - 1);
+//                }
+//                updatesList.addAll(models);
+//                if (updatesList.size() == 0) {
+//                    updatesList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
+//                }
+//                break;
+//            case PRODUCTS:
+//                selectionLayout.setVisibility(GONE);
+//                if (productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+//                    productList.remove(productList.size() - 1);
+//                }
+//                productList.addAll(models);
+//                if (productList.size() == 0) {
+//                    productList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
+//                }
+//                break;
+//            case PHOTOS:
+//                imagesList.addAll(models);
+//                mRecyclerView.setLayoutManager(linearLayoutManager);
+//                selectionLayout.setVisibility(VISIBLE);
+//                if (imagesList.size() == 0) {
+//                    imagesList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
+//                }
+//        }
+//        if (type == presenterListener.getTabType()) {
+//            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
+//        }
+//    }
+//
+//    @Override
+//    public void onError(final ImePresenterImpl.TabType type) {
+//        switch (type) {
+//            case UPDATES:
+//                selectionLayout.setVisibility(GONE);
+//                if (updatesList.size() > 0 && updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+//                    updatesList.remove(updatesList.size() - 1);
+//                }
+//                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                break;
+//            case PRODUCTS:
+//                selectionLayout.setVisibility(GONE);
+//                if (productList.size() > 0 && productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+//                    productList.remove(productList.size() - 1);
+//                }
+//                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                break;
+//            case PHOTOS:
+//                selectionLayout.setVisibility(VISIBLE);
+//                mRecyclerView.setLayoutManager(linearLayoutManager);
+//                selectionLayout.setVisibility(GONE);
+//                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
+//        if (type == presenterListener.getTabType()) {
+//            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
+//            mRecyclerView.setLayoutManager(type == UPDATES ? linearLayoutManager : (type == PRODUCTS ? linearLayoutManager : linearLayoutManager));
+//
+//        }
+//    }
+//
+//    @Override
+//    public void onCompleted(ImePresenterImpl.TabType type) {
+//        switch (type) {
+//            case UPDATES:
+//                isUpdatesCompleted = true;
+//                break;
+//            case PRODUCTS:
+//                isProductCompleted = true;
+//                break;
+//            case PHOTOS:
+//                isPhotosCompleted = true;
+//                break;
+//        }
+//    }
+//
+//    @Override
+//    public void imagesReceived() {
+//        onCompleted(PHOTOS);
+//        ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
+//        modelList.clear();
+//        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+//        int margins = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, metrics);
+//        int viewWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 88, metrics);
+//        int windowWidth = (int) metrics.widthPixels - margins;
+//        int lengthOfItems = 2 * (windowWidth / viewWidth);
+//        if (Constants.storeActualSecondaryImages != null) {
+//            for (int i = 0; i < Constants.storeSecondaryImages.size(); i++) {
+//                Photo photo = new Photo();
+//                photo.setImageUri(Constants.storeActualSecondaryImages.get(i));
+//                modelList.add(photo.toAllSuggestion());
+//            }
+//            if (lengthOfItems > Constants.storeSecondaryImages.size()) {
+//                for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
+//                    Photo photo = new Photo();
+//                    photo.setImageUri(null);
+//                    modelList.add(photo.toAllSuggestion());
+//                }
+//            }
+//            totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
+//        }
+//        if (modelList.size() < 10) {
+//            onCompleted(PHOTOS);
+//        }
+//        shareAdapter1.setSuggestionModels(modelList);
+//        recyclerViewPhotos.setLayoutManager(gridLayoutManager);
+//        selectionLayout.setVisibility(VISIBLE);
+//        onLoadMore(PHOTOS, modelList);
+//    }
     }
 
     @Override
-    public void onLoadMore(final ImePresenterImpl.TabType type, List<AllSuggestionModel> models) {
+    public void onLoadMore(ImePresenterImpl.TabType type, List<AllSuggestionModel> models) {
 
-        switch (type) {
-            case UPDATES:
-                selectionLayout.setVisibility(GONE);
-                if (updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
-                    updatesList.remove(updatesList.size() - 1);
-                }
-                updatesList.addAll(models);
-                if (updatesList.size() == 0) {
-                    updatesList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
-                }
-                break;
-            case PRODUCTS:
-                selectionLayout.setVisibility(GONE);
-                if (productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
-                    productList.remove(productList.size() - 1);
-                }
-                productList.addAll(models);
-                if (productList.size() == 0) {
-                    productList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
-                }
-                break;
-            case PHOTOS:
-                imagesList.addAll(models);
-                mRecyclerView.setLayoutManager(linearLayoutManager);
-                selectionLayout.setVisibility(VISIBLE);
-                if (imagesList.size() == 0) {
-                    imagesList.add(createSuggestionModel("Data not found", BaseAdapterManager.SectionTypeEnum.EmptyList));
-                }
-        }
-        if (type == presenterListener.getTabType()) {
-            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
-        }
     }
 
     @Override
-    public void onError(final ImePresenterImpl.TabType type) {
-        switch (type) {
-            case UPDATES:
-                selectionLayout.setVisibility(GONE);
-                if (updatesList.size() > 0 && updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
-                    updatesList.remove(updatesList.size() - 1);
-                }
-                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
-                break;
-            case PRODUCTS:
-                selectionLayout.setVisibility(GONE);
-                if (productList.size() > 0 && productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
-                    productList.remove(productList.size() - 1);
-                }
-                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
-                break;
-            case PHOTOS:
-                selectionLayout.setVisibility(VISIBLE);
-                mRecyclerView.setLayoutManager(linearLayoutManager);
-                selectionLayout.setVisibility(GONE);
-                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        if (type == presenterListener.getTabType()) {
-            shareAdapter.setSuggestionModels(type == UPDATES ? updatesList : productList);
-            mRecyclerView.setLayoutManager(type == UPDATES ? linearLayoutManager : (type == PRODUCTS ? linearLayoutManager : linearLayoutManager));
+    public void onError(ImePresenterImpl.TabType type) {
 
-        }
     }
 
     @Override
     public void onCompleted(ImePresenterImpl.TabType type) {
-        switch (type) {
-            case UPDATES:
-                isUpdatesCompleted = true;
-                break;
-            case PRODUCTS:
-                isProductCompleted = true;
-                break;
-            case PHOTOS:
-                isPhotosCompleted = true;
-                break;
-        }
+
     }
 
     @Override
     public void imagesReceived() {
-        onCompleted(PHOTOS);
-        ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
-        modelList.clear();
-        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
-        int margins = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, metrics);
-        int viewWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 88, metrics);
-        int windowWidth = (int) metrics.widthPixels - margins;
-        int lengthOfItems = 2 * (windowWidth / viewWidth);
-        if (Constants.storeActualSecondaryImages != null) {
-            for (int i = 0; i < Constants.storeSecondaryImages.size(); i++) {
-                Photo photo = new Photo();
-                photo.setImageUri(Constants.storeActualSecondaryImages.get(i));
-                modelList.add(photo.toAllSuggestion());
-            }
-            if (lengthOfItems > Constants.storeSecondaryImages.size()) {
-                for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
-                    Photo photo = new Photo();
-                    photo.setImageUri(null);
-                    modelList.add(photo.toAllSuggestion());
-                }
-            }
-            totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
-        }
-        if (modelList.size() < 10) {
-            onCompleted(PHOTOS);
-        }
-        shareAdapter1.setSuggestionModels(modelList);
-        recyclerViewPhotos.setLayoutManager(gridLayoutManager);
-        selectionLayout.setVisibility(VISIBLE);
-        onLoadMore(PHOTOS, modelList);
-    }
 
+    }
 }
