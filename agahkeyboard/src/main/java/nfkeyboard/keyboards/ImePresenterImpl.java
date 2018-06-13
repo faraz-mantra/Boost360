@@ -40,6 +40,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.inputmethod.keyboard.KeyboardSwitcher;
+import com.android.inputmethod.keyboard.emoji.models.Emojicon;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +56,6 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.database.DatabaseTable;
 import nfkeyboard.interface_contracts.CandidateToPresenterInterface;
@@ -157,16 +157,16 @@ public class ImePresenterImpl implements ItemClickListener,
         return false;
     }
 
-    @Override
-    public void onEmojiconClicked(Emojicon emojicon) {
-        if (imeListener.getImeCurrentInputConnection() != null)
-            imeListener.getImeCurrentInputConnection().commitText(emojicon.getEmoji(), 1);
-    }
-
-    @Override
-    public void onEmojiconBackspaceClicked(View v) {
-        sendKeyEvent(KeyEvent.KEYCODE_DEL);
-    }
+//    @Override
+//    public void onEmojiconClicked(Emojicon emojicon) {
+//        if (imeListener.getImeCurrentInputConnection() != null)
+//            imeListener.getImeCurrentInputConnection().commitText(emojicon.getEmoji(), 1);
+//    }
+//
+//    @Override
+//    public void onEmojiconBackspaceClicked(View v) {
+//        sendKeyEvent(KeyEvent.KEYCODE_DEL);
+//    }
 
     @Override
     public Context getContext() {
@@ -454,27 +454,27 @@ public class ImePresenterImpl implements ItemClickListener,
                 mEnterKey.icon = null;
                 mEnterKey.label = "Go";
                 break;
-            case EditorInfo.IME_ACTION_NEXT:
-                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_next_kbd);
-                mEnterKey.label = null;
-                break;
-            case EditorInfo.IME_ACTION_SEARCH:
-                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_search_kbd);
-                mEnterKey.label = null;
-                break;
-            case EditorInfo.IME_ACTION_SEND:
-                mEnterKey.iconPreview = null;
-                mEnterKey.icon = null;
-                mEnterKey.label = "send";
-                break;
-            case EditorInfo.IME_ACTION_DONE:
-                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_check_white_24dp);
-                mEnterKey.label = null;
-                break;
-            default:
-                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_enter_arrow);
-                mEnterKey.label = null;
-                break;
+//            case EditorInfo.IME_ACTION_NEXT:
+//                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_next_kbd);
+//                mEnterKey.label = null;
+//                break;
+//            case EditorInfo.IME_ACTION_SEARCH:
+//                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_search_kbd);
+//                mEnterKey.label = null;
+//                break;
+//            case EditorInfo.IME_ACTION_SEND:
+//                mEnterKey.iconPreview = null;
+//                mEnterKey.icon = null;
+//                mEnterKey.label = "send";
+//                break;
+//            case EditorInfo.IME_ACTION_DONE:
+//                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_check_white_24dp);
+//                mEnterKey.label = null;
+//                break;
+//            default:
+//                mEnterKey.icon = AppCompatResources.getDrawable(mContext, R.drawable.ic_enter_arrow);
+//                mEnterKey.label = null;
+//                break;
         }
         //mKeyboardView.invalidateKey(mCurrentKeyboard.getKeys().size()-1);
     }
@@ -1063,7 +1063,7 @@ public class ImePresenterImpl implements ItemClickListener,
             case Product:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
                 MethodUtils.onGlideBitmapReady(this, "Product: " + model.getText() +
-                        "\nPrice: " + model.getCurrencyCode() + " " + model.getPrice() +"\n\nClick to Buy: " + shareUrl, model.getImageUrl(), model.getId());
+                        "\nPrice: " + model.getCurrencyCode() + " " + model.getPrice() + "\n\nClick to Buy: " + shareUrl, model.getImageUrl(), model.getId());
                 break;
             case DetailsShare:
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);

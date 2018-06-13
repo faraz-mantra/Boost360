@@ -8,8 +8,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputBinding;
 import android.view.inputmethod.InputConnection;
 
-import nowfloats.nfkeyboard.interface_contracts.PresenterToImeInterface;
-import nowfloats.nfkeyboard.keyboards.ImePresenterImpl;
+import nfkeyboard.interface_contracts.PresenterToImeInterface;
+
 
 /**
  * Created by Admin on 20-02-2018.
@@ -22,7 +22,6 @@ public class ImeKeyboardService extends InputMethodService implements PresenterT
     @Override
     public void onCreate() {
         super.onCreate();
-        mPresenter = new ImePresenterImpl(this, this);
     }
 
     @Override

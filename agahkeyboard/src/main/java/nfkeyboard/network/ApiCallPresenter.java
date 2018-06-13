@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
 import nfkeyboard.interface_contracts.CandidateToPresenterInterface;
 import nfkeyboard.interface_contracts.GetGalleryImagesAsyncTask_Interface;
@@ -36,10 +37,10 @@ public class ApiCallPresenter {
     public void loadMore(int skipBy, ImePresenterImpl.TabType tabType, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface getGalleryImagesInterface) {
         switch (tabType) {
             case PRODUCTS:
-                adapter.getAllProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(nowfloats.nfkeyboard.R.string.client_id), skipBy, "SINGLE", productCallback);
+                adapter.getAllProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(R.string.client_id), skipBy, "SINGLE", productCallback);
                 break;
             case UPDATES:
-                adapter.getAllUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId(), mContext.getString(nowfloats.nfkeyboard.R.string.client_id), skipBy, 10, updateCallback);
+                adapter.getAllUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId(), mContext.getString(R.string.client_id), skipBy, 10, updateCallback);
                 break;
             case PHOTOS:
                 adapter.getAllImageList(getGalleryImagesInterface, SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId());

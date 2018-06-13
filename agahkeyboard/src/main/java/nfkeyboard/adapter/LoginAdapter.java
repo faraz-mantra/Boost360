@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.util.MethodUtils;
@@ -24,7 +25,7 @@ public class LoginAdapter extends BaseAdapter<AllSuggestionModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(nowfloats.nfkeyboard.R.layout.adapter_item_text, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_text, parent, false);
         return new LoginHolder(view);
     }
 
@@ -44,7 +45,7 @@ public class LoginAdapter extends BaseAdapter<AllSuggestionModel> {
             super(itemView);
             linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
             itemView.setLayoutParams(linLayoutParams);
-            suggestionTv = itemView.findViewById(nowfloats.nfkeyboard.R.id.textView);
+            suggestionTv = itemView.findViewById(R.id.textView);
             suggestionTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -59,9 +60,9 @@ public class LoginAdapter extends BaseAdapter<AllSuggestionModel> {
             suggestionTv.setText(model.getText());
             suggestionTv.setTextSize(16);
             suggestionTv.setAllCaps(true);
-            suggestionTv.setTextColor(ContextCompat.getColor(mContext, nowfloats.nfkeyboard.R.color.white));
+            suggestionTv.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             suggestionTv.setPadding(2 * leftSpace, leftSpace, 2 * leftSpace, leftSpace);
-            suggestionTv.setBackgroundResource(nowfloats.nfkeyboard.R.drawable.yellow_button_bg);
+            suggestionTv.setBackgroundResource(R.drawable.yellow_button_bg);
         }
     }
 }
