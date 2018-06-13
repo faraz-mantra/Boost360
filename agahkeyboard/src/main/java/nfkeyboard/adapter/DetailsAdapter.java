@@ -43,7 +43,7 @@ public class DetailsAdapter extends BaseAdapter<AllSuggestionModel> {
 
         public DetailsHolder(View itemView) {
             super(itemView);
-            linLayoutParams.setMargins(metrics.widthPixels * 12 / 100, topSpace, 0, topSpace);
+            linLayoutParams.setMargins(metrics.widthPixels * 12 / 140, topSpace, 0, topSpace);
             itemView.setLayoutParams(linLayoutParams);
             nameTv = itemView.findViewById(R.id.tv_name);
             businessNameTv = itemView.findViewById(R.id.tv_business_name);

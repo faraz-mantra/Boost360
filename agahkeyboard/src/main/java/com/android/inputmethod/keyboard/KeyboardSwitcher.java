@@ -82,6 +82,7 @@ import nfkeyboard.util.SharedPrefUtil;
 
 import static com.android.inputmethod.keyboard.internal.AlphabetShiftState.IS_SHIFTED;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.DETAILS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.KEYBOARD;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PHOTOS;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PRODUCTS;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
@@ -331,6 +332,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     public void showKeyboardFrame() {
+        mTabType = KEYBOARD;
         mKeyboardView.setVisibility(View.VISIBLE);
         mRichMediaView.setGone();
         imagesNotSupportedTv.setVisibility(View.GONE);
@@ -694,7 +696,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         Toast.makeText(mThemeContext, "Please reopen this keyboard", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (lastVisibleItem >= totalItemCount - 2) {
+                    if (totalItemCount > 0 && lastVisibleItem >= totalItemCount - 2) {
                         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
                             shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
                         } else {
