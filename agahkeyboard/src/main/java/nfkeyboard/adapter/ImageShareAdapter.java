@@ -73,6 +73,7 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
             model = suggestionModel;
             if (model.getImageUri() != null) {
                 Glide.with(mContext).load(suggestionModel.getImageUri()).into(imageView);
+                addIv.setVisibility(View.GONE);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -101,7 +102,7 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
                     checkedBgView.setVisibility(View.GONE);
                 }
             } else {
-                addIv.setVisibility(View.GONE);
+                addIv.setVisibility(View.VISIBLE);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

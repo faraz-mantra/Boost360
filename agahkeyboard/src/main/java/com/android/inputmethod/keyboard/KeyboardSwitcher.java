@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.android.inputmethod.keyboard.KeyboardLayoutSet.KeyboardLayoutSetException;
 import com.android.inputmethod.keyboard.internal.KeyboardState;
 import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
-import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
@@ -62,7 +61,6 @@ import io.separ.neural.inputmethod.indic.SubtypeSwitcher;
 import io.separ.neural.inputmethod.indic.WordComposer;
 import io.separ.neural.inputmethod.indic.settings.Settings;
 import io.separ.neural.inputmethod.indic.settings.SettingsValues;
-import io.separ.neural.inputmethod.slash.EventBusExt;
 import nfkeyboard.adapter.BaseAdapterManager;
 import nfkeyboard.adapter.MainAdapter;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
@@ -204,7 +202,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     public void clearResources() {
         updatesList.clear();
         productList.clear();
-        isProductCompleted = isUpdatesCompleted = false;
+        imagesList.clear();
+        isProductCompleted = isUpdatesCompleted = isPhotosCompleted = false;
         if (shareAdapter != null)
             shareAdapter.setSuggestionModels(null);
     }
@@ -935,13 +934,14 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     @Override
-    public void onCompleted(ImePresenterImpl.TabType type) {
+    public void onCompleted(ImePresenterImpl.TabType type, ArrayList<AllSuggestionModel> modelList) {
         switch (type) {
             case UPDATES:
                 isUpdatesCompleted = true;
                 if (updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     updatesList.remove(updatesList.size() - 1);
                 }
+                updatesList.addAll(modelList);
                 if (updatesList.size() == 0) {
                     updatesList.add(createSuggestionModel("No updates available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
@@ -952,6 +952,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 if (productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     productList.remove(productList.size() - 1);
                 }
+                productList.addAll(modelList);
                 if (productList.size() == 0) {
                     productList.add(createSuggestionModel("No products available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
@@ -1002,7 +1003,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         selectionLayout.setVisibility(View.VISIBLE);
 
         if (modelList.size() < 10) {
-            onCompleted(PHOTOS);
+            onCompleted(PHOTOS, null);
         } else {
             onLoadMore(PHOTOS, modelList);
         }
