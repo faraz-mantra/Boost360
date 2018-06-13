@@ -972,7 +972,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     @Override
     public void imagesReceived() {
-        onCompleted(PHOTOS);
+        //onCompleted(PHOTOS);
         ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
         modelList.clear();
         DisplayMetrics metrics = mThemeContext.getResources().getDisplayMetrics();
