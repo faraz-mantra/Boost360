@@ -13,4 +13,6 @@ public interface CandidateToPresenterInterface extends ItemClickListener{
     void onSpeechResult(String speech);
 
     boolean imagesSupported();
+
+    String packageName();
 }

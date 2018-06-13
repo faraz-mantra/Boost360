@@ -417,7 +417,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
 
     @Override
-    public void onClick(AllSuggestionModel model, boolean selected) {
+    public boolean onClick(AllSuggestionModel model, boolean selected) {
         if (selected) {
             selectedImages.add(model);
         } else {
@@ -483,6 +483,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
                 objectAnimator.start();
             }
         }
+        return true;
     }
 
     @Override

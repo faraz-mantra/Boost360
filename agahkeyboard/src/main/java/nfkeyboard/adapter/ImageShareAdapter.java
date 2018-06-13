@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,16 +80,17 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
                     public void onClick(View view) {
                         selected = !selected;
                         model.setSelected(selected);
-                        if (selected) {
-                            checkedIv.setVisibility(View.VISIBLE);
-                            overlayView.setVisibility(View.VISIBLE);
-                            checkedBgView.setVisibility(View.VISIBLE);
-                        } else {
-                            checkedIv.setVisibility(View.GONE);
-                            overlayView.setVisibility(View.GONE);
-                            checkedBgView.setVisibility(View.GONE);
+                        if (listener.onClick(model, selected)) {
+                            if (selected) {
+                                checkedIv.setVisibility(View.VISIBLE);
+                                overlayView.setVisibility(View.VISIBLE);
+                                checkedBgView.setVisibility(View.VISIBLE);
+                            } else {
+                                checkedIv.setVisibility(View.GONE);
+                                overlayView.setVisibility(View.GONE);
+                                checkedBgView.setVisibility(View.GONE);
+                            }
                         }
-                        listener.onClick(model, selected);
                     }
                 });
                 selected = model.getSelected();
@@ -102,22 +104,27 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
                     checkedBgView.setVisibility(View.GONE);
                 }
             } else {
-                addIv.setVisibility(View.VISIBLE);
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/photos"));
-                        intent.putExtra("from", "notification");
-                        intent.putExtra("url", "imagegallery");
-                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setAction(Intent.ACTION_VIEW);
-                        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
-                            mContext.startActivity(intent);
+                if (model.getSelected()) {
+                    imageView.setImageBitmap(null);
+                    addIv.setVisibility(View.VISIBLE);
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/photos"));
+                            intent.putExtra("from", "notification");
+                            intent.putExtra("url", "imagegallery");
+                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                                mContext.startActivity(intent);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    addIv.setVisibility(View.GONE);
+                }
             }
         }
     }

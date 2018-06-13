@@ -156,6 +156,13 @@ public class ImePresenterImpl implements ItemClickListener,
         return false;
     }
 
+    @Override
+    public String packageName() {
+        EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
+        return editorInfo.packageName;
+    }
+
+
 //    @Override
 //    public void onEmojiconClicked(Emojicon emojicon) {
 //        if (imeListener.getImeCurrentInputConnection() != null)
@@ -323,8 +330,8 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
-    public void onClick(AllSuggestionModel model, boolean selected) {
-
+    public boolean onClick(AllSuggestionModel model, boolean selected) {
+        return true;
     }
 
     @Override
