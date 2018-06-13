@@ -407,9 +407,8 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
 
     @Override
-    public String onCreateProductOfferClick(AllSuggestionModel model) {
+    public void onCreateProductOfferClick(AllSuggestionModel model) {
         createProductOffers(model);
-        return null;
     }
 
     @Override
@@ -492,6 +491,11 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         if (presenterListener != null) {
             presenterListener.onDetailsClick(model);
         }
+    }
+
+    @Override
+    public void onError() {
+
     }
 
     void onShareClick() {

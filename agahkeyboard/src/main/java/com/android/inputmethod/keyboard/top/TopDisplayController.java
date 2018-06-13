@@ -2,6 +2,8 @@ package com.android.inputmethod.keyboard.top;
 
 import android.content.Context;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -157,6 +159,14 @@ public class TopDisplayController {
         //mActionRowView.postDelayed(this.hideSuggestionAfter, 20000);
         mSuggestionsStripView.setVisibility(GONE);
         if (mActionRowView.findViewById(R.id.tv_products) != null) {
+
+            ScaleAnimation anim1  = new ScaleAnimation(0,1,1,1);
+            anim1.setInterpolator(new AccelerateDecelerateInterpolator());
+            anim1.setDuration(100);
+            mActionRowView.findViewById(R.id.tv_updates).startAnimation(anim1);
+            mActionRowView.findViewById(R.id.tv_products).startAnimation(anim1);
+            mActionRowView.findViewById(R.id.tv_photos).startAnimation(anim1);
+            mActionRowView.findViewById(R.id.tv_details).startAnimation(anim1);
             mActionRowView.findViewById(R.id.tv_products).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
             mActionRowView.findViewById(R.id.tv_updates).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
             mActionRowView.findViewById(R.id.tv_photos).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
