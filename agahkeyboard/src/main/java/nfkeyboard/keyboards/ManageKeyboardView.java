@@ -841,7 +841,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
 
     @Override
-    public void onCompleted(ImePresenterImpl.TabType type) {
+    public void onCompleted(ImePresenterImpl.TabType type, ArrayList<AllSuggestionModel> modelList) {
 
     }
 

@@ -1,6 +1,8 @@
 package nfkeyboard.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +50,7 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
 
     class ImageHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView, checkedIv;
+        private ImageView imageView, checkedIv, addIv;
         private AllSuggestionModel model;
         private View overlayView, checkedBgView;
         private boolean selected;
@@ -59,6 +61,8 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
             checkedIv = itemView.findViewById(R.id.iv_checked);
             overlayView = itemView.findViewById(R.id.overlay);
             checkedBgView = itemView.findViewById(R.id.view_background_checked);
+            addIv = itemView.findViewById(R.id.iv_add_photos);
+            addIv.setVisibility(View.GONE);
             checkedIv.setVisibility(View.GONE);
             overlayView.setVisibility(View.GONE);
             checkedBgView.setVisibility(View.GONE);
@@ -69,6 +73,7 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
             model = suggestionModel;
             if (model.getImageUri() != null) {
                 Glide.with(mContext).load(suggestionModel.getImageUri()).into(imageView);
+                addIv.setVisibility(View.GONE);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -96,6 +101,23 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
                     overlayView.setVisibility(View.GONE);
                     checkedBgView.setVisibility(View.GONE);
                 }
+            } else {
+                addIv.setVisibility(View.VISIBLE);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/photos"));
+                        intent.putExtra("from", "notification");
+                        intent.putExtra("url", "imagegallery");
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setAction(Intent.ACTION_VIEW);
+                        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                            mContext.startActivity(intent);
+                        }
+                    }
+                });
             }
         }
     }

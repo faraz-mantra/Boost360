@@ -1,5 +1,6 @@
 package nfkeyboard.interface_contracts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nfkeyboard.keyboards.ImePresenterImpl;
@@ -14,5 +15,6 @@ public interface ApiCallToKeyboardViewInterface {
 
     void onError(ImePresenterImpl.TabType type);
 
-    void onCompleted(ImePresenterImpl.TabType type);
+    void onCompleted(ImePresenterImpl.TabType type, ArrayList<AllSuggestionModel> modelList);
+
 }

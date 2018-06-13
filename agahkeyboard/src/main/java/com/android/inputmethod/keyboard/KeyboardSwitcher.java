@@ -202,7 +202,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     public void clearResources() {
         updatesList.clear();
         productList.clear();
-        isProductCompleted = isUpdatesCompleted = false;
+        imagesList.clear();
+        isProductCompleted = isUpdatesCompleted = isPhotosCompleted = false;
         if (shareAdapter != null)
             shareAdapter.setSuggestionModels(null);
     }
@@ -933,13 +934,14 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     @Override
-    public void onCompleted(ImePresenterImpl.TabType type) {
+    public void onCompleted(ImePresenterImpl.TabType type, ArrayList<AllSuggestionModel> modelList) {
         switch (type) {
             case UPDATES:
                 isUpdatesCompleted = true;
                 if (updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     updatesList.remove(updatesList.size() - 1);
                 }
+                updatesList.addAll(modelList);
                 if (updatesList.size() == 0) {
                     updatesList.add(createSuggestionModel("No updates available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
@@ -950,6 +952,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 if (productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     productList.remove(productList.size() - 1);
                 }
+                productList.addAll(modelList);
                 if (productList.size() == 0) {
                     productList.add(createSuggestionModel("No products available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
@@ -957,13 +960,13 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 break;
             case PHOTOS:
                 isPhotosCompleted = true;
-                if (imagesList != null && !imagesList.isEmpty() && imagesList.get(imagesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+               /* if (imagesList != null && !imagesList.isEmpty() && imagesList.get(imagesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     imagesList.remove(imagesList.size() - 1);
                 }
                 if (imagesList.size() == 0) {
                     imagesList.add(createSuggestionModel("No photos available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
-                shareAdapter1.setSuggestionModels(imagesList);
+                shareAdapter1.setSuggestionModels(imagesList);*/
                 break;
         }
     }
@@ -999,7 +1002,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         selectionLayout.setVisibility(View.VISIBLE);
 
         if (modelList.size() < 10) {
-            onCompleted(PHOTOS);
+            onCompleted(PHOTOS, null);
         } else {
             onLoadMore(PHOTOS, modelList);
         }
