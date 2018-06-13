@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.android.inputmethod.keyboard.KeyboardLayoutSet.KeyboardLayoutSetException;
 import com.android.inputmethod.keyboard.internal.KeyboardState;
 import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
-import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
@@ -62,7 +61,6 @@ import io.separ.neural.inputmethod.indic.SubtypeSwitcher;
 import io.separ.neural.inputmethod.indic.WordComposer;
 import io.separ.neural.inputmethod.indic.settings.Settings;
 import io.separ.neural.inputmethod.indic.settings.SettingsValues;
-import io.separ.neural.inputmethod.slash.EventBusExt;
 import nfkeyboard.adapter.BaseAdapterManager;
 import nfkeyboard.adapter.MainAdapter;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
@@ -959,7 +957,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 break;
             case PHOTOS:
                 isPhotosCompleted = true;
-                if (imagesList.get(imagesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+                if (imagesList != null && !imagesList.isEmpty() && imagesList.get(imagesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     imagesList.remove(imagesList.size() - 1);
                 }
                 if (imagesList.size() == 0) {
@@ -972,7 +970,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     @Override
     public void imagesReceived() {
-        onCompleted(PHOTOS);
+        //onCompleted(PHOTOS);
         ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
         modelList.clear();
         DisplayMetrics metrics = mThemeContext.getResources().getDisplayMetrics();
@@ -995,7 +993,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             }
             totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
         }
-
         imagesList.addAll(modelList);
         shareAdapter1.setSuggestionModels(modelList);
         recyclerViewPhotos.setLayoutManager(gridLayoutManager);
