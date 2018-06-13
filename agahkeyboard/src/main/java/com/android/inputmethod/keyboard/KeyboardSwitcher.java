@@ -421,7 +421,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         shareBtn.setText(mThemeContext.getResources().getString(R.string.share));
         recyclerViewPhotos.removeAllViews();
         for (int i = 0; i < imagesList.size(); i++) {
-            if (imagesList.get(i).getSelected()) {
+            if (imagesList.get(i).getSelected() && imagesList.get(i).getImageUri() != null) {
                 imagesList.get(i).setSelected(false);
             }
         }
@@ -798,13 +798,39 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     @Override
-    public void onClick(AllSuggestionModel model, boolean selected) {
-        if (selected) {
-            selectedImages.add(model);
+    public boolean onClick(AllSuggestionModel model, boolean selected) {
+        if (presenterListener.packageName().equalsIgnoreCase("com.whatsapp")) {
+            if (selectedImages.size() < 5) {
+                if (selected) {
+                    selectedImages.add(model);
+                } else {
+                    for (int i = 0; i < selectedImages.size(); i++) {
+                        if (selectedImages.get(i).getImageUri().equalsIgnoreCase(model.getImageUri())) {
+                            selectedImages.remove(i);
+                        }
+                    }
+                }
+            }
+            else {
+                if (!selected) {
+                    for (int i = 0; i < selectedImages.size(); i++) {
+                        if (selectedImages.get(i).getImageUri().equalsIgnoreCase(model.getImageUri())) {
+                            selectedImages.remove(i);
+                        }
+                    }
+                } else {
+                    Toast.makeText(mThemeContext, "Cannot select more than 5 images for WhatsApp", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
         } else {
-            for (int i = 0; i < selectedImages.size(); i++) {
-                if (selectedImages.get(i).getImageUri().equalsIgnoreCase(model.getImageUri())) {
-                    selectedImages.remove(i);
+            if (selected) {
+                selectedImages.add(model);
+            } else {
+                for (int i = 0; i < selectedImages.size(); i++) {
+                    if (selectedImages.get(i).getImageUri().equalsIgnoreCase(model.getImageUri())) {
+                        selectedImages.remove(i);
+                    }
                 }
             }
         }
@@ -864,6 +890,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 objectAnimator.start();
             }
         }
+        return true;
     }
 
     @Override
@@ -985,14 +1012,23 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             for (int i = 0; i < Constants.storeSecondaryImages.size(); i++) {
                 Photo photo = new Photo();
                 photo.setImageUri(Constants.storeActualSecondaryImages.get(i));
+                photo.setSelected(false);
                 modelList.add(photo.toAllSuggestion());
             }
             if (lengthOfItems > Constants.storeSecondaryImages.size()) {
                 for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
                     Photo photo = new Photo();
                     photo.setImageUri(null);
+                    if (i == 0) { photo.setSelected(true); }
+                    else { photo.setSelected(false); }
                     modelList.add(photo.toAllSuggestion());
                 }
+            }
+            else {
+                Photo photo = new Photo();
+                photo.setImageUri(null);
+                photo.setSelected(true);
+                modelList.add(photo.toAllSuggestion());
             }
             totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
         }

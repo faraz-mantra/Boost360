@@ -15,7 +15,7 @@ public interface ItemClickListener {
 
     String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency);
 
-    void onClick(AllSuggestionModel model, boolean selected);
+    boolean onClick(AllSuggestionModel model, boolean selected);
 
     void onDetailsClick(AllSuggestionModel model);
 }

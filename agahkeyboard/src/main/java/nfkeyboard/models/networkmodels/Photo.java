@@ -37,7 +37,7 @@ public class Photo {
     public AllSuggestionModel toAllSuggestion() {
         AllSuggestionModel model = new AllSuggestionModel(imageUri);
         model.setImageUri(getImageUri());
-        model.setSelected(false);
+        model.setSelected(getSelected());
         return model;
     }
 
