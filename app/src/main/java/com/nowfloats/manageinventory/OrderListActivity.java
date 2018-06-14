@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,16 +26,18 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.adapters.OrdersRvAdapter;
 import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
-import com.nowfloats.manageinventory.models.OrderModel;
-import com.nowfloats.manageinventory.models.ProductModel;
-import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.manageinventory.models.CommonStatus;
+import com.nowfloats.manageinventory.models.OrderDataModel;
+import com.nowfloats.manageinventory.models.OrderDataModel.Order;
+import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+
+import java.util.HashMap;
 
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
@@ -44,7 +47,9 @@ import retrofit.client.Response;
 
 
 public class OrderListActivity extends AppCompatActivity implements OrdersRvAdapter.PaginationAdapterCallback,
-        OrdersRvAdapter.OnRecyclerViewItemClickListener, View.OnClickListener{
+        OrdersRvAdapter.OnRecyclerViewItemClickListener, View.OnClickListener {
+
+    private Bus mBusEvent;
 
     @Override
     public void retryPageLoad() {
@@ -53,15 +58,14 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
 
     @Override
     public void onItemClick(View v, int position) {
-        OrderModel orderModel = mAdapter.getItem(position);
-        ArrayList<ProductModel> productList = mAdapter.getProductsForOrder(orderModel.getId());
-        openOrderDetails(orderModel, productList, ((TextView)v.findViewById(R.id.tv_order_status_tag)).getText().toString());
+        Order orderModel = mAdapter.getItem(position);
+//        ArrayList<ProductModel> productList = mAdapter.getProductsForOrder(orderModel.getId());
+        openOrderDetails(orderModel, ((TextView) v.findViewById(R.id.tv_order_status_tag)).getText().toString());
     }
 
-    private void openOrderDetails(OrderModel orderModel, ArrayList<ProductModel> productModels, String tag) {
+    private void openOrderDetails(Order orderModel, String tag) {
         Intent i = new Intent(this, OrderDetailsActivity.class);
         i.putExtra("order", orderModel);
-        i.putExtra("products", productModels);
         i.putExtra("tag", tag);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -70,9 +74,9 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
     @Override
     public void onClick(View v) {
         //hideRevealView();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rfl_overlay:
-                if(!mHidden){
+                if (!mHidden) {
                     showRevealView();
                 }
                 break;
@@ -88,7 +92,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 showRevealView();
                 showOrders(OrderType.CANCELLED.ordinal());
                 break;
-            case R.id.rl_returned_orders:
+            case R.id.rl_disputed_orders:
                 showRevealView();
                 showOrders(OrderType.RETURNED.ordinal());
                 break;
@@ -103,24 +107,29 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         }
     }
 
-    public enum OrderType{
-        TOTAL, RECEIVED, SUCCESSFUL, CANCELLED, RETURNED, ABANDONED
+    @Subscribe
+    public void refreshState(CommonStatus commonStatus) {
+        mSkip = 0;
+        getOrders(mQuery, mSkip, LIMIT);
     }
 
-    public enum OrderStatus
-    {
-        NOT_INITIATED,
-        PROCESSING,
-        ACCEPTED,
-        DISPATCHED,
-        TRANSIT,
-        DELIVERED,
-        RETURNED,
-        CANCELLED
+    public enum OrderType {
+        TOTAL, RECEIVED, SUCCESSFUL, CANCELLED, RETURNED, ABANDONED, ESCALATED
     }
 
-    public enum PaymentStatus
-    {
+//    public enum OrderStatus {
+//        NOT_INITIATED,
+//        PROCESSING,
+//        ACCEPTED,
+//        DISPATCHED,
+//        TRANSIT,
+//        DELIVERED,
+//        RETURNED,
+//        CANCELLED
+//    }
+
+
+    public enum PaymentStatus {
         NOT_INITIATED,
         FAILED,
         PENDING,
@@ -128,8 +137,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         REFUNDED
     }
 
-    public enum DeliveryStatus
-    {
+    public enum DeliveryStatus {
         NOT_INITIATED,
         ORDER_RECEIVED,
         DISPATCHED,
@@ -139,7 +147,16 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         CANCELLED
     }
 
-    private String mQuery;
+    public static class OrderStatus {
+        public static final String INITIATED = "INITIATED";
+        public static final String PLACED = "PLACED";
+        public static final String CONFIRMED = "CONFIRMED";
+        public static final String COMPLETED = "COMPLETED";
+        public static final String CANCELLED = "CANCELLED";
+        public static final String ESCALATED = "ESCALATED";
+    }
+
+    private String mQuery, orderStatus = "", emptyMsg = "";
     private long mSkip = 0;
     private static final int LIMIT = 20;
 
@@ -171,7 +188,8 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
-
+        mBusEvent = BusProvider.getInstance().getBus();
+        mBusEvent.register(this);
         mSession = new UserSessionManager(this, this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -189,7 +207,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         findViewById(R.id.rl_abandoned_orders).setOnClickListener(this);
         findViewById(R.id.rl_cancelled_orders).setOnClickListener(this);
         findViewById(R.id.rl_received_orders).setOnClickListener(this);
-        findViewById(R.id.rl_returned_orders).setOnClickListener(this);
+        findViewById(R.id.rl_disputed_orders).setOnClickListener(this);
         findViewById(R.id.rl_successful_orders).setOnClickListener(this);
         findViewById(R.id.rl_total_orders).setOnClickListener(this);
 
@@ -228,9 +246,9 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
             }
         });
 
-        if(getIntent().hasExtra(Constants.ORDER_TYPE)){
+        if (getIntent().hasExtra(Constants.ORDER_TYPE)) {
             showOrders(getIntent().getIntExtra(Constants.ORDER_TYPE, -1));
-        }else {
+        } else {
             showEmptyLayout("You don't have any Order");
         }
 
@@ -251,7 +269,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                if(!mHidden){
+                if (!mHidden) {
                     showRevealView();
                 }
             }
@@ -262,12 +280,18 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBusEvent.unregister(this);
+    }
+
     private void searchByOrderId(String query) {
-        mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_id:'%s'}", mSession.getFPID(), query.toUpperCase());
+//        mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_id:'%s'}", mSession.getFPID(), query.toUpperCase());
         setTitle("Search");
         mCurrSelectedView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
         pbLoading.setVisibility(View.VISIBLE);
-        getOrders(mQuery, mSkip, LIMIT, "OrderId not found");
+        getOrders(mQuery, mSkip, LIMIT);
     }
 
     @Override
@@ -283,7 +307,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void showRevealView(){
+    private void showRevealView() {
         int cx = (llRevealLayout.getLeft() + llRevealLayout.getRight() - Methods.dpToPx(80, this));
         int cy = llRevealLayout.getTop();
         int radius = Math.max(llRevealLayout.getWidth(), llRevealLayout.getHeight());
@@ -317,8 +341,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 });
                 anim.start();
             }
-        }
-        else {
+        } else {
             if (mHidden) {
                 Animator anim = android.view.ViewAnimationUtils.
                         createCircularReveal(llRevealLayout, cx, cy, 0, radius);
@@ -350,9 +373,9 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
-        }else if(item.getItemId() == R.id.action_orders_filter){
+        } else if (item.getItemId() == R.id.action_orders_filter) {
             if (searchView.isSearchOpen()) {
                 searchView.closeSearch();
             }
@@ -366,9 +389,9 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
     public void onBackPressed() {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
-        }else if(!mHidden){
+        } else if (!mHidden) {
             showRevealView();
-        }else {
+        } else {
             super.onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
@@ -379,145 +402,151 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         llEmptyView.setVisibility(View.VISIBLE);
     }
 
-    private void showOrders(final int orderType){
+    private void showOrders(final int orderType) {
         pbLoading.setVisibility(View.VISIBLE);
-        if(mCurrSelectedView!=null){
+        if (mCurrSelectedView != null) {
             mCurrSelectedView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
         }
-        switch (orderType){
+        switch (orderType) {
             case 0:
-                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s'}", mSession.getFPID());
+//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s'}", mSession.getFPID());
                 setTitle("Total Orders");
+                orderStatus = "";
+                emptyMsg = "You don't have Any Order";
                 mCurrSelectedView = findViewById(R.id.rl_total_orders);
-                getOrders(mQuery, mSkip, LIMIT, "You don't have Any Order");
+                getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 1:
-                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status_delivery:%d}", mSession.getFPID(), DeliveryStatus.ORDER_RECEIVED.ordinal());
+//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status_delivery:%d}", mSession.getFPID(), DeliveryStatus.ORDER_RECEIVED.ordinal());
                 setTitle("Received Orders");
+                orderStatus = OrderStatus.PLACED;
+                emptyMsg = "You don't have any Received Order";
                 mCurrSelectedView = findViewById(R.id.rl_received_orders);
-                getOrders(mQuery, mSkip, LIMIT, "You don't have any Received Order");
+                getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 2:
-                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.DELIVERED.ordinal());
+//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.DELIVERED.ordinal());
                 setTitle("Delivered Orders");
+                orderStatus = OrderStatus.COMPLETED;
+                emptyMsg = "You don't have any Successful Order";
                 mCurrSelectedView = findViewById(R.id.rl_successful_orders);
-                getOrders(mQuery, mSkip, LIMIT, "You don't have any Successful Order");
+                getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 3:
-                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.CANCELLED.ordinal());
+//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.CANCELLED.ordinal());
                 setTitle("Cancelled Orders");
+                orderStatus = OrderStatus.CANCELLED;
+                emptyMsg = "You don't have any Cancelled Order";
                 mCurrSelectedView = findViewById(R.id.rl_cancelled_orders);
-                getOrders(mQuery, mSkip, LIMIT, "You don't have any Cancelled Order");
+                getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 4:
-                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.RETURNED.ordinal());
-                setTitle("Returned Orders");
-                mCurrSelectedView = findViewById(R.id.rl_returned_orders);
-                getOrders(mQuery, mSkip, LIMIT, "You don't have any Returned Order");
+//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.RETURNED.ordinal());
+                setTitle("Disputed Orders");
+                orderStatus = OrderStatus.ESCALATED;
+                emptyMsg = "You don't have any Disputed Order";
+                mCurrSelectedView = findViewById(R.id.rl_disputed_orders);
+                getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 5:
-                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.NOT_INITIATED.ordinal());
+//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.NOT_INITIATED.ordinal());
                 setTitle("Abandoned Orders");
+                orderStatus = "";
+                emptyMsg = "You don't have any Abandoned Order";
                 mCurrSelectedView = findViewById(R.id.rl_abandoned_orders);
-                getOrders(mQuery, mSkip, LIMIT, "You don't have any Abandoned Order");
-
+                getOrders(mQuery, mSkip, LIMIT);
+                break;
+            case 6:
+//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.RETURNED.ordinal());
+                setTitle("Disputed Orders");
+                orderStatus = OrderStatus.ESCALATED;
+                mCurrSelectedView = findViewById(R.id.rl_disputed_orders);
+                emptyMsg = "You don't have any Disputed Order";
+                getOrders(mQuery, mSkip, LIMIT);
+                break;
         }
         mCurrSelectedView.setBackgroundColor(Color.parseColor("#E8E8E8"));
     }
 
 
-
-    private void getOrders(final String orderQuery, final long skip, final int limit, final String emptyMsg){
+    private void getOrders(final String orderQuery, final long skip, final int limit) {
         hideEmptyLayout();
-        WebActionCallInterface callInterface = Constants.webActionAdapter.create(WebActionCallInterface.class);
-        callInterface.getOrders(orderQuery, skip, limit, "{CreatedOn:-1}", new Callback<WebActionModel<OrderModel>>() {
-            @Override
-            public void success(WebActionModel<OrderModel> orderModelWebActionModel, Response response) {
-                pbLoading.setVisibility(View.GONE);
+
+        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("sellerId", mSession.getFpTag());
+        if (!TextUtils.isEmpty(orderStatus))
+            hashMap.put("orderStatus", orderStatus);
+        callInterface.getOrdersList(hashMap, skip, limit, orderStatusCallback);
+    }
+
+    public Callback<OrderDataModel> orderStatusCallback = new Callback<OrderDataModel>() {
+
+        @Override
+        public void success(OrderDataModel orderDataModel, Response response) {
+
+            pbLoading.setVisibility(View.GONE);
+            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
+                refreshOrders(orderDataModel);
+            } else {
                 mAdapter.clearAdapter();
-                if(orderModelWebActionModel==null || orderModelWebActionModel.getData().size()==0){
+                if (orderDataModel == null || orderDataModel.getData() == null) {
                     showEmptyLayout(emptyMsg);
-                }else {
-                    getProductsForOrders(orderModelWebActionModel);
+                } else {
+                    refreshOrders(orderDataModel);
                 }
             }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                pbLoading.setVisibility(View.GONE);
-                showEmptyLayout(emptyMsg);
-            }
-        });
+        }
 
-    }
+        @Override
+        public void failure(RetrofitError error) {
+            Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            pbLoading.setVisibility(View.GONE);
+            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
+
+            } else {
+                showEmptyLayout(emptyMsg);
+                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
+                    orderStatus = OrderStatus.CONFIRMED;
+                    getOrders(mQuery, mSkip, LIMIT);
+                }
+            }
+        }
+    };
 
     private void hideEmptyLayout() {
         llEmptyView.setVisibility(View.GONE);
     }
 
-    private void getProductsForOrders(final WebActionModel<OrderModel> ordersModelWebAction) {
-        if(ordersModelWebAction == null || ordersModelWebAction.getData().size()==0)
-            return;
-        final List<OrderModel> data = ordersModelWebAction.getData();
-        StringBuilder builder = new StringBuilder("");
-        for (OrderModel order : data){
-            builder.append(String.format("'%s',", order.getId()));
-        }
-        if(builder.length()>0) {
-            builder.deleteCharAt(builder.length() - 1);
-        }
-
-        String query = String.format("{Order_id:{$in:[%s]}}", builder.toString());
-
-        WebActionCallInterface callInterface = Constants.webActionAdapter.create(WebActionCallInterface.class);
-        callInterface.getProducts(query, 200, new Callback<WebActionModel<ProductModel>>() {
-            @Override
-            public void success(WebActionModel<ProductModel> productDetailsWA, Response response) {
-                if(productDetailsWA!=null && productDetailsWA.getData().size()>0){
-                    for(ProductModel product : productDetailsWA.getData()){
-                        mAdapter.putToProductMap(product.getOrderId(), product);
-                    }
-                }
-                mAdapter.addAll(data);
-                if(ordersModelWebAction.getExtra().getTotalCount()
-                        <= ordersModelWebAction.getExtra().getCurrentIndex() +
-                        ordersModelWebAction.getExtra().getPageSize()){
-                    isLastPage = true;
-                }else {
-                    mAdapter.addLoadingFooter();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                mAdapter.addAll(ordersModelWebAction.getData());
-                if(ordersModelWebAction.getExtra().getTotalCount()
-                        <= ordersModelWebAction.getExtra().getCurrentIndex() +
-                        ordersModelWebAction.getExtra().getPageSize()){
-                    isLastPage = true;
-                }else {
-                    mAdapter.addLoadingFooter();
-                }
-            }
-        });
-
+    private void refreshOrders(final OrderDataModel ordersModelWebAction) {
+        mAdapter.addAll(ordersModelWebAction.getData().getOrders());
     }
 
-    private void loadNextPage(){
-        WebActionCallInterface callInterface = Constants.webActionAdapter.create(WebActionCallInterface.class);
-        mSkip+=LIMIT;
-        callInterface.getOrders(mQuery, mSkip, LIMIT, "{CreatedOn:-1}", new Callback<WebActionModel<OrderModel>>() {
+    private void loadNextPage() {
+        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+        mSkip += LIMIT;
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("sellerId", mSession.getFpTag());
+        if (!TextUtils.isEmpty(orderStatus))
+            hashMap.put("orderStatus", orderStatus);
+
+        callInterface.getOrdersList(hashMap, mSkip, LIMIT, new Callback<OrderDataModel>() {
             @Override
-            public void success(WebActionModel<OrderModel> orderModelWebActionModel, Response response) {
+            public void success(OrderDataModel orderModelWebActionModel, Response response) {
                 mAdapter.removeLoadingFooter();
                 isLoading = false;
-                getProductsForOrders(orderModelWebActionModel);
+                refreshOrders(orderModelWebActionModel);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
+                    mSkip = 0;
+                    orderStatus = OrderStatus.CONFIRMED;
+                    getOrders(mQuery, mSkip, LIMIT);
+                }
             }
         });
     }

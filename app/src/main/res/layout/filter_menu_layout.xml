@@ -58,7 +58,7 @@
                 android:text="@string/received_successful_orders"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/rl_returned_orders"
+            android:id="@+id/rl_disputed_orders"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
@@ -79,7 +79,7 @@
                 android:textSize="12sp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:text="@string/returned_orders"/>
+                android:text="@string/disputed_orders"/>
         </RelativeLayout>
 
     </LinearLayout>
