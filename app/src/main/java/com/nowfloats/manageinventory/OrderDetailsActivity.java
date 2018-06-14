@@ -194,6 +194,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         markOrderAsShipped.setTrackingNumber(trackingNumber);
                         markOrderAsShipped.setTrackingURL(trackingURL);
 
+
+                        shipOrderFragment.setResultListener(null);
+                        shipOrderFragment.dismiss();
+                        shipOrderFragment = null;
+
                         WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
                         callInterface.markOrderAsShipped(markOrderAsShipped, new retrofit.Callback<CommonStatus>() {
 
@@ -212,6 +217,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         });
                     }
                 });
+
+                shipOrderFragment.show(getFragmentManager(), "Test");
             }
         });
 

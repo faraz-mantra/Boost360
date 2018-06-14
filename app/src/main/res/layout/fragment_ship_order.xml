@@ -102,7 +102,7 @@
                             android:id="@+id/etDeliveryCharges"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="numberDecimal"
                             android:maxLength="6"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
@@ -115,14 +115,34 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_save"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="right"
-        android:background="@drawable/done_button_bg"
-        android:text="@string/done"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:background="@drawable/red_btn_bg"
+            android:text="@string/close"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:background="@drawable/done_button_bg"
+            android:text="confirm"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
 
 </LinearLayout>

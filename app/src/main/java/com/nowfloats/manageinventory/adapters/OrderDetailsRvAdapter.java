@@ -131,10 +131,11 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else if (holder instanceof ProductDetailsHolder) {
             ProductDetailsHolder productDetailsHolder = (ProductDetailsHolder) holder;
             productDetailsHolder.tvProductName.setText(mProducts.get(position - 1).getProduct().getName());
-            productDetailsHolder.tvDiscount.setText(mProducts.get(position - 1).getProduct().getDiscountAmount() + "");
+            productDetailsHolder.tvDiscount.setText((mProducts.get(position - 1).getActualPrice() -
+                    mProducts.get(position - 1).getSalePrice()) + "");
             productDetailsHolder.tvProductQuantity.setText(mProducts.get(position - 1).getQuantity() + "");
-            productDetailsHolder.tvFinalPrice.setText(mProducts.get(position - 1).getProduct().getPrice() + "");
-            productDetailsHolder.tvUnitPrice.setText(mProducts.get(position - 1).getProduct().getPrice() + "");
+            productDetailsHolder.tvFinalPrice.setText(mProducts.get(position - 1).getSalePrice() + "");
+            productDetailsHolder.tvUnitPrice.setText(mProducts.get(position - 1).getActualPrice() + "");
 
             if (mProducts.get(position - 1).getProduct().getFeaturedImage() != null) {
                 Picasso.with(mContext).load(mProducts.get(position - 1).getProduct().getFeaturedImage().getTileImageUri())
@@ -145,11 +146,14 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else if (holder instanceof OrderDetailsHolder) {
             OrderDetailsHolder orderDetailsHolder = (OrderDetailsHolder) holder;
             if (mOrder.getBillingDetails() != null) {
-                orderDetailsHolder.tvTotalPrice.setText(mOrder.getBillingDetails().getGrossAmount() + "");
+                orderDetailsHolder.tvTotalPrice.setText((mOrder.getBillingDetails().getGrossAmount() +
+                        mOrder.getBillingDetails().getDiscountAmount() + mOrder.getBillingDetails().getAssuredPurchaseCharges() +
+                        mOrder.getBillingDetails().getNfDeliveryCharges()
+                        + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
                 orderDetailsHolder.tvAssuredPurchaseCharge.setText(mOrder.getBillingDetails().getAssuredPurchaseCharges() + "");
                 orderDetailsHolder.tvShippingCharge.setText((mOrder.getBillingDetails().getNfDeliveryCharges()
                         + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
-                orderDetailsHolder.tvNetAmount.setText((mOrder.getBillingDetails().getGrossAmount() -
+                orderDetailsHolder.tvNetAmount.setText((mOrder.getBillingDetails().getGrossAmount() +
                         mOrder.getBillingDetails().getDiscountAmount()) + "");
             } else {
                 orderDetailsHolder.tvTotalPrice.setText("N/A");

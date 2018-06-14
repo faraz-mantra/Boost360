@@ -103,7 +103,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 if (orderModel.getBillingDetails() != null) {
                     ordersViewHolder.tvOrderTotalAmount.setText(TextUtils.isEmpty(orderModel.getBillingDetails().getCurrencyCode()) ? "INR" :
-                            orderModel.getBillingDetails().getCurrencyCode() + " " + (orderModel.getBillingDetails().getGrossAmount() -
+                            orderModel.getBillingDetails().getCurrencyCode() + " " + (orderModel.getBillingDetails().getGrossAmount() +
                                     orderModel.getBillingDetails().getDiscountAmount()));
                 } else {
                     ordersViewHolder.tvOrderTotalAmount.setText("N/A");
@@ -144,7 +144,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.abandoned_order_text_bg));
                 }
                 if (orderModel.getOrderDetails() != null) {
-                    ordersViewHolder.tvItemsCount.setText(orderModel.getOrderDetails().size() > 1 ? orderModel.getOrderDetails().size() + " OrderDetails" : orderModel.getOrderDetails().size() + " Item");
+                    ordersViewHolder.tvItemsCount.setText(orderModel.getOrderDetails().size() > 1 ? orderModel.getOrderDetails().size() + " Items" : orderModel.getOrderDetails().size() + " Item");
 
                     if (orderModel.getOrderDetails().get(0).getProduct() != null && orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage() != null) {
                         Picasso.with(mContext).load(orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage().getTileImageUri()).
@@ -238,6 +238,11 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 notifyItemRangeInserted(prevPosition, mOrderModelList.size() - 1);
             }
         }
+    }
+
+    public void refreshList(List<Order> orderModelList) {
+        this.mOrderModelList = orderModelList;
+        notifyDataSetChanged();
     }
 
     public void remove(Order orderModel) {

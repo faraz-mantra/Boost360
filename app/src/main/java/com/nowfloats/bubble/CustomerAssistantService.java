@@ -39,7 +39,6 @@ import android.graphics.PixelFormat;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -54,8 +53,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.accessbility.TempDisplayDialog;
-import com.nowfloats.accessbility.WhatsAppBubbleCloseDialog;
 import com.nowfloats.managenotification.CallerInfoDialog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -234,6 +231,7 @@ public class CustomerAssistantService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
+        MixPanelController.track(MixPanelController.BUBBLE_ENABLED, null);
         PendingIntent pendingIntent = createPendingIntent();
         Notification notification = createNotification(pendingIntent);
         startForeground(FOREGROUND_ID, notification);

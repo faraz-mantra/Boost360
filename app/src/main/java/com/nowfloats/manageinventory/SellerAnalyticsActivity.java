@@ -205,6 +205,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
             tvReturnedPrders.setText("-");
             tvReceivedOrders.setText("-");
             tvCancelledOrders.setText("-");
+            tvDisputedOrders.setText("-");
             tvSuccessfullOrders.setText("-");
         }
 

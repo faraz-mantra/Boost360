@@ -36,6 +36,11 @@ public interface WebActionCallInterface {
     void getOrdersList(@QueryMap HashMap<String, String> hashMap, @Query("skip") long skip, @Query("limit") int limit, Callback<OrderDataModel> callback);
 
 
+    @GET("/GetOrderDetails")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getOrdersDetails(@Query("orderId") String orderId, @Query("skip") long skip, @Query("limit") int limit, Callback<OrderDataModel> callback);
+
+
     @GET("/users3/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getUser(@Query("id") String id, @Query("limit") int limit, Callback<WebActionModel<UserModel>> callback);

@@ -19,9 +19,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 /**
@@ -32,7 +35,7 @@ public class ShipOrderFragment extends DialogFragment {
 
     private TextInputEditText etShippedOn, etDeliveryProvider, etTrackingNumber, etTrackingURL, etDeliveryCharges;
 
-    private Button btnSave;
+    private Button btnConfirm;
 
     private ShipOrderFragment.OnResultReceive mResultListener;
 
@@ -45,13 +48,6 @@ public class ShipOrderFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showKeyBoard();
-    }
-
-
-    private void showKeyBoard() {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     @Override
@@ -108,18 +104,23 @@ public class ShipOrderFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ship_order, container, false);
-        setCancelable(false);
+        setCancelable(true);
+        btnConfirm = v.findViewById(R.id.btnConfirm);
+        etShippedOn = v.findViewById(R.id.etShippedOn);
+        etDeliveryProvider = v.findViewById(R.id.etDeliveryProvider);
+        etDeliveryCharges = v.findViewById(R.id.etDeliveryCharges);
+        etTrackingNumber = v.findViewById(R.id.etTrackingNumber);
+        etTrackingURL = v.findViewById(R.id.etTrackingURL);
 
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (verifyData()) {
-                    btnSave.setClickable(false);
-                    btnSave.setEnabled(false);
-                    btnSave.setVisibility(View.INVISIBLE);
-                    mResultListener.OnResult(etShippedOn.getText().toString(),
+                    btnConfirm.setClickable(false);
+                    btnConfirm.setEnabled(false);
+                    btnConfirm.setVisibility(View.INVISIBLE);
+                    mResultListener.OnResult(shippedOn,
                             etDeliveryProvider.getText().toString(), etTrackingNumber.getText().toString(), etTrackingURL.getText().toString(),
                             Double.parseDouble(etDeliveryCharges.getText().toString()));
                 }
@@ -130,7 +131,7 @@ public class ShipOrderFragment extends DialogFragment {
         etShippedOn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     pickDate(etShippedOn);
                 }
                 return true;
@@ -140,11 +141,17 @@ public class ShipOrderFragment extends DialogFragment {
         return v;
     }
 
+    String shippedOn = "";
+
     public void pickDate(final EditText et) {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                SimpleDateFormat formatter = new SimpleDateFormat(Methods.ISO_8601_24H_FULL_FORMAT, Locale.ENGLISH);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, monthOfYear, dayOfMonth);
+                shippedOn = formatter.format(calendar.getTime());
                 et.setText(monthOfYear + "-" + dayOfMonth + "-" + year);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));

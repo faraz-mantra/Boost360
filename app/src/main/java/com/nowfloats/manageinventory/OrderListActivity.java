@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Product_Gallery.Model.ProductListModel;
+import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.manageinventory.adapters.OrdersRvAdapter;
 import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.CommonStatus;
@@ -37,6 +40,8 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import io.codetail.animation.ViewAnimationUtils;
@@ -162,7 +167,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
 
     private static final int PAGE_START = 1;
 
-    private boolean isLoading = false;
+    private boolean isLoading = false, isSearching = false;
     private boolean isLastPage = false;
     private boolean mHidden = true;
 
@@ -182,6 +187,8 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
     LinearLayout llEmptyView;
     TextView tvEmptyText;
     MaterialSearchView searchView;
+
+    private ArrayList<Order> visibleOrders;
     //View dropDownView;
 
     @Override
@@ -224,10 +231,14 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         rvOrderList.addOnScrollListener(new PaginationScrollListener(layoutManager) {
             @Override
             protected void loadMoreItems() {
-                isLoading = true;
-                currentPage += 1;
 
-                loadNextPage();
+                if (!isSearching) {
+
+                    isLoading = true;
+                    currentPage += 1;
+
+                    loadNextPage();
+                }
             }
 
             @Override
@@ -256,6 +267,10 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                if (visibleOrders == null) {
+                    visibleOrders = (ArrayList<Order>) mAdapter.getOrders();
+                }
                 searchByOrderId(query);
                 return false;
             }
@@ -286,12 +301,44 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         mBusEvent.unregister(this);
     }
 
-    private void searchByOrderId(String query) {
-//        mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_id:'%s'}", mSession.getFPID(), query.toUpperCase());
-        setTitle("Search");
-        mCurrSelectedView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-        pbLoading.setVisibility(View.VISIBLE);
-        getOrders(mQuery, mSkip, LIMIT);
+    private static final String ORDER_SEARCH = "ORDER_SEARCH";
+
+    private void searchByOrderId(final String searchText) {
+
+        if (visibleOrders != null && visibleOrders.size() > 0) {
+            synchronized (ORDER_SEARCH) {
+                isSearching = true;
+                mCurrSelectedView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+
+                hideEmptyLayout();
+
+                ArrayList<Order> arrModelTemp = null;
+                if (TextUtils.isEmpty(searchText)) {
+                    arrModelTemp = visibleOrders;
+                    visibleOrders = null;
+                } else {
+
+                    Predicate<Order> searchItem = new Predicate<Order>() {
+                        public boolean apply(Order order) {
+                            return (order.getOrderId().toLowerCase().contains(searchText.toLowerCase()));
+                        }
+                    };
+                    arrModelTemp = (ArrayList<Order>)
+                            filter(visibleOrders, searchItem);
+                }
+
+                mAdapter.refreshList(arrModelTemp);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isSearching = false;
+                    }
+                }, 1000);
+
+            }
+        }
+
+
     }
 
     @Override
@@ -451,7 +498,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
             case 5:
 //                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.NOT_INITIATED.ordinal());
                 setTitle("Abandoned Orders");
-                orderStatus = "";
+                orderStatus = OrderStatus.CANCELLED;
                 emptyMsg = "You don't have any Abandoned Order";
                 mCurrSelectedView = findViewById(R.id.rl_abandoned_orders);
                 getOrders(mQuery, mSkip, LIMIT);
@@ -478,6 +525,24 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         if (!TextUtils.isEmpty(orderStatus))
             hashMap.put("orderStatus", orderStatus);
         callInterface.getOrdersList(hashMap, skip, limit, orderStatusCallback);
+    }
+
+
+    public interface Predicate<T> {
+        boolean apply(T type);
+    }
+
+    public static <T> Collection<T> filter(Collection<T> col, Predicate<T> predicate) {
+
+        Collection<T> result = new ArrayList<T>();
+        if (col != null) {
+            for (T element : col) {
+                if (predicate.apply(element)) {
+                    result.add(element);
+                }
+            }
+        }
+        return result;
     }
 
     public Callback<OrderDataModel> orderStatusCallback = new Callback<OrderDataModel>() {
@@ -519,8 +584,43 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         llEmptyView.setVisibility(View.GONE);
     }
 
-    private void refreshOrders(final OrderDataModel ordersModelWebAction) {
-        mAdapter.addAll(ordersModelWebAction.getData().getOrders());
+    private void refreshOrders(final OrderDataModel orderDataModel) {
+
+        if (orderStatus.equalsIgnoreCase(OrderStatus.CANCELLED)) {
+
+            if (getTitle().equals("Abandoned Orders")) {
+                Predicate<Order> searchItem = new Predicate<Order>() {
+                    public boolean apply(Order order) {
+                        return order.getPaymentDetails() != null && order.getPaymentDetails().getStatus().equalsIgnoreCase("Cancelled");
+                    }
+                };
+                orderDataModel.getData().setOrders((ArrayList<Order>)
+                        filter(orderDataModel.getData().getOrders(), searchItem));
+                if (orderDataModel.getData().getOrders() != null && orderDataModel.getData().getOrders().size() > 0) {
+                    mAdapter.addAll(orderDataModel.getData().getOrders());
+                } else if (mAdapter.getOrders() == null || mAdapter.getOrders().size() == 0) {
+                    showEmptyLayout(emptyMsg);
+                }
+            } else {
+                Predicate<Order> searchItem = new Predicate<Order>() {
+                    public boolean apply(Order order) {
+                        return order.getPaymentDetails() == null ||
+                                !order.getPaymentDetails().getStatus().equalsIgnoreCase("Cancelled");
+                    }
+                };
+                orderDataModel.getData().setOrders((ArrayList<Order>)
+                        filter(orderDataModel.getData().getOrders(), searchItem));
+                if (orderDataModel.getData().getOrders() != null && orderDataModel.getData().getOrders().size() > 0) {
+                    mAdapter.addAll(orderDataModel.getData().getOrders());
+                }
+                else if (mAdapter.getOrders() == null || mAdapter.getOrders().size() == 0) {
+                    showEmptyLayout(emptyMsg);
+                }
+            }
+
+        } else {
+            mAdapter.addAll(orderDataModel.getData().getOrders());
+        }
     }
 
     private void loadNextPage() {

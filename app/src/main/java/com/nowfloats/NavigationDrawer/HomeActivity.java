@@ -97,6 +97,7 @@ import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
+import com.nowfloats.manageinventory.SellerAnalyticsActivity;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
@@ -367,6 +368,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(createCustomPage);
+            } else if (url.contains("myorders")) {
+                Intent listOrder = new Intent(HomeActivity.this, SellerAnalyticsActivity.class);
+                startActivity(listOrder);
             } else if (url.contains(getResources().getString(R.string.deeplink_upgrade))) {
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {

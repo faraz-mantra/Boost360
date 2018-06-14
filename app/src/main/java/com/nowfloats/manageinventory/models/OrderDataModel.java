@@ -149,6 +149,14 @@ public class OrderDataModel {
         @Expose
         private Product product;
 
+        @SerializedName("ActualPrice")
+        @Expose
+        private Double actualPrice;
+
+        @SerializedName("SalePrice")
+        @Expose
+        private Double salePrice;
+
         @SerializedName("Quantity")
         @Expose
         private Integer quantity;
@@ -175,6 +183,22 @@ public class OrderDataModel {
 
         public void setQuantity(Integer quantity) {
             this.quantity = quantity;
+        }
+
+        public Double getActualPrice() {
+            return actualPrice;
+        }
+
+        public void setActualPrice(Double actualPrice) {
+            this.actualPrice = actualPrice;
+        }
+
+        public Double getSalePrice() {
+            return salePrice;
+        }
+
+        public void setSalePrice(Double salePrice) {
+            this.salePrice = salePrice;
         }
     }
 
