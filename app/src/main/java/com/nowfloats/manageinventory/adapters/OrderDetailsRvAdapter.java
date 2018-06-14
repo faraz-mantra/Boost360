@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.manageinventory.OrderListActivity;
-import com.nowfloats.manageinventory.models.UserModel;
-import com.nowfloats.manageinventory.models.OrderModel;
-import com.nowfloats.manageinventory.models.ProductModel;
+import com.nowfloats.manageinventory.models.OrderDataModel;
+import com.nowfloats.manageinventory.models.OrderDataModel.Order;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -30,17 +28,17 @@ import java.util.Locale;
 
 public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<ProductModel> mProducts;
-    private OrderModel mOrder;
-    private UserModel mCustomer;
+    private final List<OrderDataModel.OrderDetails> mProducts;
+    private Order mOrder;
+    private OrderDataModel.BuyerDetails buyerDetails;
     private Context mContext;
     private String mTag;
 
 
-    public OrderDetailsRvAdapter(Context context, String tag, List<ProductModel> products, OrderModel orderModel, UserModel customerModel){
-        this.mProducts = products;
+    public OrderDetailsRvAdapter(Context context, String tag, Order orderModel) {
+        this.mProducts = orderModel.getOrderDetails();
         this.mOrder = orderModel;
-        this.mCustomer = customerModel;
+        this.buyerDetails = orderModel.getBuyerDetails();
         this.mContext = context;
         this.mTag = tag;
     }
@@ -49,7 +47,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View v;
-        switch (viewType){
+        switch (viewType) {
             case 0:
                 v = layoutInflater.inflate(R.layout.customer_details_row_layout, parent, false);
                 return new CustomerDetailsHolder(v);
@@ -68,78 +66,127 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     @SuppressLint("NewApi")
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof CustomerDetailsHolder){
+        if (holder instanceof CustomerDetailsHolder) {
             CustomerDetailsHolder customerDetailsHolder = (CustomerDetailsHolder) holder;
-            customerDetailsHolder.tvCustomerName.setText(mCustomer.getCustomerName());
-            customerDetailsHolder.tvCustomerEmail.setText(mCustomer.getCustomerEmail());
-            customerDetailsHolder.tvCustomerAddress.setText(mCustomer.getAddressLine1()
-                    + ", " + mCustomer.getAddressLine2()
-                    + ", " + mCustomer.getDeliveryCity()
-                    + ", " + mCustomer.getDeliveryState()
-                    + ", " + mCustomer.getDeliveryCountry()
-                    + ", " + mCustomer.getDeliveryPincode());
-            customerDetailsHolder.getTvCustomerPhone.setText(mCustomer.getCustomerMobileNumber());
-            switch (mTag){
-                case "Fresh":
+
+            if (buyerDetails != null) {
+
+                if (buyerDetails.getContactDetails() != null) {
+
+                    customerDetailsHolder.tvCustomerName.setText(buyerDetails.getContactDetails().getFullName());
+                    customerDetailsHolder.tvCustomerEmail.setText(buyerDetails.getContactDetails().getEmailId());
+                    customerDetailsHolder.getTvCustomerPhone.setText(buyerDetails.getContactDetails().getPrimaryContactNumber());
+
+                }
+                if (buyerDetails.getAddress() != null) {
+                    customerDetailsHolder.tvCustomerAddress.setText(buyerDetails.getAddress().getAddressLine1()
+                            + ", " + buyerDetails.getAddress().getAddressLine2()
+                            + ", " + buyerDetails.getAddress().getCity()
+                            + ", " + buyerDetails.getAddress().getRegion()
+                            + ", " + buyerDetails.getAddress().getCountry()
+                            + ", " + buyerDetails.getAddress().getZipcode());
+                }
+            }
+            switch (mTag) {
+                case "Initiated":
+                    customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
+                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.received_order_status_bg));
+                    break;
+                case "Confirmed":
+                    if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
+                        customerDetailsHolder.tvStatusTag.setText("Delivery Confirmation Pending");
+                    } else {
+                        customerDetailsHolder.tvStatusTag.setText("Shipping Pending");
+                    }
+                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.received_order_status_bg));
+                    break;
+                case "Placed":
+                case "PLACED":
+                    customerDetailsHolder.tvStatusTag.setText("Confirmation Pending");
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.received_order_status_bg));
                     break;
                 case "Returned":
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.returned_order_status_bg));
                     break;
-                case "Delivered":
+                case "Completed":
+                    customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.delivered_order_status_bg));
                     break;
                 case "Cancelled":
+                    customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.cancelled_order_status_bg));
                     break;
+                case "Disputed":
+                    customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
+                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.abandoned_order_status_bg));
+                    break;
                 case "Abandoned":
+                    customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.abandoned_order_status_bg));
                     break;
                 default:
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.abandoned_order_status_bg));
                     break;
             }
-            customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
-        }else if(holder instanceof ProductDetailsHolder){
+        } else if (holder instanceof ProductDetailsHolder) {
             ProductDetailsHolder productDetailsHolder = (ProductDetailsHolder) holder;
-            productDetailsHolder.tvProductName.setText(mProducts.get(position-1).getProductName());
-            productDetailsHolder.tvDiscount.setText(mProducts.get(position-1).getDiscount()+"");
-            productDetailsHolder.tvProductQuantity.setText(mProducts.get(position-1).getQuantity()+"");
-            productDetailsHolder.tvFinalPrice.setText(mProducts.get(position-1).getFinalPrice()+"");
-            productDetailsHolder.tvUnitPrice.setText(mProducts.get(position-1).getPrice()+"");
-            Picasso.with(mContext).load(mProducts.get(position-1).getProductImgUrl()).into(productDetailsHolder.ivProductImg);
-        }else if(holder instanceof OrderDetailsHolder){
-            OrderDetailsHolder orderDetailsHolder = (OrderDetailsHolder) holder;
-            orderDetailsHolder.tvTotalPrice.setText(mOrder.getTotalAmount()+"");
-            orderDetailsHolder.tvAssuredPurchaseCharge.setText(mOrder.getNfAssuranceChargeVal()+"");
-            orderDetailsHolder.tvShippingCharge.setText(mOrder.getShippingChargeMerchant()+"");
-            orderDetailsHolder.tvNetAmount.setText(mOrder.getNetAmount()+"");
-            if(mOrder.getOrderStatus() == OrderListActivity.OrderStatus.DELIVERED.ordinal()) {
-                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getActualDeliveryDate()));
-            }else {
-                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getExpectedDeliveryDate()));
+            productDetailsHolder.tvProductName.setText(mProducts.get(position - 1).getProduct().getName());
+            productDetailsHolder.tvDiscount.setText((mProducts.get(position - 1).getActualPrice() -
+                    mProducts.get(position - 1).getSalePrice()) + "");
+            productDetailsHolder.tvProductQuantity.setText(mProducts.get(position - 1).getQuantity() + "");
+            productDetailsHolder.tvFinalPrice.setText(mProducts.get(position - 1).getSalePrice() + "");
+            productDetailsHolder.tvUnitPrice.setText(mProducts.get(position - 1).getActualPrice() + "");
+
+            if (mProducts.get(position - 1).getProduct().getFeaturedImage() != null) {
+                Picasso.with(mContext).load(mProducts.get(position - 1).getProduct().getFeaturedImage().getTileImageUri())
+                        .into(productDetailsHolder.ivProductImg);
+            } else {
+                productDetailsHolder.ivProductImg.setImageResource(R.drawable.default_product_image);
             }
+        } else if (holder instanceof OrderDetailsHolder) {
+            OrderDetailsHolder orderDetailsHolder = (OrderDetailsHolder) holder;
+            if (mOrder.getBillingDetails() != null) {
+                orderDetailsHolder.tvTotalPrice.setText((mOrder.getBillingDetails().getGrossAmount() +
+                        mOrder.getBillingDetails().getDiscountAmount() + mOrder.getBillingDetails().getAssuredPurchaseCharges() +
+                        mOrder.getBillingDetails().getNfDeliveryCharges()
+                        + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
+                orderDetailsHolder.tvAssuredPurchaseCharge.setText(mOrder.getBillingDetails().getAssuredPurchaseCharges() + "");
+                orderDetailsHolder.tvShippingCharge.setText((mOrder.getBillingDetails().getNfDeliveryCharges()
+                        + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
+                orderDetailsHolder.tvNetAmount.setText((mOrder.getBillingDetails().getGrossAmount() +
+                        mOrder.getBillingDetails().getDiscountAmount()) + "");
+            } else {
+                orderDetailsHolder.tvTotalPrice.setText("N/A");
+                orderDetailsHolder.tvAssuredPurchaseCharge.setText("N/A");
+                orderDetailsHolder.tvShippingCharge.setText("N/A");
+                orderDetailsHolder.tvNetAmount.setText("N/A");
+            }
+//            if(mOrder.getOrderStatus() == OrderListActivity.OrderStatus.COMPLETED.ordinal()) {
+//                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getActualDeliveryDate()));
+//            }else {
+//                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getExpectedDeliveryDate()));
+//            }
             orderDetailsHolder.tvOrderDate.setText(getParsedDate(mOrder.getCreatedOn()));
         }
     }
 
     @Override
     public int getItemCount() {
-        return mProducts.size()+2;
+        return mProducts.size() + 2;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0){
+        if (position == 0) {
             return 0;
-        }else if(position == mProducts.size()+1){
+        } else if (position == mProducts.size() + 1) {
             return 2;
-        }else {
+        } else {
             return 1;
         }
     }
 
-    public class CustomerDetailsHolder extends RecyclerView.ViewHolder{
+    public class CustomerDetailsHolder extends RecyclerView.ViewHolder {
 
         TextView tvCustomerName, tvCustomerEmail, tvCustomerAddress, getTvCustomerPhone, tvStatusTag;
 
@@ -156,22 +203,22 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private String getParsedDate(String strDate) {
-        if(strDate==null){
+        if (strDate == null) {
             return "N/A";
         }
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         String parsedDate;
         try {
             Date date = format.parse(strDate);
-            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy",Locale.ENGLISH).format(date);
-        }catch (ParseException e){
+            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy", Locale.ENGLISH).format(date);
+        } catch (ParseException e) {
             parsedDate = strDate;
         }
 
         return parsedDate;
     }
 
-    public class ProductDetailsHolder extends RecyclerView.ViewHolder{
+    public class ProductDetailsHolder extends RecyclerView.ViewHolder {
 
         TextView tvProductName, tvProductQuantity, tvUnitPrice, tvDiscount, tvFinalPrice;
         ImageView ivProductImg;
@@ -190,7 +237,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    public class OrderDetailsHolder extends RecyclerView.ViewHolder{
+    public class OrderDetailsHolder extends RecyclerView.ViewHolder {
 
         TextView tvOrderDate, tvDeliveryDate, tvNetAmount, tvShippingCharge, tvAssuredPurchaseCharge, tvTotalPrice;
 

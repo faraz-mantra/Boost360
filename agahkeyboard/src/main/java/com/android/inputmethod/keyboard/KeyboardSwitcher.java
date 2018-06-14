@@ -290,30 +290,35 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     // Implements {@link KeyboardState.SwitchActions}.
     @Override
     public void setAlphabetKeyboard() {
+        IS_SHIFTED = false;
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET));
     }
 
     // Implements {@link KeyboardState.SwitchActions}.
     @Override
     public void setAlphabetManualShiftedKeyboard() {
+        IS_SHIFTED = true;
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED));
     }
 
     // Implements {@link KeyboardState.SwitchActions}.
     @Override
     public void setAlphabetAutomaticShiftedKeyboard() {
+        IS_SHIFTED = true;
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED));
     }
 
     // Implements {@link KeyboardState.SwitchActions}.
     @Override
     public void setAlphabetShiftLockedKeyboard() {
+        IS_SHIFTED = true;
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED));
     }
 
     // Implements {@link KeyboardState.SwitchActions}.
     @Override
     public void setAlphabetShiftLockShiftedKeyboard() {
+        IS_SHIFTED = true;
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED));
     }
 

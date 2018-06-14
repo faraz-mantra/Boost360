@@ -31,6 +31,7 @@ public class MixPanelController {
     public static final String BUBBLE_OVERLAY_PERM = "BubbleOverlayPerm";
     public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
     public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
+    public static final String BUBBLE_ENABLED = "BubbleEnabled";
     public static final String BUBBLE_CALL_TRACKER = "BubbleCallTracker";
     public static final String BUBBLE_DISMISS_CALL_TRACKER = "BubbleDismissCallTracker";
     public static final String BUBBLE_DISMISS_ENQUIRY = "BubbleDismissEnquiry";
