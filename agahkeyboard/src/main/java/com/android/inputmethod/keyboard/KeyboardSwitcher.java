@@ -1027,23 +1027,23 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 photo.setSelected(false);
                 modelList.add(photo.toAllSuggestion());
             }
-            if (lengthOfItems > Constants.storeSecondaryImages.size()) {
-                for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
-                    Photo photo = new Photo();
-                    photo.setImageUri(null);
-                    if (i == 0) {
-                        photo.setSelected(true);
-                    } else {
-                        photo.setSelected(false);
-                    }
-                    modelList.add(photo.toAllSuggestion());
-                }
-            } else {
+        }
+        if (lengthOfItems > Constants.storeSecondaryImages.size()) {
+            for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
                 Photo photo = new Photo();
                 photo.setImageUri(null);
-                photo.setSelected(true);
+                if (i == 0) {
+                    photo.setSelected(true);
+                } else {
+                    photo.setSelected(false);
+                }
                 modelList.add(photo.toAllSuggestion());
             }
+        } else {
+            Photo photo = new Photo();
+            photo.setImageUri(null);
+            photo.setSelected(true);
+            modelList.add(photo.toAllSuggestion());
         }
         totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
         imagesList.addAll(modelList);
