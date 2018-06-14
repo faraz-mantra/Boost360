@@ -1809,7 +1809,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 && !currentSettingsValues.mInputAttributes.mIsPasswordField
                 && !mKeyboardSwitcher.isShowingEmojiPalettes();
         if (!shouldShowSuggestionsStrip) {
-            mTopDisplayController.showActionRow(getApplicationContext());
+            if (!mTopDisplayController.isActionViewVisible()) {
+                mTopDisplayController.showActionRow(getApplicationContext());
+            }
             return;
         }
         //shouldShowSuggestionsStrip = true;

@@ -21,6 +21,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -339,6 +340,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (shareLayout != null) {
             shareLayout.setVisibility(View.INVISIBLE);
         }
+        mState.setAlphabetMode(true);
     }
 
     public void setProductShareKeyboardFrame(final ImePresenterImpl.TabType tabType) {
@@ -464,7 +466,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     private void callLoadingApi(final ImePresenterImpl.TabType type) {
-        mRecyclerView.post(new Runnable() {
+        Handler mHandler = new Handler();
+        mHandler.post(new Runnable() {
             @Override
             public void run() {
                 switch (type) {
@@ -651,6 +654,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         mKeyboardView.setKeyboardActionListener(mLatinIME);
         mActionRowView = mCurrentInputView.findViewById(R.id.action_row);
         mActionRowView.setListener(this.mLatinIME);
+        mActionRowView.setKeyboardActionListener(mLatinIME);
         shareLayout = mCurrentInputView.findViewById(R.id.sharelayout);
         pbOffers = (ProgressBar) mCurrentInputView.findViewById(R.id.pb_offer);
         imagesNotSupportedTv = (TextView) mCurrentInputView.findViewById(R.id.tv_images_not_supported);

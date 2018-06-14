@@ -98,7 +98,9 @@ public final class KeyboardLayoutSet {
     private static final class ElementParams {
         int mKeyboardXmlId;
         boolean mProximityCharsCorrectionEnabled;
-        public ElementParams() {}
+
+        public ElementParams() {
+        }
     }
 
     public static final class Params {
@@ -142,22 +144,22 @@ public final class KeyboardLayoutSet {
     public Keyboard getKeyboard(final int baseKeyboardLayoutSetElementId) {
         final int keyboardLayoutSetElementId;
         switch (mParams.mMode) {
-        case KeyboardId.MODE_PHONE:
-            if (baseKeyboardLayoutSetElementId == KeyboardId.ELEMENT_SYMBOLS) {
-                keyboardLayoutSetElementId = KeyboardId.ELEMENT_PHONE_SYMBOLS;
-            } else {
-                keyboardLayoutSetElementId = KeyboardId.ELEMENT_PHONE;
-            }
-            break;
-        case KeyboardId.MODE_NUMBER:
-        case KeyboardId.MODE_DATE:
-        case KeyboardId.MODE_TIME:
-        case KeyboardId.MODE_DATETIME:
-            keyboardLayoutSetElementId = KeyboardId.ELEMENT_NUMBER;
-            break;
-        default:
-            keyboardLayoutSetElementId = baseKeyboardLayoutSetElementId;
-            break;
+            case KeyboardId.MODE_PHONE:
+                if (baseKeyboardLayoutSetElementId == KeyboardId.ELEMENT_SYMBOLS) {
+                    keyboardLayoutSetElementId = KeyboardId.ELEMENT_PHONE_SYMBOLS;
+                } else {
+                    keyboardLayoutSetElementId = KeyboardId.ELEMENT_PHONE;
+                }
+                break;
+            case KeyboardId.MODE_NUMBER:
+            case KeyboardId.MODE_DATE:
+            case KeyboardId.MODE_TIME:
+            case KeyboardId.MODE_DATETIME:
+                keyboardLayoutSetElementId = KeyboardId.ELEMENT_NUMBER;
+                break;
+            default:
+                keyboardLayoutSetElementId = baseKeyboardLayoutSetElementId;
+                break;
         }
 
         ElementParams elementParams = mParams.mKeyboardLayoutSetElementIdToParamsMap.get(
@@ -219,7 +221,7 @@ public final class KeyboardLayoutSet {
         /*if((id.mElementId >= KeyboardId.ELEMENT_EMOJI_RECENTS) && (id.mElementId <= KeyboardId.ELEMENT_EMOJI_CATEGORY16))
             keyboard.mTypeface = FontUtils.getTypeface("emoji");
         else*/
-            keyboard.mTypeface = FontUtils.getTypeface();
+        keyboard.mTypeface = FontUtils.getTypeface();
         return keyboard;
     }
 
@@ -260,8 +262,7 @@ public final class KeyboardLayoutSet {
         public Builder setSubtype(final InputMethodSubtype subtype) {
             final boolean asciiCapable = InputMethodSubtypeCompatUtils.isAsciiCapable(subtype);
             // TODO: Consolidate with {@link InputAttributes}.
-            @SuppressWarnings("deprecation")
-            final boolean deprecatedForceAscii = InputAttributes.inPrivateImeOptions(
+            @SuppressWarnings("deprecation") final boolean deprecatedForceAscii = InputAttributes.inPrivateImeOptions(
                     mPackageName, FORCE_ASCII, mParams.mEditorInfo);
             final boolean forceAscii = EditorInfoCompatUtils.hasFlagForceAscii(
                     mParams.mEditorInfo.imeOptions)
@@ -406,33 +407,33 @@ public final class KeyboardLayoutSet {
             final int variation = inputType & InputType.TYPE_MASK_VARIATION;
 
             switch (inputType & InputType.TYPE_MASK_CLASS) {
-            case InputType.TYPE_CLASS_NUMBER:
-                return KeyboardId.MODE_NUMBER;
-            case InputType.TYPE_CLASS_DATETIME:
-                switch (variation) {
-                case InputType.TYPE_DATETIME_VARIATION_DATE:
-                    return KeyboardId.MODE_DATE;
-                case InputType.TYPE_DATETIME_VARIATION_TIME:
-                    return KeyboardId.MODE_TIME;
-                default: // InputType.TYPE_DATETIME_VARIATION_NORMAL
-                    return KeyboardId.MODE_DATETIME;
-                }
-            case InputType.TYPE_CLASS_PHONE:
-                return KeyboardId.MODE_PHONE;
-            case InputType.TYPE_CLASS_TEXT:
-                if (InputTypeUtils.isEmailVariation(variation)) {
-                    return KeyboardId.MODE_EMAIL;
-                } else if (variation == InputType.TYPE_TEXT_VARIATION_URI) {
-                    return KeyboardId.MODE_URL;
-                } else if (variation == InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE) {
-                    return KeyboardId.MODE_IM;
-                } else if (variation == InputType.TYPE_TEXT_VARIATION_FILTER) {
+                case InputType.TYPE_CLASS_NUMBER:
+                    return KeyboardId.MODE_NUMBER;
+                case InputType.TYPE_CLASS_DATETIME:
+                    switch (variation) {
+                        case InputType.TYPE_DATETIME_VARIATION_DATE:
+                            return KeyboardId.MODE_DATE;
+                        case InputType.TYPE_DATETIME_VARIATION_TIME:
+                            return KeyboardId.MODE_TIME;
+                        default: // InputType.TYPE_DATETIME_VARIATION_NORMAL
+                            return KeyboardId.MODE_DATETIME;
+                    }
+                case InputType.TYPE_CLASS_PHONE:
+                    return KeyboardId.MODE_PHONE;
+                case InputType.TYPE_CLASS_TEXT:
+                    if (InputTypeUtils.isEmailVariation(variation)) {
+                        return KeyboardId.MODE_EMAIL;
+                    } else if (variation == InputType.TYPE_TEXT_VARIATION_URI) {
+                        return KeyboardId.MODE_URL;
+                    } else if (variation == InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE) {
+                        return KeyboardId.MODE_IM;
+                    } else if (variation == InputType.TYPE_TEXT_VARIATION_FILTER) {
+                        return KeyboardId.MODE_TEXT;
+                    } else {
+                        return KeyboardId.MODE_TEXT;
+                    }
+                default:
                     return KeyboardId.MODE_TEXT;
-                } else {
-                    return KeyboardId.MODE_TEXT;
-                }
-            default:
-                return KeyboardId.MODE_TEXT;
             }
         }
     }

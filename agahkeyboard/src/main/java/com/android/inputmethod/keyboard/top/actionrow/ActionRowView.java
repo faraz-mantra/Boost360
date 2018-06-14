@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.inputmethod.keyboard.KeyboardActionListener;
 import com.android.inputmethod.keyboard.emojifast.EmojiView;
 import com.android.inputmethod.keyboard.emojifast.RecentEmojiPageModel;
 import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
@@ -23,9 +24,11 @@ import java.util.HashMap;
 import io.separ.neural.inputmethod.colors.ColorManager;
 import io.separ.neural.inputmethod.colors.ColorProfile;
 import io.separ.neural.inputmethod.indic.AudioAndHapticFeedbackManager;
+import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.R;
 import io.separ.neural.inputmethod.slash.EventBusExt;
 
+import static io.separ.neural.inputmethod.indic.Constants.NOT_A_COORDINATE;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.DETAILS;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PHOTOS;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PRODUCTS;
@@ -43,9 +46,26 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
     private Listener mListener;
     private HashMap<String, LinearLayout> layouts;
     private static final String[] DEFAULT_SERVICES;
+    private KeyboardActionListener keyboardActionListener;
 
     public boolean onTouch(View v, MotionEvent event) {
+        if (event.getActionMasked() != MotionEvent.ACTION_DOWN) {
+            return false;
+        }
+        final Object tag = v.getTag();
+        if (!(tag instanceof Integer)) {
+            return false;
+        }
+        final int code = (Integer) tag;
+        keyboardActionListener.onPressKey(
+                code, 0 /* repeatCount */, true /* isSinglePointer */);
+        // It's important to return false here. Otherwise, {@link #onClick} and touch-down visual
+        // feedback stop working.
         return false;
+    }
+
+    public void setKeyboardActionListener(KeyboardActionListener keyboardActionListener) {
+        this.keyboardActionListener = keyboardActionListener;
     }
 
     /*service click handler*/
@@ -264,9 +284,19 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             i++;
         }*/
         ImageView ivBack = layout.findViewById(R.id.img_back);
+        ivBack.setTag(Constants.CODE_ALPHA_FROM_EMOJI);
+        ivBack.setOnTouchListener(this);
         ivBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                final Object tag = v.getTag();
+                if (!(tag instanceof Integer)) {
+                    return;
+                }
+                final int code = (Integer) tag;
+                keyboardActionListener.onCodeInput(code, NOT_A_COORDINATE, NOT_A_COORDINATE,
+                        false /* isKeyRepeat */);
+                keyboardActionListener.onReleaseKey(code, false /* withSliding */);
                 EventBusExt.getDefault().post(new ShowSuggestionsEvent());
             }
         });
