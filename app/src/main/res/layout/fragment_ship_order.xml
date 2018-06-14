@@ -102,6 +102,7 @@
                             android:id="@+id/etDeliveryCharges"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="0.00"
                             android:inputType="numberDecimal"
                             android:maxLength="6"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
