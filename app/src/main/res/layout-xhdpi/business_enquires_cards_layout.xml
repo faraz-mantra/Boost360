@@ -93,6 +93,38 @@
                                 android:textColor="@color/white"
                                 android:textSize="10sp"
                                 tools:ignore="MissingPrefix" />
+
+                            <LinearLayout
+                                android:id="@+id/sent_byLinearLayout"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/sent_byTextView"
+                                    android:textStyle="italic"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/enquired_by"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    tools:ignore="MissingPrefix" />
+
+                                <TextView
+                                    android:id="@+id/samTextView"
+                                    android:textStyle="italic"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="@string/sam"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    tools:ignore="MissingPrefix" />
+
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <FrameLayout

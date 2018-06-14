@@ -74,8 +74,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="#212121"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#212121">
 
         <com.android.inputmethod.keyboard.MainKeyboardView
             android:id="@+id/keyboard_view"
@@ -98,6 +98,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_images_not_supported"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/image_not_supported"
+            android:textColor="@color/white"
             android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

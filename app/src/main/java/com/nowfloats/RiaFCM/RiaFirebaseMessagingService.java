@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
+import com.apxor.androidsdk.ApxorSDK;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
@@ -48,6 +49,7 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -77,7 +79,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             sendNotification(mapResult);
             Constants.GCM_Msg = true;
         }
-
+        ApxorSDK.logAppEvent("onMessageReceived", new HashMap<String, String>());
     }
 
     private static final String SAM_BUBBLE_MSG = "I have Got some data";

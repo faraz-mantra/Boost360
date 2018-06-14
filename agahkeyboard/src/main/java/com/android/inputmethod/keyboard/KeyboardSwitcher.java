@@ -82,6 +82,7 @@ import nfkeyboard.util.SharedPrefUtil;
 
 import static com.android.inputmethod.keyboard.internal.AlphabetShiftState.IS_SHIFTED;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.DETAILS;
+import static nfkeyboard.keyboards.ImePresenterImpl.TabType.KEYBOARD;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PHOTOS;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.PRODUCTS;
 import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
@@ -119,6 +120,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface galleryImagesListener;
     boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private ProgressBar pbOffers;
+    private TextView tvImageNotSupported;
 
     public LatinIME getmLatinIME() {
         return mLatinIME;
@@ -330,8 +332,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     public void showKeyboardFrame() {
+        mTabType = KEYBOARD;
         mKeyboardView.setVisibility(View.VISIBLE);
         mRichMediaView.setGone();
+        imagesNotSupportedTv.setVisibility(View.GONE);
         if (shareLayout != null) {
             shareLayout.setVisibility(View.INVISIBLE);
         }
@@ -649,11 +653,11 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         mActionRowView.setListener(this.mLatinIME);
         shareLayout = mCurrentInputView.findViewById(R.id.sharelayout);
         pbOffers = (ProgressBar) mCurrentInputView.findViewById(R.id.pb_offer);
+        imagesNotSupportedTv = (TextView) mCurrentInputView.findViewById(R.id.tv_images_not_supported);
         shareLayout.setMinimumHeight(mKeyboardView.getHeight());
         //mRichMediaView.setMinimumHeight(mKeyboardView.getHeight());
         selectionLayout = shareLayout.findViewById(R.id.cl_selection_layout);
 
-        imagesNotSupportedTv = shareLayout.findViewById(R.id.tv_images_not_supported);
         totalImagesTv = shareLayout.findViewById(R.id.tv_total);
         shareBtn = shareLayout.findViewById(R.id.btn_share);
         shareBtn.setOnClickListener(new View.OnClickListener() {
@@ -692,7 +696,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         Toast.makeText(mThemeContext, "Please reopen this keyboard", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (lastVisibleItem >= totalItemCount - 2) {
+                    if (totalItemCount > 0 && lastVisibleItem >= totalItemCount - 2) {
                         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
                             shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
                         } else {
@@ -814,8 +818,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 if (!selected) {
                     for (int i = 0; i < selectedImages.size(); i++) {
                         if (selectedImages.get(i).getImageUri().equalsIgnoreCase(model.getImageUri())) {
@@ -1028,12 +1031,14 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
                     Photo photo = new Photo();
                     photo.setImageUri(null);
-                    if (i == 0) { photo.setSelected(true); }
-                    else { photo.setSelected(false); }
+                    if (i == 0) {
+                        photo.setSelected(true);
+                    } else {
+                        photo.setSelected(false);
+                    }
                     modelList.add(photo.toAllSuggestion());
                 }
-            }
-            else {
+            } else {
                 Photo photo = new Photo();
                 photo.setImageUri(null);
                 photo.setSelected(true);
