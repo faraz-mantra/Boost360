@@ -1039,8 +1039,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 photo.setSelected(true);
                 modelList.add(photo.toAllSuggestion());
             }
-            totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
         }
+        totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
         imagesList.addAll(modelList);
         shareAdapter1.setSuggestionModels(modelList);
         recyclerViewPhotos.setLayoutManager(gridLayoutManager);
