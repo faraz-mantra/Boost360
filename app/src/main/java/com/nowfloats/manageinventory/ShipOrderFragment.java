@@ -75,13 +75,13 @@ public class ShipOrderFragment extends DialogFragment {
     private boolean verifyData() {
 
         boolean isAllFieldsValid = true;
-        if (etDeliveryProvider.getText().toString().trim().equals("")) {
+        if (etShippedOn.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
-            etDeliveryProvider.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
+            etShippedOn.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         }
-        if (etTrackingNumber.getText().toString().trim().equals("")) {
+        if (etDeliveryCharges.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
-            etTrackingNumber.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
+            etDeliveryCharges.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         }
 
 
