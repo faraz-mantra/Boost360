@@ -98,19 +98,19 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     private void performActions() {
-
         if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.PLACED)) {
             confirmOrder();
         } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
-            if (mOrder.getLogisticsDetails() != null &&
-                    mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
-                deliverOrder();
-            } else {
-                shipOrder();
+
+            if (!mOrder.getMode().equalsIgnoreCase("PICKUP")) {
+                if (mOrder.getLogisticsDetails() != null &&
+                        mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
+                    deliverOrder();
+                } else {
+                    shipOrder();
+                }
             }
-
         }
-
     }
 
     private void confirmOrder() {

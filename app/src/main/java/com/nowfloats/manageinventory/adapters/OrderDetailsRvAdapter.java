@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +94,10 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.received_order_status_bg));
                     break;
                 case "Confirmed":
-                    if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
+                    if (mOrder.getMode().equalsIgnoreCase("Pickup")){
+                        customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
+                    }
+                    else if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
                         customerDetailsHolder.tvStatusTag.setText("Delivery Confirmation Pending");
                     } else {
                         customerDetailsHolder.tvStatusTag.setText("Shipping Pending");
@@ -117,6 +121,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.cancelled_order_status_bg));
                     break;
                 case "Disputed":
+                case "Escalated":
                     customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.abandoned_order_status_bg));
                     break;
@@ -161,11 +166,11 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 orderDetailsHolder.tvShippingCharge.setText("N/A");
                 orderDetailsHolder.tvNetAmount.setText("N/A");
             }
-//            if(mOrder.getOrderStatus() == OrderListActivity.OrderStatus.COMPLETED.ordinal()) {
-//                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getActualDeliveryDate()));
-//            }else {
-//                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getExpectedDeliveryDate()));
-//            }
+            if (mOrder.getLogisticsDetails() != null && !TextUtils.isEmpty(mOrder.getLogisticsDetails().getDeliveredOn())) {
+                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getLogisticsDetails().getDeliveredOn()));
+            } else {
+                orderDetailsHolder.tvDeliveryDate.setText("N/A");
+            }
             orderDetailsHolder.tvOrderDate.setText(getParsedDate(mOrder.getCreatedOn()));
         }
     }
