@@ -359,6 +359,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         } else {
 
             if (MethodUtils.isOnline(mThemeContext)) {
+                refreshRecyclerView();
                 switch (tabType) {
                     case UPDATES:
                         mActionRowView.findViewById(R.id.tv_updates).setBackground(mThemeContext.getResources().getDrawable(R.drawable.round_414141));
@@ -684,45 +685,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 deselectImages();
             }
         });
-        if (mRecyclerView == null) {
-            mRecyclerView = shareLayout.findViewById(R.id.product_share_rv_list);
-            mRecyclerView.setHasFixedSize(true);
-            linearLayoutManager = new LinearLayoutManager(mThemeContext, LinearLayoutManager.HORIZONTAL, false);
-            mRecyclerView.setLayoutManager(linearLayoutManager);
-            shareAdapter = new MainAdapter(mThemeContext, this);
-            mRecyclerView.setAdapter(shareAdapter);
-            snapHelper = new PagerSnapHelper();
-            snapHelper.attachToRecyclerView(mRecyclerView);
-            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-                @Override
-                public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
-
-                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    int totalItemCount = linearLayoutManager.getItemCount();
-                    int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                    if (apiCallPresenter == null) {
-                        Toast.makeText(mThemeContext, "Please reopen this keyboard", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (totalItemCount > 0 && lastVisibleItem >= totalItemCount - 2) {
-                        if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
-                            shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
-                        } else {
-                            callLoadingApi(mTabType);
-                        }
-                    }
-                }
-            });
-        }
-        if (recyclerViewPhotos == null) {
-            recyclerViewPhotos = shareLayout.findViewById(R.id.rv_list_photos);
-            recyclerViewPhotos.setHasFixedSize(true);
-            shareAdapter1 = new MainAdapter(mThemeContext, this);
-            recyclerViewPhotos.setAdapter(shareAdapter1);
-            gridLayoutManager = new GridLayoutManager(mThemeContext, 2, GridLayoutManager.HORIZONTAL, false);
-            recyclerViewPhotos.setLayoutManager(gridLayoutManager);
-        }
+        refreshRecyclerView();
         return mCurrentInputView;
     }
 
@@ -978,6 +941,51 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         }
         if (type == mTabType) {
             shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList);
+        }
+    }
+
+    private void refreshRecyclerView() {
+        mRecyclerView = null;
+        recyclerViewPhotos = null;
+        if (mRecyclerView == null) {
+            mRecyclerView = shareLayout.findViewById(R.id.product_share_rv_list);
+            mRecyclerView.setHasFixedSize(true);
+            linearLayoutManager = new LinearLayoutManager(mThemeContext, LinearLayoutManager.HORIZONTAL, false);
+            mRecyclerView.setLayoutManager(linearLayoutManager);
+            shareAdapter = new MainAdapter(mThemeContext, this);
+            mRecyclerView.setAdapter(shareAdapter);
+            mRecyclerView.setOnFlingListener(null);
+            snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(mRecyclerView);
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+                @Override
+                public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
+
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int totalItemCount = linearLayoutManager.getItemCount();
+                    int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                    if (apiCallPresenter == null) {
+                        Toast.makeText(mThemeContext, "Please reopen this keyboard", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (totalItemCount > 0 && lastVisibleItem >= totalItemCount - 2) {
+                        if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
+                            shareAdapter.setLoginScreen(createSuggestionModel("Login", BaseAdapterManager.SectionTypeEnum.Login));
+                        } else {
+                            callLoadingApi(mTabType);
+                        }
+                    }
+                }
+            });
+        }
+        if (recyclerViewPhotos == null) {
+            recyclerViewPhotos = shareLayout.findViewById(R.id.rv_list_photos);
+            recyclerViewPhotos.setHasFixedSize(true);
+            shareAdapter1 = new MainAdapter(mThemeContext, this);
+            recyclerViewPhotos.setAdapter(shareAdapter1);
+            gridLayoutManager = new GridLayoutManager(mThemeContext, 2, GridLayoutManager.HORIZONTAL, false);
+            recyclerViewPhotos.setLayoutManager(gridLayoutManager);
         }
     }
 
