@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -102,13 +103,16 @@ public class OrderDetailsActivity extends AppCompatActivity {
             confirmOrder();
         } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
 
-            if (!mOrder.getMode().equalsIgnoreCase("PICKUP")) {
-                if (mOrder.getLogisticsDetails() != null &&
-                        mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
+            if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() != null &&
+                    !TextUtils.isEmpty(mOrder.getLogisticsDetails().getDeliveryConfirmationDetails().getNotificationSentOn())) {
+
+            } else if (mOrder.getLogisticsDetails() != null &&
+                    mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
+                if (!mOrder.getMode().equalsIgnoreCase("PICKUP")) {
                     deliverOrder();
-                } else {
-                    shipOrder();
                 }
+            } else {
+                shipOrder();
             }
         }
     }
@@ -173,54 +177,82 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tvPositive.setVisibility(View.VISIBLE);
         tvNegative.setVisibility(View.VISIBLE);
 
-        tvPositive.setText("Mark Order As Shipped");
+        if (!mOrder.getMode().equalsIgnoreCase("PICKUP")) {
+            tvPositive.setText("Mark Order As Shipped");
+            tvPositive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    shipOrderFragment = ShipOrderFragment.newInstance();
+
+                    shipOrderFragment.setResultListener(new ShipOrderFragment.OnResultReceive() {
+                        @Override
+                        public void OnResult(String shippedOn, String deliveryProvider, String trackingNumber,
+                                             String trackingURL, double deliveryCharges) {
+
+                            pbOrderDetails.setVisibility(View.VISIBLE);
+                            MarkOrderAsShipped markOrderAsShipped = new MarkOrderAsShipped();
+                            markOrderAsShipped.setDeliveryCharges(deliveryCharges);
+                            markOrderAsShipped.setDeliveryProvider(deliveryProvider);
+                            markOrderAsShipped.setShippedOn(shippedOn);
+                            markOrderAsShipped.setTrackingNumber(trackingNumber);
+                            markOrderAsShipped.setTrackingURL(trackingURL);
+
+
+                            shipOrderFragment.setResultListener(null);
+                            shipOrderFragment.dismiss();
+                            shipOrderFragment = null;
+
+                            WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+                            callInterface.markOrderAsShipped(markOrderAsShipped, new retrofit.Callback<CommonStatus>() {
+
+                                @Override
+                                public void success(CommonStatus commonStatus, retrofit.client.Response response) {
+                                    pbOrderDetails.setVisibility(View.GONE);
+                                    mBusEvent.post(commonStatus);
+                                    finish();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    pbOrderDetails.setVisibility(View.GONE);
+                                    Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
+
+                    shipOrderFragment.show(getFragmentManager(), "Test");
+                }
+            });
+        } else {
+            tvPositive.setText("Send Order Delivery Confirmation");
+
+            tvPositive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pbOrderDetails.setVisibility(View.VISIBLE);
+                    WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+                    callInterface.triggerOrderDeliveryConfirmation(mOrder.getOrderId(), "SELLER", new retrofit.Callback<CommonStatus>() {
+
+                        @Override
+                        public void success(CommonStatus commonStatus, retrofit.client.Response response) {
+                            pbOrderDetails.setVisibility(View.GONE);
+                            mBusEvent.post(commonStatus);
+                            finish();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            pbOrderDetails.setVisibility(View.GONE);
+                            Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+
+        }
+
         tvNegative.setText("Cancel Order");
-
-        tvPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shipOrderFragment = ShipOrderFragment.newInstance();
-
-                shipOrderFragment.setResultListener(new ShipOrderFragment.OnResultReceive() {
-                    @Override
-                    public void OnResult(String shippedOn, String deliveryProvider, String trackingNumber,
-                                         String trackingURL, double deliveryCharges) {
-
-                        pbOrderDetails.setVisibility(View.VISIBLE);
-                        MarkOrderAsShipped markOrderAsShipped = new MarkOrderAsShipped();
-                        markOrderAsShipped.setDeliveryCharges(deliveryCharges);
-                        markOrderAsShipped.setDeliveryProvider(deliveryProvider);
-                        markOrderAsShipped.setShippedOn(shippedOn);
-                        markOrderAsShipped.setTrackingNumber(trackingNumber);
-                        markOrderAsShipped.setTrackingURL(trackingURL);
-
-
-                        shipOrderFragment.setResultListener(null);
-                        shipOrderFragment.dismiss();
-                        shipOrderFragment = null;
-
-                        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-                        callInterface.markOrderAsShipped(markOrderAsShipped, new retrofit.Callback<CommonStatus>() {
-
-                            @Override
-                            public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                pbOrderDetails.setVisibility(View.GONE);
-                                mBusEvent.post(commonStatus);
-                                finish();
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                                pbOrderDetails.setVisibility(View.GONE);
-                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-
-                shipOrderFragment.show(getFragmentManager(), "Test");
-            }
-        });
 
         tvNegative.setOnClickListener(new View.OnClickListener() {
             @Override

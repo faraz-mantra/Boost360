@@ -639,10 +639,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             calendar.setTime(new Date());
             calendar.add(Calendar.MINUTE, -330);
             calendar.add(Calendar.HOUR_OF_DAY, hours);
-            String date = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
-            String time = new SimpleDateFormat("HH:mm:ss").format(calendar.getTime());
-            Log.d("here", date + time);
-            return date + "T" + time;
+            return getParsedDate(calendar.getTime(), YYYY_MM_DD_HH_MM_SS);
+        }
+        public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
+
+        public String getParsedDate(Date dateFormat, String format) {
+            return new java.text.SimpleDateFormat(format).format(dateFormat);
         }
 
         void ListPopupWindowSetup(final String[] validity, final String[] quantity) {

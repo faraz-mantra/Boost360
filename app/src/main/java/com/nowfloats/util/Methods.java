@@ -585,6 +585,13 @@ public class Methods {
                 .build().show();
     }
 
+    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
+
+
+    public static String getParsedDate(long milliseconds, String format) {
+        return new SimpleDateFormat(format).format(milliseconds);
+    }
+
 
     public static final String ISO_8601_24H_FULL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static TimeZone UTC;

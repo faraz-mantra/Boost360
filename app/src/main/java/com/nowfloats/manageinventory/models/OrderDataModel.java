@@ -30,7 +30,7 @@ public class OrderDataModel {
         }
     }
 
-    public class Order implements Serializable{
+    public class Order implements Serializable {
         @SerializedName("_id")
         @Expose
         private String orderId;
@@ -140,7 +140,21 @@ public class OrderDataModel {
         }
     }
 
-    public class OrderDetails implements Serializable{
+    public class DeliveryConfirmationDetails implements Serializable {
+        @SerializedName("NotificationSentOn")
+        @Expose
+        private String notificationSentOn;
+
+        public String getNotificationSentOn() {
+            return notificationSentOn;
+        }
+
+        public void setNotificationSentOn(String notificationSentOn) {
+            this.notificationSentOn = notificationSentOn;
+        }
+    }
+
+    public class OrderDetails implements Serializable {
         @SerializedName("Type")
         @Expose
         private String type;
@@ -202,7 +216,7 @@ public class OrderDataModel {
         }
     }
 
-    public class Product implements Serializable{
+    public class Product implements Serializable {
         @SerializedName("Name")
         @Expose
         private String name;
@@ -253,7 +267,7 @@ public class OrderDataModel {
 
     }
 
-    public class FeaturedImage implements Serializable{
+    public class FeaturedImage implements Serializable {
         @SerializedName("ImageUri")
         @Expose
         private String imageUri;
@@ -280,7 +294,7 @@ public class OrderDataModel {
     }
 
 
-    public class BillingDetails implements Serializable{
+    public class BillingDetails implements Serializable {
         @SerializedName("CurrencyCode")
         @Expose
         private String currencyCode;
@@ -354,7 +368,7 @@ public class OrderDataModel {
         }
     }
 
-    public class PaymentDetails implements Serializable{
+    public class PaymentDetails implements Serializable {
         @SerializedName("Status")
         @Expose
         private String status;
@@ -404,7 +418,7 @@ public class OrderDataModel {
         }
     }
 
-    public class BuyerDetails implements Serializable{
+    public class BuyerDetails implements Serializable {
         @SerializedName("ContactDetails")
         @Expose
         private ContactDetails contactDetails;
@@ -430,7 +444,7 @@ public class OrderDataModel {
         }
     }
 
-    public class LogisticsDetails implements Serializable{
+    public class LogisticsDetails implements Serializable {
         @SerializedName("Status")
         @Expose
         private String status;
@@ -442,6 +456,10 @@ public class OrderDataModel {
         @SerializedName("DeliveredOn")
         @Expose
         private String deliveredOn;
+
+        @SerializedName("DeliveryConfirmationDetails")
+        @Expose
+        private DeliveryConfirmationDetails deliveryConfirmationDetails;
 
         public String getStatus() {
             return status;
@@ -466,9 +484,17 @@ public class OrderDataModel {
         public void setDeliveredOn(String deliveredOn) {
             this.deliveredOn = deliveredOn;
         }
+
+        public DeliveryConfirmationDetails getDeliveryConfirmationDetails() {
+            return deliveryConfirmationDetails;
+        }
+
+        public void setDeliveryConfirmationDetails(DeliveryConfirmationDetails deliveryConfirmationDetails) {
+            this.deliveryConfirmationDetails = deliveryConfirmationDetails;
+        }
     }
 
-    public class ContactDetails implements Serializable{
+    public class ContactDetails implements Serializable {
         @SerializedName("FullName")
         @Expose
         private String fullName;
@@ -518,7 +544,7 @@ public class OrderDataModel {
         }
     }
 
-    public class Address implements Serializable{
+    public class Address implements Serializable {
         @SerializedName("AddressLine1")
         @Expose
         private String addressLine1;
