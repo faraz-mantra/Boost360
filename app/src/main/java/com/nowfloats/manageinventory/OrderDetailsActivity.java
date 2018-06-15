@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -102,7 +103,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
             confirmOrder();
         } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
 
-            if (mOrder.getLogisticsDetails() != null &&
+            if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() != null &&
+                    !TextUtils.isEmpty(mOrder.getLogisticsDetails().getDeliveryConfirmationDetails().getNotificationSentOn())) {
+
+            } else if (mOrder.getLogisticsDetails() != null &&
                     mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
                 if (!mOrder.getMode().equalsIgnoreCase("PICKUP")) {
                     deliverOrder();
