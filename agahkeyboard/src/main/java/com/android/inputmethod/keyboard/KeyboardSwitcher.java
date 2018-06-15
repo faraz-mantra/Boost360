@@ -724,6 +724,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
         AllSuggestionModel model;
 
+        Toast.makeText(mThemeContext, "Photos are being posted...", Toast.LENGTH_SHORT).show();
+
         for (int i = 0; i < selectedImages.size(); i++) {
             model = selectedImages.get(i);
             JSONObject object = new JSONObject();

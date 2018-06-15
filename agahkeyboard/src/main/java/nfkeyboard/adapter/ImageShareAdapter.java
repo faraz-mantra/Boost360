@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
@@ -73,7 +74,12 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
         void setImageView(AllSuggestionModel suggestionModel) {
             model = suggestionModel;
             if (model.getImageUri() != null) {
-                Glide.with(mContext).load(suggestionModel.getImageUri()).into(imageView);
+                Glide.with(mContext)
+                        .load(suggestionModel.getImageUri())
+                        .apply(new RequestOptions()
+                                .placeholder(R.drawable.placeholder_ic_image_padded)
+                                .fitCenter())
+                        .into(imageView);
                 addIv.setVisibility(View.GONE);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
