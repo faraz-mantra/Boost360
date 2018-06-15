@@ -1,5 +1,7 @@
 package nfkeyboard.models.networkmodels;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -358,6 +360,7 @@ public class Product {
         model.setMaxUsage((availableUnits > 0) ? availableUnits : 10);
         model.setP_id(id);
         model.setTypeEnum(BaseAdapterManager.SectionTypeEnum.Product);
+        model.setEditTextValueTemp((model.getEditTextValueTemp() == null || model.getEditTextValueTemp().equalsIgnoreCase("")) ? price : model.getEditTextValueTemp());
         return model;
     }
 }
