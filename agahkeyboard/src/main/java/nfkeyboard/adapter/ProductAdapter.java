@@ -45,6 +45,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
     private final String LABEL = "copy";
     private final ItemClickListener listener;
+    private final int MIN_OFFER_PRICE = 10;
 
     ViewGroup parent;
 
@@ -269,20 +270,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             doneButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dataModel.setProductKeyboardShown(false);
                     if (offerPriceEt.getId() == focusId) {
                         if (editText.getText().length() != 0) {
                             if (!(editText.getText().length() == 1 && editText.getText().toString().charAt(0) == '0')) {
-                                String offerPrice = editText.getText().toString();
-                                int i = 0;
-                                while (offerPrice.length() != 0 && offerPrice.charAt(i) == '0' && i < offerPrice.length() - 1 &&
-                                        offerPrice.charAt(i + 1) != '.') {
-                                    i++;
-                                }
-                                if (Double.valueOf(offerPrice.substring(i, offerPrice.length())) >= 10)
+                                if (Double.valueOf(editText.getText().toString()) >= MIN_OFFER_PRICE)
                                 {
-                                    offerPriceEt.setText(offerPrice.substring(i, offerPrice.length()));
-                                    dataModel.setEditTextValueTemp(offerPriceEt.getText().toString());
+                                    offerPriceEt.setText(editText.getText().toString());
                                     editText.clearFocus();
                                     editText.setText("");
                                     productsKeyboardCl.setVisibility(View.GONE);
@@ -307,7 +300,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 public void onClick(View view) {
                     editText.clearFocus();
                     editText.setText("");
-                    dataModel.setProductKeyboardShown(false);
                     productsKeyboardCl.setVisibility(View.GONE);
                     offerCl.setVisibility(View.VISIBLE);
                 }
@@ -317,7 +309,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 @Override
                 public void onClick(View view) {
                     AnimationFade(false);
-                    dataModel.setCreateOfferClicked(false);
                 }
             });
 
@@ -325,7 +316,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             copyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dataModel.setFlipped(false);
                     String url = onCopyClick(dataModel);
                     if (!url.equalsIgnoreCase("")) {
                         ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -342,7 +332,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             makeOfferButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dataModel.setCreateOfferClicked(true);
                     AnimationFade(true);
                 }
             });
@@ -378,7 +367,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                     listener.onCreateProductOfferClick(dataModel);
 
                     AnimationFlip(true);
-                    dataModel.setCreateOfferClicked(false);
                 }
             });
 
@@ -393,7 +381,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             offerPriceEt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dataModel.setProductKeyboardShown(true);
                     offerCl.setVisibility(View.GONE);
                     editText.requestFocus();
                     if (offerPriceEt.getText().toString().length() != 0) {
@@ -422,14 +409,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             keyboardCurrencyTv.setText(model.getCurrencyCode());
             offerCurrencyTv.setText(model.getCurrencyCode());
             availableUnits = model.getAvailableUnits();
-            if (Double.valueOf(model.getEditTextValueTemp()) >= 10) {
-                offerPriceEt.setText(model.getEditTextValueTemp());
+            if (Double.valueOf(model.getPrice()) >= MIN_OFFER_PRICE) {
+                offerPriceEt.setText(model.getPrice());
             }
             else {
                 offerPriceEt.setText("10");
             }
-            selectedQuantityTv.setText(model.getQuantityTemp());
-            selectedValidityTv.setText(model.getHoursTemp());
 
             String[] items;
 
@@ -446,38 +431,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             }
 
             ListPopupWindowSetup(validity, items);
-
-            flippable = model.isFlippable();
-
-            if (model.isFlipped()) {
-                constraintLayout.setVisibility(View.GONE);
-                constraintLayoutFlipped.setVisibility(View.VISIBLE);
-                offerCl.setVisibility(View.GONE);
-                productsKeyboardCl.setVisibility(View.GONE);
-                flippable = true;
-                model.setFlippable(flippable);
-            } else {
-                constraintLayout.setVisibility(View.VISIBLE);
-                constraintLayoutFlipped.setVisibility(View.GONE);
-                offerCl.setVisibility(View.GONE);
-                productsKeyboardCl.setVisibility(View.GONE);
-                flippable = true;
-                model.setFlippable(flippable);
-            }
-            if (model.isCreateOfferClicked()) {
-                constraintLayout.setVisibility(View.GONE);
-                constraintLayoutFlipped.setVisibility(View.GONE);
-                offerCl.setVisibility(View.VISIBLE);
-                productsKeyboardCl.setVisibility(View.GONE);
-                flippable = false;
-                model.setFlippable(flippable);
-            }
-            if (model.isProductKeyboardShown()) {
-                constraintLayout.setVisibility(View.GONE);
-                constraintLayoutFlipped.setVisibility(View.GONE);
-                offerCl.setVisibility(View.GONE);
-                productsKeyboardCl.setVisibility(View.VISIBLE);
-            }
         }
 
         void OnButtonClick(String number) {
@@ -529,7 +482,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                                 constraintLayoutFlipped.setVisibility(View.VISIBLE);
                                 constraintLayoutFlipped.setAlpha(1);
                                 offerCl.setVisibility(View.GONE);
-                                dataModel.setFlipped(true);
                             } else {
                                 constraintLayout.setVisibility(View.VISIBLE);
                                 constraintLayoutFlipped.setVisibility(View.GONE);
@@ -537,9 +489,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                                 offerCl.setVisibility(View.GONE);
                                 if (endShare) {
                                     flippable = true;
-                                    dataModel.setFlippable(flippable);
                                 }
-                                dataModel.setFlipped(false);
                             }
                             animatorSetFlipIn.start();
                         }
@@ -599,7 +549,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                         objectAnimatorFadeIn.start();
                         constraintLayoutFlipped.setVisibility(View.VISIBLE);
                         flippable = true;
-                        dataModel.setFlippable(flippable);
                     }
 
                 }
@@ -677,7 +626,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     selectedValidityTv.setText(validity[i]);
-                    dataModel.setHoursTemp(validity[i]);
                     listPopupWindowValidity.dismiss();
                 }
             });
@@ -708,7 +656,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     selectedQuantityTv.setText(quantity[i]);
-                    dataModel.setQuantityTemp(quantity[i]);
                     listPopupWindowQuantity.dismiss();
                 }
             });
