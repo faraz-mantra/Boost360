@@ -279,19 +279,26 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                                         offerPrice.charAt(i + 1) != '.') {
                                     i++;
                                 }
-                                offerPriceEt.setText(offerPrice.substring(i, offerPrice.length()));
+                                if (Double.valueOf(offerPrice.substring(i, offerPrice.length())) >= 10)
+                                {
+                                    offerPriceEt.setText(offerPrice.substring(i, offerPrice.length()));
+                                    dataModel.setEditTextValueTemp(offerPriceEt.getText().toString());
+                                    editText.clearFocus();
+                                    editText.setText("");
+                                    productsKeyboardCl.setVisibility(View.GONE);
+                                    offerCl.setVisibility(View.VISIBLE);
+                                }
+                                else {
+                                    Toast.makeText(mContext, "Offer price cannot be less than 10", Toast.LENGTH_LONG).show();
+                                }
                             } else {
-                                offerPriceEt.setText(editText.getText().toString());
+                                Toast.makeText(mContext, "Offer price cannot be less than 10", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            offerPriceEt.setText(editText.getText().toString());
+                            Toast.makeText(mContext, "Offer price cannot be less than 10", Toast.LENGTH_LONG).show();
                         }
                     }
-                    dataModel.setEditTextValueTemp(offerPriceEt.getText().toString());
-                    editText.clearFocus();
-                    editText.setText("");
-                    productsKeyboardCl.setVisibility(View.GONE);
-                    offerCl.setVisibility(View.VISIBLE);
+
                 }
             });
 
@@ -415,7 +422,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             keyboardCurrencyTv.setText(model.getCurrencyCode());
             offerCurrencyTv.setText(model.getCurrencyCode());
             availableUnits = model.getAvailableUnits();
-            offerPriceEt.setText(model.getEditTextValueTemp());
+            if (Double.valueOf(model.getEditTextValueTemp()) >= 10) {
+                offerPriceEt.setText(model.getEditTextValueTemp());
+            }
+            else {
+                offerPriceEt.setText("10");
+            }
             selectedQuantityTv.setText(model.getQuantityTemp());
             selectedValidityTv.setText(model.getHoursTemp());
 
