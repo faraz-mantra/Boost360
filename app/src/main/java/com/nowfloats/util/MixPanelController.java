@@ -67,6 +67,14 @@ public class MixPanelController {
     public static final String SAM_BUBBLE_SELECTED_MESSAGES = "SAMBubbleSelectedMessages";
     public static final String SAM_BUBBLE_ACTION_CALL = "SAMBubbleActionCall";
     public static final String SAM_BUBBLE_ACTION_SHARE = "SAMBubbleActionShare";
+    public static final String MY_ORDERS = "MyOrders";
+    public static final String ORDER_LIST = "OrderList";
+    public static final String ORDER_DETAILS = "OrderDetails";
+    public static final String CONFIRM_ORDER = "ConfirmOrder";
+    public static final String CANCEL_ORDER = "CancelOrder";
+    public static final String SHIP_ORDER = "ShipOrder";
+    public static final String DELIVER_ORDER = "DeliverOrder";
+    public static final String ESCALATE_ORDER = "EscalateOrder";
 
 
     public static final String THIRD_PARTY_DATA = "ThirdPartyData";

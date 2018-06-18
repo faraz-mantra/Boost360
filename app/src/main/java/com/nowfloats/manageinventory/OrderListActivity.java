@@ -35,6 +35,7 @@ import com.nowfloats.manageinventory.models.OrderDataModel.Order;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -202,6 +203,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Orders");
+        MixPanelController.track(MixPanelController.ORDER_LIST, null);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -612,8 +614,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                         filter(orderDataModel.getData().getOrders(), searchItem));
                 if (orderDataModel.getData().getOrders() != null && orderDataModel.getData().getOrders().size() > 0) {
                     mAdapter.addAll(orderDataModel.getData().getOrders());
-                }
-                else if (mAdapter.getOrders() == null || mAdapter.getOrders().size() == 0) {
+                } else if (mAdapter.getOrders() == null || mAdapter.getOrders().size() == 0) {
                     showEmptyLayout(emptyMsg);
                 }
             }

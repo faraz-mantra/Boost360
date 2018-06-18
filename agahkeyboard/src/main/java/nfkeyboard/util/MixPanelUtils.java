@@ -2,9 +2,15 @@ package nfkeyboard.util;
 
 import android.content.Context;
 
+import com.apxor.androidsdk.ApxorSDK;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Admin on 02-03-2018.
@@ -17,6 +23,8 @@ public class MixPanelUtils {
     public static final String KEYBOARD_SHOW_PRODUCT = "KeyboardShowProducts";
     public static final String KEYBOARD_VOICE_INPUT = "KeyboardVoiceInput";
     public static final String KEYBOARD_SHOW_PHOTOS = "KeyboardShowPhotos";
+    public static final String KEYBOARD_CREATE_OFFER = "KeyboardCreateOffer";
+    public static final String KEYBOARD_SHARE_OFFER = "KeyboardShareOffer";
     public static final String KEYBOARD_SHOW_DETAILS = "KeyboardShowDetails";
     public static final String KEYBOARD_SPEECH_RESULT = "KeyboardVoiceResult";
     public static final String KEYBOARD_UPDATE_IMAGE_SHARE = "KeyboardUpdateImageShare";
@@ -55,12 +63,49 @@ public class MixPanelUtils {
 
     public void track(String event, JSONObject Props) {
         try {
+            ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(Props));
             if (mixPanel != null)
                 mixPanel.track(event, Props);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public static Map<String, String> jsonToMap(JSONObject json) throws JSONException {
+        Map<String, String> retMap = null;
+        if (json != null) {
+            retMap = new HashMap<String, String>();
+            if (json != JSONObject.NULL) {
+                retMap = toMap(json);
+            }
+        }
+        return retMap;
+    }
+
+    public static Map<String, String> toMap(JSONObject object) throws JSONException {
+        Map<String, String> map = new HashMap<String, String>();
+
+        Iterator<String> keysItr = object.keys();
+        while (keysItr.hasNext()) {
+            String key = keysItr.next();
+            Object value = object.get(key);
+
+//            if (value instanceof JSONArray) {
+//                value = toList((JSONArray) value);
+//            } else if (value instanceof JSONObject) {
+//                value = toMap((JSONObject) value);
+//            } else {
+//
+//            }
+            if (value instanceof String) {
+                if (key.contains("$"))
+                    key = key.replace("$", "");
+                map.put(key, String.valueOf(value));
+            }
+        }
+        return map;
+    }
+
 
     public void flush() {
         if (mixPanel != null) {

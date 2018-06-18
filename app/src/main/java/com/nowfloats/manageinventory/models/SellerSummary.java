@@ -18,15 +18,15 @@ public class SellerSummary {
 
         @SerializedName("TotalRevenue")
         @Expose
-        private Double totalRevenue;
+        private String totalRevenue;
 
         @SerializedName("TotalOrders")
         @Expose
         private Integer totalOrders;
 
-        @SerializedName("TotalCompletedOrders")
+        @SerializedName("TotalOrdersCompleted")
         @Expose
-        private Integer totalCompletedOrders;
+        private Integer totalOrdersCompleted;
 
         @SerializedName("TotalOrdersCancelled")
         @Expose
@@ -44,11 +44,11 @@ public class SellerSummary {
         @Expose
         private Integer totalOrdersAbandoned;
 
-        public Double getTotalRevenue() {
+        public String getTotalRevenue() {
             return totalRevenue;
         }
 
-        public void setTotalRevenue(Double totalRevenue) {
+        public void setTotalRevenue(String totalRevenue) {
             this.totalRevenue = totalRevenue;
         }
 
@@ -60,12 +60,12 @@ public class SellerSummary {
             this.totalOrders = totalOrders;
         }
 
-        public Integer getTotalCompletedOrders() {
-            return totalCompletedOrders;
+        public Integer getTotalOrdersCompleted() {
+            return totalOrdersCompleted;
         }
 
-        public void setTotalCompletedOrders(Integer totalCompletedOrders) {
-            this.totalCompletedOrders = totalCompletedOrders;
+        public void setTotalOrdersCompleted(Integer totalOrdersCompleted) {
+            this.totalOrdersCompleted = totalOrdersCompleted;
         }
 
         public Integer getTotalOrdersCancelled() {

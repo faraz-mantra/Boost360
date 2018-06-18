@@ -36,6 +36,7 @@ import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.util.MethodUtils;
+import nfkeyboard.util.MixPanelUtils;
 
 /**
  * Created by Admin on 27-02-2018.
@@ -330,6 +331,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             makeOfferButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_CREATE_OFFER, null);
                     AnimationFade(true);
                 }
             });
@@ -337,6 +339,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             createButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SHARE_OFFER, null);
                     dataModel.setQuantity(Integer.valueOf(selectedQuantityTv.getText().toString()));
                     dataModel.setMaxUsage(Integer.valueOf(selectedQuantityTv.getText().toString()));
                     int validity = Integer.valueOf(selectedValidityTv.getText().toString().replaceAll("Hrs", "").trim());
@@ -595,6 +598,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             calendar.add(Calendar.HOUR_OF_DAY, hours);
             return getParsedDate(calendar.getTime(), YYYY_MM_DD_HH_MM_SS);
         }
+
         public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
 
         public String getParsedDate(Date dateFormat, String format) {
