@@ -17,7 +17,6 @@
 ** limitations under the License.
 */
 -->
-
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_focused="true"
@@ -31,3 +30,4 @@
     <item
         android:drawable="@drawable/ic_emoji_nature_normal_lxx_light" />
 </selector>
+

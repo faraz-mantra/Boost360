@@ -60,7 +60,7 @@
         parent="KeyboardView.LXX_Dark"
     >
         <item name="moreKeysKeyboardForActionLayout">@layout/more_keys_keyboard_for_action_lxx</item>
-        <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_lxx_dark</item>
+        <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_lxx_light</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height_lxx</item>
         <item name="keyPreviewOffset">@dimen/config_key_preview_offset_lxx</item>
         <item name="keyPreviewShowUpAnimator">@anim/key_preview_show_up_lxx</item>
@@ -113,8 +113,8 @@
         name="MoreKeysKeyboardView.LXX_Dark"
         parent="KeyboardView.LXX_Dark"
     >
-        <item name="android:background">@drawable/keyboard_popup_panel_background_lxx_dark</item>
-        <item name="keyBackground">@drawable/btn_keyboard_key_popup_lxx_dark</item>
+        <item name="android:background">@drawable/keyboard_popup_panel_background_lxx_light</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_popup_lxx_light</item>
         <item name="divider">@drawable/more_keys_divider</item>
         <item name="keyTypeface">normal</item>
         <item name="verticalCorrection">@dimen/config_more_keys_keyboard_vertical_correction_holo</item>
