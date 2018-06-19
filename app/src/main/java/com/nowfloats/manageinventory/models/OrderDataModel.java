@@ -319,6 +319,10 @@ public class OrderDataModel {
         @Expose
         private Double assuredPurchaseCharges;
 
+        @SerializedName("AmountPayableByBuyer")
+        @Expose
+        private Double amountPayableByBuyer;
+
         public String getCurrencyCode() {
             return currencyCode;
         }
@@ -365,6 +369,14 @@ public class OrderDataModel {
 
         public void setAssuredPurchaseCharges(Double assuredPurchaseCharges) {
             this.assuredPurchaseCharges = assuredPurchaseCharges;
+        }
+
+        public Double getAmountPayableByBuyer() {
+            return amountPayableByBuyer;
+        }
+
+        public void setAmountPayableByBuyer(Double amountPayableByBuyer) {
+            this.amountPayableByBuyer = amountPayableByBuyer;
         }
     }
 

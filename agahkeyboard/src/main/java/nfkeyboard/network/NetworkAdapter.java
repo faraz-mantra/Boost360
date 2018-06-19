@@ -26,9 +26,15 @@ public class NetworkAdapter {
     private INowFloatsApi mCreateOfferApi;
 
     public NetworkAdapter() {
+
+//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.withfloats.com")
                 .addConverterFactory(GsonConverterFactory.create())
+//                .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
@@ -37,6 +43,7 @@ public class NetworkAdapter {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl("https://assuredpurchase.withfloats.com")
                 .addConverterFactory(GsonConverterFactory.create())
+//                .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
@@ -145,7 +152,7 @@ public class NetworkAdapter {
 
     public void getAllImageList(GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface galleryImagesListener, String fpId) {
         GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface();
-        gallery.setGalleryInterfaceListener(galleryImagesListener,fpId);
+        gallery.setGalleryInterfaceListener(galleryImagesListener, fpId);
         gallery.execute();
     }
 }

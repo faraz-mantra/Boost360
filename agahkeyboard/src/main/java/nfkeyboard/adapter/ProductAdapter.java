@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +35,7 @@ import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.util.MethodUtils;
+import nfkeyboard.util.MixPanelUtils;
 
 /**
  * Created by Admin on 27-02-2018.
@@ -96,6 +96,8 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
         private String temp = null;
         private String[] validity, quantity;
+
+        private int MIN_OFFER_PRICE = 10;
 
         @SuppressLint("ClickableViewAccessibility")
         ImageHolder(final View itemView) {
@@ -602,6 +604,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             calendar.add(Calendar.HOUR_OF_DAY, hours);
             return getParsedDate(calendar.getTime(), YYYY_MM_DD_HH_MM_SS);
         }
+
         public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
 
         public String getParsedDate(Date dateFormat, String format) {

@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by NowFloats on 29-08-2017.
@@ -182,8 +183,11 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         String parsedDate;
         try {
+            format.setTimeZone(TimeZone.getDefault());
             Date date = format.parse(createdOn);
-            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy").format(date);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm a dd/MM/yyyy");
+            simpleDateFormat.setTimeZone(TimeZone.getDefault());
+            parsedDate = simpleDateFormat.format(date);
         } catch (ParseException e) {
             parsedDate = createdOn;
         }

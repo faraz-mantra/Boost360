@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by NowFloats on 05-09-2017.
@@ -94,11 +95,15 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.received_order_status_bg));
                     break;
                 case "Confirmed":
-                    if (mOrder.getMode().equalsIgnoreCase("Pickup")){
-                        customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
-                    }
-                    else if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
+                    if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
                         customerDetailsHolder.tvStatusTag.setText("Delivery Confirmation Pending");
+                    } else if (mOrder.getMode().equalsIgnoreCase("Pickup")) {
+                        if (mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() == null ||
+                                TextUtils.isEmpty(mOrder.getLogisticsDetails().getDeliveryConfirmationDetails().getNotificationSentOn())) {
+                            customerDetailsHolder.tvStatusTag.setText("Pickup Pending");
+                        } else {
+                            customerDetailsHolder.tvStatusTag.setText("Pickup Confirmation Pending");
+                        }
                     } else {
                         customerDetailsHolder.tvStatusTag.setText("Shipping Pending");
                     }
@@ -148,13 +153,17 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 productDetailsHolder.ivProductImg.setImageResource(R.drawable.default_product_image);
             }
-        } else if (holder instanceof OrderDetailsHolder) {
+        } else if (holder instanceof OrderDetailsHolder)
+
+        {
             OrderDetailsHolder orderDetailsHolder = (OrderDetailsHolder) holder;
             if (mOrder.getBillingDetails() != null) {
-                orderDetailsHolder.tvTotalPrice.setText((mOrder.getBillingDetails().getGrossAmount() +
-                        mOrder.getBillingDetails().getDiscountAmount() + mOrder.getBillingDetails().getAssuredPurchaseCharges() +
-                        mOrder.getBillingDetails().getNfDeliveryCharges()
-                        + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
+//                orderDetailsHolder.tvTotalPrice.setText((mOrder.getBillingDetails().getGrossAmount() +
+//                        mOrder.getBillingDetails().getDiscountAmount() + mOrder.getBillingDetails().getAssuredPurchaseCharges() +
+//                        mOrder.getBillingDetails().getNfDeliveryCharges()
+//                        + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
+
+                orderDetailsHolder.tvTotalPrice.setText(mOrder.getBillingDetails().getAmountPayableByBuyer() + "");
                 orderDetailsHolder.tvAssuredPurchaseCharge.setText(mOrder.getBillingDetails().getAssuredPurchaseCharges() + "");
                 orderDetailsHolder.tvShippingCharge.setText((mOrder.getBillingDetails().getNfDeliveryCharges()
                         + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
@@ -207,17 +216,20 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    private String getParsedDate(String strDate) {
-        if (strDate == null) {
+    private String getParsedDate(String createdOn) {
+        if (createdOn == null) {
             return "N/A";
         }
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         String parsedDate;
         try {
-            Date date = format.parse(strDate);
-            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy", Locale.ENGLISH).format(date);
+            format.setTimeZone(TimeZone.getDefault());
+            Date date = format.parse(createdOn);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm a dd/MM/yyyy");
+            simpleDateFormat.setTimeZone(TimeZone.getDefault());
+            parsedDate = simpleDateFormat.format(date);
         } catch (ParseException e) {
-            parsedDate = strDate;
+            parsedDate = createdOn;
         }
 
         return parsedDate;

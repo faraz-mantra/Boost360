@@ -56,7 +56,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void, String,
                 if (response.contains("ImageUri"))
                     Constants.storePrimaryImage = store.getString("ImageUri");
 
-                if (response.contains("SecondaryTileImages")) {
+                if (response.contains("SecondaryImages")) {
                     try {
                         if (store != null && store.getJSONArray("SecondaryImages") != null) {
                             JSONArray array = store.getJSONArray("SecondaryImages");

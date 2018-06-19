@@ -1,5 +1,8 @@
 package nfkeyboard.network;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Shimona on 28-05-2018.
  */
@@ -37,11 +40,28 @@ class CreateOrderRequest {
         this.Seller = Seller;
     }
 
+    @SerializedName("ProductId")
+    @Expose
     String ProductId;
+
+    @SerializedName("ExpiresOn")
+    @Expose
     String ExpiresOn;
+
+    @SerializedName("Quantity")
+    @Expose
     int Quantity;
+
+    @SerializedName("SalePrice")
+    @Expose
     double SalePrice;
+
+    @SerializedName("MaxQuantityPerOrder")
+    @Expose
     int MaxQuantityPerOrder;
+
+    @SerializedName("Seller")
+    @Expose
     Seller Seller;
 
     public String getExpiresOn() {
@@ -85,8 +105,16 @@ class CreateOrderRequest {
             this.Address = addresses;
         }
 
+        @SerializedName("Identifier")
+        @Expose
         String Identifier;
+
+        @SerializedName("ContactDetails")
+        @Expose
         ContactDetails ContactDetail;
+
+        @SerializedName("Address")
+        @Expose
         Address Address;
 
         public static class Address {
@@ -138,11 +166,28 @@ class CreateOrderRequest {
                 this.Zipcode = zipcode;
             }
 
+            @SerializedName("AddressLine1")
+            @Expose
             String AddressLine1;
+
+            @SerializedName("AddressLine2")
+            @Expose
             String AddressLine2;
+
+            @SerializedName("City")
+            @Expose
             String City;
+
+            @SerializedName("Region")
+            @Expose
             String Region;
+
+            @SerializedName("Country")
+            @Expose
             String Country;
+
+            @SerializedName("Zipcode")
+            @Expose
             String Zipcode;
         }
 
@@ -179,9 +224,20 @@ class CreateOrderRequest {
                 this.EmailId = emailId;
             }
 
+            @SerializedName("FullName")
+            @Expose
             String FullName;
+
+            @SerializedName("PrimaryContactNumber")
+            @Expose
             String PrimaryContactNumber;
+
+            @SerializedName("SecondaryContactNumber")
+            @Expose
             String SecondaryContactNumber;
+
+            @SerializedName("EmailId")
+            @Expose
             String EmailId;
         }
     }

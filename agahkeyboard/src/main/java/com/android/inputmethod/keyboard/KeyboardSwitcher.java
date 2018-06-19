@@ -1047,7 +1047,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 modelList.add(photo.toAllSuggestion());
             }
         }
-        if (lengthOfItems > Constants.storeSecondaryImages.size()) {
+        if (Constants.storeSecondaryImages != null && lengthOfItems > Constants.storeSecondaryImages.size()) {
             for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
                 Photo photo = new Photo();
                 photo.setImageUri(null);

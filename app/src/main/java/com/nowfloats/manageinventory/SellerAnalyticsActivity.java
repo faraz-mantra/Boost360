@@ -15,6 +15,7 @@ import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.CommonStatus;
 import com.nowfloats.manageinventory.models.SellerSummary;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
@@ -37,6 +38,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_analytics);
+        MixPanelController.track(MixPanelController.MY_ORDERS, null);
 
         tvTotalOrders = (TextView) findViewById(R.id.tv_total_orders);
         tvTotalRevenue = (TextView) findViewById(R.id.tv_total_revenue);
@@ -160,6 +162,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
         tvCancelledOrders.setVisibility(View.INVISIBLE);
         tvSuccessfullOrders.setVisibility(View.INVISIBLE);
         tvDisputedOrders.setVisibility(View.INVISIBLE);
+        tvCurrencyCode.setVisibility(View.INVISIBLE);
     }
 
 
@@ -181,12 +184,24 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
         tvReceivedOrders.setVisibility(View.VISIBLE);
         tvCancelledOrders.setVisibility(View.VISIBLE);
         tvDisputedOrders.setVisibility(View.VISIBLE);
+        tvCurrencyCode.setVisibility(View.VISIBLE);
         tvSuccessfullOrders.setVisibility(View.VISIBLE);
 
         if (revenueSummary != null && revenueSummary.getData() != null) {
-            tvTotalRevenue.setText(revenueSummary.getData().getTotalRevenue() + "");
+
+            String revenue = revenueSummary.getData().getTotalRevenue();
+            boolean atleastOneAlpha = revenue.matches(".*[a-zA-Z]+.*");
+            String[] amount = revenue.split("(?<=\\D)(?=\\d)");
+
+            if (atleastOneAlpha) {
+                tvTotalRevenue.setText(amount[1] + "");
+                tvCurrencyCode.setText(amount[0]);
+            } else {
+                tvTotalRevenue.setText(revenue);
+            }
+
             tvTotalOrders.setText(revenueSummary.getData().getTotalOrders() + "");
-            tvSuccessfullOrders.setText(revenueSummary.getData().getTotalCompletedOrders() + "");
+            tvSuccessfullOrders.setText(revenueSummary.getData().getTotalOrdersCompleted() + "");
             tvCancelledOrders.setText(revenueSummary.getData().getTotalOrdersCancelled() + "");
             tvDisputedOrders.setText(revenueSummary.getData().getTotalOrdersEscalated() + "");
             tvReceivedOrders.setText(revenueSummary.getData().getTotalOrdersInProgress() + "");

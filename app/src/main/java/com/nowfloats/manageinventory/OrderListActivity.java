@@ -35,6 +35,7 @@ import com.nowfloats.manageinventory.models.OrderDataModel.Order;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -202,6 +203,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Orders");
+        MixPanelController.track(MixPanelController.ORDER_LIST, null);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -469,7 +471,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 orderStatus = OrderStatus.PLACED;
                 emptyMsg = "You don't have any Received Order";
                 mCurrSelectedView = findViewById(R.id.rl_received_orders);
-                getOrders(mQuery, mSkip, LIMIT);
+                getInProgressOrders(mQuery, mSkip, LIMIT);
                 break;
             case 2:
 //                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.DELIVERED.ordinal());
@@ -527,6 +529,17 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         callInterface.getOrdersList(hashMap, skip, limit, orderStatusCallback);
     }
 
+    private void getInProgressOrders(final String orderQuery, final long skip, final int limit) {
+        hideEmptyLayout();
+
+        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("sellerId", mSession.getFpTag());
+        if (!TextUtils.isEmpty(orderStatus))
+            hashMap.put("orderStatus", orderStatus);
+        callInterface.getInProgressOrdersList(hashMap, skip, limit, orderStatusCallback);
+    }
+
 
     public interface Predicate<T> {
         boolean apply(T type);
@@ -551,16 +564,16 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         public void success(OrderDataModel orderDataModel, Response response) {
 
             pbLoading.setVisibility(View.GONE);
-            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
-                refreshOrders(orderDataModel);
+//            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
+//                refreshOrders(orderDataModel);
+//            } else {
+            mAdapter.clearAdapter();
+            if (orderDataModel == null || orderDataModel.getData() == null) {
+                showEmptyLayout(emptyMsg);
             } else {
-                mAdapter.clearAdapter();
-                if (orderDataModel == null || orderDataModel.getData() == null) {
-                    showEmptyLayout(emptyMsg);
-                } else {
-                    refreshOrders(orderDataModel);
-                }
+                refreshOrders(orderDataModel);
             }
+//            }
 
         }
 
@@ -568,15 +581,15 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         public void failure(RetrofitError error) {
             Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
             pbLoading.setVisibility(View.GONE);
-            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
-
-            } else {
-                showEmptyLayout(emptyMsg);
-                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
-                    orderStatus = OrderStatus.CONFIRMED;
-                    getOrders(mQuery, mSkip, LIMIT);
-                }
-            }
+//            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
+//
+//            } else {
+            showEmptyLayout(emptyMsg);
+//                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
+//                    orderStatus = OrderStatus.CONFIRMED;
+//                    getOrders(mQuery, mSkip, LIMIT);
+//                }
+//            }
         }
     };
 
@@ -612,8 +625,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                         filter(orderDataModel.getData().getOrders(), searchItem));
                 if (orderDataModel.getData().getOrders() != null && orderDataModel.getData().getOrders().size() > 0) {
                     mAdapter.addAll(orderDataModel.getData().getOrders());
-                }
-                else if (mAdapter.getOrders() == null || mAdapter.getOrders().size() == 0) {
+                } else if (mAdapter.getOrders() == null || mAdapter.getOrders().size() == 0) {
                     showEmptyLayout(emptyMsg);
                 }
             }
@@ -642,11 +654,11 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
-                    mSkip = 0;
-                    orderStatus = OrderStatus.CONFIRMED;
-                    getOrders(mQuery, mSkip, LIMIT);
-                }
+//                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
+//                    mSkip = 0;
+//                    orderStatus = OrderStatus.CONFIRMED;
+//                    getOrders(mQuery, mSkip, LIMIT);
+//                }
             }
         });
     }

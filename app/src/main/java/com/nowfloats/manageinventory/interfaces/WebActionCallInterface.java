@@ -35,6 +35,10 @@ public interface WebActionCallInterface {
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getOrdersList(@QueryMap HashMap<String, String> hashMap, @Query("skip") long skip, @Query("limit") int limit, Callback<OrderDataModel> callback);
 
+    @GET("/ListInProgressOrders")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getInProgressOrdersList(@QueryMap HashMap<String, String> hashMap, @Query("skip") long skip, @Query("limit") int limit, Callback<OrderDataModel> callback);
+
 
     @GET("/GetOrderDetails")
     @Headers({"Authorization: " + Constants.WA_KEY})

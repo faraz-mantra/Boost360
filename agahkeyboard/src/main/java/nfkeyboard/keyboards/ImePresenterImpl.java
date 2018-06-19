@@ -692,8 +692,9 @@ public class ImePresenterImpl implements ItemClickListener,
                         imeListener.getImeCurrentInputConnection(),
                         imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
                         flag, null);
-            }
+
             imeListener.getImeCurrentInputConnection().endBatchEdit();
+            }
 
         }
 
