@@ -45,6 +45,7 @@ public class ColorUtils {
             }
         }
         colorProfile.setPrimary(parseColor(ColorDatabase.getColors(context, packageName)[0]));
+//        colorProfile.setPrimary(Color.parseColor("#AAAAAA"));
         return colorProfile;
     }
 
