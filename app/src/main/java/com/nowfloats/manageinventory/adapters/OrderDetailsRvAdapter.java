@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by NowFloats on 05-09-2017.
@@ -215,17 +216,20 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    private String getParsedDate(String strDate) {
-        if (strDate == null) {
+    private String getParsedDate(String createdOn) {
+        if (createdOn == null) {
             return "N/A";
         }
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         String parsedDate;
         try {
-            Date date = format.parse(strDate);
-            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy", Locale.ENGLISH).format(date);
+            format.setTimeZone(TimeZone.getDefault());
+            Date date = format.parse(createdOn);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm a dd/MM/yyyy");
+            simpleDateFormat.setTimeZone(TimeZone.getDefault());
+            parsedDate = simpleDateFormat.format(date);
         } catch (ParseException e) {
-            parsedDate = strDate;
+            parsedDate = createdOn;
         }
 
         return parsedDate;

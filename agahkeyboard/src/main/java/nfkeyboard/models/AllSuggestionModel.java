@@ -74,8 +74,70 @@ public class AllSuggestionModel {
     private int quantity;
     private String clientId;
     private String imageUri;
-
     private boolean selected;
+    private boolean flipped = false;
+    private boolean createOfferClicked = false;
+    private boolean flippable = true;
+    private boolean productKeyboardShown = false;
+    private String editTextValueTemp;
+    private String quantityTemp = "1";
+    private String hoursTemp = "24 Hrs";
+
+    public boolean isProductKeyboardShown() {
+        return productKeyboardShown;
+    }
+
+    public void setProductKeyboardShown(boolean productKeyboardShown) {
+        this.productKeyboardShown = productKeyboardShown;
+    }
+
+    public String getEditTextValueTemp() {
+        return editTextValueTemp;
+    }
+
+    public void setEditTextValueTemp(String editTextValueTemp) {
+        this.editTextValueTemp = editTextValueTemp;
+    }
+
+    public String getQuantityTemp() {
+        return quantityTemp;
+    }
+
+    public void setQuantityTemp(String quantityTemp) {
+        this.quantityTemp = quantityTemp;
+    }
+
+    public String getHoursTemp() {
+        return hoursTemp;
+    }
+
+    public void setHoursTemp(String hoursTemp) {
+        this.hoursTemp = hoursTemp;
+    }
+
+    public boolean isFlippable() {
+        return flippable;
+    }
+
+    public void setFlippable(boolean flippable) {
+        this.flippable = flippable;
+    }
+
+    public boolean isFlipped() {
+        return flipped;
+    }
+
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
+    }
+
+    public boolean isCreateOfferClicked() {
+        return createOfferClicked;
+    }
+
+    public void setCreateOfferClicked(boolean createOfferClicked) {
+        this.createOfferClicked = createOfferClicked;
+    }
 
     public String getName() {
         return name;

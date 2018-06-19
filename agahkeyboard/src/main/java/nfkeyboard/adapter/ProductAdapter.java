@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
@@ -96,6 +95,8 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
         private String temp = null;
         private String[] validity, quantity;
+
+        private int MIN_OFFER_PRICE = 10;
 
         @SuppressLint("ClickableViewAccessibility")
         ImageHolder(final View itemView) {
@@ -279,18 +280,23 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                                         offerPrice.charAt(i + 1) != '.') {
                                     i++;
                                 }
-                                offerPriceEt.setText(offerPrice.substring(i, offerPrice.length()));
+                                if (Double.valueOf(offerPrice.substring(i, offerPrice.length())) >= MIN_OFFER_PRICE) {
+                                    offerPriceEt.setText(offerPrice.substring(i, offerPrice.length()));
+                                    editText.clearFocus();
+                                    editText.setText("");
+                                    productsKeyboardCl.setVisibility(View.GONE);
+                                    offerCl.setVisibility(View.VISIBLE);
+                                } else {
+                                    Toast.makeText(mContext, "Offer price cannot be less than 10", Toast.LENGTH_LONG).show();
+                                }
                             } else {
-                                offerPriceEt.setText(editText.getText().toString());
+                                Toast.makeText(mContext, "Offer price cannot be less than 10", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            offerPriceEt.setText(editText.getText().toString());
+                            Toast.makeText(mContext, "Offer price cannot be less than 10", Toast.LENGTH_LONG).show();
                         }
                     }
-                    editText.clearFocus();
-                    editText.setText("");
-                    productsKeyboardCl.setVisibility(View.GONE);
-                    offerCl.setVisibility(View.VISIBLE);
+
                 }
             });
 
