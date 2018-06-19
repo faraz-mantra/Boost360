@@ -67,7 +67,8 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
 
     public enum NOTI_TYPE {
         CALLS,
-        ENQUIRIES
+        ENQUIRIES,
+        ORDERS
     }
 
     @NonNull

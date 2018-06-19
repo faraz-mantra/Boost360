@@ -62,4 +62,32 @@
         android:textSize="@dimen/medium_text_size"
         android:textStyle="bold" />
 
+
+    <com.nowfloats.managenotification.ExpandableCardView
+        android:id="@+id/ecvOrders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        app:expandOnClick="true"
+        app:inner_view="@layout/list_caller_info"
+        app:message="@string/noti_msg_orders"
+        app:title="Orders (2)" />
+
+    <TextView
+        android:id="@+id/tvDismissOrders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="-4dip"
+        android:background="#EEEEEE"
+        android:elevation="@dimen/margin_15"
+        android:gravity="left"
+        android:padding="@dimen/margin_10"
+        android:text="@string/dismiss"
+        android:textColor="@color/primaryColor"
+        android:textSize="@dimen/medium_text_size"
+        android:textStyle="bold" />
+
 </LinearLayout>

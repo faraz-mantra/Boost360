@@ -247,6 +247,7 @@ public class Constants {
     public static final String PREF_USER_NAME = "twitter_user_name";
     public static final String PREF_NOTI_CALL_LOGS = "noti_call_logs";
     public static final String PREF_NOTI_ENQUIRIES = "noti_enquiries";
+    public static final String PREF_NOTI_ORDERS = "noti_orders";
     public static final String SYNCED = "synced";
 
 
