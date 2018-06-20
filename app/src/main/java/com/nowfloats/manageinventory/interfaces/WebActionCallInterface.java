@@ -3,6 +3,7 @@ package com.nowfloats.manageinventory.interfaces;
 import com.nowfloats.manageinventory.models.CommonStatus;
 import com.nowfloats.manageinventory.models.MarkOrderAsShipped;
 import com.nowfloats.manageinventory.models.OrderDataModel;
+import com.nowfloats.manageinventory.models.OrderDetailDataModel;
 import com.nowfloats.manageinventory.models.OrderModel;
 import com.nowfloats.manageinventory.models.OrdersCountModel;
 import com.nowfloats.manageinventory.models.ProductModel;
@@ -42,7 +43,7 @@ public interface WebActionCallInterface {
 
     @GET("/GetOrderDetails")
     @Headers({"Authorization: " + Constants.WA_KEY})
-    void getOrdersDetails(@Query("orderId") String orderId, @Query("skip") long skip, @Query("limit") int limit, Callback<OrderDataModel> callback);
+    void getOrdersDetails(@Query("orderId") String orderId, Callback<OrderDetailDataModel> callback);
 
 
     @GET("/users3/get-data")
