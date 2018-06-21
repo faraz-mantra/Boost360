@@ -1,5 +1,6 @@
 package com.nowfloats.manageinventory;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +19,18 @@ import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.CommonStatus;
 import com.nowfloats.manageinventory.models.MarkOrderAsShipped;
 import com.nowfloats.manageinventory.models.OrderDataModel.Order;
+import com.nowfloats.manageinventory.models.OrderDetailDataModel;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
+import java.util.HashMap;
+
+import retrofit.Callback;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
@@ -67,24 +73,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tvNegative = (TextView) findViewById(R.id.tvNegative);
 
         if (mOrder != null) {
-            setTitle("ORDER ID: " + mOrder.getOrderId());
+            setTitle("ORDER ID: " + mOrder.getReferenceNumber());
             showOrderDetails();
-
-            if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.PLACED)
-                    || mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
-
-                if (mOrder.getPaymentDetails() != null) {
-                    if (mOrder.getPaymentDetails().
-                            getMethod().equalsIgnoreCase("onlinepayment")
-                            && mOrder.getPaymentDetails().getStatus().equalsIgnoreCase("Success")) {
-                        performActions();
-                    } else if (mOrder.getPaymentDetails().
-                            getMethod().equalsIgnoreCase("COD")
-                            && mOrder.getPaymentDetails().getStatus().equalsIgnoreCase("Pending")) {
-                        performActions();
-                    }
-                }
-            }
         }
 
     }
@@ -115,6 +105,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         }
     }
 
+
     private void confirmOrder() {
         tvPositive.setVisibility(View.VISIBLE);
         tvNegative.setVisibility(View.VISIBLE);
@@ -132,9 +123,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                        pbOrderDetails.setVisibility(View.GONE);
-                        mBusEvent.post(commonStatus);
-                        finish();
+
+                        finishActions(commonStatus);
                     }
 
                     @Override
@@ -156,9 +146,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                        pbOrderDetails.setVisibility(View.GONE);
-                        mBusEvent.post(commonStatus);
-                        finish();
+                        finishActions(commonStatus);
                     }
 
                     @Override
@@ -195,9 +183,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                                 @Override
                                 public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                    pbOrderDetails.setVisibility(View.GONE);
-                                    mBusEvent.post(commonStatus);
-                                    finish();
+                                    finishActions(commonStatus);
                                 }
 
                                 @Override
@@ -221,9 +207,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                                 @Override
                                 public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                    pbOrderDetails.setVisibility(View.GONE);
-                                    mBusEvent.post(commonStatus);
-                                    finish();
+                                    finishActions(commonStatus);
                                 }
 
                                 @Override
@@ -248,9 +232,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                                 @Override
                                 public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                    pbOrderDetails.setVisibility(View.GONE);
-                                    mBusEvent.post(commonStatus);
-                                    finish();
+                                    finishActions(commonStatus);
                                 }
 
                                 @Override
@@ -296,9 +278,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                                 @Override
                                 public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                    pbOrderDetails.setVisibility(View.GONE);
-                                    mBusEvent.post(commonStatus);
-                                    finish();
+                                    finishActions(commonStatus);
                                 }
 
                                 @Override
@@ -326,9 +306,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                            pbOrderDetails.setVisibility(View.GONE);
-                            mBusEvent.post(commonStatus);
-                            finish();
+                            finishActions(commonStatus);
                         }
 
                         @Override
@@ -351,29 +329,36 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tvPositive.setText("Send Order Delivery Confirmation");
         tvNegative.setText("Escalate Order");
 
-        tvPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MixPanelController.track(MixPanelController.DELIVER_ORDER, null);
-                pbOrderDetails.setVisibility(View.VISIBLE);
-                WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-                callInterface.triggerOrderDeliveryConfirmation(mOrder.getOrderId(), "SELLER", new retrofit.Callback<CommonStatus>() {
-
+        if (mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() != null) {
+            if (TextUtils.isEmpty(mOrder.getLogisticsDetails().
+                    getDeliveryConfirmationDetails().getNotificationSentOn())) {
+                tvPositive.setVisibility(View.VISIBLE);
+                tvPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                        pbOrderDetails.setVisibility(View.GONE);
-                        mBusEvent.post(commonStatus);
-                        finish();
-                    }
+                    public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.DELIVER_ORDER, null);
+                        pbOrderDetails.setVisibility(View.VISIBLE);
+                        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+                        callInterface.triggerOrderDeliveryConfirmation(mOrder.getOrderId(), "SELLER", new retrofit.Callback<CommonStatus>() {
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        pbOrderDetails.setVisibility(View.GONE);
-                        Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void success(CommonStatus commonStatus, retrofit.client.Response response) {
+                                finishActions(commonStatus);
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                pbOrderDetails.setVisibility(View.GONE);
+                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
+
+            } else {
+                tvPositive.setVisibility(View.GONE);
             }
-        });
+        }
 
         tvNegative.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -385,9 +370,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                        pbOrderDetails.setVisibility(View.GONE);
-                        mBusEvent.post(commonStatus);
-                        finish();
+                        finishActions(commonStatus);
                     }
 
                     @Override
@@ -398,7 +381,28 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
+
+    private void finishActions(CommonStatus commonStatus) {
+        mBusEvent.post(commonStatus);
+        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+
+        callInterface.getOrdersDetails(mOrder.getOrderId(), new Callback<OrderDetailDataModel>() {
+            @Override
+            public void success(OrderDetailDataModel orderModelWebActionModel, Response response) {
+                mOrder = orderModelWebActionModel.getOrder();
+                showOrderDetails();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                pbOrderDetails.setVisibility(View.GONE);
+                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -417,7 +421,43 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     private void showOrderDetails() {
         pbOrderDetails.setVisibility(View.GONE);
+        tvPositive.setVisibility(View.GONE);
+        tvNegative.setVisibility(View.GONE);
+
+        if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.INITIATED)) {
+            mTag = "Initiated";
+        } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.PLACED)) {
+            mTag = "PLACED";
+        } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
+            mTag = "Confirmed";
+        } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.COMPLETED)) {
+            mTag = "Completed";
+        } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CANCELLED)) {
+            mTag = "Cancelled";
+        } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.ESCALATED)) {
+            mTag = "Escalated";
+        }
         rvOrderDetails.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvOrderDetails.setAdapter(new OrderDetailsRvAdapter(this, mTag, mOrder));
+        processOrder();
+    }
+
+    private void processOrder() {
+
+        if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.PLACED)
+                || mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
+
+            if (mOrder.getPaymentDetails() != null) {
+                if (mOrder.getPaymentDetails().
+                        getMethod().equalsIgnoreCase("onlinepayment")
+                        && mOrder.getPaymentDetails().getStatus().equalsIgnoreCase("Success")) {
+                    performActions();
+                } else if (mOrder.getPaymentDetails().
+                        getMethod().equalsIgnoreCase("COD")
+                        && mOrder.getPaymentDetails().getStatus().equalsIgnoreCase("Pending")) {
+                    performActions();
+                }
+            }
+        }
     }
 }

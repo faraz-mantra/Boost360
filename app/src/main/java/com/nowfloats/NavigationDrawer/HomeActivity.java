@@ -526,6 +526,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
             if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
                 sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
+            }else{
+                sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
             }
         }
 

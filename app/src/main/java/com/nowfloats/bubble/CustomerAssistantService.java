@@ -232,7 +232,7 @@ public class CustomerAssistantService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        MixPanelController.track(MixPanelController.BUBBLE_ENABLED, null);
+        MixPanelController.track(MixPanelController.BUBBLE_SERVICE_ENABLED, null);
         PendingIntent pendingIntent = createPendingIntent();
         Notification notification = createNotification(pendingIntent);
         startForeground(FOREGROUND_ID, notification);

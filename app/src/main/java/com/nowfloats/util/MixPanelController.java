@@ -32,6 +32,7 @@ public class MixPanelController {
     public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
     public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
     public static final String BUBBLE_ENABLED = "BubbleEnabled";
+    public static final String BUBBLE_SERVICE_ENABLED = "BubbleServiceEnabled";
     public static final String BUBBLE_CALL_TRACKER = "BubbleCallTracker";
     public static final String BUBBLE_ORDERS = "BubbleOrders";
     public static final String BUBBLE_DISMISS_CALL_TRACKER = "BubbleDismissCallTracker";
@@ -44,6 +45,7 @@ public class MixPanelController {
     public static final String BOOK_DOMAIN = "BookDomain";
     public static final String DOMAIN_SEARCH = "DomainSearch";
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
+    public static final String VMN_CALL_TRACKER_LOGS = "VmnCallTrackerLogs";
     public static final String MANAGE_INVENTORY = "ManageInventory";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";

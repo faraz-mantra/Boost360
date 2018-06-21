@@ -35,6 +35,10 @@ public class OrderDataModel {
         @Expose
         private String orderId;
 
+        @SerializedName("ReferenceNumber")
+        @Expose
+        private String referenceNumber;
+
         @SerializedName("Status")
         @Expose
         private String status;
@@ -137,6 +141,14 @@ public class OrderDataModel {
 
         public void setLogisticsDetails(LogisticsDetails logisticsDetails) {
             this.logisticsDetails = logisticsDetails;
+        }
+
+        public String getReferenceNumber() {
+            return referenceNumber;
+        }
+
+        public void setReferenceNumber(String referenceNumber) {
+            this.referenceNumber = referenceNumber;
         }
     }
 

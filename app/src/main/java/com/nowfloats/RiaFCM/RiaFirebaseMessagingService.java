@@ -354,6 +354,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                             }*/
                         }
                         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REFRESH_DIALOG));
+                        MixPanelController.track(MixPanelController.BUBBLE_ENABLED, null);
                     }
                 }
 

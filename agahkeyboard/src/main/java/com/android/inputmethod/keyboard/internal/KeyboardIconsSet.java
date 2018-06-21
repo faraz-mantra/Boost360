@@ -116,9 +116,9 @@ public final class KeyboardIconsSet {
                 mIcons[iconId] = icon;
                 mIconResourceIds[iconId] = keyboardAttrs.getResourceId(attrId, 0);
             } catch (Resources.NotFoundException e) {
-                Log.w(TAG, "Drawable resource for icon #"
-                        + keyboardAttrs.getResources().getResourceEntryName(attrId)
-                        + " not found");
+//                Log.w(TAG, "Drawable resource for icon #"
+//                        + keyboardAttrs.getResources().getResourceEntryName(attrId)
+//                        + " not found");
             }
         }
     }

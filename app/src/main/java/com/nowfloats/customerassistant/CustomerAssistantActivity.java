@@ -148,7 +148,7 @@ public class CustomerAssistantActivity extends Activity {
 
     @Override
     public void onStop() {
-        sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
         mBus.unregister(this);
         super.onStop();
     }

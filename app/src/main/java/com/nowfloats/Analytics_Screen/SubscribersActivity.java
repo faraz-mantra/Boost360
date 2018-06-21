@@ -29,8 +29,10 @@ import com.nowfloats.Analytics_Screen.model.AddSubscriberModel;
 import com.nowfloats.Analytics_Screen.model.SubscriberModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -42,10 +44,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,SubscribersAdapter.SubscriberInterfaceMethods {
+public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener, SubscribersAdapter.SubscriberInterfaceMethods {
 
 
-    private static final int SUBSCRIBER_REQUEST_CODE = 221 ;
+    private static final int SUBSCRIBER_REQUEST_CODE = 221;
     private UserSessionManager mSessionManager;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -56,7 +58,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     private boolean stop;
     TextView titleTextView;
     AutoCompleteTextView searchEditText;
-    ImageView deleteImage,searchImage;
+    ImageView deleteImage, searchImage;
 
     LinearLayout emptyLayout;
     private int itemClicked = -1;
@@ -64,6 +66,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
         setContentView(R.layout.activity_subscribers);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -88,10 +91,10 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void afterTextChanged(Editable s) {
                 String key = searchEditText.getText().toString().trim();
-                if(key.length() == 0) {
+                if (key.length() == 0) {
 
                     mRecyclerView.setAdapter(mSubscriberAdapter);
-                }else{
+                } else {
                     searchSubcribers(key);
                 }
             }
@@ -112,9 +115,9 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         mRecyclerView = (RecyclerView) findViewById(R.id.lv_subscribers);
 
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mSubscriberAdapter = new SubscribersAdapter(this,mSubscriberList);
+        mSubscriberAdapter = new SubscribersAdapter(this, mSubscriberList);
         mRecyclerView.setAdapter(mSubscriberAdapter);
 
         mSessionManager = new UserSessionManager(getApplicationContext(), SubscribersActivity.this);
@@ -124,7 +127,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int count = mLayoutManager.getItemCount();
                 int visiblePosition = mLayoutManager.findLastVisibleItemPosition();
-                if(visiblePosition>=count-2 && !stop) {//call api when second last item visible
+                if (visiblePosition >= count - 2 && !stop) {//call api when second last item visible
                     getSubscribersList();
                 }
             }
@@ -141,19 +144,19 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void success(ArrayList<SubscriberModel> subscriberModels, Response response) {
 
-                if(subscriberModels == null || response.getStatus() != 200){
+                if (subscriberModels == null || response.getStatus() != 200) {
                     return;
                 }
 
                 //autoCompleteAdapter = new SpinnerAdapter(SubscribersActivity.this,subscriberModels);
                 //searchEditText.setAdapter(autoCompleteAdapter);
 
-                for(SubscriberModel model:mSubscriberList){
-                    if(!subscriberModels.contains(model)&&model.getUserMobile().toLowerCase().contains(key.toLowerCase())){
+                for (SubscriberModel model : mSubscriberList) {
+                    if (!subscriberModels.contains(model) && model.getUserMobile().toLowerCase().contains(key.toLowerCase())) {
                         subscriberModels.add(model);
                     }
                 }
-                SubscribersAdapter adapter = new SubscribersAdapter(SubscribersActivity.this,subscriberModels);
+                SubscribersAdapter adapter = new SubscribersAdapter(SubscribersActivity.this, subscriberModels);
                 mRecyclerView.setAdapter(adapter);
                 mProgressBar.setVisibility(View.GONE);
 
@@ -161,16 +164,16 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void failure(RetrofitError error) {
-                Log.v("ggg",error.getMessage());
+                Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
             }
         });
     }
 
-    private void getSubscribersList(){
-        stop =true;
+    private void getSubscribersList() {
+        stop = true;
         final int count = mSubscriberList.size();
-        String offset = String.valueOf(String.valueOf(count+1));
+        String offset = String.valueOf(String.valueOf(count + 1));
 
         mProgressBar.setVisibility(View.VISIBLE);
         SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
@@ -178,24 +181,24 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void success(List<SubscriberModel> subscriberModels, Response response) {
                 mProgressBar.setVisibility(View.GONE);
-                if(subscriberModels == null){
+                if (subscriberModels == null) {
                     return;
                 }
                 int newItems = subscriberModels.size();
 
-                for (int i=0;i<newItems;i++){
+                for (int i = 0; i < newItems; i++) {
                     //Log.v("ggg",subscriberModels.get(i).getUserMobile());
                     mSubscriberList.add(subscriberModels.get(i));
-                    mSubscriberAdapter.notifyItemChanged(count+i);
+                    mSubscriberAdapter.notifyItemChanged(count + i);
                 }
                 //autoCompleteAdapter.notifyDataSetChanged();
                 //autoCompleteAdapter = new ArrayAdapter<SubscriberModel>(SubscribersActivity.this,android.R.layout.simple_list_item_activated_1,mSubscriberList);
                 // searchEditText.setAdapter(autoCompleteAdapter);
                 //Log.v("ggg","size "+autoCompleteAdapter.getCount()+" auto "+autoCompleteAdapter.toString()+" subscribe "+mSubscriberList.toString());
-                if(newItems >=10){
+                if (newItems >= 10) {
                     stop = false;
                 }
-                if(mSubscriberList.size() == 0){
+                if (mSubscriberList.size() == 0) {
                     emptyLayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -203,12 +206,13 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void failure(RetrofitError error) {
                 mProgressBar.setVisibility(View.GONE);
-                Log.v("ggg",error.getMessage());
-                Methods.showSnackBarNegative(SubscribersActivity.this,getString(R.string.something_went_wrong));
+                Log.v("ggg", error.getMessage());
+                Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong));
             }
         });
     }
-    private void addSubscriber(final String email, final MaterialDialog dialog){
+
+    private void addSubscriber(final String email, final MaterialDialog dialog) {
         AddSubscriberModel model = new AddSubscriberModel();
         model.setClientId(Constants.clientId);
         model.setCountryCode(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
@@ -220,30 +224,31 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void success(String s, Response response) {
                 mProgressBar.setVisibility(View.GONE);
-                if(response.getStatus() == 200) {
+                if (response.getStatus() == 200) {
                     mSubscriberList.clear();
                     mSubscriberAdapter.notifyDataSetChanged();
                     getSubscribersList();
-                    Toast.makeText(SubscribersActivity.this, email+" Successfully Added", Toast.LENGTH_SHORT).show();
-                    if (!isFinishing()){
+                    Toast.makeText(SubscribersActivity.this, email + " Successfully Added", Toast.LENGTH_SHORT).show();
+                    if (!isFinishing()) {
                         dialog.dismiss();
                     }
-                }else{
-                    Methods.showSnackBarNegative(SubscribersActivity.this,getString(R.string.something_went_wrong_try_again));
+                } else {
+                    Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.v("ggg",error.getMessage());
+                Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
-                Methods.showSnackBarNegative(SubscribersActivity.this,getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
             }
         });
     }
+
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
 
             case R.id.img_delete:
                 subscriberDialog();
@@ -263,16 +268,18 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         super.onResume();
         mSubscriberAdapter.notifyDataSetChanged();
     }
-    private boolean checkIsEmailOrNumber(String email){
+
+    private boolean checkIsEmailOrNumber(String email) {
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher mat = pattern.matcher(email);
         return mat.matches();
     }
+
     private void subscriberDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber, null);
         final EditText email = (EditText) view.findViewById(R.id.edittext);
         new MaterialDialog.Builder(this)
-                .customView(view,false)
+                .customView(view, false)
                 .positiveText("Add")
                 .negativeText("Cancel")
                 .negativeColorRes(R.color.gray_transparent)
@@ -281,11 +288,10 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        if(!checkIsEmailOrNumber(email.getText().toString().trim())){
-                            Methods.showSnackBarNegative(SubscribersActivity.this,"Add only email Id");
-                        }
-                        else{
-                            addSubscriber(email.getText().toString().trim(),dialog);
+                        if (!checkIsEmailOrNumber(email.getText().toString().trim())) {
+                            Methods.showSnackBarNegative(SubscribersActivity.this, "Add only email Id");
+                        } else {
+                            addSubscriber(email.getText().toString().trim(), dialog);
                         }
                     }
 
@@ -302,16 +308,16 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     public void onitemSeleted(int pos) {
         itemClicked = pos;
         Intent i = new Intent(this, SubscriberDetailsActivity.class);
-        i.putExtra("data",new Gson().toJson(mSubscriberList.get(pos)));
-        i.putExtra("fpTag",mSessionManager.getFpTag());
-        startActivityForResult(i,SUBSCRIBER_REQUEST_CODE);
+        i.putExtra("data", new Gson().toJson(mSubscriberList.get(pos)));
+        i.putExtra("fpTag", mSessionManager.getFpTag());
+        startActivityForResult(i, SUBSCRIBER_REQUEST_CODE);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == SUBSCRIBER_REQUEST_CODE && resultCode == RESULT_OK){
-            if(itemClicked != -1 && data != null) {
+        if (requestCode == SUBSCRIBER_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (itemClicked != -1 && data != null) {
                 mSubscriberList.get(itemClicked).setSubscriptionStatus(data.getStringExtra("STATUS"));
                 mSubscriberAdapter.notifyItemChanged(itemClicked);
                 itemClicked = -1;
@@ -328,19 +334,18 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case android.R.id.home:
-                if(searchEditText.getVisibility() == View.VISIBLE){
+                if (searchEditText.getVisibility() == View.VISIBLE) {
                     searchEditText.clearFocus();
                     searchEditText.setText("");
                     searchEditText.setVisibility(View.GONE);
                     deleteImage.setVisibility(View.VISIBLE);
                     titleTextView.setVisibility(View.VISIBLE);
                     searchImage.setVisibility(View.VISIBLE);
-                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
-                }else
-                {
+                } else {
                     onBackPressed();
                 }
                 return true;

@@ -235,10 +235,8 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
             protected void loadMoreItems() {
 
                 if (!isSearching) {
-
                     isLoading = true;
                     currentPage += 1;
-
                     loadNextPage();
                 }
             }
@@ -351,8 +349,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
 
-        //dropDownView = MenuItemCompat.getActionView(menu.findItem(R.id.action_orders_filter));
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -458,7 +454,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         }
         switch (orderType) {
             case 0:
-//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s'}", mSession.getFPID());
                 setTitle("Total Orders");
                 orderStatus = "";
                 emptyMsg = "You don't have Any Order";
@@ -466,7 +461,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 1:
-//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status_delivery:%d}", mSession.getFPID(), DeliveryStatus.ORDER_RECEIVED.ordinal());
                 setTitle("Received Orders");
                 orderStatus = OrderStatus.PLACED;
                 emptyMsg = "You don't have any Received Order";
@@ -474,7 +468,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 getInProgressOrders(mQuery, mSkip, LIMIT);
                 break;
             case 2:
-//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.DELIVERED.ordinal());
                 setTitle("Delivered Orders");
                 orderStatus = OrderStatus.COMPLETED;
                 emptyMsg = "You don't have any Successful Order";
@@ -482,7 +475,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 3:
-//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.CANCELLED.ordinal());
                 setTitle("Cancelled Orders");
                 orderStatus = OrderStatus.CANCELLED;
                 emptyMsg = "You don't have any Cancelled Order";
@@ -490,7 +482,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 4:
-//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.RETURNED.ordinal());
                 setTitle("Disputed Orders");
                 orderStatus = OrderStatus.ESCALATED;
                 emptyMsg = "You don't have any Disputed Order";
@@ -498,7 +489,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 5:
-//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.NOT_INITIATED.ordinal());
                 setTitle("Abandoned Orders");
                 orderStatus = OrderStatus.CANCELLED;
                 emptyMsg = "You don't have any Abandoned Order";
@@ -506,7 +496,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 6:
-//                mQuery = String.format(Locale.getDefault(), "{merchant_id:'%s', order_status:%d}", mSession.getFPID(), OrderStatus.RETURNED.ordinal());
                 setTitle("Disputed Orders");
                 orderStatus = OrderStatus.ESCALATED;
                 mCurrSelectedView = findViewById(R.id.rl_disputed_orders);
@@ -564,32 +553,20 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         public void success(OrderDataModel orderDataModel, Response response) {
 
             pbLoading.setVisibility(View.GONE);
-//            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
-//                refreshOrders(orderDataModel);
-//            } else {
             mAdapter.clearAdapter();
-            if (orderDataModel == null || orderDataModel.getData() == null) {
+            if (orderDataModel == null || orderDataModel.getData() == null || orderDataModel.getData().getOrders() == null
+                    || orderDataModel.getData().getOrders().size() == 0) {
                 showEmptyLayout(emptyMsg);
             } else {
                 refreshOrders(orderDataModel);
             }
-//            }
-
         }
 
         @Override
         public void failure(RetrofitError error) {
             Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
             pbLoading.setVisibility(View.GONE);
-//            if (orderStatus.equalsIgnoreCase(OrderStatus.CONFIRMED) && !mAdapter.isEmpty()) {
-//
-//            } else {
             showEmptyLayout(emptyMsg);
-//                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
-//                    orderStatus = OrderStatus.CONFIRMED;
-//                    getOrders(mQuery, mSkip, LIMIT);
-//                }
-//            }
         }
     };
 
@@ -645,20 +622,20 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
 
         callInterface.getOrdersList(hashMap, mSkip, LIMIT, new Callback<OrderDataModel>() {
             @Override
-            public void success(OrderDataModel orderModelWebActionModel, Response response) {
-                mAdapter.removeLoadingFooter();
+            public void success(OrderDataModel orderDataModel, Response response) {
+//                mAdapter.removeLoadingFooter();
                 isLoading = false;
-                refreshOrders(orderModelWebActionModel);
+                if (orderDataModel == null || orderDataModel.getData() == null || orderDataModel.getData().getOrders() == null
+                        || orderDataModel.getData().getOrders().size() == 0) {
+
+                } else {
+                    refreshOrders(orderDataModel);
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-//                if (orderStatus.equalsIgnoreCase(OrderStatus.PLACED)) {
-//                    mSkip = 0;
-//                    orderStatus = OrderStatus.CONFIRMED;
-//                    getOrders(mQuery, mSkip, LIMIT);
-//                }
             }
         });
     }

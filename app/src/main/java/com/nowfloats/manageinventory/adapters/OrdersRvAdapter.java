@@ -99,7 +99,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                if (mProductListMap.containsKey(orderModel.getId())) {
 //                    products = mProductListMap.get(orderModel.getId());
 //                }
-                ordersViewHolder.tvOrderId.setText(orderModel.getOrderId());
+                ordersViewHolder.tvOrderId.setText(orderModel.getReferenceNumber());
                 ordersViewHolder.tvOrderDate.setText(getParsedDate(orderModel.getCreatedOn()));
 
                 if (orderModel.getBillingDetails() != null) {
