@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.apxor.androidsdk.ApxorSDK;
@@ -28,6 +29,8 @@ import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
+import com.nowfloats.managenotification.CallerInfoDialog;
+import com.nowfloats.managenotification.OrderModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -47,6 +50,7 @@ import java.util.Map;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
+import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 /**
  * Created by NowFloats on 05-10-2016.
@@ -244,22 +248,111 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         notificationBuilder.setContentText("" + entity_model.getMessage());
                         notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(entity_model.getMessage()));
 
+                        ArrayList<OrderModel> orderList = new ArrayList<>();
+
+                        /*Business_Enquiry_Model entity_model = gson.fromJson(jsonData,
+                                new TypeToken<Business_Enquiry_Model>() {
+                                }.getType());*/
+
+                        OrderModel orderModel = new OrderModel(
+                                "Shimona Elora",
+                                "8763303549",
+                                "Hyderabad",
+                                "Telangana",
+                                1,
+                                200,
+                                "INR",
+                                "20-06-2018 3:33PM",
+                                "Confirmed"
+                        );
+
+                        oldData = pref.getString(PREF_NOTI_ORDERS, "");
+
+                        if (!TextUtils.isEmpty(oldData)) {
+                            Type type = new TypeToken<List<OrderModel>>() {
+                            }.getType();
+                            orderList = gson.fromJson(oldData, type);
+                        }
+
+                        orderList.add(orderModel);
+
+                        json = gson.toJson(orderList);
+                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
+                        BoostLog.e("deepLinkUrl", jsonData);
+
+                        notificationBuilder.setContentTitle("Orders");
+                        notificationBuilder.setContentText("You have a new Order");
+                        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("You have a new Order"));
+
+                        Log.d("here", "asncjsncjbsdbc");
+                        //sendBroadcast(new Intent(CustomerAssistantService.OPEN_DIALOG));
+
+                    } else if (deepLinkUrl.contains("orders")) {
+
+                        /*ArrayList<OrderModel> orderList = new ArrayList<>();
+
+                        Business_Enquiry_Model entity_model = gson.fromJson(jsonData,
+                                new TypeToken<Business_Enquiry_Model>() {
+                                }.getType());
+
+                        OrderModel orderModel = new OrderModel(
+                                "Shimona Elora",
+                                "8763303549",
+                                "Hyderabad",
+                                "Telangana",
+                                1,
+                                200,
+                                "INR"
+                        );
+
+                        String oldData = pref.getString(PREF_NOTI_ORDERS, "");
+
+                        if (!TextUtils.isEmpty(oldData)) {
+                            Type type = new TypeToken<List<OrderModel>>() {
+                            }.getType();
+                            orderList = gson.fromJson(oldData, type);
+                        }
+
+                        orderList.add(orderModel);
+
+                        String json = gson.toJson(orderList);
+                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
+                        BoostLog.e("deepLinkUrl", jsonData);
+
+                        notificationBuilder.setContentTitle("Orders");
+                        notificationBuilder.setContentText("You have a new Order");
+                        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("You have a new Order"));*/
+
                     }
 
                     pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
                     if (Methods.hasOverlayPerm(this)) {
                         if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
-
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                startForegroundService(new Intent(this, CustomerAssistantService.class));
+                                Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                                if (deepLinkUrl.contains(getResources().getString(R.string.deeplink_bizenquiry)) || deepLinkUrl.contains("enquiries")) {
+                                    bubbleIntent.putExtra("shouldOpen", true);
+                                } else {
+                                    bubbleIntent.putExtra("shouldOpen", false);
+                                }
+                                startForegroundService(bubbleIntent);
                             } else {
                                 Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                                if (deepLinkUrl.contains(getResources().getString(R.string.deeplink_bizenquiry)) || deepLinkUrl.contains("enquiries")) {
+                                    bubbleIntent.putExtra("shouldOpen", true);
+                                } else {
+                                    bubbleIntent.putExtra("shouldOpen", false);
+                                }
                                 startService(bubbleIntent);
                             }
-
-
                         }
-
+                        else {
+                            /*if (deepLinkUrl.contains(getResources().getString(R.string.deeplink_bizenquiry)) || deepLinkUrl.contains("enquiries")) {
+                                Intent intent1 = new Intent(this, CallerInfoDialog.class);
+                                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(intent1);
+                            }*/
+                        }
                         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REFRESH_DIALOG));
                     }
                 }

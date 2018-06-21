@@ -1047,8 +1047,26 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 modelList.add(photo.toAllSuggestion());
             }
         }
-        if (Constants.storeSecondaryImages != null && lengthOfItems > Constants.storeSecondaryImages.size()) {
-            for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
+        if (Constants.storeSecondaryImages != null) {
+            if (lengthOfItems > Constants.storeActualSecondaryImages.size()) {
+                for (int i = 0; i < lengthOfItems - Constants.storeSecondaryImages.size(); i++) {
+                    Photo photo = new Photo();
+                    photo.setImageUri(null);
+                    if (i == 0) {
+                        photo.setSelected(true);
+                    } else {
+                        photo.setSelected(false);
+                    }
+                    modelList.add(photo.toAllSuggestion());
+                }
+            } else {
+                Photo photo = new Photo();
+                photo.setImageUri(null);
+                photo.setSelected(true);
+                modelList.add(photo.toAllSuggestion());
+            }
+        } else {
+            for (int i = 0; i < lengthOfItems; i++) {
                 Photo photo = new Photo();
                 photo.setImageUri(null);
                 if (i == 0) {
@@ -1058,11 +1076,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 }
                 modelList.add(photo.toAllSuggestion());
             }
-        } else {
-            Photo photo = new Photo();
-            photo.setImageUri(null);
-            photo.setSelected(true);
-            modelList.add(photo.toAllSuggestion());
         }
         totalImagesTv.setText(Integer.toString(Constants.storeActualSecondaryImages.size()));
         imagesList.addAll(modelList);

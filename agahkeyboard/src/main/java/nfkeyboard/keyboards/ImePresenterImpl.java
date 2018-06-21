@@ -1102,7 +1102,7 @@ public class ImePresenterImpl implements ItemClickListener,
         String shareUrl = null;
         try {
             if (!TextUtils.isEmpty(url)) {
-                uri = Uri.parse(url).buildUpon().appendQueryParameter(UTM_SOURCE, "bk")
+                uri = Uri.parse(url).buildUpon().appendQueryParameter(UTM_SOURCE, "bk_android")
                         .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
             }
         } catch (Exception e) {

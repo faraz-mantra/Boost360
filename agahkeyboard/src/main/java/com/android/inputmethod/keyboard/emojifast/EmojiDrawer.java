@@ -62,7 +62,6 @@ public class EmojiDrawer extends LinearLayout {
         if (recentModel.getEmoji().length == 0)
             pager.setCurrentItem(1);
         strip.setViewPager(pager);
-        strip.setIndicatorColor(R.color.white);
     }
 
     private void initializePageModels() {

@@ -66,6 +66,7 @@ import java.util.List;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
+import static com.nowfloats.util.Constants.loginUrl;
 
 
 public class CustomerAssistantService extends Service {
@@ -100,12 +101,13 @@ public class CustomerAssistantService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-
+            //Log.d("here", "received noti " + intent.getAction());
             if (intent.getAction().equalsIgnoreCase(ACTION_ADD_BUBBLE)) {
                 repostionBubble();
                 bubbleView.applyAlpha();
             } else if (bubbleView != null) {
                 if (intent.getAction().equalsIgnoreCase(ACTION_REMOVE_BUBBLE)) {
+                    Log.d("here", "remove bubble");
                     recycleBubble(bubbleView);
                 } else if (intent.getAction().equalsIgnoreCase(ACTION_RESET_BUBBLE))
                     bubbleView.applyAlpha();
@@ -149,7 +151,6 @@ public class CustomerAssistantService extends Service {
                 bubbleView = null;
                 for (BubbleLayout cachedBubble : bubbles) {
                     if (cachedBubble == bubble) {
-
                         bubble.notifyBubbleRemoved();
                         bubbles.remove(cachedBubble);
                         break;
@@ -236,9 +237,26 @@ public class CustomerAssistantService extends Service {
         Notification notification = createNotification(pendingIntent);
         startForeground(FOREGROUND_ID, notification);
 
+
         if (intent == null) {
             return Service.START_STICKY;
         } else {
+            Log.d("here", "noti_received");
+            boolean data = false;
+            if (intent.getExtras() != null) {
+                Log.d("here", "noti_received1");
+                data = intent.getExtras().getBoolean("shouldOpen", false);
+                Log.d("here", "noti_received " + data);
+                if (data) {
+                    Log.d("here", "noti_received2");
+                    killDialog();
+                    bubbleView.resetAlpha();
+                    bubbleView.goToRightWall();
+                    Intent intent1 = new Intent(CustomerAssistantService.this, CallerInfoDialog.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent1);
+                }
+            }
             return Service.START_REDELIVER_INTENT;
         }
 
@@ -273,6 +291,7 @@ public class CustomerAssistantService extends Service {
         registerReceiver(resetReceiver, removeIntentFilter);
         registerReceiver(resetReceiver, moveRightIntentFilters);
         registerReceiver(resetReceiver, moveSpecificIntentFilters);
+
         if ((cpuWakeLock != null) && (cpuWakeLock.isHeld() == false)) {
             PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
             cpuWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ShakeEventService onCreate Tag");

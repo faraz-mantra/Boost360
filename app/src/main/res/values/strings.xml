@@ -2,7 +2,7 @@
 <resources>
     <string name="noti_msg_calls">Reach out to these customers before they go somewhere else!</string>
     <string name="noti_msg_enquires">Respond to these enquiries before it\'s too late!</string>
-    <string name="noti_msg_orders">You have new orders waiting to be confirmed!</string>
+    <string name="noti_msg_orders">New order details, click to take action!</string>
 
     <string name="gmb_integration_Successful">Your business has been synced with Google My Business</string>
     <string name="gmb_upload_data">Google My Business Profile updated.</string>
