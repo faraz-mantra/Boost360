@@ -288,6 +288,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
     @Override
     protected void onResume() {
         super.onResume();
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     @Override

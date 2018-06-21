@@ -256,11 +256,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                                 Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
                                 startService(bubbleIntent);
                             }
-
-
                         }
 
                         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REFRESH_DIALOG));
+                        MixPanelController.track(MixPanelController.BUBBLE_ENABLED, null);
                     }
                 }
 

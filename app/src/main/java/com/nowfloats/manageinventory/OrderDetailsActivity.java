@@ -18,7 +18,6 @@ import com.nowfloats.manageinventory.adapters.OrderDetailsRvAdapter;
 import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.CommonStatus;
 import com.nowfloats.manageinventory.models.MarkOrderAsShipped;
-import com.nowfloats.manageinventory.models.OrderDataModel;
 import com.nowfloats.manageinventory.models.OrderDataModel.Order;
 import com.nowfloats.manageinventory.models.OrderDetailDataModel;
 import com.nowfloats.util.BusProvider;
@@ -74,7 +73,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tvNegative = (TextView) findViewById(R.id.tvNegative);
 
         if (mOrder != null) {
-            setTitle("ORDER ID: " + mOrder.getOrderId());
+            setTitle("ORDER ID: " + mOrder.getReferenceNumber());
             showOrderDetails();
         }
 
