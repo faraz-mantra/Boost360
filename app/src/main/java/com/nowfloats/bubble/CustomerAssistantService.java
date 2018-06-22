@@ -100,8 +100,6 @@ public class CustomerAssistantService extends Service {
     BroadcastReceiver resetReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            //Log.d("here", "received noti " + intent.getAction());
             if (intent.getAction().equalsIgnoreCase(ACTION_ADD_BUBBLE)) {
                 repostionBubble();
                 bubbleView.applyAlpha();
@@ -252,9 +250,9 @@ public class CustomerAssistantService extends Service {
                     killDialog();
                     bubbleView.resetAlpha();
                     bubbleView.goToRightWall();
-                    Intent intent1 = new Intent(CustomerAssistantService.this, CallerInfoDialog.class);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(intent1);
+                    Intent callIntent = new Intent(CustomerAssistantService.this, CallerInfoDialog.class);
+                    callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(callIntent);
                 }
             }
             return Service.START_REDELIVER_INTENT;

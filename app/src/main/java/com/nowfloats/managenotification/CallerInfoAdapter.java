@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,8 +21,6 @@ import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.manageinventory.SellerAnalyticsActivity;
-import com.nowfloats.manageinventory.models.OrderDataModel;
 import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -35,8 +32,6 @@ import java.util.List;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
-import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
-import static com.nowfloats.util.Constants.isDirectlyCameToMainScreen;
 
 /**
  * Created by vinay on 22-05-2018.

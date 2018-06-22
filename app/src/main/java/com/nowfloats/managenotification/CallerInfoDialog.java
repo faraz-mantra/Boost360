@@ -278,12 +278,29 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
     private void bindValues() {
 
 
+        if (ordersList.size() > 0) {
+            llOrders.setVisibility(View.VISIBLE);
+            ecvOrders.setVisibility(View.VISIBLE);
+            ecvOrders.setTitle("Orders (" + ordersList.size() + ")");
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            orderAdapter = new CallerInfoAdapter(CallerInfoDialog.this, CallerInfoAdapter.NOTI_TYPE.ORDERS, ordersList, pref);
+            rvOrders.setLayoutManager(linearLayoutManager);
+            rvOrders.setAdapter(orderAdapter);
+
+            ecvOrders.expand();
+
+        } else {
+            ecvOrders.setVisibility(View.GONE);
+            llOrders.setVisibility(View.GONE);
+        }
+
         if (callList.size() > 0) {
 
             if (ordersList.size() > 0)
-                ecvEnquiries.setInitCollapse(true);
+                ecvCalls.setInitCollapse(true);
             else {
-                ecvEnquiries.expand();
+                ecvCalls.expand();
             }
             ecvCalls.setVisibility(View.VISIBLE);
             tvDismissCalls.setVisibility(View.VISIBLE);
@@ -293,8 +310,6 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
             callsAdapter = new CallerInfoAdapter(CallerInfoDialog.this, CallerInfoAdapter.NOTI_TYPE.CALLS, callList, pref);
             rvCalls.setLayoutManager(linearLayoutManager);
             rvCalls.setAdapter(callsAdapter);
-
-            //ecvCalls.expand();
         } else {
             ecvCalls.setVisibility(View.GONE);
             tvDismissCalls.setVisibility(View.GONE);
@@ -319,23 +334,6 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
         } else {
             ecvEnquiries.setVisibility(View.GONE);
             tvDismissEnquiries.setVisibility(View.GONE);
-        }
-
-        if (ordersList.size() > 0) {
-            llOrders.setVisibility(View.VISIBLE);
-            ecvOrders.setVisibility(View.VISIBLE);
-            ecvOrders.setTitle("Orders (" + ordersList.size() + ")");
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            orderAdapter = new CallerInfoAdapter(CallerInfoDialog.this, CallerInfoAdapter.NOTI_TYPE.ORDERS, ordersList, pref);
-            rvOrders.setLayoutManager(linearLayoutManager);
-            rvOrders.setAdapter(orderAdapter);
-
-            ecvOrders.expand();
-
-        } else {
-            ecvOrders.setVisibility(View.GONE);
-            llOrders.setVisibility(View.GONE);
         }
 
         if (callList.size() > 0 && businessEnquiryList.size() > 0 && ordersList.size() > 0) {
