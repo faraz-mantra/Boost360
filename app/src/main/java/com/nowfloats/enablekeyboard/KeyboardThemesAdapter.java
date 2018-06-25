@@ -1,13 +1,17 @@
 package com.nowfloats.enablekeyboard;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.thinksity.R;
 
@@ -19,14 +23,19 @@ import java.util.ArrayList;
 
 public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAdapter.MyViewHolder> {
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     private Context context;
     private ArrayList<Integer> keyboardDrawables;
     private int selected;
 
-    public KeyboardThemesAdapter(Context context, ArrayList<Integer> keyboardDrawables, int selected) {
+    public KeyboardThemesAdapter(Context context, ArrayList<Integer> keyboardDrawables, int selected, SharedPreferences sharedPreferences, SharedPreferences.Editor editor) {
         this.context = context;
         this.keyboardDrawables = keyboardDrawables;
         this.selected = selected;
+        this.sharedPreferences = sharedPreferences;
+        this.editor = editor;
     }
 
     @NonNull
@@ -38,7 +47,7 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         holder.ivKeyboardTheme.setImageDrawable(context.getResources().getDrawable(keyboardDrawables.get(position)));
 
@@ -50,12 +59,22 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
             holder.ivCheckMark.setVisibility(View.GONE);
         }
 
-        holder.clKeyboardTheme.setOnClickListener(new View.OnClickListener() {
+        holder.clKeyboardTheme.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                if (position != selected) {
-                    //to do
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    holder.clKeyboardTheme.setAlpha(0.5f);
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    holder.clKeyboardTheme.setAlpha(1f);
+                    selected = position;
+                    editor.putInt("keyboard_theme", position);
+                    editor.commit();
+                    Snackbar.make(view, "The theme has been applied!", Snackbar.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                } else {
+                    holder.clKeyboardTheme.setAlpha(1f);
                 }
+                return true;
             }
         });
     }

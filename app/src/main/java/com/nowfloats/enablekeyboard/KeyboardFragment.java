@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -54,6 +56,10 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  */
 
 public class KeyboardFragment extends Fragment implements View.OnTouchListener, View.OnClickListener {
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     private static final int STORAGE_CODE = 100, MICROPHONE_CODE = 101;
     private static final int INPUT_METHOD_SETTINGS = 102;
     private Context mContext;
@@ -70,6 +76,8 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        sharedPreferences = getContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         return inflater.inflate(R.layout.fragment_keyboard, container, false);
     }
 
@@ -94,7 +102,8 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         ArrayList<Integer> keyboardDrawables = new ArrayList<>();
         keyboardDrawables.add(R.drawable.ic_keyboard);
         keyboardDrawables.add(R.drawable.ic_keyboard);
-        keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, 0);
+        int selected = sharedPreferences.getInt("keyboard_theme", 0);
+        keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences, editor);
         rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
     }
 
