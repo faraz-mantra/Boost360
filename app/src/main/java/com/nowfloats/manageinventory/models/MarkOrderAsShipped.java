@@ -14,9 +14,9 @@ public class MarkOrderAsShipped {
 
     @SerializedName("ShippedBy")
     @Expose
-    private String ShippedOn;
+    private String shippedBy;
 
-    @SerializedName("shippedOn")
+    @SerializedName("ShippedOn")
     @Expose
     private String shippedOn;
 
@@ -48,12 +48,20 @@ public class MarkOrderAsShipped {
         this.orderId = orderId;
     }
 
+    public String getShippedBy() {
+        return shippedBy;
+    }
+
+    public void setShippedBy(String shippedBy) {
+        this.shippedBy = shippedBy;
+    }
+
     public String getShippedOn() {
-        return ShippedOn;
+        return shippedOn;
     }
 
     public void setShippedOn(String shippedOn) {
-        ShippedOn = shippedOn;
+        this.shippedOn = shippedOn;
     }
 
     public String getDeliveryProvider() {

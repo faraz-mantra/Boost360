@@ -25,8 +25,6 @@ import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Product_Gallery.Model.ProductListModel;
-import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.manageinventory.adapters.OrdersRvAdapter;
 import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.CommonStatus;
@@ -39,7 +37,6 @@ import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
-
 
 import java.util.ArrayList;
 import java.util.Collection;

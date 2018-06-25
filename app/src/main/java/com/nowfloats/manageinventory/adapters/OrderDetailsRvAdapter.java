@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nowfloats.manageinventory.models.OrderDataModel;
 import com.nowfloats.manageinventory.models.OrderDataModel.Order;
+import com.nowfloats.util.Methods;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -92,7 +93,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             switch (mTag) {
                 case "Initiated":
                     customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
-                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.received_order_status_bg));
+                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.initiated_order_status_bg));
                     break;
                 case "Confirmed":
                     if (mOrder.getLogisticsDetails() != null && mOrder.getLogisticsDetails().getStatus().equalsIgnoreCase("Shipped")) {
@@ -128,24 +129,27 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 case "Disputed":
                 case "Escalated":
                     customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
-                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.abandoned_order_status_bg));
+                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.cancelled_order_status_bg));
                     break;
                 case "Abandoned":
                     customerDetailsHolder.tvStatusTag.setText(mTag.toUpperCase());
-                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.abandoned_order_status_bg));
+                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.cancelled_order_status_bg));
                     break;
                 default:
-                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.abandoned_order_status_bg));
+                    customerDetailsHolder.tvStatusTag.setBackground(ContextCompat.getDrawable(mContext, R.drawable.cancelled_order_status_bg));
                     break;
             }
         } else if (holder instanceof ProductDetailsHolder) {
             ProductDetailsHolder productDetailsHolder = (ProductDetailsHolder) holder;
             productDetailsHolder.tvProductName.setText(mProducts.get(position - 1).getProduct().getName());
-            productDetailsHolder.tvDiscount.setText((mProducts.get(position - 1).getActualPrice() -
-                    mProducts.get(position - 1).getSalePrice()) + "");
+            productDetailsHolder.tvDiscount.setText(TextUtils.isEmpty(mOrder.getBillingDetails().getCurrencyCode()) ? "INR" :
+                    mOrder.getBillingDetails().getCurrencyCode() + " " + (mProducts.get(position - 1).getActualPrice() -
+                            mProducts.get(position - 1).getSalePrice()) + "");
             productDetailsHolder.tvProductQuantity.setText(mProducts.get(position - 1).getQuantity() + "");
-            productDetailsHolder.tvFinalPrice.setText(mProducts.get(position - 1).getSalePrice() + "");
-            productDetailsHolder.tvUnitPrice.setText(mProducts.get(position - 1).getActualPrice() + "");
+            productDetailsHolder.tvFinalPrice.setText(TextUtils.isEmpty(mOrder.getBillingDetails().getCurrencyCode()) ? "INR" :
+                    mOrder.getBillingDetails().getCurrencyCode() + " " + mProducts.get(position - 1).getSalePrice() + "");
+            productDetailsHolder.tvUnitPrice.setText(TextUtils.isEmpty(mOrder.getBillingDetails().getCurrencyCode()) ? "INR" :
+                    mOrder.getBillingDetails().getCurrencyCode() + " " + mProducts.get(position - 1).getActualPrice() + "");
 
             if (mProducts.get(position - 1).getProduct().getFeaturedImage() != null) {
                 Picasso.with(mContext).load(mProducts.get(position - 1).getProduct().getFeaturedImage().getTileImageUri())
@@ -163,12 +167,14 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 //                        mOrder.getBillingDetails().getNfDeliveryCharges()
 //                        + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
 
-                orderDetailsHolder.tvTotalPrice.setText(mOrder.getBillingDetails().getAmountPayableByBuyer() + "");
+                orderDetailsHolder.tvTotalPrice.setText(TextUtils.isEmpty(mOrder.getBillingDetails().getCurrencyCode()) ? "INR" :
+                        mOrder.getBillingDetails().getCurrencyCode() + " " + mOrder.getBillingDetails().getAmountPayableByBuyer() + "");
                 orderDetailsHolder.tvAssuredPurchaseCharge.setText(mOrder.getBillingDetails().getAssuredPurchaseCharges() + "");
                 orderDetailsHolder.tvShippingCharge.setText((mOrder.getBillingDetails().getNfDeliveryCharges()
                         + mOrder.getBillingDetails().getSellerDeliveryCharges()) + "");
-                orderDetailsHolder.tvNetAmount.setText((mOrder.getBillingDetails().getGrossAmount() +
-                        mOrder.getBillingDetails().getDiscountAmount()) + "");
+                orderDetailsHolder.tvNetAmount.setText(TextUtils.isEmpty(mOrder.getBillingDetails().getCurrencyCode()) ? "INR" :
+                        mOrder.getBillingDetails().getCurrencyCode() + " " + (mOrder.getBillingDetails().getGrossAmount() +
+                                mOrder.getBillingDetails().getDiscountAmount()) + "");
             } else {
                 orderDetailsHolder.tvTotalPrice.setText("N/A");
                 orderDetailsHolder.tvAssuredPurchaseCharge.setText("N/A");
@@ -176,11 +182,11 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 orderDetailsHolder.tvNetAmount.setText("N/A");
             }
             if (mOrder.getLogisticsDetails() != null && !TextUtils.isEmpty(mOrder.getLogisticsDetails().getDeliveredOn())) {
-                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getLogisticsDetails().getDeliveredOn()));
+                orderDetailsHolder.tvDeliveryDate.setText(Methods.getParsedDate(mOrder.getLogisticsDetails().getDeliveredOn()));
             } else {
                 orderDetailsHolder.tvDeliveryDate.setText("N/A");
             }
-            orderDetailsHolder.tvOrderDate.setText(getParsedDate(mOrder.getCreatedOn()));
+            orderDetailsHolder.tvOrderDate.setText(Methods.getParsedDate(mOrder.getCreatedOn()));
         }
     }
 
@@ -216,24 +222,6 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    private String getParsedDate(String createdOn) {
-        if (createdOn == null) {
-            return "N/A";
-        }
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        String parsedDate;
-        try {
-            format.setTimeZone(TimeZone.getDefault());
-            Date date = format.parse(createdOn);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm a dd/MM/yyyy");
-            simpleDateFormat.setTimeZone(TimeZone.getDefault());
-            parsedDate = simpleDateFormat.format(date);
-        } catch (ParseException e) {
-            parsedDate = createdOn;
-        }
-
-        return parsedDate;
-    }
 
     public class ProductDetailsHolder extends RecyclerView.ViewHolder {
 

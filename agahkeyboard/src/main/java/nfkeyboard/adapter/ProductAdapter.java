@@ -275,15 +275,14 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                     if (offerPriceEt.getId() == focusId) {
                         if (editText.getText().length() != 0) {
                             if (!(editText.getText().length() == 1 && editText.getText().toString().charAt(0) == '0')) {
-                                if (Double.valueOf(editText.getText().toString()) >= MIN_OFFER_PRICE)
-                                {
+                                String valPrice = editText.getText().toString().replace(",", "");
+                                if (Double.valueOf(valPrice) >= MIN_OFFER_PRICE) {
                                     offerPriceEt.setText(editText.getText().toString());
                                     editText.clearFocus();
                                     editText.setText("");
                                     productsKeyboardCl.setVisibility(View.GONE);
                                     offerCl.setVisibility(View.VISIBLE);
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(mContext, "Offer price cannot be less than 10", Toast.LENGTH_LONG).show();
                                 }
                             } else {
@@ -413,8 +412,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             availableUnits = model.getAvailableUnits();
             if (Double.valueOf(model.getPrice()) >= MIN_OFFER_PRICE) {
                 offerPriceEt.setText(model.getPrice());
-            }
-            else {
+            } else {
                 offerPriceEt.setText("10");
             }
 

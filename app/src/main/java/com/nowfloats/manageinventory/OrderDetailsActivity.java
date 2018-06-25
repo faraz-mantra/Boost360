@@ -1,6 +1,5 @@
 package com.nowfloats.manageinventory;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,8 +24,6 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
-
-import java.util.HashMap;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -167,83 +164,84 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
         if (mOrder.getMode().equalsIgnoreCase("PICKUP")) {
 
-            if (mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() != null) {
-                if (TextUtils.isEmpty(mOrder.getLogisticsDetails().
-                        getDeliveryConfirmationDetails().getNotificationSentOn())) {
+            if (mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() != null
+                    && !TextUtils.isEmpty(mOrder.getLogisticsDetails().
+                    getDeliveryConfirmationDetails().getNotificationSentOn())) {
 
-                    tvPositive.setText("Mark Order as Picked Up");
+                tvPositive.setVisibility(View.GONE);
+                tvNegative.setText("Escalate Order");
+                tvNegative.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.ESCALATE_ORDER, null);
+                        pbOrderDetails.setVisibility(View.VISIBLE);
+                        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+                        callInterface.raiseOrderDispute(mOrder.getOrderId(), new retrofit.Callback<CommonStatus>() {
 
-                    tvPositive.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            MixPanelController.track(MixPanelController.DELIVER_ORDER, null);
-                            pbOrderDetails.setVisibility(View.VISIBLE);
-                            WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-                            callInterface.triggerOrderDeliveryConfirmation(mOrder.getOrderId(), "SELLER", new retrofit.Callback<CommonStatus>() {
+                            @Override
+                            public void success(CommonStatus commonStatus, retrofit.client.Response response) {
+                                finishActions(commonStatus);
+                            }
 
-                                @Override
-                                public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                    finishActions(commonStatus);
-                                }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                pbOrderDetails.setVisibility(View.GONE);
+                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    pbOrderDetails.setVisibility(View.GONE);
-                                    Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    });
 
-                    tvNegative.setText("Cancel Order");
+            } else {
 
-                    tvNegative.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            MixPanelController.track(MixPanelController.CANCEL_ORDER, null);
-                            pbOrderDetails.setVisibility(View.VISIBLE);
-                            WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-                            callInterface.cancelOrder(mOrder.getOrderId(), new retrofit.Callback<CommonStatus>() {
+                tvPositive.setText("Mark Order as Picked Up");
 
-                                @Override
-                                public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                    finishActions(commonStatus);
-                                }
+                tvPositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.DELIVER_ORDER, null);
+                        pbOrderDetails.setVisibility(View.VISIBLE);
+                        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+                        callInterface.triggerOrderDeliveryConfirmation(mOrder.getOrderId(), "SELLER", new retrofit.Callback<CommonStatus>() {
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    pbOrderDetails.setVisibility(View.GONE);
-                                    Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    });
+                            @Override
+                            public void success(CommonStatus commonStatus, retrofit.client.Response response) {
+                                finishActions(commonStatus);
+                            }
 
-                } else {
-                    tvPositive.setVisibility(View.GONE);
-                    tvNegative.setText("Escalate Order");
-                    tvNegative.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            MixPanelController.track(MixPanelController.ESCALATE_ORDER, null);
-                            pbOrderDetails.setVisibility(View.VISIBLE);
-                            WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-                            callInterface.raiseOrderDispute(mOrder.getOrderId(), new retrofit.Callback<CommonStatus>() {
+                            @Override
+                            public void failure(RetrofitError error) {
+                                pbOrderDetails.setVisibility(View.GONE);
+                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
 
-                                @Override
-                                public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                    finishActions(commonStatus);
-                                }
+                tvNegative.setText("Cancel Order");
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    pbOrderDetails.setVisibility(View.GONE);
-                                    Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    });
-                }
+                tvNegative.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.CANCEL_ORDER, null);
+                        pbOrderDetails.setVisibility(View.VISIBLE);
+                        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+                        callInterface.cancelOrder(mOrder.getOrderId(), new retrofit.Callback<CommonStatus>() {
+
+                            @Override
+                            public void success(CommonStatus commonStatus, retrofit.client.Response response) {
+                                finishActions(commonStatus);
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                pbOrderDetails.setVisibility(View.GONE);
+                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
             }
 
         } else {
@@ -265,8 +263,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
                             markOrderAsShipped.setDeliveryCharges(deliveryCharges);
                             markOrderAsShipped.setDeliveryProvider(deliveryProvider);
                             markOrderAsShipped.setShippedOn(shippedOn);
+                            markOrderAsShipped.setShippedBy("SELLER");
                             markOrderAsShipped.setTrackingNumber(trackingNumber);
                             markOrderAsShipped.setTrackingURL(trackingURL);
+                            markOrderAsShipped.setOrderId(mOrder.getOrderId());
 
 
                             shipOrderFragment.setResultListener(null);
@@ -329,35 +329,34 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tvPositive.setText("Send Order Delivery Confirmation");
         tvNegative.setText("Escalate Order");
 
-        if (mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() != null) {
-            if (TextUtils.isEmpty(mOrder.getLogisticsDetails().
-                    getDeliveryConfirmationDetails().getNotificationSentOn())) {
-                tvPositive.setVisibility(View.VISIBLE);
-                tvPositive.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(MixPanelController.DELIVER_ORDER, null);
-                        pbOrderDetails.setVisibility(View.VISIBLE);
-                        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-                        callInterface.triggerOrderDeliveryConfirmation(mOrder.getOrderId(), "SELLER", new retrofit.Callback<CommonStatus>() {
+        if (mOrder.getLogisticsDetails().getDeliveryConfirmationDetails() != null
+                && !TextUtils.isEmpty(mOrder.getLogisticsDetails().
+                getDeliveryConfirmationDetails().getNotificationSentOn())) {
+            tvPositive.setVisibility(View.GONE);
+        } else {
 
-                            @Override
-                            public void success(CommonStatus commonStatus, retrofit.client.Response response) {
-                                finishActions(commonStatus);
-                            }
+            tvPositive.setVisibility(View.VISIBLE);
+            tvPositive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MixPanelController.track(MixPanelController.DELIVER_ORDER, null);
+                    pbOrderDetails.setVisibility(View.VISIBLE);
+                    WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+                    callInterface.triggerOrderDeliveryConfirmation(mOrder.getOrderId(), "SELLER", new retrofit.Callback<CommonStatus>() {
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                pbOrderDetails.setVisibility(View.GONE);
-                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
+                        @Override
+                        public void success(CommonStatus commonStatus, retrofit.client.Response response) {
+                            finishActions(commonStatus);
+                        }
 
-            } else {
-                tvPositive.setVisibility(View.GONE);
-            }
+                        @Override
+                        public void failure(RetrofitError error) {
+                            pbOrderDetails.setVisibility(View.GONE);
+                            Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
         }
 
         tvNegative.setOnClickListener(new View.OnClickListener() {

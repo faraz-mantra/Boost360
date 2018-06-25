@@ -588,8 +588,23 @@ public class Methods {
     public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
 
 
-    public static String getParsedDate(long milliseconds, String format) {
-        return new SimpleDateFormat(format).format(milliseconds);
+    public static String getParsedDate(String createdOn) {
+        if (TextUtils.isEmpty(createdOn)) {
+            return "N/A";
+        }
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String parsedDate;
+        try {
+            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = format.parse(createdOn);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+            simpleDateFormat.setTimeZone(TimeZone.getDefault());
+            parsedDate = simpleDateFormat.format(date);
+        } catch (ParseException e) {
+            parsedDate = createdOn;
+        }
+
+        return parsedDate;
     }
 
 
