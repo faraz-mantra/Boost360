@@ -110,6 +110,8 @@
     <key-style
         latin:styleName="emojiKeyStyle"
         latin:keySpec="!icon/emoji_normal_key|!code/key_emoji"
+        latin:moreKeys="!fixedColumnOrder!3,!needsDividers!,!text/keyspec_emoji_action_key,!fixedColumnOrder!3,!needsDividers!,!text/keyspec_settings_action_key"
+        latin:keyLabelFlags="hasPopupHint|keepBackgroundAspectRatio"
         latin:keyActionFlags="noKeyPreview"
         latin:backgroundType="functional" />
     <key-style

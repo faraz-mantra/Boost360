@@ -251,6 +251,7 @@ public final class KeyboardTextsTable {
         /* 165: 0 */ "morekeys_double_quote",
         /* 166: 0 */ "morekeys_tablet_double_quote",
         /* 167: 0 */ "keyspec_emoji_action_key",
+            /* 168: 0 */ "keyspec_settings_action_key",
     };
 
     private static final String EMPTY = "";
@@ -449,6 +450,7 @@ public final class KeyboardTextsTable {
         /* morekeys_double_quote */ "!fixedColumnOrder!5,!text/double_quotes,!text/double_angle_quotes",
         /* morekeys_tablet_double_quote */ "!fixedColumnOrder!6,!text/double_quotes,!text/single_quotes,!text/double_angle_quotes,!text/single_angle_quotes",
         /* keyspec_emoji_action_key */ "!icon/emoji_action_key|!code/key_emoji",
+            /* keyspec_settings_action_key */ "!icon/settings_key|!code/key_settings",
     };
 
     /* Locale fa: Farsi */

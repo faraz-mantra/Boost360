@@ -1569,10 +1569,20 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     }
 
     public void displaySettingsDialog() {
-        if (isShowingOptionDialog()) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/addproduct"));
+        intent.putExtra("from", "notification");
+        intent.putExtra("url", "keyboardSettings");
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+        /*if (isShowingOptionDialog()) {
             return;
         }
-        showSubtypeSelectorAndSettings();
+        showSubtypeSelectorAndSettings();*/
     }
 
     @Override

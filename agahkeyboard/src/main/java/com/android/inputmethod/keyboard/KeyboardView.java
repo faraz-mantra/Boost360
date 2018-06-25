@@ -559,8 +559,8 @@ public class KeyboardView extends View {
                 paint.setTextAlign(Align.CENTER);
             }
             final float adjustmentY = params.mHintLabelVerticalAdjustment * labelCharHeight;
-           /* canvas.drawText(
-                    hintLabel, 0, hintLabel.length(), hintX, hintBaseline + adjustmentY, paint);*/
+           canvas.drawText(
+                    hintLabel, 0, hintLabel.length(), hintX, hintBaseline + adjustmentY, paint);
         }
 
         // Draw key icon.

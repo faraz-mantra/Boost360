@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -17,6 +18,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -36,6 +39,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.codetail.animation.ViewAnimationUtils;
@@ -60,6 +64,8 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     private SwitchCompat keyboardSettingSwitchTv;
     private ImageView gifImageView;
     private RevealFrameLayout overLayout1;
+    private RecyclerView rvKeyboardThemes;
+    private KeyboardThemesAdapter keyboardThemesAdapter;
 
     @Nullable
     @Override
@@ -83,6 +89,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         view.findViewById(R.id.keyboard_info).setOnClickListener(this);
         overLayout1 = view.findViewById(R.id.enable_keyboard_rfl_overlay1);
         view.findViewById(R.id.ll_enable_keyboard).setOnClickListener(this);
+        rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
+        rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
+        ArrayList<Integer> keyboardDrawables = new ArrayList<>();
+        keyboardDrawables.add(R.drawable.ic_keyboard);
+        keyboardDrawables.add(R.drawable.ic_keyboard);
+        keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, 0);
+        rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
     }
 
     @Override

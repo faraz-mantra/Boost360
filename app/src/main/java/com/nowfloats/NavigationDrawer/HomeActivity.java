@@ -95,6 +95,7 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
+import com.nowfloats.enablekeyboard.BoostKeyboardActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -364,6 +365,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     productActivity.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(productActivity);
+            } else if (url.contains("keyboardSettings")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                        .commit();
             } else if (url.contains("addCustomPage")) {
                 Intent createCustomPage = new Intent(HomeActivity.this, CreateCustomPageActivity.class);
                 if (isFromRia && mRiaNodeDataModel != null) {
