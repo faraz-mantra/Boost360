@@ -462,7 +462,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 orderStatus = OrderStatus.PLACED;
                 emptyMsg = "You don't have any Received Order";
                 mCurrSelectedView = findViewById(R.id.rl_received_orders);
-                getInProgressOrders(mQuery, mSkip, LIMIT);
+                getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 2:
                 setTitle("Delivered Orders");
@@ -512,18 +512,12 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         hashMap.put("sellerId", mSession.getFpTag());
         if (!TextUtils.isEmpty(orderStatus))
             hashMap.put("orderStatus", orderStatus);
-        callInterface.getOrdersList(hashMap, skip, limit, orderStatusCallback);
-    }
 
-    private void getInProgressOrders(final String orderQuery, final long skip, final int limit) {
-        hideEmptyLayout();
-
-        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("sellerId", mSession.getFpTag());
-        if (!TextUtils.isEmpty(orderStatus))
-            hashMap.put("orderStatus", orderStatus);
-        callInterface.getInProgressOrdersList(hashMap, skip, limit, orderStatusCallback);
+        if (orderStatus.equalsIgnoreCase("Placed")) {
+            callInterface.getInProgressOrdersList(hashMap, skip, limit, orderStatusCallback);
+        } else {
+            callInterface.getOrdersList(hashMap, skip, limit, orderStatusCallback);
+        }
     }
 
 
