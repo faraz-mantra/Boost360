@@ -88,15 +88,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         } else {
             if ((message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG))
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
-                /*MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
-                pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
-                pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, true).apply();
-                if (Methods.hasOverlayPerm(this)) {
-                    if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
-                        Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-                        startService(bubbleIntent);
-                    }
-                }*/
                 message.put("url", "thirdPartyQueries");
                 message.put("mp_message", "You have new enquires from Third Party, check now.");
             }
@@ -247,84 +238,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         notificationBuilder.setContentTitle("Business Enquiry");
                         notificationBuilder.setContentText("" + entity_model.getMessage());
                         notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(entity_model.getMessage()));
-
-//                        ArrayList<OrderModel> orderList = new ArrayList<>();
-//
-//                        /*Business_Enquiry_Model entity_model = gson.fromJson(jsonData,
-//                                new TypeToken<Business_Enquiry_Model>() {
-//                                }.getType());*/
-//
-//                        OrderModel orderModel = new OrderModel(
-//                                "Shimona Elora",
-//                                "8763303549",
-//                                "Hyderabad",
-//                                "Telangana",
-//                                1,
-//                                200,
-//                                "INR",
-//                                "20-06-2018 3:33PM",
-//                                "Confirmed"
-//                        );
-//
-//                        oldData = pref.getString(PREF_NOTI_ORDERS, "");
-//
-//                        if (!TextUtils.isEmpty(oldData)) {
-//                            Type type = new TypeToken<List<OrderModel>>() {
-//                            }.getType();
-//                            orderList = gson.fromJson(oldData, type);
-//                        }
-//
-//                        orderList.add(orderModel);
-//
-//                        json = gson.toJson(orderList);
-//                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
-//                        BoostLog.e("deepLinkUrl", jsonData);
-//
-//                        notificationBuilder.setContentTitle("Orders");
-//                        notificationBuilder.setContentText("You have a new Order");
-//                        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("You have a new Order"));
-//
-//                        Log.d("here", "asncjsncjbsdbc");
-//                        //sendBroadcast(new Intent(CustomerAssistantService.OPEN_DIALOG));
-//
-//                    } else if (deepLinkUrl.contains("orders")) {
-//
-//                        /*ArrayList<OrderModel> orderList = new ArrayList<>();
-//
-//                        Business_Enquiry_Model entity_model = gson.fromJson(jsonData,
-//                                new TypeToken<Business_Enquiry_Model>() {
-//                                }.getType());
-//
-//                        OrderModel orderModel = new OrderModel(
-//                                "Shimona Elora",
-//                                "8763303549",
-//                                "Hyderabad",
-//                                "Telangana",
-//                                1,
-//                                200,
-//                                "INR"
-//                        );
-//
-//                        String oldData = pref.getString(PREF_NOTI_ORDERS, "");
-//
-//                        if (!TextUtils.isEmpty(oldData)) {
-//                            Type type = new TypeToken<List<OrderModel>>() {
-//                            }.getType();
-//                            orderList = gson.fromJson(oldData, type);
-//                        }
-//
-//                        orderList.add(orderModel);
-//
-//                        String json = gson.toJson(orderList);
-//                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
-//                        BoostLog.e("deepLinkUrl", jsonData);
-//
-//                        notificationBuilder.setContentTitle("Orders");
-//                        notificationBuilder.setContentText("You have a new Order");
-//                        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("You have a new Order"));*/
-//
-//                    }
-
+                    }
                     pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
                     if (Methods.hasOverlayPerm(this)) {
                         if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
@@ -341,8 +255,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                             } else {
                                 startService(bubbleIntent);
                             }
-                        }
-                        else {
+                        } else {
                             if (deepLinkUrl.contains(getResources().getString(R.string.deeplink_bizenquiry)) || deepLinkUrl.contains("enquiries")) {
                                 Intent callIntent = new Intent(this, CallerInfoDialog.class);
                                 callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -353,6 +266,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         MixPanelController.track(MixPanelController.BUBBLE_ENABLED, null);
                     }
                 }
+
 
                 if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
@@ -365,7 +279,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
                 }
             }
-        }
         }
 
     }
