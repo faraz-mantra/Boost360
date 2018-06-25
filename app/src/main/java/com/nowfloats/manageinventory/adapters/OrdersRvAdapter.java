@@ -18,18 +18,12 @@ import android.widget.TextView;
 
 import com.nowfloats.manageinventory.OrderListActivity;
 import com.nowfloats.manageinventory.models.OrderDataModel.Order;
+import com.nowfloats.util.Methods;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * Created by NowFloats on 29-08-2017.
@@ -100,7 +94,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                    products = mProductListMap.get(orderModel.getId());
 //                }
                 ordersViewHolder.tvOrderId.setText(orderModel.getReferenceNumber());
-                ordersViewHolder.tvOrderDate.setText(getParsedDate(orderModel.getCreatedOn()));
+                ordersViewHolder.tvOrderDate.setText(Methods.getParsedDate(orderModel.getCreatedOn()));
 
                 if (orderModel.getBillingDetails() != null) {
                     ordersViewHolder.tvOrderTotalAmount.setText(TextUtils.isEmpty(orderModel.getBillingDetails().getCurrencyCode()) ? "INR" :
@@ -112,37 +106,35 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 if (orderModel.getLogisticsDetails() != null) {
                     ordersViewHolder.tvExpDelivDate.setText(
-                            TextUtils.isEmpty(orderModel.getLogisticsDetails().getDeliveredOn())
-                                    ? "N/A"
-                                    : getParsedDate(orderModel.getLogisticsDetails().getDeliveredOn()));
+                            Methods.getParsedDate(orderModel.getLogisticsDetails().getDeliveredOn()));
                 } else {
                     ordersViewHolder.tvExpDelivDate.setText("N/A");
                 }
 
                 if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.INITIATED)) {
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#339112"));
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#808080"));
                     ordersViewHolder.tvOrderStatusTag.setText("Initiated");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.fresh_order_text_bg));
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.initiated_order_text_bg));
                 } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.PLACED)) {
                     ordersViewHolder.tvOrderStatusTag.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
                     ordersViewHolder.tvOrderStatusTag.setText("PLACED");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.delivered_order_text_bg));
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.received_order_text_bg));
                 } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#808080"));
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
                     ordersViewHolder.tvOrderStatusTag.setText("Confirmed");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.cancelled_order_text_bg));
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.received_order_text_bg));
                 } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.COMPLETED)) {
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#F80208"));
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#4BB543"));
                     ordersViewHolder.tvOrderStatusTag.setText("Completed");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.returned_order_text_bg));
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.delivered_order_text_bg));
                 } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CANCELLED)) {
                     ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#F80208"));
                     ordersViewHolder.tvOrderStatusTag.setText("Cancelled");
                     ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.cancelled_order_text_bg));
                 } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.ESCALATED)) {
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#6DA5FF"));
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#F80208"));
                     ordersViewHolder.tvOrderStatusTag.setText("Escalated");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.abandoned_order_text_bg));
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.cancelled_order_text_bg));
                 }
                 if (orderModel.getOrderDetails() != null) {
                     ordersViewHolder.tvItemsCount.setText(orderModel.getOrderDetails().size() > 1 ? orderModel.getOrderDetails().size() + " Items" : orderModel.getOrderDetails().size() + " Item");
@@ -174,25 +166,6 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
 
-    }
-
-    private String getParsedDate(String createdOn) {
-        if (createdOn == null) {
-            return "N/A";
-        }
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        String parsedDate;
-        try {
-            format.setTimeZone(TimeZone.getDefault());
-            Date date = format.parse(createdOn);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm a dd/MM/yyyy");
-            simpleDateFormat.setTimeZone(TimeZone.getDefault());
-            parsedDate = simpleDateFormat.format(date);
-        } catch (ParseException e) {
-            parsedDate = createdOn;
-        }
-
-        return parsedDate;
     }
 
     @Override

@@ -1,121 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:layout_marginBottom="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="160dp">
+    android:background="@color/white">
 
     <com.nowfloats.CustomWidget.VerticalTextView
         android:id="@+id/tv_order_status_tag"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
         android:background="@drawable/returned_order_status_bg"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:rotation="180"
         android:gravity="center"
-        android:text="RETURNED"/>
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:rotation="180"
+        android:text="RETURNED"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TableLayout
-        android:layout_marginLeft="40dp"
-        android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="40dp">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Customer Name:"
-                />
+                android:text="Customer Name:" />
+
             <TextView
                 android:id="@+id/tv_customer_name"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="12sp"
-                android:layout_marginLeft="5dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Romio Ranjan Jena"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textStyle="bold"
+
                 />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email:"
-                />
+                android:text="Email:" />
+
             <TextView
                 android:id="@+id/tv_customer_email"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="12sp"
-                android:layout_marginLeft="5dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="info.romiojena@gmail.com"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textStyle="bold"
+
                 />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address:"
-                />
+                android:text="Address:" />
+
             <TextView
                 android:id="@+id/tv_customer_address"
-                android:textStyle="bold"
-                android:maxLines="4"
-                android:lines="3"
-                android:ellipsize="end"
-                android:textSize="12sp"
-                android:layout_marginLeft="5dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="A1- Westend Apartments, Near Durgam Cheruvu Lake, madhapur, Hyderabad, 500081, India"
-                />
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:lines="3"
+                android:maxLines="4"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone Number:"
-                />
+                android:text="Phone Number:" />
+
             <TextView
                 android:id="@+id/tv_customer_phone"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginLeft="5dp"
                 android:layout_width="0dp"
-                android:textSize="12sp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="+917504825521"
-                />
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </TableRow>
 
     </TableLayout>

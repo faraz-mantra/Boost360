@@ -44,7 +44,7 @@
             android:id="@+id/tv_order_status_tag"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/fresh_order_text_bg"
+            android:background="@drawable/initiated_order_text_bg"
             android:gravity="center"
             android:padding="2dp"
             android:text="Fresh"
