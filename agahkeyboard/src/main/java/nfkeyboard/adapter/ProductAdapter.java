@@ -333,6 +333,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             makeOfferButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_CREATE_OFFER, null);
                     AnimationFade(true);
                 }
             });
@@ -340,6 +341,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             createButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SHARE_OFFER, null);
                     dataModel.setQuantity(Integer.valueOf(selectedQuantityTv.getText().toString()));
                     dataModel.setMaxUsage(Integer.valueOf(selectedQuantityTv.getText().toString()));
                     int validity = Integer.valueOf(selectedValidityTv.getText().toString().replaceAll("Hrs", "").trim());

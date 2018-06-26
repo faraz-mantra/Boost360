@@ -102,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="2dp"
+                android:id="@+id/tvHeadExp"
                 android:text="Exp. Deliv. Date:" />
 
             <TextView

@@ -174,7 +174,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
                 tvDismissEnquiries.setVisibility(View.GONE);
                 ecvEnquiries.setVisibility(View.GONE);
                 pref.edit().putString(PREF_NOTI_ENQUIRIES, "").commit();
-                if (ecvCalls.getVisibility() == View.GONE &&ecvOrders.getVisibility() == View.GONE) {
+                if (ecvCalls.getVisibility() == View.GONE && ecvOrders.getVisibility() == View.GONE) {
                     stopService();
                 }
             }
@@ -196,7 +196,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
         tvViewOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MixPanelController.track(MixPanelController.BUBBLE_ORDERS, null);
+                MixPanelController.track(MixPanelController.BUBBLE_VIEW_ORDERS, null);
 
                 llOrders.setVisibility(View.GONE);
                 ecvOrders.setVisibility(View.GONE);

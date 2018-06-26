@@ -238,13 +238,35 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         notificationBuilder.setContentTitle("Business Enquiry");
                         notificationBuilder.setContentText("" + entity_model.getMessage());
                         notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(entity_model.getMessage()));
+                    } else if (deepLinkUrl.contains("myorders")) {
+
+                        ArrayList<OrderModel> orderList = new ArrayList<>();
+
+                        OrderModel entity_model = gson.fromJson(jsonData,
+                                new TypeToken<OrderModel>() {
+                                }.getType());
+
+                        String oldData = pref.getString(PREF_NOTI_ORDERS, "");
+
+                        if (!TextUtils.isEmpty(oldData)) {
+                            Type type = new TypeToken<List<OrderModel>>() {
+                            }.getType();
+                            orderList = gson.fromJson(oldData, type);
+                        }
+
+                        orderList.add(entity_model);
+
+                        String json = gson.toJson(orderList);
+                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
+                        BoostLog.e("deepLinkUrl", jsonData);
                     }
+
                     pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
                     if (Methods.hasOverlayPerm(this)) {
                         if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
 
                             Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-                            if (deepLinkUrl.contains(getResources().getString(R.string.deeplink_bizenquiry)) || deepLinkUrl.contains("enquiries")) {
+                            if (deepLinkUrl.contains("myorders")) {
                                 bubbleIntent.putExtra("shouldOpen", true);
                             } else {
                                 bubbleIntent.putExtra("shouldOpen", false);
@@ -256,7 +278,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                                 startService(bubbleIntent);
                             }
                         } else {
-                            if (deepLinkUrl.contains(getResources().getString(R.string.deeplink_bizenquiry)) || deepLinkUrl.contains("enquiries")) {
+                            if (deepLinkUrl.contains("myorders")) {
                                 Intent callIntent = new Intent(this, CallerInfoDialog.class);
                                 callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 startActivity(callIntent);

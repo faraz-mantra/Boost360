@@ -66,7 +66,7 @@ import java.util.List;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
-import static com.nowfloats.util.Constants.loginUrl;
+import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 
 public class CustomerAssistantService extends Service {
@@ -101,8 +101,9 @@ public class CustomerAssistantService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equalsIgnoreCase(ACTION_ADD_BUBBLE)) {
-                repostionBubble();
-                bubbleView.applyAlpha();
+                repositionBubble();
+                if (bubbleView != null)
+                    bubbleView.applyAlpha();
             } else if (bubbleView != null) {
                 if (intent.getAction().equalsIgnoreCase(ACTION_REMOVE_BUBBLE)) {
                     Log.d("here", "remove bubble");
@@ -226,6 +227,8 @@ public class CustomerAssistantService extends Service {
                 || componentInfo.getClassName().equalsIgnoreCase(BUBBLE_V2_CLASS_NAME));
     }
 
+    private boolean shouldOpen = false;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
@@ -237,31 +240,21 @@ public class CustomerAssistantService extends Service {
 
 
         if (intent == null) {
+            repositionBubble();
             return Service.START_STICKY;
         } else {
-            Log.d("here", "noti_received");
-            boolean data = false;
             if (intent.getExtras() != null) {
-                Log.d("here", "noti_received1");
-                data = intent.getExtras().getBoolean("shouldOpen", false);
-                Log.d("here", "noti_received " + data);
-                if (data) {
-                    Log.d("here", "noti_received2");
-                    killDialog();
-                    bubbleView.resetAlpha();
-                    bubbleView.goToRightWall();
-                    Intent callIntent = new Intent(CustomerAssistantService.this, CallerInfoDialog.class);
-                    callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(callIntent);
-                }
+                shouldOpen = intent.getExtras().getBoolean("shouldOpen", false);
             }
+            repositionBubble();
             return Service.START_REDELIVER_INTENT;
         }
+
 
     }
 
 
-    private void repostionBubble() {
+    private void repositionBubble() {
 
         WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
@@ -273,11 +266,27 @@ public class CustomerAssistantService extends Service {
 
         initAplha = 0.7f;
 
-        if (Methods.hasOverlayPerm(CustomerAssistantService.this)) {
-            if (bubbles == null || bubbles.size() == 0) {
-                addTrash(R.layout.bubble_trash_layout);
-                addBubble(x_pos, y_Pos);
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        if (am.getRunningTasks(1) != null && am.getRunningTasks(1).size() > 0) {
+            ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
+            if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
+                if (Methods.hasOverlayPerm(CustomerAssistantService.this) && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                    if (bubbles == null || bubbles.size() == 0) {
+                        addTrash(R.layout.bubble_trash_layout);
+                        addBubble(x_pos, y_Pos);
+                    }
+
+                    if (shouldOpen && bubbleView != null) {
+                        shouldOpen = false;
+                        if (!isDialogShowing()) {
+                            Intent intent = new Intent(CustomerAssistantService.this, CallerInfoDialog.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivity(intent);
+                        }
+                    }
+                }
             }
+
         }
     }
 
@@ -296,14 +305,6 @@ public class CustomerAssistantService extends Service {
             cpuWakeLock.acquire();
         }
 
-
-        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        if (am.getRunningTasks(1) != null && am.getRunningTasks(1).size() > 0) {
-            ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
-            if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
-                repostionBubble();
-            }
-        }
     }
 
     private PendingIntent createPendingIntent() {
@@ -414,6 +415,7 @@ public class CustomerAssistantService extends Service {
         pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).commit();
         pref.edit().putString(PREF_NOTI_CALL_LOGS, "").commit();
         pref.edit().putString(PREF_NOTI_ENQUIRIES, "").commit();
+        pref.edit().putString(PREF_NOTI_ORDERS, "").commit();
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
         stopSelf();
     }

@@ -34,12 +34,12 @@ public class MixPanelController {
     public static final String BUBBLE_ENABLED = "BubbleEnabled";
     public static final String BUBBLE_SERVICE_ENABLED = "BubbleServiceEnabled";
     public static final String BUBBLE_CALL_TRACKER = "BubbleCallTracker";
-    public static final String BUBBLE_ORDERS = "BubbleOrders";
+    public static final String BUBBLE_VIEW_ORDERS = "BubbleViewOrders";
+    public static final String BUBBLE_ORDER_DETAIL = "BubbleOrderDetail";
     public static final String BUBBLE_DISMISS_CALL_TRACKER = "BubbleDismissCallTracker";
     public static final String BUBBLE_DISMISS_ENQUIRY = "BubbleDismissEnquiry";
     public static final String BUBBLE_DISMISS_ORDER = "BubbleDismissOrder";
     public static final String BUBBLE_ENQUIRY = "BubbleEnquiry";
-    public static final String SAM_BUBBLE_CLOSED = "SAMBubbleClosedByUser";
     public static final String WHATSAPP_TO_BOOST = "whatsapp_to_boost";
     public static final String LINK_DOMAIN = "LinkDomain";
     public static final String BOOK_DOMAIN = "BookDomain";

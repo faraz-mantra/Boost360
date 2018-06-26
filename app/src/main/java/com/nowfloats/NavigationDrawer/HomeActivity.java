@@ -98,6 +98,7 @@ import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
+import com.nowfloats.manageinventory.OrderDetailsActivity;
 import com.nowfloats.manageinventory.SellerAnalyticsActivity;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
@@ -187,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
     private RiaNodeDataModel mRiaNodeDataModel;
-    private String mDeepLinkUrl;
+    private String mDeepLinkUrl, mPayload;
     private String TAG = HomeActivity.class.getSimpleName();
     private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
             , Manifest.permission.READ_PHONE_STATE};
@@ -219,9 +220,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();
 
-        if (bundle != null && bundle.containsKey("url")) {
-            mDeepLinkUrl = bundle.getString("url");
-            //DeepLinkPage(mDeepLinkUrl, false);
+        if (bundle != null) {
+            if (bundle.containsKey("url")) {
+                mDeepLinkUrl = bundle.getString("url");
+            }
+            if (bundle.containsKey("payload")) {
+                mPayload = bundle.getString("payload");
+            }
         }
 
         if (bundle != null && bundle.containsKey("Username")) {
@@ -373,6 +378,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains("myorders")) {
                 Intent listOrder = new Intent(HomeActivity.this, SellerAnalyticsActivity.class);
                 startActivity(listOrder);
+            } else if (url.contains("myorderdetail")) {
+                Intent orderDetail = new Intent(HomeActivity.this, OrderDetailsActivity.class);
+                orderDetail.putExtra("orderId", mPayload);
+                startActivity(orderDetail);
             } else if (url.contains(getResources().getString(R.string.deeplink_upgrade))) {
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {
@@ -526,7 +535,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
             if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
                 sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
-            }else{
+            } else {
                 sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
             }
         }
