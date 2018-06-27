@@ -234,6 +234,10 @@ public class MixPanelController {
             people.initPushHandling("669302602295");
             // people.initPushHandling("276987746927");
             people.set("Notification", fpid);
+
+            ApxorSDK.setUserIdentifier(id);
+            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -279,8 +283,8 @@ public class MixPanelController {
             //  669302602295 - Boost Project ID
             // 150516431070 - Test Project ID
             people.initPushHandling("669302602295");
-            ApxorSDK.setUserIdentifier(id);
-            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(store));
+//            ApxorSDK.setUserIdentifier(id);
+//            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(store));
             //people.initPushHandling("276987746927");
             // people.withIdentity(Constants.Store_id);
         } catch (Exception e) {
