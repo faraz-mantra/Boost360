@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#E6E7E9"
+    android:orientation="vertical"
     tools:context="com.nowfloats.manageinventory.OrderDetailsActivity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
         app:theme="@style/CustomToolbarTheme">
 
     </android.support.v7.widget.Toolbar>
@@ -19,19 +20,52 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_order_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
+
         <ProgressBar
             android:id="@+id/pb_order_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tvPositive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        android:background="#4BB543"
+        android:gravity="center"
+        android:padding="@dimen/margin_8"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvNegative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@drawable/order_cancel_btn_bg"
+        android:gravity="center"
+        android:padding="@dimen/margin_8"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </LinearLayout>

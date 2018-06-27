@@ -210,7 +210,7 @@ public class ExpandableCardView extends LinearLayout {
         Animation expandAnimation = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if (interpolatedTime == 1) {
+                if (interpolatedTime == 0) {
                     //Setting isExpanding/isCollapsing to false
                     isExpanding = false;
                     isCollapsing = false;

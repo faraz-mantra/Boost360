@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service android:name=".keyboards.ImeKeyboardService"
+        <!--<service android:name=".keyboards.ImeKeyboardService"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
@@ -21,7 +21,7 @@
             </intent-filter>
             <meta-data android:name="android.view.im"
                 android:resource="@xml/kbd_method" />
-        </service>
+        </service>-->
         <activity android:name=".activity.TestMainActivity" />
     </application>
 

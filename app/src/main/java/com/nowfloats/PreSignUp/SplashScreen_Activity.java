@@ -117,12 +117,12 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     private void fetchData() {
         try {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
                     Util.addBackgroundImages();
-                }
-            }).start();
+//                }
+//            }).start();
             getFPDetails_retrofit(SplashScreen_Activity.this, session.getFPID(), Constants.clientId, bus);
         } catch (Exception e) {
             e.printStackTrace();

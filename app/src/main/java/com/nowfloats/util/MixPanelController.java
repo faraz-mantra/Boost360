@@ -31,16 +31,21 @@ public class MixPanelController {
     public static final String BUBBLE_OVERLAY_PERM = "BubbleOverlayPerm";
     public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
     public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
+    public static final String BUBBLE_ENABLED = "BubbleEnabled";
+    public static final String BUBBLE_SERVICE_ENABLED = "BubbleServiceEnabled";
     public static final String BUBBLE_CALL_TRACKER = "BubbleCallTracker";
+    public static final String BUBBLE_VIEW_ORDERS = "BubbleViewOrders";
+    public static final String BUBBLE_ORDER_DETAIL = "BubbleOrderDetail";
     public static final String BUBBLE_DISMISS_CALL_TRACKER = "BubbleDismissCallTracker";
     public static final String BUBBLE_DISMISS_ENQUIRY = "BubbleDismissEnquiry";
+    public static final String BUBBLE_DISMISS_ORDER = "BubbleDismissOrder";
     public static final String BUBBLE_ENQUIRY = "BubbleEnquiry";
-    public static final String SAM_BUBBLE_CLOSED = "SAMBubbleClosedByUser";
     public static final String WHATSAPP_TO_BOOST = "whatsapp_to_boost";
     public static final String LINK_DOMAIN = "LinkDomain";
     public static final String BOOK_DOMAIN = "BookDomain";
     public static final String DOMAIN_SEARCH = "DomainSearch";
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
+    public static final String VMN_CALL_TRACKER_LOGS = "VmnCallTrackerLogs";
     public static final String MANAGE_INVENTORY = "ManageInventory";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
@@ -66,6 +71,14 @@ public class MixPanelController {
     public static final String SAM_BUBBLE_SELECTED_MESSAGES = "SAMBubbleSelectedMessages";
     public static final String SAM_BUBBLE_ACTION_CALL = "SAMBubbleActionCall";
     public static final String SAM_BUBBLE_ACTION_SHARE = "SAMBubbleActionShare";
+    public static final String MY_ORDERS = "MyOrders";
+    public static final String ORDER_LIST = "OrderList";
+    public static final String ORDER_DETAILS = "OrderDetails";
+    public static final String CONFIRM_ORDER = "ConfirmOrder";
+    public static final String CANCEL_ORDER = "CancelOrder";
+    public static final String SHIP_ORDER = "ShipOrder";
+    public static final String DELIVER_ORDER = "DeliverOrder";
+    public static final String ESCALATE_ORDER = "EscalateOrder";
 
 
     public static final String THIRD_PARTY_DATA = "ThirdPartyData";
@@ -221,6 +234,10 @@ public class MixPanelController {
             people.initPushHandling("669302602295");
             // people.initPushHandling("276987746927");
             people.set("Notification", fpid);
+
+            ApxorSDK.setUserIdentifier(id);
+            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -266,8 +283,8 @@ public class MixPanelController {
             //  669302602295 - Boost Project ID
             // 150516431070 - Test Project ID
             people.initPushHandling("669302602295");
-            ApxorSDK.setUserIdentifier(id);
-            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(store));
+//            ApxorSDK.setUserIdentifier(id);
+//            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(store));
             //people.initPushHandling("276987746927");
             // people.withIdentity(Constants.Store_id);
         } catch (Exception e) {

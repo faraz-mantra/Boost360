@@ -139,7 +139,7 @@ public class ManageInventoryFragment extends Fragment {
 
 
         try {
-
+            ivLockWidget.setVisibility(View.GONE);
             Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
             robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
 
@@ -174,33 +174,33 @@ public class ManageInventoryFragment extends Fragment {
             tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mIsAPEnabled) {
+//                    if(mIsAPEnabled) {
                         MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
                         Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }else {
-                        new AlertDialog.Builder(getActivity())
-                                .setMessage("Enable Assured Purchase to view Seller Analytics")
-                                .setPositiveButton("Payment Settings", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
-                                        Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
-                                        startActivity(i);
-                                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    }
-                                })
-                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show();
-
-                    }
+//                    }else {
+//                        new AlertDialog.Builder(getActivity())
+//                                .setMessage("Enable Assured Purchase to view Seller Analytics")
+//                                .setPositiveButton("Payment Settings", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                        MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
+//                                        Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
+//                                        startActivity(i);
+//                                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                    }
+//                                })
+//                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                })
+//                                .show();
+//
+//                    }
                 }
             });
         } catch (Exception e) {

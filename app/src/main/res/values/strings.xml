@@ -2,9 +2,10 @@
 <resources>
     <string name="noti_msg_calls">Reach out to these customers before they go somewhere else!</string>
     <string name="noti_msg_enquires">Respond to these enquiries before it\'s too late!</string>
+    <string name="noti_msg_orders">New order details, click to take action!</string>
 
     <string name="gmb_integration_Successful">Your business has been synced with Google My Business</string>
-    <string name="gmb_upload_data" >Google My Business Profile updated.</string>
+    <string name="gmb_upload_data">Google My Business Profile updated.</string>
     <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
     <string name="google_map_key">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>
@@ -1558,6 +1559,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="error_msg_unknown">Unknown Error Occurred</string>
     <string name="tap_to_reload">Tap to Reload</string>
     <string name="received_orders">Received Orders</string>
+    <string name="disputed_orders">Disputed Orders</string>
+    <string name="delivery_charges">Delivery Charges</string>
+    <string name="tracking_url">Tracking URL</string>
+    <string name="tracking_number">Tracking Number</string>
+    <string name="delivery_provider">Delivery Provider</string>
+    <string name="shipped_on">Shipped On</string>
     <string name="received_successful_orders">Successful Orders</string>
     <string name="cancelled_orders">Cancelled Orders</string>
     <string name="returned_orders">Returned Orders</string>

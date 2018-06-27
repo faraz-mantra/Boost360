@@ -23,6 +23,7 @@ import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vmn_calls);
+        MixPanelController.track(MixPanelController.VMN_CALL_TRACKER_LOGS, null);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,11 +69,11 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
         loadButton = (Button) findViewById(R.id.btn_load);
         loadButton.setOnClickListener(this);
 
-        sessionManager = new UserSessionManager(this,this);
-        linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        sessionManager = new UserSessionManager(this, this);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        vmnCallAdapter = new VmnCall_v2Adapter(this,headerList);
+        vmnCallAdapter = new VmnCall_v2Adapter(this, headerList);
         mRecyclerView.setAdapter(vmnCallAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -79,7 +81,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int totalItemCount = linearLayoutManager.getItemCount();
                 int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                if(lastVisibleItem>=totalItemCount-2 && !stopApiCall){
+                if (lastVisibleItem >= totalItemCount - 2 && !stopApiCall) {
                     getCalls();
                 }
             }
@@ -91,7 +93,8 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
         }
         getCalls();
     }
-    private void getCalls(){
+
+    private void getCalls() {
         stopApiCall = true;
         showProgress();
         final String startOffset = String.valueOf(offset);
@@ -100,20 +103,20 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
         hashMap.put("clientId", Constants.clientId);
         hashMap.put("fpid", sessionManager.getFPID());
         hashMap.put("offset", startOffset);
-        hashMap.put("identifierType", sessionManager.getISEnterprise().equals("true")?"MULTI":"SINGLE");
+        hashMap.put("identifierType", sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE");
         trackerApis.trackerCalls(hashMap, new Callback<ArrayList<VmnCallModel>>() {
             @Override
             public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
                 hideProgress();
-                if(vmnCallModels == null || response.getStatus() != 200){
+                if (vmnCallModels == null || response.getStatus() != 200) {
                     Toast.makeText(ShowVmnCallActivity.this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                int size =vmnCallModels.size();
+                int size = vmnCallModels.size();
                 stopApiCall = size < 10;
                 saveWithViewType(vmnCallModels);
 
-                if(size != 0) {
+                if (size != 0) {
                     offset += 10;
                 }
             }
@@ -128,51 +131,51 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
     }
 
     // making key for each item from DATE and store that for headers only
-    private void saveWithViewType(ArrayList<VmnCallModel> list){
-        String oldKey ="";
-        int headerSize=0;
+    private void saveWithViewType(ArrayList<VmnCallModel> list) {
+        String oldKey = "";
+        int headerSize = 0;
         Calendar c = Calendar.getInstance();
         Calendar temp = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_YEAR);
 
         int sizeOfList = headerList.size();
-        if(sizeOfList>0){
-            String Sdate = headerList.get(sizeOfList-1).getCallDateTime();
+        if (sizeOfList > 0) {
+            String Sdate = headerList.get(sizeOfList - 1).getCallDateTime();
             String date = Methods.getFormattedDate(Sdate);
-            if(Sdate.contains("/Date")){
+            if (Sdate.contains("/Date")) {
                 Sdate = Sdate.replace("/Date(", "").replace(")/", "");
             }
             Long epochTime = Long.parseLong(Sdate);
             temp.setTimeInMillis(epochTime);
-            oldKey = date.substring(0,date.indexOf(" at"));
-            if(c.get(Calendar.YEAR) != temp.get(Calendar.YEAR)){
+            oldKey = date.substring(0, date.indexOf(" at"));
+            if (c.get(Calendar.YEAR) != temp.get(Calendar.YEAR)) {
 
-            }else if(temp.get(Calendar.DAY_OF_YEAR) == day){
-                oldKey = "Today, "+oldKey;
-            }else if (day == (temp.get(Calendar.DAY_OF_YEAR)+1)){
-                oldKey = "Yesterday, "+oldKey;
+            } else if (temp.get(Calendar.DAY_OF_YEAR) == day) {
+                oldKey = "Today, " + oldKey;
+            } else if (day == (temp.get(Calendar.DAY_OF_YEAR) + 1)) {
+                oldKey = "Yesterday, " + oldKey;
             }
         }
         int listSize = list.size();
 
-        for (int i = 0; i<listSize; i++) {
+        for (int i = 0; i < listSize; i++) {
             VmnCallModel model = list.get(i);
             String Sdate = model.getCallDateTime();
             String date = Methods.getFormattedDate(Sdate);
-            String key = date.substring(0,date.indexOf(" at"));
+            String key = date.substring(0, date.indexOf(" at"));
 
-            if(Sdate.contains("/Date")){
+            if (Sdate.contains("/Date")) {
                 Sdate = Sdate.replace("/Date(", "").replace(")/", "");
             }
 
             Long epochTime = Long.parseLong(Sdate);
             temp.setTimeInMillis(epochTime);
-            if(c.get(Calendar.YEAR) != temp.get(Calendar.YEAR)){
+            if (c.get(Calendar.YEAR) != temp.get(Calendar.YEAR)) {
 
-            }else if(temp.get(Calendar.DAY_OF_YEAR) == day){
-                key = "Today, "+key;
-            }else if ((temp.get(Calendar.DAY_OF_YEAR)+1) == day){
-                key = "Yesterday, "+key;
+            } else if (temp.get(Calendar.DAY_OF_YEAR) == day) {
+                key = "Today, " + key;
+            } else if ((temp.get(Calendar.DAY_OF_YEAR) + 1) == day) {
+                key = "Yesterday, " + key;
             }
             if (!key.equals(oldKey)) {
                 oldKey = key;
@@ -180,12 +183,12 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
                 tempModel.setViewType(0);
                 tempModel.setCallDateTime(key);
                 headerList.add(tempModel);
-                vmnCallAdapter.notifyItemInserted(sizeOfList+headerSize+i);
+                vmnCallAdapter.notifyItemInserted(sizeOfList + headerSize + i);
                 headerSize++;
             }
             model.setViewType(1);
             headerList.add(model);
-            vmnCallAdapter.notifyItemInserted(sizeOfList+headerSize+i);
+            vmnCallAdapter.notifyItemInserted(sizeOfList + headerSize + i);
         }
         //vmnCallAdapter.notifyDataSetChanged();
         /*vmnCallAdapter = new VmnCall_v2Adapter(this,headerList);
@@ -220,12 +223,14 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
         startActivity(intent);
     }
 
-    private void showProgress(){
+    private void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
     }
-    private void hideProgress(){
+
+    private void hideProgress() {
         progressBar.setVisibility(View.GONE);
     }
+
     @Override
     public void requestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

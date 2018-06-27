@@ -17,20 +17,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nowfloats.manageinventory.OrderListActivity;
-import com.nowfloats.manageinventory.models.OrderModel;
-import com.nowfloats.manageinventory.models.ProductModel;
+import com.nowfloats.manageinventory.models.OrderDataModel.Order;
+import com.nowfloats.util.Methods;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by NowFloats on 29-08-2017.
@@ -50,12 +43,12 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private String mErrorMsg;
 
-    private List<OrderModel> mOrderModelList;
-    private Map<String, ArrayList<ProductModel>> mProductListMap;
+    private List<Order> mOrderModelList;
+//    private Map<String, ArrayList<ProductModel>> mProductListMap;
 
-    public OrdersRvAdapter(Context context){
+    public OrdersRvAdapter(Context context) {
         this.mOrderModelList = new ArrayList<>();
-        this.mProductListMap = new HashMap<>();
+//        this.mProductListMap = new HashMap<>();
         this.mContext = context;
         this.mCallback = (PaginationAdapterCallback) context;
         this.mOnItemClickListener = (OnRecyclerViewItemClickListener) context;
@@ -66,7 +59,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerView.ViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        switch (viewType){
+        switch (viewType) {
             case ITEM:
                 View viewItem = inflater.inflate(R.layout.orders_row_layout, parent, false);
                 viewHolder = new OrdersViewHolder(viewItem);
@@ -79,57 +72,78 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return viewHolder;
     }
 
-    public ArrayList<ProductModel> getProductsForOrder(String orderId){
-        if(mProductListMap.containsKey(orderId)) {
-            return mProductListMap.get(orderId);
-        }
-        return null;
-    }
+//    public ArrayList<ProductModel> getProductsForOrder(String orderId) {
+//        if (mProductListMap.containsKey(orderId)) {
+//            return mProductListMap.get(orderId);
+//        }
+//        return null;
+//    }
 
     @Override
     @SuppressLint("NewApi")
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        OrderModel orderModel = mOrderModelList.get(position);
+        Order orderModel = mOrderModelList.get(position);
 
-        switch (getItemViewType(position)){
+        switch (getItemViewType(position)) {
             case ITEM:
                 final OrdersViewHolder ordersViewHolder = (OrdersViewHolder) holder;
-                List<ProductModel> products = null;
-                if(orderModel==null)
+//                List<ProductModel> products = null;
+                if (orderModel == null)
                     return;
-                if(mProductListMap.containsKey(orderModel.getId())) {
-                     products = mProductListMap.get(orderModel.getId());
+//                if (mProductListMap.containsKey(orderModel.getId())) {
+//                    products = mProductListMap.get(orderModel.getId());
+//                }
+                ordersViewHolder.tvOrderId.setText(orderModel.getReferenceNumber());
+                ordersViewHolder.tvOrderDate.setText(Methods.getParsedDate(orderModel.getCreatedOn()));
+
+                if (orderModel.getBillingDetails() != null) {
+                    ordersViewHolder.tvOrderTotalAmount.setText(TextUtils.isEmpty(orderModel.getBillingDetails().getCurrencyCode()) ? "INR" :
+                            orderModel.getBillingDetails().getCurrencyCode() + " " + orderModel.getBillingDetails().getAmountPayableByBuyer() + "");
+                } else {
+                    ordersViewHolder.tvOrderTotalAmount.setText("N/A");
                 }
-                ordersViewHolder.tvOrderId.setText(orderModel.getOrderId());
-                ordersViewHolder.tvOrderDate.setText(getParsedDate(orderModel.getCreatedOn()));
-                ordersViewHolder.tvOrderTotalAmount.setText(TextUtils.isEmpty(orderModel.getCurrency())? "INR" :
-                        orderModel.getCurrency() + " " + orderModel.getTotalAmount());
-                ordersViewHolder.tvExpDelivDate.setText(orderModel.getExpectedDeliveryDate()==null?"N/A"
-                        :getParsedDate(orderModel.getExpectedDeliveryDate()));
-                if(orderModel.getOrderStatusDelivery() == OrderListActivity.DeliveryStatus.ORDER_RECEIVED.ordinal()){
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#339112"));
-                    ordersViewHolder.tvOrderStatusTag.setText("Fresh");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.fresh_order_text_bg));
-                }else if(orderModel.getOrderStatus() == OrderListActivity.OrderStatus.DELIVERED.ordinal()){
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
-                    ordersViewHolder.tvOrderStatusTag.setText("Delivered");
+
+                if (orderModel.getLogisticsDetails() != null) {
+                    ordersViewHolder.tvExpDelivDate.setText(
+                            Methods.getParsedDate(orderModel.getLogisticsDetails().getDeliveredOn()));
+                } else {
+                    ordersViewHolder.tvExpDelivDate.setText("N/A");
+                }
+                ordersViewHolder.tvHeadExp.setText("Exp. Deliv. Date:");
+                if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.COMPLETED)) {
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#4BB543"));
+                    ordersViewHolder.tvOrderStatusTag.setText("Completed");
+                    ordersViewHolder.tvHeadExp.setText("Deliv. Date:");
                     ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.delivered_order_text_bg));
-                }else if(orderModel.getOrderStatus() == OrderListActivity.OrderStatus.CANCELLED.ordinal()){
+                } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.INITIATED)) {
                     ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#808080"));
+                    ordersViewHolder.tvOrderStatusTag.setText("Initiated");
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.initiated_order_text_bg));
+                } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.PLACED)) {
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
+                    ordersViewHolder.tvOrderStatusTag.setText("PLACED");
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.received_order_text_bg));
+                } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CONFIRMED)) {
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
+                    ordersViewHolder.tvOrderStatusTag.setText("Confirmed");
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.received_order_text_bg));
+                } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CANCELLED)) {
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#F80208"));
                     ordersViewHolder.tvOrderStatusTag.setText("Cancelled");
                     ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.cancelled_order_text_bg));
-                }else if(orderModel.getOrderStatus() == OrderListActivity.OrderStatus.RETURNED.ordinal()){
+                } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.ESCALATED)) {
                     ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#F80208"));
-                    ordersViewHolder.tvOrderStatusTag.setText("Returned");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.returned_order_text_bg));
-                }else if(orderModel.getOrderStatus() == OrderListActivity.OrderStatus.NOT_INITIATED.ordinal()){
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#6DA5FF"));
-                    ordersViewHolder.tvOrderStatusTag.setText("Abandoned");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.abandoned_order_text_bg));
+                    ordersViewHolder.tvOrderStatusTag.setText("Escalated");
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.cancelled_order_text_bg));
                 }
-                if(products!=null) {
-                    ordersViewHolder.tvItemsCount.setText(products.size()>1?products.size() + " Items": products.size() + " Item");
-                    Picasso.with(mContext).load(products.get(0).getProductImgUrl()).into(ordersViewHolder.ivProducts);
+                if (orderModel.getOrderDetails() != null) {
+                    ordersViewHolder.tvItemsCount.setText(orderModel.getOrderDetails().size() > 1 ? orderModel.getOrderDetails().size() + " Items" : orderModel.getOrderDetails().size() + " Item");
+
+                    if (orderModel.getOrderDetails().get(0).getProduct() != null && orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage() != null) {
+                        Picasso.with(mContext).load(orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage().getTileImageUri()).
+                                into(ordersViewHolder.ivProducts);
+                    }
+
                 }
                 break;
             case LOADING:
@@ -154,22 +168,6 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    private String getParsedDate(String createdOn) {
-        if(createdOn==null){
-            return "N/A";
-        }
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        String parsedDate;
-        try {
-            Date date = format.parse(createdOn);
-            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy").format(date);
-        }catch (ParseException e){
-            parsedDate = createdOn;
-        }
-
-        return parsedDate;
-    }
-
     @Override
     public int getItemCount() {
         return mOrderModelList == null ? 0 : mOrderModelList.size();
@@ -184,42 +182,47 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public List<OrderModel> getOrders() {
+    public List<Order> getOrders() {
         return mOrderModelList;
     }
 
-    public void setOrders(List<OrderModel> orderList) {
+    public void setOrders(List<Order> orderList) {
         this.mOrderModelList = orderList;
     }
 
-    public void add(OrderModel orderModel) {
+    public void add(Order orderModel) {
         mOrderModelList.add(orderModel);
         notifyItemInserted(mOrderModelList.size() - 1);
     }
 
-    public void putToProductMap(String key, ProductModel val){
-        if(mProductListMap.containsKey(key)){
-            mProductListMap.get(key).add(val);
-        }else {
-            ArrayList<ProductModel> list = new ArrayList<>();
-            list.add(val);
-            mProductListMap.put(key, list);
-        }
-    }
+//    public void putToProductMap(String key, ProductModel val) {
+//        if (mProductListMap.containsKey(key)) {
+//            mProductListMap.get(key).add(val);
+//        } else {
+//            ArrayList<ProductModel> list = new ArrayList<>();
+//            list.add(val);
+//            mProductListMap.put(key, list);
+//        }
+//    }
 
-    public void addAll(List<OrderModel> orderModelList) {
-        if(orderModelList!=null && orderModelList.size()>0) {
+    public void addAll(List<Order> orderModelList) {
+        if (orderModelList != null && orderModelList.size() > 0) {
             int prevPosition = mOrderModelList.size();
             mOrderModelList.addAll(orderModelList);
-            if(orderModelList.size()==1){
-                notifyItemInserted(mOrderModelList.size()-1);
-            }else {
+            if (orderModelList.size() == 1) {
+                notifyItemInserted(mOrderModelList.size() - 1);
+            } else {
                 notifyItemRangeInserted(prevPosition, mOrderModelList.size() - 1);
             }
         }
     }
 
-    public void remove(OrderModel orderModel) {
+    public void refreshList(List<Order> orderModelList) {
+        this.mOrderModelList = orderModelList;
+        notifyDataSetChanged();
+    }
+
+    public void remove(Order orderModel) {
         int position = mOrderModelList.indexOf(orderModel);
         if (position > -1) {
             mOrderModelList.remove(position);
@@ -239,21 +242,21 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    public void addLoadingFooter() {
-        isLoadingAdded = true;
-        add(new OrderModel());
-    }
+//    public void addLoadingFooter() {
+//        isLoadingAdded = true;
+//        add(new Order());
+//    }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
 
         int position = mOrderModelList.size() - 1;
-        OrderModel result = getItem(position);
+        Order result = getItem(position);
 
         remove(result);
     }
 
-    public OrderModel getItem(int position) {
+    public Order getItem(int position) {
         return mOrderModelList.get(position);
     }
 
@@ -272,13 +275,13 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void clearAdapter() {
         mOrderModelList.clear();
-        mProductListMap.clear();
+//        mProductListMap.clear();
         notifyDataSetChanged();
     }
 
-    protected class OrdersViewHolder extends RecyclerView.ViewHolder{
+    protected class OrdersViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvOrderId, tvOrderDate, tvOrderTotalAmount, tvOrderStatusTag, tvExpDelivDate, tvItemsCount;
+        TextView tvOrderId, tvOrderDate, tvOrderTotalAmount, tvOrderStatusTag, tvExpDelivDate, tvItemsCount, tvHeadExp;
         ImageView ivProducts;
 
         public OrdersViewHolder(final View itemView) {
@@ -289,6 +292,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvOrderTotalAmount = (TextView) itemView.findViewById(R.id.tv_order_total_amount);
             tvOrderStatusTag = (TextView) itemView.findViewById(R.id.tv_order_status_tag);
             tvExpDelivDate = (TextView) itemView.findViewById(R.id.tv_exp_deliv_date);
+            tvHeadExp = (TextView) itemView.findViewById(R.id.tvHeadExp);
             tvItemsCount = (TextView) itemView.findViewById(R.id.tv_num_of_items);
             ivProducts = (ImageView) itemView.findViewById(R.id.iv_products);
 

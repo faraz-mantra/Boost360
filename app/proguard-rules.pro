@@ -367,3 +367,41 @@
 -keepclassmembers class com.anachat.chatsdk.** { *; }
 
 -dontwarn org.apache.http.**
+
+##------keyboard---------##
+-dontnote retrofit2.Platform
+-dontwarn retrofit2.Platform$Java8
+-keepattributes Signature
+-keepattributes Exceptions
+-keepattributes *Annotation*,EnclosingMethod,Signature
+-keepnames class com.fasterxml.jackson.** { *;  }
+-dontwarn com.fasterxml.jackson.databind.**
+-keep class org.codehaus.** { *;  }
+-keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility { public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *; }
+-keep public class com.android.inputmethod.keyboard.top.services.tenor.** { public void set*(***); public *** get*(); }
+-keep public class io.separ.neural.inputmethod.slash.** { public void set*(***); public *** get*(); }
+
+# Keep classes and methods that have the @UsedForTesting annotation
+-keep @io.separ.neural.inputmethod.annotations.UsedForTesting class *
+-keepclassmembers class * {
+    @io.separ.neural.inputmethod.annotations.UsedForTesting *;
+}
+
+# Keep classes and methods that have the @ExternallyReferenced annotation
+-keep @io.separ.neural.inputmethod.annotations.ExternallyReferenced class *
+-keepclassmembers class * {
+    @io.separ.neural.inputmethod.annotations.ExternallyReferenced *;
+}
+
+# Keep native methods
+-keepclassmembers class * {
+    native <methods>;
+}
+
+# Keep classes that are used as a parameter type of methods that are also marked as keep
+# to preserve changing those methods' signature.
+-keep class io.separ.neural.inputmethod.indic.AssetFileAddress
+-keep class io.separ.neural.inputmethod.indic.Dictionary
+-keep class com.android.inputmethod.latin.PrevWordsInfo
+-keep class com.android.inputmethod.latin.makedict.ProbabilityInfo
+-keep class com.android.inputmethod.latin.utils.LanguageModelParam

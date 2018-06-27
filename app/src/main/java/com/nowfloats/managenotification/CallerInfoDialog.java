@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -33,6 +34,8 @@ import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.customerassistant.FirebaseLogger;
+import com.nowfloats.manageinventory.SellerAnalyticsActivity;
+import com.nowfloats.manageinventory.models.OrderDataModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -45,6 +48,7 @@ import java.util.List;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
+import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 
 /**
@@ -54,17 +58,21 @@ import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
 public class CallerInfoDialog extends AppCompatActivity implements ExpandableCardView.OnExpandedListener {
 
 
-    private CallerInfoAdapter callsAdapter, enquiryAdapter;
+    private CallerInfoAdapter callsAdapter, enquiryAdapter, orderAdapter;
 
     private ArrayList<VmnCallModel> callList = new ArrayList<>();
 
     private ArrayList<Business_Enquiry_Model> businessEnquiryList = new ArrayList<>();
 
-    private ExpandableCardView ecvCalls, ecvEnquiries;
+    private ArrayList<OrderModel> ordersList = new ArrayList<>();
 
-    private TextView tvDismissCalls, tvDismissEnquiries;
+    private ExpandableCardView ecvCalls, ecvEnquiries, ecvOrders;
 
-    private RecyclerView rvCalls, rvEnquiries;
+    private TextView tvDismissCalls, tvDismissEnquiries, tvDismissOrders, tvViewOrders;
+
+    private LinearLayout llOrders;
+
+    private RecyclerView rvCalls, rvEnquiries, rvOrders;
 
     private UserSessionManager session;
 
@@ -128,19 +136,23 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
 
         ecvCalls = findViewById(R.id.ecvCalls);
         ecvEnquiries = findViewById(R.id.ecvEnquiries);
+        ecvOrders = findViewById(R.id.ecvOrders);
         tvDismissCalls = findViewById(R.id.tvDismissCalls);
         tvDismissEnquiries = findViewById(R.id.tvDismissEnquiries);
-
+        tvDismissOrders = findViewById(R.id.tvDismissOrders);
+        tvViewOrders = findViewById(R.id.tvViewOrders);
+        llOrders = findViewById(R.id.llOrders);
 
         rvCalls = ecvCalls.findViewById(R.id.rvList);
         rvEnquiries = ecvEnquiries.findViewById(R.id.rvList);
+        rvOrders = ecvOrders.findViewById(R.id.rvList);
 //        tvDismissCalls = ecvCalls.findViewById(R.id.tvDismiss);
 //        tvDismissEnquiries = ecvEnquiries.findViewById(R.id.tvDismiss);
         session = new UserSessionManager(getApplicationContext(), CallerInfoDialog.this);
 
         ecvCalls.setOnExpandedListener(this);
         ecvEnquiries.setOnExpandedListener(this);
-
+        ecvOrders.setOnExpandedListener(this);
 
         tvDismissCalls.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +161,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
                 ecvCalls.setVisibility(View.GONE);
                 tvDismissCalls.setVisibility(View.GONE);
                 pref.edit().putString(PREF_NOTI_CALL_LOGS, "").commit();
-                if (ecvEnquiries.getVisibility() == View.GONE) {
+                if (ecvEnquiries.getVisibility() == View.GONE && ecvOrders.getVisibility() == View.GONE) {
                     stopService();
                 }
             }
@@ -162,9 +174,41 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
                 tvDismissEnquiries.setVisibility(View.GONE);
                 ecvEnquiries.setVisibility(View.GONE);
                 pref.edit().putString(PREF_NOTI_ENQUIRIES, "").commit();
-                if (ecvCalls.getVisibility() == View.GONE) {
+                if (ecvCalls.getVisibility() == View.GONE && ecvOrders.getVisibility() == View.GONE) {
                     stopService();
                 }
+            }
+        });
+
+        tvDismissOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MixPanelController.track(MixPanelController.BUBBLE_DISMISS_ORDER, null);
+                llOrders.setVisibility(View.GONE);
+                ecvOrders.setVisibility(View.GONE);
+                pref.edit().putString(PREF_NOTI_ORDERS, "").commit();
+                if (ecvCalls.getVisibility() == View.GONE && ecvEnquiries.getVisibility() == View.GONE) {
+                    stopService();
+                }
+            }
+        });
+
+        tvViewOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MixPanelController.track(MixPanelController.BUBBLE_VIEW_ORDERS, null);
+
+                llOrders.setVisibility(View.GONE);
+                ecvOrders.setVisibility(View.GONE);
+                pref.edit().putString(PREF_NOTI_ORDERS, "").commit();
+                if (ecvCalls.getVisibility() == View.GONE && ecvEnquiries.getVisibility() == View.GONE) {
+                    stopService();
+                }
+                Intent intent = new Intent(getApplicationContext(), SellerAnalyticsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("from", "notification");
+                intent.putExtra("url", getApplicationContext().getString(R.string.deep_link_call_tracker));
+                getApplicationContext().startActivity(intent);
             }
         });
 
@@ -188,6 +232,13 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
             businessEnquiryList = gson.fromJson(businessLogsData, type);
         }
 
+        String orderLogsData = pref.getString(PREF_NOTI_ORDERS, "");
+
+        if (!TextUtils.isEmpty(orderLogsData)) {
+            Type type = new TypeToken<List<OrderModel>>() {
+            }.getType();
+            ordersList = gson.fromJson(orderLogsData, type);
+        }
     }
 
     public void checkValues() {
@@ -211,7 +262,15 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
             businessEnquiryList = gson.fromJson(businessLogsData, type);
         }
 
-        if (callList.size() == 0 && businessEnquiryList.size() == 0) {
+        String orderLogsData = pref.getString(PREF_NOTI_ORDERS, "");
+
+        if (!TextUtils.isEmpty(orderLogsData)) {
+            Type type = new TypeToken<List<OrderModel>>() {
+            }.getType();
+            ordersList = gson.fromJson(orderLogsData, type);
+        }
+
+        if (callList.size() == 0 && businessEnquiryList.size() == 0 && ordersList.size() == 0) {
             stopService();
         }
     }
@@ -219,7 +278,30 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
     private void bindValues() {
 
 
+        if (ordersList.size() > 0) {
+            llOrders.setVisibility(View.VISIBLE);
+            ecvOrders.setVisibility(View.VISIBLE);
+            ecvOrders.setTitle("Orders (" + ordersList.size() + ")");
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            orderAdapter = new CallerInfoAdapter(CallerInfoDialog.this, CallerInfoAdapter.NOTI_TYPE.ORDERS, ordersList, pref);
+            rvOrders.setLayoutManager(linearLayoutManager);
+            rvOrders.setAdapter(orderAdapter);
+
+            ecvOrders.expand();
+
+        } else {
+            ecvOrders.setVisibility(View.GONE);
+            llOrders.setVisibility(View.GONE);
+        }
+
         if (callList.size() > 0) {
+
+            if (ordersList.size() > 0)
+                ecvCalls.setInitCollapse(true);
+            else {
+                ecvCalls.expand();
+            }
             ecvCalls.setVisibility(View.VISIBLE);
             tvDismissCalls.setVisibility(View.VISIBLE);
             ecvCalls.setTitle("Calls (" + callList.size() + ")");
@@ -228,8 +310,6 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
             callsAdapter = new CallerInfoAdapter(CallerInfoDialog.this, CallerInfoAdapter.NOTI_TYPE.CALLS, callList, pref);
             rvCalls.setLayoutManager(linearLayoutManager);
             rvCalls.setAdapter(callsAdapter);
-
-            ecvCalls.expand();
         } else {
             ecvCalls.setVisibility(View.GONE);
             tvDismissCalls.setVisibility(View.GONE);
@@ -237,7 +317,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
 
         if (businessEnquiryList.size() > 0) {
 
-            if (callList.size() > 0)
+            if (callList.size() > 0 || ordersList.size() > 0)
                 ecvEnquiries.setInitCollapse(true);
             else {
                 ecvEnquiries.expand();
@@ -256,16 +336,27 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
             tvDismissEnquiries.setVisibility(View.GONE);
         }
 
-        if (callList.size() > 0 && businessEnquiryList.size() > 0) {
+        if (callList.size() > 0 && businessEnquiryList.size() > 0 && ordersList.size() > 0) {
+            ecvCalls.setMaxHeight((int) (metrics.heightPixels * 0.90) / 3);
+            ecvEnquiries.setMaxHeight((int) (metrics.heightPixels * 0.90) / 3);
+            ecvOrders.setMaxHeight((int) (metrics.heightPixels * 0.90) / 3);
+        } else if (callList.size() > 0 && businessEnquiryList.size() > 0) {
             ecvCalls.setMaxHeight((int) (metrics.heightPixels * 0.90) / 2);
             ecvEnquiries.setMaxHeight((int) (metrics.heightPixels * 0.90) / 2);
+        } else if (ordersList.size() > 0 && businessEnquiryList.size() > 0) {
+            ecvOrders.setMaxHeight((int) (metrics.heightPixels * 0.90) / 2);
+            ecvEnquiries.setMaxHeight((int) (metrics.heightPixels * 0.90) / 2);
+        } else if (ordersList.size() > 0 && callList.size() > 0) {
+            ecvOrders.setMaxHeight((int) (metrics.heightPixels * 0.90) / 2);
+            ecvCalls.setMaxHeight((int) (metrics.heightPixels * 0.90) / 2);
         } else {
             ecvCalls.setMaxHeight((int) (metrics.heightPixels * 0.80) - Methods.dpToPx(40, CallerInfoDialog.this));
             ecvEnquiries.setMaxHeight((int) (metrics.heightPixels * 0.80) - Methods.dpToPx(40, CallerInfoDialog.this));
+            ecvOrders.setMaxHeight((int) (metrics.heightPixels * 0.80) - Methods.dpToPx(40, CallerInfoDialog.this));
         }
 
 
-        if (callList.size() == 0 && businessEnquiryList.size() == 0) {
+        if (callList.size() == 0 && businessEnquiryList.size() == 0 && ordersList.size() == 0) {
             stopService();
         }
 
@@ -288,6 +379,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
     @Override
     protected void onResume() {
         super.onResume();
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     @Override
@@ -319,10 +411,18 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
             case R.id.ecvCalls:
                 if (isExpanded) {
                     ecvEnquiries.collapse();
+                    ecvOrders.collapse();
                 }
                 break;
             case R.id.ecvEnquiries:
                 if (isExpanded) {
+                    ecvCalls.collapse();
+                    ecvOrders.collapse();
+                }
+                break;
+            case R.id.ecvOrders:
+                if (isExpanded) {
+                    ecvEnquiries.collapse();
                     ecvCalls.collapse();
                 }
                 break;

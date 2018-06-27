@@ -1,14 +1,10 @@
 package com.nowfloats.managenotification;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +12,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
-import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
+import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 /**
  * Created by vinay on 22-05-2018.
@@ -42,6 +34,7 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
     private Context mContext;
     private ArrayList<VmnCallModel> mCallList;
     private ArrayList<Business_Enquiry_Model> mEnquiryList;
+    private ArrayList<OrderModel> mOrderList;
     private NOTI_TYPE noti_type;
     private int leftMargin, callTopMargin, enQTopMargin;
     private SharedPreferences pref;
@@ -62,21 +55,29 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
             case ENQUIRIES:
                 mEnquiryList = (ArrayList<Business_Enquiry_Model>) list;
                 break;
+            case ORDERS:
+                mOrderList = (ArrayList<OrderModel>) list;
+                break;
         }
     }
 
     public enum NOTI_TYPE {
         CALLS,
-        ENQUIRIES
+        ENQUIRIES,
+        ORDERS
     }
 
     @NonNull
     @Override
     public CallerInfoAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View convertView = null;
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_caller_info, parent, false);
-        return new CallerInfoAdapter.MyHolder(convertView, viewType);
-
+        if (noti_type == NOTI_TYPE.CALLS || noti_type == NOTI_TYPE.ENQUIRIES) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_caller_info, parent, false);
+            return new CallerInfoAdapter.MyHolder(convertView, viewType);
+        } else {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_orders_info, parent, false);
+            return new CallerInfoAdapter.MyHolder(convertView, viewType);
+        }
     }
 
     @Override
@@ -158,6 +159,43 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                     }
                 });
                 break;
+            case ORDERS:
+                final OrderModel order = mOrderList.get(position);
+                if (position == mOrderList.size() - 1) {
+                    holder.divider.setVisibility(View.INVISIBLE);
+                } else {
+                    holder.divider.setVisibility(View.VISIBLE);
+                }
+                holder.tvName.setText(order.getBuyerName());
+                holder.tvPhoneNumber.setText(order.getBuyerContactNumber());
+                holder.tvLocation.setText(order.getBuyerCity() + ", " + order.getBuyerState());
+                holder.tvQuantity.setText(Integer.toString(order.getOrderQuantity()));
+                holder.tvValue.setText(order.getOrderCurrency() + " " + Double.toString(order.getOrderValue()));
+                holder.tvStatus.setText(order.getOrderStatus());
+                holder.tvDate.setText(getDate(Methods.getFormattedDate(order.getCreatedOn())));
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.BUBBLE_ORDER_DETAIL, null);
+
+                        ArrayList<OrderModel> eqList = new ArrayList<>(mOrderList);
+                        eqList.remove(order);
+
+                        String json = gson.toJson(eqList);
+                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
+                        ((CallerInfoDialog) mContext).checkValues();
+
+                        Intent intent = new Intent(mContext, HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("from", "notification");
+                        intent.putExtra("url", "myorderdetail");
+                        intent.putExtra("payload", order.getOrderId());
+                        mContext.startActivity(intent);
+                    }
+                });
+
+                break;
         }
     }
 
@@ -174,22 +212,34 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                 return mCallList.size();
             case ENQUIRIES:
                 return mEnquiryList.size();
+            case ORDERS:
+                return mOrderList.size();
         }
         return 0;
     }
 
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-
         ImageView ivIcon;
-        TextView tvSource, tvInfo, tvDate;
+        TextView tvSource, tvInfo, tvDate, tvName, tvPhoneNumber, tvLocation, tvQuantity, tvValue, tvStatus;
+        View divider;
 
         public MyHolder(View itemView, int viewType) {
             super(itemView);
-            ivIcon = (ImageView) itemView.findViewById(R.id.ivIcon);
-            tvSource = (TextView) itemView.findViewById(R.id.tvSource);
-            tvInfo = (TextView) itemView.findViewById(R.id.tvInfo);
-            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
+            if (noti_type == NOTI_TYPE.ENQUIRIES || noti_type == NOTI_TYPE.CALLS) {
+                ivIcon = itemView.findViewById(R.id.ivIcon);
+                tvSource = itemView.findViewById(R.id.tvSource);
+                tvInfo = itemView.findViewById(R.id.tvInfo);
+                tvDate = itemView.findViewById(R.id.tvDate);
+            } else {
+                tvName = itemView.findViewById(R.id.tv_name);
+                tvPhoneNumber = itemView.findViewById(R.id.tv_phone_number);
+                tvLocation = itemView.findViewById(R.id.tv_location);
+                tvQuantity = itemView.findViewById(R.id.tv_order_quantity);
+                tvValue = itemView.findViewById(R.id.tv_order_value);
+                divider = itemView.findViewById(R.id.divider);
+                tvDate = itemView.findViewById(R.id.tv_date);
+                tvStatus = itemView.findViewById(R.id.tv_order_status);
+            }
         }
 
         @Override

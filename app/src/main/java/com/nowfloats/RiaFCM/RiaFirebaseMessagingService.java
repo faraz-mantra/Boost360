@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -28,12 +26,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
-import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
-import com.nowfloats.manageinventory.models.MerchantProfileModel;
-import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.managenotification.CallerInfoDialog;
+import com.nowfloats.managenotification.OrderModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -41,9 +38,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -53,10 +47,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
+import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 /**
  * Created by NowFloats on 05-10-2016.
@@ -94,15 +88,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         } else {
             if ((message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG))
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
-                /*MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
-                pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
-                pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, true).apply();
-                if (Methods.hasOverlayPerm(this)) {
-                    if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
-                        Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-                        startService(bubbleIntent);
-                    }
-                }*/
                 message.put("url", "thirdPartyQueries");
                 message.put("mp_message", "You have new enquires from Third Party, check now.");
             }
@@ -253,26 +238,57 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         notificationBuilder.setContentTitle("Business Enquiry");
                         notificationBuilder.setContentText("" + entity_model.getMessage());
                         notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(entity_model.getMessage()));
+                    } else if (deepLinkUrl.contains("myorders")) {
 
+                        ArrayList<OrderModel> orderList = new ArrayList<>();
+
+                        OrderModel entity_model = gson.fromJson(jsonData,
+                                new TypeToken<OrderModel>() {
+                                }.getType());
+
+                        String oldData = pref.getString(PREF_NOTI_ORDERS, "");
+
+                        if (!TextUtils.isEmpty(oldData)) {
+                            Type type = new TypeToken<List<OrderModel>>() {
+                            }.getType();
+                            orderList = gson.fromJson(oldData, type);
+                        }
+
+                        orderList.add(entity_model);
+
+                        String json = gson.toJson(orderList);
+                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
+                        BoostLog.e("deepLinkUrl", jsonData);
                     }
 
                     pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).commit();
                     if (Methods.hasOverlayPerm(this)) {
                         if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                startForegroundService(new Intent(this, CustomerAssistantService.class));
+                            Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                            if (deepLinkUrl.contains("myorders")) {
+                                bubbleIntent.putExtra("shouldOpen", true);
                             } else {
-                                Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-                                startService(bubbleIntent);
+                                bubbleIntent.putExtra("shouldOpen", false);
                             }
 
-
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                startForegroundService(bubbleIntent);
+                            } else {
+                                startService(bubbleIntent);
+                            }
+                        } else {
+                            if (deepLinkUrl.contains("myorders")) {
+                                Intent callIntent = new Intent(this, CallerInfoDialog.class);
+                                callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(callIntent);
+                            }
                         }
-
                         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REFRESH_DIALOG));
+                        MixPanelController.track(MixPanelController.BUBBLE_ENABLED, null);
                     }
                 }
+
 
                 if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
