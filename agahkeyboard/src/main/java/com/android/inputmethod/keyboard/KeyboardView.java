@@ -557,7 +557,7 @@ public class KeyboardView extends View {
 
             if (key.getCode() == ',' && key.getMoreKeys() != null) {
                 final Drawable icon1 = getContext().getResources().getDrawable(R.drawable.emoji_happiness);
-                final int iconWidth = key.getWidth() / 3;
+                final int iconWidth = (int) (key.getWidth() / 3.5f);
                 final int iconHeight = iconWidth;
                 final int iconY = iconHeight;
                 final int iconX = (keyWidth - iconWidth) / 2; // Align horizontally center.

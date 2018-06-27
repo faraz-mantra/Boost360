@@ -67,12 +67,14 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     holder.clKeyboardTheme.setAlpha(0.5f);
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (selected != position) {
+                        selected = position;
+                        editor.putInt("keyboard_theme", position);
+                        editor.commit();
+                        Snackbar.make(view, "The theme has been applied!", Snackbar.LENGTH_SHORT).show();
+                        notifyDataSetChanged();
+                    }
                     holder.clKeyboardTheme.setAlpha(1f);
-                    selected = position;
-                    editor.putInt("keyboard_theme", position);
-                    editor.commit();
-                    Snackbar.make(view, "The theme has been applied!", Snackbar.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
                 } else {
                     holder.clKeyboardTheme.setAlpha(1f);
                 }
