@@ -54,9 +54,11 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
         if (position == selected) {
             holder.overlay.setVisibility(View.VISIBLE);
             holder.ivCheckMark.setVisibility(View.VISIBLE);
+            holder.checkMarkbackground.setVisibility(View.VISIBLE);
         } else {
             holder.overlay.setVisibility(View.GONE);
             holder.ivCheckMark.setVisibility(View.GONE);
+            holder.checkMarkbackground.setVisibility(View.GONE);
         }
 
         holder.clKeyboardTheme.setOnTouchListener(new View.OnTouchListener() {
@@ -87,7 +89,7 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivKeyboardTheme, ivCheckMark;
-        View overlay;
+        View overlay, checkMarkbackground;
         ConstraintLayout clKeyboardTheme;
 
         MyViewHolder(View view) {
@@ -96,6 +98,7 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
             ivCheckMark = view.findViewById(R.id.iv_check_mark);
             overlay = view.findViewById(R.id.overlay);
             clKeyboardTheme = view.findViewById(R.id.cl_keyboard_theme);
+            checkMarkbackground = view.findViewById(R.id.check_mark_background);
         }
 
     }

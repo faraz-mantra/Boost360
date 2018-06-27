@@ -46,6 +46,7 @@ import java.util.HashSet;
 import io.separ.neural.inputmethod.Utils.ColorUtils;
 import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.R;
+import nfkeyboard.util.SharedPrefUtil;
 
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ACTION;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_SPACEBAR;
@@ -306,8 +307,11 @@ public class KeyboardView extends View {
         }
 
         if (this instanceof MoreKeysKeyboardView) {
-            getBackground().setColorFilter(colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
+            getBackground().setAlpha(0);
+            ColorUtils.drawBackground(canvas, Color.parseColor("#212121"));
+            //getBackground().setColorFilter(colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
         } else {
+            getBackground().setAlpha(0);
             //ColorUtils.drawBackground(canvas, colorProfile.getPrimary());
             ColorUtils.drawBackground(canvas, Color.parseColor("#212121"));
         }
@@ -367,7 +371,7 @@ public class KeyboardView extends View {
                 Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground);
                 tmp.setColorFilter(ColorUtils.colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
                 onDrawKeyBackground(key, canvas, tmp);
-                Log.e("SEPAR", "here :(");
+                //Log.e("SEPAR", "here :(");
             } else {
                 switch (key.getType()) {
                     case BACKGROUND_TYPE_ACTION:
@@ -411,39 +415,67 @@ public class KeyboardView extends View {
     // Draw key background.
     protected void onDrawKeyBackground(final Key key, final Canvas canvas,
                                        Drawable background) {
-        if (key.getLabel() != null && !key.getLabel().equals("?123") && !key.getLabel().equals("ABC")) {//-103246
-            if (key.getCode() == -1) {
-                background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
-            } else {
-                background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
-            }
+        if (this instanceof MoreKeysKeyboardView) {
+            background = getContext().getResources().getDrawable(R.drawable.round_transparent);
+            //getBackground().setColorFilter(colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
         } else {
-            if (key.getCode() == -10 || key.getCode() == 32) {
-                background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
+                if (key.getLabel() != null && !key.getLabel().equals("?123") && !key.getLabel().equals("ABC")) {//-103246
+                    if (key.getCode() == -1) {
+                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
+                    } else {
+                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+                    }
+                } else {
+                    if (key.getCode() == -10 || key.getCode() == 32) {
+                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+                    } else {
+                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
+                    }
+                }
             } else {
-                background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
+                if (key.getCode() == 32) {
+                    background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+                } else if (key.getCode() == Constants.CODE_ENTER) {
+                    background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
+                } else if (key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
+                        // HACK: To disable expanding normal/functional key background.
+                        && !key.hasCustomActionLabel()) {
+                    background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
+                } else {
+                    background = getContext().getResources().getDrawable(R.drawable.round_transparent);
+                }
             }
         }
         final int keyWidth = key.getDrawWidth();
         final int keyHeight = key.getHeight();
         final int bgWidth, bgHeight, bgX, bgY;
-        if (key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
+        if ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
                 // HACK: To disable expanding normal/functional key background.
-                && !key.hasCustomActionLabel()) {
+                && !key.hasCustomActionLabel())) {
             final int intrinsicWidth = background.getIntrinsicWidth();
             final int intrinsicHeight = background.getIntrinsicHeight();
             final float minScale = Math.min(
                     keyWidth / (float) intrinsicWidth, keyHeight / (float) intrinsicHeight);
             bgWidth = (int) (intrinsicWidth * minScale);
-            bgHeight = (int) (intrinsicHeight * minScale);
+            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 1) {
+                bgHeight = (int) (intrinsicHeight * minScale * 0.8f);
+            } else {
+                bgHeight = (int) (intrinsicHeight *minScale);
+            }
             bgX = (keyWidth - bgWidth) / 2;
             bgY = (keyHeight - bgHeight) / 2;
         } else {
             final Rect padding = mKeyBackgroundPadding;
             bgWidth = keyWidth + padding.left + padding.right;
-            bgHeight = keyHeight + padding.top + padding.bottom;
+            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 1 && key.getCode() == Constants.CODE_SPACE) {
+                bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * 0.8f);
+                bgY = (int) (keyHeight * 0.1f);
+            } else {
+                bgHeight = keyHeight + padding.top + padding.bottom;
+                bgY = - padding.top;
+            }
             bgX = -padding.left;
-            bgY = -padding.top;
         }
         final Rect bounds = background.getBounds();
         if (bgWidth != bounds.right || bgHeight != bounds.bottom) {
@@ -511,10 +543,34 @@ public class KeyboardView extends View {
                 paint.clearShadowLayer();
             }
             blendAlpha(paint, params.mAnimAlpha);
+            if (key.getCode() == ',' && key.getMoreKeys() != null) {
+                paint.setColor(Color.parseColor("#000000"));
+            }
            /* Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
-            paint.setColor(Color.parseColor("#cacaca"));
+            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
+                paint.setColor(Color.parseColor("#cacaca"));
+            } else {
+                paint.setColor(Color.parseColor("#ffffff"));
+            }
+
+            if (key.getCode() == ',' && key.getMoreKeys() != null) {
+                final Drawable icon1 = getContext().getResources().getDrawable(R.drawable.emoji_happiness);
+                final int iconWidth = key.getWidth() / 3;
+                final int iconHeight = iconWidth;
+                final int iconY = iconHeight;
+                final int iconX = (keyWidth - iconWidth) / 2; // Align horizontally center.
+                //drawIcon(key.getCode(), canvas, icon, iconX, iconY, iconWidth, iconHeight);
+                icon1.clearColorFilter();
+                icon1.setColorFilter(null);
+                icon1.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+                //icon.setColorFilter(colorProfile.getIcon(), PorterDuff.Mode.SRC_IN);
+                canvas.translate((float) iconX, (float) iconY);
+                icon1.setBounds(0, 0, iconWidth, iconHeight);
+                icon1.draw(canvas);
+                canvas.translate(-iconX, -iconY);
+            }
             canvas.drawText(label, 0, label.length(), labelX, labelBaseline, paint);
             // Turn off drop shadow and reset x-scale.
             paint.clearShadowLayer();
@@ -536,11 +592,16 @@ public class KeyboardView extends View {
             if (key.hasHintLabel()) {
                 // The hint label is placed just right of the key label. Used mainly on
                 // "phone number" layout.
-                hintX = labelX + params.mHintLabelOffCenterRatio * labelCharWidth;
+                hintX = labelX + params.mHintLabelOffCenterRatio * labelCharWidth * 0.7f;
                 if (key.isAlignHintLabelToBottom(mDefaultKeyLabelFlags)) {
                     hintBaseline = labelBaseline;
                 } else {
                     hintBaseline = centerY + labelCharHeight / 2.0f;
+                }
+                if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
+                    paint.setColor(Color.parseColor("#cacaca"));
+                } else {
+                    paint.setColor(Color.parseColor("#ffffff"));
                 }
                 paint.setTextAlign(Align.LEFT);
             } else if (key.hasShiftedLetterHint()) {
@@ -554,12 +615,17 @@ public class KeyboardView extends View {
                 final float hintDigitWidth = TypefaceUtils.getReferenceDigitWidth(paint);
                 final float hintLabelWidth = TypefaceUtils.getStringWidth(hintLabel, paint);
                 hintX = keyWidth - mKeyHintLetterPadding
-                        - Math.max(hintDigitWidth, hintLabelWidth) / 2.0f;
-                hintBaseline = -paint.ascent();
+                        - Math.max(hintDigitWidth, hintLabelWidth) / 1.3f;
+                hintBaseline = - paint.ascent() + 2;
                 paint.setTextAlign(Align.CENTER);
+                if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
+                    paint.setColor(Color.parseColor("#cacaca"));
+                } else {
+                    paint.setColor(Color.parseColor("#ffffff"));
+                }
             }
             final float adjustmentY = params.mHintLabelVerticalAdjustment * labelCharHeight;
-           canvas.drawText(
+            canvas.drawText(
                     hintLabel, 0, hintLabel.length(), hintX, hintBaseline + adjustmentY, paint);
         }
 

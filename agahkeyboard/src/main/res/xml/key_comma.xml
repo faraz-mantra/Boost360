@@ -27,26 +27,26 @@
         >
             <Key
                 latin:keySpec="/"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                latin:keyStyle="emojiKeyStyle" />
         </case>
         <case
             latin:mode="email"
         >
             <Key
                 latin:keySpec="\@"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                latin:keyStyle="emojiKeyStyle" />
         </case>
         <case
             latin:languageCode="fa">
             <Key
                 latin:keySpec="،"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                latin:keyStyle="emojiKeyStyle" />
         </case>
         <default>
             <Key
                 latin:keySpec="!text/keyspec_comma"
                 latin:keyLabelFlags="hasPopupHint"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                latin:keyStyle="emojiKeyStyle"/>
         </default>
     </switch>
 </merge>

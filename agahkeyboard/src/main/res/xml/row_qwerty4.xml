@@ -22,11 +22,9 @@
         <Key
             latin:keyStyle="toSymbolKeyStyle"
             latin:keyWidth="15%p" />
-        <Key
-            latin:keyStyle="emojiKeyStyle"
-            latin:keyXPos="16.3%p" />
+        <include latin:keyboardLayout="@xml/key_comma" />
         <include
-            latin:keyXPos="28%p"
+            latin:keyXPos="25%p"
             latin:keyboardLayout="@xml/key_space_5kw" />
         <include latin:keyboardLayout="@xml/key_period" />
         <Key

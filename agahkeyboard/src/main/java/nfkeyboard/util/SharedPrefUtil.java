@@ -148,4 +148,11 @@ public class SharedPrefUtil {
         }
         return null;
     }
+
+    public int getKeyboardThemeSelected() {
+        if (sBoostPref != null) {
+            return sBoostPref.getInt("keyboard_theme", 0);
+        }
+        return 0;
+    }
 }

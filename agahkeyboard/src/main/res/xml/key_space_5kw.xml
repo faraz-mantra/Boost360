@@ -21,5 +21,5 @@
     <Key latin:keyStyle="languageSwitchKeyStyle" />
     <Key
         latin:keyStyle="spaceKeyStyle"
-        latin:keyWidth="38%p" />
+        latin:keyWidth="41%p" />
 </merge>
