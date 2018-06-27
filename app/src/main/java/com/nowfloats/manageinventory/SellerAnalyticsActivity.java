@@ -14,8 +14,10 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.CommonStatus;
 import com.nowfloats.manageinventory.models.SellerSummary;
+import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
@@ -33,13 +35,15 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
 
     private UserSessionManager mSession;
 
+    private Bus mBusEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_analytics);
         MixPanelController.track(MixPanelController.MY_ORDERS, null);
-
+        mBusEvent = BusProvider.getInstance().getBus();
+        mBusEvent.register(this);
         tvTotalOrders = (TextView) findViewById(R.id.tv_total_orders);
         tvTotalRevenue = (TextView) findViewById(R.id.tv_total_revenue);
         tvSuccessfullOrders = (TextView) findViewById(R.id.tv_successful_orders);
@@ -74,6 +78,12 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
         init();
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBusEvent.unregister(this);
     }
 
     public void onOrderTypeClicked(View v) {

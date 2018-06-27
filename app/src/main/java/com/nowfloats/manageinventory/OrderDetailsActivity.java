@@ -47,16 +47,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
         mBusEvent = BusProvider.getInstance().getBus();
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            if (bundle.containsKey("order")) {
-                mOrder = (Order) bundle.get("order");
-            }
-
-            if (bundle.containsKey("tag")) {
-                mTag = bundle.getString("tag");
-            }
-        }
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
@@ -69,12 +59,21 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tvPositive = (TextView) findViewById(R.id.tvPositive);
         tvNegative = (TextView) findViewById(R.id.tvNegative);
 
-        if (mOrder != null) {
-            setTitle("ORDER ID: " + mOrder.getReferenceNumber());
-            showOrderDetails();
-        }
+        if (bundle != null) {
 
+            if (bundle.containsKey("tag")) {
+                mTag = bundle.getString("tag");
+            }
+
+            if (bundle.containsKey("order")) {
+                mOrder = (Order) bundle.get("order");
+                showOrderDetails();
+            } else if (bundle.containsKey("orderId")) {
+                getOrderDetail(bundle.getString("orderId"));
+            }
+        }
     }
+
 
     @Override
     protected void onStart() {
@@ -385,9 +384,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     private void finishActions(CommonStatus commonStatus) {
         mBusEvent.post(commonStatus);
+        getOrderDetail(mOrder.getOrderId());
+    }
+
+    private void getOrderDetail(String orderId) {
         WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
 
-        callInterface.getOrdersDetails(mOrder.getOrderId(), new Callback<OrderDetailDataModel>() {
+        callInterface.getOrdersDetails(orderId, new Callback<OrderDetailDataModel>() {
             @Override
             public void success(OrderDetailDataModel orderModelWebActionModel, Response response) {
                 mOrder = orderModelWebActionModel.getOrder();
@@ -422,7 +425,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         pbOrderDetails.setVisibility(View.GONE);
         tvPositive.setVisibility(View.GONE);
         tvNegative.setVisibility(View.GONE);
-
+        setTitle("ORDER ID: " + mOrder.getReferenceNumber());
         if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.INITIATED)) {
             mTag = "Initiated";
         } else if (mOrder.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.PLACED)) {

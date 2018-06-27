@@ -27,6 +27,8 @@ import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -204,7 +206,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 value.put("clientId", Constants.clientId);
                 value.put("notificationId", alertData.get(pos)._id);
                 value.put("isRead", "true");
-                alertInterface.setRead(value, new Callback<String>() {
+                alertInterface.setRead(new JSONObject(),value, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
                         Log.i("setRead  Success---", "" + s);

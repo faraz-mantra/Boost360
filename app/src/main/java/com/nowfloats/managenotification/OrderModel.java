@@ -9,36 +9,46 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderModel {
 
-    @SerializedName("buyerName")
+    @SerializedName("BuyerName")
     @Expose
     private String buyerName;
-    @SerializedName("buyerContactNumber")
+    @SerializedName("BuyerContactNumber")
     @Expose
     private String buyerContactNumber;
-    @SerializedName("buyerCity")
+    @SerializedName("BuyerCity")
     @Expose
     private String buyerCity;
-    @SerializedName("buyerState")
+    @SerializedName("BuyerState")
     @Expose
     private String buyerState;
-    @SerializedName("orderQuantity")
+    @SerializedName("OrderQuantity")
     @Expose
     private int orderQuantity;
-    @SerializedName("orderValue")
+    @SerializedName("OrderValue")
     @Expose
     private double orderValue;
-    @SerializedName("orderCurrency")
+    @SerializedName("OrderCurrency")
     @Expose
     private String orderCurrency;
-    @SerializedName("createdOn")
+    @SerializedName("CreatedOn")
     @Expose
     private String createdOn;
-    @SerializedName("orderStatus")
+    @SerializedName("OrderStatus")
     @Expose
     private String orderStatus;
 
-    public OrderModel(String buyerName, String buyerContactNumber, String buyerCity, String buyerState, int orderQuantity, double orderValue, String orderCurrency, String createdOn, String orderStatus) {
+    @SerializedName("OrderId")
+    @Expose
+    private String orderId;
+
+    @SerializedName("OrderReferenceNumber")
+    @Expose
+    private String orderReferenceNumber;
+
+    public OrderModel(String orderId, String orderReferenceNumber, String buyerName, String buyerContactNumber, String buyerCity, String buyerState, int orderQuantity, double orderValue, String orderCurrency, String createdOn, String orderStatus) {
         this.buyerName = buyerName;
+        this.orderId = orderId;
+        this.orderReferenceNumber = orderReferenceNumber;
         this.buyerContactNumber = buyerContactNumber;
         this.buyerCity = buyerCity;
         this.buyerState = buyerState;
@@ -47,6 +57,22 @@ public class OrderModel {
         this.orderCurrency = orderCurrency;
         this.createdOn = createdOn;
         this.orderStatus = orderStatus;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderReferenceNumber() {
+        return orderReferenceNumber;
+    }
+
+    public void setOrderReferenceNumber(String orderReferenceNumber) {
+        this.orderReferenceNumber = orderReferenceNumber;
     }
 
     public String getOrderStatus() {

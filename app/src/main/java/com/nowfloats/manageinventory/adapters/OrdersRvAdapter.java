@@ -98,8 +98,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 if (orderModel.getBillingDetails() != null) {
                     ordersViewHolder.tvOrderTotalAmount.setText(TextUtils.isEmpty(orderModel.getBillingDetails().getCurrencyCode()) ? "INR" :
-                            orderModel.getBillingDetails().getCurrencyCode() + " " + (orderModel.getBillingDetails().getGrossAmount() +
-                                    orderModel.getBillingDetails().getDiscountAmount()));
+                            orderModel.getBillingDetails().getCurrencyCode() + " " + orderModel.getBillingDetails().getAmountPayableByBuyer() + "");
                 } else {
                     ordersViewHolder.tvOrderTotalAmount.setText("N/A");
                 }
@@ -110,8 +109,13 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 } else {
                     ordersViewHolder.tvExpDelivDate.setText("N/A");
                 }
-
-                if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.INITIATED)) {
+                ordersViewHolder.tvHeadExp.setText("Exp. Deliv. Date:");
+                if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.COMPLETED)) {
+                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#4BB543"));
+                    ordersViewHolder.tvOrderStatusTag.setText("Completed");
+                    ordersViewHolder.tvHeadExp.setText("Deliv. Date:");
+                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.delivered_order_text_bg));
+                } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.INITIATED)) {
                     ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#808080"));
                     ordersViewHolder.tvOrderStatusTag.setText("Initiated");
                     ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.initiated_order_text_bg));
@@ -123,10 +127,6 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ordersViewHolder.tvOrderStatusTag.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
                     ordersViewHolder.tvOrderStatusTag.setText("Confirmed");
                     ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.received_order_text_bg));
-                } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.COMPLETED)) {
-                    ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#4BB543"));
-                    ordersViewHolder.tvOrderStatusTag.setText("Completed");
-                    ordersViewHolder.tvOrderStatusTag.setBackground(mContext.getDrawable(R.drawable.delivered_order_text_bg));
                 } else if (orderModel.getStatus().equalsIgnoreCase(OrderListActivity.OrderStatus.CANCELLED)) {
                     ordersViewHolder.tvOrderStatusTag.setTextColor(Color.parseColor("#F80208"));
                     ordersViewHolder.tvOrderStatusTag.setText("Cancelled");
@@ -281,7 +281,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     protected class OrdersViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvOrderId, tvOrderDate, tvOrderTotalAmount, tvOrderStatusTag, tvExpDelivDate, tvItemsCount;
+        TextView tvOrderId, tvOrderDate, tvOrderTotalAmount, tvOrderStatusTag, tvExpDelivDate, tvItemsCount, tvHeadExp;
         ImageView ivProducts;
 
         public OrdersViewHolder(final View itemView) {
@@ -292,6 +292,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvOrderTotalAmount = (TextView) itemView.findViewById(R.id.tv_order_total_amount);
             tvOrderStatusTag = (TextView) itemView.findViewById(R.id.tv_order_status_tag);
             tvExpDelivDate = (TextView) itemView.findViewById(R.id.tv_exp_deliv_date);
+            tvHeadExp = (TextView) itemView.findViewById(R.id.tvHeadExp);
             tvItemsCount = (TextView) itemView.findViewById(R.id.tv_num_of_items);
             ivProducts = (ImageView) itemView.findViewById(R.id.iv_products);
 

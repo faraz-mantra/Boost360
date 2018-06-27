@@ -1,14 +1,10 @@
 package com.nowfloats.managenotification;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +12,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
-import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
+import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 /**
  * Created by vinay on 22-05-2018.
@@ -180,7 +172,29 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                 holder.tvQuantity.setText(Integer.toString(order.getOrderQuantity()));
                 holder.tvValue.setText(order.getOrderCurrency() + " " + Double.toString(order.getOrderValue()));
                 holder.tvStatus.setText(order.getOrderStatus());
-                holder.tvDate.setText(order.getCreatedOn());
+                holder.tvDate.setText(getDate(Methods.getFormattedDate(order.getCreatedOn())));
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MixPanelController.track(MixPanelController.BUBBLE_ORDER_DETAIL, null);
+
+                        ArrayList<OrderModel> eqList = new ArrayList<>(mOrderList);
+                        eqList.remove(order);
+
+                        String json = gson.toJson(eqList);
+                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
+                        ((CallerInfoDialog) mContext).checkValues();
+
+                        Intent intent = new Intent(mContext, HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("from", "notification");
+                        intent.putExtra("url", "myorderdetail");
+                        intent.putExtra("payload", order.getOrderId());
+                        mContext.startActivity(intent);
+                    }
+                });
+
                 break;
         }
     }
@@ -216,8 +230,7 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                 tvSource = itemView.findViewById(R.id.tvSource);
                 tvInfo = itemView.findViewById(R.id.tvInfo);
                 tvDate = itemView.findViewById(R.id.tvDate);
-            }
-            else {
+            } else {
                 tvName = itemView.findViewById(R.id.tv_name);
                 tvPhoneNumber = itemView.findViewById(R.id.tv_phone_number);
                 tvLocation = itemView.findViewById(R.id.tv_location);
