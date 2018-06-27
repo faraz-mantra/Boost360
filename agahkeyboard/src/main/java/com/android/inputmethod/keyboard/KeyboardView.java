@@ -557,23 +557,6 @@ public class KeyboardView extends View {
             } else {
                 paint.setColor(Color.parseColor("#ffffff"));
             }
-
-            if (key.getCode() == ',' && key.getMoreKeys() != null) {
-                final Drawable icon1 = getContext().getResources().getDrawable(R.drawable.emoji_happiness);
-                final int iconWidth = (int) (key.getWidth() / 3.5f);
-                final int iconHeight = iconWidth;
-                final int iconY = iconHeight;
-                final int iconX = (keyWidth - iconWidth) / 2; // Align horizontally center.
-                //drawIcon(key.getCode(), canvas, icon, iconX, iconY, iconWidth, iconHeight);
-                icon1.clearColorFilter();
-                icon1.setColorFilter(null);
-                icon1.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-                //icon.setColorFilter(colorProfile.getIcon(), PorterDuff.Mode.SRC_IN);
-                canvas.translate((float) iconX, (float) iconY);
-                icon1.setBounds(0, 0, iconWidth, iconHeight);
-                icon1.draw(canvas);
-                canvas.translate(-iconX, -iconY);
-            }
             canvas.drawText(label, 0, label.length(), labelX, labelBaseline, paint);
             // Turn off drop shadow and reset x-scale.
             paint.clearShadowLayer();

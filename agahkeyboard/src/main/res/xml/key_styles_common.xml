@@ -80,6 +80,13 @@
         latin:keyActionFlags="isRepeatable|noKeyPreview"
         latin:backgroundType="functional" />
     <!-- emojiKeyStyle must be defined before including @xml/key_syles_enter. -->
+    <key-style
+        latin:styleName="commaKeyStyle"
+        latin:keySpec="!icon/emoji_comma_key|!text/keyspec_comma"
+        latin:moreKeys="!fixedColumnOrder!3,!needsDividers!,!text/keyspec_emoji_action_key,!fixedColumnOrder!3,!needsDividers!,!text/keyspec_settings_action_key"
+        latin:keyLabelFlags="hasPopupHint"
+        latin:keyActionFlags="noKeyPreview"
+        latin:backgroundType="action" />
     <switch>
         <case latin:keyboardTheme="ICS|KLP">
             <key-style

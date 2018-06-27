@@ -47,5 +47,6 @@
         <item name="iconEmojiActionKey">@drawable/emoji_happiness</item>
         <!-- Use dark green emoji icon (for lxx_light) because a normal key has white color background. -->
         <item name="iconEmojiNormalKey">@drawable/sym_keyboard_smiley_lxx_light</item>
+        <item name="iconEmojiCommaKey">@drawable/ic_comma_emoji_24dp_white</item>
     </style>
 </resources>
