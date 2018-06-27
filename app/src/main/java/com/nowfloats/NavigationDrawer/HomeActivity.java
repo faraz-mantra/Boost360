@@ -95,7 +95,6 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
-import com.nowfloats.enablekeyboard.BoostKeyboardActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;

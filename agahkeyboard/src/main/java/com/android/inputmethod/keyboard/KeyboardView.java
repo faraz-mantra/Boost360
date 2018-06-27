@@ -450,7 +450,7 @@ public class KeyboardView extends View {
         final int keyWidth = key.getDrawWidth();
         final int keyHeight = key.getHeight();
         final int bgWidth, bgHeight, bgX, bgY;
-        if ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
+        /*if ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
                 // HACK: To disable expanding normal/functional key background.
                 && !key.hasCustomActionLabel())) {
             final int intrinsicWidth = background.getIntrinsicWidth();
@@ -462,13 +462,16 @@ public class KeyboardView extends View {
                 bgHeight = (int) (intrinsicHeight * minScale * 0.8f);
             } else {
                 bgHeight = (int) (intrinsicHeight *minScale);
+
             }
             bgX = (keyWidth - bgWidth) / 2;
             bgY = (keyHeight - bgHeight) / 2;
-        } else {
+        } else {*/
             final Rect padding = mKeyBackgroundPadding;
             bgWidth = keyWidth + padding.left + padding.right;
-            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 1 && key.getCode() == Constants.CODE_SPACE) {
+            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 1 && (key.getCode() == Constants.CODE_SPACE || ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
+                    // HACK: To disable expanding normal/functional key background.
+                    && !key.hasCustomActionLabel())))) {
                 bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * 0.8f);
                 bgY = (int) (keyHeight * 0.1f);
             } else {
@@ -476,7 +479,7 @@ public class KeyboardView extends View {
                 bgY = - padding.top;
             }
             bgX = -padding.left;
-        }
+        //}
         final Rect bounds = background.getBounds();
         if (bgWidth != bounds.right || bgHeight != bounds.bottom) {
             background.setBounds(0, 0, bgWidth, bgHeight);

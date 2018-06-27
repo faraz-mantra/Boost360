@@ -1579,10 +1579,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
-        /*if (isShowingOptionDialog()) {
-            return;
-        }
-        showSubtypeSelectorAndSettings();*/
     }
 
     @Override
