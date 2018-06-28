@@ -1,16 +1,26 @@
 package nfkeyboard.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.apxor.androidsdk.ApxorSDK;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by Admin on 02-03-2018.
@@ -31,7 +41,8 @@ public class MixPanelUtils {
     public static final String KEYBOARD_PRODUCT_SHARE = "KeyboardProductShare";
     public static final String KEYBOARD_UPDATE_SHARE = "KeyboardUpdateShare";
     private static MixPanelUtils mixPanelUtils = new MixPanelUtils();
-    private MixpanelAPI mixPanel;
+    private static MixpanelAPI mixPanel;
+    public static MixpanelAPI.People people = null;
 
     private MixPanelUtils() {
     }
@@ -40,11 +51,11 @@ public class MixPanelUtils {
         return mixPanelUtils;
     }
 
-    public void setMixPanel(Context app) {
-        flush();
+    public static void setMixPanel(Context app) {
+        if (mixPanel != null)
+            mixPanel.flush();
         /** Boost App **/
         mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");
-        //store.put("Tag", SharedPrefUtil.fromBoostPref().getsBoostPref(app).getIdentifier());
 
         /**New Test Id**/
 //        mixPanel = MixpanelAPI.getInstance(app,"21d1bf26130e59cc8a0189372c010c25");
@@ -61,11 +72,25 @@ public class MixPanelUtils {
         // "957da88e50221dedf6dac5f189d5db82");
     }
 
-    public void track(String event, JSONObject Props) {
+    public static void reset(Context app) {
         try {
-            ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(Props));
+            if (mixPanel == null)
+                mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void flushMixPanel() {
+        if (mixPanel != null)
+            mixPanel.flush();
+    }
+
+    public static void track(String event, JSONObject props) {
+        try {
+            ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(props));
             if (mixPanel != null)
-                mixPanel.track(event, Props);
+                mixPanel.track(event, props);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,16 +131,94 @@ public class MixPanelUtils {
         return map;
     }
 
+    public static List<Object> toList(JSONArray array) throws JSONException {
+        List<Object> list = new ArrayList<Object>();
+        for (int i = 0; i < array.length(); i++) {
+            Object value = array.get(i);
+            if (value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            } else if (value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            list.add(value);
+        }
+        return list;
+    }
 
-    public void flush() {
-        if (mixPanel != null) {
-            mixPanel.flush();
+
+    public static void identify(String id, JSONObject param, String fpid) {
+        Log.v("mixpanel", id);
+        try {
+            if (mixPanel == null) return;
+            mixPanel.identify(id);
+            people = mixPanel.getPeople();
+            people.identify(id);
+            people.set(param);
+            //	people.set("$email", Constants.StoreEmail);
+            //  669302602295 - Boost Project ID
+            // 150516431070 - Test Project ID
+            people.initPushHandling("669302602295");
+            // people.initPushHandling("276987746927");
+            people.set("Notification", fpid);
+
+            ApxorSDK.setUserIdentifier(id);
+            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void createUser(String fpTag) {
-        flush();
-        if (mixPanel != null && mixPanel.getPeople() != null)
-            mixPanel.getPeople().identify(fpTag);
+    public static void sendMixPanelProperties(String storeName, String email, String fpTAG, String dateString) {
+        JSONObject store = new JSONObject();
+        String dateTime = null;
+        try {
+            store.put("$name", storeName);
+            store.put("$email", email);
+            dateString = dateString.replace("/Date(", "").replace(")/", "");
+            Long epochTime = Long.parseLong(dateString);
+            Date date = new Date(epochTime);
+            DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+            format.setTimeZone(TimeZone.getDefault());
+            dateTime = format.format(date);
+            store.put("$Created On", dateTime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MixPanelUtils.createUser(fpTAG.toUpperCase(), store);
     }
+
+
+    public static void setProperties(String plan, String status) {
+        try {
+            if (mixPanel != null)
+                mixPanel.getPeople().set(plan, status);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createUser(String id, JSONObject store) {
+//		Log.v("mixpanel", id);
+        try {
+
+            if (mixPanel == null)
+                return;
+            mixPanel.identify(id);
+            people = mixPanel.getPeople();
+            people.identify(id);
+            people.set(store);
+            //people.set("$email", Constants.StoreEmail);
+            //  669302602295 - Boost Project ID
+            // 150516431070 - Test Project ID
+            people.initPushHandling("669302602295");
+//            ApxorSDK.setUserIdentifier(id);
+//            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(store));
+            //people.initPushHandling("276987746927");
+            // people.withIdentity(Constants.Store_id);
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+    }
+
 }

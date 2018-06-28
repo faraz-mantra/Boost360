@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -46,6 +47,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.Window.FEATURE_NO_TITLE;
 import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
 import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
 import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
@@ -98,6 +100,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
         overridePendingTransition(R.anim.bubble_scale_up, R.anim.bubble_scale_down);
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(FEATURE_NO_TITLE);
         killListener = new KillListener();
         setContentView(R.layout.dialog_caller_info);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
@@ -133,6 +136,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
         int screenWidth = (int) (metrics.widthPixels * 1);
         getWindow().setGravity(Gravity.CENTER);
         getWindow().setLayout(screenWidth, screenHeight);
+        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         ecvCalls = findViewById(R.id.ecvCalls);
         ecvEnquiries = findViewById(R.id.ecvEnquiries);

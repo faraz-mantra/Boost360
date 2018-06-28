@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Handler;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,12 +27,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.viewHolder.MyViewHolder;
-import com.nowfloats.managenotification.CallerTempDisplayDialog;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -182,102 +185,86 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         }
                         return;
                     }
-                    // final Intent shareIntent = null;
-//                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
-//
-//                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
-//                        if (Methods.isOnline(appContext)) {
-//                            String url;
-//                            if (imageShare.contains("BizImages")) {
-//                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
-//                            } else {
-//                                url = imageShare;
-//                            }
-//                            Target target = new Target(){
-//
-//
-//                                @Override
-//                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-//                                    pd.dismiss();
-//                                    targetMap= null;
-//                                    try {
-//                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-//                                        View view = new View(appContext);
-//                                        view.draw(new Canvas(mutableBitmap));
-//                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-//                                        BoostLog.d("Path is:", path);
-//                                        Uri uri = Uri.parse(path);
-//                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-//                                                HomeActivity.StorebizFloats.get(position).url);
-//                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//                                        shareIntent.setType("image/*");
-//
-//                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-//                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
-//                                        } else {
-//                                            Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
-//                                        }
-//                                    }catch(OutOfMemoryError e){
-//                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-//                                    } catch (Exception e) {
-//
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onBitmapFailed(Drawable errorDrawable) {
-//                                    pd.dismiss();
-//                                    targetMap= null;
-//                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-//
-//                                }
-//
-//                                @Override
-//                                public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                                }
-//                            };
-//                            targetMap = target;
-//                            Picasso.with(appContext)
-//                                    .load(url)
-//                                    .into(target);
-//
-//
-//                        } else {
-//                            pd.dismiss();
-//                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
-//                        }
-//
-//
-//                    } else {
-//                        pd.dismiss();
-//                        shareIntent.setType("text/plain");
-//                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-//                                HomeActivity.StorebizFloats.get(position).url);
-//                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-//                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
-//                        } else {
-//                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-//                        }
-//
-//                    }
+                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
 
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            appContext.runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-                    Intent intent = new Intent(appContext, CallerTempDisplayDialog.class).
-                            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    appContext.startActivity(intent);
-//                }
-//                            });
-//
-//                        }
-//                    },3000);
+                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
+                        if (Methods.isOnline(appContext)) {
+                            String url;
+                            if (imageShare.contains("BizImages")) {
+                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+                            } else {
+                                url = imageShare;
+                            }
+                            Target target = new Target() {
+
+
+                                @Override
+                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    pd.dismiss();
+                                    targetMap = null;
+                                    try {
+                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                        View view = new View(appContext);
+                                        view.draw(new Canvas(mutableBitmap));
+                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                                        BoostLog.d("Path is:", path);
+                                        Uri uri = Uri.parse(path);
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                                HomeActivity.StorebizFloats.get(position).url);
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                        shareIntent.setType("image/*");
+
+                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                                        } else {
+                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                                        }
+                                    } catch (OutOfMemoryError e) {
+                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+                                    pd.dismiss();
+                                    targetMap = null;
+                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            };
+                            targetMap = target;
+                            Picasso.with(appContext)
+                                    .load(url)
+                                    .into(target);
+
+
+                        } else {
+                            pd.dismiss();
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+                        }
+
+
+                    } else {
+                        pd.dismiss();
+                        shareIntent.setType("text/plain");
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                HomeActivity.StorebizFloats.get(position).url);
+                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                        } else {
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                        }
+
+                    }
 
                 }
 

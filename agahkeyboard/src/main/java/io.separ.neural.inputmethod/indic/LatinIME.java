@@ -97,6 +97,8 @@ import com.turkialkhateeb.materialcolorpicker.ColorListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -148,6 +150,8 @@ import io.separ.neural.inputmethod.slash.SearchRetryErrorEvent;
 import io.separ.neural.inputmethod.slash.ServiceRequestEvent;
 import nfkeyboard.interface_contracts.PresenterToImeInterface;
 import nfkeyboard.keyboards.ImePresenterImpl;
+import nfkeyboard.util.MixPanelUtils;
+import nfkeyboard.util.SharedPrefUtil;
 
 import static io.separ.neural.inputmethod.colors.ColorManager.addObserver;
 import static io.separ.neural.inputmethod.colors.ColorManager.getLastProfile;
@@ -287,6 +291,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onServiceClicked(String serviceId) {
+        MixPanelUtils.reset(this);
         StatsUtils.getInstance().onServiceClicked(serviceId);
         if (serviceId.equals("customization")) {
             Context context = DialogUtils.getPlatformDialogThemeContext(this);
@@ -754,6 +759,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         super.onCreate();
         mHandler.onCreate();
         DEBUG = DebugFlags.DEBUG_ENABLED;
+        setMixPanel(this);
 
         // TODO: Resolve mutual dependencies of {@link #loadSettings()} and {@link #initSuggest()}.
         loadSettings();
@@ -2499,4 +2505,58 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             });
         }
     }
+
+    public void setMixPanel(Context mContext) {
+
+        if (!TextUtils.isEmpty(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag())) {
+
+            MixPanelUtils.setMixPanel(mContext);
+
+            MixPanelUtils.sendMixPanelProperties(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getBusinessName(),
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getEmail(),
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(),
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFPDetailsCreatedOn());
+
+            setMixPanelProperties();
+        }
+    }
+
+
+    private void setMixPanelProperties() {
+
+        try {
+            JSONObject store = new JSONObject();
+            store.put("Business Name", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getBusinessName());
+            store.put("Tag", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpTag());
+            store.put("Primary contact", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getPrimaryContactNumber());
+            store.put("$phone", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getPrimaryContactNumber());
+            store.put("$email", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getEmail());
+            store.put("$city", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getCity());
+            store.put("$country_code", getCountryCode());
+            if (TextUtils.isEmpty(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getRootAliasURI()) || SharedPrefUtil.fromBoostPref().getsBoostPref(this).getRootAliasURI().equals("null")) {
+                store.put("Domain", "False");
+            } else {
+                store.put("Domain", "True");
+            }
+            store.put("FpId", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpId());
+            MixPanelUtils.identify(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpTag(), store, SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private String getCountryCode() {
+        String[] string_array = this.getResources().getStringArray(R.array.CountryCodes);
+        for (String country_phone : string_array) {
+            String[] Codes = country_phone.split(",");
+            if (Codes[0].equalsIgnoreCase(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getCountryPhoneCode())) {
+                return Codes[1];
+            }
+        }
+        return "";
+    }
+
+
 }
