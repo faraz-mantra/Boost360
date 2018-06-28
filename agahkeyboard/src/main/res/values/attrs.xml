@@ -46,7 +46,9 @@
         <!-- Background image for the key. This image needs to be a {@link StateListDrawable},
              with the following possible states: normal, pressed, checkable, checkable+pressed,
              checkable+checked, checkable+checked+pressed. -->
+        <attr name="background" format="reference" />
         <attr name="keyBackground" format="reference" />
+        <attr name="enterKeyBackground" format="reference" />
         <!-- Background image for the functional key. This image needs to be a
              {@link StateListDrawable}, with the following possible states: normal, pressed. -->
         <attr name="functionalKeyBackground" format="reference" />

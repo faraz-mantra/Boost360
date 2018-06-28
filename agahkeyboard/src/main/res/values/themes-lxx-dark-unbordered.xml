@@ -19,48 +19,48 @@
 -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="KeyboardTheme.LXX_Dark" parent="KeyboardIcons.LXX_Dark">
+    <style name="KeyboardTheme.LXX_Dark_Unbordered" parent="KeyboardIcons.LXX_Dark">
         <item name="inputViewStyle">@style/InputView.LXX</item>
-        <item name="keyboardStyle">@style/Keyboard.LXX_Dark</item>
-        <item name="keyboardViewStyle">@style/KeyboardView.LXX_Dark</item>
-        <item name="mainKeyboardViewStyle">@style/MainKeyboardView.LXX_Dark</item>
-        <item name="emojiPalettesViewStyle">@style/EmojiPalettesView.LXX_Dark</item>
-        <item name="moreKeysKeyboardStyle">@style/MoreKeysKeyboard.LXX_Dark</item>
-        <item name="moreKeysKeyboardViewStyle">@style/MoreKeysKeyboardView.LXX_Dark</item>
-        <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.LXX_Dark.Action</item>
-        <item name="suggestionStripViewStyle">@style/SuggestionStripView.LXX_Dark</item>
-        <item name="suggestionWordStyle">@style/SuggestionWord.LXX_Dark</item>
+        <item name="keyboardStyle">@style/Keyboard.LXX_Dark_Unbordered</item>
+        <item name="keyboardViewStyle">@style/KeyboardView.LXX_Dark_Unbordered</item>
+        <item name="mainKeyboardViewStyle">@style/MainKeyboardView.LXX_Dark_Unbordered</item>
+        <item name="emojiPalettesViewStyle">@style/EmojiPalettesView.LXX_Dark_Unbordered</item>
+        <item name="moreKeysKeyboardStyle">@style/MoreKeysKeyboard.LXX_Dark_Unbordered</item>
+        <item name="moreKeysKeyboardViewStyle">@style/MoreKeysKeyboardView.LXX_Dark_Unbordered</item>
+        <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.LXX_Dark_Unbordered.Action</item>
+        <item name="suggestionStripViewStyle">@style/SuggestionStripView.LXX_Dark_Unbordered</item>
+        <item name="suggestionWordStyle">@style/SuggestionWord.LXX_Dark_Unbordered</item>
     </style>
     <style
-        name="Keyboard.LXX_Dark"
+        name="Keyboard.LXX_Dark_Unbordered"
         parent="Keyboard"
-    >
+        >
         <!-- This should be aligned with KeyboardTheme.THEME_ID_* -->
         <item name="themeId">LXXDark</item>
     </style>
     <style
-        name="KeyboardView.LXX_Dark"
+        name="KeyboardView.LXX_Dark_Unbordered"
         parent="KeyboardView.LXX"
-    >
+        >
         <item name="android:background">@color/keyboard_background_dark</item>
         <item name="background">@color/keyboard_background_dark</item>
-        <item name="keyBackground">@drawable/round_light_grey_agah</item>
-        <item name="functionalKeyBackground">@drawable/round_light_grey</item>
+        <item name="keyBackground">@drawable/round_transparent</item>
+        <item name="functionalKeyBackground">@drawable/round_transparent</item>
         <item name="enterKeyBackground">@drawable/round_light_grey</item>
         <item name="spacebarBackground">@drawable/round_light_grey_agah</item>
-        <item name="keyTextColor">@color/key_text_color_lxx_dark</item>
-        <item name="keyTextInactivatedColor">@color/key_functional_text_color_lxx_dark</item>
-        <item name="functionalTextColor">@color/key_text_color_lxx_dark</item>
-        <item name="keyHintLetterColor">@color/key_hint_letter_color_lxx_dark</item>
-        <item name="keyHintLabelColor">@color/key_text_inactive_color_lxx_dark</item>
-        <item name="keyShiftedLetterHintInactivatedColor">@color/key_text_inactive_color_lxx_dark</item>
-        <item name="keyShiftedLetterHintActivatedColor">@color/key_text_color_lxx_dark</item>
+        <item name="keyTextColor">@color/white</item>
+        <item name="keyTextInactivatedColor">@color/white</item>
+        <item name="functionalTextColor">@color/white</item>
+        <item name="keyHintLetterColor">@color/white</item>
+        <item name="keyHintLabelColor">@color/white</item>
+        <item name="keyShiftedLetterHintInactivatedColor">@color/white</item>
+        <item name="keyShiftedLetterHintActivatedColor">@color/white</item>
         <item name="keyPreviewTextColor">@color/white</item>
     </style>
     <style
-        name="MainKeyboardView.LXX_Dark"
-        parent="KeyboardView.LXX_Dark"
-    >
+        name="MainKeyboardView.LXX_Dark_Unbordered"
+        parent="KeyboardView.LXX_Dark_Unbordered"
+        >
         <item name="moreKeysKeyboardForActionLayout">@layout/more_keys_keyboard_for_action_lxx</item>
         <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_lxx_light</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height_lxx</item>
@@ -78,9 +78,9 @@
     <!-- Though {@link EmojiPalettesView} doesn't extend {@link KeyboardView}, some views inside it,
          for instance delete button, need themed {@link KeyboardView} attributes. -->
     <style
-        name="EmojiPalettesView.LXX_Dark"
-        parent="MainKeyboardView.LXX_Dark"
-    >
+        name="EmojiPalettesView.LXX_Dark_Unbordered"
+        parent="MainKeyboardView.LXX_Dark_Unbordered"
+        >
         <item name="categoryIndicatorEnabled">false</item>
         <item name="categoryPageIndicatorColor">@color/highlight_color_lxx_dark</item>
         <item name="categoryPageIndicatorBackground">@color/emoji_tab_page_indicator_background_lxx_dark</item>
@@ -103,18 +103,18 @@
         <item name="iconEmojiCategory16Tab">@drawable/ic_emoji_people_lxx_dark</item>
     </style>
     <style
-        name="MoreKeysKeyboard.LXX_Dark"
-        parent="Keyboard.LXX_Dark"
-    >
+        name="MoreKeysKeyboard.LXX_Dark_Unbordered"
+        parent="Keyboard.LXX_Dark_Unbordered"
+        >
         <item name="keyboardTopPadding">0%p</item>
         <item name="keyboardBottomPadding">0%p</item>
         <item name="horizontalGap">0%p</item>
         <item name="touchPositionCorrectionData">@null</item>
     </style>
     <style
-        name="MoreKeysKeyboardView.LXX_Dark"
-        parent="KeyboardView.LXX_Dark"
-    >
+        name="MoreKeysKeyboardView.LXX_Dark_Unbordered"
+        parent="KeyboardView.LXX_Dark_Unbordered"
+        >
         <item name="android:background">@drawable/keyboard_popup_panel_background_lxx_light</item>
         <item name="keyBackground">@drawable/btn_keyboard_key_popup_lxx_light</item>
         <item name="divider">@drawable/more_keys_divider</item>
@@ -122,18 +122,18 @@
         <item name="verticalCorrection">@dimen/config_more_keys_keyboard_vertical_correction_holo</item>
     </style>
     <style
-        name="MoreKeysKeyboardView.LXX_Dark.Action"
-        parent="MoreKeysKeyboardView.LXX_Dark"
-    >
+        name="MoreKeysKeyboardView.LXX_Dark_Unbordered.Action"
+        parent="MoreKeysKeyboardView.LXX_Dark_Unbordered"
+        >
         <item name="android:background">@android:color/transparent</item>
         <item name="keyBackground">@drawable/btn_keyboard_key_popup_action_lxx_dark</item>
         <item name="divider">@null</item>
         <item name="keyLabelFlags">keepBackgroundAspectRatio</item>
     </style>
     <style
-        name="SuggestionStripView.LXX_Dark"
-        parent="KeyboardView.LXX_Dark"
-    >
+        name="SuggestionStripView.LXX_Dark_Unbordered"
+        parent="KeyboardView.LXX_Dark_Unbordered"
+        >
         <item name="suggestionsCountInStrip">@integer/config_suggestions_count_in_strip</item>
         <item name="centerSuggestionPercentile">@fraction/config_center_suggestion_percentile</item>
         <item name="maxMoreSuggestionsRow">@integer/config_max_more_suggestions_row</item>
@@ -148,9 +148,9 @@
         <item name="alphaObsoleted">70%</item>
     </style>
     <style
-        name="SuggestionWord.LXX_Dark"
+        name="SuggestionWord.LXX_Dark_Unbordered"
         parent="SuggestionWord"
-    >
+        >
         <item name="android:background">@drawable/btn_suggestion_lxx_dark</item>
         <item name="android:textColor">@color/highlight_color_lxx_dark</item>
     </style>

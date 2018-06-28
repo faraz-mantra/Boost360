@@ -122,6 +122,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private ProgressBar pbOffers;
     private TextView tvImageNotSupported;
+    private Context mContext;
 
     public LatinIME getmLatinIME() {
         return mLatinIME;
@@ -165,9 +166,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     public void updateKeyboardTheme() {
         final boolean themeUpdated = updateKeyboardThemeAndContextThemeWrapper(
-                mLatinIME, KeyboardTheme.getKeyboardTheme(mPrefs));
+                mLatinIME, KeyboardTheme.getKeyboardTheme(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext)));
         if (themeUpdated && mKeyboardView != null) {
-            mLatinIME.setInputView(onCreateInputView(mIsHardwareAcceleratedDrawingEnabled));
+            mLatinIME.setInputView(onCreateInputView(mIsHardwareAcceleratedDrawingEnabled, mLatinIME.getApplicationContext()));
         }
     }
 
@@ -641,13 +642,14 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         }
     }
 
-    public View onCreateInputView(final boolean isHardwareAcceleratedDrawingEnabled) {
+    public View onCreateInputView(final boolean isHardwareAcceleratedDrawingEnabled, Context context) {
+        mContext = context;
         if (mKeyboardView != null) {
             mKeyboardView.closing();
         }
 
         updateKeyboardThemeAndContextThemeWrapper(
-                mLatinIME, KeyboardTheme.getKeyboardTheme(mPrefs));
+                mLatinIME, KeyboardTheme.getKeyboardTheme(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext)));
         mCurrentInputView = (InputView) LayoutInflater.from(mThemeContext).inflate(
                 R.layout.input_view, null);
         apiCallPresenter = new ApiCallPresenter(mThemeContext, this);

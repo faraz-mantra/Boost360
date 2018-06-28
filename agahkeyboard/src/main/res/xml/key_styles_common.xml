@@ -54,7 +54,7 @@
             <key-style
                 latin:styleName="shiftKeyStyle"
                 latin:keySpec="!icon/shift_key_shifted|!code/key_shift"
-                latin:backgroundType="stickyOff"
+                latin:backgroundType="action"
                 latin:parentStyle="baseForShiftKeyStyle" />
         </case>
         <case
@@ -63,14 +63,14 @@
             <key-style
                 latin:styleName="shiftKeyStyle"
                 latin:keySpec="!icon/shift_key_shifted|!code/key_shift"
-                latin:backgroundType="stickyOn"
+                latin:backgroundType="action"
                 latin:parentStyle="baseForShiftKeyStyle" />
         </case>
         <default>
             <key-style
                 latin:styleName="shiftKeyStyle"
                 latin:keySpec="!icon/shift_key|!code/key_shift"
-                latin:backgroundType="stickyOff"
+                latin:backgroundType="action"
                 latin:parentStyle="baseForShiftKeyStyle" />
         </default>
     </switch>
@@ -78,15 +78,14 @@
         latin:styleName="deleteKeyStyle"
         latin:keySpec="!icon/delete_key|!code/key_delete"
         latin:keyActionFlags="isRepeatable|noKeyPreview"
-        latin:backgroundType="functional" />
+        latin:backgroundType="action" />
     <!-- emojiKeyStyle must be defined before including @xml/key_syles_enter. -->
     <key-style
         latin:styleName="commaKeyStyle"
         latin:keySpec="!icon/emoji_comma_key|!text/keyspec_comma"
-        latin:moreKeys="!fixedColumnOrder!3,!needsDividers!,!text/keyspec_emoji_action_key,!fixedColumnOrder!3,!needsDividers!,!text/keyspec_settings_action_key"
+        latin:moreKeys="!fixedColumnOrder!2,!needsDividers!,!text/keyspec_emoji_action_key,!fixedColumnOrder!2,!needsDividers!,!text/keyspec_settings_action_key"
         latin:keyLabelFlags="hasPopupHint"
-        latin:keyActionFlags="noKeyPreview"
-        latin:backgroundType="action" />
+        latin:keyActionFlags="noKeyPreview" />
     <switch>
         <case latin:keyboardTheme="ICS|KLP">
             <key-style
@@ -155,7 +154,7 @@
         latin:styleName="baseForLayoutSwitchKeyStyle"
         latin:keyLabelFlags="preserveCase|followFunctionalTextColor"
         latin:keyActionFlags="noKeyPreview"
-        latin:backgroundType="functional" />
+        latin:backgroundType="action" />
     <key-style
         latin:styleName="toSymbolKeyStyle"
         latin:keySpec="!text/keylabel_to_symbol|!code/key_switch_alpha_symbol"

@@ -49,6 +49,7 @@ import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.util.SharedPrefUtil;
 
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ACTION;
+import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_FUNCTIONAL;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_SPACEBAR;
 import static io.separ.neural.inputmethod.Utils.ColorUtils.colorProfile;
 
@@ -101,6 +102,7 @@ public class KeyboardView extends View {
     protected final Drawable mKeyBackground;
     private final Drawable mFunctionalKeyBackground;
     private final Drawable mSpacebarBackground;
+    private final Drawable mEnterKeyBackground;
     private final float mSpacebarIconWidthRatio;
     private final Rect mKeyBackgroundPadding = new Rect();
     private static final float KET_TEXT_SHADOW_RADIUS_DISABLED = -1.0f;
@@ -144,19 +146,20 @@ public class KeyboardView extends View {
         this(context, attrs, defStyle, false);
     }
 
+    final TypedArray keyboardViewAttr;
     public KeyboardView(final Context context, final AttributeSet attrs, final int defStyle, boolean isEmoji) {
         super(context, attrs, defStyle);
 
-        final TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs,
+        keyboardViewAttr = context.obtainStyledAttributes(attrs,
                 R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
-        //mKeyBackground = keyboardViewAttr.getDrawable(R.styleable.KeyboardView_keyBackground);
-        mKeyBackground = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
+        mKeyBackground = keyboardViewAttr.getDrawable(R.styleable.KeyboardView_keyBackground);
         if (!isInEditMode())
             mKeyBackground.getPadding(mKeyBackgroundPadding);
         final Drawable functionalKeyBackground = keyboardViewAttr.getDrawable(
                 R.styleable.KeyboardView_functionalKeyBackground);
         mFunctionalKeyBackground = (functionalKeyBackground != null) ? functionalKeyBackground
                 : mKeyBackground;
+        mEnterKeyBackground = keyboardViewAttr.getDrawable(R.styleable.KeyboardView_enterKeyBackground);
         final Drawable spacebarBackground = keyboardViewAttr.getDrawable(
                 R.styleable.KeyboardView_spacebarBackground);
         mSpacebarBackground = (spacebarBackground != null) ? spacebarBackground : mKeyBackground;
@@ -306,15 +309,13 @@ public class KeyboardView extends View {
             return;
         }
 
-        if (this instanceof MoreKeysKeyboardView) {
-            getBackground().setAlpha(0);
-            ColorUtils.drawBackground(canvas, Color.parseColor("#212121"));
-            //getBackground().setColorFilter(colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
+        /*if (this instanceof MoreKeysKeyboardView) {
+            getBackground().setColorFilter(keyboardViewAttr.getColor(R.styleable.KeyboardView_background, Color.parseColor("#212121")), PorterDuff.Mode.MULTIPLY);
         } else {
-            getBackground().setAlpha(0);
-            //ColorUtils.drawBackground(canvas, colorProfile.getPrimary());
-            ColorUtils.drawBackground(canvas, Color.parseColor("#212121"));
-        }
+            //getBackground().setAlpha(0);
+            ColorUtils.drawBackground(canvas, keyboardViewAttr.getColor(R.styleable.KeyboardView_background, Color.parseColor("#212121")));
+            //ColorUtils.drawBackground(canvas, Color.parseColor("#212121"));
+        }*/
 
         final Paint paint = mPaint;
         final Drawable background = getBackground();
@@ -369,19 +370,22 @@ public class KeyboardView extends View {
         if (!key.isSpacer()) {
             if (key.isMoreKey()) {
                 Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground);
-                tmp.setColorFilter(ColorUtils.colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
+                //tmp.setColorFilter(ColorUtils.colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
                 onDrawKeyBackground(key, canvas, tmp);
                 //Log.e("SEPAR", "here :(");
             } else {
                 switch (key.getType()) {
+                    case BACKGROUND_TYPE_FUNCTIONAL:
+                        onDrawKeyBackground(key, canvas, mEnterKeyBackground);
+                        break;
                     case BACKGROUND_TYPE_ACTION:
-                        onDrawKeyBackground(key, canvas, key.getActionBackground(this.mKeyBackground, colorProfile.getSecondary()));
+                        onDrawKeyBackground(key, canvas, mFunctionalKeyBackground);
                         break;
                     case BACKGROUND_TYPE_SPACEBAR:
-                        onDrawKeyBackground(key, canvas, key.getSpaceBarBackground(this.mSpacebarBackground, colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY));
+                        onDrawKeyBackground(key, canvas, mSpacebarBackground);
                         break;
                     default:
-                        onDrawKeyBackground(key, canvas, new ColorDrawable(ColorUtils.colorProfile.getPrimary()));
+                        onDrawKeyBackground(key, canvas, mKeyBackground);
                 }
             }
             /*switch (key.getType()) {
@@ -415,7 +419,7 @@ public class KeyboardView extends View {
     // Draw key background.
     protected void onDrawKeyBackground(final Key key, final Canvas canvas,
                                        Drawable background) {
-        if (this instanceof MoreKeysKeyboardView) {
+        /*if (this instanceof MoreKeysKeyboardView) {
             background = getContext().getResources().getDrawable(R.drawable.round_transparent);
             //getBackground().setColorFilter(colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
         } else {
@@ -447,6 +451,7 @@ public class KeyboardView extends View {
                 }
             }
         }
+        */
         final int keyWidth = key.getDrawWidth();
         final int keyHeight = key.getHeight();
         final int bgWidth, bgHeight, bgX, bgY;
@@ -532,8 +537,8 @@ public class KeyboardView extends View {
             }
 
             if (key.isEnabled()) {
-                //paint.setColor(key.selectTextColor(params));
-                paint.setColor(colorProfile.getText());
+                paint.setColor(key.selectTextColor(params));
+                //paint.setColor(colorProfile.getText());
                 // Set a drop shadow for the text if the shadow radius is positive value.
                 if (mKeyTextShadowRadius > 0.0f) {
                     paint.setShadowLayer(mKeyTextShadowRadius, 0.0f, 0.0f, params.mTextShadowColor);
@@ -546,17 +551,9 @@ public class KeyboardView extends View {
                 paint.clearShadowLayer();
             }
             blendAlpha(paint, params.mAnimAlpha);
-            if (key.getCode() == ',' && key.getMoreKeys() != null) {
-                paint.setColor(Color.parseColor("#000000"));
-            }
            /* Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
-            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
-                paint.setColor(Color.parseColor("#cacaca"));
-            } else {
-                paint.setColor(Color.parseColor("#ffffff"));
-            }
             canvas.drawText(label, 0, label.length(), labelX, labelBaseline, paint);
             // Turn off drop shadow and reset x-scale.
             paint.clearShadowLayer();
@@ -567,8 +564,7 @@ public class KeyboardView extends View {
         final String hintLabel = key.getHintLabel();
         if (hintLabel != null) {
             paint.setTextSize(key.selectHintTextSize(params));
-            //paint.setColor(key.selectHintTextColor(params));
-            paint.setColor(colorProfile.getText());
+            paint.setColor(key.selectHintTextColor(params));
             // TODO: Should add a way to specify type face for hint letters
             paint.setTypeface(Typeface.DEFAULT_BOLD);
             blendAlpha(paint, params.mAnimAlpha);
@@ -583,11 +579,6 @@ public class KeyboardView extends View {
                     hintBaseline = labelBaseline;
                 } else {
                     hintBaseline = centerY + labelCharHeight / 2.0f;
-                }
-                if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
-                    paint.setColor(Color.parseColor("#cacaca"));
-                } else {
-                    paint.setColor(Color.parseColor("#ffffff"));
                 }
                 paint.setTextAlign(Align.LEFT);
             } else if (key.hasShiftedLetterHint()) {
@@ -604,11 +595,6 @@ public class KeyboardView extends View {
                         - Math.max(hintDigitWidth, hintLabelWidth) / 1.3f;
                 hintBaseline = - paint.ascent() + 2;
                 paint.setTextAlign(Align.CENTER);
-                if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
-                    paint.setColor(Color.parseColor("#cacaca"));
-                } else {
-                    paint.setColor(Color.parseColor("#ffffff"));
-                }
             }
             final float adjustmentY = params.mHintLabelVerticalAdjustment * labelCharHeight;
             canvas.drawText(
