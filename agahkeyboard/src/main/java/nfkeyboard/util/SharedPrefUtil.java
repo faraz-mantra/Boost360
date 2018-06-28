@@ -45,6 +45,13 @@ public class SharedPrefUtil {
         return null;
     }
 
+    public String getFPDetailsCreatedOn() {
+        if (sBoostPref != null) {
+            return sBoostPref.getString("GET_FP_DETAILS_CREATED_ON", null);
+        }
+        return null;
+    }
+
     public String getProductVerb() {
         if (sBoostPref != null) {
             return sBoostPref.getString("GET_PRODUCT_CATEGORY_VERB", null);
@@ -90,6 +97,13 @@ public class SharedPrefUtil {
     public String getPhoneNumber() {
         if (sBoostPref != null) {
             return sBoostPref.getString("GET_FP_DETAILS_PRIMARY_NUMBER", null);
+        }
+        return null;
+    }
+
+    public String getPrimaryContactNumber() {
+        if (sBoostPref != null) {
+            return sBoostPref.getString("mainPrimaryContactNum", null);
         }
         return null;
     }
@@ -145,6 +159,20 @@ public class SharedPrefUtil {
     public String getCountry() {
         if (sBoostPref != null) {
             return sBoostPref.getString("GET_FP_DETAILS_COUNTRY", null);
+        }
+        return null;
+    }
+
+    public String getRootAliasURI() {
+        if (sBoostPref != null) {
+            return sBoostPref.getString("GET_FP_DETAILS_ROOTALIASURI", null);
+        }
+        return null;
+    }
+
+    public String getCountryPhoneCode() {
+        if (sBoostPref != null) {
+            return sBoostPref.getString("GET_FP_DETAILS_COUNTRYPHONECODE", null);
         }
         return null;
     }

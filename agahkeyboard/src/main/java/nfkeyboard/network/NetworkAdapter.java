@@ -116,7 +116,7 @@ public class NetworkAdapter {
         Log.d("here", "email " + contactDetails.getEmailId());
         contactDetails.setSecondaryContactNumber(null);
         Log.d("here", "numbersec " + contactDetails.getSecondaryContactNumber());
-        contactDetails.setPrimaryContactNumber(SharedPrefUtil.fromBoostPref().getPhoneNumber());
+        contactDetails.setPrimaryContactNumber(SharedPrefUtil.fromBoostPref().getPrimaryContactNumber());
         Log.d("here", "number " + contactDetails.getPrimaryContactNumber());
         CreateOrderRequest.Seller.Address address = new CreateOrderRequest.Seller.Address();
         address.setCity(SharedPrefUtil.fromBoostPref().getCity());

@@ -511,7 +511,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             store.put("$email", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
             store.put("$city", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
             store.put("$country_code", getCountryCode());
-            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) == null || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).equals("null")) {
+            if (TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)) || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).equals("null")) {
                 store.put("Domain", "False");
             } else {
                 store.put("Domain", "True");
