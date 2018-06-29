@@ -595,7 +595,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
             mMoreKeysKeyboardCache.put(key, moreKeysKeyboard);
         }
 
-        final View container = key.isActionKey() ? mMoreKeysKeyboardForActionContainer
+        final View container = key.isActionKey() || key.isEnterKey() ? mMoreKeysKeyboardForActionContainer
                 : mMoreKeysKeyboardContainer;
         final MoreKeysKeyboardView moreKeysKeyboardView =
                 (MoreKeysKeyboardView) container.findViewById(R.id.more_keys_keyboard_view);

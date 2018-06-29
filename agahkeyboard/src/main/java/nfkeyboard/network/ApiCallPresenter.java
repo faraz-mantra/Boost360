@@ -141,7 +141,7 @@ public class ApiCallPresenter {
         Details details = new Details();
         details.setName(SharedPrefUtil.fromBoostPref().getName());
         details.setBusinessName(SharedPrefUtil.fromBoostPref().getBusinessName());
-        details.setPhoneNumber(SharedPrefUtil.fromBoostPref().getPhoneNumber());
+        details.setPhoneNumber(SharedPrefUtil.fromBoostPref().getPrimaryContactNumber());
         details.setEmail(SharedPrefUtil.fromBoostPref().getEmail());
         details.setWebsite(SharedPrefUtil.fromBoostPref().getWebsite());
         details.setAddress(SharedPrefUtil.fromBoostPref().getAddress());

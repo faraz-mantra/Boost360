@@ -1,0 +1,4 @@
+1. class KeyboardView
+    - responsible for drawing the keyboard everytime it is opened.
+2. class Key
+    -

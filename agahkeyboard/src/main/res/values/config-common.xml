@@ -107,6 +107,8 @@
     <!-- Common suggestion strip configuration. -->
     <integer name="config_suggestions_count_in_strip">3</integer>
     <fraction name="config_center_suggestion_percentile">44%</fraction>
+    <fraction name="config_height_fraction_space_enter_lxx_dark">100%</fraction>
+    <fraction name="config_height_fraction_space_enter_lxx_dark_unbordered">80%</fraction>
     <integer name="config_delay_in_milliseconds_to_update_suggestions">250</integer>
     <integer name="config_delay_in_milliseconds_to_update_old_suggestions">400</integer>
 

@@ -385,7 +385,10 @@ public class ImePresenterImpl implements ItemClickListener,
         mContext = context;
         this.imeListener = mImeListener;
         this.mKeyboardSwitcher = mKeyboardSwitcher;
+
+
     }
+
 
     @Override
     public View onCreateInputView() {
@@ -400,7 +403,7 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
-        MixPanelUtils.getInstance().createUser(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag());
+
         packageName = attribute.packageName;
         mShiftType = ShiftType.CAPITAL;
         switch (attribute.inputType & InputType.TYPE_MASK_CLASS) {
@@ -444,7 +447,6 @@ public class ImePresenterImpl implements ItemClickListener,
         imeOptionId = attribute.imeOptions;
         setCurrentKeyboard();
     }
-
     private void initializeValues() {
         mTabType = TabType.NO_TAB;
         manageKeyboardView.clearResources();
@@ -547,7 +549,7 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     public void onDestroy() {
-        MixPanelUtils.getInstance().flush();
+        MixPanelUtils.flushMixPanel();
     }
 
     private void addCandidateTypeView(KeyboardUtils.CandidateType type, TabType tabType) {
@@ -693,7 +695,7 @@ public class ImePresenterImpl implements ItemClickListener,
                         imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
                         flag, null);
 
-            imeListener.getImeCurrentInputConnection().endBatchEdit();
+                imeListener.getImeCurrentInputConnection().endBatchEdit();
             }
 
         }

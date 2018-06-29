@@ -45,9 +45,10 @@
         <item name="android:background">@color/keyboard_background_dark</item>
         <item name="background">@color/keyboard_background_dark</item>
         <item name="keyBackground">@drawable/round_transparent</item>
-        <item name="functionalKeyBackground">@drawable/round_transparent</item>
-        <item name="enterKeyBackground">@drawable/round_light_grey</item>
-        <item name="spacebarBackground">@drawable/round_light_grey_agah</item>
+        <item name="heightFractionSpaceEnter">@fraction/config_height_fraction_space_enter_lxx_dark_unbordered</item>
+        <item name="functionalKeyBackground">@drawable/btn_keyboard_key_functional_lxx_dark_unbordered</item>
+        <item name="enterKeyBackground">@drawable/btn_keyboard_key_functional_lxx_dark</item>
+        <item name="spacebarBackground">@drawable/btn_keyboard_spacebar_lxx_dark</item>
         <item name="keyTextColor">@color/white</item>
         <item name="keyTextInactivatedColor">@color/white</item>
         <item name="functionalTextColor">@color/white</item>

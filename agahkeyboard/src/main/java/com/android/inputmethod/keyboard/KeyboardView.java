@@ -39,6 +39,7 @@ import android.view.View;
 import com.android.inputmethod.keyboard.internal.AlphabetShiftState;
 import com.android.inputmethod.keyboard.internal.KeyDrawParams;
 import com.android.inputmethod.keyboard.internal.KeyVisualAttributes;
+import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.TypefaceUtils;
 
 import java.util.HashSet;
@@ -49,6 +50,7 @@ import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.util.SharedPrefUtil;
 
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ACTION;
+import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ENTERKEY;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_FUNCTIONAL;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_SPACEBAR;
 import static io.separ.neural.inputmethod.Utils.ColorUtils.colorProfile;
@@ -309,6 +311,7 @@ public class KeyboardView extends View {
             return;
         }
 
+        // Sets color according to package primary color
         /*if (this instanceof MoreKeysKeyboardView) {
             getBackground().setColorFilter(keyboardViewAttr.getColor(R.styleable.KeyboardView_background, Color.parseColor("#212121")), PorterDuff.Mode.MULTIPLY);
         } else {
@@ -369,23 +372,27 @@ public class KeyboardView extends View {
 
         if (!key.isSpacer()) {
             if (key.isMoreKey()) {
-                Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground);
+                Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground, this.mEnterKeyBackground);
                 //tmp.setColorFilter(ColorUtils.colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
                 onDrawKeyBackground(key, canvas, tmp);
                 //Log.e("SEPAR", "here :(");
             } else {
                 switch (key.getType()) {
-                    case BACKGROUND_TYPE_FUNCTIONAL:
-                        onDrawKeyBackground(key, canvas, mEnterKeyBackground);
+                    case BACKGROUND_TYPE_ENTERKEY:
+                        key.setBackgroundState(mEnterKeyBackground);
+                        onDrawKeyBackground(key, canvas, key.getActionBackground(mEnterKeyBackground, Color.parseColor("#ffffff")));
                         break;
                     case BACKGROUND_TYPE_ACTION:
-                        onDrawKeyBackground(key, canvas, mFunctionalKeyBackground);
+                        key.setBackgroundState(mFunctionalKeyBackground);
+                        onDrawKeyBackground(key, canvas, key.getActionBackground(mFunctionalKeyBackground, Color.parseColor("#ffffff")));
                         break;
                     case BACKGROUND_TYPE_SPACEBAR:
-                        onDrawKeyBackground(key, canvas, mSpacebarBackground);
+                        key.setBackgroundState(mSpacebarBackground);
+                        onDrawKeyBackground(key, canvas, key.getSpaceBarBackground(mSpacebarBackground, Color.parseColor("#ffffff"), PorterDuff.Mode.MULTIPLY));
                         break;
                     default:
-                        onDrawKeyBackground(key, canvas, mKeyBackground);
+                        key.setBackgroundState(mKeyBackground);
+                        onDrawKeyBackground(key, canvas, key.getNormalBackground(mKeyBackground, true, Color.parseColor("#ffffff")));
                 }
             }
             /*switch (key.getType()) {
@@ -455,6 +462,7 @@ public class KeyboardView extends View {
         final int keyWidth = key.getDrawWidth();
         final int keyHeight = key.getHeight();
         final int bgWidth, bgHeight, bgX, bgY;
+        // Used for expanding keys to keep background ratio
         /*if ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
                 // HACK: To disable expanding normal/functional key background.
                 && !key.hasCustomActionLabel())) {
@@ -472,18 +480,11 @@ public class KeyboardView extends View {
             bgX = (keyWidth - bgWidth) / 2;
             bgY = (keyHeight - bgHeight) / 2;
         } else {*/
-            final Rect padding = mKeyBackgroundPadding;
-            bgWidth = keyWidth + padding.left + padding.right;
-            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 1 && (key.getCode() == Constants.CODE_SPACE || ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
-                    // HACK: To disable expanding normal/functional key background.
-                    && !key.hasCustomActionLabel())))) {
-                bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * 0.8f);
-                bgY = (int) (keyHeight * 0.1f);
-            } else {
-                bgHeight = keyHeight + padding.top + padding.bottom;
-                bgY = - padding.top;
-            }
-            bgX = -padding.left;
+        final Rect padding = mKeyBackgroundPadding;
+        bgWidth = keyWidth + padding.left + padding.right;
+        bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
+        bgY = - padding.top;
+        bgX = -padding.left;
         //}
         final Rect bounds = background.getBounds();
         if (bgWidth != bounds.right || bgHeight != bounds.bottom) {
