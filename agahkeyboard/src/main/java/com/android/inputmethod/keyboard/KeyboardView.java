@@ -374,25 +374,25 @@ public class KeyboardView extends View {
             if (key.isMoreKey()) {
                 Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground, this.mEnterKeyBackground);
                 //tmp.setColorFilter(ColorUtils.colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
-                onDrawKeyBackground(key, canvas, tmp);
+                onDrawKeyBackground(key, canvas, tmp, 1);
                 //Log.e("SEPAR", "here :(");
             } else {
                 switch (key.getType()) {
                     case BACKGROUND_TYPE_ENTERKEY:
                         key.setBackgroundState(mEnterKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getActionBackground(mEnterKeyBackground, Color.parseColor("#ffffff")));
+                        onDrawKeyBackground(key, canvas, key.getActionBackground(mEnterKeyBackground, Color.parseColor("#ffffff")), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
                         break;
                     case BACKGROUND_TYPE_ACTION:
                         key.setBackgroundState(mFunctionalKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getActionBackground(mFunctionalKeyBackground, Color.parseColor("#ffffff")));
+                        onDrawKeyBackground(key, canvas, key.getActionBackground(mFunctionalKeyBackground, Color.parseColor("#ffffff")), 1);
                         break;
                     case BACKGROUND_TYPE_SPACEBAR:
                         key.setBackgroundState(mSpacebarBackground);
-                        onDrawKeyBackground(key, canvas, key.getSpaceBarBackground(mSpacebarBackground, Color.parseColor("#ffffff"), PorterDuff.Mode.MULTIPLY));
+                        onDrawKeyBackground(key, canvas, key.getSpaceBarBackground(mSpacebarBackground, Color.parseColor("#ffffff"), PorterDuff.Mode.MULTIPLY), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
                         break;
                     default:
                         key.setBackgroundState(mKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getNormalBackground(mKeyBackground, true, Color.parseColor("#ffffff")));
+                        onDrawKeyBackground(key, canvas, key.getNormalBackground(mKeyBackground, true, Color.parseColor("#ffffff")), 1);
                 }
             }
             /*switch (key.getType()) {
@@ -425,7 +425,7 @@ public class KeyboardView extends View {
 
     // Draw key background.
     protected void onDrawKeyBackground(final Key key, final Canvas canvas,
-                                       Drawable background) {
+                                       Drawable background, float heightFraction) {
         /*if (this instanceof MoreKeysKeyboardView) {
             background = getContext().getResources().getDrawable(R.drawable.round_transparent);
             //getBackground().setColorFilter(colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
@@ -482,7 +482,7 @@ public class KeyboardView extends View {
         } else {*/
         final Rect padding = mKeyBackgroundPadding;
         bgWidth = keyWidth + padding.left + padding.right;
-        bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
+        bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * heightFraction);
         bgY = - padding.top;
         bgX = -padding.left;
         //}
