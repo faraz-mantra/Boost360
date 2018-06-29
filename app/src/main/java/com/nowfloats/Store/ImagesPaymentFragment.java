@@ -6,15 +6,15 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +54,7 @@ import retrofit.client.Response;
 
 public class ImagesPaymentFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, OnImagePicked, View.OnTouchListener {
     public Context mContext;
-    public TextInputEditText bankNameEt, chequeNumberEt, transactionIdEt, accountNumberEt, transactionAmountEt,
+    public EditText bankNameEt, chequeNumberEt, transactionIdEt, accountNumberEt, transactionAmountEt,
             ifscCodeEt, paymentDateEt, gstNumberEt;
     public RadioGroup gstRadioGroup;
     public TextView addAltTv, addMainTv;
@@ -62,43 +62,76 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
     private UserSessionManager manager;
     public ImageView altChequeImgView, mainChequeImgView;
     public String mainImage, altImage;
-    private int totalPrice, taxAmount;
+    private double totalPrice, taxAmount, discountPercentage, tdsPercentage, tdsAmount, finalAmount, discountAmount = 0;
     private String currencyCode;
     private List<ProductPaymentModel> mProductPaymentModel;
+    private DiscountCoupon discountCoupon;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arg = getArguments();
-        if (arg != null){
-            initializeProductList(new Gson().<List<PackageDetails>>fromJson(getArguments().getString("packageList"),new TypeToken<List<PackageDetails>>(){}.getType()));
+        if (arg != null) {
+            discountCoupon = (DiscountCoupon) getArguments().get("discountCoupon");
+            initializeProductList(new Gson().<List<PackageDetails>>fromJson(getArguments().getString("packageList"), new TypeToken<List<PackageDetails>>() {
+            }.getType()), discountCoupon, (int) getArguments().get("tdsPercentage"));
         }
-        manager = new UserSessionManager(mContext,getActivity());
+        manager = new UserSessionManager(mContext, getActivity());
     }
 
-    private void initializeProductList(List<PackageDetails> packageList) {
-        if (packageList ==  null) return;
+    private void initializeProductList(List<PackageDetails> packageList, DiscountCoupon discountCoupon, int tdsPercentage) {
+        if (packageList == null) return;
+        this.tdsPercentage = tdsPercentage;
         mProductPaymentModel = new ArrayList<>();
-        for (PackageDetails details: packageList){
+        for (PackageDetails details : packageList) {
             ProductPaymentModel model = new ProductPaymentModel();
             model.setName(details.getName());
-            model.setPrice(details.getPrice().intValue());
+            model.setPrice(details.getPrice());
             model.setDescription(details.getDesc());
             model.setProductId(details.getId());
             model.setQuantity(1);
             model.setType(null);
             currencyCode = details.getCurrencyCode();
-            totalPrice+=details.getPrice();
-            double totalTax = 0;
-            if(details.getTaxes() != null) {
+            double totalTax = 0, unitPrice = 0, unitTaxAmount = 0, unitTDSAmount = 0;
+            if (details.getTaxes() != null) {
                 for (TaxDetail taxData : details.getTaxes()) {
                     totalTax += taxData.getValue();
                 }
             }
-            model.setTaxValue(totalTax);
-            taxAmount += (details.getPrice()*totalTax)/100;
+
+            if (discountCoupon != null) {
+                discountAmount += (details.getPrice() * discountCoupon.getDiscountPercentage() / 100.0);
+                unitPrice = details.getPrice() - discountAmount;
+                discountPercentage = discountCoupon.getDiscountPercentage();
+                model.setDiscount(discountCoupon.getDiscountPercentage());
+            } else {
+                unitPrice = details.getPrice();
+                model.setDiscount(0.0);
+            }
+
+            unitTaxAmount = (unitPrice * totalTax) / 100;
+
+            if (tdsPercentage > 0) {
+                unitTDSAmount = ((unitPrice + unitTaxAmount) * tdsPercentage / 100.0);
+            }
+
+
+            totalPrice += unitPrice;
+
+            finalAmount += unitPrice + unitTaxAmount - unitTDSAmount;
+            taxAmount += unitTaxAmount;
+            tdsAmount += unitTDSAmount;
+
+            model.setPrice(unitPrice + unitTaxAmount - unitTDSAmount);
+            model.setTaxValue(unitTaxAmount);
             mProductPaymentModel.add(model);
         }
+
+        finalAmount = Math.round(finalAmount);
+        taxAmount = Math.round(taxAmount);
+        tdsAmount = Math.round(tdsAmount);
+        totalPrice = Math.round(totalPrice);
+        discountAmount = Math.round(discountAmount);
     }
 
     @Override
@@ -120,7 +153,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         chequeNumberEt = view.findViewById(R.id.editText_cheque_number);
         paymentDateEt = view.findViewById(R.id.editText_payment_date);
         gstNumberEt = view.findViewById(R.id.editText_gst_number);
-        final TextInputLayout gstLayout = view.findViewById(R.id.inputLayout_gst);
+        final LinearLayout gstLayout = view.findViewById(R.id.inputLayout_gst);
         gstRadioGroup = view.findViewById(R.id.rg_is_gst);
         addMainTv = view.findViewById(R.id.textView_add_main);
         addMainTv.setOnClickListener(this);
@@ -136,7 +169,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         gstRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (group.getCheckedRadioButtonId()){
+                switch (group.getCheckedRadioButtonId()) {
                     case R.id.radioButton_yes:
                         gstLayout.setVisibility(View.VISIBLE);
                         break;
@@ -154,26 +187,27 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         paymentDateEt.setOnTouchListener(this);
     }
 
-    public boolean validateAllFields(){
-       if (gstRadioGroup.getCheckedRadioButtonId() == R.id.radioButton_yes) {
-           if (gstNumberEt.getText().toString().trim().length() == 0) {
-               showMessage("Enter GST number");
-               return false;
-           } else if (!validateGstNumber(gstNumberEt.getText().toString())) {
-               showMessage("Wrong GST number");
-               return false;
-           }
-       }
-       return true;
+    public boolean validateAllFields() {
+        if (gstRadioGroup.getCheckedRadioButtonId() == R.id.radioButton_yes) {
+            if (gstNumberEt.getText().toString().trim().length() == 0) {
+                showMessage("Enter GST number");
+                return false;
+            } else if (!validateGstNumber(gstNumberEt.getText().toString())) {
+                showMessage("Wrong GST number");
+                return false;
+            }
+        }
+        return true;
     }
 
-    private boolean validateGstNumber(String gstNumber){
+    private boolean validateGstNumber(String gstNumber) {
         String regex = "[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}";
         return gstNumber.matches(regex);
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.imageView_main_delete:
                 mainImage = null;
@@ -209,7 +243,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
                 .show();
     }
 
-    private void showPaidConfirmation(){
+    private void showPaidConfirmation() {
         new MaterialDialog.Builder(mContext)
                 .title("Successfully Updated")
                 .titleColorRes(R.color.gray)
@@ -221,19 +255,20 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        ((OnPaymentOptionClick)mContext).setResult(null);
+                        ((OnPaymentOptionClick) mContext).setResult(null);
                         dialog.dismiss();
                     }
                 })
                 .show();
     }
+
     @Override
     public void onShowPicked(Bundle bundle) {
         String path = bundle.getString("path");
         int code = bundle.getInt("requestCode");
-        Bitmap bitmap = Methods.decodeSampledBitmap(path, 300,300);
+        Bitmap bitmap = Methods.decodeSampledBitmap(path, 300, 300);
         String imageString = Methods.convertBitmapToString(bitmap);
-        switch (code){
+        switch (code) {
             case 10:
                 mainImageCv.setVisibility(View.VISIBLE);
                 addAltTv.setVisibility(View.VISIBLE);
@@ -254,21 +289,21 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         SimpleDateFormat formatter = new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year,month,dayOfMonth);
+        calendar.set(year, month, dayOfMonth);
         String s = formatter.format(calendar.getTime());
         paymentDateEt.setText(s);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP){
-            switch (v.getId()){
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            switch (v.getId()) {
                 case R.id.editText_bank_name:
                     getBankNames();
                     return true;
                 case R.id.editText_payment_date:
                     Calendar now = Calendar.getInstance();
-                    android.app.DatePickerDialog dialog  = new android.app.DatePickerDialog(
+                    android.app.DatePickerDialog dialog = new android.app.DatePickerDialog(
                             mContext,
                             this,
                             now.get(Calendar.YEAR),
@@ -282,8 +317,8 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public void initiateProcess(final InitiateModel initiateModel){
-        ((OnPaymentOptionClick)mContext).showProcess(getString(R.string.please_wait));
+    public void initiateProcess(final InitiateModel initiateModel) {
+        ((OnPaymentOptionClick) mContext).showProcess(getString(R.string.please_wait));
         String accId = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
         String appId = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
         initiateModel.setClientId(TextUtils.isEmpty(accId) ? appId : accId);
@@ -292,7 +327,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         initiateModel.setFpId(manager.getFPID());
         initiateModel.setFpTag(manager.getFpTag());
         initiateModel.setPaymentTransactionChannel(1);
-        initiateModel.setTdsPercentage(0.0);
+        initiateModel.setTdsPercentage(tdsPercentage);
         initiateModel.setRecurringMonths(0);
         initiateModel.setProducts(mProductPaymentModel);
         initiateModel.setPhoneNumber(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
@@ -301,27 +336,27 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         api.initiate(Constants.clientId, initiateModel, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if (!TextUtils.isEmpty(s)){
+                if (!TextUtils.isEmpty(s)) {
                     ChequePaymentModel model = new ChequePaymentModel();
                     model.setTransactionId(s);
                     model.setProducts(mProductPaymentModel);
                     model.setClientId(initiateModel.getClientId());
                     updatePaymentDetails(model);
-                }else{
-                    ((OnPaymentOptionClick)mContext).hideProcess();
+                } else {
+                    ((OnPaymentOptionClick) mContext).hideProcess();
                     showMessage("Request Failed");
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                ((OnPaymentOptionClick)mContext).hideProcess();
+                ((OnPaymentOptionClick) mContext).hideProcess();
                 showMessage(getString(R.string.something_went_wrong_try_again));
             }
         });
     }
 
-    public void updatePaymentDetails(final ChequePaymentModel chequeModel){
+    public void updatePaymentDetails(final ChequePaymentModel chequeModel) {
         chequeModel.setBankName(bankNameEt.getText().toString());
         chequeModel.setIfscCode(ifscCodeEt.getText().toString());
         chequeModel.setFpTag(manager.getFpTag());
@@ -334,28 +369,28 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         chequeModel.setPaymentFor(null);
         //chequeModel.setPaymentDate(String.format("\\/Date(%s)\\/",String.valueOf(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis())));
         chequeModel.setPaymentTransactionChannel(1);
-        chequeModel.setTotalPrice(totalPrice+taxAmount);
-        chequeModel.setTdsPercentage(0);
+        chequeModel.setTotalPrice(finalAmount);
+        chequeModel.setTdsPercentage(tdsPercentage);
         chequeModel.setTaxAmount(taxAmount);
         chequeModel.setProducts(mProductPaymentModel);
         chequeModel.setReferenceId(null);
         chequeModel.setRejectionReason(null);
         chequeModel.setChequeNumber(chequeNumberEt.getText().toString().trim());
         chequeModel.setRtgsId(transactionIdEt.getText().toString().trim());
-        chequeModel.setGSTNumber(gstRadioGroup.getCheckedRadioButtonId() == R.id.radioButton_yes ? gstNumberEt.getText().toString():"");
+        chequeModel.setGSTNumber(gstRadioGroup.getCheckedRadioButtonId() == R.id.radioButton_yes ? gstNumberEt.getText().toString() : "");
         chequeModel.setImage(mainImage);
         chequeModel.setAlternateImage(altImage);
         StoreInterface api = Constants.movingFloatsDevAdapter.create(StoreInterface.class);
         api.updateChequeLog(chequeModel, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if ("updated".equalsIgnoreCase(s) || "inserted".equalsIgnoreCase(s)){
+                if ("updated".equalsIgnoreCase(s) || "inserted".equalsIgnoreCase(s)) {
                     MarkAsPaidModel model = new MarkAsPaidModel();
                     model.setPaymentTransactionId(chequeModel.getTransactionId());
                     model.setClientId(chequeModel.getClientId());
                     markAsPaid(model);
-                }else{
-                    ((OnPaymentOptionClick)mContext).hideProcess();
+                } else {
+                    ((OnPaymentOptionClick) mContext).hideProcess();
                     showMessage("Request Cancelled");
                     //cancel process api
                 }
@@ -364,18 +399,18 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
             @Override
             public void failure(RetrofitError error) {
                 // cancel process
-                ((OnPaymentOptionClick)mContext).hideProcess();
-                showMessage( getString(R.string.something_went_wrong_try_again));
+                ((OnPaymentOptionClick) mContext).hideProcess();
+                showMessage(getString(R.string.something_went_wrong_try_again));
             }
         });
     }
 
-    public void markAsPaid(MarkAsPaidModel model){
+    public void markAsPaid(MarkAsPaidModel model) {
         model.setFpTag(manager.getFpTag());
         model.setFpId(manager.getFPID());
         model.setCurrencyCode(currencyCode);
         model.setBaseAmount(totalPrice);
-        model.setExpectedAmount(totalPrice+taxAmount);
+        model.setExpectedAmount(finalAmount);
         model.setIsCustomBundle(false);
         model.setIsPartOfComboPlan(false);
         model.setTaxAmount(taxAmount);
@@ -385,11 +420,11 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         salesOrderRequest.setPaymentMode(1);
         salesOrderRequest.setPurchasedUnits(1);
         salesOrderRequest.setSendEmail(true);
-        salesOrderRequest.setDiscountPercentageValue(0);
+        salesOrderRequest.setDiscountPercentageValue(discountPercentage);
         salesOrderRequest.setPaymentTransactionStatus(3);
         model.setCustomerSalesOrderRequest(salesOrderRequest);
         List<MarkAsPaidModel.Package> packages = new ArrayList<>();
-        for (ProductPaymentModel product : mProductPaymentModel){
+        for (ProductPaymentModel product : mProductPaymentModel) {
             MarkAsPaidModel.Package package1 = new MarkAsPaidModel.Package();
             package1.setPackageId(product.getProductId());
             package1.setQuantity(product.getQuantity());
@@ -398,33 +433,66 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         model.setPackages(packages);
         model.setIsPartOfComboPlan(false);
         model.setComboPackageId(null);
-        StoreInterface api = Constants.movingFloatsDevAdapter.create(StoreInterface.class);
+        StoreInterface api = Constants.movingFloatsDev2Adapter.create(StoreInterface.class);
         api.markAsPaid(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                ((OnPaymentOptionClick)mContext).hideProcess();
-                if (!TextUtils.isEmpty(s)){
+
+                if (!TextUtils.isEmpty(s)) {
                     // invoice created
-                    showPaidConfirmation();
-                }else{
-                    ((OnPaymentOptionClick)mContext).hideProcess();
+                    if (discountCoupon != null) {
+                        redeemPromo();
+                    } else {
+                        ((OnPaymentOptionClick) mContext).hideProcess();
+                        showPaidConfirmation();
+                    }
+                } else {
+                    ((OnPaymentOptionClick) mContext).hideProcess();
 
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                ((OnPaymentOptionClick)mContext).hideProcess();
-                showMessage( getString(R.string.something_went_wrong_try_again));
+                ((OnPaymentOptionClick) mContext).hideProcess();
+                showMessage(getString(R.string.something_went_wrong_try_again));
             }
         });
     }
 
-    public void showMessage(String msg){
+    public void showMessage(String msg) {
         if (getActivity() != null) {
             Methods.showSnackBarNegative(getActivity(), msg);
-        }else{
+        } else {
             Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void redeemPromo() {
+
+        try {
+            StoreInterface storeInterface = Constants.restAdapterV2.create(StoreInterface.class);
+            RedeemDiscountRequestModel redeemDiscountRequestModel
+                    = new RedeemDiscountRequestModel(Constants.clientId, discountCoupon.getCouponCode(), true);
+            storeInterface.redeemDiscountCode(redeemDiscountRequestModel, new Callback<DiscountCoupon>() {
+
+                @Override
+                public void success(DiscountCoupon discountResponse, Response response) {
+                    ((OnPaymentOptionClick) mContext).hideProcess();
+                    showPaidConfirmation();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    ((OnPaymentOptionClick) mContext).hideProcess();
+                    showMessage(getString(R.string.something_went_wrong_try_again));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            ((OnPaymentOptionClick) mContext).hideProcess();
+            showMessage(getString(R.string.something_went_wrong_try_again));
+        }
+
     }
 }

@@ -75,13 +75,13 @@ public class ChequePaymentModel {
     private String rtgsId;
     @SerializedName("taxAmount")
     @Expose
-    private Integer taxAmount;
+    private Double taxAmount;
     @SerializedName("tdsPercentage")
     @Expose
-    private Integer tdsPercentage;
+    private Double tdsPercentage;
     @SerializedName("totalPrice")
     @Expose
-    private Integer totalPrice;
+    private Double totalPrice;
     @SerializedName("transactionId")
     @Expose
     private String transactionId;
@@ -265,27 +265,36 @@ public class ChequePaymentModel {
         this.rtgsId = rtgsId;
     }
 
-    public Integer getTaxAmount() {
+
+    public String getgSTNumber() {
+        return gSTNumber;
+    }
+
+    public void setgSTNumber(String gSTNumber) {
+        this.gSTNumber = gSTNumber;
+    }
+
+    public Double getTaxAmount() {
         return taxAmount;
     }
 
-    public void setTaxAmount(Integer taxAmount) {
+    public void setTaxAmount(Double taxAmount) {
         this.taxAmount = taxAmount;
     }
 
-    public Integer getTdsPercentage() {
+    public Double getTdsPercentage() {
         return tdsPercentage;
     }
 
-    public void setTdsPercentage(Integer tdsPercentage) {
+    public void setTdsPercentage(Double tdsPercentage) {
         this.tdsPercentage = tdsPercentage;
     }
 
-    public Integer getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
