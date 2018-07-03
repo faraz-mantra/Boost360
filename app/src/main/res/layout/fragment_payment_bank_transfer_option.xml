@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="MissingPrefix">
 
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="0dp"
-        android:layout_margin="8dp"
         android:layout_height="0dp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textView_pay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,148 +22,225 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:visibility="gone"
-                android:hint="@string/choose_your_bank">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/choose_your_bank"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_bank_name"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:drawableRight="@drawable/dropselect"
+                    android:hint="@string/choose_your_bank"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:visibility="gone"
-                android:hint="IFSC Code">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="IFSC Code"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_ifsc_code"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:ellipsize="end"
+                    android:hint="IFSC Code"
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textAllCaps="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:hint="Bank Account Number">
+                android:orientation="vertical">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Bank Account Number"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_account_number"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:ellipsize="end"
+                    android:hint="Bank Account Number"
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:hint="Bank Transfer Amount">
+                android:orientation="vertical">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Bank Transfer Amount"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_transfer_amount"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:ellipsize="end"
-                    android:inputType="number"
+                    android:hint="Bank Transfer Amount"
+                    android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/margin_5"
-                android:hint="Cheque Number">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Cheque Number"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_cheque_number"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:ellipsize="end"
+                    android:hint="Cheque Number"
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textAllCaps="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:hint="Transaction Reference Id NEFT/RTGS/IMPS">
+                android:orientation="vertical">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Transaction Reference Id NEFT/RTGS/IMPS"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_transaction_id"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:ellipsize="end"
-                    android:textAllCaps="true"
+                    android:hint="Transaction Reference Id NEFT/RTGS/IMPS"
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
+                    android:textAllCaps="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:hint="Payment Date"
                 android:visibility="gone">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Payment Date"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_payment_date"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:ellipsize="end"
+                    android:hint="Payment Date"
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
+                    android:textAllCaps="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -193,33 +270,43 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="No"
                     android:checked="true"
+                    android:text="No"
                     android:textColor="@color/light_gray" />
             </RadioGroup>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:id="@+id/inputLayout_gst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:hint="GST Number"
                 android:visibility="gone">
 
-                <android.support.design.widget.TextInputEditText
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="GST Number"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
                     android:id="@+id/editText_gst_number"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#383838"
                     android:ellipsize="end"
+                    android:hint="GST Number"
                     android:inputType="textNoSuggestions"
-                    android:textAllCaps="true"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
+                    android:textAllCaps="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -261,24 +348,26 @@
                     android:minHeight="200dp"
                     android:minWidth="250dp"
                     android:src="@drawable/ic_action_camera" />
+
                 <ImageView
                     android:id="@+id/imageView_main_delete"
                     android:layout_width="35dp"
                     android:layout_height="39dp"
                     android:layout_gravity="end"
-                    android:src="@drawable/cancel1"
-                    android:background="@color/transluscent_background"/>
+                    android:background="@color/transluscent_background"
+                    android:src="@drawable/cancel1" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Receipt Image"
-                    android:padding="10dp"
                     android:layout_gravity="end"
-                    android:layout_marginRight="35dp"
                     android:layout_marginEnd="35dp"
+                    android:layout_marginRight="35dp"
+                    android:background="@color/transluscent_background"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:background="@color/transluscent_background" />
+                    android:padding="10dp"
+                    android:text="Receipt Image"
+                    android:textColor="@color/white" />
 
             </android.support.v7.widget.CardView>
 
@@ -315,24 +404,26 @@
                     android:minHeight="200dp"
                     android:minWidth="250dp"
                     android:src="@drawable/ic_action_camera" />
+
                 <ImageView
                     android:id="@+id/imageView_alt_delete"
                     android:layout_width="35dp"
                     android:layout_height="39dp"
                     android:layout_gravity="end"
-                    android:src="@drawable/cancel1"
-                    android:background="@color/transluscent_background"/>
+                    android:background="@color/transluscent_background"
+                    android:src="@drawable/cancel1" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Other Image"
-                    android:padding="10dp"
                     android:layout_gravity="end"
-                    android:layout_marginRight="35dp"
                     android:layout_marginEnd="35dp"
+                    android:layout_marginRight="35dp"
+                    android:background="@color/transluscent_background"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:background="@color/transluscent_background" />
+                    android:padding="10dp"
+                    android:text="Other Image"
+                    android:textColor="@color/white" />
 
             </android.support.v7.widget.CardView>
         </LinearLayout>
@@ -346,8 +437,8 @@
         android:background="@drawable/btn_bg"
         android:gravity="center"
         android:padding="10dp"
-        android:textColor="@color/white"
         android:text="Pay Now"
+        android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

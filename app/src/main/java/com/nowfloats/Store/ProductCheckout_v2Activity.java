@@ -11,12 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
 import com.nowfloats.Store.Model.AllPackage;
@@ -45,7 +49,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class ProductCheckout_v2Activity extends AppCompatActivity {
+public class ProductCheckout_v2Activity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private static final int DIRECT_REQUEST_CODE = 2013;
     private UserSessionManager mSessionManager;
@@ -53,19 +57,26 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
 
     private String mNewPackage, mFinalAmount;
 
-    Toolbar toolbar;
-    MaterialDialog materialProgress;
-    TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes,
-            tvAmountToBePaid, tvTanNo, tvTdsAmount;
-    RecyclerView rvItems;
-    TextView btnPayNow, btnOpcApply;
-    EditText etOpc;
+    private Toolbar toolbar;
+    private MaterialDialog materialProgress;
+    private TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes,
+            tvAmountToBePaid, tvTanNo, tvTdsAmount, tvDiscountAmount, tvDiscountPercentage;
+    private RecyclerView rvItems;
+    private TextView btnPayNow, btnOpcApply, btnDeleteOPC;
+    private EditText etOpc;
 
-    TableRow trTanNo, trTdsAmount;
+    private TableRow trTanNo, trTdsAmount;
 
     private List<PackageDetails> mPurchasePlans;
     private String[] mPackageIds;
 
+    private TableRow trDiscount;
+
+    private DiscountCoupon discountCoupon;
+
+    private CheckBox cvTwo, cvTen;
+
+    private int tdsPercentage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +89,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        tdsPercentage = 0;
         mPackageIds = getIntent().getExtras().getStringArray("package_ids");
         mSessionManager = new UserSessionManager(this, this);
 
@@ -102,13 +113,19 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
         tvAmountToBePaid = (TextView) findViewById(R.id.tv_amount_to_be_paid);
         tvTanNo = (TextView) findViewById(R.id.tv_user_tan_no);
         tvTdsAmount = (TextView) findViewById(R.id.tv_tds_amount);
+        tvDiscountPercentage = (TextView) findViewById(R.id.tv_discount_percent);
+        tvDiscountAmount = (TextView) findViewById(R.id.tv_discount_amount);
+        trDiscount = (TableRow) findViewById(R.id.trDiscount);
+        cvTwo = (CheckBox) findViewById(R.id.cvTwo);
+        cvTen = (CheckBox) findViewById(R.id.cvTen);
 
         rvItems = (RecyclerView) findViewById(R.id.rv_store_items);
         trTanNo = (TableRow) findViewById(R.id.tr_tan_no);
         trTdsAmount = (TableRow) findViewById(R.id.tr_tds_amount);
-        findViewById(R.id.llOpcInputLayout).setVisibility(View.GONE);
+//        findViewById(R.id.llOpcInputLayout).setVisibility(View.GONE);
         btnPayNow = findViewById(R.id.btn_pay_now);
         btnOpcApply = findViewById(R.id.btnOpcApply);
+        btnDeleteOPC = findViewById(R.id.btnDeleteOPC);
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +140,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
                             "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
                     i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
                     i.putExtra("packageList", new Gson().toJson(mPurchasePlans));
+                    i.putExtra("discountCoupon", discountCoupon);
+                    i.putExtra("tdsPercentage", tdsPercentage);
                     startActivityForResult(i, DIRECT_REQUEST_CODE);
                     //write logic for with and without opc cases
                 } else {
@@ -131,7 +150,96 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
             }
         });
 
+
+        btnDeleteOPC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                discountCoupon = null;
+                initializeVal(receiveDraftInvoiceModel, false);
+                btnDeleteOPC.setVisibility(View.GONE);
+                btnOpcApply.setVisibility(View.VISIBLE);
+                etOpc.setEnabled(true);
+                hideDiscount();
+            }
+        });
+
+        btnOpcApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                applyPromo();
+            }
+        });
+
         getPricingPlanDetails();
+
+        cvTwo.setOnCheckedChangeListener(this);
+        cvTen.setOnCheckedChangeListener(this);
+    }
+
+    private void applyPromo() {
+
+        try {
+            showLoader();
+            StoreInterface storeInterface = Constants.restAdapterV2.create(StoreInterface.class);
+            RedeemDiscountRequestModel redeemDiscountRequestModel
+                    = new RedeemDiscountRequestModel(Constants.clientId, etOpc.getText().toString(), false);
+            storeInterface.redeemDiscountCode(redeemDiscountRequestModel, new Callback<DiscountCoupon>() {
+
+                @Override
+                public void success(DiscountCoupon discountResponse, Response response) {
+                    discountCoupon = discountResponse;
+                    discountCoupon.setCouponCode(etOpc.getText().toString());
+                    btnDeleteOPC.setVisibility(View.VISIBLE);
+                    etOpc.setEnabled(false);
+                    btnOpcApply.setVisibility(View.GONE);
+                    trDiscount.setVisibility(View.VISIBLE);
+                    if (receiveDraftInvoiceModel != null) {
+                        initializeVal(receiveDraftInvoiceModel, false);
+                    }
+                    hideLoader();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    hideDiscount();
+                    if (error.getResponse().getStatus() == 400) {
+                        Toast.makeText(ProductCheckout_v2Activity.this, "Coupon does not exist", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ProductCheckout_v2Activity.this, "Error processing the request", Toast.LENGTH_SHORT).show();
+                    }
+                    hideLoader();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            hideDiscount();
+            hideLoader();
+            Toast.makeText(ProductCheckout_v2Activity.this, "Error processing the request", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void hideDiscount() {
+        etOpc.setText("");
+        discountCoupon = null;
+        trDiscount.setVisibility(View.GONE);
+        tvDiscountPercentage.setText("");
+        tvDiscountAmount.setText("");
+    }
+
+    private void showLoader() {
+        materialProgress = new MaterialDialog.Builder(this)
+                .widgetColorRes(R.color.accentColor)
+                .content("Please Wait...")
+                .progress(true, 0)
+                .cancelable(false)
+                .show();
+    }
+
+    private void hideLoader() {
+        if (materialProgress != null && materialProgress.isShowing()) {
+            materialProgress.dismiss();
+        }
     }
 
     private void getPricingPlanDetails() {
@@ -165,6 +273,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
         });
 
     }
+
+    private ReceiveDraftInvoiceModel receiveDraftInvoiceModel;
 
     private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel) {
         new Thread(new Runnable() {
@@ -210,7 +320,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
                     purchaseDetail.setTaxDetails(packageDetail.getTaxes());
                     purchaseDetailList.add(purchaseDetail);
                 }
-                final ReceiveDraftInvoiceModel receiveDraftInvoiceModel = new ReceiveDraftInvoiceModel();
+                receiveDraftInvoiceModel = new ReceiveDraftInvoiceModel();
                 receiveDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
 
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -247,20 +357,29 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
             trTanNo.setVisibility(View.VISIBLE);
             tvTanNo.setText(invoiceData.getTanNumber() + "");
         }
-        double netAmount = 0;
+        double netAmount = 0, discountAmount = 0;
         for (PurchaseDetail data : invoiceData.getPurchaseDetails()) {
-            if (data.getDiscount() == null) {
-                netAmount += data.getBasePrice();
-            } else {
-                netAmount += (data.getBasePrice() - (data.getBasePrice() * data.getDiscount().value / 100.0));
-            }
+//            if (data.getDiscount() == null) {
+//                if (discountCoupon != null) {
+//                    netAmount += (data.getBasePrice() - (data.getBasePrice() * discountCoupon.getDiscountPercentage() / 100.0));
+//                } else {
+            netAmount += data.getBasePrice();
+//                }
+//            } else {
+//                double discountPercentage = data.getDiscount().value;
+//                if (discountCoupon != null) {
+//                    discountPercentage = discountCoupon.getDiscountPercentage();
+//                }
+//                netAmount += (data.getBasePrice() - (data.getBasePrice() * discountPercentage / 100.0));
+//            }
         }
+
         netAmount = Math.round((netAmount * 100) / 100.0);
         if (invoiceData != null && invoiceData.getPurchaseDetails() != null && !invoiceData.getPurchaseDetails().isEmpty()) {
             tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                     NumberFormat.getIntegerInstance(Locale.US).format(netAmount) + " /-");
         }
-        float taxVal = 0;
+        double taxVal = 0;
         StringBuilder taxNames = new StringBuilder();
 
         for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
@@ -268,28 +387,42 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
             taxNames.append(taxData.getKey() + "-" + taxData.getValue() + "%,\n ");
         }
 
-        double taxAmount = 0;
+        if (discountCoupon != null) {
+            discountAmount += (netAmount * discountCoupon.getDiscountPercentage() / 100.0);
+            tvDiscountPercentage.setText("Promo Disc (" + discountCoupon.getDiscountPercentage() + "%) ");
+            tvDiscountAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + discountAmount + " /-");
+        } else {
+            hideDiscount();
+        }
+
+        double taxAmount = 0, tdsAmount = 0;
         if (invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType() == 0) {
-            taxAmount = (netAmount * taxVal) / 100.0;
+            taxAmount = ((netAmount - discountAmount) * taxVal) / 100.0;
         } else {
             taxAmount = (int) taxVal;
         }
         taxAmount = Math.round((taxAmount * 100) / 100.0);
+
+        tdsAmount = Math.round((((netAmount + taxAmount - discountAmount) * tdsPercentage / 100)));
+
         tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
-        if (showDiscount) {
+        if (tdsPercentage > 0) {
             trTdsAmount.setVisibility(View.VISIBLE);
-            tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + invoiceData.getTdsAmount());
+            tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + tdsAmount + " /-");
+        } else {
+            trTdsAmount.setVisibility(View.GONE);
+            tvTdsAmount.setText("");
         }
 
         tvAmountToBePaid.setText(mPurchasePlans.get(0).getCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100) + " /-");
+                NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - discountAmount - tdsAmount) * 100) / 100) + " /-");
         String packages = "";
         for (int i = 0; i < invoiceData.getPurchaseDetails().size(); i++) {
             packages += invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
         }
         mNewPackage = packages;
-        mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100);
+        mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount - discountAmount - tdsAmount) * 100) / 100);
 
 
         rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -316,5 +449,28 @@ public class ProductCheckout_v2Activity extends AppCompatActivity {
 
     }
 
-    //TODO: tax calculation re calculate
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+        if (buttonView.getId() == R.id.cvTwo) {
+            if (!isChecked && tdsPercentage == 2) {
+                tdsPercentage = 0;
+                initializeVal(receiveDraftInvoiceModel, false);
+            } else if (isChecked) {
+                tdsPercentage = 2;
+                initializeVal(receiveDraftInvoiceModel, false);
+                cvTen.setChecked(false);
+            }
+        } else if (buttonView.getId() == R.id.cvTen) {
+            if (!isChecked && tdsPercentage == 10) {
+                tdsPercentage = 0;
+                initializeVal(receiveDraftInvoiceModel, false);
+            } else if (isChecked) {
+                tdsPercentage = 10;
+                initializeVal(receiveDraftInvoiceModel, false);
+                cvTwo.setChecked(false);
+            }
+        }
+    }
 }

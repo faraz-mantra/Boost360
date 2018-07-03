@@ -57,6 +57,7 @@ public interface EventKeysWL
     String SIDE_PANEL_MANAGE_CUSTOMERS = "ManageCustomers";
     String SIDE_PANEL_MANAGE_INVENTORY = "ManageInventory";
     String SIDE_PANEL_UPGRADE = "SidePanelUpgrade";
+    String SIDE_PANEL_ADD_ONS = "SidePanelAddOn";
     String SIDE_PANEL_PRODUCT_GALLERY = "ProductGallery";
     String SIDE_PANEL_SETTINGS = "ic_settings";
     String SIDE_PANEL_CHANGE_BACKGROUND_GALLERY = "ChangeBackgroundGallery";

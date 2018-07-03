@@ -73,11 +73,12 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
     private String mInvoiceId;
     private List<PackageDetails> mPurchasePlans;
     TextView tvNetTotal, tvTaxes,
-            tvAmountToBePaid, tvTdsAmount,btnPayNow, btnOpcApply;
+            tvAmountToBePaid, tvTdsAmount, btnPayNow, btnOpcApply;
     RecyclerView rvItems;
 
     TableRow trTanNo, trTdsAmount;
-    public static Fragment getInstance(Bundle b){
+
+    public static Fragment getInstance(Bundle b) {
         Fragment frag = new OpcPaymentFragment();
         frag.setArguments(b);
         return frag;
@@ -87,9 +88,10 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSessionManager = new UserSessionManager(mContext, getActivity());
-        if (getArguments() != null){
+        if (getArguments() != null) {
             mOrderData = getArguments().getParcelable(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER);
-            mPurchasePlans = new Gson().fromJson(getArguments().getString("packageList"),new TypeToken<List<PackageDetails>>(){}.getType());
+            mPurchasePlans = new Gson().fromJson(getArguments().getString("packageList"), new TypeToken<List<PackageDetails>>() {
+            }.getType());
         }
     }
 
@@ -131,12 +133,13 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
 
         preProcessAndDispatchPlans();
     }
-    private void preProcessAndDispatchPlans(){
+
+    private void preProcessAndDispatchPlans() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
-                for(PackageDetails packageDetail : mPurchasePlans) {
+                for (PackageDetails packageDetail : mPurchasePlans) {
                     PurchaseDetail purchaseDetail = new PurchaseDetail();
                     String clientId;
                     if (!Util.isNullOrEmpty(mSessionManager.getSourceClientId())) {
@@ -145,7 +148,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                         clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
                     }
                     double totalTax = 0;
-                    if(packageDetail.getTaxes() != null) {
+                    if (packageDetail.getTaxes() != null) {
                         for (TaxDetail taxData : packageDetail.getTaxes()) {
                             totalTax += taxData.getValue();
                         }
@@ -154,7 +157,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                     purchaseDetail.setClientId(clientId);
                     purchaseDetail.setDurationInMnths(packageDetail.getValidityInMths());
                     purchaseDetail.setFPId(mSessionManager.getFPID());
-                    purchaseDetail.setMRP(packageDetail.getPrice() + (packageDetail.getPrice()*totalTax)/100);
+                    purchaseDetail.setMRP(packageDetail.getPrice() + (packageDetail.getPrice() * totalTax) / 100);
                     purchaseDetail.setMRPCurrencyCode(packageDetail.getCurrencyCode());
                     purchaseDetail.setPackageId(packageDetail.getId());
                     purchaseDetail.setPackageName(packageDetail.getName());
@@ -175,8 +178,9 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         }).start();
 
     }
+
     private void updateDraftInvoice(String OPCCode) {
-        if(Util.isNullOrEmpty(OPCCode)){
+        if (Util.isNullOrEmpty(OPCCode)) {
             showMessage("Online Voucher can't be empty");
             return;
         }
@@ -184,16 +188,16 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
             DataBase dataBase = new DataBase(getActivity());
             Cursor cursor = dataBase.getLoginStatus();
             String fpUserProfileId;
-            if (cursor.moveToFirst()){
+            if (cursor.moveToFirst()) {
                 fpUserProfileId = cursor.getString(cursor.getColumnIndex(DataBase.colloginId));
-            }else {
-                Methods.showDialog(mContext,"Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+            } else {
+                Methods.showDialog(mContext, "Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
                 return;
             }
             UpdateDraftInvoiceModel updateDraftInvoiceModel;
-            if(mInvoiceId!=null && fpUserProfileId!=null) {
+            if (mInvoiceId != null && fpUserProfileId != null) {
                 updateDraftInvoiceModel = new UpdateDraftInvoiceModel(fpUserProfileId, OPCCode, mInvoiceId);
-            }else {
+            } else {
                 showMessage("Unable to create Draft Invoice");
                 return;
             }
@@ -201,34 +205,34 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
 
-            if(updateDraftInvoiceModel==null){
+            if (updateDraftInvoiceModel == null) {
                 showMessage("Unable to apply Coupon");
                 return;
             }
-            ((OnPaymentOptionClick)mContext).showProcess(getString(R.string.please_wait));
+            ((OnPaymentOptionClick) mContext).showProcess(getString(R.string.please_wait));
 
-            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
             storeInterface.updateDraftInvoice(params, updateDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
-                    if(receiveDraftInvoice!=null){
-                        ((OnPaymentOptionClick)mContext).hideProcess();
-                        if(receiveDraftInvoice.getError().getErrorList()==null || receiveDraftInvoice.getStatusCode()==200) {
-                            if(receiveDraftInvoice.getResult().getPurchaseDetails().get(0).getPackageId().equals(mPurchasePlans.get(0).getId())) {
+                    if (receiveDraftInvoice != null) {
+                        ((OnPaymentOptionClick) mContext).hideProcess();
+                        if (receiveDraftInvoice.getError().getErrorList() == null || receiveDraftInvoice.getStatusCode() == 200) {
+                            if (receiveDraftInvoice.getResult().getPurchaseDetails().get(0).getPackageId().equals(mPurchasePlans.get(0).getId())) {
                                 opcEditText.setEnabled(false);
                                 btnOpcApply.setEnabled(false);
                                 mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
                                 mOpcDetails = receiveDraftInvoice.getResult().getOpcDetails();
                                 initializeVal(receiveDraftInvoice.getResult(), true);
                                 showMessage("Online voucher Applied Successfully");
-                            }else {
+                            } else {
                                 showMessage("The entered Online voucher is not valid for this product.");
                             }
-                        }else {
+                        } else {
                             showMessage(receiveDraftInvoice.getError().getErrorList().get(0).Key);
                         }
-                    }else {
-                        ((OnPaymentOptionClick)mContext).hideProcess();
+                    } else {
+                        ((OnPaymentOptionClick) mContext).hideProcess();
                         showMessage(getString(R.string.error_invoice));
                     }
 
@@ -236,36 +240,36 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
 
                 @Override
                 public void failure(RetrofitError error) {
-                    ((OnPaymentOptionClick)mContext).hideProcess();
+                    ((OnPaymentOptionClick) mContext).hideProcess();
                     showMessage(getString(R.string.error_invoice));
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            ((OnPaymentOptionClick)mContext).hideProcess();
+            ((OnPaymentOptionClick) mContext).hideProcess();
             Toast.makeText(mContext, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void initializeVal(final ReceiveDraftInvoiceModel invoiceData, boolean showDiscount) {
-        if(invoiceData==null || mPurchasePlans == null){
+        if (invoiceData == null || mPurchasePlans == null) {
             return;
         }
 
         double netAmount = 0;
-        for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
-            if(data.getDiscount()==null) {
+        for (PurchaseDetail data : invoiceData.getPurchaseDetails()) {
+            if (data.getDiscount() == null) {
                 netAmount += data.getBasePrice();
-            }else {
-                netAmount += (data.getBasePrice()-(data.getBasePrice()*data.getDiscount().value/100.0));
+            } else {
+                netAmount += (data.getBasePrice() - (data.getBasePrice() * data.getDiscount().value / 100.0));
             }
         }
         netAmount = Math.round((netAmount * 100) / 100.0);
         tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(netAmount)+ " /-");
+                NumberFormat.getIntegerInstance(Locale.US).format(netAmount) + " /-");
         float taxVal = 0;
-        StringBuilder taxNames= new StringBuilder();
+        StringBuilder taxNames = new StringBuilder();
 
         for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
             taxVal += taxData.getValue();
@@ -273,24 +277,24 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         }
 
         double taxAmount = 0;
-        if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
+        if (invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType() == 0) {
             taxAmount = (netAmount * taxVal) / 100.0;
-        }else {
-            taxAmount =(int) taxVal;
+        } else {
+            taxAmount = (int) taxVal;
         }
         taxAmount = Math.round((taxAmount * 100) / 100.0);
         tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
-        if(showDiscount) {
+        if (showDiscount) {
             trTdsAmount.setVisibility(View.VISIBLE);
             tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + invoiceData.getTdsAmount());
         }
 
         tvAmountToBePaid.setText(mPurchasePlans.get(0).getCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100) + " /-");
-        String packages="";
-        for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
-            packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
+        String packages = "";
+        for (int i = 0; i < invoiceData.getPurchaseDetails().size(); i++) {
+            packages += invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
         }
 
         rvItems.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
@@ -301,9 +305,9 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
 
     private void showConfirmationDialog(final Intent i, final String mInvoiceId) {
         ReceiveDraftInvoiceModel.KeyValuePair keyVal = mOpcDetails.get(0);
-        if(keyVal.getValue()!=null){
+        if (keyVal.getValue() != null) {
             new AlertDialog.Builder(mContext)
-                    .setMessage("Please note that your package will be activated on " + keyVal.getValue() +". Are you sure you want to proceed?")
+                    .setMessage("Please note that your package will be activated on " + keyVal.getValue() + ". Are you sure you want to proceed?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -319,7 +323,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                     .create()
                     .show();
 
-        }else {
+        } else {
             new AlertDialog.Builder(mContext)
                     .setMessage(getString(R.string.dialog_to_be_activated_null_text))
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -339,45 +343,44 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    private void payWithInstaMojo(){
+    private void payWithInstaMojo() {
         Intent i = new Intent(mContext, InstaMojoMainActivity.class);
         i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
         //write logic for with and without opc cases
-        if(!opcEditText.isEnabled()) {
-            if(mOpcDetails==null) {
+        if (!opcEditText.isEnabled()) {
+            if (mOpcDetails == null) {
                 initiatePaymentProcess(i, mInvoiceId);
-            }else {
+            } else {
                 showConfirmationDialog(i, mInvoiceId);
             }
-        }else {
+        } else {
             initiatePaymentProcess(i, mInvoiceId);
         }
 
     }
 
     private void initiatePaymentProcess(final Intent i, final String invoiceId) {
-        if(mInvoiceId==null){
+        if (mInvoiceId == null) {
             Toast.makeText(mContext, "Invalid Invoice", Toast.LENGTH_SHORT).show();
             return;
         }
-        StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+        StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
         Map<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
         params.put("invoiceId", invoiceId);
 
         SupportedPaymentMethods method = null;
-        if(mPurchasePlans!=null &&
-                mPurchasePlans.get(0).getSupportedPaymentMethods()!=null
-                && mPurchasePlans.get(0).getSupportedPaymentMethods().size()>0){
-            for (SupportedPaymentMethods paymentMethod : mPurchasePlans.get(0).getSupportedPaymentMethods()){
-                if(paymentMethod.Type==1){
+        if (mPurchasePlans != null &&
+                mPurchasePlans.get(0).getSupportedPaymentMethods() != null
+                && mPurchasePlans.get(0).getSupportedPaymentMethods().size() > 0) {
+            for (SupportedPaymentMethods paymentMethod : mPurchasePlans.get(0).getSupportedPaymentMethods()) {
+                if (paymentMethod.Type == 1) {
                     method = paymentMethod;
                 }
             }
 
-            ((OnPaymentOptionClick)mContext).showProcess(getString(R.string.please_wait));
-            if(method != null)
-            {
+            ((OnPaymentOptionClick) mContext).showProcess(getString(R.string.please_wait));
+            if (method != null) {
                 method.RedirectUri = "https://hello.nowfloats.com";
             }
 
@@ -385,14 +388,13 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                 @Override
                 public void success(PaymentTokenResult paymentTokenResult, Response response) {
 
-                    ((OnPaymentOptionClick)mContext).hideProcess();
-                    if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
-                        switch (paymentTokenResult.getResult().getPaymentMethodType())
-                        {
+                    ((OnPaymentOptionClick) mContext).hideProcess();
+                    if (paymentTokenResult != null && paymentTokenResult.getResult() != null) {
+                        switch (paymentTokenResult.getResult().getPaymentMethodType()) {
                             case "INSTAMOJO":
                                 i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
                                 i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId=" + Constants.clientId);//change this later
 
                                 startActivityForResult(i, OPC_REQUEST_CODE);
                                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -406,7 +408,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                                 showMessage("Error while processing payment");
                         }
 
-                    }else {
+                    } else {
                         showMessage("Error while processing payment");
                     }
                 }
@@ -414,7 +416,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                 @Override
                 public void failure(RetrofitError error) {
 
-                    ((OnPaymentOptionClick)mContext).hideProcess();
+                    ((OnPaymentOptionClick) mContext).hideProcess();
                     showMessage("Error while processing payment");
                 }
             });
@@ -424,18 +426,18 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE || requestCode == PADDLE_REQUEST_CODE) {
+        if (requestCode == DIRECT_REQUEST_CODE || requestCode == OPC_REQUEST_CODE || requestCode == PADDLE_REQUEST_CODE) {
             if (data == null) {
                 return;
             }
-            if(mOpcDetails!=null){
+            if (mOpcDetails != null) {
                 data.putExtra("showToBeActivatedOn", true);
-                if(mOpcDetails.get(0).getValue()!=null){
+                if (mOpcDetails.get(0).getValue() != null) {
                     data.putExtra("toBeActivatedOn", mOpcDetails.get(0).getValue());
                 }
             }
-            ((OnPaymentOptionClick)mContext).setResult(data);
-        }else{
+            ((OnPaymentOptionClick) mContext).setResult(data);
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -444,7 +446,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         try {
             SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
             List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
-            for(PackageDetails packageDetail : mPurchasePlans) {
+            for (PackageDetails packageDetail : mPurchasePlans) {
                 PurchaseDetail purchaseDetail = new PurchaseDetail();
                 String clientId;
 
@@ -480,28 +482,28 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
             sendDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
             DataBase dataBase = new DataBase(getActivity());
             Cursor cursor = dataBase.getLoginStatus();
-            if (cursor.moveToFirst() && !cursor.getString(cursor.getColumnIndex(DataBase.colloginId)).equals("0")){
+            if (cursor.moveToFirst() && !cursor.getString(cursor.getColumnIndex(DataBase.colloginId)).equals("0")) {
                 sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
                 sendDraftInvoiceModel.setOpc(null);
-            }else {
-                Methods.showDialog(mContext,"Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+            } else {
+                Methods.showDialog(mContext, "Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
                 return;
             }
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
-            ((OnPaymentOptionClick)mContext).showProcess(getString(R.string.please_wait));
-            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+            ((OnPaymentOptionClick) mContext).showProcess(getString(R.string.please_wait));
+            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
             storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
-                    if(receiveDraftInvoice!=null && receiveDraftInvoice.getStatusCode()==200){
+                    if (receiveDraftInvoice != null && receiveDraftInvoice.getStatusCode() == 200) {
 
-                        ((OnPaymentOptionClick)mContext).hideProcess();
+                        ((OnPaymentOptionClick) mContext).hideProcess();
                         mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
                         initializeVal(receiveDraftInvoice.getResult(), false);
-                    }else {
-                        ((OnPaymentOptionClick)mContext).hideProcess();
+                    } else {
+                        ((OnPaymentOptionClick) mContext).hideProcess();
                         showMessage(getResources().getString(R.string.error_invoice));
                     }
 
@@ -510,28 +512,29 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                 @Override
                 public void failure(RetrofitError error) {
 
-                    ((OnPaymentOptionClick)mContext).hideProcess();
+                    ((OnPaymentOptionClick) mContext).hideProcess();
                     showMessage(getResources().getString(R.string.error_invoice));
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 
-            ((OnPaymentOptionClick)mContext).hideProcess();
+            ((OnPaymentOptionClick) mContext).hideProcess();
             Toast.makeText(mContext, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void showMessage(String msg){
+    public void showMessage(String msg) {
         if (getActivity() != null) {
             Methods.showSnackBarNegative(getActivity(), msg);
-        }else{
+        } else {
             Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.textView_apply:
                 updateDraftInvoice(opcEditText.getText().toString());
                 // check for opc

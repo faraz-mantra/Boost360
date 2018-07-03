@@ -73,7 +73,7 @@ public class NewPricingPlansActivity extends AppCompatActivity {
         ivHistory = (ImageView) findViewById(R.id.iv_history);
         ivHistory.setVisibility(View.INVISIBLE);
         setSupportActionBar(toolbar);
-        tvToolBarTitle.setText("Pricing Plans");
+        tvToolBarTitle.setText("Buy and Renew");
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

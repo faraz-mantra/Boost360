@@ -4,11 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
 public class MarkAsPaidModel {
 
     @SerializedName("BaseAmount")
     @Expose
-    private Integer baseAmount;
+    private Double baseAmount;
     @SerializedName("ClientId")
     @Expose
     private String clientId;
@@ -17,7 +18,7 @@ public class MarkAsPaidModel {
     private Object comboPackageId;
     @SerializedName("ExpectedAmount")
     @Expose
-    private Integer expectedAmount;
+    private Double expectedAmount;
     @SerializedName("FpId")
     @Expose
     private String fpId;
@@ -32,7 +33,7 @@ public class MarkAsPaidModel {
     private Boolean isPartOfComboPlan;
     @SerializedName("TaxAmount")
     @Expose
-    private Integer taxAmount;
+    private Double taxAmount;
     @SerializedName("currencyCode")
     @Expose
     private String currencyCode;
@@ -49,13 +50,6 @@ public class MarkAsPaidModel {
     @Expose
     private String paymentTransactionId;
 
-    public Integer getBaseAmount() {
-        return baseAmount;
-    }
-
-    public void setBaseAmount(Integer baseAmount) {
-        this.baseAmount = baseAmount;
-    }
 
     public String getClientId() {
         return clientId;
@@ -73,13 +67,6 @@ public class MarkAsPaidModel {
         this.comboPackageId = comboPackageId;
     }
 
-    public Integer getExpectedAmount() {
-        return expectedAmount;
-    }
-
-    public void setExpectedAmount(Integer expectedAmount) {
-        this.expectedAmount = expectedAmount;
-    }
 
     public String getFpId() {
         return fpId;
@@ -113,11 +100,43 @@ public class MarkAsPaidModel {
         this.isPartOfComboPlan = isPartOfComboPlan;
     }
 
-    public Integer getTaxAmount() {
+    public Double getBaseAmount() {
+        return baseAmount;
+    }
+
+    public void setBaseAmount(Double baseAmount) {
+        this.baseAmount = baseAmount;
+    }
+
+    public Double getExpectedAmount() {
+        return expectedAmount;
+    }
+
+    public void setExpectedAmount(Double expectedAmount) {
+        this.expectedAmount = expectedAmount;
+    }
+
+    public Boolean getCustomBundle() {
+        return isCustomBundle;
+    }
+
+    public void setCustomBundle(Boolean customBundle) {
+        isCustomBundle = customBundle;
+    }
+
+    public Boolean getPartOfComboPlan() {
+        return isPartOfComboPlan;
+    }
+
+    public void setPartOfComboPlan(Boolean partOfComboPlan) {
+        isPartOfComboPlan = partOfComboPlan;
+    }
+
+    public Double getTaxAmount() {
         return taxAmount;
     }
 
-    public void setTaxAmount(Integer taxAmount) {
+    public void setTaxAmount(Double taxAmount) {
         this.taxAmount = taxAmount;
     }
 
@@ -160,6 +179,7 @@ public class MarkAsPaidModel {
     public void setPaymentTransactionId(String paymentTransactionId) {
         this.paymentTransactionId = paymentTransactionId;
     }
+
     public static class CustomerSalesOrderRequest {
 
         @SerializedName("_nfInternalERPId")
@@ -170,7 +190,7 @@ public class MarkAsPaidModel {
         private String customerEmailId;
         @SerializedName("discountPercentageValue")
         @Expose
-        private Integer discountPercentageValue;
+        private Double discountPercentageValue;
         @SerializedName("invoiceStatus")
         @Expose
         private Integer invoiceStatus;
@@ -203,11 +223,11 @@ public class MarkAsPaidModel {
             this.customerEmailId = customerEmailId;
         }
 
-        public Integer getDiscountPercentageValue() {
+        public Double getDiscountPercentageValue() {
             return discountPercentageValue;
         }
 
-        public void setDiscountPercentageValue(Integer discountPercentageValue) {
+        public void setDiscountPercentageValue(Double discountPercentageValue) {
             this.discountPercentageValue = discountPercentageValue;
         }
 
