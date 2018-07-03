@@ -169,7 +169,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/et_opc_bg"
                         android:gravity="center"
-                        android:hint="Have an online voucher?"
+                        android:hint="Have a discount code?"
                         android:textSize="13sp" />
 
                     <TextView
@@ -182,7 +182,7 @@
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:paddingTop="10dp"
-                        android:text="APPLY"
+                        android:text="Apply"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -359,7 +359,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Amount to be Paid"
+                        android:text="Amount to be paid"
                         android:textColor="@color/green"
                         android:textStyle="bold" />
 

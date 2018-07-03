@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -132,6 +133,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         tdsAmount = Math.round(tdsAmount);
         totalPrice = Math.round(totalPrice);
         discountAmount = Math.round(discountAmount);
+
     }
 
     @Override
@@ -185,6 +187,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         paymentDateEt.setFocusable(false);
         paymentDateEt.setFocusableInTouchMode(false);
         paymentDateEt.setOnTouchListener(this);
+        transactionAmountEt.setText(finalAmount + "");
     }
 
     public boolean validateAllFields() {
@@ -332,7 +335,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         initiateModel.setProducts(mProductPaymentModel);
         initiateModel.setPhoneNumber(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
         initiateModel.setPhoneNumberExtension(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
-        StoreInterface api = Constants.movingFloatsDevAdapter.create(StoreInterface.class);
+        StoreInterface api = Constants.restAdapter.create(StoreInterface.class);
         api.initiate(Constants.clientId, initiateModel, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
@@ -367,7 +370,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         chequeModel.setPaymentStatus("initiated");
         chequeModel.setPartnerType(null);
         chequeModel.setPaymentFor(null);
-        //chequeModel.setPaymentDate(String.format("\\/Date(%s)\\/",String.valueOf(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis())));
+        chequeModel.setPaymentDate(String.format("/Date(%s)/",String.valueOf(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis())));
         chequeModel.setPaymentTransactionChannel(1);
         chequeModel.setTotalPrice(finalAmount);
         chequeModel.setTdsPercentage(tdsPercentage);
@@ -380,7 +383,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         chequeModel.setGSTNumber(gstRadioGroup.getCheckedRadioButtonId() == R.id.radioButton_yes ? gstNumberEt.getText().toString() : "");
         chequeModel.setImage(mainImage);
         chequeModel.setAlternateImage(altImage);
-        StoreInterface api = Constants.movingFloatsDevAdapter.create(StoreInterface.class);
+        StoreInterface api = Constants.restAdapter.create(StoreInterface.class);
         api.updateChequeLog(chequeModel, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
@@ -433,7 +436,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         model.setPackages(packages);
         model.setIsPartOfComboPlan(false);
         model.setComboPackageId(null);
-        StoreInterface api = Constants.movingFloatsDev2Adapter.create(StoreInterface.class);
+        StoreInterface api = Constants.restAdapterV2.create(StoreInterface.class);
         api.markAsPaid(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {

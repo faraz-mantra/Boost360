@@ -52,6 +52,7 @@ import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
+import com.nowfloats.Analytics_Screen.OrderAnalytics;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
@@ -99,9 +100,11 @@ import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYP
  */
 public class Analytics_Fragment extends Fragment {
     View rootView = null;
-    public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount, searchQueriesCount, businessEnqCount, facebokImpressions;
+    public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount,
+            searchQueriesCount, businessEnqCount, facebokImpressions, tvOrdersCount;
     private int noOfSearchQueries = 0;
-    public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, subscriber_progress, search_query_progress, businessEnqProgress;
+    public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar,
+            subscriber_progress, search_query_progress, businessEnqProgress, pbOrders;
     UserSessionManager session;
     private Context context;
     private Bus bus;
@@ -156,6 +159,9 @@ public class Analytics_Fragment extends Fragment {
         }
         if (!Util.isNullOrEmpty(session.getEnquiryCount())) {
             businessEnqCount.setText(session.getEnquiryCount());
+        }
+        if (!Util.isNullOrEmpty(session.getOrderCount())) {
+            tvOrdersCount.setText(session.getOrderCount());
         }
         if (!Util.isNullOrEmpty(session.getMapVisitsCount())) {
             mapVisitsCount.setText(session.getMapVisitsCount());
@@ -365,6 +371,18 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
+        LinearLayout orderLayout = (LinearLayout) rootView.findViewById(R.id.order_analytics_layout);
+        orderLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), OrderAnalytics.class);
+                startActivity(i);
+
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
         LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -423,6 +441,7 @@ public class Analytics_Fragment extends Fragment {
         searchQueriesCount = (TextView) rootView.findViewById(R.id.analytics_screen_search_queries_count);
         vmnTotalCallCount = (TextView) rootView.findViewById(R.id.analytics_screen_vmn_tracker_count);
         businessEnqCount = (TextView) rootView.findViewById(R.id.analytics_screen_business_enq_count);
+        tvOrdersCount = (TextView) rootView.findViewById(R.id.orders_count);
         facebokImpressions = (TextView) rootView.findViewById(R.id.analytics_screen_updates_count);
         searchQueriesCount.setVisibility(View.INVISIBLE);
         visits_progressBar = (ProgressBar) rootView.findViewById(R.id.visits_progressBar);
@@ -438,6 +457,8 @@ public class Analytics_Fragment extends Fragment {
         search_query_progress.setVisibility(View.VISIBLE);
         businessEnqProgress = (ProgressBar) rootView.findViewById(R.id.business_enq_progressBar);
         businessEnqProgress.setVisibility(View.VISIBLE);
+        pbOrders = (ProgressBar) rootView.findViewById(R.id.order_progressBar);
+        pbOrders.setVisibility(View.VISIBLE);
 
 
         String visittotal = session.getVisitsCount();
@@ -445,6 +466,7 @@ public class Analytics_Fragment extends Fragment {
         String subscribetotal = session.getSubcribersCount();
         String searchQueryCount = session.getSearchCount();
         String enquiryCount = session.getEnquiryCount();
+        String orderCount = session.getOrderCount();
         String mapCount = session.getMapVisitsCount();
 //        String Str_noOfSearchQueries = "";
 
@@ -509,6 +531,16 @@ public class Analytics_Fragment extends Fragment {
             businessEnqProgress.setVisibility(View.VISIBLE);
             businessEnqCount.setVisibility(View.GONE);
         }
+
+        if (orderCount != null && orderCount.trim().length() > 0) {
+            pbOrders.setVisibility(View.GONE);
+            tvOrdersCount.setVisibility(View.VISIBLE);
+            tvOrdersCount.setText(orderCount);
+        } else {
+            pbOrders.setVisibility(View.VISIBLE);
+            tvOrdersCount.setVisibility(View.GONE);
+        }
+
         final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));

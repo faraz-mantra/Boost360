@@ -87,13 +87,13 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         public static String getName(int pos) {
             switch (pos) {
                 case 0:
-                    return "ACTIVE PLANS";
+                    return "ACTIVE";
                 case 3:
-                    return "YOUR ORDERS";
+                    return "YOUR INVOICES";
                 case 1:
-                    return "PLANS TO BE ACTIVATED";
+                    return "TO BE ACTIVATED";
                 case 2:
-                    return "EXPIRED PLANS";
+                    return "EXPIRED";
                 default:
                     return getName(0);
             }
@@ -127,7 +127,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            setTitle("Your Plans");
+            setTitle("Subscription History");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }

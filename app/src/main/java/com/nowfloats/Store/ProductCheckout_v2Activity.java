@@ -188,6 +188,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
                 @Override
                 public void success(DiscountCoupon discountResponse, Response response) {
                     discountCoupon = discountResponse;
+                    discountCoupon.setCouponCode(etOpc.getText().toString());
                     btnDeleteOPC.setVisibility(View.VISIBLE);
                     etOpc.setEnabled(false);
                     btnOpcApply.setVisibility(View.GONE);

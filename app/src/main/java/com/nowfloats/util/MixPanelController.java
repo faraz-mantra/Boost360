@@ -79,6 +79,9 @@ public class MixPanelController {
     public static final String SHIP_ORDER = "ShipOrder";
     public static final String DELIVER_ORDER = "DeliverOrder";
     public static final String ESCALATE_ORDER = "EscalateOrder";
+    public static final String SUBSCRIPTIONS = "Subscriptions";
+    public static final String SUBSCRIPTION_HISTORY = "SubscriptionHistory";
+    public static final String BUY_AND_RENEW = "BuyAndRenew";
 
 
     public static final String THIRD_PARTY_DATA = "ThirdPartyData";

@@ -537,7 +537,7 @@
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="12dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_upgrade" />
+                app:srcCompat="@drawable/ic_add_ons" />
 
             <TextView
                 android:id="@+id/thirdRow_TextView"

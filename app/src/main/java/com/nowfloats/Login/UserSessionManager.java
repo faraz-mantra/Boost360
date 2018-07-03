@@ -40,8 +40,7 @@ import retrofit.client.Response;
 /**
  * Created by Dell on 28-01-2015.
  */
-public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Interface
-{
+public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Interface {
 
 
     // Shared Preferences reference
@@ -76,8 +75,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private Activity activity;
     private static final String KEY_FP_Messages = "fpmessages";
     private static final String KEY_GALLLERY_IMAGES = "gallery";
-    Fetch_Home_Data fetch_home_data ;
-    ProgressDialog pd 				= null;
+    Fetch_Home_Data fetch_home_data;
+    ProgressDialog pd = null;
     private String KEY_FP_NAME = "fpname";
     private String KEY_sourceClientId = "source_clientid";
     private String KEY_Visit_Count = "visitCount";
@@ -85,6 +84,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_Subcribers_Count = "subcribersCount";
     private String KEY_Search_Count = "SearchQueryCount";
     private String KEY_Enq_Count = "EnquiryCount";
+    private String KEY_Order_Count = "OrderCount";
     private String KEY_Map_Visits_Count = "MapVisitsCount";
     private String KEY_Call_Count = "VmnCallCount";
     private String KEY_LATEST_ENQ_COUNT = "LatestEnquiryCount";
@@ -128,18 +128,18 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     //public boolean showUpdates;
 
     // Constructor
-    public UserSessionManager(Context context, Activity activity){
+    public UserSessionManager(Context context, Activity activity) {
         this._context = context;
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
-        this.activity = activity ;
-        fetch_home_data = new Fetch_Home_Data(activity,0);
+        this.activity = activity;
+        fetch_home_data = new Fetch_Home_Data(activity, 0);
         //searchQueriesEnterpriseAPI = new Search_Queries_Enterprise_API(activity);
     }
 
 
     //Create login session
-    public void createUserLoginSession(String name, String email){
+    public void createUserLoginSession(String name, String email) {
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
@@ -153,523 +153,479 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-    public void storeFPName(String fpName)
-    {
-        editor.putString(KEY_FP_NAME , fpName);
+    public void storeFPName(String fpName) {
+        editor.putString(KEY_FP_NAME, fpName);
         editor.commit();
     }
 
-    public  void setUserLogin(boolean val){
+    public void setUserLogin(boolean val) {
         editor.putBoolean(IS_USER_LOGIN, val).apply();
     }
-    public void storeFpWebTempalteType(String type){
+
+    public void storeFpWebTempalteType(String type) {
         editor.putString(KEY_WEB_TEMPLATE_TYPE, type);
         editor.commit();
     }
 
-    public String getWebTemplateType(){
+    public String getWebTemplateType() {
         return pref.getString(KEY_WEB_TEMPLATE_TYPE, null);
     }
 
-    public void setVisitsCount(String cnt)
-    {
-        editor.putString(KEY_Visit_Count , cnt);
-        editor.commit();
-    }public void setVisitorsCount(String cnt)
-    {
-        editor.putString(KEY_Visitors_Count , cnt);
-        editor.commit();
-    }
-    public String getVisitsCount()
-    {
-        return pref.getString(KEY_Visit_Count,"");
-    }public String getVisitorsCount()
-    {
-        return pref.getString(KEY_Visitors_Count,"");
-    }
-
-    public void setSubcribersCount(String cnt)
-    {
-        editor.putString(KEY_Subcribers_Count , cnt);
+    public void setVisitsCount(String cnt) {
+        editor.putString(KEY_Visit_Count, cnt);
         editor.commit();
     }
 
-
-    public String getSubcribersCount()
-    {
-
-        return pref.getString(KEY_Subcribers_Count,"");
+    public void setVisitorsCount(String cnt) {
+        editor.putString(KEY_Visitors_Count, cnt);
+        editor.commit();
     }
 
-    public void setSearchCount(String cnt)
-    {
-        editor.putString(KEY_Search_Count , cnt);
-        editor.apply();
-    }
-    public String getSearchCount()
-    {
-        return pref.getString(KEY_Search_Count,"");
+    public String getVisitsCount() {
+        return pref.getString(KEY_Visit_Count, "");
     }
 
-    public void setEnquiryCount(String count){
-        editor.putString(KEY_Enq_Count , count);
-        editor.apply();
+    public String getVisitorsCount() {
+        return pref.getString(KEY_Visitors_Count, "");
     }
 
-    public String getEnquiryCount(){
-        return pref.getString(KEY_Enq_Count,"");
-    }
-    public void setMapVisitsCount(String count){
-        editor.putString(KEY_Map_Visits_Count , count);
-        editor.apply();
+    public void setSubcribersCount(String cnt) {
+        editor.putString(KEY_Subcribers_Count, cnt);
+        editor.commit();
     }
 
-    public String getMapVisitsCount(){
-        return pref.getString(KEY_Map_Visits_Count,"");
+
+    public String getSubcribersCount() {
+
+        return pref.getString(KEY_Subcribers_Count, "");
     }
- public void setVmnCallsCount(String count){
-        editor.putString(KEY_Call_Count , count);
+
+    public void setSearchCount(String cnt) {
+        editor.putString(KEY_Search_Count, cnt);
         editor.apply();
     }
 
-    public String getVmnCallsCount(){
-        return pref.getString(KEY_Call_Count,"");
+    public String getSearchCount() {
+        return pref.getString(KEY_Search_Count, "");
     }
 
-    public void setLatestEnqCount(String count){
-        editor.putString(KEY_LATEST_ENQ_COUNT , count);
+    public void setEnquiryCount(String count) {
+        editor.putString(KEY_Enq_Count, count);
         editor.apply();
     }
 
-    public String getLatestEnqCount(){
+    public String getEnquiryCount() {
+        return pref.getString(KEY_Enq_Count, "");
+    }
+
+    public void setOrderCount(String count) {
+        editor.putString(KEY_Order_Count, count);
+        editor.apply();
+    }
+
+    public String getOrderCount() {
+        return pref.getString(KEY_Order_Count, "");
+    }
+
+    public void setMapVisitsCount(String count) {
+        editor.putString(KEY_Map_Visits_Count, count);
+        editor.apply();
+    }
+
+    public String getMapVisitsCount() {
+        return pref.getString(KEY_Map_Visits_Count, "");
+    }
+
+    public void setVmnCallsCount(String count) {
+        editor.putString(KEY_Call_Count, count);
+        editor.apply();
+    }
+
+    public String getVmnCallsCount() {
+        return pref.getString(KEY_Call_Count, "");
+    }
+
+    public void setLatestEnqCount(String count) {
+        editor.putString(KEY_LATEST_ENQ_COUNT, count);
+        editor.apply();
+    }
+
+    public String getLatestEnqCount() {
         return pref.getString(KEY_LATEST_ENQ_COUNT, "0");
     }
 
 
-    public void setLocalStorePurchase(String cnt)
-    {
+    public void setLocalStorePurchase(String cnt) {
         editor.putString(KEY_LS, cnt);
         editor.apply();
     }
-    public void storeFpTag(String tag){
+
+    public void storeFpTag(String tag) {
         editor.putString(KEY_FP_TAG, tag);
         editor.apply();
     }
 
-    public String getLocalStorePurchase()
-    {
+    public String getLocalStorePurchase() {
         return pref.getString(KEY_LS, "");
     }
 
-    public void setWebsiteshare(boolean cnt)
-    {
-        editor.putBoolean(Key_Preferences.WEBSITE_SHARE , cnt);
-        editor.apply();
-    }
-    public Boolean getWebsiteshare()
-    {
-        return pref.getBoolean(Key_Preferences.WEBSITE_SHARE,false);
-    }
-    public void setBusinessHours(boolean cnt)
-    {
-        editor.putBoolean(KEY_BUSINESS_HOURS , cnt);
-        editor.apply();
-    }
-    public Boolean getBusinessHours()
-    {
-        return pref.getBoolean(KEY_BUSINESS_HOURS,false);
-    }
-
-    public void setSignUpFromFacebook(String isSignUpFromFacebook)
-    {
-        editor.putString(KEY_IS_SIGNUP_FROM_FACEBOOK,isSignUpFromFacebook);
+    public void setWebsiteshare(boolean cnt) {
+        editor.putBoolean(Key_Preferences.WEBSITE_SHARE, cnt);
         editor.apply();
     }
 
-    public String getIsSignUpFromFacebook()
-    {
-        return pref.getString(KEY_IS_SIGNUP_FROM_FACEBOOK,"");
+    public Boolean getWebsiteshare() {
+        return pref.getBoolean(Key_Preferences.WEBSITE_SHARE, false);
     }
 
-    public void storeSourceClientId(String val)
-    {
-        editor.putString(KEY_sourceClientId,val);
+    public void setBusinessHours(boolean cnt) {
+        editor.putBoolean(KEY_BUSINESS_HOURS, cnt);
         editor.apply();
     }
 
-    public String getSourceClientId()
-    {
-        return pref.getString(KEY_sourceClientId,"");
+    public Boolean getBusinessHours() {
+        return pref.getBoolean(KEY_BUSINESS_HOURS, false);
     }
 
-    public String getFPName()
-    {
-
-        return pref.getString(KEY_FP_NAME,null);
+    public void setSignUpFromFacebook(String isSignUpFromFacebook) {
+        editor.putString(KEY_IS_SIGNUP_FROM_FACEBOOK, isSignUpFromFacebook);
+        editor.apply();
     }
-    public String getFpTag(){
+
+    public String getIsSignUpFromFacebook() {
+        return pref.getString(KEY_IS_SIGNUP_FROM_FACEBOOK, "");
+    }
+
+    public void storeSourceClientId(String val) {
+        editor.putString(KEY_sourceClientId, val);
+        editor.apply();
+    }
+
+    public String getSourceClientId() {
+        return pref.getString(KEY_sourceClientId, "");
+    }
+
+    public String getFPName() {
+
+        return pref.getString(KEY_FP_NAME, null);
+    }
+
+    public String getFpTag() {
         return pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null);
     }
-    public String getRootAliasURI(){
+
+    public String getRootAliasURI() {
         return pref.getString(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI, null);
     }
 
-    public boolean getShareWebsite(){
+    public boolean getShareWebsite() {
         return pref.getBoolean("shareWebsite", false);
     }
 
-    public void storeISEnterprise(String isEnterprise)
-    {
-        editor.putString(KEY_IS_ENTERPRISE , isEnterprise);
+    public void storeISEnterprise(String isEnterprise) {
+        editor.putString(KEY_IS_ENTERPRISE, isEnterprise);
         editor.apply();
     }
 
-    public String getISEnterprise()
-    {
+    public String getISEnterprise() {
 
-        return pref.getString(KEY_IS_ENTERPRISE,"false");
+        return pref.getString(KEY_IS_ENTERPRISE, "false");
     }
 
-    public void storeIsRestricted(String isRestricted)
-    {
-        editor.putString(KEY_IS_RESTRICTED , isRestricted);
+    public void storeIsRestricted(String isRestricted) {
+        editor.putString(KEY_IS_RESTRICTED, isRestricted);
         editor.apply();
     }
 
-        public String getIsRestricted()
-    {
+    public String getIsRestricted() {
 
-        return pref.getString(KEY_IS_RESTRICTED,"false");
+        return pref.getString(KEY_IS_RESTRICTED, "false");
     }
 
-    public void storeIsThinksity(String isThinksity)
-    {
-        editor.putString(KEY_IS_THINKSITY , isThinksity);
+    public void storeIsThinksity(String isThinksity) {
+        editor.putString(KEY_IS_THINKSITY, isThinksity);
         editor.apply();
     }
 
-    public String getIsThinksity()
-    {
+    public String getIsThinksity() {
 
-        return pref.getString(KEY_IS_THINKSITY,"false");
+        return pref.getString(KEY_IS_THINKSITY, "false");
     }
 
 
-    public void storeIsAutoPostEnabled(String isEnabled)
-    {
-        editor.putString(KEY_IS_AUTO_POST_ENABLED , isEnabled);
+    public void storeIsAutoPostEnabled(String isEnabled) {
+        editor.putString(KEY_IS_AUTO_POST_ENABLED, isEnabled);
         editor.apply();
     }
 
-    public String getIsAutoPostEnabled()
-    {
-        return pref.getString(KEY_IS_AUTO_POST_ENABLED , "false");
+    public String getIsAutoPostEnabled() {
+        return pref.getString(KEY_IS_AUTO_POST_ENABLED, "false");
     }
 
 
-
-    public void storePageAccessToken(String pageAccessToken)
-    {
-        editor.putString(KEY_PAGE_ACCESS_TOKEN , pageAccessToken);
+    public void storePageAccessToken(String pageAccessToken) {
+        editor.putString(KEY_PAGE_ACCESS_TOKEN, pageAccessToken);
         editor.apply();
     }
 
-    public String getPageAccessToken()
-    {
-        return pref.getString(KEY_PAGE_ACCESS_TOKEN,null);
+    public String getPageAccessToken() {
+        return pref.getString(KEY_PAGE_ACCESS_TOKEN, null);
     }
 
-    public void storeUserAccessToken(String userAccessToken)
-    {
-        editor.putString(KEY_USER_ACCESS_TOKEN , userAccessToken);
+    public void storeUserAccessToken(String userAccessToken) {
+        editor.putString(KEY_USER_ACCESS_TOKEN, userAccessToken);
         editor.apply();
     }
 
-    public String getUserAccessToken()
-    {
-        return pref.getString(KEY_USER_ACCESS_TOKEN,null);
+    public String getUserAccessToken() {
+        return pref.getString(KEY_USER_ACCESS_TOKEN, null);
     }
 
 
-    public void storeFBLikeBoxInfo(String isFBLikeBoxPresent)
-    {
-        editor.putString(KEY_FB_LIKE , isFBLikeBoxPresent);
+    public void storeFBLikeBoxInfo(String isFBLikeBoxPresent) {
+        editor.putString(KEY_FB_LIKE, isFBLikeBoxPresent);
         editor.apply();
     }
 
-    public String getStoreFBLikeBoxInfo()
-    {
-        return pref.getString(KEY_FB_LIKE,null);
+    public String getStoreFBLikeBoxInfo() {
+        return pref.getString(KEY_FB_LIKE, null);
     }
 
 
-    public void storeShowUpdates(boolean showUpdates)
-    {
+    public void storeShowUpdates(boolean showUpdates) {
         editor.putBoolean(KEY_SHOW_UPDATES, showUpdates);
         editor.apply();
     }
 
-    public boolean getShowUpdates()
-    {
+    public boolean getShowUpdates() {
 
         return pref.getBoolean(KEY_SHOW_UPDATES, true);
     }
-    public void setShowUpdates(boolean val)
-    {
+
+    public void setShowUpdates(boolean val) {
         editor.putBoolean(KEY_SHOW_UPDATES, val);
         editor.apply();
     }
 
 
-    public void storeFacebookName(String facebookName)
-    {
-        editor.putString(KEY_FACEBOOK_NAME , facebookName);
+    public void storeFacebookName(String facebookName) {
+        editor.putString(KEY_FACEBOOK_NAME, facebookName);
         editor.apply();
     }
 
-    public String getFacebookName()
-    {
-        return pref.getString(KEY_FACEBOOK_NAME,null);
+    public String getFacebookName() {
+        return pref.getString(KEY_FACEBOOK_NAME, null);
     }
 
-    public void storeFacebookImpressions(String facebookImpression)
-    {
-        editor.putString(KEY_FACEBOOK_IMPRESSIONS , facebookImpression);
+    public void storeFacebookImpressions(String facebookImpression) {
+        editor.putString(KEY_FACEBOOK_IMPRESSIONS, facebookImpression);
         editor.apply();
     }
 
-    public String getFacebookImpressions()
-    {
-        return pref.getString(KEY_FACEBOOK_IMPRESSIONS,null);
+    public String getFacebookImpressions() {
+        return pref.getString(KEY_FACEBOOK_IMPRESSIONS, null);
     }
-    public void storeFacebookAccessToken(String token)
-    {
-        editor.putString(KEY_FACEBOOK_ACCESS_TOKEN , token);
+
+    public void storeFacebookAccessToken(String token) {
+        editor.putString(KEY_FACEBOOK_ACCESS_TOKEN, token);
         editor.apply();
     }
 
-    public String getFacebookAccessToken()
-    {
-        return pref.getString(KEY_FACEBOOK_ACCESS_TOKEN,null);
+    public String getFacebookAccessToken() {
+        return pref.getString(KEY_FACEBOOK_ACCESS_TOKEN, null);
     }
 
-    public void storeFacebookPage(String facebookName)
-    {
-        editor.putString(KEY_FACEBOOK_PAGE , facebookName);
+    public void storeFacebookPage(String facebookName) {
+        editor.putString(KEY_FACEBOOK_PAGE, facebookName);
         editor.apply();
     }
 
-    public String getFacebookPage()
-    {
-        return pref.getString(KEY_FACEBOOK_PAGE,null);
+    public String getFacebookPage() {
+        return pref.getString(KEY_FACEBOOK_PAGE, null);
     }
 
-    public void storeFacebookPageID(String id)
-    {
-        editor.putString(KEY_FACEBOOK_PAGE_ID , id);
+    public void storeFacebookPageID(String id) {
+        editor.putString(KEY_FACEBOOK_PAGE_ID, id);
         editor.apply();
     }
 
-    public String getFacebookPageID()
-    {
-        return pref.getString(KEY_FACEBOOK_PAGE_ID,null);
+    public String getFacebookPageID() {
+        return pref.getString(KEY_FACEBOOK_PAGE_ID, null);
     }
-    public void storeFPEmail(String fpEmail)
-    {
-        editor.putString(KEY_FP_EMAIL , fpEmail);
+
+    public void storeFPEmail(String fpEmail) {
+        editor.putString(KEY_FP_EMAIL, fpEmail);
         editor.apply();
     }
 
-    public String getFPEmail()
-    {
-        return pref.getString(KEY_FP_EMAIL,null);
+    public String getFPEmail() {
+        return pref.getString(KEY_FP_EMAIL, null);
     }
 
-    public void storeLogoURI(String fpLogoURI)
-    {
-        editor.putString(KEY_LOGO_URI,fpLogoURI);
+    public void storeLogoURI(String fpLogoURI) {
+        editor.putString(KEY_LOGO_URI, fpLogoURI);
         editor.apply();
     }
 
-    public void storeMondayChecked(boolean value)
-    {
+    public void storeMondayChecked(boolean value) {
         editor.putBoolean(KEY_MONDAY, value);
         editor.apply();
     }
 
-    public boolean getMonayChecked()
-    {
-        return pref.getBoolean(KEY_MONDAY,true);
+    public boolean getMonayChecked() {
+        return pref.getBoolean(KEY_MONDAY, true);
     }
 
-    public void storeTuesdayChecked(boolean value)
-    {
-        editor.putBoolean(KEY_TUESDAY,value);
+    public void storeTuesdayChecked(boolean value) {
+        editor.putBoolean(KEY_TUESDAY, value);
         editor.apply();
     }
 
-    public boolean getTuesdayChecked()
-    {
-        return pref.getBoolean(KEY_TUESDAY,false);
+    public boolean getTuesdayChecked() {
+        return pref.getBoolean(KEY_TUESDAY, false);
     }
 
-    public void storeWednesdayChecked(boolean value)
-    {
-        editor.putBoolean(KEY_WEDNESDAY,value);
+    public void storeWednesdayChecked(boolean value) {
+        editor.putBoolean(KEY_WEDNESDAY, value);
         editor.apply();
     }
 
-    public boolean getWednesdayChecked()
-    {
-        return pref.getBoolean(KEY_WEDNESDAY,false);
+    public boolean getWednesdayChecked() {
+        return pref.getBoolean(KEY_WEDNESDAY, false);
     }
 
-    public void storeThursdayChecked(boolean value)
-    {
-        editor.putBoolean(KEY_THURSDAY,value);
+    public void storeThursdayChecked(boolean value) {
+        editor.putBoolean(KEY_THURSDAY, value);
         editor.apply();
     }
 
-    public boolean getThursdayChecked()
-    {
-        return pref.getBoolean(KEY_THURSDAY,false);
+    public boolean getThursdayChecked() {
+        return pref.getBoolean(KEY_THURSDAY, false);
     }
 
-    public void storeFridayChecked(boolean value)
-    {
-        editor.putBoolean(KEY_FRIDAY,value);
+    public void storeFridayChecked(boolean value) {
+        editor.putBoolean(KEY_FRIDAY, value);
         editor.apply();
     }
 
-    public boolean getFridayChecked()
-    {
-        return pref.getBoolean(KEY_FRIDAY,false);
+    public boolean getFridayChecked() {
+        return pref.getBoolean(KEY_FRIDAY, false);
     }
 
-    public void storeSaturdayChecked(boolean value)
-    {
-        editor.putBoolean(KEY_SATURDAY,value);
+    public void storeSaturdayChecked(boolean value) {
+        editor.putBoolean(KEY_SATURDAY, value);
         editor.apply();
     }
 
-    public boolean getSaturdayChecked()
-    {
-        return pref.getBoolean(KEY_SATURDAY,false);
+    public boolean getSaturdayChecked() {
+        return pref.getBoolean(KEY_SATURDAY, false);
     }
-    public void storeSundayChecked(boolean value)
-    {
-        editor.putBoolean(KEY_SUNDAY,value);
+
+    public void storeSundayChecked(boolean value) {
+        editor.putBoolean(KEY_SUNDAY, value);
         editor.apply();
     }
 
-    public boolean getSundayChecked()
-    {
-        return pref.getBoolean(KEY_SUNDAY,false);
+    public boolean getSundayChecked() {
+        return pref.getBoolean(KEY_SUNDAY, false);
     }
 
 
-    public void storeStartTime(String startTime)
-    {
-        editor.putString(KEY_START_TIME,startTime);
+    public void storeStartTime(String startTime) {
+        editor.putString(KEY_START_TIME, startTime);
         editor.apply();
     }
 
-    public String getStartTime()
-    {
-        return pref.getString(KEY_START_TIME,"10:00 AM");
+    public String getStartTime() {
+        return pref.getString(KEY_START_TIME, "10:00 AM");
     }
 
-    public void storeEndTime(String startTime)
-    {
-        editor.putString(KEY_END_TIME,startTime);
+    public void storeEndTime(String startTime) {
+        editor.putString(KEY_END_TIME, startTime);
         editor.apply();
     }
 
-    public String getEndTime()
-    {
-        return pref.getString(KEY_END_TIME,"06:00 PM");
+    public String getEndTime() {
+        return pref.getString(KEY_END_TIME, "06:00 PM");
     }
 
-    public String getLogoURI()
-    {
-        return pref.getString(KEY_LOGO_URI,null);
+    public String getLogoURI() {
+        return pref.getString(KEY_LOGO_URI, null);
     }
 
-    public void storeFPID(String fpID)
-    {
-        String fpId = fpID.replaceAll("\"","");
-       // fpId = fpId.replace
-        editor.putString(KEY_FP_ID , fpId);
+    public void storeFPID(String fpID) {
+        String fpId = fpID.replaceAll("\"", "");
+        // fpId = fpId.replace
+        editor.putString(KEY_FP_ID, fpId);
         editor.apply();
     }
 
-    public String getFPID()
-    {
-        return pref.getString(KEY_FP_ID,null);
+    public String getFPID() {
+        return pref.getString(KEY_FP_ID, null);
     }
 
 
-    public void storeFacebookPageURL(String imageURL)
-    {
-        editor.putString(KEY_FACEBOOK_IMAGE_URL,imageURL);
+    public void storeFacebookPageURL(String imageURL) {
+        editor.putString(KEY_FACEBOOK_IMAGE_URL, imageURL);
         editor.apply();
 
     }
 
-    public String getFacebookPageURL()
-    {
-        return pref.getString(KEY_FACEBOOK_IMAGE_URL,"");
+    public String getFacebookPageURL() {
+        return pref.getString(KEY_FACEBOOK_IMAGE_URL, "");
     }
 
-    public void storeFacebookProfileDescription(String description)
-    {
-        editor.putString(KEY_FACEBOOK_PROFILE_DESCRIPTION,description);
+    public void storeFacebookProfileDescription(String description) {
+        editor.putString(KEY_FACEBOOK_PROFILE_DESCRIPTION, description);
         editor.apply();
     }
-    public String getFacebookProfileDescription()
-    {
-        return pref.getString(KEY_FACEBOOK_PROFILE_DESCRIPTION,"");
+
+    public String getFacebookProfileDescription() {
+        return pref.getString(KEY_FACEBOOK_PROFILE_DESCRIPTION, "");
     }
 
     public void storeIsFreeDomainDisplayed(String isFreeDomain) {
 
-        editor.putString(KEY_IS_FREE_DOMAIN,isFreeDomain);
+        editor.putString(KEY_IS_FREE_DOMAIN, isFreeDomain);
         editor.apply();
     }
 
-    public String getIsFreeDomainDisplayed()
-    {
-        return pref.getString(KEY_IS_FREE_DOMAIN,"");
+    public String getIsFreeDomainDisplayed() {
+        return pref.getString(KEY_IS_FREE_DOMAIN, "");
     }
 
-    public void savePackageStatus(String packegeId, boolean val){
-        try{
-            editor.putBoolean(packegeId,val);
+    public void savePackageStatus(String packegeId, boolean val) {
+        try {
+            editor.putBoolean(packegeId, val);
             editor.apply();
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public boolean getPackageStatus(String packageId){
+    public boolean getPackageStatus(String packageId) {
         return pref.getBoolean(packageId, false);
     }
 
-    public void storeBooleanDetails(String key,boolean value){
+    public void storeBooleanDetails(String key, boolean value) {
         editor.putBoolean(key.trim(), value).apply();
     }
-    public boolean getBooleanDetails(String key){
-        return pref.getBoolean(key,false);
+
+    public boolean getBooleanDetails(String key) {
+        return pref.getBoolean(key, false);
     }
     public void storeFPDetails(String key,String value)
     {   try{
-            editor.putString(key.trim(),value == null ?"":value.trim());
+            editor.putString(key.trim(), value == null ? "" : value.trim());
             editor.apply();
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getFPDetails(String key)
-    {
-        return pref.getString(key.trim(),"");
+    public String getFPDetails(String key) {
+        return pref.getString(key.trim(), "");
     }
 
     public boolean isBoostBubbleEnabled() {
@@ -683,6 +639,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void setBubbleStatus(boolean flag) {
         pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, flag).apply();
     }
+
     public void setCustomerAssistantStatus(boolean flag) {
         pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, flag).apply();
     }
@@ -690,36 +647,35 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void setBubbleTime(long time) {
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, time).apply();
     }
+
     public void setBubbleShareProducts(boolean flag) {
         pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, flag).apply();
     }
+
     public Long getBubbleTime() {
         return pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, 0);
     }
 
     public void storeGalleryImages(String imagePath) {
-        editor.putString(KEY_GALLLERY_IMAGES,imagePath);
+        editor.putString(KEY_GALLLERY_IMAGES, imagePath);
         editor.apply();
     }
 
-    public String getFPLogo()
-    {
-        return pref.getString(KEY_FP_LOGO,null);
+    public String getFPLogo() {
+        return pref.getString(KEY_FP_LOGO, null);
     }
 
-    public void storeFPLogo(String logo)
-    {
-        editor.putString(KEY_FP_LOGO,logo);
+    public void storeFPLogo(String logo) {
+        editor.putString(KEY_FP_LOGO, logo);
         editor.apply();
     }
 
-    public ArrayList<String> getStoredGalleryImages()
-    {
+    public ArrayList<String> getStoredGalleryImages() {
         String imagesList = pref.getString(KEY_GALLLERY_IMAGES, null);
-        String replace = imagesList.replace("[","");
-        String replace1 = replace.replace("]","");
-        String replace2 =  replace1.replace(" ","");
-       // Log.d("UserSessionManager : getStoredGalleryImages","imagesList : "+replace2);
+        String replace = imagesList.replace("[", "");
+        String replace1 = replace.replace("]", "");
+        String replace2 = replace1.replace(" ", "");
+        // Log.d("UserSessionManager : getStoredGalleryImages","imagesList : "+replace2);
         ArrayList<String> myList = new ArrayList<>(Arrays.asList(replace2.split(",")));
 
         return myList;
@@ -729,14 +685,14 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
      * sent_check login method will check user login status
      * If false it will redirect user to login page
      * Else do anything
-     * */
-    public boolean checkLogin(){
+     */
+    public boolean checkLogin() {
         // sent_check login status
-        DataBase db =new DataBase(activity);
+        DataBase db = new DataBase(activity);
         Cursor cursor = db.getLoginStatus();
-        boolean isLogin = false ;
-        if (cursor!=null && cursor.getCount()>0){
-            if (cursor.moveToNext()){
+        boolean isLogin = false;
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToNext()) {
                 String LoginStatus = cursor.getString(0);
                 String fpid = cursor.getString(1);
                 String facebookName = cursor.getString(2);
@@ -746,7 +702,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 String facepageId = cursor.getString(6);
                 String isRestricted = cursor.getString(9);
                 String isEnterprise = cursor.getString(8);
-                if (LoginStatus.equals("true")){
+                if (LoginStatus.equals("true")) {
                     isLogin = true;
 
                     storeFPID(fpid);
@@ -755,17 +711,17 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                     storeISEnterprise(isEnterprise);
 //                    Constants.FACEBOOK_PAGE_ID = facepageId;
                     storeFacebookPageID(facepageId);
-                    if (facebookName!=null && facebookName.trim().length()>0){
+                    if (facebookName != null && facebookName.trim().length() > 0) {
                         storeFacebookName(facebookName);
 //                        Constants.FACEBOOK_USER_NAME = facebookName;
                     }
-                    if (facebookPage!=null && facebookPage.trim().length()>0)
+                    if (facebookPage != null && facebookPage.trim().length() > 0)
                         storeFacebookPage(facebookPage);
-                    if(facebookAccessToken!=null && facebookAccessToken.trim().length()>0){
+                    if (facebookAccessToken != null && facebookAccessToken.trim().length() > 0) {
 //                        Constants.FACEBOOK_ACCESS_TOKEN = facebookAccessToken;
                         storeFacebookAccessToken(facebookAccessToken);
                     }
-                }else isLogin = false;
+                } else isLogin = false;
 
             }
         }
@@ -801,31 +757,28 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         new Get_FP_Details_Service(activity,fpId,clientId,bus);
     }*/
 
-    public void store_FIRST_TIME(boolean value)
-    {
+    public void store_FIRST_TIME(boolean value) {
         editor.putBoolean(KEY_FIRST_TIME_Details, value);
         editor.apply();
     }
 
-    public boolean get_FIRST_TIME()
-    {
-        return pref.getBoolean(KEY_FIRST_TIME_Details,true);
+    public boolean get_FIRST_TIME() {
+        return pref.getBoolean(KEY_FIRST_TIME_Details, true);
     }
-    
-    public void store_SHOW_POP_UP_TIME(long time)
-    {
+
+    public void store_SHOW_POP_UP_TIME(long time) {
         editor.putLong(KEY_LAST_TIME, time);
         editor.apply();
     }
 
-    public long get_SHOW_POP_UP_TIME()
-    {
-        return pref.getLong(KEY_LAST_TIME,0);
+    public long get_SHOW_POP_UP_TIME() {
+        return pref.getLong(KEY_LAST_TIME, 0);
     }
+
     /**
      * Get stored session data
-     * */
-    public HashMap<String, String> getUserDetails(){
+     */
+    public HashMap<String, String> getUserDetails() {
 
         //Use hashmap to store user credentials
         HashMap<String, String> user = new HashMap<String, String>();
@@ -842,8 +795,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     /**
      * Clear session details
-     * */
-    public void logoutUser(){
+     */
+    public void logoutUser() {
 
         // Clearing all user data from Shared Preferences
         unsubscribeRIA(getFPID(), activity);
@@ -851,21 +804,20 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     }
 
-    public void unsubscribeRIA(String fpID, final Activity activity)
-    {
-        final ProgressDialog pd ;
+    public void unsubscribeRIA(String fpID, final Activity activity) {
+        final ProgressDialog pd;
         pd = ProgressDialog.show(activity, "", activity.getString(R.string.logging_out));
         pd.setCancelable(false);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
-        params.put("fpId",fpID);
+        params.put("fpId", fpID);
         Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
-        api_login_request.logoutUnsubcribeRIA(params,new Callback<String>() {
+        api_login_request.logoutUnsubcribeRIA(params, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 Log.d("Valid Email", "Valid Email Response: " + response);
-                if(pd.isShowing())
-                pd.dismiss();
+                if (pd.isShowing())
+                    pd.dismiss();
                 WebEngage.get().user().logout();
                 setUserLogin(false);
                 AnaCore.logoutUser(activity);
@@ -876,7 +828,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 editor.clear();
                 editor.apply();
 
-                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit();
                 twitterEditor.clear();
                 twitterEditor.apply();
 
@@ -889,19 +841,19 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
                 // After logout redirect user to Login Activity
                 Constants.clearStore();
-                Constants.StorebizQueries 		= new ArrayList<>();
-                Constants.storeSecondaryImages = null ;
+                Constants.StorebizQueries = new ArrayList<>();
+                Constants.storeSecondaryImages = null;
                 Constants.storeActualSecondaryImages = new ArrayList<>();
-                Constants.StoreUserSearch		= new DataMap();
-                Constants.StorebizEnterpriseQueries 		= new ArrayList<Entity_model>();
+                Constants.StoreUserSearch = new DataMap();
+                Constants.StorebizEnterpriseQueries = new ArrayList<Entity_model>();
                 Constants.StorePackageIds = new ArrayList<>();
-                Constants.widgets	=	new HashSet<String>();
+                Constants.widgets = new HashSet<String>();
                 Constants.StoreWidgets = new ArrayList<>();
-                Constants.ImageGalleryWidget = false ;
-                Constants.BusinessTimingsWidget = false ;
-                Constants.BusinessEnquiryWidget = false ;
+                Constants.ImageGalleryWidget = false;
+                Constants.BusinessTimingsWidget = false;
+                Constants.BusinessEnquiryWidget = false;
                 HomeActivity.StorebizFloats.clear();
-                HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
+                HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
                 LoginManager.getInstance().logOut();
                 //Analytics_Fragment.subscriberCount.setText("0");
                 //Analytics_Fragment.visitCount.setText("0");
@@ -923,24 +875,25 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd.isShowing())
-                pd.dismiss();
-                Methods.showSnackBarNegative(activity,activity.getString(R.string.unable_to_logout));
+                if (pd.isShowing())
+                    pd.dismiss();
+                Methods.showSnackBarNegative(activity, activity.getString(R.string.unable_to_logout));
             }
         });
     }
 
-    public boolean isSiteAppearanceShown(){
+    public boolean isSiteAppearanceShown() {
         return pref.getBoolean(Key_Preferences.IS_FP_SITE_APPEARNCE_SHOWN, false);
     }
-    public void setSiteAppearanceShown(boolean val){
+
+    public void setSiteAppearanceShown(boolean val) {
         editor.putBoolean(Key_Preferences.IS_FP_SITE_APPEARNCE_SHOWN, true);
         editor.apply();
     }
 
 
     // sent_check for login
-    public boolean isUserLoggedIn(){
+    public boolean isUserLoggedIn() {
         //Log.d("isUserLoggedIn", "isUserLoggedIn : "+IS_USER_LOGIN);
         return pref.getBoolean(IS_USER_LOGIN, false);
     }
@@ -948,8 +901,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     @Override
     public void dataFetched(int skip, boolean isNewMessage) {
 
-        if(pd != null)
-        pd.dismiss();
+        if (pd != null)
+            pd.dismiss();
 
 //        API_Business_enquiries businessEnquiries = new API_Business_enquiries(null,this);
 //        businessEnquiries.getMessages();
@@ -967,38 +920,39 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     @Override
-    public void sendFetched(FloatsMessageModel jsonObject) {}
+    public void sendFetched(FloatsMessageModel jsonObject) {
+    }
 
 
     public void setSiteHealth(int siteMeterTotalWeight) {
-        editor.putInt(Key_Preferences.SITE_HEALTH,siteMeterTotalWeight).apply();
+        editor.putInt(Key_Preferences.SITE_HEALTH, siteMeterTotalWeight).apply();
     }
 
-    public int getSiteHealth(){
-        return pref.getInt(Key_Preferences.SITE_HEALTH,0);
+    public int getSiteHealth() {
+        return pref.getInt(Key_Preferences.SITE_HEALTH, 0);
     }
 
     public void setProductsCount(int size) {
         editor.putInt(Key_Preferences.PRODUCTS_COUNT, size).apply();
     }
 
-    public int getProductsCount(){
-        return pref.getInt(Key_Preferences.PRODUCTS_COUNT,0);
+    public int getProductsCount() {
+        return pref.getInt(Key_Preferences.PRODUCTS_COUNT, 0);
     }
 
     public void setOnBoardingStatus(boolean flag) {
         editor.putBoolean(Key_Preferences.ON_BOARDING_STATUS, flag).apply();
     }
 
-    public boolean getOnBoardingStatus(){
-        return pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS,false);
+    public boolean getOnBoardingStatus() {
+        return pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false);
     }
 
     public void setCustomPageCount(int size) {
         editor.putInt(Key_Preferences.CUSTOM_PAGE, size).apply();
     }
 
-    public int getCustomPageCount(){
-        return pref.getInt(Key_Preferences.CUSTOM_PAGE,0);
+    public int getCustomPageCount() {
+        return pref.getInt(Key_Preferences.CUSTOM_PAGE, 0);
     }
 }
