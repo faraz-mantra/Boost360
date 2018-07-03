@@ -20,14 +20,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.Arrays;
 
 import io.separ.neural.inputmethod.annotations.UsedForTesting;
 import io.separ.neural.inputmethod.compat.BuildCompatUtils;
 import io.separ.neural.inputmethod.indic.R;
-import nfkeyboard.util.SharedPrefUtil;
 
 public final class KeyboardTheme implements Comparable<KeyboardTheme> {
     private static final String TAG = KeyboardTheme.class.getSimpleName();
@@ -43,8 +41,6 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
     public static final int THEME_ID_LXX_DARK = 4;
     public static final int THEME_ID_LXX_DARK_UNBORDERED = 5;
     public static final int DEFAULT_THEME_ID = THEME_ID_LXX_DARK;
-
-    Context context;
 
     private static final KeyboardTheme[] KEYBOARD_THEMES = {
         new KeyboardTheme(THEME_ID_ICS, "ICS", R.style.KeyboardTheme_ICS,
@@ -111,7 +107,7 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
     }
 
     @UsedForTesting
-    static KeyboardTheme getDefaultKeyboardTheme(final SharedPrefUtil prefs,
+    static KeyboardTheme getDefaultKeyboardTheme(final SharedPreferences prefs,
             final int sdkVersion) {
         return searchKeyboardThemeById(DEFAULT_THEME_ID);
     }
@@ -141,14 +137,14 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
         prefs.edit().putString(prefKey, themeIdString).apply();
     }
 
-    public static KeyboardTheme getKeyboardTheme(final SharedPrefUtil prefs) {
+    public static KeyboardTheme getKeyboardTheme(final SharedPreferences prefs) {
         return getKeyboardTheme(prefs, BuildCompatUtils.EFFECTIVE_SDK_INT);
     }
 
     @UsedForTesting
-    static KeyboardTheme getKeyboardTheme(final SharedPrefUtil prefs, final int sdkVersion) {
+    static KeyboardTheme getKeyboardTheme(final SharedPreferences prefs, final int sdkVersion) {
         //final String lxxThemeIdString = prefs.getString(LXX_KEYBOARD_THEME_KEY, null);
-        final String themeId = prefs.getKeyboardThemeSelected();
+        final String themeId = prefs.getString("keyboard_theme", "LXX_DARK");
         /*if (lxxThemeIdString == null) {
             return getDefaultKeyboardTheme(prefs, sdkVersion);
         }

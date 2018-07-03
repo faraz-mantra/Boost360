@@ -57,7 +57,6 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 public class KeyboardFragment extends Fragment implements View.OnTouchListener, View.OnClickListener {
 
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
 
     private static final int STORAGE_CODE = 100, MICROPHONE_CODE = 101;
     private static final int INPUT_METHOD_SETTINGS = 102;
@@ -76,7 +75,6 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         sharedPreferences = getContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
         return inflater.inflate(R.layout.fragment_keyboard, container, false);
     }
 
@@ -108,7 +106,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         } else if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK_UNBORDERED.toString())) {
             selected = 1;
         }
-        keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences, editor);
+        keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences);
         rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
     }
 

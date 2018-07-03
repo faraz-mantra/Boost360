@@ -163,13 +163,6 @@ public class SharedPrefUtil {
         return null;
     }
 
-    public String getKeyboardThemeSelected() {
-        if (sBoostPref != null) {
-            return sBoostPref.getString("keyboard_theme", "LXX_DARK");
-        }
-        return "LXX_DARK";
-    }
-
     public String getRootAliasURI() {
         if (sBoostPref != null) {
             return sBoostPref.getString("GET_FP_DETAILS_ROOTALIASURI", null);

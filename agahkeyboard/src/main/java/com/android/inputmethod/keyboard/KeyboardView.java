@@ -27,7 +27,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.content.ContextCompat;
@@ -43,13 +42,11 @@ import com.android.inputmethod.latin.utils.TypefaceUtils;
 
 import java.util.HashSet;
 
-import io.separ.neural.inputmethod.Utils.ColorUtils;
 import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.R;
 
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ACTION;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ENTERKEY;
-import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_FUNCTIONAL;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_SPACEBAR;
 import static io.separ.neural.inputmethod.Utils.ColorUtils.colorProfile;
 
@@ -371,22 +368,13 @@ public class KeyboardView extends View {
         if (!key.isSpacer()) {
             if (key.isMoreKey()) {
                 Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground);
-                if (key.ismShowColorFilter()) {
-                    if (key.ismPressed()) {
-                        tmp.setColorFilter(Color.parseColor("#ffce61"), PorterDuff.Mode.SRC_IN);
-                    } else {
-                        tmp.setColorFilter(Color.parseColor("#ffb900"), PorterDuff.Mode.SRC_IN);
-                    }
-                } else {
-                    tmp.clearColorFilter();
-                }
                 onDrawKeyBackground(key, canvas, tmp, 1);
                 //Log.e("SEPAR", "here :(");
             } else {
                 switch (key.getType()) {
                     case BACKGROUND_TYPE_ENTERKEY:
                         key.setBackgroundState(mEnterKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getActionBackground(mEnterKeyBackground), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
+                        onDrawKeyBackground(key, canvas, key.getEnterKeyBackground(mEnterKeyBackground), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
                         break;
                     case BACKGROUND_TYPE_ACTION:
                         key.setBackgroundState(mFunctionalKeyBackground);
@@ -432,39 +420,6 @@ public class KeyboardView extends View {
     // Draw key background.
     protected void onDrawKeyBackground(final Key key, final Canvas canvas,
                                        Drawable background, float heightFraction) {
-        /*if (this instanceof MoreKeysKeyboardView) {
-            background = getContext().getResources().getDrawable(R.drawable.round_transparent);
-            //getBackground().setColorFilter(colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
-        } else {
-            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 0) {
-                if (key.getLabel() != null && !key.getLabel().equals("?123") && !key.getLabel().equals("ABC")) {//-103246
-                    if (key.getCode() == -1) {
-                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
-                    } else {
-                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
-                    }
-                } else {
-                    if (key.getCode() == -10 || key.getCode() == 32) {
-                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
-                    } else {
-                        background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
-                    }
-                }
-            } else {
-                if (key.getCode() == 32) {
-                    background = getContext().getResources().getDrawable(R.drawable.round_light_grey_agah);
-                } else if (key.getCode() == Constants.CODE_ENTER) {
-                    background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
-                } else if (key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
-                        // HACK: To disable expanding normal/functional key background.
-                        && !key.hasCustomActionLabel()) {
-                    background = getContext().getResources().getDrawable(R.drawable.round_light_grey);
-                } else {
-                    background = getContext().getResources().getDrawable(R.drawable.round_transparent);
-                }
-            }
-        }
-        */
         final int keyWidth = key.getDrawWidth();
         final int keyHeight = key.getHeight();
         final int bgWidth, bgHeight, bgX, bgY;

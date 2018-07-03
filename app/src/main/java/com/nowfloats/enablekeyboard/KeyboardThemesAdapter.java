@@ -44,12 +44,12 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
         }
     };
 
-    public KeyboardThemesAdapter(Context context, ArrayList<Integer> keyboardDrawables, int selected, SharedPreferences sharedPreferences, SharedPreferences.Editor editor) {
+    public KeyboardThemesAdapter(Context context, ArrayList<Integer> keyboardDrawables, int selected, SharedPreferences sharedPreferences) {
         this.context = context;
         this.keyboardDrawables = keyboardDrawables;
         this.selected = selected;
         this.sharedPreferences = sharedPreferences;
-        this.editor = editor;
+        this.editor = sharedPreferences.edit();
     }
 
     @NonNull

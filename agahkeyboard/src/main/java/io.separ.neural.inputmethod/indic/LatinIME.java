@@ -957,7 +957,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public View onCreateInputView() {
         StatsUtils.getInstance().onCreateInputView();
-        return mKeyboardSwitcher.onCreateInputView(mIsHardwareAcceleratedDrawingEnabled, getApplicationContext());
+        return mKeyboardSwitcher.onCreateInputView(mIsHardwareAcceleratedDrawingEnabled);
     }
 
     @Override

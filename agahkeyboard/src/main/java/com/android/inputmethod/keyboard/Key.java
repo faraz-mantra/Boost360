@@ -17,6 +17,7 @@
 package com.android.inputmethod.keyboard;
 
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -506,10 +507,6 @@ public class Key implements Comparable<Key> {
         this.mShowColorFilter = mShowColorFilter;
     }
 
-    public boolean ismShowColorFilter() {
-        return mShowColorFilter;
-    }
-
     public String toLongString() {
         final int iconId = mIconId;
         final String topVisual = (iconId == KeyboardIconsSet.ICON_UNDEFINED)
@@ -847,10 +844,6 @@ public class Key implements Comparable<Key> {
         mPressed = true;
     }
 
-    public boolean ismPressed() {
-        return mPressed;
-    }
-
     /**
      * Informs the key that it has been released, in case it needs to change its appearance or
      * state.
@@ -956,6 +949,15 @@ public class Key implements Comparable<Key> {
             background = keyBackground;
         }
         setBackgroundState(background);
+        if (mShowColorFilter) {
+            if (mPressed) {
+                background.setColorFilter(Color.parseColor("#ffce61"), PorterDuff.Mode.SRC_IN);
+            } else {
+                background.setColorFilter(Color.parseColor("#ffb900"), PorterDuff.Mode.SRC_IN);
+            }
+        } else {
+            background.clearColorFilter();
+        }
         return background;
     }
 
@@ -990,7 +992,12 @@ public class Key implements Comparable<Key> {
     public Drawable getActionBackground(Drawable normalDrawable) {
         ColorUtils.ButtonType type = ColorUtils.getButtonType();
         normalDrawable.setState(KeyBackgroundState.STATES[type != ColorUtils.ButtonType.NONE ? BACKGROUND_TYPE_NORMAL : BACKGROUND_TYPE_ACTION].getState(this.mPressed, type));
-        //normalDrawable.setColorFilter(mDrawColor, type != ColorUtils.ButtonType.NONE ? PorterDuff.Mode.MULTIPLY : PorterDuff.Mode.SRC_ATOP);
+        return normalDrawable;
+    }
+
+    public Drawable getEnterKeyBackground(Drawable normalDrawable) {
+        ColorUtils.ButtonType type = ColorUtils.getButtonType();
+        normalDrawable.setState(KeyBackgroundState.STATES[type != ColorUtils.ButtonType.NONE ? BACKGROUND_TYPE_NORMAL : BACKGROUND_TYPE_ACTION].getState(this.mPressed, type));
         return normalDrawable;
     }
 
@@ -1011,9 +1018,6 @@ public class Key implements Comparable<Key> {
             z = false;
         }
         int[] state = keyBackgroundState.getState(z, ColorUtils.ButtonType.NONE);
-            //normalDrawable.setColorFilter(darkColor, PorterDuff.Mode.MULTIPLY);
-            /*normalDrawable.clearColorFilter();
-            normalDrawable.setColorFilter(null);*/
         normalDrawable.setState(state);
         return normalDrawable;
     }
