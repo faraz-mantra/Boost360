@@ -17,7 +17,6 @@
 package com.android.inputmethod.keyboard;
 
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -947,7 +946,7 @@ public class Key implements Comparable<Key> {
      * @see android.graphics.drawable.StateListDrawable#setState(int[])
      */
     public final Drawable selectBackgroundDrawable(final Drawable keyBackground,
-            final Drawable functionalKeyBackground, final Drawable spacebarBackground, final Drawable enterKeyBackground) {
+            final Drawable functionalKeyBackground, final Drawable spacebarBackground) {
         final Drawable background;
         if (mBackgroundType == BACKGROUND_TYPE_FUNCTIONAL) {
             background = functionalKeyBackground;
@@ -982,13 +981,13 @@ public class Key implements Comparable<Key> {
         }
     }
 
-    public Drawable getSpaceBarBackground(Drawable mSpacebarBackground, int mDrawColor, PorterDuff.Mode mode) {
+    public Drawable getSpaceBarBackground(Drawable mSpacebarBackground) {
         ColorUtils.ButtonType type = ColorUtils.getButtonType();
         mSpacebarBackground.setState(KeyBackgroundState.STATES[BACKGROUND_TYPE_SPACEBAR].getState(this.mPressed, type));
         return mSpacebarBackground;
     }
 
-    public Drawable getActionBackground(Drawable normalDrawable, int mDrawColor) {
+    public Drawable getActionBackground(Drawable normalDrawable) {
         ColorUtils.ButtonType type = ColorUtils.getButtonType();
         normalDrawable.setState(KeyBackgroundState.STATES[type != ColorUtils.ButtonType.NONE ? BACKGROUND_TYPE_NORMAL : BACKGROUND_TYPE_ACTION].getState(this.mPressed, type));
         //normalDrawable.setColorFilter(mDrawColor, type != ColorUtils.ButtonType.NONE ? PorterDuff.Mode.MULTIPLY : PorterDuff.Mode.SRC_ATOP);
@@ -1005,7 +1004,7 @@ public class Key implements Comparable<Key> {
         return normalDrawable;
     }
 
-    public Drawable getNormalBackground(Drawable normalDrawable, boolean forceNoPress, int darkColor) {
+    public Drawable getNormalBackground(Drawable normalDrawable, boolean forceNoPress) {
         boolean z = true;
         KeyBackgroundState keyBackgroundState = KeyBackgroundState.STATES[BACKGROUND_TYPE_NORMAL];
         if (forceNoPress || !this.mPressed) {

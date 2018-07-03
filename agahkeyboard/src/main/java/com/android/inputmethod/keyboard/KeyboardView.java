@@ -33,7 +33,6 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.android.inputmethod.keyboard.internal.AlphabetShiftState;
@@ -47,7 +46,6 @@ import java.util.HashSet;
 import io.separ.neural.inputmethod.Utils.ColorUtils;
 import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.R;
-import nfkeyboard.util.SharedPrefUtil;
 
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ACTION;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ENTERKEY;
@@ -372,7 +370,7 @@ public class KeyboardView extends View {
 
         if (!key.isSpacer()) {
             if (key.isMoreKey()) {
-                Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground, this.mEnterKeyBackground);
+                Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground);
                 if (key.ismShowColorFilter()) {
                     if (key.ismPressed()) {
                         tmp.setColorFilter(Color.parseColor("#ffce61"), PorterDuff.Mode.SRC_IN);
@@ -388,19 +386,19 @@ public class KeyboardView extends View {
                 switch (key.getType()) {
                     case BACKGROUND_TYPE_ENTERKEY:
                         key.setBackgroundState(mEnterKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getActionBackground(mEnterKeyBackground, Color.parseColor("#ffffff")), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
+                        onDrawKeyBackground(key, canvas, key.getActionBackground(mEnterKeyBackground), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
                         break;
                     case BACKGROUND_TYPE_ACTION:
                         key.setBackgroundState(mFunctionalKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getActionBackground(mFunctionalKeyBackground, Color.parseColor("#ffffff")), 1);
+                        onDrawKeyBackground(key, canvas, key.getActionBackground(mFunctionalKeyBackground), 1);
                         break;
                     case BACKGROUND_TYPE_SPACEBAR:
                         key.setBackgroundState(mSpacebarBackground);
-                        onDrawKeyBackground(key, canvas, key.getSpaceBarBackground(mSpacebarBackground, Color.parseColor("#ffffff"), PorterDuff.Mode.MULTIPLY), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
+                        onDrawKeyBackground(key, canvas, key.getSpaceBarBackground(mSpacebarBackground), ResourceUtils.getFraction(keyboardViewAttr, R.styleable.KeyboardView_heightFractionSpaceEnter, 1));
                         break;
                     default:
                         key.setBackgroundState(mKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getNormalBackground(mKeyBackground, false, Color.parseColor("#ffffff")), 1);
+                        onDrawKeyBackground(key, canvas, key.getNormalBackground(mKeyBackground, false), 1);
                 }
             }
             /*switch (key.getType()) {

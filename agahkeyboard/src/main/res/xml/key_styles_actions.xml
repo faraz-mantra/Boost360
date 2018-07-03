@@ -115,7 +115,7 @@
         <case latin:keyboardTheme="ICS|KLP">
             <key-style
                 latin:styleName="customLabelActionKeyStyle"
-                latin:keySpec="!code/key_enter"
+                latin:keySpec="dummy_label|!code/key_enter"
                 latin:keyLabelFlags="fromCustomActionLabel"
                 latin:backgroundType="action"
                 latin:parentStyle="defaultEnterKeyStyle" />
@@ -124,7 +124,7 @@
         <default>
             <key-style
                 latin:styleName="customLabelActionKeyStyle"
-                latin:keySpec="!code/key_enter"
+                latin:keySpec="dummy_label|!code/key_enter"
                 latin:keyLabelFlags="fromCustomActionLabel"
                 latin:backgroundType="functional"
                 latin:parentStyle="defaultEnterKeyStyle" />
