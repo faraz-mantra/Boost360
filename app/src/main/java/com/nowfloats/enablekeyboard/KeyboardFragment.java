@@ -101,7 +101,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         ArrayList<Integer> keyboardDrawables = new ArrayList<>();
         keyboardDrawables.add(R.drawable.ic_keyboard_theme_two);
         keyboardDrawables.add(R.drawable.ic_keyboard_theme_one);
-        int selected = sharedPreferences.getInt("keyboard_theme", 0);
+        String selectedString = sharedPreferences.getString("keyboard_theme", KeyboardThemesAdapter.Themes.LXX_DARK.toString());
+        int selected = 0;
+        if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK.toString())) {
+            selected = 0;
+        } else if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK_UNBORDERED.toString())) {
+            selected = 1;
+        }
         keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences, editor);
         rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
     }

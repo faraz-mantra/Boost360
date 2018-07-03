@@ -373,7 +373,15 @@ public class KeyboardView extends View {
         if (!key.isSpacer()) {
             if (key.isMoreKey()) {
                 Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground, this.mEnterKeyBackground);
-                //tmp.setColorFilter(ColorUtils.colorProfile.getPrimary(), PorterDuff.Mode.MULTIPLY);
+                if (key.ismShowColorFilter()) {
+                    if (key.ismPressed()) {
+                        tmp.setColorFilter(Color.parseColor("#ffce61"), PorterDuff.Mode.SRC_IN);
+                    } else {
+                        tmp.setColorFilter(Color.parseColor("#ffb900"), PorterDuff.Mode.SRC_IN);
+                    }
+                } else {
+                    tmp.clearColorFilter();
+                }
                 onDrawKeyBackground(key, canvas, tmp, 1);
                 //Log.e("SEPAR", "here :(");
             } else {
@@ -392,7 +400,7 @@ public class KeyboardView extends View {
                         break;
                     default:
                         key.setBackgroundState(mKeyBackground);
-                        onDrawKeyBackground(key, canvas, key.getNormalBackground(mKeyBackground, true, Color.parseColor("#ffffff")), 1);
+                        onDrawKeyBackground(key, canvas, key.getNormalBackground(mKeyBackground, false, Color.parseColor("#ffffff")), 1);
                 }
             }
             /*switch (key.getType()) {
@@ -483,7 +491,7 @@ public class KeyboardView extends View {
         final Rect padding = mKeyBackgroundPadding;
         bgWidth = keyWidth + padding.left + padding.right;
         bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * heightFraction);
-        bgY = - padding.top;
+        bgY = (int) ((keyHeight + padding.top + padding.bottom) * (1 - heightFraction) / 2);
         bgX = -padding.left;
         //}
         final Rect bounds = background.getBounds();

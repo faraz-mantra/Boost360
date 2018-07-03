@@ -108,5 +108,6 @@
     <color name="light_gray">#CACACA</color>
     <color name="yellow">#ffb900</color>
     <color name="gray">#AAAAAA</color>
+    <color name="more_keys_background">#353535</color>
 
 </resources>

@@ -301,7 +301,7 @@
         >
             <key-style
                 latin:styleName="enterKeyStyle"
-                latin:parentStyle="customLabelActionKeyStyle" />
+                latin:parentStyle="defaultEnterKeyStyle" />
         </case>
         <!-- imeAction is either actionNone or actionUnspecified. -->
         <default>

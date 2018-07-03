@@ -30,6 +30,20 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
     private ArrayList<Integer> keyboardDrawables;
     private int selected;
 
+    public enum Themes {
+        LXX_DARK {
+            public String toString() {
+                return "LXX_DARK";
+            }
+        },
+
+        LXX_DARK_UNBORDERED {
+            public String toString() {
+                return "LXX_DARK_UNBORDERED";
+            }
+        }
+    };
+
     public KeyboardThemesAdapter(Context context, ArrayList<Integer> keyboardDrawables, int selected, SharedPreferences sharedPreferences, SharedPreferences.Editor editor) {
         this.context = context;
         this.keyboardDrawables = keyboardDrawables;
@@ -69,7 +83,16 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     if (selected != position) {
                         selected = position;
-                        editor.putInt("keyboard_theme", position);
+                        switch (position) {
+                            case 0:
+                                editor.putString("keyboard_theme", Themes.LXX_DARK.toString());
+                                break;
+                            case 1:
+                                editor.putString("keyboard_theme", Themes.LXX_DARK_UNBORDERED.toString());
+                                break;
+                            default:
+                                editor.putString("keyboard_theme", Themes.LXX_DARK.toString());
+                        }
                         editor.commit();
                         Snackbar.make(view, "The theme has been applied!", Snackbar.LENGTH_SHORT).show();
                         notifyDataSetChanged();

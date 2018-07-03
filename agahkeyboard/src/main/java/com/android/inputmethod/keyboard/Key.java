@@ -17,6 +17,7 @@
 package com.android.inputmethod.keyboard;
 
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -201,6 +202,8 @@ public class Key implements Comparable<Key> {
     private boolean mPressed;
     /** Key is enabled and responds on press */
     private boolean mEnabled = true;
+
+    private boolean mShowColorFilter = false;
 
     public Key(final String label, final int iconId, final int code, final String outputText,
                final String hintLabel, final int labelFlags, final int backgroundType, final int x,
@@ -498,6 +501,14 @@ public class Key implements Comparable<Key> {
             return getOutputText();
         }
         return Constants.printableCode(code);
+    }
+
+    public void setApplyColorFilter(boolean mShowColorFilter) {
+        this.mShowColorFilter = mShowColorFilter;
+    }
+
+    public boolean ismShowColorFilter() {
+        return mShowColorFilter;
     }
 
     public String toLongString() {
@@ -835,6 +846,10 @@ public class Key implements Comparable<Key> {
      */
     public void onPressed() {
         mPressed = true;
+    }
+
+    public boolean ismPressed() {
+        return mPressed;
     }
 
     /**
