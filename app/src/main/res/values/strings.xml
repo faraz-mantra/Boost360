@@ -1134,6 +1134,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="country">Country</string>
     <string name="nowfloats.com">.nowfloats.com</string>
     <string name="add_a_page">Add a Page</string>
+    <string name="top_up_plans_desc">"Top-up Plans","WildFire, Dictate, My Business App",
+                    "You can add top ups to your website to get added features that enable your website to get more visibility and hence more business.",
+                    "Check Top Up Plans"</string>
     <string name="use_custom_pages_to_describe_business">Use custom pages to describe your business offerings in detail. You can add and format paragraphs of text, links and images!</string>
     <string name="retry">Retry</string>
     <string name="new_in_capital">NEW</string>
@@ -1524,6 +1527,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="action_sort_source">Channel</string>
     <string name="seller_analytics">Seller Analytics</string>
     <string name="total_orders">Total Orders</string>
+    <string name="orders">Orders</string>
+    <string name="order_analytics">Order Analytics</string>
     <string name="assured_purchase">Assured Purchase</string>
     <string name="select_payment_method">Select yout payment method</string>
     <string name="use_own_payment_link">Use own payment link</string>
@@ -1613,6 +1618,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="account_settings">Account Settings</string>
     <string name="about">About</string>
     <string name="upgrades">Upgrades</string>
+    <string name="add_ons">Add-ons</string>
+    <string name="subscriptions">Subscriptions</string>
     <string name="shared_user_label">NowFloatsBoost</string>
 
     <string-array name="about_tab_items">
@@ -1646,9 +1653,16 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string-array name="account_setting_tab_items">
         <item>Site Appearance</item>
         <item>Domain and Email</item>
-        <item>Your Plans</item>
+        <!--
+                <item>Your Plans</item>
+        -->
         <item>Change Password</item>
         <item>Log out</item>
+    </string-array>
+
+    <string-array name="upgrade_tab_items">
+        <item>Buy and Renew</item>
+        <item>Subscription History</item>
     </string-array>
     <string-array name="payment_options">
         <item>OPC Online Pay</item>

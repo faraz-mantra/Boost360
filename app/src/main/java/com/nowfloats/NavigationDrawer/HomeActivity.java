@@ -89,6 +89,7 @@ import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
+import com.nowfloats.Store.AddOnFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
@@ -160,6 +161,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     ManageCustomerFragment manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
     UpgradesFragment upgradesFragment;
+    AddOnFragment addOnFragment;
     AboutFragment aboutFragment;
     ManageContentFragment manageContentFragment;
     AccountSettingsFragment accountSettingsFragment;
@@ -1208,6 +1210,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, upgradesFragment, "upgradesFragment")
                             .commit();
+                } else if (nextScreen.equals(getString(R.string.add_ons))) {
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ADD_ONS, null);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, addOnFragment, "addOnFragment")
+                            .commit();
                 } else if (nextScreen.equals(getString(R.string.about))) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_ABOUT, null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, aboutFragment, "aboutFragment")
@@ -1261,18 +1267,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private boolean get_VersionUpdate() {
-        if (!Methods.isOnline(this) || BuildConfig.DEBUG) {
-            return false;
-        }
+//        if (!Methods.isOnline(this) || BuildConfig.DEBUG) {
+//            return false;
+//        }
         try {
             String new_version = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName() + "&hl=it")
                     .timeout(30000)
                     .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                     .referrer("http://www.google.com")
                     .get()
-                    .select("div[itemprop=softwareVersion]")
-                    .first()
-                    .ownText();
+                    .body().getElementsByClass("xyOfqd").select(".hAyfc")
+                    .get(3).child(1).child(0).child(0).ownText();
             return newer_version_available(getPackageManager().getPackageInfo(getPackageName(), 0).versionName, new_version);
         } catch (Exception e) {
             return false;
@@ -1475,6 +1480,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         keyboardFragment = new KeyboardFragment();
         manageInventoryFragment = new ManageInventoryFragment();
         upgradesFragment = new UpgradesFragment();
+        addOnFragment = new AddOnFragment();
         aboutFragment = new AboutFragment();
         manageContentFragment = new ManageContentFragment();
         accountSettingsFragment = new AccountSettingsFragment();

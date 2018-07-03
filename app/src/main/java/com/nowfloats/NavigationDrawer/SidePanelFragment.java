@@ -76,8 +76,8 @@ public class SidePanelFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
-    TextView dashBoardTextView,analyticsTextView, tvManageCustomers,tvSocialSharing,tvManageInventory, tvManageContent,
-            accountSettingsText,upgradeText,keyboardTextView, helpAndSupportText, shareText,aboutText;
+    TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvSocialSharing, tvManageInventory, tvManageContent,
+            accountSettingsText, upgradeText, addOnText, keyboardTextView, helpAndSupportText, shareText, aboutText;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -94,8 +94,8 @@ public class SidePanelFragment extends Fragment {
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
-    LinearLayout homeLayout,analyticsLayout, upgradeLayout, accountSettingsLayout,keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
-            manageContentLayout, manageCustomersLayout,socialLayout,manageInventoryLayout;
+    LinearLayout homeLayout, analyticsLayout, upgradeLayout, addOnLayout, accountSettingsLayout, keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+            manageContentLayout, manageCustomersLayout, socialLayout, manageInventoryLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -107,9 +107,9 @@ public class SidePanelFragment extends Fragment {
     private final int gallery_req_id = 6;
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
-    private ImageView shareImageView,keyboardImageView, upgradeImageView, analyticsImageView,dasbBoardImageView, helpAndSupportImageView,
-            accountSettingsImageView, manageCustomerImageView,manageContentImageView,aboutImageView,
-            socialImageView,manageInventoryImageView;
+    private ImageView shareImageView, keyboardImageView, upgradeImageView, addOnImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
+            accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView,
+            socialImageView, manageInventoryImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
 
@@ -231,7 +231,7 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setVisibility(View.VISIBLE);
 
         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        String normalURI = "http://"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
+        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
         if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
             fpNameTextView.setText(Methods.fromHtml("<u>" + rootAlisasURI + "</u>"));
         } else {
@@ -322,8 +322,9 @@ public class SidePanelFragment extends Fragment {
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         socialLayout = card.findViewById(R.id.eleventh_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
-        accountSettingsLayout =  card.findViewById(R.id.fifthRow_Layout);
+        accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
         upgradeLayout = card.findViewById(R.id.secondRow_Layout);
+        addOnLayout = card.findViewById(R.id.thirdRow_Layout);
         helpAndSupportLayout = card.findViewById(R.id.seventhRow_Layout);
         aboutLayout = card.findViewById(R.id.layout_about);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
@@ -331,6 +332,7 @@ public class SidePanelFragment extends Fragment {
 
         if (session.getISEnterprise().equals("true")) {
             upgradeLayout.setVisibility(View.GONE);
+            addOnLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
             helpAndSupportLayout.setVisibility(View.GONE);
             shareLayout.setVisibility(View.GONE);
@@ -344,6 +346,7 @@ public class SidePanelFragment extends Fragment {
         tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
         accountSettingsText = (TextView) accountSettingsLayout.findViewById(R.id.fifthRow_TextView);
         upgradeText = (TextView) upgradeLayout.findViewById(R.id.secondRow_TextView);
+        addOnText = (TextView) addOnLayout.findViewById(R.id.thirdRow_TextView);
         helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
         aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
@@ -357,6 +360,7 @@ public class SidePanelFragment extends Fragment {
         socialImageView = socialLayout.findViewById(R.id.eleventh_ImageView);
         accountSettingsImageView = accountSettingsLayout.findViewById(R.id.fifthRow_ImageView);
         upgradeImageView = upgradeLayout.findViewById(R.id.secondRow_ImageView);
+        addOnImageView = addOnLayout.findViewById(R.id.thirdRow_ImageView);
         helpAndSupportImageView = helpAndSupportLayout.findViewById(R.id.seventhRow_ImageView);
         aboutImageView = aboutLayout.findViewById(R.id.img_about);
         shareImageView = shareLayout.findViewById(R.id.eigthRow_ImageView);
@@ -410,6 +414,7 @@ public class SidePanelFragment extends Fragment {
         tvSocialSharing.setTypeface(robotoMedium);
         accountSettingsText.setTypeface(robotoMedium);
         upgradeText.setTypeface(robotoMedium);
+        addOnText.setTypeface(robotoMedium);
         helpAndSupportText.setTypeface(robotoMedium);
         aboutText.setTypeface(robotoMedium);
         shareText.setTypeface(robotoMedium);
@@ -427,6 +432,13 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.upgrades));
                 onclickColorChange(upgradeImageView, upgradeText, upgradeLayout);
+            }
+        });
+        addOnLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.add_ons));
+                onclickColorChange(addOnImageView, addOnText, addOnLayout);
             }
         });
         keyboardTextView.setTypeface(robotoMedium);
@@ -791,6 +803,7 @@ public class SidePanelFragment extends Fragment {
         }
         if (session.getISEnterprise().equals("true")) {
             upgradeLayout.setVisibility(View.GONE);
+            addOnLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
         }
     }
@@ -853,9 +866,9 @@ public class SidePanelFragment extends Fragment {
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight + "%");
 
-        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
+        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight) {
             session.setSiteHealth(siteMeterTotalWeight);
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("site_health:%s",siteMeterTotalWeight));
+            OnBoardingApiCalls.updateData(session.getFpTag(), String.format("site_health:%s", siteMeterTotalWeight));
         }
     }
 
@@ -869,10 +882,10 @@ public class SidePanelFragment extends Fragment {
         tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
         accountSettingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
         upgradeText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        addOnText.setTextColor(getResources().getColor(R.color.cell_text_color));
         helpAndSupportText.setTextColor(getResources().getColor(R.color.cell_text_color));
         aboutText.setTextColor(getResources().getColor(R.color.cell_text_color));
         shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
-
 
 
         dasbBoardImageView.setColorFilter(defaultLabelFilter);
@@ -884,6 +897,7 @@ public class SidePanelFragment extends Fragment {
         socialImageView.setColorFilter(defaultLabelFilter);
         accountSettingsImageView.setColorFilter(defaultLabelFilter);
         upgradeImageView.setColorFilter(defaultLabelFilter);
+        addOnImageView.setColorFilter(defaultLabelFilter);
         helpAndSupportImageView.setColorFilter(defaultLabelFilter);
         aboutImageView.setColorFilter(defaultLabelFilter);
         shareImageView.setColorFilter(defaultLabelFilter);
@@ -898,6 +912,7 @@ public class SidePanelFragment extends Fragment {
         socialLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         accountSettingsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         upgradeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        addOnLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         helpAndSupportLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         aboutLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));

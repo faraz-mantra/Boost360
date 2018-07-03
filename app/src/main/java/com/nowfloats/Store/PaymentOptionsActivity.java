@@ -39,12 +39,12 @@ import com.thinksity.R;
  * Created by Admin on 12-04-2018.
  */
 
-public class PaymentOptionsActivity extends AppCompatActivity implements OnPaymentOptionClick{
+public class PaymentOptionsActivity extends AppCompatActivity implements OnPaymentOptionClick {
 
     private final static int media_req_id = 111, gallery_req_id = 112, ACTION_REQUEST_IMAGE_EDIT = 113;
     private String path;
     private int requestCode;
-    private Uri imageUri ;
+    private Uri imageUri;
     private PaymentType requestedFragmentType = null;
     private ProgressDialog progressDialog;
 
@@ -78,16 +78,17 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
     }
 
 
-    public enum PaymentType{
-        PAYMENT_OPTIONS, CHEQUE,OPC,BANK_TRANSFER;
+    public enum PaymentType {
+        PAYMENT_OPTIONS, CHEQUE, OPC, BANK_TRANSFER;
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_options);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -97,9 +98,9 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
 
     public void choosePicture() {
         final MaterialDialog dialog = new MaterialDialog.Builder(this)
-                .customView(R.layout.featuredimage_popup,true)
+                .customView(R.layout.featuredimage_popup, true)
                 .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
@@ -130,26 +131,22 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        if(requestCode==media_req_id)
-        {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == media_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
-            }else{
+            } else {
                 Toast.makeText(this, "Please give storage and camera permission", Toast.LENGTH_SHORT).show();
             }
 
-        }
-        else if(requestCode==gallery_req_id)
-        {
+        } else if (requestCode == gallery_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
 
-            }else{
+            } else {
                 Toast.makeText(this, "Please give read storage permission", Toast.LENGTH_SHORT).show();
             }
 
@@ -175,10 +172,9 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
                 }
                 if (!Util.isNullOrEmpty(path)) {
                     editImage();
-                }  else
-                    Methods.showSnackBarNegative(this,getResources().getString(R.string.select_image_upload));
-            }
-            else if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
+                } else
+                    Methods.showSnackBarNegative(this, getResources().getString(R.string.select_image_upload));
+            } else if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
@@ -187,16 +183,16 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
                         if (!Util.isNullOrEmpty(path)) {
                             editImage();
                         } else
-                            Methods.showSnackBarNegative(this,getResources().getString(R.string.select_image_upload));
+                            Methods.showSnackBarNegative(this, getResources().getString(R.string.select_image_upload));
                     }
                 }
-            }else if(resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT){
+            } else if (resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT) {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
                     sendPathToFragment();
                 }
-            }else{
+            } else {
                 super.onActivityResult(requestCode, resultCode, data);
             }
         } catch (Exception e) {
@@ -225,23 +221,23 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
         OnImagePicked frag = (OnImagePicked) getSupportFragmentManager().findFragmentByTag(requestedFragmentType.name());
         if (frag == null) return;
         Bundle b = new Bundle();
-        b.putString("path",path);
-        b.putInt("requestCode",requestCode);
+        b.putString("path", path);
+        b.putInt("requestCode", requestCode);
         frag.onShowPicked(b);
     }
 
-    private void editImage(){
-        Intent in =new Intent(this,EditImageActivity.class);
-        in.putExtra("image",path);
-        in.putExtra("isFixedAspectRatio",false);
+    private void editImage() {
+        Intent in = new Intent(this, EditImageActivity.class);
+        in.putExtra("image", path);
+        in.putExtra("isFixedAspectRatio", false);
         startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
     }
 
-    public void cameraIntent(){
+    public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
@@ -250,7 +246,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.TITLE, "New Picture");
             values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri =getContentResolver().insert(
+            imageUri = getContentResolver().insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             Intent captureIntent = new Intent(
                     MediaStore.ACTION_IMAGE_CAPTURE);
@@ -260,17 +256,16 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(this,errorMessage);
-        }
-        catch(Exception e){
+            Methods.showSnackBarNegative(this, errorMessage);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void galleryIntent(){
+    public void galleryIntent() {
         try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED ) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         gallery_req_id);
                 return;
@@ -283,52 +278,54 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(this,errorMessage);
+            Methods.showSnackBarNegative(this, errorMessage);
         }
     }
 
-    private void showPaymentOptionScreen(PaymentType type, Bundle b){
+    private void showPaymentOptionScreen(PaymentType type, Bundle b) {
         if (b != null) {
             b.putString("packageList", getIntent().getStringExtra("packageList"));
+            b.putSerializable("discountCoupon", (DiscountCoupon) getIntent().getExtras().get("discountCoupon"));
+            b.putInt("tdsPercentage", (int) getIntent().getExtras().get("tdsPercentage"));
             b.putString(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, getIntent().getStringExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER));
         }
         FragmentManager manager = getSupportFragmentManager();
-        Fragment  frag = manager.findFragmentByTag(type.name());
-        switch (type){
+        Fragment frag = manager.findFragmentByTag(type.name());
+        switch (type) {
             case OPC:
 
-                if (frag == null){
+                if (frag == null) {
 
                     frag = OpcPaymentFragment.getInstance(b);
                 }
-                manager.beginTransaction().replace(R.id.fragment_layout,frag,type.name())
+                manager.beginTransaction().replace(R.id.fragment_layout, frag, type.name())
                         .addToBackStack(null)
                         .commit();
                 break;
             case CHEQUE:
 
-                if (frag == null){
+                if (frag == null) {
                     frag = ChequePaymentFragment.getInstance(b);
                 }
-                manager.beginTransaction().replace(R.id.fragment_layout,frag,type.name())
+                manager.beginTransaction().replace(R.id.fragment_layout, frag, type.name())
                         .addToBackStack(null)
                         .commit();
                 break;
             case BANK_TRANSFER:
 
-                if (frag == null){
+                if (frag == null) {
                     frag = BankTransferFragment.getInstance(b);
                 }
-                manager.beginTransaction().replace(R.id.fragment_layout,frag,type.name())
+                manager.beginTransaction().replace(R.id.fragment_layout, frag, type.name())
                         .addToBackStack(null)
                         .commit();
                 break;
             case PAYMENT_OPTIONS:
 
-                if (frag == null){
+                if (frag == null) {
                     frag = PaymentOptionsListFragment.getInstance(b);
                 }
-                manager.beginTransaction().replace(R.id.fragment_layout,frag,type.name())
+                manager.beginTransaction().replace(R.id.fragment_layout, frag, type.name())
                         .commit();
                 break;
         }
@@ -336,7 +333,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
