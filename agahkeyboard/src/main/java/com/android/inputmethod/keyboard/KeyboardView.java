@@ -423,8 +423,8 @@ public class KeyboardView extends View {
         final int keyWidth = key.getDrawWidth();
         final int keyHeight = key.getHeight();
         final int bgWidth, bgHeight, bgX, bgY;
-        // Used for expanding keys to keep background ratio
-        /*if ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
+        // Used for expanding keys to keep background ratio & for Landscape view
+        if ((key.needsToKeepBackgroundAspectRatio(mDefaultKeyLabelFlags)
                 // HACK: To disable expanding normal/functional key background.
                 && !key.hasCustomActionLabel())) {
             final int intrinsicWidth = background.getIntrinsicWidth();
@@ -432,21 +432,16 @@ public class KeyboardView extends View {
             final float minScale = Math.min(
                     keyWidth / (float) intrinsicWidth, keyHeight / (float) intrinsicHeight);
             bgWidth = (int) (intrinsicWidth * minScale);
-            if (SharedPrefUtil.fromBoostPref().getsBoostPref(getContext()).getKeyboardThemeSelected() == 1) {
-                bgHeight = (int) (intrinsicHeight * minScale * 0.8f);
-            } else {
-                bgHeight = (int) (intrinsicHeight *minScale);
-
-            }
+            bgHeight = (int) (intrinsicHeight *minScale);
             bgX = (keyWidth - bgWidth) / 2;
             bgY = (keyHeight - bgHeight) / 2;
-        } else {*/
-        final Rect padding = mKeyBackgroundPadding;
-        bgWidth = keyWidth + padding.left + padding.right;
-        bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * heightFraction);
-        bgY = (int) ((keyHeight + padding.top + padding.bottom) * (1 - heightFraction) / 2);
-        bgX = -padding.left;
-        //}
+        } else {
+            final Rect padding = mKeyBackgroundPadding;
+            bgWidth = keyWidth + padding.left + padding.right;
+            bgHeight = (int) ((keyHeight + padding.top + padding.bottom) * heightFraction);
+            bgY = (int) ((keyHeight + padding.top + padding.bottom) * (1 - heightFraction) / 2);
+            bgX = -padding.left;
+        }
         final Rect bounds = background.getBounds();
         if (bgWidth != bounds.right || bgHeight != bounds.bottom) {
             background.setBounds(0, 0, bgWidth, bgHeight);

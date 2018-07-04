@@ -27,13 +27,14 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
+        android:background="?android:selectableItemBackground"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:elevation="3dp"
         android:padding="4dip"
-        android:src="@drawable/app_launcher" />
+        android:src="@drawable/anim_boost_to_back" />
     <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
          We just need to ignore the system's audio and haptic feedback settings. -->
     <LinearLayout

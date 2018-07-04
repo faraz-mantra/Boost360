@@ -19,6 +19,9 @@ package io.separ.neural.inputmethod.indic.suggestions;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -162,6 +165,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mSuggestionsStrip = (ViewGroup) findViewById(R.id.suggestions_strip);
         mVoiceKey = (ImageButton) findViewById(R.id.suggestions_strip_voice_key);
         mServicesKey = (ImageView) findViewById(R.id.suggestions_strip_services_key);
+        mServicesKey.setImageDrawable(null);
+        mServicesKey.setImageDrawable(getResources().getDrawable(R.drawable.anim_boost_to_back));
         mAddToDictionaryStrip = (ViewGroup) findViewById(R.id.add_to_dictionary_strip);
         //mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,
@@ -212,7 +217,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final SettingsValues currentSettingsValues = Settings.getInstance().getCurrent();
         //mVoiceKey.setVisibility(shouldBeVisible ? (currentSettingsValues.mShowsVoiceInputKey ? VISIBLE : INVISIBLE) : INVISIBLE);
         mVoiceKey.setVisibility(shouldBeVisible ? VISIBLE : INVISIBLE);
-        mServicesKey.setVisibility(shouldBeVisible ? VISIBLE : INVISIBLE);
+        mServicesKey.setVisibility(shouldBeVisible ? VISIBLE : GONE);
+        if (shouldBeVisible) {
+            mServicesKey.setClickable(true);
+        }
     }
 
     public void setSuggestions(final SuggestedWords suggestedWords, final boolean isRtlLanguage) {
@@ -317,7 +325,22 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             return;
         }
         if (view == mServicesKey) {
-            EventBusExt.getDefault().post(new ShowActionRowEvent());
+            mServicesKey.setImageDrawable(null);
+            mServicesKey.setImageDrawable(getResources().getDrawable(R.drawable.anim_boost_to_back));
+            final Animatable animatable = (Animatable) mServicesKey.getDrawable();
+            int longestAnimationTime = 1000; //miliseconds, defined in XML possibly?
+            animatable.start();
+            mServicesKey.setClickable(false);
+            mServicesKey.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    mServicesKey.setClickable(true);
+                    mServicesKey.setImageDrawable(null);
+                    mServicesKey.setImageDrawable(getResources().getDrawable(R.drawable.anim_boost_to_back));
+                    EventBusExt.getDefault().post(new ShowActionRowEvent());
+                }
+            }, longestAnimationTime);
             return;
         }
         final Object tag = view.getTag();

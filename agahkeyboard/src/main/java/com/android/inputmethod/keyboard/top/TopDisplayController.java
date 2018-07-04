@@ -150,6 +150,7 @@ public class TopDisplayController {
         mSuggestionsStripView.setVisibility(View.VISIBLE);
         mVoiceKey.setVisibility(View.VISIBLE);
         mServicesKey.setVisibility(View.VISIBLE);
+        mServicesKey.setClickable(true);
     }
 
     public void showActionRow(Context context) {

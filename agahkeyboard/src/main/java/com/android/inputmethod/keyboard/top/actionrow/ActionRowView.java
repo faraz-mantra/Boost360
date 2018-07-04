@@ -1,7 +1,10 @@
 package com.android.inputmethod.keyboard.top.actionrow;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimationDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -283,21 +286,38 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             imageView.setBackgroundResource(R.drawable.action_row_bg);
             i++;
         }*/
-        ImageView ivBack = layout.findViewById(R.id.img_back);
+        final ImageView ivBack = layout.findViewById(R.id.img_back);
+        ivBack.setImageDrawable(null);
+        ivBack.setImageDrawable(getResources().getDrawable(R.drawable.anim_back_to_boost));
         ivBack.setTag(Constants.CODE_ALPHA_FROM_EMOJI);
-        ivBack.setOnTouchListener(this);
         ivBack.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                final Object tag = v.getTag();
-                if (!(tag instanceof Integer)) {
-                    return;
-                }
-                final int code = (Integer) tag;
-                keyboardActionListener.onCodeInput(code, NOT_A_COORDINATE, NOT_A_COORDINATE,
-                        false /* isKeyRepeat */);
-                keyboardActionListener.onReleaseKey(code, false /* withSliding */);
-                EventBusExt.getDefault().post(new ShowSuggestionsEvent());
+            public void onClick(final View v) {
+                ivBack.setImageDrawable(null);
+                ivBack.setImageDrawable(getResources().getDrawable(R.drawable.anim_back_to_boost));
+                int longestAnimationTime = 1000; //miliseconds, defined in XML possibly?
+                final Animatable animatable = (Animatable) ivBack.getDrawable();
+                animatable.start();
+                ivBack.setClickable(false);
+                ivBack.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        animatable.stop();
+                        ivBack.setClickable(true);
+                        final Object tag = v.getTag();
+                        if (!(tag instanceof Integer)) {
+                            return;
+                        }
+                        final int code = (Integer) tag;
+                        keyboardActionListener.onCodeInput(code, NOT_A_COORDINATE, NOT_A_COORDINATE,
+                                false /* isKeyRepeat */);
+                        keyboardActionListener.onReleaseKey(code, false /* withSliding */);
+                        EventBusExt.getDefault().post(new ShowSuggestionsEvent());
+                        ivBack.setImageDrawable(null);
+                        ivBack.setImageDrawable(getResources().getDrawable(R.drawable.anim_back_to_boost));
+                    }
+                }, longestAnimationTime);
             }
         });
         TextView tvUpdates = layout.findViewById(R.id.tv_updates);
