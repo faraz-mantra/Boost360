@@ -19,9 +19,6 @@ package io.separ.neural.inputmethod.indic.suggestions;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Animatable2;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -33,6 +30,10 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -165,8 +166,6 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mSuggestionsStrip = (ViewGroup) findViewById(R.id.suggestions_strip);
         mVoiceKey = (ImageButton) findViewById(R.id.suggestions_strip_voice_key);
         mServicesKey = (ImageView) findViewById(R.id.suggestions_strip_services_key);
-        mServicesKey.setImageDrawable(null);
-        mServicesKey.setImageDrawable(getResources().getDrawable(R.drawable.anim_boost_to_back));
         mAddToDictionaryStrip = (ViewGroup) findViewById(R.id.add_to_dictionary_strip);
         //mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,
@@ -325,22 +324,47 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             return;
         }
         if (view == mServicesKey) {
-            mServicesKey.setImageDrawable(null);
-            mServicesKey.setImageDrawable(getResources().getDrawable(R.drawable.anim_boost_to_back));
-            final Animatable animatable = (Animatable) mServicesKey.getDrawable();
-            int longestAnimationTime = 1000; //miliseconds, defined in XML possibly?
-            animatable.start();
             mServicesKey.setClickable(false);
-            mServicesKey.postDelayed(new Runnable() {
+            RotateAnimation rotateAnimation = new RotateAnimation(0, 225f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation.setDuration(500);
+            rotateAnimation.setInterpolator(new OvershootInterpolator(1.2f));
+            final ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            scaleAnimation.setDuration(200);
+            scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
 
                 @Override
-                public void run() {
-                    mServicesKey.setClickable(true);
-                    mServicesKey.setImageDrawable(null);
-                    mServicesKey.setImageDrawable(getResources().getDrawable(R.drawable.anim_boost_to_back));
+                public void onAnimationEnd(Animation animation) {
                     EventBusExt.getDefault().post(new ShowActionRowEvent());
+                    mServicesKey.setClickable(true);
                 }
-            }, longestAnimationTime);
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mServicesKey.setRotation(225f);
+                    mServicesKey.startAnimation(scaleAnimation);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            mServicesKey.startAnimation(rotateAnimation);
             return;
         }
         final Object tag = view.getTag();

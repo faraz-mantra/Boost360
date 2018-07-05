@@ -22,7 +22,7 @@
         android:layout_marginBottom="2dp"
         android:elevation="3dp"
         android:padding="4dip"
-        android:src="@drawable/anim_back_to_boost"/>
+        android:src="@drawable/icon_action_back"/>
 
     <LinearLayout
         android:layout_width="match_parent"

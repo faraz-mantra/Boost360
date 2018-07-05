@@ -3,6 +3,9 @@ package com.android.inputmethod.keyboard.top;
 import android.content.Context;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -131,8 +134,8 @@ public class TopDisplayController {
         mDimOtherView = (View) parent.findViewById(R.id.dim_other_view);
     }
 
-    public void showSuggestions() {
-      /*  if (this.mSuggestionsStripView.getVisibility() == View.VISIBLE) {
+    public void showSuggestions(boolean shouldAnimate) {
+        /*  if (this.mSuggestionsStripView.getVisibility() == View.VISIBLE) {
             if (mServiceResultsView != null && this.mServiceResultsView.getVisibility() == View.VISIBLE) {
                 this.mSuggestionsStripHackyContainer.setVisibility(GONE);
                 return;
@@ -143,14 +146,64 @@ public class TopDisplayController {
             //mActionRowView.postDelayed(this.hideSuggestionAfter, 5000);
             mSuggestionsStripView.setVisibility(View.VISIBLE);
         }*/
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(200);
+        final RotateAnimation rotateAnimation = new RotateAnimation(-135f, 0f,  Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setInterpolator(new OvershootInterpolator(1.5f));
+        rotateAnimation.setDuration(400);
+        rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mServicesKey.setRotation(0f);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mServicesKey.setRotation(0f);
+                mServicesKey.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mServicesKey.startAnimation(rotateAnimation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        if (shouldAnimate) {
+            mServicesKey.startAnimation(scaleAnimation);
+            mServicesKey.setClickable(false);
+        } else {
+            mServicesKey.setRotation(0f);
+            mServicesKey.clearAnimation();
+            mServicesKey.setClickable(true);
+        }
         mActionRowView.removeCallbacks(this.hideSuggestionAfter);
-        mActionRowView.setVisibility(GONE);
-        this.mSuggestionsStripHackyContainer.setVisibility(View.VISIBLE);
-        //mActionRowView.postDelayed(this.hideSuggestionAfter, 5000);
-        mSuggestionsStripView.setVisibility(View.VISIBLE);
+        if (mActionRowView.findViewById(R.id.tv_products) != null) {
+            mActionRowView.findViewById(R.id.tv_photos).setVisibility(GONE);
+            mActionRowView.findViewById(R.id.tv_updates).setVisibility(GONE);
+            mActionRowView.findViewById(R.id.tv_details).setVisibility(GONE);
+            mActionRowView.findViewById(R.id.tv_products).setVisibility(GONE);
+        }
         mVoiceKey.setVisibility(View.VISIBLE);
+        mSuggestionsStripView.setVisibility(View.VISIBLE);
+        mActionRowView.setVisibility(GONE);
         mServicesKey.setVisibility(View.VISIBLE);
-        mServicesKey.setClickable(true);
+        mSuggestionsStripHackyContainer.setVisibility(View.VISIBLE);
+        //mActionRowView.postDelayed(this.hideSuggestionAfter, 5000);
     }
 
     public void showActionRow(Context context) {
@@ -160,9 +213,16 @@ public class TopDisplayController {
         //mActionRowView.postDelayed(this.hideSuggestionAfter, 20000);
         mSuggestionsStripView.setVisibility(GONE);
         if (mActionRowView.findViewById(R.id.tv_products) != null) {
-
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0f,1f, 0f, 1f,  Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            scaleAnimation.setDuration(200);
+            scaleAnimation.setInterpolator(new OvershootInterpolator(1.2f));
+            mActionRowView.findViewById(R.id.img_back).startAnimation(scaleAnimation);
             ScaleAnimation anim1  = new ScaleAnimation(0,1,1,1);
             anim1.setInterpolator(new AccelerateDecelerateInterpolator());
+            mActionRowView.findViewById(R.id.tv_photos).setVisibility(View.VISIBLE);
+            mActionRowView.findViewById(R.id.tv_updates).setVisibility(View.VISIBLE);
+            mActionRowView.findViewById(R.id.tv_details).setVisibility(View.VISIBLE);
+            mActionRowView.findViewById(R.id.tv_products).setVisibility(View.VISIBLE);
             anim1.setDuration(100);
             mActionRowView.findViewById(R.id.tv_updates).startAnimation(anim1);
             mActionRowView.findViewById(R.id.tv_products).startAnimation(anim1);

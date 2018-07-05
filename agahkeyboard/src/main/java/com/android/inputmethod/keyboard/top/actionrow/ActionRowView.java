@@ -1,10 +1,6 @@
 package com.android.inputmethod.keyboard.top.actionrow;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.AnimationDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +17,7 @@ import android.widget.TextView;
 import com.android.inputmethod.keyboard.KeyboardActionListener;
 import com.android.inputmethod.keyboard.emojifast.EmojiView;
 import com.android.inputmethod.keyboard.emojifast.RecentEmojiPageModel;
-import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
+import com.android.inputmethod.keyboard.top.ShowSuggestionsEventAnimated;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -213,7 +211,7 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
     }
 
     public void onColorChange(ColorProfile newProfile) {
-        setBackgroundColor(newProfile.getSecondary());
+        //setBackgroundColor(newProfile.getSecondary());
         setupLayouts();
         adapter = new ActionRowAdapter();
         setAdapter(adapter);
@@ -226,7 +224,7 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
     }
 
     private void init() {
-        setBackgroundColor(Color.parseColor("#eceff1"));
+        //setBackgroundColor(Color.parseColor("#eceff1"));
         //layoutToShow = ActionRowSettingsActivity.DEFAULT_LAYOUTS.split("\\s*,\\s*");
         layoutToShow = ActionRowSettingsActivity.SERVCICE_ID.split("\\s*,\\s*");
         ColorManager.addObserverAndCall(this);
@@ -287,23 +285,23 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             i++;
         }*/
         final ImageView ivBack = layout.findViewById(R.id.img_back);
-        ivBack.setImageDrawable(null);
-        ivBack.setImageDrawable(getResources().getDrawable(R.drawable.anim_back_to_boost));
         ivBack.setTag(Constants.CODE_ALPHA_FROM_EMOJI);
         ivBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
-                ivBack.setImageDrawable(null);
-                ivBack.setImageDrawable(getResources().getDrawable(R.drawable.anim_back_to_boost));
-                int longestAnimationTime = 1000; //miliseconds, defined in XML possibly?
-                final Animatable animatable = (Animatable) ivBack.getDrawable();
-                animatable.start();
                 ivBack.setClickable(false);
-                ivBack.postDelayed(new Runnable() {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, ivBack.getX() + ivBack.getWidth()/2, ivBack.getY() + ivBack.getHeight()/2);
+                scaleAnimation.setDuration(200);
+                scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
 
                     @Override
-                    public void run() {
-                        animatable.stop();
+                    public void onAnimationEnd(Animation animation) {
+                        ivBack.setScaleX(1f);
+                        ivBack.setScaleX(1f);
                         ivBack.setClickable(true);
                         final Object tag = v.getTag();
                         if (!(tag instanceof Integer)) {
@@ -313,11 +311,15 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
                         keyboardActionListener.onCodeInput(code, NOT_A_COORDINATE, NOT_A_COORDINATE,
                                 false /* isKeyRepeat */);
                         keyboardActionListener.onReleaseKey(code, false /* withSliding */);
-                        EventBusExt.getDefault().post(new ShowSuggestionsEvent());
-                        ivBack.setImageDrawable(null);
-                        ivBack.setImageDrawable(getResources().getDrawable(R.drawable.anim_back_to_boost));
+                        EventBusExt.getDefault().post(new ShowSuggestionsEventAnimated());
                     }
-                }, longestAnimationTime);
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                ivBack.startAnimation(scaleAnimation);
             }
         });
         TextView tvUpdates = layout.findViewById(R.id.tv_updates);
