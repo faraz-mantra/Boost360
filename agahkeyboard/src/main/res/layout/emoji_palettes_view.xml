@@ -18,6 +18,7 @@
 -->
 
 <com.android.inputmethod.keyboard.emoji.EmojiPalettesView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="?attr/emojiPalettesViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
             </FrameLayout>
         </TabHost>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/emoji_keyboard_delete"
             android:layout_width="0dip"
             android:layout_height="match_parent"
@@ -69,7 +70,7 @@
             android:hapticFeedbackEnabled="false"
             android:padding="7dip"
             android:soundEffectsEnabled="false"
-            android:src="@drawable/ic_backspace_arrow" />
+            app:srcCompat="@drawable/ic_backspace_arrow" />
     </LinearLayout>
 
     <View

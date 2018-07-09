@@ -160,12 +160,16 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
         }
         // Remove preference that contains unknown or illegal theme id.
         prefs.edit().remove(LXX_KEYBOARD_THEME_KEY).apply();*/
-        if (themeId.equals(getKeyboardThemeName(THEME_ID_LXX_DARK))) {
-            return getDefaultKeyboardTheme(prefs, sdkVersion);
-        } else if (themeId.equals(getKeyboardThemeName(THEME_ID_LXX_DARK_UNBORDERED))) {
-            return searchKeyboardThemeById(THEME_ID_LXX_DARK_UNBORDERED);
+        if (android.os.Build.VERSION.SDK_INT <= VERSION_CODES.LOLLIPOP) {
+            return searchKeyboardThemeById(THEME_ID_KLP);
         } else {
-            return getDefaultKeyboardTheme(prefs, sdkVersion);
+            if (themeId.equals(getKeyboardThemeName(THEME_ID_LXX_DARK))) {
+                return getDefaultKeyboardTheme(prefs, sdkVersion);
+            } else if (themeId.equals(getKeyboardThemeName(THEME_ID_LXX_DARK_UNBORDERED))) {
+                return searchKeyboardThemeById(THEME_ID_LXX_DARK_UNBORDERED);
+            } else {
+                return getDefaultKeyboardTheme(prefs, sdkVersion);
+            }
         }
     }
 }

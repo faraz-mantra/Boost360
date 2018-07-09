@@ -94,20 +94,25 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         view.findViewById(R.id.keyboard_info).setOnClickListener(this);
         overLayout1 = view.findViewById(R.id.enable_keyboard_rfl_overlay1);
         view.findViewById(R.id.ll_enable_keyboard).setOnClickListener(this);
-        rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
-        rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
-        ArrayList<Integer> keyboardDrawables = new ArrayList<>();
-        keyboardDrawables.add(R.drawable.ic_keyboard_theme_two);
-        keyboardDrawables.add(R.drawable.ic_keyboard_theme_one);
-        String selectedString = sharedPreferences.getString("keyboard_theme", KeyboardThemesAdapter.Themes.LXX_DARK.toString());
-        int selected = 0;
-        if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK.toString())) {
-            selected = 0;
-        } else if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK_UNBORDERED.toString())) {
-            selected = 1;
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            view.findViewById(R.id.cv_themes).setVisibility(View.GONE);
+        } else {
+            view.findViewById(R.id.cv_themes).setVisibility(View.VISIBLE);
+            rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
+            rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
+            ArrayList<Integer> keyboardDrawables = new ArrayList<>();
+            keyboardDrawables.add(R.drawable.ic_keyboard_theme_two);
+            keyboardDrawables.add(R.drawable.ic_keyboard_theme_one);
+            String selectedString = sharedPreferences.getString("keyboard_theme", KeyboardThemesAdapter.Themes.LXX_DARK.toString());
+            int selected = 0;
+            if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK.toString())) {
+                selected = 0;
+            } else if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK_UNBORDERED.toString())) {
+                selected = 1;
+            }
+            keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences);
+            rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
         }
-        keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences);
-        rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
     }
 
     @Override
