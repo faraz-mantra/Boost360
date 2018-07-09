@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
+
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
@@ -18,8 +20,8 @@ import nfkeyboard.models.AllSuggestionModel;
 
 public class DetailsAdapter extends BaseAdapter<AllSuggestionModel> {
 
-    DetailsAdapter(Context context, ItemClickListener listener) {
-        super(context, listener);
+    DetailsAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
+        super(context, listener, mKeyboardSwitcher);
     }
 
     @Override

@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="8dp"
-        android:drawablePadding="4dp"
+        android:drawablePadding="8dp"
         android:drawableTop="@drawable/ic_local_offer_black_24dp"
         android:padding="16dp"
         android:text="@string/create_offer"

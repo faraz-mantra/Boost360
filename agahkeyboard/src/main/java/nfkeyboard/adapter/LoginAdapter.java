@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
+
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
@@ -19,8 +21,8 @@ import nfkeyboard.util.MethodUtils;
 
 public class LoginAdapter extends BaseAdapter<AllSuggestionModel> {
 
-    LoginAdapter(Context context, ItemClickListener listener) {
-        super(context, listener);
+    LoginAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
+        super(context, listener, mKeyboardSwitcher);
     }
 
     @Override

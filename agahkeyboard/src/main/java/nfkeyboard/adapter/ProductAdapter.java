@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.bumptech.glide.Glide;
 
 import java.text.DecimalFormat;
@@ -49,8 +50,8 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
     ViewGroup parent;
 
-    ProductAdapter(Context context, ItemClickListener listener) {
-        super(context, listener);
+    ProductAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
+        super(context, listener, mKeyboardSwitcher);
         this.listener = listener;
     }
 

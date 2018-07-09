@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -29,8 +30,8 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
 
     private Context mContext;
 
-    ImageShareAdapter(Context context, ItemClickListener listener) {
-        super(context, listener);
+    ImageShareAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
+        super(context, listener, mKeyboardSwitcher);
         this.mContext = context;
         this.listener = listener;
     }

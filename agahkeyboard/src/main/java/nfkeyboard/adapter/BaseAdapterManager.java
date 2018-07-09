@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
+
 import java.util.ArrayList;
 
 import nfkeyboard.interface_contracts.ItemClickListener;
@@ -31,9 +33,9 @@ public class BaseAdapterManager {
 
     private ArrayList<BaseAdapter<AllSuggestionModel>> adapterList;
 
-    public BaseAdapterManager(Context context, ItemClickListener listener) {
+    public BaseAdapterManager(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
         adapterList = new ArrayList<>();
-        makeSectionAdapterList(context, listener);
+        makeSectionAdapterList(context, listener, mKeyboardSwitcher);
     }
 
 
@@ -47,14 +49,14 @@ public class BaseAdapterManager {
         adapterList.get(position).onBindViewHolder(holder, node);
     }
 
-    private void makeSectionAdapterList(Context context, ItemClickListener listener) {
-        adapterList.add(new ImageAdapter(context, listener));
-        adapterList.add(new TextAdapter(context, listener));
-        adapterList.add(new ProductAdapter(context, listener));
-        adapterList.add(new EmptyListAdapter(context, listener));
-        adapterList.add(new LoginAdapter(context, listener));
-        adapterList.add(new LoaderAdapter(context, listener));
-        adapterList.add(new ImageShareAdapter(context, listener));
-        adapterList.add(new DetailsAdapter(context, listener));
+    private void makeSectionAdapterList(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
+        adapterList.add(new ImageAdapter(context, listener, mKeyboardSwitcher));
+        adapterList.add(new TextAdapter(context, listener, mKeyboardSwitcher));
+        adapterList.add(new ProductAdapter(context, listener, mKeyboardSwitcher));
+        adapterList.add(new EmptyListAdapter(context, listener, mKeyboardSwitcher));
+        adapterList.add(new LoginAdapter(context, listener, mKeyboardSwitcher));
+        adapterList.add(new LoaderAdapter(context, listener, mKeyboardSwitcher));
+        adapterList.add(new ImageShareAdapter(context, listener, mKeyboardSwitcher));
+        adapterList.add(new DetailsAdapter(context, listener, mKeyboardSwitcher));
     }
 }

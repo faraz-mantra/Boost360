@@ -954,7 +954,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             mRecyclerView.setHasFixedSize(true);
             linearLayoutManager = new LinearLayoutManager(mThemeContext, LinearLayoutManager.HORIZONTAL, false);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            shareAdapter = new MainAdapter(mThemeContext, this);
+            shareAdapter = new MainAdapter(mThemeContext, this, this);
             mRecyclerView.setAdapter(shareAdapter);
             mRecyclerView.setOnFlingListener(null);
             snapHelper = new PagerSnapHelper();
@@ -984,7 +984,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (recyclerViewPhotos == null) {
             recyclerViewPhotos = shareLayout.findViewById(R.id.rv_list_photos);
             recyclerViewPhotos.setHasFixedSize(true);
-            shareAdapter1 = new MainAdapter(mThemeContext, this);
+            shareAdapter1 = new MainAdapter(mThemeContext, this, this);
             recyclerViewPhotos.setAdapter(shareAdapter1);
             gridLayoutManager = new GridLayoutManager(mThemeContext, 2, GridLayoutManager.HORIZONTAL, false);
             recyclerViewPhotos.setLayoutManager(gridLayoutManager);

@@ -1,12 +1,15 @@
 package nfkeyboard.adapter;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
 
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
@@ -22,7 +25,7 @@ public abstract class BaseAdapter<T extends AllSuggestionModel> {
     private ItemClickListener mItemClickListener;
     LinearLayout.LayoutParams linLayoutParams;
 
-    BaseAdapter(Context context) {
+    BaseAdapter(Context context, KeyboardSwitcher mKeyboardSwitcher) {
         mContext = context;
         metrics = mContext.getResources().getDisplayMetrics();
         leftSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
@@ -30,11 +33,11 @@ public abstract class BaseAdapter<T extends AllSuggestionModel> {
         padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, metrics);
         paddingTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 23, metrics);
         linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 75 / 100,
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, metrics));
+                mKeyboardSwitcher.getMainKeyboardView().getHeight() - topSpace - topSpace);
     }
 
-    BaseAdapter(Context context, ItemClickListener listener) {
-        this(context);
+    BaseAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
+        this(context, mKeyboardSwitcher);
         mItemClickListener = listener;
     }
 

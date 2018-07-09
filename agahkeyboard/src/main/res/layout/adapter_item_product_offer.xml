@@ -146,6 +146,7 @@
             android:id="@+id/tv_selected_quantity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="bottom"
             android:layout_marginTop="2dp"
@@ -153,10 +154,10 @@
             android:textColor="@android:color/black"
             android:text="1"/>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_drop_down_grey_600_24dp"
+            android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_arrow_drop_down_grey_600_24dp" />
 
     </LinearLayout>
@@ -165,13 +166,15 @@
         android:id="@+id/tv_validity"
         android:layout_width="0dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
         android:maxLines="2"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintVertical_weight="1"
         app:layout_constraintEnd_toStartOf="@id/ll_validity"
-        app:layout_constraintTop_toBottomOf="@id/tv_quantity"
+        app:layout_constraintTop_toTopOf="@id/ll_validity"
         app:layout_constraintBottom_toBottomOf="@id/ll_validity"
         app:layout_constraintStart_toEndOf="@id/card_view_image"
         android:textSize="14sp"
@@ -194,16 +197,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:gravity="bottom"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="8dp"
             android:textColor="@android:color/black"
             android:text="24 Hrs"/>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_drop_down_grey_600_24dp"
+            android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_arrow_drop_down_grey_600_24dp" />
 
     </LinearLayout>

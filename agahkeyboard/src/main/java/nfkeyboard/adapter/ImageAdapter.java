@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.bumptech.glide.Glide;
 
 import io.separ.neural.inputmethod.indic.R;
@@ -19,8 +20,8 @@ import nfkeyboard.models.AllSuggestionModel;
  */
 
 class ImageAdapter extends BaseAdapter<AllSuggestionModel> {
-    public ImageAdapter(Context context, ItemClickListener listener) {
-        super(context, listener);
+    public ImageAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
+        super(context, listener, mKeyboardSwitcher);
     }
 
     @Override
