@@ -441,10 +441,6 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
         mDrawingPreviewPlacerView.setKeyboardViewGeometry(mOriginCoords, getWidth(), getHeight());
     }
 
-    public float getHeightOfKeyboard() {
-        return getHeight();
-    }
-
     private void installPreviewPlacerView() {
         final View rootView = getRootView();
         if (rootView == null) {

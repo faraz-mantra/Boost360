@@ -256,6 +256,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 .hasMultipleEnabledIMEsOrSubtypes(true /* shouldIncludeAuxiliarySubtypes */);
         keyboardView.startDisplayLanguageOnSpacebar(subtypeChanged, languageOnSpacebarFormatType,
                 hasMultipleEnabledIMEsOrSubtypes);
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putInt("keyboard_height", getMainKeyboardView().getHeight());
+        editor.commit();
     }
 
     public Keyboard getKeyboard() {
@@ -352,6 +355,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         this.mTabType = tabType;
         shareLayout.setVisibility(View.VISIBLE);
         mKeyboardView.setVisibility(View.INVISIBLE);
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putInt("keyboard_height", getMainKeyboardView().getHeight());
+        editor.commit();
         mRichMediaView.setGone();
         //EventBusExt.getDefault().post(new ShowActionRowEvent());
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {
@@ -954,7 +960,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             mRecyclerView.setHasFixedSize(true);
             linearLayoutManager = new LinearLayoutManager(mThemeContext, LinearLayoutManager.HORIZONTAL, false);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            shareAdapter = new MainAdapter(mThemeContext, this, this);
+            shareAdapter = new MainAdapter(mThemeContext, this);
             mRecyclerView.setAdapter(shareAdapter);
             mRecyclerView.setOnFlingListener(null);
             snapHelper = new PagerSnapHelper();
@@ -984,7 +990,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (recyclerViewPhotos == null) {
             recyclerViewPhotos = shareLayout.findViewById(R.id.rv_list_photos);
             recyclerViewPhotos.setHasFixedSize(true);
-            shareAdapter1 = new MainAdapter(mThemeContext, this, this);
+            shareAdapter1 = new MainAdapter(mThemeContext, this);
             recyclerViewPhotos.setAdapter(shareAdapter1);
             gridLayoutManager = new GridLayoutManager(mThemeContext, 2, GridLayoutManager.HORIZONTAL, false);
             recyclerViewPhotos.setLayoutManager(gridLayoutManager);

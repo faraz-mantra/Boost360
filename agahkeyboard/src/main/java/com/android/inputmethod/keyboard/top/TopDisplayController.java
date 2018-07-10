@@ -175,7 +175,12 @@ public class TopDisplayController {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mServicesKey.startAnimation(rotateAnimation);
+                if (mActionRowView.getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+                    mServicesKey.setRotation(0f);
+                    mServicesKey.setClickable(true);
+                } else {
+                    mServicesKey.startAnimation(rotateAnimation);
+                }
             }
 
             @Override

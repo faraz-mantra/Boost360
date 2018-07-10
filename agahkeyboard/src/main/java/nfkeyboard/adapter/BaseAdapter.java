@@ -1,15 +1,13 @@
 package nfkeyboard.adapter;
 
 import android.content.Context;
-import android.graphics.Rect;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-import com.android.inputmethod.keyboard.KeyboardSwitcher;
 
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
@@ -24,20 +22,23 @@ public abstract class BaseAdapter<T extends AllSuggestionModel> {
     final DisplayMetrics metrics;
     private ItemClickListener mItemClickListener;
     LinearLayout.LayoutParams linLayoutParams;
+    SharedPreferences preferences;
 
-    BaseAdapter(Context context, KeyboardSwitcher mKeyboardSwitcher) {
+    BaseAdapter(Context context) {
         mContext = context;
+        preferences = mContext.getApplicationContext().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
         metrics = mContext.getResources().getDisplayMetrics();
         leftSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
         topSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
         padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, metrics);
         paddingTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 23, metrics);
         linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 75 / 100,
-                mKeyboardSwitcher.getMainKeyboardView().getHeight() - topSpace - topSpace);
+                preferences.getInt("keyboard_height", (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, metrics)) - 2 * topSpace);
     }
 
-    BaseAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
-        this(context, mKeyboardSwitcher);
+    BaseAdapter(Context context, ItemClickListener listener) {
+        this(context);
+        preferences = mContext.getApplicationContext().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
         mItemClickListener = listener;
     }
 

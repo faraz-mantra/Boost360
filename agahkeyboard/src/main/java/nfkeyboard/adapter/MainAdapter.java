@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.android.inputmethod.keyboard.KeyboardSwitcher;
-
 import java.util.ArrayList;
 
 import nfkeyboard.interface_contracts.ItemClickListener;
@@ -23,8 +21,8 @@ public class MainAdapter extends RecyclerView.Adapter {
     private ArrayList<AllSuggestionModel> mSuggestionModels = new ArrayList<>();
     ;
 
-    public MainAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
-        baseAdapterManager = new BaseAdapterManager(context, listener, mKeyboardSwitcher);
+    public MainAdapter(Context context, ItemClickListener listener) {
+        baseAdapterManager = new BaseAdapterManager(context, listener);
     }
 
     @Override

@@ -1,18 +1,13 @@
 package nfkeyboard.adapter;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.android.inputmethod.keyboard.KeyboardSwitcher;
 
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ItemClickListener;
@@ -24,8 +19,8 @@ import nfkeyboard.models.AllSuggestionModel;
 
 public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
 
-    EmptyListAdapter(Context context, ItemClickListener listener, KeyboardSwitcher mKeyboardSwitcher) {
-        super(context, listener, mKeyboardSwitcher);
+    EmptyListAdapter(Context context, ItemClickListener listener) {
+        super(context, listener);
     }
 
     @Override

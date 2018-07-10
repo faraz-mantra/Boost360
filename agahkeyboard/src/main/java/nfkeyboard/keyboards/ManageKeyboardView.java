@@ -194,8 +194,8 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             recyclerViewPhotos = shareLayout.findViewById(R.id.rv_list_photos);
 //            mRecyclerView = shareLayout.findViewById(R.id.rv_list);
             mRecyclerView.setHasFixedSize(true);
-            shareAdapter1 = new MainAdapter(mContext, this, null);
-            shareAdapter = new MainAdapter(mContext, this, null);
+            shareAdapter1 = new MainAdapter(mContext, this);
+            shareAdapter = new MainAdapter(mContext, this);
             mRecyclerView.setAdapter(shareAdapter);
             switch (type) {
                 case PRODUCTS:
@@ -223,7 +223,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
         }
         if (recyclerViewPhotos == null) {
             recyclerViewPhotos.setHasFixedSize(true);
-            shareAdapter1 = new MainAdapter(mContext, this, null);
+            shareAdapter1 = new MainAdapter(mContext, this);
             recyclerViewPhotos.setAdapter(shareAdapter1);
             recyclerViewPhotos.setLayoutManager(gridLayoutManager);
             selectionLayout.setVisibility(VISIBLE);

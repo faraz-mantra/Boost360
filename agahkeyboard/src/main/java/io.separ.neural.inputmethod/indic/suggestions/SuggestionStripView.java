@@ -365,7 +365,11 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
                 }
             });
-            mServicesKey.startAnimation(rotateAnimation);
+            if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+                mServicesKey.startAnimation(scaleAnimation);
+            } else {
+                mServicesKey.startAnimation(rotateAnimation);
+            }
             return;
         }
         final Object tag = view.getTag();
