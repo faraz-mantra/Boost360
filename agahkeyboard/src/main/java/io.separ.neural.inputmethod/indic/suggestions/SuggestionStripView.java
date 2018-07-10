@@ -166,6 +166,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mSuggestionsStrip = (ViewGroup) findViewById(R.id.suggestions_strip);
         mVoiceKey = (ImageButton) findViewById(R.id.suggestions_strip_voice_key);
         mServicesKey = (ImageView) findViewById(R.id.suggestions_strip_services_key);
+        mServicesKey.setImageResource(getResources().getIdentifier("app_launcher", "drawable", context.getApplicationContext().getPackageName()));
         mAddToDictionaryStrip = (ViewGroup) findViewById(R.id.add_to_dictionary_strip);
         //mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,

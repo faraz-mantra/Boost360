@@ -939,7 +939,7 @@ public class Key implements Comparable<Key> {
      * @see android.graphics.drawable.StateListDrawable#setState(int[])
      */
     public final Drawable selectBackgroundDrawable(final Drawable keyBackground,
-            final Drawable functionalKeyBackground, final Drawable spacebarBackground) {
+            final Drawable functionalKeyBackground, final Drawable spacebarBackground, int color, int colorPressed) {
         final Drawable background;
         if (mBackgroundType == BACKGROUND_TYPE_FUNCTIONAL) {
             background = functionalKeyBackground;
@@ -951,9 +951,9 @@ public class Key implements Comparable<Key> {
         setBackgroundState(background);
         if (mShowColorFilter) {
             if (mPressed) {
-                background.setColorFilter(Color.parseColor("#ffce61"), PorterDuff.Mode.SRC_IN);
+                background.setColorFilter(colorPressed, PorterDuff.Mode.SRC_IN);
             } else {
-                background.setColorFilter(Color.parseColor("#ffb900"), PorterDuff.Mode.SRC_IN);
+                background.setColorFilter(color, PorterDuff.Mode.SRC_IN);
             }
         } else {
             background.clearColorFilter();

@@ -1577,7 +1577,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     public void displaySettingsDialog() {
         Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/addproduct"));
+                Uri.parse("nowfloats://" + getApplicationContext().getPackageName() + ".keyboard.home/addproduct"));
         intent.putExtra("from", "notification");
         intent.putExtra("url", "keyboardSettings");
         intent.addCategory(Intent.CATEGORY_BROWSABLE);

@@ -118,7 +118,7 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/photos"));
+                                    Uri.parse("nowfloats://" + mContext.getApplicationContext().getPackageName() + ".keyboard.home/photos"));
                             intent.putExtra("from", "notification");
                             intent.putExtra("url", "imagegallery");
                             intent.addCategory(Intent.CATEGORY_BROWSABLE);

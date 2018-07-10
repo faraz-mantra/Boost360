@@ -367,7 +367,7 @@ public class KeyboardView extends View {
 
         if (!key.isSpacer()) {
             if (key.isMoreKey()) {
-                Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground);
+                Drawable tmp = key.selectBackgroundDrawable(this.mKeyBackground, this.mFunctionalKeyBackground, this.mSpacebarBackground, getResources().getColor(R.color.primaryColor), getResources().getColor(R.color.primaryColorDark));
                 onDrawKeyBackground(key, canvas, tmp, 1);
                 //Log.e("SEPAR", "here :(");
             } else {
