@@ -1147,7 +1147,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     }
 
     private void navigateToProductDetail() {
-        if (materialProgress.isShowing())
+        if (materialProgress != null && materialProgress.isShowing())
             materialProgress.dismiss();
         if (lsProductImages != null && lsProductImages.size() > 0) {
             lsProductImages.clear();

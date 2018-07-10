@@ -101,6 +101,7 @@ public class Constants {
     public static final String[] FACEBOOK_READ_PERMISSIONS = Specific.FACEBOOK_READ_PERMISSIONS;
     public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = Specific.FACEBOOK_PUBLISH_PERMISSIONS;
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
+//    public final static String NOW_FLOATS_API_URL = "http://api2.withfloats.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
     public final static String NOW_FLOATS_API_URL_V2 = "https://api2.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";

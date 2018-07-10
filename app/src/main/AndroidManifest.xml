@@ -169,13 +169,13 @@
         </activity>
 
         <activity
-            android:name="com.nowfloats.Analytics_Screen.OrderAnalytics"
+            android:name="com.nowfloats.Analytics_Screen.OrderAnalyticsActivity"
             android:label="Order Analytics"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nowfloats.Analytics_Screen.OrderAnalytics" />
+                android:value="com.nowfloats.Analytics_Screen.OrderAnalyticsActivity" />
         </activity>
         <activity
             android:name="com.nowfloats.signup.UI.UI.WebSiteAddressActivity"

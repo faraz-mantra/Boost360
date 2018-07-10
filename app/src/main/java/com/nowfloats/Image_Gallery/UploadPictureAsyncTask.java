@@ -443,7 +443,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
 //            uri = Constants.LoadStoreURI+param+
 //                    "?clientId="+ Constants.clientId+
 //                    "&fpId="+ session.getFPID()+"&reqType=sequential&reqtId=" + s_uuid + "&";
-                uri = "https://api.withfloats.com/Discover/v1/FloatingPoint/createSecondaryImage/?clientId=" +
+                uri = Constants.NOW_FLOATS_API_URL + "/Discover/v1/FloatingPoint/createSecondaryImage/?clientId=" +
                         Constants.clientId +
                         "&fpId=" + session.getFPID() +
                         "&reqType=sequential&reqtId=" +
@@ -473,9 +473,9 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             response = null;
-        } catch (OutOfMemoryError e){
+        } catch (OutOfMemoryError e) {
             e.printStackTrace();
-            Methods.showSnackBar(appContext,"Image is too large");
+            Methods.showSnackBar(appContext, "Image is too large");
         }
 
 
@@ -588,6 +588,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             connection.setRequestProperty("Connection", "Keep-Alive");
 
             outputStream = new DataOutputStream(connection.getOutputStream());
+
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);

@@ -33,7 +33,7 @@
             android:layout_height="30dp"
             android:padding="5dp"
             android:src="@drawable/ic_total_orders"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/toolbar_spinner"
