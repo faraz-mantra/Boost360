@@ -958,14 +958,25 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp">
 
-                    <ImageView
-                        android:id="@+id/iv_order_analytics"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/analytics_facebook" />
+                        <ImageView
+                            android:id="@+id/iv_order_analytics"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/circle_bakground" />
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_order_analytics" />
+                    </FrameLayout>
+
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
