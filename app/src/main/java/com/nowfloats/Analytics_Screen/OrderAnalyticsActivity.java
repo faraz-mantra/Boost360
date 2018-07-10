@@ -203,6 +203,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         MixPanelController.track(MixPanelController.FILTER_ORDER_ANALYTICS, null);
+                        count = 1;
                         initiatePopupWindow(image);
                         tvYear.setText(yearsList.get(i));
                         getOrderSummary(yearsList.get(i));
@@ -325,20 +326,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
     private void syncData() {
 
         showDialog();
-        count = 0;
         WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-//        callInterface.getRevenueSummary(mSession.getFpTag(), new retrofit.Callback<SellerSummary>() {
-//
-//            @Override
-//            public void success(SellerSummary sellerSummary, retrofit.client.Response response) {
-//                updateBarChart(sellerSummary);
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-        hideDialog();
-//            }
-//        });
 
         callInterface.getOrderStatusSummary(mSession.getFpTag(), previousStartDate, previousEndDate, new retrofit.Callback<OrderStatusSummary>() {
 
@@ -518,7 +506,6 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
         previousEndDate = "";
         previousOrderSummary = null;
         currentOrderSummary = null;
-        count = 0;
         Calendar calendar = Calendar.getInstance();
 
         switch (choice) {
