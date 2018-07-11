@@ -366,8 +366,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="Boost Keyboard Themes"
-                    android:textAllCaps="true"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_keyboard_themes"
