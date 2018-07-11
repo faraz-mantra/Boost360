@@ -98,6 +98,12 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
             view.findViewById(R.id.cv_themes).setVisibility(View.GONE);
         } else {
             view.findViewById(R.id.cv_themes).setVisibility(View.VISIBLE);
+            TextView tvBoostThemes = view.findViewById(R.id.tv_boost_themes);
+            if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+                tvBoostThemes.setText("RedTim Keyboard Themes");
+            } else {
+                tvBoostThemes.setText("Boost Keyboard Themes");
+            }
             rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
             rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
             ArrayList<Integer> keyboardDrawables = new ArrayList<>();
