@@ -152,7 +152,8 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         Constants.restAdapter.create(StoreInterface.class).getInvoiceDetailsByFPTag(params, new Callback<InvoiceDetailsModel>() {
             @Override
             public void success(InvoiceDetailsModel invoiceDetailsModel, Response response) {
-                if (invoiceDetailsModel != null && invoiceDetailsModel.results.size() > 0) {
+                if (invoiceDetailsModel != null && invoiceDetailsModel.results != null
+                        && invoiceDetailsModel.results.size() > 0) {
 //                    ActivePackage header = new ActivePackage();
 //                    yourOrdersItems.add(header);
                     for (InvoiceDetailsResult result : invoiceDetailsModel.results) {

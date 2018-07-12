@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.inputmethod.latin.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,8 +39,11 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import org.jsoup.helper.StringUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -204,8 +208,24 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
     }
 
     private boolean validateGstNumber(String gstNumber) {
-        String regex = "[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}";
-        return gstNumber.matches(regex);
+//        String regex = "[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}";
+//        return gstNumber.matches(regex);
+        gstNumber = gstNumber.toUpperCase();
+        if (gstNumber.length() != 15)
+            return false;
+        char strarray[] = gstNumber.toCharArray();
+        for (int i = 0; i < strarray.length; i++) {
+            String index = i + "";
+            String gstValue = strarray[i] + "";
+            if (StringUtil.in(index, "0", "1", "7", "8", "9", "10", "12")) {
+                if (!StringUtil.isNumeric(gstValue))
+                    return false;
+            } else if (StringUtil.in(index, "2", "3", "4", "5", "6", "11", "13")) {
+                if (StringUtil.isNumeric(gstValue) || StringUtil.isBlank(gstValue.trim()))
+                    return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -224,8 +244,8 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.textView_pay:
                 if (validateAllFields()) {
-                    //showPaidConfirmation();
-                    initiateProcess(new InitiateModel());
+                    showPaidConfirmation();
+//                    initiateProcess(new InitiateModel());
                 }
                 break;
         }
@@ -370,7 +390,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         chequeModel.setPaymentStatus("initiated");
         chequeModel.setPartnerType(null);
         chequeModel.setPaymentFor(null);
-        chequeModel.setPaymentDate(String.format("/Date(%s)/",String.valueOf(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis())));
+        chequeModel.setPaymentDate(String.format("/Date(%s)/", String.valueOf(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis())));
         chequeModel.setPaymentTransactionChannel(1);
         chequeModel.setTotalPrice(finalAmount);
         chequeModel.setTdsPercentage(tdsPercentage);
