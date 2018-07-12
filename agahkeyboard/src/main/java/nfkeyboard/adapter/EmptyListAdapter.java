@@ -1,11 +1,8 @@
 package nfkeyboard.adapter;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +53,7 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
                             equalsIgnoreCase("No products available.")) {
 
                         Intent intent = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/addproduct"));
+                                Uri.parse("nowfloats://" + mContext.getApplicationContext().getPackageName() + ".keyboard.home/addproduct"));
                         intent.putExtra("from", "notification");
                         intent.putExtra("url", "addProduct");
                         intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -69,7 +66,7 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
                             equalsIgnoreCase("No updates available.")) {
 
                         Intent intent = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/update"));
+                                Uri.parse("nowfloats://" + mContext.getApplicationContext().getPackageName() + ".keyboard.home/update"));
                         intent.putExtra("from", "notification");
                         intent.putExtra("url", "update");
                         intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -82,7 +79,7 @@ public class EmptyListAdapter extends BaseAdapter<AllSuggestionModel> {
                             equalsIgnoreCase("No photos available.")) {
 
                         Intent intent = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/photos"));
+                                Uri.parse("nowfloats://" + mContext.getApplicationContext().getPackageName() + ".keyboard.home/photos"));
                         intent.putExtra("from", "notification");
                         intent.putExtra("url", "imagegallery");
                         intent.addCategory(Intent.CATEGORY_BROWSABLE);

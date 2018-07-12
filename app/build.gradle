@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 2018070003
+        versionCode 2018070011
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         ndk {
@@ -110,14 +110,16 @@ android {
         }
 
         nowfloats_us {
-            versionName "1.0.0"
+            versionName "1.0.1"
             applicationId "com.redtim"
             dimension "default"
+            buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "4.9.20"
+            versionName "4.9.21"
             applicationId "com.biz2.nowfloats"
             dimension "default"
+            buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
         }
     }
     packagingOptions {
@@ -167,7 +169,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'com.melnykov:floatingactionbutton:1.1.0'
-    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.makeramen:roundedimageview:1.5.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.2'
     implementation 'com.facebook.android:facebook-android-sdk:4.16.1'

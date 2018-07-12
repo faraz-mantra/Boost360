@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,11 +34,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.codetail.animation.ViewAnimationUtils;
@@ -50,6 +55,9 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  */
 
 public class KeyboardFragment extends Fragment implements View.OnTouchListener, View.OnClickListener {
+
+    SharedPreferences sharedPreferences;
+
     private static final int STORAGE_CODE = 100, MICROPHONE_CODE = 101;
     private static final int INPUT_METHOD_SETTINGS = 102;
     private Context mContext;
@@ -60,10 +68,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     private SwitchCompat keyboardSettingSwitchTv;
     private ImageView gifImageView;
     private RevealFrameLayout overLayout1;
+    private RecyclerView rvKeyboardThemes;
+    private KeyboardThemesAdapter keyboardThemesAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        sharedPreferences = getContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         return inflater.inflate(R.layout.fragment_keyboard, container, false);
     }
 
@@ -83,6 +94,31 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         view.findViewById(R.id.keyboard_info).setOnClickListener(this);
         overLayout1 = view.findViewById(R.id.enable_keyboard_rfl_overlay1);
         view.findViewById(R.id.ll_enable_keyboard).setOnClickListener(this);
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            view.findViewById(R.id.cv_themes).setVisibility(View.GONE);
+        } else {
+            view.findViewById(R.id.cv_themes).setVisibility(View.VISIBLE);
+            TextView tvBoostThemes = view.findViewById(R.id.tv_boost_themes);
+            if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+                tvBoostThemes.setText("RedTim Keyboard Themes");
+            } else {
+                tvBoostThemes.setText("Boost Keyboard Themes");
+            }
+            rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
+            rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
+            ArrayList<Integer> keyboardDrawables = new ArrayList<>();
+            keyboardDrawables.add(R.drawable.ic_keyboard_theme_two);
+            keyboardDrawables.add(R.drawable.ic_keyboard_theme_one);
+            String selectedString = sharedPreferences.getString("keyboard_theme", KeyboardThemesAdapter.Themes.LXX_DARK.toString());
+            int selected = 0;
+            if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK.toString())) {
+                selected = 0;
+            } else if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK_UNBORDERED.toString())) {
+                selected = 1;
+            }
+            keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences);
+            rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
+        }
     }
 
     @Override

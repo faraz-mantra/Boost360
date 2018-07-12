@@ -55,7 +55,7 @@
             <key-style
                 latin:styleName="shiftKeyStyle"
                 latin:keySpec="!icon/shift_key_shifted|!code/key_shift"
-                latin:backgroundType="stickyOff"
+                latin:backgroundType="action"
                 latin:parentStyle="baseForShiftKeyStyle" />
         </case>
         <case
@@ -64,22 +64,29 @@
             <key-style
                 latin:styleName="shiftKeyStyle"
                 latin:keySpec="!icon/shift_key_shifted|!code/key_shift"
-                latin:backgroundType="stickyOn"
+                latin:backgroundType="action"
                 latin:parentStyle="baseForShiftKeyStyle" />
         </case>
         <default>
             <key-style
                 latin:styleName="shiftKeyStyle"
                 latin:keySpec="!icon/shift_key|!code/key_shift"
-                latin:backgroundType="stickyOff"
+                latin:backgroundType="action"
                 latin:parentStyle="baseForShiftKeyStyle" />
         </default>
     </switch>
     <key-style
+        latin:styleName="commaKeyStyle"
+        latin:keySpec="!icon/emoji_comma_key|!text/keyspec_comma"
+        latin:moreKeys="!fixedColumnOrder!2,!needsDividers!,!text/keyspec_emoji_action_key,!fixedColumnOrder!2,!needsDividers!,!text/keyspec_settings_action_key"
+        latin:keyLabelFlags="hasPopupHint"
+        latin:backgroundType="action"
+        latin:keyActionFlags="noKeyPreview" />
+    <key-style
         latin:styleName="deleteKeyStyle"
         latin:keySpec="!icon/delete_key|!code/key_delete"
         latin:keyActionFlags="isRepeatable|noKeyPreview"
-        latin:backgroundType="functional" />
+        latin:backgroundType="action" />
     <include
         latin:keyboardLayout="@xml/key_styles_enter" />
     <!-- TODO: Currently there is no way to specify icon alignment per theme. -->
@@ -110,13 +117,13 @@
     <key-style
         latin:styleName="emojiKeyStyle"
         latin:keySpec="!icon/emoji_normal_key|!code/key_emoji"
-        latin:keyActionFlags="noKeyPreview"
-        latin:backgroundType="functional" />
+        latin:moreKeys="!fixedColumnOrder!3,!needsDividers!,!text/keyspec_emoji_action_key,!fixedColumnOrder!3,!needsDividers!,!text/keyspec_settings_action_key"
+        latin:keyLabelFlags="hasPopupHint|keepBackgroundAspectRatio"
+        latin:keyActionFlags="noKeyPreview" />
     <key-style
         latin:styleName="settingsKeyStyle"
         latin:keySpec="!icon/settings_key|!code/key_settings"
-        latin:keyActionFlags="noKeyPreview"
-        latin:backgroundType="functional" />
+        latin:keyActionFlags="noKeyPreview" />
     <switch>
         <case
             latin:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLockShifted"
@@ -147,7 +154,7 @@
         latin:styleName="baseForLayoutSwitchKeyStyle"
         latin:keyLabelFlags="preserveCase|followFunctionalTextColor"
         latin:keyActionFlags="noKeyPreview"
-        latin:backgroundType="functional" />
+        latin:backgroundType="action" />
     <key-style
         latin:styleName="toSymbolKeyStyle"
         latin:keySpec="!text/keylabel_to_symbol|!code/key_switch_alpha_symbol"

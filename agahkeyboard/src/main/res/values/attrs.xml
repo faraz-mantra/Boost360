@@ -46,7 +46,10 @@
         <!-- Background image for the key. This image needs to be a {@link StateListDrawable},
              with the following possible states: normal, pressed, checkable, checkable+pressed,
              checkable+checked, checkable+checked+pressed. -->
+        <attr name="background" format="reference" />
         <attr name="keyBackground" format="reference" />
+        <attr name="enterKeyBackground" format="reference" />
+        <attr name="heightFractionSpaceEnter" format="fraction" />
         <!-- Background image for the functional key. This image needs to be a
              {@link StateListDrawable}, with the following possible states: normal, pressed. -->
         <attr name="functionalKeyBackground" format="reference" />
@@ -233,6 +236,7 @@
             <enum name="KLP" value="2" />
             <enum name="LXXLight" value="3" />
             <enum name="LXXDark" value="4" />
+            <enum name="LXXDarkUnbordered" value="5" />
         </attr>
         <!-- Touch position correction -->
         <attr name="touchPositionCorrectionData" format="reference" />
@@ -274,6 +278,7 @@
         <attr name="iconImeKey" format="reference" />
         <attr name="iconEmojiActionKey" format="reference" />
         <attr name="iconEmojiNormalKey" format="reference" />
+        <attr name="iconEmojiCommaKey" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="Keyboard_GridRows">
@@ -305,6 +310,7 @@
             <enum name="stickyOn" value="4" />
             <enum name="action" value="5" />
             <enum name="spacebar" value="6" />
+            <enum name="enter" value="7" />
         </attr>
         <!-- The key action flags. -->
         <attr name="keyActionFlags" format="integer">
@@ -329,7 +335,7 @@
             <flag name="fontNormal" value="0x10" />
             <flag name="fontMonoSpace" value="0x20" />
             <flag name="fontDefault" value="0x30" />
-            <flag name="followKeyLargeLetterRatio" value="0x40" />
+            <flag name="followKeyLargeLetterRatio" value="0x30" />
             <flag name="followKeyLetterRatio" value="0x80" />
             <flag name="followKeyLabelRatio" value="0xC0" />
             <flag name="followKeyHintLabelRatio" value="0x140" />

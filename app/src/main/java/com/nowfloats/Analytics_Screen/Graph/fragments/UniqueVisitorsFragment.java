@@ -17,15 +17,17 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
@@ -56,12 +58,12 @@ import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYP
 
 public class UniqueVisitorsFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
-    private  String dataType;
-    private  BarChart graph;
+    private String dataType;
+    private BarChart graph;
     private String tabType;
     private UserSessionManager manager;
-    private  ProgressBar progressBar;
-    private TextView visitsTitle,visitsCount;
+    private ProgressBar progressBar;
+    private TextView visitsTitle, visitsCount;
     private ArrayList<String> labels = new ArrayList<>(12);
     public static String pattern = "yyyy/MM/dd";
     private VisitsModel currVisitsModel;
@@ -73,7 +75,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.img_info:
                 showInfoDialog();
                 break;
@@ -82,7 +84,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 
     private void showInfoDialog() {
         String visitsName = "";
-        switch (mVisitType){
+        switch (mVisitType) {
             case TOTAL:
                 visitsName = getString(R.string.overall_visits);
                 break;
@@ -93,10 +95,10 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 visitsName = getString(R.string.unique_visitors);
                 break;
         }
-        String title = String.format("%s in a %s",visitsName,tabType.toLowerCase());
+        String title = String.format("%s in a %s", visitsName, tabType.toLowerCase());
 
-        String content = String.format(getString(mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE?
-                R.string.unique_visitors_message : R.string.total_visits_message),tabType.toLowerCase());
+        String content = String.format(getString(mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE ?
+                R.string.unique_visitors_message : R.string.total_visits_message), tabType.toLowerCase());
 
         if (materialDialog == null) {
             materialDialog = new MaterialDialog.Builder(mContext)
@@ -109,24 +111,26 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         materialDialog.show();
     }
 
-    public enum BatchType
-    {
+    public enum BatchType {
         dy(0),
         ww(1),
         mm(2),
         yy(3);
 
         public int val;
-        BatchType(int v){
+
+        BatchType(int v) {
             val = v;
         }
 
     }
-    public static Fragment getInstance(Bundle bundle){
+
+    public static Fragment getInstance(Bundle bundle) {
         Fragment frag = new UniqueVisitorsFragment();
         frag.setArguments(bundle);
         return frag;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -136,11 +140,11 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() ==null) return;
+        if (getArguments() == null) return;
         int pos = getArguments().getInt("pos");
         totalVisits = getArguments().getInt("totalViews");
         mVisitType = (SiteViewsAnalytics.VisitsType) getArguments().getSerializable(VISITS_TYPE);
-        switch (pos){
+        switch (pos) {
             case 0:
                 dataType = getString(R.string.day);
                 tabType = getString(R.string.week).toLowerCase();
@@ -153,7 +157,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 break;
             case 2:
                 dataType = getString(R.string.Month);
-                tabType =  getString(R.string.Year).toLowerCase();
+                tabType = getString(R.string.Year).toLowerCase();
                 batchType = BatchType.mm;
                 break;
         }
@@ -162,19 +166,19 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_visits,container,false);
+        return inflater.inflate(R.layout.fragment_visits, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (!isAdded() || isDetached()) return;
-        manager = new UserSessionManager(mContext,getActivity());
-        visitsCount= (TextView) view.findViewById(R.id.tv_visit_count);
-        visitsTitle= (TextView) view.findViewById(R.id.tv_visits_title);
+        manager = new UserSessionManager(mContext, getActivity());
+        visitsCount = (TextView) view.findViewById(R.id.tv_visit_count);
+        visitsTitle = (TextView) view.findViewById(R.id.tv_visits_title);
         progressBar = view.findViewById(R.id.progress_bar);
         view.findViewById(R.id.img_info).setOnClickListener(this);
         String visitsName = "";
-        switch (mVisitType){
+        switch (mVisitType) {
             case TOTAL:
                 visitsName = getString(R.string.overall_visits);
                 break;
@@ -185,16 +189,16 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 visitsName = getString(R.string.unique_visitors);
                 break;
         }
-        visitsTitle.setText( String.format("%s in a %s",visitsName,tabType.toLowerCase()));
-        if (totalVisits != 0){
+        visitsTitle.setText(String.format("%s in a %s", visitsName, tabType.toLowerCase()));
+        if (totalVisits != 0) {
             visitsCount.setText(String.valueOf(totalVisits));
-        }else if(getArguments().containsKey("hashmap")){
-                HashMap<String,String> map = (HashMap<String, String>) getArguments().getSerializable("hashmap");
-                fetchTotalViews((HashMap<String, String>) map.clone());
+        } else if (getArguments().containsKey("hashmap")) {
+            HashMap<String, String> map = (HashMap<String, String>) getArguments().getSerializable("hashmap");
+            fetchTotalViews((HashMap<String, String>) map.clone());
         }
         graph = (BarChart) view.findViewById(R.id.graph);
         Paint p = graph.getPaint(Chart.PAINT_INFO);
-        p.setColor(ContextCompat.getColor(mContext,R.color.primaryColor));
+        p.setColor(ContextCompat.getColor(mContext, R.color.primaryColor));
         graph.setDrawGridBackground(false);
 //        graph.getLegend().setEnabled(false);
 //        graph.setDrawBorders(false);
@@ -221,34 +225,34 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         rightAxis.setDrawGridLines(false);
         leftAxis.setEnabled(false);
         rightAxis.setEnabled(false);
-        leftAxis.setTextColor(Color.argb(0,0,0,0));
-        rightAxis.setTextColor(Color.argb(0,0,0,0));
-        graph.setDescription("");
+        leftAxis.setTextColor(Color.argb(0, 0, 0, 0));
+        rightAxis.setTextColor(Color.argb(0, 0, 0, 0));
+//        graph.setDescription("");
 
         graph.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
-            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                BoostLog.d("Clicked index:", " "+ e.getXIndex());
-                if (e.getVal()<=0){
+            public void onValueSelected(Entry e, Highlight h) {
+                BoostLog.d("Clicked index:", " " + e.getX());
+                if (e.getX() <= 0) {
                     // do not show for 0 data
                     return;
                 }
-                HashMap<String,String> map = new HashMap<String, String>();
-                switch (batchType){
+                HashMap<String, String> map = new HashMap<String, String>();
+                switch (batchType) {
                     case mm:
-                        map.put("batchType",BatchType.ww.name());
+                        map.put("batchType", BatchType.ww.name());
                         break;
                     case ww:
-                        map.put("batchType",BatchType.dy.name());
+                        map.put("batchType", BatchType.dy.name());
                         break;
                     case dy:
                     case yy:
                     default:
                         return;
                 }
-                map.put("startDate", Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getStartDate(),pattern));
-                map.put("endDate",Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get(e.getXIndex()).getEndDate(),pattern));
-                ((ViewCallback)mContext).onChartBarClicked(map,(int)e.getVal());
+                map.put("startDate", Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get((int) e.getX()).getStartDate(), pattern));
+                map.put("endDate", Methods.getFormattedDate(currVisitsModel.getUniqueVisitsList().get((int) e.getX()).getEndDate(), pattern));
+                ((ViewCallback) mContext).onChartBarClicked(map, (int) e.getX());
             }
 
             @Override
@@ -256,50 +260,81 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 
             }
         });
+
         graph.invalidate();
         // customize for all kind of tab
-        if(getArguments().containsKey("hashmap")){
-            HashMap<String,String> map = (HashMap<String, String>) getArguments().getSerializable("hashmap");
+        if (getArguments().containsKey("hashmap")) {
+            HashMap<String, String> map = (HashMap<String, String>) getArguments().getSerializable("hashmap");
             if (map == null) return;
-            map.put("batchType",batchType.name());
+            map.put("batchType", batchType.name());
             progressBar.setVisibility(View.VISIBLE);
-            getVisitsData(map,visitsModelCallback);
+            getVisitsData(map, visitsModelCallback);
         }
     }
 
     private void fetchTotalViews(HashMap<String, String> map) {
-        switch (batchType){
+        switch (batchType) {
             case mm:
-                map.put("batchType",BatchType.yy.name());
+                map.put("batchType", BatchType.yy.name());
                 break;
             case ww:
-                map.put("batchType",BatchType.mm.name());
+                map.put("batchType", BatchType.mm.name());
                 break;
             case dy:
-                map.put("batchType",BatchType.ww.name());
+                map.put("batchType", BatchType.ww.name());
                 break;
             case yy:
             default:
                 return;
         }
-        getVisitsData(map,totalVisitsCallback);
+        getVisitsData(map, totalVisitsCallback);
     }
 
-    private void addDataToGraph( List<IBarDataSet> dataSet){
-        BarData data = new BarData(labels, dataSet);
+    private void addDataToGraph(BarDataSet dataSet) {
+        BarData data = new BarData(dataSet);
         data.setValueFormatter(new MyYAxisValueFormatter());
         data.setValueTextSize(10);
+
+
+        XAxis xAxis = graph.getXAxis();
+
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setLabelCount(7);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return labels.get((int) value);
+            }
+        });
+
+
         graph.setData(data);
+
+        Description description = new Description();
+        description.setText("");
+        graph.setDescription(description);
+
+        graph.getBarData().setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                return Math.round(value) + "";
+            }
+        });
+
         graph.setVisibleXRangeMaximum(5.2f);
         graph.notifyDataSetChanged();
         graph.animateXY(1000, 1000);
         graph.invalidate();
     }
 
-    public class MyYAxisValueFormatter implements ValueFormatter
-    {
+    public class MyYAxisValueFormatter implements IValueFormatter {
         private DecimalFormat mFormat;
-        public MyYAxisValueFormatter () {
+
+        public MyYAxisValueFormatter() {
             mFormat = new DecimalFormat("#########");
         }
 
@@ -308,12 +343,13 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
             return mFormat.format(value);
         }
     }
+
     public void updateData(VisitsModel visitsModel) {
-        if(!isAdded() || isDetached())
+        if (!isAdded() || isDetached())
             return;
         progressBar.setVisibility(View.GONE);
         currVisitsModel = visitsModel;
-        if (visitsModel == null){
+        if (visitsModel == null) {
             Toast.makeText(mContext, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -321,8 +357,8 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         // update data here
     }
 
-    private List<IBarDataSet> getGraphDataSet() {
-        List<IBarDataSet> dataSets = null;
+    private BarDataSet getGraphDataSet() {
+//        List<IBarDataSet> dataSets = null;
 
         List<BarEntry> valueSet1 = new ArrayList<>();
         List<VisitsModel.UniqueVisitsList> data = currVisitsModel.getUniqueVisitsList();
@@ -334,22 +370,21 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 //            valueSet1.add(new BarEntry(2000000000,i));
 //            labels.add(months[i]);
 //        }
-        for(int i=0;i<data.size();i++)
-        {
-            valueSet1.add(new BarEntry(data.get(i).getDataCount(),i));
+        for (int i = 0; i < data.size(); i++) {
+            valueSet1.add(new BarEntry(i, data.get(i).getDataCount(), ""));
             c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getStartDate()));
-            switch (batchType){
+            switch (batchType) {
                 case ww:
                     int month = c.get(Calendar.MONTH);
                     int startDate = c.get(Calendar.DAY_OF_MONTH);
                     c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getEndDate()));
-                    labels.add(String.format(Locale.ENGLISH,"%d-%d %s'%d",startDate,c.get(Calendar.DAY_OF_MONTH),months[month],c.get(Calendar.YEAR)%100));
+                    labels.add(String.format(Locale.ENGLISH, "%d-%d %s'%d", startDate, c.get(Calendar.DAY_OF_MONTH), months[month], c.get(Calendar.YEAR) % 100));
                     break;
                 case mm:
-                    labels.add(String.format(Locale.ENGLISH,"%s %d",months[c.get(Calendar.MONTH)],c.get(Calendar.YEAR)));
+                    labels.add(String.format(Locale.ENGLISH, "%s %d", months[c.get(Calendar.MONTH)], c.get(Calendar.YEAR)));
                     break;
                 case dy:
-                    labels.add(String.format(Locale.ENGLISH,"%d %s'%s",c.get(Calendar.DAY_OF_MONTH),months[c.get(Calendar.MONTH)],c.get(Calendar.YEAR)%100));
+                    labels.add(String.format(Locale.ENGLISH, "%d %s'%s", c.get(Calendar.DAY_OF_MONTH), months[c.get(Calendar.MONTH)], c.get(Calendar.YEAR) % 100));
                     break;
             }
         }
@@ -357,27 +392,28 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, dataType);
         barDataSet1.setColor(Color.GRAY);
 
-        dataSets = new ArrayList<>();
-        dataSets.add(barDataSet1);
-        return dataSets;
+//        dataSets = new ArrayList<>();
+//        dataSets.add(barDataSet1);
+        return barDataSet1;
     }
 
-    private void getVisitsData(HashMap<String, String> map, Callback<VisitsModel> callback){
+    private void getVisitsData(HashMap<String, String> map, Callback<VisitsModel> callback) {
         map.put("clientId", Constants.clientId);
-        map.put("scope",manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
+        map.put("scope", manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
         AnalyticsFetch.FetchDetails visitsApi = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
-        switch (mVisitType){
+        switch (mVisitType) {
             case UNIQUE:
-                visitsApi.getUniqueVisits(manager.getFpTag(), map,callback);
+                visitsApi.getUniqueVisits(manager.getFpTag(), map, callback);
                 break;
             case TOTAL:
-                visitsApi.getTotalVisits(manager.getFpTag(), map,callback);
+                visitsApi.getTotalVisits(manager.getFpTag(), map, callback);
                 break;
             case MAP_VISITS:
-                visitsApi.getMapVisits(manager.getFpTag(), map,callback);
+                visitsApi.getMapVisits(manager.getFpTag(), map, callback);
                 break;
         }
     }
+
     private Callback<VisitsModel> visitsModelCallback = new Callback<VisitsModel>() {
         @Override
         public void success(VisitsModel visitsModel, Response response) {
@@ -394,9 +430,9 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         @Override
         public void success(VisitsModel visitsModel, Response response) {
             int totalCount = 0;
-            if (visitsModel != null){
-                for (VisitsModel.UniqueVisitsList data:visitsModel.getUniqueVisitsList()){
-                    totalCount+=data.getDataCount();
+            if (visitsModel != null) {
+                for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
+                    totalCount += data.getDataCount();
                 }
             }
             visitsCount.setText(String.valueOf(totalCount));
@@ -408,7 +444,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         }
     };
 
-    public interface ViewCallback{
-        void onChartBarClicked(HashMap<String,String> map,int val);
+    public interface ViewCallback {
+        void onChartBarClicked(HashMap<String, String> map, int val);
     }
 }

@@ -22,6 +22,8 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import org.json.JSONObject;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -30,21 +32,21 @@ import retrofit.client.Response;
  * Created by Admin on 27-06-2017.
  */
 
-public class ThemeSelectorFragment extends Fragment{
-    public static final int[] imageIds = new int[]{R.drawable.theme_bnb,R.drawable.theme_fml,R.drawable.theme_ttf};
-    String[] themeNames,themeMessages;
+public class ThemeSelectorFragment extends Fragment {
+    public static final int[] imageIds = new int[]{R.drawable.theme_bnb, R.drawable.theme_fml, R.drawable.theme_ttf};
+    String[] themeNames, themeMessages;
     String[] themeIds;
     int pos;
     private Context mContext;
-    String currentThemeId ="";
+    String currentThemeId = "";
     UserSessionManager manager;
     ProgressDialog dialog;
     TextView setLook;
 
-    public static Fragment getInstanse(int pos){
+    public static Fragment getInstanse(int pos) {
         Fragment frag = new ThemeSelectorFragment();
         Bundle b = new Bundle();
-        b.putInt("pos",pos);
+        b.putInt("pos", pos);
         frag.setArguments(b);
         return frag;
     }
@@ -53,8 +55,8 @@ public class ThemeSelectorFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getArguments();
-        if (b != null){
-            pos = b.getInt("pos",0);
+        if (b != null) {
+            pos = b.getInt("pos", 0);
         }
         themeNames = getResources().getStringArray(R.array.themeNames);
         themeMessages = getResources().getStringArray(R.array.themeMessages);
@@ -65,34 +67,34 @@ public class ThemeSelectorFragment extends Fragment{
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        manager = new UserSessionManager(context,getActivity());
-        currentThemeId =  manager.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID);
+        manager = new UserSessionManager(context, getActivity());
+        currentThemeId = manager.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.adapter_item_theme_picker,container,false);
+        return inflater.inflate(R.layout.adapter_item_theme_picker, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(!isAdded()) return;
+        if (!isAdded()) return;
         ImageView imageview = (ImageView) view.findViewById(R.id.img_theme);
         setLook = (TextView) view.findViewById(R.id.btn_set_look);
-        setLook.setText(currentThemeId.equals(themeIds[pos])? "Current look":"Set this look");
+        setLook.setText(currentThemeId.equals(themeIds[pos]) ? "Current look" : "Set this look");
 
-        if(setLook.getText().toString().equals("Current look")){
+        if (setLook.getText().toString().equals("Current look")) {
             setCurrentThemeButtonBg();
         }
         setLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                if (manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     Methods.showFeatureNotAvailDialog(getContext());
-                }else if (setLook.getText().toString().equals("Current look")) {
-                        Toast.makeText(mContext, "Your website already has this look", Toast.LENGTH_SHORT).show();
+                } else if (setLook.getText().toString().equals("Current look")) {
+                    Toast.makeText(mContext, "Your website already has this look", Toast.LENGTH_SHORT).show();
                 } else {
                     showDialog();
                     setTheme();
@@ -100,8 +102,8 @@ public class ThemeSelectorFragment extends Fragment{
             }
         });
 
-        ((TextView)view.findViewById(R.id.tv_theme_name)).setText(themeNames[pos]);
-        ((TextView)view.findViewById(R.id.tv_theme_message)).setText(themeMessages[pos]);
+        ((TextView) view.findViewById(R.id.tv_theme_name)).setText(themeNames[pos]);
+        ((TextView) view.findViewById(R.id.tv_theme_message)).setText(themeMessages[pos]);
         view.findViewById(R.id.tv_theme_description).setVisibility(View.GONE);
         Glide.with(this).load(imageIds[pos])
                 .apply(new RequestOptions()
@@ -109,38 +111,41 @@ public class ThemeSelectorFragment extends Fragment{
                 .into(imageview);
     }
 
-    private void setCurrentThemeButtonBg(){
-        setLook.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+    private void setCurrentThemeButtonBg() {
+        setLook.setTextColor(ContextCompat.getColor(mContext, R.color.white));
         setLook.setBackgroundResource(R.drawable.rounded_gray_padded);
     }
-    private void setTheme(){
-        UserSessionManager sessionManager = new UserSessionManager(getActivity(),getActivity());
+
+    private void setTheme() {
+        UserSessionManager sessionManager = new UserSessionManager(getActivity(), getActivity());
         ThemeApis api = Constants.restAdapter.create(ThemeApis.class);
-        api.setTheme(Constants.clientId, sessionManager.getFpTag(), themeIds[pos], new Callback<String>() {
+        api.setTheme(new JSONObject(), Constants.clientId, sessionManager.getFpTag(), themeIds[pos], new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                setCurrentLook(response.getStatus() == 200? s:null);
+                setCurrentLook(response.getStatus() == 200 ? s : null);
             }
 
             @Override
             public void failure(RetrofitError error) {
-               setCurrentLook(null);
+                setCurrentLook(null);
             }
         });
     }
 
-    private void showDialog(){
-        if(dialog == null){
-            dialog = ProgressDialog.show(mContext,"",getString(R.string.please_wait),true);
+    private void showDialog() {
+        if (dialog == null) {
+            dialog = ProgressDialog.show(mContext, "", getString(R.string.please_wait), true);
             dialog.setCanceledOnTouchOutside(false);
         }
     }
-    private void hideDialog(){
-        if(dialog != null && dialog.isShowing()){
+
+    private void hideDialog() {
+        if (dialog != null && dialog.isShowing()) {
             dialog.hide();
         }
     }
-//    private void setDynamicTheme(){
+
+    //    private void setDynamicTheme(){
 //        ThemeApis api = Constants.restAdapter.create(ThemeApis.class);
 //        api.setDynamicTheme(Constants.clientId, manager.getFpTag(), new Callback<String>() {
 //            @Override
@@ -154,20 +159,20 @@ public class ThemeSelectorFragment extends Fragment{
 //            }
 //        });
 //    }
-    public void setCurrentLook(String s){
-        if(!isAdded()) return;
-        if(TextUtils.isEmpty(s)){
+    public void setCurrentLook(String s) {
+        if (!isAdded()) return;
+        if (TextUtils.isEmpty(s)) {
             Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-        }else if(s.equals("true")){
+        } else if (s.equals("true")) {
             setLook.setText("Current look");
             setCurrentThemeButtonBg();
-            manager.storeFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID,themeIds[pos]);
-            ((SiteAppearanceActivity)mContext).notifyDataSetChanged();
-            Toast.makeText(mContext, "Changed theme to "+themeNames[pos], Toast.LENGTH_SHORT).show();
-        }else if(s.equals("false")){
+            manager.storeFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID, themeIds[pos]);
+            ((SiteAppearanceActivity) mContext).notifyDataSetChanged();
+            Toast.makeText(mContext, "Changed theme to " + themeNames[pos], Toast.LENGTH_SHORT).show();
+        } else if (s.equals("false")) {
             Toast.makeText(mContext, "Not able to change theme", Toast.LENGTH_SHORT).show();
         }
         hideDialog();
     }
-    
+
 }

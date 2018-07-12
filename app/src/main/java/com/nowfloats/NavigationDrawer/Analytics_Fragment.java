@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -42,8 +43,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
@@ -52,7 +53,7 @@ import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
-import com.nowfloats.Analytics_Screen.OrderAnalytics;
+import com.nowfloats.Analytics_Screen.OrderAnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
@@ -376,7 +377,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getActivity(), OrderAnalytics.class);
+                Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
                 startActivity(i);
 
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -421,6 +422,7 @@ public class Analytics_Fragment extends Fragment {
         ImageView visitorsBack = (ImageView) rootView.findViewById(R.id.visitors_image_bg);
         ImageView searchRankBack = (ImageView) rootView.findViewById(R.id.pop_up_search_ranking_img);
         ImageView wildfireBack = (ImageView) rootView.findViewById(R.id.img_wildfire_back);
+        ImageView orderAnalyticsBack = rootView.findViewById(R.id.iv_order_analytics);
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
@@ -433,6 +435,8 @@ public class Analytics_Fragment extends Fragment {
         visitorsBack.setColorFilter(porterDuffColorFilter);
         searchRankBack.setColorFilter(porterDuffColorFilter);
         wildfireBack.setColorFilter(porterDuffColorFilter);
+        orderAnalyticsBack.setColorFilter(porterDuffColorFilter);
+
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
         mapVisitsCount = (TextView) rootView.findViewById(R.id.analytics_screen_map_count);
@@ -458,7 +462,7 @@ public class Analytics_Fragment extends Fragment {
         businessEnqProgress = (ProgressBar) rootView.findViewById(R.id.business_enq_progressBar);
         businessEnqProgress.setVisibility(View.VISIBLE);
         pbOrders = (ProgressBar) rootView.findViewById(R.id.order_progressBar);
-        pbOrders.setVisibility(View.VISIBLE);
+        pbOrders.setVisibility(View.GONE);
 
 
         String visittotal = session.getVisitsCount();
@@ -537,7 +541,7 @@ public class Analytics_Fragment extends Fragment {
             tvOrdersCount.setVisibility(View.VISIBLE);
             tvOrdersCount.setText(orderCount);
         } else {
-            pbOrders.setVisibility(View.VISIBLE);
+//            pbOrders.setVisibility(View.VISIBLE);
             tvOrdersCount.setVisibility(View.GONE);
         }
 
@@ -811,13 +815,13 @@ public class Analytics_Fragment extends Fragment {
             barChart.setPadding(dpToPx(-5), dpToPx(-5), dpToPx(-5), dpToPx(-5));
             barChart.getAxisLeft().setAxisMinValue(0);
             barChart.getAxisLeft().setSpaceBottom(0);
-            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            ArrayList<String> xVals = new ArrayList<>();
+//            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+            final ArrayList<String> xVals = new ArrayList<>();
+            List<BarEntry> dataEntry = new ArrayList<>();
             for (CoordinatesSet coordinateSet : widget.getCoordinatesSet()) {
-                List<BarEntry> dataEntry = new ArrayList<>();
                 int i = 0;
                 for (CoordinateList coordinate : coordinateSet.getCoordinateList()) {
-                    dataEntry.add(new BarEntry(Float.parseFloat(coordinate.getY()), i));
+                    dataEntry.add(new BarEntry(i, Float.parseFloat(coordinate.getY()), ""));
                     xVals.add(coordinate.getX());
                     i++;
                 }
@@ -826,15 +830,32 @@ public class Analytics_Fragment extends Fragment {
                 dataSet.setColor(ContextCompat.getColor(getActivity(), R.color.primary));
                 dataSet.setValueTextSize(10);
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-                dataSets.add(dataSet);
+//                dataSets.add(dataSet);
             }
             if (widget.getCoordinatesSet().size() <= 1) {
                 barChart.getAxisRight().setEnabled(false);
             }
             barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-            BarData barDataMain = new BarData(xVals, dataSets);
+            BarDataSet set = new BarDataSet(dataEntry, "BarDataSet");
+            BarData barDataMain = new BarData(set);
+
             barDataMain.setValueFormatter(new GraphValueFormatter());
             barChart.setData(barDataMain);
+
+            XAxis xAxis = barChart.getXAxis();
+            xAxis.setDrawGridLines(false);
+            xAxis.setGranularity(1f); // only intervals of 1 day
+            xAxis.setLabelCount(7);
+            xAxis.setGranularityEnabled(true);
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+            xAxis.setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    return xVals.get((int) value);
+                }
+            });
+
             barChart.invalidate();
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(200));
             graph.addView(barChart, lp);
@@ -856,10 +877,10 @@ public class Analytics_Fragment extends Fragment {
             lineChart.getLegend().setEnabled(false);
             lineChart.getAxisLeft().setAxisMinValue(0);
             lineChart.getAxisLeft().setSpaceBottom(0);
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            ArrayList<String> xVals = new ArrayList<>();
+//            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            final ArrayList<String> xVals = new ArrayList<>();
+            List<Entry> dataEntry = new ArrayList<>();
             for (CoordinatesSet coordinateSet : widget.getCoordinatesSet()) {
-                List<Entry> dataEntry = new ArrayList<>();
                 int i = 0;
                 for (CoordinateList coordinate : coordinateSet.getCoordinateList()) {
                     dataEntry.add(new Entry(Float.parseFloat(coordinate.getY()), i));
@@ -874,15 +895,27 @@ public class Analytics_Fragment extends Fragment {
                 dataSet.setCircleColor(ContextCompat.getColor(getActivity(), R.color.primaryColor));
                 dataSet.setCircleColorHole(ContextCompat.getColor(getActivity(), R.color.primaryColor));
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-                dataSets.add(dataSet);
+//                dataSets.add(dataSet);
             }
             if (widget.getCoordinatesSet().size() <= 1) {
                 lineChart.getAxisRight().setEnabled(false);
             }
             lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-            LineData lineDataMain = new LineData(xVals, dataSets);
+            LineDataSet set = new LineDataSet(dataEntry, "");
+            LineData lineDataMain = new LineData(set);
+
+
             lineDataMain.setValueFormatter(new GraphValueFormatter());
             lineChart.setData(lineDataMain);
+
+            XAxis xAxis = lineChart.getXAxis();
+            xAxis.setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    return xVals.get((int) value);
+                }
+            });
+
             lineChart.invalidate();
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(200));
             graph.addView(lineChart, lp);
@@ -950,11 +983,12 @@ public class Analytics_Fragment extends Fragment {
         void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel riaNodeData);
     }
 
-    public class GraphValueFormatter implements ValueFormatter {
+    public class GraphValueFormatter implements IValueFormatter {
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return Math.round(value) + "";
         }
+
     }
 
     private void setVmnTotalCallCount() {

@@ -1325,6 +1325,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
+
+    <string-array name="order_analytics">
+        <item>Successful Orders</item>
+        <item>Received Orders</item>
+        <item>Cancelled Orders</item>
+        <item>Abandoned Orders</item>
+    </string-array>
+
     <string-array name="tabs">
         <item>Week</item>
         <item>Month</item>

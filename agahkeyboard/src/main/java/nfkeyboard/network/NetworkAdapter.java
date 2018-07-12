@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers;
 import nfkeyboard.interface_contracts.GetGalleryImagesAsyncTask_Interface;
 import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.models.networkmodels.Product;
+import nfkeyboard.util.Constants;
 import nfkeyboard.util.SharedPrefUtil;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -32,7 +33,7 @@ public class NetworkAdapter {
 //        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.withfloats.com")
+                .baseUrl(Constants.NOW_FLOATS_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
 //                .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

@@ -56,6 +56,10 @@
     <string name="ps_create_tag_tf">HN56IT.ttf</string>
     <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at tim@redtim.com or call us at 1844&#8211;811&#8211;2065.</string>
 
+    <string-array name="payment_options">
+        <item>OPC Online Pay</item>
+    </string-array>
+
     <string-array name="time_arrays">
         <item>01:00</item>
         <item>02:00</item>

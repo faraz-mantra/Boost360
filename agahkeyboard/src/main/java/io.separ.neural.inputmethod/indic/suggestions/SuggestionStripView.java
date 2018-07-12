@@ -30,6 +30,10 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -162,6 +166,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mSuggestionsStrip = (ViewGroup) findViewById(R.id.suggestions_strip);
         mVoiceKey = (ImageButton) findViewById(R.id.suggestions_strip_voice_key);
         mServicesKey = (ImageView) findViewById(R.id.suggestions_strip_services_key);
+        mServicesKey.setImageResource(getResources().getIdentifier("app_launcher", "drawable", context.getApplicationContext().getPackageName()));
         mAddToDictionaryStrip = (ViewGroup) findViewById(R.id.add_to_dictionary_strip);
         //mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,
@@ -212,7 +217,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final SettingsValues currentSettingsValues = Settings.getInstance().getCurrent();
         //mVoiceKey.setVisibility(shouldBeVisible ? (currentSettingsValues.mShowsVoiceInputKey ? VISIBLE : INVISIBLE) : INVISIBLE);
         mVoiceKey.setVisibility(shouldBeVisible ? VISIBLE : INVISIBLE);
-        mServicesKey.setVisibility(shouldBeVisible ? VISIBLE : INVISIBLE);
+        mServicesKey.setVisibility(shouldBeVisible ? VISIBLE : GONE);
+        if (shouldBeVisible) {
+            mServicesKey.setClickable(true);
+        }
     }
 
     public void setSuggestions(final SuggestedWords suggestedWords, final boolean isRtlLanguage) {
@@ -317,7 +325,51 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             return;
         }
         if (view == mServicesKey) {
-            EventBusExt.getDefault().post(new ShowActionRowEvent());
+            mServicesKey.setClickable(false);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, 225f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation.setDuration(500);
+            rotateAnimation.setInterpolator(new OvershootInterpolator(1.2f));
+            final ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            scaleAnimation.setDuration(200);
+            scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    EventBusExt.getDefault().post(new ShowActionRowEvent());
+                    mServicesKey.setClickable(true);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mServicesKey.setRotation(225f);
+                    mServicesKey.startAnimation(scaleAnimation);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+                mServicesKey.startAnimation(scaleAnimation);
+            } else {
+                mServicesKey.startAnimation(rotateAnimation);
+            }
             return;
         }
         final Object tag = view.getTag();

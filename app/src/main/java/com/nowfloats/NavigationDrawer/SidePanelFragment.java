@@ -350,6 +350,11 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
         aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
+        if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+            keyboardTextView.setText("RedTim Keyboard");
+        } else {
+            keyboardTextView.setText("Boost Keyboard");
+        }
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
 
         dasbBoardImageView = homeLayout.findViewById(R.id.firstrow_ImageView);
@@ -781,7 +786,7 @@ public class SidePanelFragment extends Fragment {
         if (Constants.IMAGEURIUPLOADED == false) {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
             //int size = (int) Math.ceil(Math.sqrt(100 * 100));
-            if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
+            if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != Constants.NOW_FLOATS_API_URL + "/FP/Actual/default.png")) {
                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
                 Picasso.with(getActivity())
                         .load(baseNameProfileImage)

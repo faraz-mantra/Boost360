@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +116,7 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("nowfloats://com.biz2.nowfloats.keyboard.home/photos"));
+                                    Uri.parse("nowfloats://" + mContext.getApplicationContext().getPackageName() + ".keyboard.home/photos"));
                             intent.putExtra("from", "notification");
                             intent.putExtra("url", "imagegallery");
                             intent.addCategory(Intent.CATEGORY_BROWSABLE);

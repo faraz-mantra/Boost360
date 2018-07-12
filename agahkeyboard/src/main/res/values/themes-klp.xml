@@ -43,35 +43,39 @@
         name="KeyboardView.KLP"
         parent="KeyboardView.Holo"
     >
-        <item name="android:background">@drawable/keyboard_background_holo</item>
-        <item name="keyBackground">@drawable/btn_keyboard_key_klp</item>
-        <item name="functionalKeyBackground">@drawable/btn_keyboard_key_functional_klp</item>
-        <item name="spacebarBackground">@drawable/btn_keyboard_spacebar_klp</item>
-        <item name="keyTextColor">@color/key_text_color_holo</item>
-        <item name="keyTextInactivatedColor">@color/key_text_inactivated_color_holo</item>
-        <item name="functionalTextColor">@color/key_text_color_holo</item>
-        <item name="keyHintLetterColor">@color/key_hint_letter_color_holo</item>
-        <item name="keyHintLabelColor">@color/key_hint_label_color_holo</item>
-        <item name="keyShiftedLetterHintInactivatedColor">@color/key_shifted_letter_hint_inactivated_color_holo</item>
-        <item name="keyShiftedLetterHintActivatedColor">@color/key_shifted_letter_hint_activated_color_holo</item>
-        <item name="keyPreviewTextColor">@color/key_text_color_holo</item>
+        <item name="android:background">@color/keyboard_background_dark</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_normal_lxx_dark</item>
+        <item name="background">@color/keyboard_background_dark</item>
+        <item name="heightFractionSpaceEnter">@fraction/config_height_fraction_space_enter_lxx_dark</item>
+        <item name="enterKeyBackground">@drawable/btn_keyboard_key_functional_lxx_dark</item>
+        <item name="functionalKeyBackground">@drawable/btn_keyboard_key_functional_lxx_dark</item>
+        <item name="spacebarBackground">@drawable/btn_keyboard_spacebar_lxx_dark</item>
+        <item name="keyTextColor">@color/key_text_color_lxx_dark</item>
+        <item name="keyTextInactivatedColor">@color/key_functional_text_color_lxx_dark</item>
+        <item name="functionalTextColor">@color/key_text_color_lxx_dark</item>
+        <item name="keyHintLetterColor">@color/key_hint_letter_color_lxx_dark</item>
+        <item name="keyHintLabelColor">@color/key_text_inactive_color_lxx_dark</item>
+        <item name="keyShiftedLetterHintInactivatedColor">@color/key_text_inactive_color_lxx_dark</item>
+        <item name="keyShiftedLetterHintActivatedColor">@color/key_text_color_lxx_dark</item>
+        <item name="keyPreviewTextColor">@color/white</item>
     </style>
     <style
         name="MainKeyboardView.KLP"
         parent="KeyboardView.KLP"
     >
-        <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_klp</item>
-        <item name="keyPreviewHeight">@dimen/config_key_preview_height_holo</item>
-        <item name="keyPreviewOffset">@dimen/config_key_preview_offset_holo</item>
-        <item name="keyPreviewShowUpAnimator">@anim/key_preview_show_up_holo</item>
-        <item name="keyPreviewDismissAnimator">@anim/key_preview_dismiss_holo</item>
-        <item name="gestureFloatingPreviewTextColor">@color/highlight_color_klp</item>
-        <item name="gestureFloatingPreviewColor">@color/gesture_floating_preview_color_holo</item>
-        <item name="gestureTrailColor">@color/highlight_color_klp</item>
-        <item name="slidingKeyInputPreviewColor">@color/highlight_translucent_color_klp</item>
-        <item name="languageOnSpacebarTextColor">@color/spacebar_text_color_holo</item>
-        <item name="languageOnSpacebarTextShadowRadius">1.0</item>
-        <item name="languageOnSpacebarTextShadowColor">@color/spacebar_text_shadow_color_holo</item>
+        <item name="moreKeysKeyboardForActionLayout">@layout/more_keys_keyboard_for_action_lxx</item>
+        <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_lxx_light</item>
+        <item name="keyPreviewHeight">@dimen/config_key_preview_height_lxx</item>
+        <item name="keyPreviewOffset">@dimen/config_key_preview_offset_lxx</item>
+        <item name="keyPreviewShowUpAnimator">@anim/key_preview_show_up_lxx</item>
+        <item name="keyPreviewDismissAnimator">@anim/key_preview_dismiss_lxx</item>
+        <item name="gestureFloatingPreviewTextColor">@color/auto_correct_color_lxx_dark</item>
+        <item name="gestureFloatingPreviewColor">@color/more_keys_background</item>
+        <item name="gestureTrailColor">@color/gesture_trail_color_lxx_dark</item>
+        <item name="slidingKeyInputPreviewColor">@color/sliding_key_input_preview_color_lxx_dark</item>
+        <item name="languageOnSpacebarTextColor">@color/key_text_inactive_color_lxx_dark</item>
+        <!-- A negative value to disable text shadow layer. -->
+        <item name="languageOnSpacebarTextShadowRadius">-1.0</item>
     </style>
     <!-- Though {@link EmojiPalettesView} doesn't extend {@link KeyboardView}, some views inside it,
          for instance delete button, need themed {@link KeyboardView} attributes. -->
@@ -115,11 +119,20 @@
         name="MoreKeysKeyboardView.KLP"
         parent="KeyboardView.KLP"
     >
-        <item name="android:background">@drawable/keyboard_popup_panel_background_klp</item>
-        <item name="keyBackground">@drawable/btn_keyboard_key_popup_klp</item>
+        <item name="android:background">@drawable/keyboard_morekeys_background_lxx_dark</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_popup_lxx_light</item>
         <item name="divider">@drawable/more_keys_divider</item>
         <item name="keyTypeface">normal</item>
         <item name="verticalCorrection">@dimen/config_more_keys_keyboard_vertical_correction_holo</item>
+    </style>
+    <style
+        name="MoreKeysKeyboardView.KLP.Action"
+        parent="MoreKeysKeyboardView.KLP"
+        >
+        <item name="android:background">@android:color/transparent</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_popup_action_lxx_dark</item>
+        <item name="divider">@null</item>
+        <item name="keyLabelFlags">keepBackgroundAspectRatio</item>
     </style>
     <style
         name="SuggestionStripView.KLP"

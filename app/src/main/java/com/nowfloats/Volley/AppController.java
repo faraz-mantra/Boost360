@@ -23,12 +23,12 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
-	 
+
     public static final String TAG = AppController.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private static AppController mInstance ;
-    private String APXOR_BUNDLED_ID = "cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07";
+    private static AppController mInstance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,20 +36,22 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 //        ContextApplication.initSdk(this, this);
 
         //AppIce SDk
- //       ContextApplication.initSdk(getApplicationContext(), this);
+        //       ContextApplication.initSdk(getApplicationContext(), this);
 
         //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
         try {
             //Fabric.with(this, new Crashlytics());
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        ApxorSDK.initialize(APXOR_BUNDLED_ID,getApplicationContext());
-        String deviceId = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
+        ApxorSDK.initialize(BuildConfig.APXOR_BUNDLED_ID, getApplicationContext());
+        String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         //Log.d("Device ID","Device ID : "+deviceId);
 
@@ -63,28 +65,29 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppEventsLogger.activateApp(this);
 
         mInstance = this;
-        try{
+        try {
           /*  MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
                     "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
                     "e13c031f28ba356a76110e8d1e2c4543c84670d5");
             Mobihelp.init(this, config);*/
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 
 
     public static synchronized AppController getInstance() {
         return mInstance;
     }
- 
+
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
- 
+
         return mRequestQueue;
     }
- 
+
     public ImageLoader getImageLoader() {
         getRequestQueue();
         if (mImageLoader == null) {
@@ -97,7 +100,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void clearApplicationData() {
         deleteCACHE();
 
-       // com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+        // com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
 //   mImageLoader.clearDiskCache();
 //        mImageLoader.clearMemoryCache();
 
@@ -107,14 +110,14 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         File pictureDir = new File(sdcard, dir);
 
-       // File cache = getCacheDir();
-       // File appDir = new File(cache.getParent());
-        if(pictureDir.exists()){
+        // File cache = getCacheDir();
+        // File appDir = new File(cache.getParent());
+        if (pictureDir.exists()) {
             String[] children = pictureDir.list();
-            for(String s : children){
-                if(!s.equals("lib")){
+            for (String s : children) {
+                if (!s.equals("lib")) {
                     deleteDir(new File(pictureDir, s));
-                    Log.i("TAG", "File /data/data/com.thinksity/ :"+pictureDir+" , " + s + " DELETED");
+                    Log.i("TAG", "File /data/data/com.thinksity/ :" + pictureDir + " , " + s + " DELETED");
                 }
             }
         }
@@ -157,7 +160,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             String[] children = dir.list();
             for (int i = 0; i < children.length; i++) {
                 boolean success = deleteDir(new File(dir, children[i]));
-                Log.d("AppController","Success : "+dir);
+                Log.d("AppController", "Success : " + dir);
                 if (!success) {
                     return false;
                 }
@@ -168,7 +171,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     }
 
 
-    public void deleteCACHE () {
+    public void deleteCACHE() {
         PackageManager pm = getPackageManager();
         // Get all methods on the PackageManager
 
@@ -187,7 +190,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
     }
 
-    public void addToRequstQueue(Request request){
+    public void addToRequstQueue(Request request) {
         if (mRequestQueue == null) {
             getRequestQueue();
         }

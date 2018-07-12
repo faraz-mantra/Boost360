@@ -150,7 +150,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     public static void init(final LatinIME latinIme) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(latinIme);
+        final SharedPreferences prefs = latinIme.getApplicationContext().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
         sInstance.initInternal(latinIme, prefs);
     }
 
@@ -256,6 +256,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 .hasMultipleEnabledIMEsOrSubtypes(true /* shouldIncludeAuxiliarySubtypes */);
         keyboardView.startDisplayLanguageOnSpacebar(subtypeChanged, languageOnSpacebarFormatType,
                 hasMultipleEnabledIMEsOrSubtypes);
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putInt("keyboard_height", getMainKeyboardView().getHeight());
+        editor.commit();
     }
 
     public Keyboard getKeyboard() {
@@ -352,6 +355,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         this.mTabType = tabType;
         shareLayout.setVisibility(View.VISIBLE);
         mKeyboardView.setVisibility(View.INVISIBLE);
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putInt("keyboard_height", getMainKeyboardView().getHeight());
+        editor.commit();
         mRichMediaView.setGone();
         //EventBusExt.getDefault().post(new ShowActionRowEvent());
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mThemeContext).isLoggedIn()) {

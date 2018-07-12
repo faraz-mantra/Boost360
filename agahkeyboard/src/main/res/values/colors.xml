@@ -20,6 +20,7 @@
 <resources>
     <!-- Color resources for IceCreamSandwich theme. Base color = 33B5E5 -->
     <!-- android:color/holo_blue_light value is #FF33B5E5 -->
+    <color name="keyboard_background_dark">#212121</color>
     <color name="highlight_color_ics">#FF33B5E5</color>
     <color name="typed_word_color_ics">#D833B5E5</color>
     <color name="suggested_word_color_ics">#B233B5E5</color>
@@ -59,10 +60,10 @@
     <color name="emoji_tab_page_indicator_background_lxx_light">#E4E7E9</color>
     <!-- Color resources for LXX_Dark theme.
          10%:0x19 50%:0x80 70%:0xB3 75%:0xC0 80%:0xCC 85%:0xD9 90%:0xE6  -->
-    <color name="key_text_color_lxx_dark">#CCFFFFFF</color>
-    <color name="key_functional_text_color_lxx_dark">#CCFFFFFF</color>
-    <color name="key_text_inactive_color_lxx_dark">#80FFFFFF</color>
-    <color name="key_hint_letter_color_lxx_dark">#80FFFFFF</color>
+    <color name="key_text_color_lxx_dark">#CACACA</color>
+    <color name="key_functional_text_color_lxx_dark">#CACACA</color>
+    <color name="key_text_inactive_color_lxx_dark">#CACACA</color>
+    <color name="key_hint_letter_color_lxx_dark">#CACACA</color>
     <color name="language_on_spacebar_text_color_lxx_dark">#B3FFFFFF</color>
     <color name="highlight_color_lxx_dark">#80CBC4</color>
     <color name="auto_correct_color_lxx_dark">#FFFFFF</color>
@@ -103,8 +104,10 @@
 
     <color name="color_212121">#212121</color>
     <color name="kbd_shift_key_color">#cc2d2d2d</color>
+    <color name="kbd_shift_key_color_pressed">#ccaeaeae</color>
     <color name="light_gray">#CACACA</color>
     <color name="yellow">#ffb900</color>
     <color name="gray">#AAAAAA</color>
+    <color name="more_keys_background">#353535</color>
 
 </resources>

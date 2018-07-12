@@ -338,6 +338,11 @@ public final class MoreKeysKeyboard extends Keyboard {
                 final int x = params.getX(n, row);
                 final int y = params.getY(row);
                 final Key key = moreKeySpec.buildKey(x, y, moreKeyFlags, params, true);
+                if (mParentKey.isActionKey() || mParentKey.isEnterKey()) {
+                    key.setApplyColorFilter(true);
+                } else {
+                    key.setApplyColorFilter(false);
+                }
                 params.markAsEdgeKey(key, row);
                 params.onAddKey(key);
 

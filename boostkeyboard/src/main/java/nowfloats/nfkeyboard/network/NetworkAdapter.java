@@ -21,7 +21,7 @@ public class NetworkAdapter {
 
     public NetworkAdapter() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.withfloats.com")
+                .baseUrl(Constants.NOW_FLOATS_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

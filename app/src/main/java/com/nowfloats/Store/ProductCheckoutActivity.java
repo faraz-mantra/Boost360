@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ import com.nowfloats.util.Methods;
 import com.romeo.mylibrary.Models.OrderDataModel;
 import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -69,6 +71,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
              tvAmountToBePaid, tvTanNo, tvTdsAmount,btnPayNow, btnOpcApply;
     RecyclerView rvItems;
     EditText etOpc;
+    LinearLayout llOpcInputLayout;
 
     TableRow trTanNo, trTdsAmount;
 
@@ -123,6 +126,12 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
         btnPayNow = findViewById(R.id.btn_pay_now);
         btnOpcApply = findViewById(R.id.btnOpcApply);
+        llOpcInputLayout = findViewById(R.id.llOpcInputLayout);
+        if (Specific.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")) {
+            llOpcInputLayout.setVisibility(View.VISIBLE);
+        } else {
+            llOpcInputLayout.setVisibility(View.GONE);
+        }
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -600,52 +609,55 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             tvTanNo.setText(invoiceData.getTanNumber() + "");
         }
         double netAmount = 0;
-        for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
-            if(data.getDiscount()==null) {
-                netAmount += data.getBasePrice();
-            }else {
-                netAmount += (data.getBasePrice()-(data.getBasePrice()*data.getDiscount().value/100.0));
+        if (invoiceData.getPurchaseDetails() != null && invoiceData.getPurchaseDetails().size() != 0) {
+            for (PurchaseDetail data : invoiceData.getPurchaseDetails()) {
+                if (data.getDiscount() == null) {
+                    netAmount += data.getBasePrice();
+                } else {
+                    netAmount += (data.getBasePrice() - (data.getBasePrice() * data.getDiscount().value / 100.0));
+                }
             }
-        }
-        netAmount = Math.round((netAmount * 100) / 100.0);
-        tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(netAmount)+ " /-");
-        float taxVal = 0;
-        StringBuilder taxNames= new StringBuilder();
+            netAmount = Math.round((netAmount * 100) / 100.0);
+            tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
+                    NumberFormat.getIntegerInstance(Locale.US).format(netAmount) + " /-");
 
-        for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
-            taxVal += taxData.getValue();
-            taxNames.append(taxData.getKey() + "-" + taxData.getValue() + "%,\n ");
-        }
+            float taxVal = 0;
+            StringBuilder taxNames = new StringBuilder();
 
-        double taxAmount = 0;
-        if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
-            taxAmount = (netAmount * taxVal) / 100.0;
-        }else {
-            taxAmount =(int) taxVal;
-        }
-        taxAmount = Math.round((taxAmount * 100) / 100.0);
-        tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
-        if(showDiscount) {
-            trTdsAmount.setVisibility(View.VISIBLE);
-            tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + invoiceData.getTdsAmount());
-        }
+            for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
+                taxVal += taxData.getValue();
+                taxNames.append(taxData.getKey() + "-" + taxData.getValue() + "%,\n ");
+            }
 
-        tvAmountToBePaid.setText(mPurchasePlans.get(0).getCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100) + " /-");
-        String packages="";
-        for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
-            packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
+            double taxAmount = 0;
+            if (invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType() == 0) {
+                taxAmount = (netAmount * taxVal) / 100.0;
+            } else {
+                taxAmount = (int) taxVal;
+            }
+            taxAmount = Math.round((taxAmount * 100) / 100.0);
+            tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
+                    NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
+            if (showDiscount) {
+                trTdsAmount.setVisibility(View.VISIBLE);
+                tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + invoiceData.getTdsAmount());
+            }
+
+            tvAmountToBePaid.setText(mPurchasePlans.get(0).getCurrencyCode() + " " +
+                    NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100) + " /-");
+            String packages = "";
+            for (int i = 0; i < invoiceData.getPurchaseDetails().size(); i++) {
+                packages += invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
+            }
+            mNewPackage = packages;
+            mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100);
+
+
+            rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            ItemsRecyclerViewAdapter adapter = new ItemsRecyclerViewAdapter(invoiceData.getPurchaseDetails(), mPurchasePlans.get(0).getCurrencyCode(), showDiscount);
+            rvItems.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
-        mNewPackage = packages;
-        mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100);
-
-
-        rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ItemsRecyclerViewAdapter adapter = new ItemsRecyclerViewAdapter(invoiceData.getPurchaseDetails(), mPurchasePlans.get(0).getCurrencyCode(), showDiscount);
-        rvItems.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     private void showDialog(String title, String msg){

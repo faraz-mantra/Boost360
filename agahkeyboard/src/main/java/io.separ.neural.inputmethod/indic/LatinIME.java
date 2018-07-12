@@ -70,6 +70,7 @@ import com.android.inputmethod.keyboard.TextDecoratorUi;
 import com.android.inputmethod.keyboard.sticker.InsertPngEvent;
 import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
 import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
+import com.android.inputmethod.keyboard.top.ShowSuggestionsEventAnimated;
 import com.android.inputmethod.keyboard.top.TopDisplayController;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.keyboard.top.actionrow.FrequentEmojiHandler;
@@ -1575,10 +1576,16 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     }
 
     public void displaySettingsDialog() {
-        if (isShowingOptionDialog()) {
-            return;
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("nowfloats://" + getApplicationContext().getPackageName() + ".keyboard.home/addproduct"));
+        intent.putExtra("from", "notification");
+        intent.putExtra("url", "keyboardSettings");
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
         }
-        showSubtypeSelectorAndSettings();
     }
 
     @Override
@@ -1737,7 +1744,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onUpdateBatchInput(final InputPointers batchPointers) {
         mInputLogic.onUpdateBatchInput(mSettings.getCurrent(), batchPointers, mKeyboardSwitcher);
         if (mTopDisplayController != null)
-            mTopDisplayController.showSuggestions();
+            mTopDisplayController.showSuggestions(false);
     }
 
     @Override
@@ -1962,7 +1969,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             if (!shouldShowSuggestionsStrip) {
                 return;
             }
-            mTopDisplayController.showSuggestions();
+            mTopDisplayController.showSuggestions(false);
         }
     }
 
@@ -2484,7 +2491,13 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         @Subscribe(threadMode = ThreadMode.MAIN)
         public void onEventMainThread(ShowSuggestionsEvent event) {
-            mTopDisplayController.showSuggestions();
+            mTopDisplayController.showSuggestions(false);
+            mKeyboardSwitcher.showKeyboardFrame();
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEventMainThread(ShowSuggestionsEventAnimated event) {
+            mTopDisplayController.showSuggestions(true);
             mKeyboardSwitcher.showKeyboardFrame();
         }
 

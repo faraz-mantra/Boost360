@@ -371,6 +371,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     productActivity.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(productActivity);
+            } else if (url.contains("keyboardSettings")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                        .commit();
+                //navigationView.getMenu().getItem(1).setChecked(true);
             } else if (url.contains("addCustomPage")) {
                 Intent createCustomPage = new Intent(HomeActivity.this, CreateCustomPageActivity.class);
                 if (isFromRia && mRiaNodeDataModel != null) {

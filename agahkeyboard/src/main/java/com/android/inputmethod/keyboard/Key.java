@@ -17,6 +17,7 @@
 package com.android.inputmethod.keyboard;
 
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -147,6 +148,7 @@ public class Key implements Comparable<Key> {
     public static final int BACKGROUND_TYPE_STICKY_ON = 4;
     public static final int BACKGROUND_TYPE_ACTION = 5;
     public static final int BACKGROUND_TYPE_SPACEBAR = 6;
+    public static final int BACKGROUND_TYPE_ENTERKEY = 7;
 
     private final int mActionFlags;
     private static final int ACTION_FLAGS_IS_REPEATABLE = 0x01;
@@ -200,6 +202,8 @@ public class Key implements Comparable<Key> {
     private boolean mPressed;
     /** Key is enabled and responds on press */
     private boolean mEnabled = true;
+
+    private boolean mShowColorFilter = false;
 
     public Key(final String label, final int iconId, final int code, final String outputText,
                final String hintLabel, final int labelFlags, final int backgroundType, final int x,
@@ -499,6 +503,10 @@ public class Key implements Comparable<Key> {
         return Constants.printableCode(code);
     }
 
+    public void setApplyColorFilter(boolean mShowColorFilter) {
+        this.mShowColorFilter = mShowColorFilter;
+    }
+
     public String toLongString() {
         final int iconId = mIconId;
         final String topVisual = (iconId == KeyboardIconsSet.ICON_UNDEFINED)
@@ -517,6 +525,7 @@ public class Key implements Comparable<Key> {
         case BACKGROUND_TYPE_STICKY_ON: return "stickyOn";
         case BACKGROUND_TYPE_ACTION: return "action";
         case BACKGROUND_TYPE_SPACEBAR: return "spacebar";
+        case BACKGROUND_TYPE_ENTERKEY: return "enter";
         default: return null;
         }
     }
@@ -559,6 +568,10 @@ public class Key implements Comparable<Key> {
 
     public final boolean isActionKey() {
         return mBackgroundType == BACKGROUND_TYPE_ACTION;
+    }
+
+    public final boolean isEnterKey() {
+        return mBackgroundType == BACKGROUND_TYPE_ENTERKEY;
     }
 
     public int getType() {
@@ -915,6 +928,8 @@ public class Key implements Comparable<Key> {
             new KeyBackgroundState(android.R.attr.state_active),
             // 6: BACKGROUND_TYPE_SPACEBAR
             new KeyBackgroundState(),
+            // 7: BACKGROUND_TYPE_ENTER
+            new KeyBackgroundState(android.R.attr.state_active),
         };
     }
 
@@ -924,7 +939,7 @@ public class Key implements Comparable<Key> {
      * @see android.graphics.drawable.StateListDrawable#setState(int[])
      */
     public final Drawable selectBackgroundDrawable(final Drawable keyBackground,
-            final Drawable functionalKeyBackground, final Drawable spacebarBackground) {
+            final Drawable functionalKeyBackground, final Drawable spacebarBackground, int color, int colorPressed) {
         final Drawable background;
         if (mBackgroundType == BACKGROUND_TYPE_FUNCTIONAL) {
             background = functionalKeyBackground;
@@ -933,9 +948,22 @@ public class Key implements Comparable<Key> {
         } else {
             background = keyBackground;
         }
+        setBackgroundState(background);
+        if (mShowColorFilter) {
+            if (mPressed) {
+                background.setColorFilter(colorPressed, PorterDuff.Mode.SRC_IN);
+            } else {
+                background.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
+        } else {
+            background.clearColorFilter();
+        }
+        return background;
+    }
+
+    public final void setBackgroundState(final Drawable background) {
         final int[] state = KeyBackgroundState.STATES[mBackgroundType].getState(mPressed);
         background.setState(state);
-        return background;
     }
 
     public static class Spacer extends Key {
@@ -955,15 +983,21 @@ public class Key implements Comparable<Key> {
         }
     }
 
-    public Drawable getSpaceBarBackground(Drawable mSpacebarBackground, int mDrawColor, PorterDuff.Mode mode) {
-        mSpacebarBackground.setColorFilter(mDrawColor, mode);
+    public Drawable getSpaceBarBackground(Drawable mSpacebarBackground) {
+        ColorUtils.ButtonType type = ColorUtils.getButtonType();
+        mSpacebarBackground.setState(KeyBackgroundState.STATES[BACKGROUND_TYPE_SPACEBAR].getState(this.mPressed, type));
         return mSpacebarBackground;
     }
 
-    public Drawable getActionBackground(Drawable normalDrawable, int mDrawColor) {
+    public Drawable getActionBackground(Drawable normalDrawable) {
         ColorUtils.ButtonType type = ColorUtils.getButtonType();
         normalDrawable.setState(KeyBackgroundState.STATES[type != ColorUtils.ButtonType.NONE ? BACKGROUND_TYPE_NORMAL : BACKGROUND_TYPE_ACTION].getState(this.mPressed, type));
-        normalDrawable.setColorFilter(mDrawColor, type != ColorUtils.ButtonType.NONE ? PorterDuff.Mode.MULTIPLY : PorterDuff.Mode.SRC_ATOP);
+        return normalDrawable;
+    }
+
+    public Drawable getEnterKeyBackground(Drawable normalDrawable) {
+        ColorUtils.ButtonType type = ColorUtils.getButtonType();
+        normalDrawable.setState(KeyBackgroundState.STATES[type != ColorUtils.ButtonType.NONE ? BACKGROUND_TYPE_NORMAL : BACKGROUND_TYPE_ACTION].getState(this.mPressed, type));
         return normalDrawable;
     }
 
@@ -977,16 +1011,13 @@ public class Key implements Comparable<Key> {
         return normalDrawable;
     }
 
-    public Drawable getNormalBackground(Drawable normalDrawable, boolean forceNoPress, int darkColor) {
+    public Drawable getNormalBackground(Drawable normalDrawable, boolean forceNoPress) {
         boolean z = true;
         KeyBackgroundState keyBackgroundState = KeyBackgroundState.STATES[BACKGROUND_TYPE_NORMAL];
         if (forceNoPress || !this.mPressed) {
             z = false;
         }
         int[] state = keyBackgroundState.getState(z, ColorUtils.ButtonType.NONE);
-            normalDrawable.setColorFilter(darkColor, PorterDuff.Mode.MULTIPLY);
-            /*normalDrawable.clearColorFilter();
-            normalDrawable.setColorFilter(null);*/
         normalDrawable.setState(state);
         return normalDrawable;
     }

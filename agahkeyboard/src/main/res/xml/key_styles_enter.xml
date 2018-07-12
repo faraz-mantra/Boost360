@@ -219,7 +219,7 @@
                 latin:keySpec="!icon/enter_key|!code/key_enter"
                 latin:keyLabelFlags="preserveCase|autoXScale|followKeyLabelRatio|followFunctionalTextColor"
                 latin:keyActionFlags="noKeyPreview"
-                latin:backgroundType="action"
+                latin:backgroundType="enter"
                 latin:parentStyle="navigateMoreKeysStyle" />
         </case>
         <!-- keyboardTheme="LXXLight|LXXDark" -->
@@ -227,9 +227,9 @@
             <key-style
                 latin:styleName="defaultEnterKeyStyle"
                 latin:keySpec="!icon/enter_key|!code/key_enter"
-                latin:keyLabelFlags="preserveCase|autoXScale|followKeyLabelRatio|followFunctionalTextColor|keepBackgroundAspectRatio"
+                latin:keyLabelFlags="preserveCase|autoXScale|followKeyLabelRatio|followFunctionalTextColor"
                 latin:keyActionFlags="noKeyPreview"
-                latin:backgroundType="action"
+                latin:backgroundType="enter"
                 latin:parentStyle="navigateMoreKeysStyle" />
         </default>
     </switch>
@@ -301,7 +301,7 @@
         >
             <key-style
                 latin:styleName="enterKeyStyle"
-                latin:parentStyle="customLabelActionKeyStyle" />
+                latin:parentStyle="defaultEnterKeyStyle" />
         </case>
         <!-- imeAction is either actionNone or actionUnspecified. -->
         <default>
