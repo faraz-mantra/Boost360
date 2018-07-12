@@ -197,7 +197,7 @@ dependencies {
     implementation 'com.android.support:gridlayout-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.webengage:android-sdk:2.+'
-    implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.7.8@aar') {
+    implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.8.2@aar') {
         exclude group: 'com.google.firebase'
     }
     implementation project(':agahkeyboard')

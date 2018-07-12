@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.android.inputmethod.latin.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -43,7 +42,6 @@ import org.jsoup.helper.StringUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -244,8 +242,8 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.textView_pay:
                 if (validateAllFields()) {
-                    showPaidConfirmation();
-//                    initiateProcess(new InitiateModel());
+//                    showPaidConfirmation();
+                    initiateProcess(new InitiateModel());
                 }
                 break;
         }
