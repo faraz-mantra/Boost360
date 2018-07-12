@@ -26,6 +26,12 @@ android {
         }
 
     }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
 }
 
 dependencies {
@@ -75,7 +81,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.7.8@aar') {
+    implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.8.2@aar') {
         exclude group: 'com.google.firebase'
     }
 }
