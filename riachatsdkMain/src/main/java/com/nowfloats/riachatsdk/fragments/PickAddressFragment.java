@@ -427,11 +427,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     if (city.contains(",")) {
                         String country[] = city.split(",");
                         city = country[0];
-                        if (country.length == 3) {
-                            etCountry.setText(country[2].trim());
-                        } else if (country.length == 2)
-                            etCountry.setText(country[1].trim());
-                        etCountry.setFocusable(true);
+//                        if (country.length == 3) {
+//                            etCountry.setText(country[2].trim());
+//                        } else if (country.length == 2)
+//                            etCountry.setText(country[1].trim());
+//                        etCountry.setFocusable(true);
                     }
                     etCity.setTag(false);
                     etCity.setText(city);

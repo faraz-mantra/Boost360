@@ -48,6 +48,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.AnaCore;
+import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.android.inputmethod.latin.utils.JniUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -1155,10 +1156,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.chat))) {
                     if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT, null);
+
+                        PreferencesManager.getsInstance(HomeActivity.this).setUserName(session.getFpTag());
+
                         new AnaChatBuilder(HomeActivity.this)
                                 .setBusinessId(Constants.ANA_BUSINESS_ID)
                                 .setBaseUrl(Constants.ANA_CHAT_API_URL)
-                                .setFlowId(session.getFpTag())
+                                .setFlowId(Constants.ANA_BUSINESS_ID)
                                 .setThemeColor(R.color.primary)
                                 .setToolBarDescription("Available")
                                 .setToolBarTittle(getString(R.string.support_name) + " Chat")

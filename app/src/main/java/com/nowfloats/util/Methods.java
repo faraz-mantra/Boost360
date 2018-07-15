@@ -544,6 +544,23 @@ public class Methods {
         return false;
     }
 
+    public static long getDateDifference(Date startDate, Date endDate) {
+        //milliseconds
+        long different = endDate.getTime() - startDate.getTime();
+
+        System.out.println("startDate : " + startDate);
+        System.out.println("endDate : " + endDate);
+        System.out.println("different : " + different);
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        return elapsedDays;
+    }
+
     public static String getFormattedDate(String date, String format) {
         if (TextUtils.isEmpty(date)) {
             return "";
@@ -623,6 +640,20 @@ public class Methods {
         }
 
         return parsedDate;
+    }
+
+    public static long getMilliSecondsFromDate(String date, String format) {
+
+        long timeInMilliseconds = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            Date mDate = sdf.parse(date);
+            timeInMilliseconds = mDate.getTime();
+            System.out.println("Date in milli :: " + timeInMilliseconds);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return timeInMilliseconds;
     }
 
 
