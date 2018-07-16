@@ -36,11 +36,15 @@ import android.view.View;
 
 import com.android.inputmethod.keyboard.internal.AlphabetShiftState;
 import com.android.inputmethod.keyboard.internal.KeyDrawParams;
+import com.android.inputmethod.keyboard.internal.KeySpecParser;
 import com.android.inputmethod.keyboard.internal.KeyVisualAttributes;
+import com.android.inputmethod.keyboard.internal.MoreKeySpec;
 import com.android.inputmethod.latin.utils.ResourceUtils;
+import com.android.inputmethod.latin.utils.StringUtils;
 import com.android.inputmethod.latin.utils.TypefaceUtils;
 
 import java.util.HashSet;
+import java.util.Locale;
 
 import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.R;
@@ -48,7 +52,10 @@ import io.separ.neural.inputmethod.indic.R;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ACTION;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_ENTERKEY;
 import static com.android.inputmethod.keyboard.Key.BACKGROUND_TYPE_SPACEBAR;
+import static com.android.inputmethod.keyboard.internal.KeyboardIconsSet.ICON_UNDEFINED;
 import static io.separ.neural.inputmethod.Utils.ColorUtils.colorProfile;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_OUTPUT_TEXT;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_UNSPECIFIED;
 
 /**
  * A view that renders a virtual {@link Keyboard}.
@@ -144,6 +151,7 @@ public class KeyboardView extends View {
     }
 
     final TypedArray keyboardViewAttr;
+
     public KeyboardView(final Context context, final AttributeSet attrs, final int defStyle, boolean isEmoji) {
         super(context, attrs, defStyle);
 
@@ -432,7 +440,7 @@ public class KeyboardView extends View {
             final float minScale = Math.min(
                     keyWidth / (float) intrinsicWidth, keyHeight / (float) intrinsicHeight);
             bgWidth = (int) (intrinsicWidth * minScale);
-            bgHeight = (int) (intrinsicHeight *minScale);
+            bgHeight = (int) (intrinsicHeight * minScale);
             bgX = (keyWidth - bgWidth) / 2;
             bgY = (keyHeight - bgHeight) / 2;
         } else {
@@ -463,7 +471,7 @@ public class KeyboardView extends View {
         final Drawable icon = key.getIcon(mKeyboard.mIconsSet, params.mAnimAlpha);
         float labelX = centerX;
         float labelBaseline = centerY;
-        final String label = key.getLabel();
+        String label = key.getLabel();
         if (label != null) {
             paint.setTypeface(Key.selectTypeface(params));
             paint.setTextSize(key.selectTextSize(params));
@@ -511,6 +519,42 @@ public class KeyboardView extends View {
            /* Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
+            if (key.isHeaderKey() && PointerTracker.KEYBOARD_TYPED_KEY != null && PointerTracker.KEYBOARD_TYPED_KEY.getLabel() != null) {
+                String[] moreKeys = new String[]{label};
+                MoreKeySpec[] mMoreKeys = new MoreKeySpec[moreKeys.length];
+                mMoreKeys[0] = new MoreKeySpec(moreKeys[0], false, Locale.getDefault());
+                key.mMoreKeys = mMoreKeys;
+                label = PointerTracker.KEYBOARD_TYPED_KEY.getLabel() + (key.getHeaderKeySpec() != null ? key.getHeaderKeySpec() : "");
+                String mLabel = label;
+                String outputText = key.getOutputText();
+                int mCode;
+                final int code = KeySpecParser.getCode(label);
+                if (code == CODE_UNSPECIFIED && TextUtils.isEmpty(key.getOutputText())
+                        && !TextUtils.isEmpty(key.getLabel())) {
+                    if (StringUtils.codePointCount(label) == 1) {
+                        // Use the first letter of the hint label if shiftedLetterActivated flag is
+                        // specified.
+                        mCode = mLabel.codePointAt(0);
+                    } else {
+                        // In some locale and case, the character might be represented by multiple code
+                        // points, such as upper case Eszett of German alphabet.
+                        outputText = mLabel;
+                        mCode = CODE_OUTPUT_TEXT;
+                    }
+                } else if (code == CODE_UNSPECIFIED && key.getOutputText() != null) {
+                    if (StringUtils.codePointCount(key.getOutputText()) == 1) {
+                        mCode = key.getOutputText().codePointAt(0);
+                        outputText = null;
+                    } else {
+                        mCode = CODE_OUTPUT_TEXT;
+                    }
+                } else {
+                    mCode = StringUtils.toUpperCaseOfCodeForLocale(code, false, Locale.getDefault());
+                }
+                key.mOptionalAttributes = Key.OptionalAttributes.newInstance(label, CODE_UNSPECIFIED,
+                        ICON_UNDEFINED, 0 /* visualInsetsLeft */, 0 /* visualInsetsRight */);
+                key.mCode = mCode;
+            }
             canvas.drawText(label, 0, label.length(), labelX, labelBaseline, paint);
             // Turn off drop shadow and reset x-scale.
             paint.clearShadowLayer();
@@ -550,7 +594,7 @@ public class KeyboardView extends View {
                 final float hintLabelWidth = TypefaceUtils.getStringWidth(hintLabel, paint);
                 hintX = keyWidth - mKeyHintLetterPadding
                         - Math.max(hintDigitWidth, hintLabelWidth) / 1.3f;
-                hintBaseline = - paint.ascent() + 2;
+                hintBaseline = -paint.ascent() + 2;
                 paint.setTextAlign(Align.CENTER);
             }
             final float adjustmentY = params.mHintLabelVerticalAdjustment * labelCharHeight;

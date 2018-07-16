@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2009, The Android Open Source Project
@@ -57,5 +56,7 @@
         <item>qwerty</item>
         <item>fa:TrySuppressingImeSwitcher,SupportTouchPositionCorrection,EmojiCapable</item>
         <item>farsi</item>
+        <item>hi_IN:TrySuppressingImeSwitcher,SupportTouchPositionCorrection,EmojiCapable</item>
+        <item>hindi</item>
     </string-array>
 </resources>

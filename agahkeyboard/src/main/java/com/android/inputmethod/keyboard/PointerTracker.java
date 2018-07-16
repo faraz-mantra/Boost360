@@ -49,58 +49,103 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private static final boolean DEBUG_MOVE_EVENT = false;
     private static final boolean DEBUG_LISTENER = false;
     private static final boolean DEBUG_MODE = DebugFlags.DEBUG_ENABLED || DEBUG_EVENT;
+    public static Key KEYBOARD_TYPED_KEY = null;
 
     public interface DrawingProxy {
         void invalidateKey(Key key);
+
         void showKeyPreview(Key key);
+
         void dismissKeyPreview(Key key);
+
         void showSlidingKeyInputPreview(PointerTracker tracker);
+
         void dismissSlidingKeyInputPreview();
+
         void showGestureTrail(PointerTracker tracker, boolean showsFloatingPreviewText);
     }
 
     public interface TimerProxy {
         void startTypingStateTimer(Key typedKey);
+
         boolean isTypingState();
+
         void startKeyRepeatTimerOf(PointerTracker tracker, int repeatCount, int delay);
+
         void startLongPressTimerOf(PointerTracker tracker, int delay);
+
         void cancelLongPressTimerOf(PointerTracker tracker);
+
         void cancelLongPressShiftKeyTimers();
+
         void cancelKeyTimersOf(PointerTracker tracker);
+
         void startDoubleTapShiftKeyTimer();
+
         void cancelDoubleTapShiftKeyTimer();
+
         boolean isInDoubleTapShiftKeyTimeout();
+
         void startUpdateBatchInputTimer(PointerTracker tracker);
+
         void cancelUpdateBatchInputTimer(PointerTracker tracker);
+
         void cancelAllUpdateBatchInputTimers();
 
         class Adapter implements TimerProxy {
             @Override
-            public void startTypingStateTimer(Key typedKey) {}
+            public void startTypingStateTimer(Key typedKey) {
+            }
+
             @Override
-            public boolean isTypingState() { return false; }
+            public boolean isTypingState() {
+                return false;
+            }
+
             @Override
-            public void startKeyRepeatTimerOf(PointerTracker tracker, int repeatCount, int delay) {}
+            public void startKeyRepeatTimerOf(PointerTracker tracker, int repeatCount, int delay) {
+            }
+
             @Override
-            public void startLongPressTimerOf(PointerTracker tracker, int delay) {}
+            public void startLongPressTimerOf(PointerTracker tracker, int delay) {
+            }
+
             @Override
-            public void cancelLongPressTimerOf(PointerTracker tracker) {}
+            public void cancelLongPressTimerOf(PointerTracker tracker) {
+            }
+
             @Override
-            public void cancelLongPressShiftKeyTimers() {}
+            public void cancelLongPressShiftKeyTimers() {
+            }
+
             @Override
-            public void cancelKeyTimersOf(PointerTracker tracker) {}
+            public void cancelKeyTimersOf(PointerTracker tracker) {
+            }
+
             @Override
-            public void startDoubleTapShiftKeyTimer() {}
+            public void startDoubleTapShiftKeyTimer() {
+            }
+
             @Override
-            public void cancelDoubleTapShiftKeyTimer() {}
+            public void cancelDoubleTapShiftKeyTimer() {
+            }
+
             @Override
-            public boolean isInDoubleTapShiftKeyTimeout() { return false; }
+            public boolean isInDoubleTapShiftKeyTimeout() {
+                return false;
+            }
+
             @Override
-            public void startUpdateBatchInputTimer(PointerTracker tracker) {}
+            public void startUpdateBatchInputTimer(PointerTracker tracker) {
+            }
+
             @Override
-            public void cancelUpdateBatchInputTimer(PointerTracker tracker) {}
+            public void cancelUpdateBatchInputTimer(PointerTracker tracker) {
+            }
+
             @Override
-            public void cancelAllUpdateBatchInputTimers() {}
+            public void cancelAllUpdateBatchInputTimers() {
+            }
         }
     }
 
@@ -203,7 +248,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
     // TODO: Add PointerTrackerFactory singleton and move some class static methods into it.
     public static void init(final TypedArray mainKeyboardViewAttr, final TimerProxy timerProxy,
-            final DrawingProxy drawingProxy) {
+                            final DrawingProxy drawingProxy) {
         sParams = new PointerTrackerParams(mainKeyboardViewAttr);
         sGestureStrokeRecognitionParams = new GestureStrokeRecognitionParams(mainKeyboardViewAttr);
         sGestureStrokeDrawingParams = new GestureStrokeDrawingParams(mainKeyboardViewAttr);
@@ -291,7 +336,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
     // Returns true if keyboard has been changed by this callback.
     private boolean callListenerOnPressAndCheckKeyboardLayoutChange(final Key key,
-            final int repeatCount) {
+                                                                    final int repeatCount) {
         // While gesture input is going on, this method should be a no-operation. But when gesture
         // input has been canceled, <code>sInGesture</code> and <code>mIsDetectingGesture</code>
         // are set to false. To keep this method is a no-operation,
@@ -323,7 +368,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     // Note that we need primaryCode argument because the keyboard may in shifted state and the
     // primaryCode is different from {@link Key#mKeyCode}.
     private void callListenerOnCodeInput(final Key key, final int primaryCode, final int x,
-            final int y, final long eventTime, final boolean isKeyRepeat) {
+                                         final int y, final long eventTime, final boolean isKeyRepeat) {
         final boolean ignoreModifierKey = mIsInDraggingFinger && key.isModifier();
         final boolean altersCode = key.altCodeWhileTyping() && sTimerProxy.isTypingState();
         final int code = altersCode ? key.getAltCode() : primaryCode;
@@ -356,7 +401,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     // Note that we need primaryCode argument because the keyboard may be in shifted state and the
     // primaryCode is different from {@link Key#mKeyCode}.
     private void callListenerOnRelease(final Key key, final int primaryCode,
-            final boolean withSliding) {
+                                       final boolean withSliding) {
         // See the comment at {@link #callListenerOnPressAndCheckKeyboardLayoutChange(Key}}.
         if (sInGesture || mIsDetectingGesture || mIsTrackingForActionDisabled) {
             return;
@@ -366,7 +411,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             Log.d(TAG, String.format("[%d] onRelease  : %s%s%s%s", mPointerId,
                     Constants.printableCode(primaryCode),
                     withSliding ? " sliding" : "", ignoreModifierKey ? " ignoreModifier" : "",
-                    key.isEnabled() ?  "": " disabled"));
+                    key.isEnabled() ? "" : " disabled"));
         }
         if (ignoreModifierKey) {
             return;
@@ -408,7 +453,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         // Keep {@link #mCurrentKey} that comes from previous keyboard. The key preview of
         // {@link #mCurrentKey} will be dismissed by {@setReleasedKeyGraphics(Key)} via
         // {@link onMoveEventInternal(int,int,long)} or {@link #onUpEventInternal(int,int,long)}.
-        mPhantomSuddenMoveThreshold = (int)(keyWidth * PHANTOM_SUDDEN_MOVE_THRESHOLD);
+        mPhantomSuddenMoveThreshold = (int) (keyWidth * PHANTOM_SUDDEN_MOVE_THRESHOLD);
         mBogusMoveEventDetector.setKeyboardGeometry(keyWidth, keyHeight);
     }
 
@@ -538,7 +583,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private static int getDistance(final int x1, final int y1, final int x2, final int y2) {
-        return (int)Math.hypot(x1 - x2, y1 - y2);
+        return (int) Math.hypot(x1 - x2, y1 - y2);
     }
 
     private Key onMoveKeyInternal(final int x, final int y) {
@@ -559,7 +604,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         return newKey;
     }
 
-    /* package */ static int getActivePointerTrackerCount() {
+    /* package */
+    static int getActivePointerTrackerCount() {
         return sPointerTrackerQueue.size();
     }
 
@@ -649,33 +695,33 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 if (shouldIgnoreOtherPointers && id != mPointerId) {
                     continue;
                 }
-                final int x = (int)me.getX(index);
-                final int y = (int)me.getY(index);
+                final int x = (int) me.getX(index);
+                final int y = (int) me.getY(index);
                 final PointerTracker tracker = getPointerTracker(id);
                 tracker.onMoveEvent(x, y, eventTime, me);
             }
             return;
         }
         final int index = me.getActionIndex();
-        final int x = (int)me.getX(index);
-        final int y = (int)me.getY(index);
+        final int x = (int) me.getX(index);
+        final int y = (int) me.getY(index);
         switch (action) {
-        case MotionEvent.ACTION_DOWN:
-        case MotionEvent.ACTION_POINTER_DOWN:
-            onDownEvent(x, y, eventTime, keyDetector);
-            break;
-        case MotionEvent.ACTION_UP:
-        case MotionEvent.ACTION_POINTER_UP:
-            onUpEvent(x, y, eventTime);
-            break;
-        case MotionEvent.ACTION_CANCEL:
-            onCancelEvent(x, y, eventTime);
-            break;
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+                onDownEvent(x, y, eventTime, keyDetector);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                onUpEvent(x, y, eventTime);
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                onCancelEvent(x, y, eventTime);
+                break;
         }
     }
 
     private void onDownEvent(final int x, final int y, final long eventTime,
-            final KeyDetector keyDetector) {
+                             final KeyDetector keyDetector) {
         setKeyDetectorInner(keyDetector);
         if (DEBUG_EVENT) {
             printTouchEvent("onDownEvent:", x, y, eventTime);
@@ -687,7 +733,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             if (distance < sParams.mTouchNoiseThresholdDistance) {
                 if (DEBUG_MODE)
                     Log.w(TAG, String.format("[%d] onDownEvent:"
-                            + " ignore potential noise: time=%d distance=%d",
+                                    + " ignore potential noise: time=%d distance=%d",
                             mPointerId, deltaT, distance));
                 cancelTrackingForAction();
                 return;
@@ -769,7 +815,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void onGestureMoveEvent(final int x, final int y, final long eventTime,
-            final boolean isMajorEvent, final Key key) {
+                                    final boolean isMajorEvent, final Key key) {
         if (!mIsDetectingGesture) {
             return;
         }
@@ -812,8 +858,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             final int pointerIndex = me.findPointerIndex(mPointerId);
             final int historicalSize = me.getHistorySize();
             for (int h = 0; h < historicalSize; h++) {
-                final int historicalX = (int)me.getHistoricalX(pointerIndex, h);
-                final int historicalY = (int)me.getHistoricalY(pointerIndex, h);
+                final int historicalX = (int) me.getHistoricalX(pointerIndex, h);
+                final int historicalY = (int) me.getHistoricalY(pointerIndex, h);
                 final long historicalTime = me.getHistoricalEventTime(h);
                 onGestureMoveEvent(historicalX, historicalY, historicalTime,
                         false /* isMajorEvent */, null);
@@ -834,7 +880,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void processDraggingFingerInToNewKey(final Key newKey, final int x, final int y,
-            final long eventTime) {
+                                                 final long eventTime) {
         // This onPress call may have changed keyboard layout. Those cases are detected
         // at {@link #setKeyboard}. In those cases, we should update key according
         // to the new keyboard layout.
@@ -851,11 +897,11 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void processPhantomSuddenMoveHack(final Key key, final int x, final int y,
-            final long eventTime, final Key oldKey, final int lastX, final int lastY) {
+                                              final long eventTime, final Key oldKey, final int lastX, final int lastY) {
         if (DEBUG_MODE) {
             Log.w(TAG, String.format("[%d] onMoveEvent:"
-                    + " phantom sudden move event (distance=%d) is translated to "
-                    + "up[%d,%d,%s]/down[%d,%d,%s] events", mPointerId,
+                            + " phantom sudden move event (distance=%d) is translated to "
+                            + "up[%d,%d,%s]/down[%d,%d,%s] events", mPointerId,
                     getDistance(x, y, lastX, lastY),
                     lastX, lastY, Constants.printableCode(oldKey.getCode()),
                     x, y, Constants.printableCode(key.getCode())));
@@ -865,16 +911,16 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void processProximateBogusDownMoveUpEventHack(final Key key, final int x, final int y,
-            final long eventTime, final Key oldKey, final int lastX, final int lastY) {
+                                                          final long eventTime, final Key oldKey, final int lastX, final int lastY) {
         if (DEBUG_MODE) {
-            final float keyDiagonal = (float)Math.hypot(
+            final float keyDiagonal = (float) Math.hypot(
                     mKeyboard.mMostCommonKeyWidth, mKeyboard.mMostCommonKeyHeight);
             final float radiusRatio =
                     mBogusMoveEventDetector.getDistanceFromDownEvent(x, y)
-                    / keyDiagonal;
+                            / keyDiagonal;
             Log.w(TAG, String.format("[%d] onMoveEvent:"
-                    + " bogus down-move-up event (raidus=%.2f key diagonal) is "
-                    + " translated to up[%d,%d,%s]/down[%d,%d,%s] events",
+                            + " bogus down-move-up event (raidus=%.2f key diagonal) is "
+                            + " translated to up[%d,%d,%s]/down[%d,%d,%s] events",
                     mPointerId, radiusRatio,
                     lastX, lastY, Constants.printableCode(oldKey.getCode()),
                     x, y, Constants.printableCode(key.getCode())));
@@ -891,7 +937,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void dragFingerFromOldKeyToNewKey(final Key key, final int x, final int y,
-            final long eventTime, final Key oldKey, final int lastX, final int lastY) {
+                                              final long eventTime, final Key oldKey, final int lastX, final int lastY) {
         // The pointer has been slid in to the new key from the previous key, we must call
         // onRelease() first to notify that the previous key has been released, then call
         // onPress() to notify that the new key is being pressed.
@@ -1094,7 +1140,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         sPointerTrackerQueue.remove(this);
     }
 
-    public boolean longClickOnMaybeLangChange(){
+    public boolean longClickOnMaybeLangChange() {
         final Key key = getKey();
         if (key == null)
             return false;
@@ -1127,7 +1173,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private boolean isMajorEnoughMoveToBeOnNewKey(final int x, final int y, final long eventTime,
-            final Key newKey) {
+                                                  final Key newKey) {
         final Key curKey = mCurrentKey;
         if (newKey == curKey) {
             return false;
@@ -1141,22 +1187,22 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         final int distanceFromKeyEdgeSquared = curKey.squaredDistanceToEdge(x, y);
         if (distanceFromKeyEdgeSquared >= keyHysteresisDistanceSquared) {
             if (DEBUG_MODE) {
-                final float distanceToEdgeRatio = (float)Math.sqrt(distanceFromKeyEdgeSquared)
+                final float distanceToEdgeRatio = (float) Math.sqrt(distanceFromKeyEdgeSquared)
                         / mKeyboard.mMostCommonKeyWidth;
                 Log.d(TAG, String.format("[%d] isMajorEnoughMoveToBeOnNewKey:"
-                        +" %.2f key width from key edge", mPointerId, distanceToEdgeRatio));
+                        + " %.2f key width from key edge", mPointerId, distanceToEdgeRatio));
             }
             return true;
         }
         if (!mIsAllowedDraggingFinger && sTypingTimeRecorder.isInFastTyping(eventTime)
                 && mBogusMoveEventDetector.hasTraveledLongDistance(x, y)) {
             if (DEBUG_MODE) {
-                final float keyDiagonal = (float)Math.hypot(
+                final float keyDiagonal = (float) Math.hypot(
                         mKeyboard.mMostCommonKeyWidth, mKeyboard.mMostCommonKeyHeight);
                 final float lengthFromDownRatio =
                         mBogusMoveEventDetector.getAccumulatedDistanceFromDownKey() / keyDiagonal;
                 Log.d(TAG, String.format("[%d] isMajorEnoughMoveToBeOnNewKey:"
-                        + " %.2f key diagonal from virtual down point",
+                                + " %.2f key diagonal from virtual down point",
                         mPointerId, lengthFromDownRatio));
             }
             return true;
@@ -1201,6 +1247,12 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             return;
         }
 
+        if (!key.isHeaderKey()) {
+            KEYBOARD_TYPED_KEY = key;
+        } else {
+            KEYBOARD_TYPED_KEY = null;
+        }
+
         final int code = key.getCode();
         callListenerOnCodeInput(key, code, x, y, eventTime, false /* isKeyRepeat */);
         callListenerOnRelease(key, code, false /* withSliding */);
@@ -1238,7 +1290,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void printTouchEvent(final String title, final int x, final int y,
-            final long eventTime) {
+                                 final long eventTime) {
         final Key key = mKeyDetector.detectHitKey(x, y);
         final String code = (key == null ? "none" : Constants.printableCode(key.getCode()));
         Log.d(TAG, String.format("[%d]%s%s %4d %4d %5d %s", mPointerId,
