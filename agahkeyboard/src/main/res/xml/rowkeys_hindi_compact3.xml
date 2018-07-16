@@ -21,6 +21,7 @@
     <!-- Because the font rendering system prior to API version 16 can't automatically
          render dotted circle for incomplete combining letter of some scripts, different
          set of Key definitions are needed based on the API version. -->
+    <Key latin:keySpec="&#x091F;" />
     <Key latin:keySpec="&#x0920;" />
     <Key latin:keySpec="&#x0921;" />
     <Key latin:keySpec="&#x0922;" />
@@ -30,8 +31,6 @@
     <Key latin:keySpec="&#x0926;" />
     <Key latin:keySpec="&#x0927;" />
     <Key latin:keySpec="&#x0928;" />
-    <Key latin:keySpec="&#x092A;" />
-    <!--<Key latin:keySpec="&#x092B;" />-->
     <!-- <include latin:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_candra_o" />
      &lt;!&ndash; U+0911: "ऑ" DEVANAGARI LETTER CANDRA O &ndash;&gt;
      <Key

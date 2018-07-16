@@ -50,6 +50,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private static final boolean DEBUG_LISTENER = false;
     private static final boolean DEBUG_MODE = DebugFlags.DEBUG_ENABLED || DEBUG_EVENT;
     public static Key KEYBOARD_TYPED_KEY = null;
+    public static String KEYBOARD_KEY_LABEL;
 
     public interface DrawingProxy {
         void invalidateKey(Key key);
@@ -356,6 +357,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             return false;
         }
         if (key.isEnabled()) {
+            KEYBOARD_KEY_LABEL = key.getLabel();
             sListener.onPressKey(key.getCode(), repeatCount, getActivePointerTrackerCount() == 1);
             final boolean keyboardLayoutHasBeenChanged = mKeyboardLayoutHasBeenChanged;
             mKeyboardLayoutHasBeenChanged = false;

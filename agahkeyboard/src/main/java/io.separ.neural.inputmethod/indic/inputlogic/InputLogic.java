@@ -270,7 +270,7 @@ public final class InputLogic {
         if (mWordComposer.isComposingWord()) {
             commitCurrentAutoCorrection(settingsValues, rawText, handler);
         } else {
-            resetComposingState(true /* alsoResetLastComposedWord */);
+            resetComposingState(true /* a lsoResetLastComposedWord */);
         }
         handler.postUpdateSuggestionStrip(SuggestedWords.INPUT_STYLE_TYPING);
         final String text = performSpecificTldProcessingOnTextInput(rawText);
@@ -966,6 +966,9 @@ public final class InputLogic {
             if (swapWeakSpace && trySwapSwapperAndSpace(event, inputTransaction)) {
                 mSpaceState = SpaceState.WEAK;
             } else {
+              /*  if (PointerTracker.KEYBOARD_TYPED_KEY == null) {
+                    revertCommit(inputTransaction, inputTransaction.mSettingsValues);
+                }*/
                 sendKeyCodePoint(settingsValues, codePoint, isTransliteration);
             }
         }
@@ -2356,7 +2359,7 @@ public final class InputLogic {
     private void commitChosenWord(final SettingsValues settingsValues, final String chosenWord,
                                   final int commitType, final String separatorString) {
         final SuggestedWords suggestedWords = mSuggestedWords;
-        final CharSequence chosenWordWithSuggestions =
+        CharSequence chosenWordWithSuggestions =
                 SuggestionSpanUtils.getTextWithSuggestionSpan(mLatinIME, chosenWord,
                         suggestedWords);
         // When we are composing word, get previous words information from the 2nd previous word

@@ -476,10 +476,11 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
                 Xml.asAttributeSet(parser), R.styleable.Keyboard_Key);
         final KeyStyle keyStyle = mParams.mKeyStyles.getKeyStyle(keyAttr, parser);
         final String keySpec = keyStyle.getString(keyAttr, R.styleable.Keyboard_Key_keySpec);
+        final String headerKeySpec = keyStyle.getString(keyAttr, R.styleable.Keyboard_Key_headerKeySpec);
         if (TextUtils.isEmpty(keySpec)) {
             throw new ParseException("Empty keySpec", parser);
         }
-        final Key key = new Key(keySpec, keyAttr, keyStyle, mParams, row);
+        final Key key = new Key(keySpec,headerKeySpec, keyAttr, keyStyle, mParams, row);
         keyAttr.recycle();
         if (DEBUG) {
             startEndTag("<%s%s %s moreKeys=%s />", TAG_KEY, (key.isEnabled() ? "" : " disabled"),

@@ -53,6 +53,7 @@ import static io.separ.neural.inputmethod.indic.Constants.CODE_UNSPECIFIED;
  * Class for describing the position and characteristics of a single key in the keyboard.
  */
 public class Key implements Comparable<Key> {
+    private String mKeySpec;
     /**
      * The key code (unicode or custom code) that this key generates.
      */
@@ -294,8 +295,10 @@ public class Key implements Comparable<Key> {
      * @param row     the row that this key belongs to. row's x-coordinate will be the right edge of
      *                this key.
      */
-    public Key(final String keySpec, final TypedArray keyAttr, final KeyStyle style,
+    public Key(final String keySpec, final String headerKeySpec, final TypedArray keyAttr, final KeyStyle style,
                final KeyboardParams params, final KeyboardRow row) {
+        mHeaderKeySpec = headerKeySpec;
+        this.mKeySpec = keySpec;
         final float horizontalGap = isSpacer() ? 0 : params.mHorizontalGap;
         final int rowHeight = row.getRowHeight();
         mHeight = rowHeight - params.mVerticalGap;
@@ -990,6 +993,8 @@ public class Key implements Comparable<Key> {
                 new KeyBackgroundState(),
                 // 7: BACKGROUND_TYPE_ENTER
                 new KeyBackgroundState(android.R.attr.state_active),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
         };
     }
 
@@ -1030,7 +1035,7 @@ public class Key implements Comparable<Key> {
     public static class Spacer extends Key {
         public Spacer(final TypedArray keyAttr, final KeyStyle keyStyle,
                       final KeyboardParams params, final KeyboardRow row) {
-            super(null /* keySpec */, keyAttr, keyStyle, params, row);
+            super(null /* keySpec */, null, keyAttr, keyStyle, params, row);
         }
 
         /**
