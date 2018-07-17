@@ -98,7 +98,7 @@ public class KeyboardView extends View {
     // Currently only "alignHintLabelToBottom" is supported.
     private final int mDefaultKeyLabelFlags;
     private final float mKeyHintLetterPadding;
-    private final String mKeyPopupHintLetter;
+    public final String mKeyPopupHintLetter;
     private final float mKeyPopupHintLetterPadding;
     private final float mKeyShiftedLetterHintPadding;
     private final float mKeyTextShadowRadius;
@@ -520,6 +520,7 @@ public class KeyboardView extends View {
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
             if (key.isHeaderKey() && PointerTracker.KEYBOARD_TYPED_KEY != null && PointerTracker.KEYBOARD_TYPED_KEY.getLabel() != null) {
+                key.setLabelModified(true);
                 String[] moreKeys = new String[]{label};
                 MoreKeySpec[] mMoreKeys = new MoreKeySpec[moreKeys.length];
                 mMoreKeys[0] = new MoreKeySpec(moreKeys[0], false, Locale.getDefault());
@@ -555,6 +556,7 @@ public class KeyboardView extends View {
                         ICON_UNDEFINED, 0 /* visualInsetsLeft */, 0 /* visualInsetsRight */);
                 key.mCode = mCode;
             } else {
+                key.setLabelModified(false);
                 String mLabel = label;
                 key.mOptionalAttributes = Key.OptionalAttributes.newInstance(label, CODE_UNSPECIFIED,
                         ICON_UNDEFINED, 0 /* visualInsetsLeft */, 0 /* visualInsetsRight */);
@@ -624,8 +626,9 @@ public class KeyboardView extends View {
             final int iconX = (keyWidth - iconWidth) / 2; // Align horizontally center.
             drawIcon(key.getCode(), canvas, icon, iconX, iconY, iconWidth, iconHeight);
         }
-
-        if (key.hasPopupHint() && key.getMoreKeys() != null) {
+        if (TextUtils.isEmpty(mKeyPopupHintLetter)) {
+            return;
+        } else if (key.hasPopupHint() && key.getMoreKeys() != null) {
             drawKeyPopupHint(key, canvas, paint, params);
         }
     }

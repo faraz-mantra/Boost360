@@ -278,7 +278,7 @@ public final class InputLogic {
         if (SpaceState.PHANTOM == mSpaceState) {
             promotePhantomSpace(settingsValues);
         }
-        if (PointerTracker.KEYBOARD_TYPED_KEY == null) {
+        if (PointerTracker.KEYBOARD_TYPED_KEY == null && PointerTracker.isLebelModified) {
             mConnection.deleteTextBeforeCursor(1);
         }
         mConnection.commitText(text, 1);

@@ -187,9 +187,18 @@ public class Key implements Comparable<Key> {
 
     public OptionalAttributes mOptionalAttributes;
     private boolean moreKey = false;
+    private boolean isLabelModified;
 
     public boolean isMoreKey() {
         return moreKey;
+    }
+
+    public void setLabelModified(boolean isLabelModified) {
+        this.isLabelModified = isLabelModified;
+    }
+
+    public boolean isLabelModified() {
+        return isLabelModified;
     }
 
     public static final class OptionalAttributes {
@@ -608,12 +617,7 @@ public class Key implements Comparable<Key> {
     }
 
     public MoreKeySpec[] getMoreKeys() {
-       /* if (isHeaderKey() && mHeaderMoreKeys != null && mHeaderMoreKeys.length > 0) {
-            return mHeaderMoreKeys;
-        } else {
-            return mMoreKeys;
-        }*/
-        return mMoreKeys;
+        return mMoreKeys != null ? mMoreKeys : mHeaderMoreKeys;
     }
 
     public void markAsLeftEdge(final KeyboardParams params) {

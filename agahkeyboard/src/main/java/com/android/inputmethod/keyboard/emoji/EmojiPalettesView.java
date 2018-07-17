@@ -52,6 +52,7 @@ import com.android.inputmethod.latin.utils.ResourceUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.separ.neural.inputmethod.colors.ColorManager;
@@ -158,14 +159,15 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         // The main keyboard expands to the entire this {@link KeyboardView}.
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
-        final int height = ResourceUtils.getDefaultKeyboardHeight(res) /*-
+        int height = ResourceUtils.getDefaultKeyboardHeight(res) /*-
                 res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)*/
                 + getPaddingTop() + getPaddingBottom() - 40;
         setMeasuredDimension(width, height);
     }
 
     private static class DeleteKeyOnTouchListener implements OnTouchListener {
-        static final long MAX_REPEAT_COUNT_TIME = TimeUnit.SECONDS.toMillis(30);
+        static final long MAX_REPEAT_COUNT_TIME = TimeUnit.SECONDS.toMillis(
+                30);
         final long mKeyRepeatStartTimeout;
         final long mKeyRepeatInterval;
 

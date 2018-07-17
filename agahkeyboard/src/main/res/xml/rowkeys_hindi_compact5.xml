@@ -27,7 +27,9 @@
     <Key latin:keySpec="ज्ञ" />
     <Key latin:keySpec="ज्ञ" />
     <Key latin:keySpec="श्र" />
-    <Key latin:keySpec="&#x0960;" />
+    <Key latin:keySpec="&#x0960;"
+        latin:backgroundType="headerkey"
+        latin:headerKeySpec="ृ" />
     <Key
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ँ"

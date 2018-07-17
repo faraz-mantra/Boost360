@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2014, The Android Open Source Project
@@ -18,27 +17,25 @@
 */
 -->
 
-<KeyboardLayoutSet
-    xmlns:latin="http://schemas.android.com/apk/res-auto">
-    <Feature
-        latin:supportedScript="devanagari" />
+<KeyboardLayoutSet xmlns:latin="http://schemas.android.com/apk/res-auto">
+    <Feature latin:supportedScript="devanagari" />
     <Element
-        latin:elementName="alphabet"
         latin:elementKeyboard="@xml/kbd_hindi_compact"
+        latin:elementName="alphabet"
         latin:enableProximityCharsCorrection="true" />
     <Element
-        latin:elementName="symbols"
-        latin:elementKeyboard="@xml/kbd_symbols" />
+        latin:elementKeyboard="@xml/kbd_symbols_hindi"
+        latin:elementName="symbols" />
     <Element
-        latin:elementName="symbolsShifted"
-        latin:elementKeyboard="@xml/kbd_symbols_shift" />
+        latin:elementKeyboard="@xml/kbd_symbols_shift_hindi"
+        latin:elementName="symbolsShifted" />
     <Element
-        latin:elementName="phone"
-        latin:elementKeyboard="@xml/kbd_phone" />
+        latin:elementKeyboard="@xml/kbd_phone"
+        latin:elementName="phone" />
     <Element
-        latin:elementName="phoneSymbols"
-        latin:elementKeyboard="@xml/kbd_phone_symbols" />
+        latin:elementKeyboard="@xml/kbd_phone_symbols"
+        latin:elementName="phoneSymbols" />
     <Element
-        latin:elementName="number"
-        latin:elementKeyboard="@xml/kbd_number" />
+        latin:elementKeyboard="@xml/kbd_number"
+        latin:elementName="number" />
 </KeyboardLayoutSet>

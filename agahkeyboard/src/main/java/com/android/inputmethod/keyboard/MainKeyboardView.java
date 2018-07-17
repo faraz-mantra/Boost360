@@ -28,6 +28,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -578,7 +579,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
             return null;
         }
         Keyboard moreKeysKeyboard = mMoreKeysKeyboardCache.get(key);
-        if (moreKeysKeyboard == null) {
+        if (moreKeysKeyboard == null || key.isHeaderKey()) {
             // {@link KeyPreviewDrawParams#mPreviewVisibleWidth} should have been set at
             // {@link KeyPreviewChoreographer#placeKeyPreview(Key,TextView,KeyboardIconsSet,KeyDrawParams,int,int[]},
             // though there may be some chances that the value is zero. <code>width == 0</code>
@@ -619,6 +620,9 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
         final Key key = tracker.getKey();
         if (key == null) {
             return;
+        }
+        if (key.isHeaderKey()) {
+            PointerTracker.KEYBOARD_TYPED_KEY = null;
         }
         final KeyboardActionListener listener = mKeyboardActionListener;
         if (key.hasNoPanelAutoMoreKey()) {
@@ -872,7 +876,9 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
                 drawLanguageOnSpacebar(key, canvas, paint);
             }
             // Whether space key needs to show the "..." popup hint for special purposes
-            if (key.isLongPressEnabled() && mHasMultipleEnabledIMEsOrSubtypes) {
+            if (TextUtils.isEmpty(mKeyPopupHintLetter)) {
+                return;
+            } else if (key.isLongPressEnabled() && mHasMultipleEnabledIMEsOrSubtypes) {
                 drawKeyPopupHint(key, canvas, paint, params);
             }
         } else if (code == Constants.CODE_LANGUAGE_SWITCH) {

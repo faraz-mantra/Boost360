@@ -51,6 +51,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private static final boolean DEBUG_MODE = DebugFlags.DEBUG_ENABLED || DEBUG_EVENT;
     public static Key KEYBOARD_TYPED_KEY = null;
     public static String KEYBOARD_KEY_LABEL;
+    public static boolean isLebelModified = false;
 
     public interface DrawingProxy {
         void invalidateKey(Key key);
@@ -387,7 +388,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         // Even if the key is disabled, it should respond if it is in the altCodeWhileTyping state.
         if (key.isEnabled() || altersCode) {
             sTypingTimeRecorder.onCodeInput(code, eventTime);
-            if (code == Constants.CODE_OUTPUT_TEXT && !key.isActionKey()) {
+            if (code == Constants.CODE_OUTPUT_TEXT) {
                 sListener.onTextInput(key.getOutputText());
             } else if (code != Constants.CODE_UNSPECIFIED) {
                 if (mKeyboard.hasProximityCharsCorrection(code) && !key.isActionKey()) {
@@ -1249,11 +1250,13 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             return;
         }
 
-        if (!key.isHeaderKey()) {
+        if (!key.isHeaderKey() && !key.isModifier()) {
             KEYBOARD_TYPED_KEY = key;
         } else {
             KEYBOARD_TYPED_KEY = null;
         }
+
+        isLebelModified = key.isLabelModified();
 
         final int code = key.getCode();
         callListenerOnCodeInput(key, code, x, y, eventTime, false /* isKeyRepeat */);

@@ -66,6 +66,7 @@ import com.android.inputmethod.keyboard.KeyboardActionListener;
 import com.android.inputmethod.keyboard.KeyboardId;
 import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.android.inputmethod.keyboard.MainKeyboardView;
+import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.keyboard.TextDecoratorUi;
 import com.android.inputmethod.keyboard.sticker.InsertPngEvent;
 import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
@@ -1258,6 +1259,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         if (this.navManager != null) {
             this.navManager.show();
         }
+        PointerTracker.KEYBOARD_TYPED_KEY = null;
         /*if (mTopDisplayController.isActionViewVisible() && serviceTab != null) {
             EventBusExt.getDefault().post(new ShowActionRowEvent());
             this.mKeyboardSwitcher.setProductShareKeyboardFrame(serviceTab);
