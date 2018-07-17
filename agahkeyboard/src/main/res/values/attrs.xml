@@ -323,6 +323,7 @@
         <!-- The label, icon to display on the key. And code, outputText of the key. -->
         <attr name="keySpec" format="string" />
         <attr name="headerKeySpec" format="string" />
+        <attr name="headerMoreKeys" format="string" />
         <!-- The hint label to display on the key in conjunction with the label. -->
         <attr name="keyHintLabel" format="string" />
         <!-- The vertical adjustment of key hint label in proportion to its height. -->

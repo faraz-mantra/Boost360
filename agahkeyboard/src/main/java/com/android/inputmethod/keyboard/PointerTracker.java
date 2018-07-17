@@ -387,10 +387,10 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         // Even if the key is disabled, it should respond if it is in the altCodeWhileTyping state.
         if (key.isEnabled() || altersCode) {
             sTypingTimeRecorder.onCodeInput(code, eventTime);
-            if (code == Constants.CODE_OUTPUT_TEXT) {
+            if (code == Constants.CODE_OUTPUT_TEXT && !key.isActionKey()) {
                 sListener.onTextInput(key.getOutputText());
             } else if (code != Constants.CODE_UNSPECIFIED) {
-                if (mKeyboard.hasProximityCharsCorrection(code)) {
+                if (mKeyboard.hasProximityCharsCorrection(code) && !key.isActionKey()) {
                     sListener.onCodeInput(code, x, y, isKeyRepeat);
                 } else {
                     sListener.onCodeInput(code,

@@ -523,7 +523,7 @@ public class KeyboardView extends View {
                 String[] moreKeys = new String[]{label};
                 MoreKeySpec[] mMoreKeys = new MoreKeySpec[moreKeys.length];
                 mMoreKeys[0] = new MoreKeySpec(moreKeys[0], false, Locale.getDefault());
-                key.mMoreKeys = mMoreKeys;
+                // key.mMoreKeys = mMoreKeys;
                 label = PointerTracker.KEYBOARD_TYPED_KEY.getLabel() + (key.getHeaderKeySpec() != null ? key.getHeaderKeySpec() : "");
                 String mLabel = label;
                 String outputText = key.getOutputText();
@@ -555,35 +555,9 @@ public class KeyboardView extends View {
                         ICON_UNDEFINED, 0 /* visualInsetsLeft */, 0 /* visualInsetsRight */);
                 key.mCode = mCode;
             } else {
-                int mCode;
                 String mLabel = label;
-                String outputText = key.getOutputText();
-                final int code = KeySpecParser.getCode(label);
-                if (code == CODE_UNSPECIFIED && TextUtils.isEmpty(key.getOutputText())
-                        && !TextUtils.isEmpty(key.getLabel())) {
-                    if (StringUtils.codePointCount(label) == 1) {
-                        // Use the first letter of the hint label if shiftedLetterActivated flag is
-                        // specified.
-                        mCode = mLabel.codePointAt(0);
-                    } else {
-                        // In some locale and case, the character might be represented by multiple code
-                        // points, such as upper case Eszett of German alphabet.
-                        outputText = mLabel;
-                        mCode = CODE_OUTPUT_TEXT;
-                    }
-                } else if (code == CODE_UNSPECIFIED && key.getOutputText() != null) {
-                    if (StringUtils.codePointCount(key.getOutputText()) == 1) {
-                        mCode = key.getOutputText().codePointAt(0);
-                        outputText = null;
-                    } else {
-                        mCode = CODE_OUTPUT_TEXT;
-                    }
-                } else {
-                    mCode = StringUtils.toUpperCaseOfCodeForLocale(code, false, Locale.getDefault());
-                }
                 key.mOptionalAttributes = Key.OptionalAttributes.newInstance(label, CODE_UNSPECIFIED,
                         ICON_UNDEFINED, 0 /* visualInsetsLeft */, 0 /* visualInsetsRight */);
-                key.mCode = mCode;
             }
             canvas.drawText(label, 0, label.length(), labelX, labelBaseline, paint);
             // Turn off drop shadow and reset x-scale.

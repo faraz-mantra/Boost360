@@ -135,6 +135,7 @@ public class Key implements Comparable<Key> {
      * More keys. It is guaranteed that this is null or an array of one or more elements
      */
     public MoreKeySpec[] mMoreKeys;
+    public MoreKeySpec[] mHeaderMoreKeys;
     /**
      * More keys column number and flags
      */
@@ -295,12 +296,13 @@ public class Key implements Comparable<Key> {
      * @param row     the row that this key belongs to. row's x-coordinate will be the right edge of
      *                this key.
      */
-    public Key(final String keySpec, final String headerKeySpec, final TypedArray keyAttr, final KeyStyle style,
+    public Key(final String keySpec, final String headerKeySpec, final String headerKeys, final TypedArray keyAttr, final KeyStyle style,
                final KeyboardParams params, final KeyboardRow row) {
         mHeaderKeySpec = headerKeySpec;
         this.mKeySpec = keySpec;
         final float horizontalGap = isSpacer() ? 0 : params.mHorizontalGap;
         final int rowHeight = row.getRowHeight();
+        //mHeight = rowHeight - params.mVerticalGap;
         mHeight = rowHeight - params.mVerticalGap;
 
         final float keyXPos = row.getKeyX(keyAttr);
@@ -331,6 +333,8 @@ public class Key implements Comparable<Key> {
         final Locale locale = params.mId.mLocale;
         int actionFlags = style.getFlags(keyAttr, R.styleable.Keyboard_Key_keyActionFlags);
         String[] moreKeys = style.getStringArray(keyAttr, R.styleable.Keyboard_Key_moreKeys);
+        String[] headerMoreKeys = new String[1];
+        headerMoreKeys[0] = headerKeys;
 
         // Get maximum column order number and set a relevant mode value.
         int moreKeysColumnAndFlags = style.getInt(keyAttr, R.styleable.Keyboard_Key_maxMoreKeysColumn,
@@ -373,6 +377,12 @@ public class Key implements Comparable<Key> {
             }
         } else {
             mMoreKeys = null;
+        }
+        if (headerKeys != null && headerMoreKeys != null && headerMoreKeys.length > 0) {
+            mHeaderMoreKeys = new MoreKeySpec[headerMoreKeys.length];
+            mHeaderMoreKeys[0] = new MoreKeySpec(headerMoreKeys[0], needsToUpperCase, locale);
+        } else {
+            mHeaderMoreKeys = null;
         }
         mActionFlags = actionFlags;
 
@@ -598,6 +608,11 @@ public class Key implements Comparable<Key> {
     }
 
     public MoreKeySpec[] getMoreKeys() {
+       /* if (isHeaderKey() && mHeaderMoreKeys != null && mHeaderMoreKeys.length > 0) {
+            return mHeaderMoreKeys;
+        } else {
+            return mMoreKeys;
+        }*/
         return mMoreKeys;
     }
 
@@ -1035,7 +1050,7 @@ public class Key implements Comparable<Key> {
     public static class Spacer extends Key {
         public Spacer(final TypedArray keyAttr, final KeyStyle keyStyle,
                       final KeyboardParams params, final KeyboardRow row) {
-            super(null /* keySpec */, null, keyAttr, keyStyle, params, row);
+            super(null /* keySpec */, null, null, keyAttr, keyStyle, params, row);
         }
 
         /**

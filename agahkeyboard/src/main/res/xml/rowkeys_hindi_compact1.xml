@@ -33,6 +33,7 @@
     <Key
         latin:additionalMoreKeys="&#x0967;,1"
         latin:backgroundType="headerkey"
+        latin:headerMoreKeys="&#x0905;"
         latin:keyHintLabel="1"
         latin:keySpec="&#x0905;"
         latin:keyStyle="moreKeySpecDevanagariSignVirama" />
@@ -47,6 +48,7 @@
         latin:additionalMoreKeys="&#x0969;,2"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ा"
+        latin:headerMoreKeys="&#x0906;"
         latin:keyHintLabel="2"
         latin:keySpec="&#x0906;"
         latin:keyStyle="moreKeysDevanagariVowelSignAa" />
@@ -58,6 +60,7 @@
         latin:additionalMoreKeys="&#x0969;,3"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ि"
+        latin:headerMoreKeys="&#x0907;"
         latin:keyHintLabel="3"
         latin:keySpec="&#x0907;"
         latin:keyStyle="moreKeysDevanagariVowelSignI" />
@@ -69,6 +72,7 @@
         latin:additionalMoreKeys="&#x096A;,4"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ी"
+        latin:headerMoreKeys="&#x0908;"
         latin:keyHintLabel="4"
         latin:keySpec="&#x0908;"
         latin:keyStyle="moreKeysDevanagariVowelSignIi" />
@@ -83,6 +87,7 @@
         latin:additionalMoreKeys="&#x096B;,5"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ु"
+        latin:headerMoreKeys="&#x0909;"
         latin:keyHintLabel="5"
         latin:keySpec="&#x0909;"
         latin:keyStyle="moreKeysDevanagariVowelSignU" />
@@ -95,6 +100,7 @@
         latin:additionalMoreKeys="&#x096C;,6"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ू"
+        latin:headerMoreKeys="&#x090A;"
         latin:keyHintLabel="6"
         latin:keySpec="&#x090A;"
         latin:keyStyle="moreKeysDevanagariVowelSignUu" />
@@ -103,6 +109,7 @@
         latin:additionalMoreKeys="&#x096D;,7"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="े"
+        latin:headerMoreKeys="&#x090F;"
         latin:keyHintLabel="7"
         latin:keySpec="&#x090F;"
         latin:keyStyle="moreKeysDevanagariVowelSignE" />
@@ -116,6 +123,7 @@
         latin:additionalMoreKeys="&#x096E;,8"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ै"
+        latin:headerMoreKeys="&#x0910;"
         latin:keyHintLabel="8"
         latin:keySpec="&#x0910;"
         latin:keyStyle="moreKeysDevanagariVowelSignAi" />
@@ -125,6 +133,7 @@
         latin:additionalMoreKeys="&#x096F;,9"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ो"
+        latin:headerMoreKeys="&#x0913;"
         latin:keyHintLabel="9"
         latin:keySpec="&#x0913;"
         latin:keyStyle="moreKeysDevanagariVowelSignO" />
@@ -167,6 +176,7 @@
         latin:additionalMoreKeys="&#x0966;,0"
         latin:backgroundType="headerkey"
         latin:headerKeySpec="ौ"
+        latin:headerMoreKeys="&#x0914;"
         latin:keyHintLabel="0"
         latin:keySpec="&#x0914;"
         latin:keyStyle="moreKeysDevanagariVowelSignAu" />

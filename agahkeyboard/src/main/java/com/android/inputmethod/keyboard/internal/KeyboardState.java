@@ -19,7 +19,6 @@ package com.android.inputmethod.keyboard.internal;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.latin.utils.RecapitalizeStatus;
 
 import io.separ.neural.inputmethod.Utils.FontUtils;
@@ -387,8 +386,7 @@ public final class KeyboardState {
             onPressShift();
         } else if (code == Constants.CODE_CAPSLOCK) {
             // Nothing to do here. See {@link #onReleaseKey(int,boolean)}.
-        } else if (code == Constants.CODE_SWITCH_ALPHA_SYMBOL || (PointerTracker.KEYBOARD_KEY_LABEL != null && PointerTracker.KEYBOARD_KEY_LABEL.equalsIgnoreCase("?१२३")
-                || (PointerTracker.KEYBOARD_KEY_LABEL != null && PointerTracker.KEYBOARD_KEY_LABEL.equalsIgnoreCase("कखग")))) {
+        } else if (code == Constants.CODE_SWITCH_ALPHA_SYMBOL) {
             onPressSymbol(currentAutoCapsState, currentRecapitalizeState);
         } else {
             mShiftKeyState.onOtherKeyPressed();

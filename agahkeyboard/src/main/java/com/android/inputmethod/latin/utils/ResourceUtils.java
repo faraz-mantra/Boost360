@@ -44,10 +44,10 @@ public final class ResourceUtils {
     private static final HashMap<String, String> sDeviceOverrideValueMap = new HashMap<>();
 
     private static final String[] BUILD_KEYS_AND_VALUES = {
-        "HARDWARE", Build.HARDWARE,
-        "MODEL", Build.MODEL,
-        "BRAND", Build.BRAND,
-        "MANUFACTURER", Build.MANUFACTURER
+            "HARDWARE", Build.HARDWARE,
+            "MODEL", Build.MODEL,
+            "BRAND", Build.BRAND,
+            "MANUFACTURER", Build.MANUFACTURER
     };
     private static final HashMap<String, String> sBuildKeyValues;
     private static final String sBuildKeyValuesDebugString;
@@ -67,7 +67,7 @@ public final class ResourceUtils {
     }
 
     public static String getDeviceOverrideValue(final Resources res, final int overrideResId,
-            final String defaultValue) {
+                                                final String defaultValue) {
         final int orientation = res.getConfiguration().orientation;
         final String key = overrideResId + "-" + orientation;
         if (sDeviceOverrideValueMap.containsKey(key)) {
@@ -79,7 +79,7 @@ public final class ResourceUtils {
         // The overrideValue might be an empty string.
         if (overrideValue != null) {
             Log.i(TAG, "Find override value:"
-                    + " resource="+ res.getResourceEntryName(overrideResId)
+                    + " resource=" + res.getResourceEntryName(overrideResId)
                     + " build=" + sBuildKeyValuesDebugString
                     + " override=" + overrideValue);
             sDeviceOverrideValueMap.put(key, overrideValue);
@@ -97,7 +97,7 @@ public final class ResourceUtils {
         }
 
         public DeviceOverridePatternSyntaxError(final String message, final String expression,
-                final Throwable throwable) {
+                                                final Throwable throwable) {
             super(message + ": " + expression, throwable);
         }
     }
@@ -108,21 +108,21 @@ public final class ResourceUtils {
      * "pattern1[:pattern2...] (or an empty string for the default). A pattern is
      * "key=regexp_value" string. The condition matches only if all patterns of the condition
      * are true for the specified key value pairs.
-     *
+     * <p>
      * For example, "condition,constant" has the following format.
      * (See {@link ResourceUtilsTests#testFindConstantForKeyValuePairsRegexp()})
-     *  - HARDWARE=mako,constantForNexus4
-     *  - MODEL=Nexus 4:MANUFACTURER=LGE,constantForNexus4
-     *  - ,defaultConstant
+     * - HARDWARE=mako,constantForNexus4
+     * - MODEL=Nexus 4:MANUFACTURER=LGE,constantForNexus4
+     * - ,defaultConstant
      *
-     * @param keyValuePairs attributes to be used to look for a matched condition.
+     * @param keyValuePairs          attributes to be used to look for a matched condition.
      * @param conditionConstantArray an array of "condition,constant" elements to be searched.
      * @return the constant part of the matched "condition,constant" element. Returns null if no
      * condition matches.
      */
     @UsedForTesting
     static String findConstantForKeyValuePairs(final HashMap<String, String> keyValuePairs,
-            final String[] conditionConstantArray) {
+                                               final String[] conditionConstantArray) {
         if (conditionConstantArray == null || keyValuePairs == null) {
             return null;
         }
@@ -153,8 +153,8 @@ public final class ResourceUtils {
         return foundValue;
     }
 
-    private static boolean fulfillsCondition(final HashMap<String,String> keyValuePairs,
-            final String condition) throws DeviceOverridePatternSyntaxError {
+    private static boolean fulfillsCondition(final HashMap<String, String> keyValuePairs,
+                                             final String condition) throws DeviceOverridePatternSyntaxError {
         final String[] patterns = condition.split(":");
         // Check all patterns in a condition are true
         boolean matchedAll = true;
@@ -208,7 +208,7 @@ public final class ResourceUtils {
         }
         // Keyboard height will not exceed maxKeyboardHeight and will not be less than
         // minKeyboardHeight.
-        return (int)Math.max(Math.min(keyboardHeight, maxKeyboardHeight), minKeyboardHeight);
+        return (int) Math.max(Math.min(keyboardHeight, maxKeyboardHeight), minKeyboardHeight);
     }
 
     public static boolean isValidFraction(final float fraction) {
@@ -250,7 +250,7 @@ public final class ResourceUtils {
     }
 
     public static float getDimensionOrFraction(final TypedArray a, final int index, final int base,
-            final float defValue) {
+                                               final float defValue) {
         final TypedValue value = a.peekValue(index);
         if (value == null)
             return defValue;

@@ -32,6 +32,7 @@ import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.EditorInfo;
 
 import com.android.inputmethod.keyboard.KeyboardSwitcher;
+import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.keyboard.ProximityInfo;
 import com.android.inputmethod.keyboard.TextDecorator;
 import com.android.inputmethod.keyboard.TextDecoratorUiOperator;
@@ -276,6 +277,9 @@ public final class InputLogic {
         final String text = performSpecificTldProcessingOnTextInput(rawText);
         if (SpaceState.PHANTOM == mSpaceState) {
             promotePhantomSpace(settingsValues);
+        }
+        if (PointerTracker.KEYBOARD_TYPED_KEY == null) {
+            mConnection.deleteTextBeforeCursor(1);
         }
         mConnection.commitText(text, 1);
         StatsUtils.getInstance().onWordCommitUserTyped(mEnteredText, mWordComposer.isBatchMode());
@@ -1165,7 +1169,11 @@ public final class InputLogic {
                 // Cancel multi-character input: remove the text we just entered.
                 // This is triggered on backspace after a key that inputs multiple characters,
                 // like the smiley key or the .com key.
-                mConnection.deleteSurroundingText(mEnteredText.length(), 0);
+                if (PointerTracker.KEYBOARD_TYPED_KEY == null) {
+                    mConnection.deleteSurroundingText(mEnteredText.length(), 0);
+                } else {
+                    mConnection.deleteSurroundingText(1, 0);
+                }
                 StatsUtils.getInstance().onDeleteMultiCharInput(mEnteredText.length());
                 mEnteredText = null;
                 // If we have mEnteredText, then we know that mHasUncommittedTypedChars == false.
