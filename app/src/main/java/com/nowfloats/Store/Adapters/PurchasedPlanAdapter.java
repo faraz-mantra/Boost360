@@ -66,25 +66,25 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         if (myHolder instanceof MyPurchasePlanOrdersHolder && purchasePlans != null && !purchasePlans.isEmpty()) {
 
-                MyPurchasePlanOrdersHolder holder = (MyPurchasePlanOrdersHolder) myHolder;
-                ActivePackage activePackage = purchasePlans.get(position);
-                holder.tvSerialNumber.setTypeface(null, Typeface.NORMAL);
-                holder.tvPaymentDate.setTypeface(null, Typeface.NORMAL);
-                holder.tvOrderId.setTypeface(null, Typeface.NORMAL);
-                holder.tvPackageName.setTypeface(null, Typeface.NORMAL);
-                holder.tvTotalAmount.setTypeface(null, Typeface.NORMAL);
-                holder.tvCliamId.setTypeface(null, Typeface.NORMAL);
-                holder.tvPaymentStatus.setTypeface(null, Typeface.NORMAL);
-                holder.tvSerialNumber.setText(position + " ");
-                holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getPaymentDate(), "dd-MM-yyyy"));
-                holder.tvOrderId.setText(activePackage.getId());
-                if (activePackage.getPackageDetails() != null && !activePackage.getPackageDetails().isEmpty()) {
-                    holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());
-                    holder.tvTotalAmount.setText(activePackage.getCurrencyCode() + " " + activePackage.getPackageDetails().get(0).getNetPackagePrice());
-                }
-                holder.tvCliamId.setText(activePackage.getClaimid() != null ? activePackage.getClaimid() : " ");
-                holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() < 0 ? "EXPIRED" : activePackage.getPaymentStatus() == 0 ? "DEMO"
-                        : activePackage.getPaymentStatus() > 0 ? "PAID" : " ");
+            MyPurchasePlanOrdersHolder holder = (MyPurchasePlanOrdersHolder) myHolder;
+            ActivePackage activePackage = purchasePlans.get(position);
+            holder.tvSerialNumber.setTypeface(null, Typeface.NORMAL);
+            holder.tvPaymentDate.setTypeface(null, Typeface.NORMAL);
+            holder.tvOrderId.setTypeface(null, Typeface.NORMAL);
+            holder.tvPackageName.setTypeface(null, Typeface.NORMAL);
+            holder.tvTotalAmount.setTypeface(null, Typeface.NORMAL);
+            holder.tvCliamId.setTypeface(null, Typeface.NORMAL);
+            holder.tvPaymentStatus.setTypeface(null, Typeface.NORMAL);
+            holder.tvSerialNumber.setText(position + " ");
+            holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getPaymentDate(), "dd-MM-yyyy"));
+            holder.tvOrderId.setText(activePackage.getId());
+            if (activePackage.getPackageDetails() != null && !activePackage.getPackageDetails().isEmpty()) {
+                holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());
+                holder.tvTotalAmount.setText(activePackage.getCurrencyCode() + " " + activePackage.getPackageDetails().get(0).getNetPackagePrice());
+            }
+            holder.tvCliamId.setText(activePackage.getClaimid() != null ? activePackage.getClaimid() : " ");
+            holder.tvPaymentStatus.setText(activePackage.getPaymentStatus() < 0 ? "EXPIRED" : activePackage.getPaymentStatus() == 0 ? "DEMO"
+                    : activePackage.getPaymentStatus() > 0 ? "PAID" : " ");
 
         }
     }
@@ -150,56 +150,60 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
         public void setActiveOrExpiredHolder(ActivePackage activePlan) {
             this.activePlan = activePlan;
             renewTv.setVisibility(View.VISIBLE);
-            if (activePlan.getProductClassification().getPackType() == 1) {
-                planImV.setVisibility(View.GONE);
-                mImagDivider.setVisibility(View.GONE);
-                validityTv.setText(Methods.fromHtml(String.format("<b><font color=%s>%s</font></b>",
-                        ContextCompat.getColor(mContext, R.color.gray), activePlan.getName())));
-                topUpImV.setVisibility(View.VISIBLE);
-                topUpTv.setVisibility(View.INVISIBLE);
-            } else {
+            if (activePlan.getProductClassification() != null) {
 
-                topUpTv.setVisibility(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? View.VISIBLE : View.INVISIBLE);
-                Glide.with(mContext).load(activePlan.getPrimaryImageUri()).into(planImV);
-                if (activePlan.getName().toLowerCase().contains("lite")) {
-                    //planImV.setImageResource(R.drawable.boost_lite_logo);
-                } else if (activePlan.getName().toLowerCase().contains("pro")) {
-                    //planImV.setImageResource(R.drawable.boost_pro_logo);
-                } else if (activePlan.getName().toLowerCase().contains("light")) {
-                    //planImV.setImageResource(R.drawable.lighthouse);
-                    renewTv.setVisibility(View.INVISIBLE);
+                if (activePlan.getProductClassification().getPackType() == 1) {
+                    planImV.setVisibility(View.GONE);
+                    mImagDivider.setVisibility(View.GONE);
+                    validityTv.setText(Methods.fromHtml(String.format("<b><font color=%s>%s</font></b>",
+                            ContextCompat.getColor(mContext, R.color.gray), activePlan.getName())));
+                    topUpImV.setVisibility(View.VISIBLE);
+                    topUpTv.setVisibility(View.INVISIBLE);
+                } else {
+
+                    topUpTv.setVisibility(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? View.VISIBLE : View.INVISIBLE);
+                    Glide.with(mContext).load(activePlan.getPrimaryImageUri()).into(planImV);
+                    if (activePlan.getName().toLowerCase().contains("lite")) {
+                        //planImV.setImageResource(R.drawable.boost_lite_logo);
+                    } else if (activePlan.getName().toLowerCase().contains("pro")) {
+                        //planImV.setImageResource(R.drawable.boost_pro_logo);
+                    } else if (activePlan.getName().toLowerCase().contains("light")) {
+                        //planImV.setImageResource(R.drawable.lighthouse);
+                        renewTv.setVisibility(View.INVISIBLE);
+                    }
+                    mImagDivider.setVisibility(View.VISIBLE);
+                    planImV.setVisibility(View.VISIBLE);
+                    topUpImV.setVisibility(View.GONE);
+                    validityTv.setText(Methods.fromHtml(String.format("Validity: <b><font color=%s>%s</font></b>",
+                            ContextCompat.getColor(mContext, R.color.gray), activePlan.getTotalMonthsValidity() + " Months")));
                 }
-                mImagDivider.setVisibility(View.VISIBLE);
-                planImV.setVisibility(View.VISIBLE);
-                topUpImV.setVisibility(View.GONE);
-                validityTv.setText(Methods.fromHtml(String.format("Validity: <b><font color=%s>%s</font></b>",
-                        ContextCompat.getColor(mContext, R.color.gray), activePlan.getTotalMonthsValidity() + " Months")));
-            }
-            if (activePlan.isExpanded()) {
-                detailsTv.setText("Hide Plan Details");
-                visibleDetails.setVisibility(View.VISIBLE);
-            } else {
-                detailsTv.setText("Show Plan Details");
-                visibleDetails.setVisibility(View.GONE);
-            }
+                if (activePlan.isExpanded()) {
+                    detailsTv.setText("Hide Plan Details");
+                    visibleDetails.setVisibility(View.VISIBLE);
+                } else {
+                    detailsTv.setText("Show Plan Details");
+                    visibleDetails.setVisibility(View.GONE);
+                }
 
-            visibleDetails.setText(activePlan.getFeatures());
-            switch (activePlan.getActiveStatus()) {
-                case "Expired":
-                    statusTv.setText(Methods.fromHtml(String.format("Status: <font color=%s>%s</font>",
-                            ContextCompat.getColor(mContext, R.color.red), activePlan.getActiveStatus())));
-                    break;
-                case "Not Active":
-                case "Active":
-                default:
-                    statusTv.setText(Methods.fromHtml(String.format("Status: <font color=%s>%s</font>",
-                            ContextCompat.getColor(mContext, R.color.gray), activePlan.getActiveStatus())));
-                    break;
+                visibleDetails.setText(activePlan.getFeatures());
+                switch (activePlan.getActiveStatus()) {
+                    case "Expired":
+                        statusTv.setText(Methods.fromHtml(String.format("Status: <font color=%s>%s</font>",
+                                ContextCompat.getColor(mContext, R.color.red), activePlan.getActiveStatus())));
+                        break;
+                    case "Not Active":
+                    case "Active":
+                    default:
+                        statusTv.setText(Methods.fromHtml(String.format("Status: <font color=%s>%s</font>",
+                                ContextCompat.getColor(mContext, R.color.gray), activePlan.getActiveStatus())));
+                        break;
+                }
+                numberTv.setText(Methods.fromHtml(String.format("Invoice Number: <font color=%s>%s</font>",
+                        ContextCompat.getColor(mContext, R.color.gray), TextUtils.isEmpty(activePlan.getNfInternalERPId()) ? "NA" : activePlan.getNfInternalERPId())));
+                dateTv.setText(Methods.fromHtml(String.format("Activated on: <font color=%s>%s</font>",
+                        ContextCompat.getColor(mContext, R.color.gray), Methods.getFormattedDate(activePlan.getToBeActivatedOn(), "dd MMM yyyy"))));
+
             }
-            numberTv.setText(Methods.fromHtml(String.format("Invoice Number: <font color=%s>%s</font>",
-                    ContextCompat.getColor(mContext, R.color.gray), TextUtils.isEmpty(activePlan.getNfInternalERPId()) ? "NA" : activePlan.getNfInternalERPId())));
-            dateTv.setText(Methods.fromHtml(String.format("Activated on: <font color=%s>%s</font>",
-                    ContextCompat.getColor(mContext, R.color.gray), Methods.getFormattedDate(activePlan.getToBeActivatedOn(), "dd MMM yyyy"))));
         }
 
         @Override
@@ -226,7 +230,8 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         private void showRenewPlans() {
-            if (activePlan.getProductClassification().getPackType() == 0) {
+            if (activePlan.getProductClassification() != null
+                    && activePlan.getProductClassification().getPackType() == 0) {
                 Intent i = new Intent(mContext, NewPricingPlansActivity.class);
                 i.putExtra("fragmentName", "BasePlans");
                 mContext.startActivity(i);

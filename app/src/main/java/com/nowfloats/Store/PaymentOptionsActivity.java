@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
+import com.nowfloats.Store.Model.SalesmanModel;
 import com.nowfloats.Store.Service.OnPaymentOptionClick;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -287,6 +288,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
             b.putString("packageList", getIntent().getStringExtra("packageList"));
             b.putSerializable("discountCoupon", (DiscountCoupon) getIntent().getExtras().get("discountCoupon"));
             b.putInt("tdsPercentage", (int) getIntent().getExtras().get("tdsPercentage"));
+            b.putSerializable("salesmanModel", (SalesmanModel) getIntent().getExtras().get("salesmanModel"));
             b.putString(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, getIntent().getStringExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER));
         }
         FragmentManager manager = getSupportFragmentManager();

@@ -1,26 +1,37 @@
 package com.nowfloats.Store;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
 import com.nowfloats.Store.Model.AllPackage;
@@ -28,6 +39,7 @@ import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.Model.PurchaseDetail;
 import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
+import com.nowfloats.Store.Model.SalesmanModel;
 import com.nowfloats.Store.Model.TaxDetail;
 import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -49,7 +61,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class ProductCheckout_v2Activity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class ProductCheckout_v2Activity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnTouchListener {
 
     private static final int DIRECT_REQUEST_CODE = 2013;
     private UserSessionManager mSessionManager;
@@ -63,7 +75,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
             tvAmountToBePaid, tvTanNo, tvTdsAmount, tvDiscountAmount, tvDiscountPercentage;
     private RecyclerView rvItems;
     private TextView btnPayNow, btnOpcApply, btnDeleteOPC;
-    private EditText etOpc;
+    private EditText etOpc, edtSalesman;
+    public RadioGroup rgSalesman;
 
     private TableRow trTanNo, trTdsAmount;
 
@@ -77,6 +90,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
     private CheckBox cvTwo, cvTen;
 
     private int tdsPercentage;
+
+    private SalesmanModel salesmanModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +119,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
                 .show();
 
         etOpc = (EditText) findViewById(R.id.etOpcCode);
+        edtSalesman = (EditText) findViewById(R.id.edtSalesman);
+        rgSalesman = (RadioGroup) findViewById(R.id.rgSalesman);
 
         tvUserName = (TextView) findViewById(R.id.tv_username);
         tvUserEmail = (TextView) findViewById(R.id.tv_user_email);
@@ -141,6 +158,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
                     i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
                     i.putExtra("packageList", new Gson().toJson(mPurchasePlans));
                     i.putExtra("discountCoupon", discountCoupon);
+                    i.putExtra("salesmanModel", salesmanModel);
                     i.putExtra("tdsPercentage", tdsPercentage);
                     startActivityForResult(i, DIRECT_REQUEST_CODE);
                     //write logic for with and without opc cases
@@ -174,6 +192,123 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
 
         cvTwo.setOnCheckedChangeListener(this);
         cvTen.setOnCheckedChangeListener(this);
+
+        edtSalesman.setVisibility(View.GONE);
+        edtSalesman.setFocusable(false);
+        edtSalesman.setFocusableInTouchMode(false);
+        edtSalesman.setOnTouchListener(this);
+
+        rgSalesman.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (group.getCheckedRadioButtonId()) {
+                    case R.id.radioButton_yes:
+                        edtSalesman.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        edtSalesman.setText("");
+                        edtSalesman.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            switch (v.getId()) {
+                case R.id.edtSalesman:
+                    getSalesmanList();
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private ArrayList<SalesmanModel> arrSalesman;
+
+    private void getSalesmanList() {
+        if (arrSalesman == null) {
+            final ProgressDialog pd = ProgressDialog.show(this, "", getResources().getString(R.string.wait_while_loading_salesman));
+            StoreInterface api = Constants.restAdapterSalesman.create(StoreInterface.class);
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("clientId", "ERPWE0892F2F45388F439BDE9F6F3FB5C31F0FAA628D40CD2920A79D8841597B");//
+            // Constants.clientId);
+            api.getActiveEmployees(jsonObject, new Callback<ArrayList<SalesmanModel>>() {
+
+                @Override
+                public void success(ArrayList<SalesmanModel> salesmanModels, Response response) {
+                    if (pd != null && pd.isShowing()) {
+                        pd.dismiss();
+                    }
+                    arrSalesman = salesmanModels;
+                    showSalesmanDialog(arrSalesman);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if (pd != null && pd.isShowing()) {
+                        pd.dismiss();
+                    }
+                    Toast.makeText(ProductCheckout_v2Activity.this
+                            , getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            showSalesmanDialog(arrSalesman);
+        }
+    }
+
+    private void showSalesmanDialog(ArrayList<SalesmanModel> arrSalesman) {
+
+        final ArrayAdapter<SalesmanModel> adapter = new ArrayAdapter<>(this,
+                R.layout.search_list_item_layout, arrSalesman);
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+
+        builderSingle.setTitle(R.string.select_salesman);
+
+        View view = LayoutInflater.from(this).inflate(R.layout.search_list_layout, null);
+        builderSingle.setView(view);
+
+        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
+
+        lvItems.setAdapter(adapter);
+
+
+        final Dialog dialog = builderSingle.show();
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SalesmanModel strVal = adapter.getItem(position);
+                salesmanModel = strVal;
+                dialog.dismiss();
+                edtSalesman.setText(strVal.getEmployeeId());
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s.toString().toLowerCase());
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(false);
     }
 
     private void applyPromo() {
@@ -403,7 +538,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
         }
         taxAmount = Math.round((taxAmount * 100) / 100.0);
 
-        tdsAmount = Math.round((((netAmount + taxAmount - discountAmount) * tdsPercentage / 100)));
+//        tdsAmount = Math.round((((netAmount + taxAmount - discountAmount) * tdsPercentage / 100)));
+        tdsAmount = Math.round((((netAmount - discountAmount) * tdsPercentage / 100)));
 
         tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
@@ -473,4 +609,5 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
             }
         }
     }
+
 }
