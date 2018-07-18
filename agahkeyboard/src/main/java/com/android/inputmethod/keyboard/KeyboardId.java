@@ -72,6 +72,10 @@ public final class KeyboardId {
     public static final int ELEMENT_EMOJI_CATEGORY14 = 24;
     public static final int ELEMENT_EMOJI_CATEGORY15 = 25;
     public static final int ELEMENT_EMOJI_CATEGORY16 = 26;
+    public static final int KEYBOARD_MAIN_LAYOUT_ONE = 27;
+    public static final int KEYBOARD_MAIN_LAYOUT_TWO = 28;
+    public static final int KEYBOARD_MAIN_LAYOUT_THREE = 29;
+    public static final int KEYBOARD_MAIN_LAYOUT_FOUR = 30;
 
     public final InputMethodSubtype mSubtype;
     public final Locale mLocale;
@@ -220,6 +224,10 @@ public final class KeyboardId {
         case ELEMENT_EMOJI_CATEGORY14: return "emojiCategory14";
         case ELEMENT_EMOJI_CATEGORY15: return "emojiCategory15";
         case ELEMENT_EMOJI_CATEGORY16: return "emojiCategory16";
+            case KEYBOARD_MAIN_LAYOUT_ONE: return "alphabet";
+            case KEYBOARD_MAIN_LAYOUT_TWO: return "mainLayoutTwo";
+            case KEYBOARD_MAIN_LAYOUT_THREE: return "mainLayoutThree";
+            case KEYBOARD_MAIN_LAYOUT_FOUR: return "mainLayoutFour";
         default: return null;
         }
     }

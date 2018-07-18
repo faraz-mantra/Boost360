@@ -639,6 +639,10 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="back">BACK</string>
     <string name="create_offer">Create Offer</string>
     <string name="image_not_supported">Image sharing not supported by this app.</string>
+    <string name="keyboard_layout_one">Keyboard layout one</string>
+    <string name="keyboard_layout_two">Keyboard layout two</string>
+    <string name="keyboard_layout_three">Keyboard layout three</string>
+    <string name="keyboard_layout_four">Keyboard layout four</string>
 
 
     <string-array name="validity_items">

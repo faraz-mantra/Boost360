@@ -579,6 +579,26 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_SYMBOLS_SHIFTED));
     }
 
+    @Override
+    public void setMainLayoutOne() {
+        setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_ONE));
+    }
+
+    @Override
+    public void setMainLayoutTwo() {
+        setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_TWO));
+    }
+
+    @Override
+    public void setMainLayoutThree() {
+        setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_THREE));
+    }
+
+    @Override
+    public void setMainLayoutFour() {
+        setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_FOUR));
+    }
+
     // Future method for requesting an updating to the shift state.
     public void requestUpdatingShiftState(final int currentAutoCapsState,
                                           final int currentRecapitalizeState) {

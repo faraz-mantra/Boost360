@@ -47,6 +47,7 @@ import static io.separ.neural.inputmethod.indic.Constants.CODE_DELETE;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_OUTPUT_TEXT;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_SHIFT;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_SWITCH_ALPHA_SYMBOL;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_SWITCH_SCREEN_MAIN;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_UNSPECIFIED;
 
 /**
@@ -674,7 +675,7 @@ public class Key implements Comparable<Key> {
     }
 
     public final boolean isModifier() {
-        return mCode == CODE_SHIFT || mCode == CODE_SWITCH_ALPHA_SYMBOL;
+        return mCode == CODE_SHIFT || mCode == CODE_SWITCH_ALPHA_SYMBOL || mCode == CODE_SWITCH_SCREEN_MAIN;
     }
 
     public final boolean isRepeatable() {
