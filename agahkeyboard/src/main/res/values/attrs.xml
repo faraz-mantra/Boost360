@@ -311,6 +311,7 @@
             <enum name="spacebar" value="6" />
             <enum name="enter" value="7" />
             <enum name="headerkey" value="8" />
+            <enum name="fontResizeKey" value="9" />
         </attr>
         <!-- The key action flags. -->
         <attr name="keyActionFlags" format="integer">
