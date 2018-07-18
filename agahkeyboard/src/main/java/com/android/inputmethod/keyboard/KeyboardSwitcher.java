@@ -580,11 +580,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     @Override
-    public void setMainLayoutOne() {
-        setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_ONE));
-    }
-
-    @Override
     public void setMainLayoutTwo() {
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_TWO));
     }

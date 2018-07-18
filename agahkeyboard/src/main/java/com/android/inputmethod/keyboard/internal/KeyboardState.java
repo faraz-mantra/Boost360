@@ -60,8 +60,6 @@ public final class KeyboardState {
 
         void setSymbolsShiftedKeyboard();
 
-        void setMainLayoutOne();
-
         void setMainLayoutTwo();
 
         void setMainLayoutThree();
@@ -109,7 +107,7 @@ public final class KeyboardState {
     // For handling double tap.
     private boolean mIsInAlphabetUnshiftedFromShifted;
     private boolean mIsInDoubleTapShiftKey;
-    private int screenNumber;
+    private int screenNumber = 1;
 
     private final SavedKeyboardState mSavedKeyboardState = new SavedKeyboardState();
 
@@ -152,7 +150,6 @@ public final class KeyboardState {
         mShiftKeyState.onRelease();
         mSymbolKeyState.onRelease();
         mSwitchScreenMainKeyState.onRelease();
-        screenNumber = 1;
         onRestoreKeyboardState(currentAutoCapsState, currentRecapitalizeState);
     }
 
@@ -306,7 +303,7 @@ public final class KeyboardState {
         }
         switch (screenNumber) {
             case 1:
-                mSwitchActions.setMainLayoutOne();
+                mSwitchActions.setAlphabetKeyboard();
                 break;
             case 2:
                 mSwitchActions.setMainLayoutTwo();
@@ -325,7 +322,6 @@ public final class KeyboardState {
             Log.d(TAG, "resetKeyboardStateToAlphabet: " + this);
         }
         if (mIsAlphabetMode) return;
-        screenNumber = 1;
 
         mPrevSymbolsKeyboardWasShifted = mIsSymbolShifted;
         setAlphabetKeyboard(currentAutoCapsState, currentRecapitalizeState);
@@ -418,12 +414,10 @@ public final class KeyboardState {
         } else if (code == Constants.CODE_CAPSLOCK) {
             // Nothing to do here. See {@link #onReleaseKey(int,boolean)}.
         } else if (code == Constants.CODE_SWITCH_ALPHA_SYMBOL) {
-            screenNumber = 1;
             onPressSymbol(currentAutoCapsState, currentRecapitalizeState);
         } else if (code == Constants.CODE_SWITCH_SCREEN_MAIN) {
             onPressSwitchScreenMain();
         } else {
-            screenNumber = 1;
             mShiftKeyState.onOtherKeyPressed();
             mSymbolKeyState.onOtherKeyPressed();
             mSwitchScreenMainKeyState.onOtherKeyPressed();
@@ -460,6 +454,10 @@ public final class KeyboardState {
             onReleaseSymbol(withSliding, currentAutoCapsState, currentRecapitalizeState);
         } else if (code == Constants.CODE_SWITCH_SCREEN_MAIN) {
             onReleaseSwitchScreenMain(withSliding);
+        }
+        if (screenNumber != 1 && code != Constants.CODE_SWITCH_SCREEN_MAIN && !withSliding) {
+            screenNumber = 1;
+            mSwitchActions.setAlphabetKeyboard();
         }
     }
 
