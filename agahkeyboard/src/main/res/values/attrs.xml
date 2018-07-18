@@ -475,7 +475,6 @@
             <enum name="emojiCategory16" value="26" />
             <enum name="mainLayoutTwo" value="28" />
             <enum name="mainLayoutThree" value="29" />
-            <enum name="mainLayoutFour" value="30" />
         </attr>
         <!-- This should be aligned with Keyboard.themeId and KeyboardTheme.THEME_ID_* -->
         <attr name="keyboardTheme" format="enum|string">

@@ -255,7 +255,6 @@ public final class KeyboardTextsTable {
             /* 168: 0 */ "keyspec_one_by_four",
             /* 168: 0 */ "keyspec_two_by_four",
             /* 168: 0 */ "keyspec_three_by_four",
-            /* 168: 0 */ "keyspec_four_by_four",
     };
 
     private static final String EMPTY = "";
@@ -455,10 +454,9 @@ public final class KeyboardTextsTable {
             /* morekeys_tablet_double_quote */ "!fixedColumnOrder!6,!text/double_quotes,!text/single_quotes,!text/double_angle_quotes,!text/single_angle_quotes",
             /* keyspec_emoji_action_key */ "!icon/emoji_action_key|!code/key_emoji",
             /* keyspec_settings_action_key */ "!icon/settings_key|!code/key_settings",
-            /* keyspec_one_by_four */ "1/4",
-            /* keyspec_two_by_four */ "2/4",
-            /* keyspec_three_by_four */ "3/4",
-            /* keyspec_four_by_four */ "4/4",
+            /* keyspec_one_by_four */ "1/3",
+            /* keyspec_two_by_four */ "2/3",
+            /* keyspec_three_by_four */ "3/3",
     };
 
     /* Locale fa: Farsi */

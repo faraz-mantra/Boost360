@@ -26,22 +26,28 @@
         latin:keyLabelFlags="hasPopupHint"
         latin:backgroundType="action"
         latin:keyActionFlags="noKeyPreview" />
-    <Key latin:keySpec="&#x0937;" />
-    <Key latin:keySpec="&#x0938;" />
-    <Key latin:keySpec="ह" />
-    <Key latin:keySpec="ज्ञ" />
-    <Key latin:keySpec="ज्ञ" />
-    <Key latin:keySpec="श्र" />
-    <Key latin:keySpec="&#x0960;"
-        latin:backgroundType="headerkey"
-        latin:headerKeySpec="ृ" />
-    <!--<Key
-        latin:backgroundType="headerkey"
-        latin:headerKeySpec="ँ"
-        latin:keySpec="&#x0901;" />-->
     <Key
-        latin:backgroundType="headerkey"
-        latin:headerKeySpec="्"
-        latin:keySpec="&#x094D;" />
-    <!--<Key latin:keySpec="&#x0939;" />-->
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ल्ट" />
+    <Key
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ल्प" />
+    <Key
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ल्ब" />
+    <Key
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ल्ह" />
+    <Key
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ष्ट" />
+    <Key
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ष्ण" />
+    <Key
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ष्प" />
+    <Key
+        latin:backgroundType="fontResizeKey"
+        latin:keySpec="ष्क" />
 </merge>
