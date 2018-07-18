@@ -173,6 +173,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
     private final DrawingHandler mDrawingHandler = new DrawingHandler(this);
 
     private MainKeyboardAccessibilityDelegate mAccessibilityDelegate;
+    public static int MAIN_KEYBOARD_HEIGHT;
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
@@ -438,6 +439,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
 
     private void locatePreviewPlacerView() {
         getLocationInWindow(mOriginCoords);
+        MAIN_KEYBOARD_HEIGHT = getHeight();
         mDrawingPreviewPlacerView.setKeyboardViewGeometry(mOriginCoords, getWidth(), getHeight());
     }
 

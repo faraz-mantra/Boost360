@@ -24,10 +24,10 @@
         latin:elementName="alphabet"
         latin:enableProximityCharsCorrection="true" />
     <Element
-        latin:elementKeyboard="@xml/kbd_hindi_compact2"
+        latin:elementKeyboard="@xml/kbd_hindi_compact_two_by_four"
         latin:elementName="mainLayoutTwo" />
     <Element
-        latin:elementKeyboard="@xml/kbd_hindi_compact3"
+        latin:elementKeyboard="@xml/kbd_hindi_compact_three_by_three"
         latin:elementName="mainLayoutThree" />
     <Element
         latin:elementKeyboard="@xml/kbd_hindi_compact4"

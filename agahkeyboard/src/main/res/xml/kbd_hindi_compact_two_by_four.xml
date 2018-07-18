@@ -23,5 +23,5 @@
     latin:rowHeight="20%p"
     latin:touchPositionCorrectionData="@array/touch_position_correction_data_default"
     latin:verticalGap="@fraction/config_key_vertical_gap_5row">
-    <include latin:keyboardLayout="@xml/rows_hindi_compact2" />
+    <include latin:keyboardLayout="@xml/rows_hindi_compact_two_by_four" />
 </Keyboard>

@@ -42,7 +42,9 @@ public final class MainKeyboardAccessibilityDelegate
         implements AccessibilityLongPressTimer.LongPressTimerCallback {
     private static final String TAG = MainKeyboardAccessibilityDelegate.class.getSimpleName();
 
-    /** Map of keyboard modes to resource IDs. */
+    /**
+     * Map of keyboard modes to resource IDs.
+     */
     private static final SparseIntArray KEYBOARD_MODE_RES_IDS = new SparseIntArray();
 
     static {
@@ -57,7 +59,9 @@ public final class MainKeyboardAccessibilityDelegate
         KEYBOARD_MODE_RES_IDS.put(KeyboardId.MODE_URL, R.string.keyboard_mode_url);
     }
 
-    /** The most recently set keyboard mode. */
+    /**
+     * The most recently set keyboard mode.
+     */
     private int mLastKeyboardMode = KEYBOARD_IS_HIDDEN;
     private static final int KEYBOARD_IS_HIDDEN = -1;
     // The rectangle region to ignore hover events.
@@ -66,7 +70,7 @@ public final class MainKeyboardAccessibilityDelegate
     private final AccessibilityLongPressTimer mAccessibilityLongPressTimer;
 
     public MainKeyboardAccessibilityDelegate(final MainKeyboardView mainKeyboardView,
-            final KeyDetector keyDetector) {
+                                             final KeyDetector keyDetector) {
         super(mainKeyboardView, keyDetector);
         mAccessibilityLongPressTimer = new AccessibilityLongPressTimer(
                 this /* callback */, mainKeyboardView.getContext());
@@ -145,7 +149,7 @@ public final class MainKeyboardAccessibilityDelegate
     /**
      * Announces which type of keyboard is being displayed.
      *
-     * @param keyboard The new keyboard.
+     * @param keyboard     The new keyboard.
      * @param lastKeyboard The last keyboard.
      */
     private void announceKeyboardType(final Keyboard keyboard, final Keyboard lastKeyboard) {
@@ -201,9 +205,6 @@ public final class MainKeyboardAccessibilityDelegate
                 break;
             case KeyboardId.KEYBOARD_MAIN_LAYOUT_THREE:
                 resId = R.string.keyboard_layout_three;
-                break;
-            case KeyboardId.KEYBOARD_MAIN_LAYOUT_FOUR:
-                resId = R.string.keyboard_layout_four;
                 break;
             default:
                 return;

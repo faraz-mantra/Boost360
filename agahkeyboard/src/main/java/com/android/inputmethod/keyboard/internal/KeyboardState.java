@@ -66,8 +66,6 @@ public final class KeyboardState {
 
         void setMainLayoutThree();
 
-        void setMainLayoutFour();
-
         /**
          * Request to call back {@link KeyboardState#onUpdateShiftState(int, int)}.
          */
@@ -303,7 +301,7 @@ public final class KeyboardState {
 
     private void toggleMainLayouts() {
         screenNumber++;
-        if (screenNumber > 4) {
+        if (screenNumber > 3) {
             screenNumber = 1;
         }
         switch (screenNumber) {
@@ -315,9 +313,6 @@ public final class KeyboardState {
                 break;
             case 3:
                 mSwitchActions.setMainLayoutThree();
-                break;
-            case 4:
-                mSwitchActions.setMainLayoutFour();
                 break;
         }
     }

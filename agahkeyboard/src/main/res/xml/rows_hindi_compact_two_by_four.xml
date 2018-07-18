@@ -31,27 +31,27 @@
          <else>
              <include latin:keyboardLayout="@xml/rowkeys_hindi_compact1" />
          </else>-->
-        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact1" />
+        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact_2_4_1" />
     </Row>
     <Row
         latin:keyLabelFlags="fontNormal"
         latin:keyWidth="10%p">
-        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact2" />
+        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact_2_4_2" />
     </Row>
     <Row
         latin:keyLabelFlags="fontNormal"
         latin:keyWidth="10%p">
-        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact3" />
+        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact_2_4_3" />
     </Row>
     <Row
         latin:keyLabelFlags="fontNormal"
         latin:keyWidth="10%p">
-        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact4" />
+        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact_2_4_4" />
     </Row>
     <Row
         latin:keyLabelFlags="fontNormal"
         latin:keyWidth="10%p">
-        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact_3_5" />
+        <include latin:keyboardLayout="@xml/rowkeys_hindi_compact_2_4_5" />
         <Key
             latin:keyStyle="deleteKeyStyle"
             latin:keyWidth="fillRight" />
