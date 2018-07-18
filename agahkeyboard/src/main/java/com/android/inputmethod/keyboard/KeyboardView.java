@@ -483,6 +483,9 @@ public class KeyboardView extends View {
 
             // Vertical label text alignment.
             labelBaseline = centerY + labelCharHeight / 2.0f;
+            if (key.isFontResizeKey()) {
+                labelBaseline = centerY + labelCharHeight / 1.3f;
+            }
 
             // Horizontal label text alignment
             if (key.isAlignLabelOffCenter()) {
