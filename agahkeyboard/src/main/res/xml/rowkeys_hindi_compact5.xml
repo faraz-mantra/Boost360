@@ -22,10 +22,10 @@
          render dotted circle for incomplete combining letter of some scripts, different
          set of Key definitions are needed based on the API version. -->
     <Key
-        latin:keySpec="!text/keyspec_one_by_four|!code/key_switch_screen_main"
-        latin:keyLabelFlags="hasPopupHint"
         latin:backgroundType="action"
-        latin:keyActionFlags="noKeyPreview" />
+        latin:keyActionFlags="noKeyPreview"
+        latin:keyLabelFlags="hasPopupHint"
+        latin:keySpec="!text/keyspec_one_by_four|!code/key_switch_screen_main" />
     <Key latin:keySpec="&#x0937;" />
     <Key latin:keySpec="&#x0938;" />
     <Key latin:keySpec="ह" />
@@ -40,8 +40,6 @@
         latin:keySpec="श्र" />
     <Key
         latin:backgroundType="headerkey"
-        latin:headerKeySpec="ृ" />
-    <Key
         latin:headerKeySpec="ृ"
         latin:keySpec="&#x0960;" />
     <!--<Key
