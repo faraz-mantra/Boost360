@@ -26,15 +26,22 @@
         latin:keyActionFlags="noKeyPreview"
         latin:keyLabelFlags="hasPopupHint"
         latin:keySpec="!text/keyspec_one_by_four|!code/key_switch_screen_main" />
-    <Key latin:keySpec="&#x0937;" />
-    <Key latin:keySpec="&#x0938;" />
-    <Key latin:keySpec="ह" />
+    <Key
+        latin:keySpec="&#x0937;"
+        latin:moreKeys="षं,ष्" />
+    <Key
+        latin:keySpec="&#x0938;"
+        latin:moreKeys="सं,स्" />
+    <Key
+        latin:keySpec="ह"
+        latin:moreKeys="हं,ह्" />
     <Key
         latin:backgroundType="fontResizeKey"
         latin:keySpec="ज्ञ" />
     <Key
         latin:backgroundType="fontResizeKey"
-        latin:keySpec="ज्ञ" />
+        latin:keySpec="क्ष"
+        latin:moreKeys="क्षं,क्ष्" />
     <Key
         latin:backgroundType="fontResizeKey"
         latin:keySpec="श्र" />

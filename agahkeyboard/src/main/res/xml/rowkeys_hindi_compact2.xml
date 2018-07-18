@@ -21,14 +21,30 @@
     <!-- Because the font rendering system prior to API version 16 can't automatically
          render dotted circle for incomplete combining letter of some scripts, different
          set of Key definitions are needed based on the API version. -->
-    <Key latin:keySpec="&#x0915;" />
-    <Key latin:keySpec="&#x0916;" />
-    <Key latin:keySpec="&#x0917;" />
-    <Key latin:keySpec="&#x0918;" />
-    <Key latin:keySpec="&#x091A;" />
-    <Key latin:keySpec="&#x091B;" />
-    <Key latin:keySpec="&#x091C;" />
-    <Key latin:keySpec="&#x091D;" />
+    <Key
+        latin:keySpec="&#x0915;"
+        latin:moreKeys="कं,क्,क़,क़्" />
+    <Key
+        latin:keySpec="&#x0916;"
+        latin:moreKeys="ख़,खं,ख्,ख़ं,ख़्" />
+    <Key
+        latin:keySpec="&#x0917;"
+        latin:moreKeys="ग़,गं,ग्,ग़्"  />
+    <Key
+        latin:keySpec="&#x0918;"
+        latin:moreKeys="घं,घ्" />
+    <Key
+        latin:keySpec="&#x091A;"
+        latin:moreKeys="चं,च्" />
+    <Key
+        latin:keySpec="&#x091B;"
+        latin:moreKeys="छं,छ्" />
+    <Key
+        latin:keySpec="&#x091C;"
+        latin:moreKeys="ज़्,ज़,जं,ज्,ज़ं" />
+    <Key
+        latin:keySpec="&#x091D;"
+        latin:moreKeys="झ़,झंं,झ्,झ़्" />
     <Key
         latin:backgroundType="headerkey"
         latin:headerKeySpec="़"
