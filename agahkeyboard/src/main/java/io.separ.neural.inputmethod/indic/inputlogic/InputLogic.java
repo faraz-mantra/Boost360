@@ -797,6 +797,8 @@ public final class InputLogic {
                 break;
             case Constants.CODE_INLINESETTINGS:
                 break;
+            case Constants.CODE_SWITCH_SCREEN_MAIN:
+                break;
             default:
                 throw new RuntimeException("Unknown key code : " + event.mKeyCode);
         }

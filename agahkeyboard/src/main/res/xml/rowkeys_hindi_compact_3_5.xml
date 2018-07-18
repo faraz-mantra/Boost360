@@ -22,7 +22,7 @@
          render dotted circle for incomplete combining letter of some scripts, different
          set of Key definitions are needed based on the API version. -->
     <Key
-        latin:keySpec="!text/keyspec_one_by_four|!code/key_switch_screen_main"
+        latin:keySpec="!text/keyspec_three_by_four|!code/key_switch_screen_main"
         latin:keyLabelFlags="hasPopupHint"
         latin:backgroundType="action"
         latin:keyActionFlags="noKeyPreview" />

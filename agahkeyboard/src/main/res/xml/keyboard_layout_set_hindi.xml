@@ -24,6 +24,15 @@
         latin:elementName="alphabet"
         latin:enableProximityCharsCorrection="true" />
     <Element
+        latin:elementKeyboard="@xml/kbd_hindi_compact2"
+        latin:elementName="mainLayoutTwo" />
+    <Element
+        latin:elementKeyboard="@xml/kbd_hindi_compact3"
+        latin:elementName="mainLayoutThree" />
+    <Element
+        latin:elementKeyboard="@xml/kbd_hindi_compact4"
+        latin:elementName="mainLayoutFour" />
+    <Element
         latin:elementKeyboard="@xml/kbd_symbols_hindi"
         latin:elementName="symbols" />
     <Element

@@ -152,49 +152,61 @@ public final class MainKeyboardAccessibilityDelegate
         final int lastElementId = lastKeyboard.mId.mElementId;
         final int resId;
         switch (keyboard.mId.mElementId) {
-        case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
-        case KeyboardId.ELEMENT_ALPHABET:
-            if (lastElementId == KeyboardId.ELEMENT_ALPHABET
-                    || lastElementId == KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED) {
-                // Transition between alphabet mode and automatic shifted mode should be silently
-                // ignored because it can be determined by each key's talk back announce.
+            case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
+            case KeyboardId.ELEMENT_ALPHABET:
+                if (lastElementId == KeyboardId.ELEMENT_ALPHABET
+                        || lastElementId == KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED) {
+                    // Transition between alphabet mode and automatic shifted mode should be silently
+                    // ignored because it can be determined by each key's talk back announce.
+                    return;
+                }
+                resId = R.string.spoken_description_mode_alpha;
+                break;
+            case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
+                if (lastElementId == KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED) {
+                    // Resetting automatic shifted mode by pressing the shift key causes the transition
+                    // from automatic shifted to manual shifted that should be silently ignored.
+                    return;
+                }
+                resId = R.string.spoken_description_shiftmode_on;
+                break;
+            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
+                if (lastElementId == KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED) {
+                    // Resetting caps locked mode by pressing the shift key causes the transition
+                    // from shift locked to shift lock shifted that should be silently ignored.
+                    return;
+                }
+                resId = R.string.spoken_description_shiftmode_locked;
+                break;
+            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
+                resId = R.string.spoken_description_shiftmode_locked;
+                break;
+            case KeyboardId.ELEMENT_SYMBOLS:
+                resId = R.string.spoken_description_mode_symbol;
+                break;
+            case KeyboardId.ELEMENT_SYMBOLS_SHIFTED:
+                resId = R.string.spoken_description_mode_symbol_shift;
+                break;
+            case KeyboardId.ELEMENT_PHONE:
+                resId = R.string.spoken_description_mode_phone;
+                break;
+            case KeyboardId.ELEMENT_PHONE_SYMBOLS:
+                resId = R.string.spoken_description_mode_phone_shift;
+                break;
+            case KeyboardId.KEYBOARD_MAIN_LAYOUT_ONE:
+                resId = R.string.keyboard_layout_one;
+                break;
+            case KeyboardId.KEYBOARD_MAIN_LAYOUT_TWO:
+                resId = R.string.keyboard_layout_two;
+                break;
+            case KeyboardId.KEYBOARD_MAIN_LAYOUT_THREE:
+                resId = R.string.keyboard_layout_three;
+                break;
+            case KeyboardId.KEYBOARD_MAIN_LAYOUT_FOUR:
+                resId = R.string.keyboard_layout_four;
+                break;
+            default:
                 return;
-            }
-            resId = R.string.spoken_description_mode_alpha;
-            break;
-        case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
-            if (lastElementId == KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED) {
-                // Resetting automatic shifted mode by pressing the shift key causes the transition
-                // from automatic shifted to manual shifted that should be silently ignored.
-                return;
-            }
-            resId = R.string.spoken_description_shiftmode_on;
-            break;
-        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
-            if (lastElementId == KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED) {
-                // Resetting caps locked mode by pressing the shift key causes the transition
-                // from shift locked to shift lock shifted that should be silently ignored.
-                return;
-            }
-            resId = R.string.spoken_description_shiftmode_locked;
-            break;
-        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
-            resId = R.string.spoken_description_shiftmode_locked;
-            break;
-        case KeyboardId.ELEMENT_SYMBOLS:
-            resId = R.string.spoken_description_mode_symbol;
-            break;
-        case KeyboardId.ELEMENT_SYMBOLS_SHIFTED:
-            resId = R.string.spoken_description_mode_symbol_shift;
-            break;
-        case KeyboardId.ELEMENT_PHONE:
-            resId = R.string.spoken_description_mode_phone;
-            break;
-        case KeyboardId.ELEMENT_PHONE_SYMBOLS:
-            resId = R.string.spoken_description_mode_phone_shift;
-            break;
-        default:
-            return;
         }
         sendWindowStateChanged(resId);
     }
