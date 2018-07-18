@@ -121,6 +121,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private ProgressBar pbOffers;
     private TextView tvImageNotSupported;
+    public static int MAIN_KEYBOARD_HEIGHT;
 
     public LatinIME getmLatinIME() {
         return mLatinIME;
@@ -191,6 +192,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         final Resources res = mThemeContext.getResources();
         final int keyboardWidth = ResourceUtils.getDefaultKeyboardWidth(res);
         final int keyboardHeight = ResourceUtils.getDefaultKeyboardHeight(res);
+        MAIN_KEYBOARD_HEIGHT = keyboardHeight;
         builder.setKeyboardGeometry(keyboardWidth, keyboardHeight);
         builder.setSubtype(mSubtypeSwitcher.getCurrentSubtype());
         builder.setVoiceInputKeyEnabled(settingsValues.mShowsVoiceInputKey);

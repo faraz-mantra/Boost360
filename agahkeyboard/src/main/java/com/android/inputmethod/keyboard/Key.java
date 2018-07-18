@@ -176,6 +176,7 @@ public class Key implements Comparable<Key> {
     public static final int BACKGROUND_TYPE_SPACEBAR = 6;
     public static final int BACKGROUND_TYPE_ENTERKEY = 7;
     public static final int BACKGROUND_TYPE_HEADERKEY = 8;
+    public static final int BACKGROUND_TYPE_FONTRESIZEKEY = 9;
 
     private final int mActionFlags;
     private static final int ACTION_FLAGS_IS_REPEATABLE = 0x01;
@@ -660,6 +661,10 @@ public class Key implements Comparable<Key> {
         return mBackgroundType == BACKGROUND_TYPE_HEADERKEY;
     }
 
+    public final boolean isFontResizeKey() {
+        return mBackgroundType == BACKGROUND_TYPE_FONTRESIZEKEY;
+    }
+
     public final boolean isDelete() {
         return getCode() == CODE_DELETE;
     }
@@ -1012,6 +1017,8 @@ public class Key implements Comparable<Key> {
                 new KeyBackgroundState(),
                 // 7: BACKGROUND_TYPE_ENTER
                 new KeyBackgroundState(android.R.attr.state_active),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
                 // 7: BACKGROUND_TYPE_ENTER
                 new KeyBackgroundState(),
         };

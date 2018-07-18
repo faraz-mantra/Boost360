@@ -477,6 +477,9 @@ public class KeyboardView extends View {
             paint.setTextSize(key.selectTextSize(params));
             final float labelCharHeight = TypefaceUtils.getReferenceCharHeight(paint);
             final float labelCharWidth = TypefaceUtils.getReferenceCharWidth(paint);
+            if (key.isFontResizeKey()) {
+                paint.setTextSize(paint.getTextSize() * 1.6f);
+            }
 
             // Vertical label text alignment.
             labelBaseline = centerY + labelCharHeight / 2.0f;
@@ -626,9 +629,7 @@ public class KeyboardView extends View {
             final int iconX = (keyWidth - iconWidth) / 2; // Align horizontally center.
             drawIcon(key.getCode(), canvas, icon, iconX, iconY, iconWidth, iconHeight);
         }
-        if (TextUtils.isEmpty(mKeyPopupHintLetter)) {
-            return;
-        } else if (key.hasPopupHint() && key.getMoreKeys() != null) {
+        if (key.hasPopupHint() && key.getMoreKeys() != null) {
             drawKeyPopupHint(key, canvas, paint, params);
         }
     }
