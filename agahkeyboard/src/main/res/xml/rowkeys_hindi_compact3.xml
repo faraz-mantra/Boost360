@@ -21,16 +21,36 @@
     <!-- Because the font rendering system prior to API version 16 can't automatically
          render dotted circle for incomplete combining letter of some scripts, different
          set of Key definitions are needed based on the API version. -->
-    <Key latin:keySpec="&#x091F;" />
-    <Key latin:keySpec="&#x0920;" />
-    <Key latin:keySpec="&#x0921;" />
-    <Key latin:keySpec="&#x0922;" />
-    <Key latin:keySpec="&#x0923;" />
-    <Key latin:keySpec="&#x0924;" />
-    <Key latin:keySpec="&#x0925;" />
-    <Key latin:keySpec="&#x0926;" />
-    <Key latin:keySpec="&#x0927;" />
-    <Key latin:keySpec="&#x0928;" />
+    <Key
+        latin:keySpec="&#x091F;"
+        latin:moreKeys="टं,ट्" />
+    <Key
+        latin:keySpec="&#x0920;"
+        latin:moreKeys="ठं,ठ्" />
+    <Key
+        latin:keySpec="&#x0921;"
+        latin:moreKeys="ङं,ड़्,ङ,ङ्,ड़,डं,ड्,ड़ं" />
+    <Key
+        latin:keySpec="&#x0922;"
+        latin:moreKeys="ढ़्,ढ़,ढं,ढ्,ढ़ं" />
+    <Key
+        latin:keySpec="&#x0923;"
+        latin:moreKeys="णं,ण्" />
+    <Key
+        latin:keySpec="&#x0924;"
+        latin:moreKeys="त्र,तं,त्" />
+    <Key
+        latin:keySpec="&#x0925;"
+        latin:moreKeys="थं,थ्" />
+    <Key
+        latin:keySpec="&#x0926;"
+        latin:moreKeys="दं,द्" />
+    <Key
+        latin:keySpec="&#x0927;"
+        latin:moreKeys="धं,ध्" />
+    <Key
+        latin:keySpec="&#x0928;"
+        latin:moreKeys="न्,नं" />
     <!-- <include latin:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_candra_o" />
      &lt;!&ndash; U+0911: "ऑ" DEVANAGARI LETTER CANDRA O &ndash;&gt;
      <Key
