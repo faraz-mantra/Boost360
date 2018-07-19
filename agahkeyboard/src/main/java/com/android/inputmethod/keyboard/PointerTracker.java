@@ -50,6 +50,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private static final boolean DEBUG_LISTENER = false;
     private static final boolean DEBUG_MODE = DebugFlags.DEBUG_ENABLED || DEBUG_EVENT;
     public static Key KEYBOARD_TYPED_KEY = null;
+    public static Key PREV_KEYBOARD_TYPED_KEY = null;
     public static String KEYBOARD_KEY_LABEL;
     public static boolean isLebelModified = false;
 
@@ -1252,7 +1253,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
         if (!key.isHeaderKey() && !key.isModifier()) {
             KEYBOARD_TYPED_KEY = key;
-        } else {
+        } else if (!key.getLabel().equalsIgnoreCase("2/3") && !key.getLabel().equalsIgnoreCase("3/3") && !key.getLabel().equalsIgnoreCase("1/3")) {
+            PREV_KEYBOARD_TYPED_KEY = KEYBOARD_TYPED_KEY;
             KEYBOARD_TYPED_KEY = null;
         }
 

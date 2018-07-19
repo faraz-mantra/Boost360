@@ -27,12 +27,15 @@
         latin:keySpec="ज्ञ" />
     <Key
         latin:backgroundType="headerkey"
+        latin:headerKeySpec="ॉ"
         latin:keySpec="&#x0911;" />
     <Key
         latin:backgroundType="fontResizeKey"
-        latin:keySpec="अं" />
+        latin:headerKeySpec="ं"
+        latin:keySpec="&#x0905;&#x0902;"/>
     <Key
         latin:backgroundType="fontResizeKey"
+        latin:headerKeySpec="ः"
         latin:keySpec="अः" />
     <Key latin:keySpec="&#x0919;" />
     <Key latin:keySpec="&#x091E;" />

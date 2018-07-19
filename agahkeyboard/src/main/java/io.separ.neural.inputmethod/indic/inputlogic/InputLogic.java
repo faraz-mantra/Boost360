@@ -278,8 +278,8 @@ public final class InputLogic {
         if (SpaceState.PHANTOM == mSpaceState) {
             promotePhantomSpace(settingsValues);
         }
-        if (PointerTracker.KEYBOARD_TYPED_KEY == null && PointerTracker.isLebelModified) {
-            mConnection.deleteTextBeforeCursor(1);
+        if (PointerTracker.KEYBOARD_TYPED_KEY == null && PointerTracker.isLebelModified && PointerTracker.PREV_KEYBOARD_TYPED_KEY != null && PointerTracker.PREV_KEYBOARD_TYPED_KEY.getLabel() != null) {
+            mConnection.deleteTextBeforeCursor(PointerTracker.PREV_KEYBOARD_TYPED_KEY.getLabel().length());
         }
         mConnection.commitText(text, 1);
         StatsUtils.getInstance().onWordCommitUserTyped(mEnteredText, mWordComposer.isBatchMode());
