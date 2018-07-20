@@ -248,6 +248,11 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
                 tvProducts.setText(R.string.tv_products);
                 tvPhotos.setText(R.string.tv_photos);
                 tvDetails.setText(R.string.tv_details);
+
+                tvUpdates.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvProducts.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvPhotos.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvDetails.setBackgroundColor(getResources().getColor(android.R.color.transparent));
             }
         }
     }

@@ -1162,10 +1162,15 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
 
         String locale = ims.getLocale();
-        mResContext = setLocale(getApplicationContext(), locale);
+        if (locale.equalsIgnoreCase("en_US")) {
+            mLanguageIndex = 0;
+        } else {
+            mLanguageIndex = 1;
+        }
+       /* mResContext = setLocale(getApplicationContext(), locale);
         if (++mLanguageIndex >= LocaleUtils.LocaleDef.SUPPORTED_LOCALES.length) {
             mLanguageIndex = 0;
-        }
+        }*/
 
         LocaleUtils.setLocale(this, mLanguageIndex);
         EventBusExt.getDefault().post(new UpdateActionBarEvent());
