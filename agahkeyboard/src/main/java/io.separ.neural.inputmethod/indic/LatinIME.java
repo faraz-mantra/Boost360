@@ -782,7 +782,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         } else {
             resources.updateConfiguration(configuration, displayMetrics);
         }
-        if (locale.equalsIgnoreCase("en_US")) {
+        if (locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
             mLanguageIndex = 0;
         } else {
             mLanguageIndex = 1;
@@ -1162,9 +1162,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
 
         String locale = ims.getLocale();
-        if (locale.equalsIgnoreCase("en_US")) {
+        if (locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
             mLanguageIndex = 0;
         } else {
+            PointerTracker.KEYBOARD_TYPED_KEY = null;
             mLanguageIndex = 1;
         }
        /* mResContext = setLocale(getApplicationContext(), locale);

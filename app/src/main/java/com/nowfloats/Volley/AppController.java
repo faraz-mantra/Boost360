@@ -1,19 +1,13 @@
 package com.nowfloats.Volley;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
-import android.view.inputmethod.InputMethodSubtype;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,7 +22,6 @@ import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.Locale;
 
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 
@@ -36,19 +29,10 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static AppController mInstance;
-    public static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        this.mContext = this;
-
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
-
-        String locale = ims.getLocale();
-        setLocale(this, locale);
 
 //        ContextApplication.initSdk(this, this);
 
@@ -90,42 +74,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-    public static Context setLocale(Context context, String language) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context, language);
-        }
-
-        return updateResourcesLegacy(context, language);
-    }
-
-    @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        Configuration configuration = context.getResources().getConfiguration();
-        configuration.setLocale(locale);
-
-        return context.createConfigurationContext(configuration);
-    }
-
-    @SuppressWarnings("deprecation")
-    private static Context updateResourcesLegacy(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        Resources resources = context.getResources();
-
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-
-        return context;
     }
 
 

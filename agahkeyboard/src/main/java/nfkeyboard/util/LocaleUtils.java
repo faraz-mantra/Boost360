@@ -17,7 +17,7 @@ public class LocaleUtils {
         String[] SUPPORTED_LOCALES = {ENGLISH, HINDI};
     }
 
-    public static final String ENGLISH = "en";
+    public static final String ENGLISH = "en_US";
     public static final String HINDI = "hi";
 
     public static void initialize(Context context) {
