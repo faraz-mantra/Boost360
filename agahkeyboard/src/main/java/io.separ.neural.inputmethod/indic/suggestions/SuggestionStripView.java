@@ -326,9 +326,6 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }
         if (view == mServicesKey) {
             mServicesKey.setClickable(false);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, 225f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotateAnimation.setDuration(500);
-            rotateAnimation.setInterpolator(new OvershootInterpolator(1.2f));
             final ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
             scaleAnimation.setDuration(200);
             scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -348,28 +345,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
                 }
             });
-            rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mServicesKey.setRotation(225f);
-                    mServicesKey.startAnimation(scaleAnimation);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
-                mServicesKey.startAnimation(scaleAnimation);
-            } else {
-                mServicesKey.startAnimation(rotateAnimation);
-            }
+            mServicesKey.startAnimation(scaleAnimation);
             return;
         }
         final Object tag = view.getTag();

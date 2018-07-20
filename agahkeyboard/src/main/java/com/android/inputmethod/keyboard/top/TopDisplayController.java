@@ -148,26 +148,6 @@ public class TopDisplayController {
         }*/
         ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(200);
-        final RotateAnimation rotateAnimation = new RotateAnimation(-135f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setInterpolator(new OvershootInterpolator(1.5f));
-        rotateAnimation.setDuration(400);
-        rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                mServicesKey.setRotation(0f);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mServicesKey.setRotation(0f);
-                mServicesKey.setClickable(true);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -175,12 +155,7 @@ public class TopDisplayController {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (mActionRowView.getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
-                    mServicesKey.setRotation(0f);
-                    mServicesKey.setClickable(true);
-                } else {
-                    mServicesKey.startAnimation(rotateAnimation);
-                }
+                mServicesKey.setClickable(true);
             }
 
             @Override
@@ -192,7 +167,6 @@ public class TopDisplayController {
             mServicesKey.startAnimation(scaleAnimation);
             mServicesKey.setClickable(false);
         } else {
-            mServicesKey.setRotation(0f);
             mServicesKey.clearAnimation();
             mServicesKey.setClickable(true);
         }
