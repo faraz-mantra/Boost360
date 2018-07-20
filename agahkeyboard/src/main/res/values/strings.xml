@@ -655,6 +655,7 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="tv_description">Description:</string>
     <string name="deselect_all">Deselect all</string>
     <string name="tv_done">Done</string>
+    <string name="separator">". "</string>
 
 
     <string-array name="validity_items">

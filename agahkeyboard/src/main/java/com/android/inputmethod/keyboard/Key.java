@@ -630,6 +630,10 @@ public class Key implements Comparable<Key> {
         mHitBox.right = params.mOccupiedWidth - params.mRightPadding;
     }
 
+    public boolean isPeriodKey() {
+        return mLabel.equalsIgnoreCase("।");
+    }
+
     public void markAsTopEdge(final KeyboardParams params) {
         mHitBox.top = params.mTopPadding;
     }
