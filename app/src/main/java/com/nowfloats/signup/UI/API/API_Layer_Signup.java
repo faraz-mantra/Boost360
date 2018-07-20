@@ -96,7 +96,7 @@ public class API_Layer_Signup {
     }
 
 
-    public static void checkUniqueNumber(Context context, final String mobileNumber) {
+    public static void checkUniqueNumber(Context context, final String mobileNumber,final String countryCode) {
 
         final SignUp_Interface checkUniqueNumberInterface = (SignUp_Interface) context;
 
@@ -139,6 +139,7 @@ public class API_Layer_Signup {
                 try {
                     obj.put("clientId", Constants.clientId);
                     obj.put("mobile", mobileNumber);
+                    obj.put("countryCode", countryCode);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

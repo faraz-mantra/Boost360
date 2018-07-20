@@ -155,7 +155,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 //    private StringBuilder mStringBuilder;
 
-    private Handler mHandler = new Handler(Looper.getMainLooper());;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+    ;
 
     private Button mCurrButton, mDefaultButton;
 
@@ -233,7 +234,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     /*
      **************************** CONSTANTS *******************************
-    */
+     */
 
     private Runnable mAutoCallRunnable = new Runnable() {
         @Override
@@ -248,7 +249,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private FacebookHandler facebookHandler;
 
-    private final List<String> readPermissions=Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging");
+    private final List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging");
     private final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
 
     private PermissionListener mPermissionListener = new PermissionListener() {
@@ -1022,8 +1023,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             Glide.with(ChatViewActivity.this)
                     .load(getParsedPrefixPostfixText(url))
                     .apply(new RequestOptions()
-                    .fitCenter()
-                    .placeholder(R.drawable.site_sc_default))
+                            .fitCenter()
+                            .placeholder(R.drawable.site_sc_default))
                     .into(ivContent);
         } else {
 
@@ -1211,8 +1212,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mBundle.putString(Save_Lat, mDataMap.get("[~LAT]"));
         mBundle.putString(Save_Lng, mDataMap.get("[~LNG]"));
 
+//        Intent intent = new Intent(Intent.ACTION_VIEW,
+//                Uri.parse("nowfloats://com.biz2.nowfloats.riasdk.skip/riachat"));
+
         Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("nowfloats://com.biz2.nowfloats.riasdk.skip/riachat"));
+                Uri.parse("nowfloats://" + getApplicationContext().getPackageName() + ".riasdk.skip/riachat"));
+
         intent.putExtra("mBundle", mBundle);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setAction(Intent.ACTION_VIEW);
@@ -1229,7 +1234,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mHandler.removeCallbacksAndMessages(null);
 
         Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("com.biz2.nowfloats://com.riasdk.login/riachat"));
+                Uri.parse("nowfloats://" + getApplicationContext().getPackageName() + ".keyboard.home/riachat"));
+
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setAction(Intent.ACTION_VIEW);
 
@@ -1614,10 +1620,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 etChatInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                             }
 
-                             /*
-                         * setting input filters to edit text based on
-                         * variable name
-                         */
+                            /*
+                             * setting input filters to edit text based on
+                             * variable name
+                             */
 
                             if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
                                     || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE)) {
@@ -2283,7 +2289,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onLoginSuccess(LoginResult loginResult) {
-        mDataMap.put("[~FBACCESSTOKEN]",loginResult.getAccessToken().getToken());
+        mDataMap.put("[~FBACCESSTOKEN]", loginResult.getAccessToken().getToken());
         showNextNode(mNextNodeId);
     }
 

@@ -1,20 +1,29 @@
 package com.nowfloats.Store;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,15 +33,18 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.ChequePaymentModel;
 import com.nowfloats.Store.Model.InitiateModel;
 import com.nowfloats.Store.Model.MarkAsPaidModel;
 import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.ProductPaymentModel;
+import com.nowfloats.Store.Model.SalesmanModel;
 import com.nowfloats.Store.Model.TaxDetail;
 import com.nowfloats.Store.Service.OnPaymentOptionClick;
 import com.nowfloats.Store.Service.StoreInterface;
+import com.nowfloats.signup.UI.API.API_Layer;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -42,7 +54,9 @@ import org.jsoup.helper.StringUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -69,6 +83,8 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
     private String currencyCode;
     private List<ProductPaymentModel> mProductPaymentModel;
     private DiscountCoupon discountCoupon;
+    public int paymentMode = 0;
+    private SalesmanModel salesmanModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +92,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         Bundle arg = getArguments();
         if (arg != null) {
             discountCoupon = (DiscountCoupon) getArguments().get("discountCoupon");
+            salesmanModel = (SalesmanModel) getArguments().get("salesmanModel");
             initializeProductList(new Gson().<List<PackageDetails>>fromJson(getArguments().getString("packageList"), new TypeToken<List<PackageDetails>>() {
             }.getType()), discountCoupon, (int) getArguments().get("tdsPercentage"));
         }
@@ -115,7 +132,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
             unitTaxAmount = (unitPrice * totalTax) / 100;
 
             if (tdsPercentage > 0) {
-                unitTDSAmount = ((unitPrice + unitTaxAmount) * tdsPercentage / 100.0);
+                unitTDSAmount = (unitPrice * tdsPercentage / 100.0);
             }
 
 
@@ -308,9 +325,10 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        SimpleDateFormat formatter = new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH);
+        SimpleDateFormat formatter = new SimpleDateFormat(Methods.YYYY_MM_DD, Locale.ENGLISH);
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
+//        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
         String s = formatter.format(calendar.getTime());
         paymentDateEt.setText(s);
     }
@@ -346,6 +364,12 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         initiateModel.setEmail(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         initiateModel.setCustomerName(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         initiateModel.setFpId(manager.getFPID());
+        if (salesmanModel != null) {
+            initiateModel.setSalesPersonId(salesmanModel.getEmployeeId());
+        } else {
+            initiateModel.setSalesPersonId("");
+        }
+        initiateModel.setPaymentMode(paymentMode);
         initiateModel.setFpTag(manager.getFpTag());
         initiateModel.setPaymentTransactionChannel(1);
         initiateModel.setTdsPercentage(tdsPercentage);
@@ -377,6 +401,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         });
     }
 
+
     public void updatePaymentDetails(final ChequePaymentModel chequeModel) {
         chequeModel.setBankName(bankNameEt.getText().toString());
         chequeModel.setIfscCode(ifscCodeEt.getText().toString());
@@ -385,11 +410,12 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         chequeModel.setId(null);
         chequeModel.setMicrCode(null);
         chequeModel.setName(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        chequeModel.setPaymentStatus("initiated");
+        chequeModel.setPaymentStatus(ChequePaymentModel.PaymentTransactionStatus.INITIATED.ordinal());
         chequeModel.setPartnerType(null);
         chequeModel.setPaymentFor(null);
         chequeModel.setPaymentDate(String.format("/Date(%s)/", String.valueOf(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis())));
         chequeModel.setPaymentTransactionChannel(1);
+        chequeModel.setActivationDate(paymentDateEt.getText().toString());
         chequeModel.setTotalPrice(finalAmount);
         chequeModel.setTdsPercentage(tdsPercentage);
         chequeModel.setTaxAmount(taxAmount);
@@ -406,10 +432,15 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
             @Override
             public void success(String s, Response response) {
                 if ("updated".equalsIgnoreCase(s) || "inserted".equalsIgnoreCase(s)) {
-                    MarkAsPaidModel model = new MarkAsPaidModel();
-                    model.setPaymentTransactionId(chequeModel.getTransactionId());
-                    model.setClientId(chequeModel.getClientId());
-                    markAsPaid(model);
+
+                    if (paymentMode == InitiateModel.PAYMENT_MODE.PDC.ordinal()) {
+                        executePaid(s);
+                    } else {
+                        MarkAsPaidModel model = new MarkAsPaidModel();
+                        model.setPaymentTransactionId(chequeModel.getTransactionId());
+                        model.setClientId(chequeModel.getClientId());
+                        markAsPaid(model);
+                    }
                 } else {
                     ((OnPaymentOptionClick) mContext).hideProcess();
                     showMessage("Request Cancelled");
@@ -458,19 +489,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
         api.markAsPaid(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-
-                if (!TextUtils.isEmpty(s)) {
-                    // invoice created
-                    if (discountCoupon != null) {
-                        redeemPromo();
-                    } else {
-                        ((OnPaymentOptionClick) mContext).hideProcess();
-                        showPaidConfirmation();
-                    }
-                } else {
-                    ((OnPaymentOptionClick) mContext).hideProcess();
-
-                }
+                executePaid(s);
             }
 
             @Override
@@ -479,6 +498,21 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
                 showMessage(getString(R.string.something_went_wrong_try_again));
             }
         });
+    }
+
+    private void executePaid(String response) {
+        if (!TextUtils.isEmpty(response)) {
+            // invoice created
+            if (discountCoupon != null) {
+                redeemPromo();
+            } else {
+                ((OnPaymentOptionClick) mContext).hideProcess();
+                showPaidConfirmation();
+            }
+        } else {
+            ((OnPaymentOptionClick) mContext).hideProcess();
+
+        }
     }
 
     public void showMessage(String msg) {

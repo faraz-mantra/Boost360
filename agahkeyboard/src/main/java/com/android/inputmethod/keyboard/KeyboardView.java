@@ -144,6 +144,7 @@ public class KeyboardView extends View {
     }
 
     final TypedArray keyboardViewAttr;
+
     public KeyboardView(final Context context, final AttributeSet attrs, final int defStyle, boolean isEmoji) {
         super(context, attrs, defStyle);
 
@@ -432,7 +433,7 @@ public class KeyboardView extends View {
             final float minScale = Math.min(
                     keyWidth / (float) intrinsicWidth, keyHeight / (float) intrinsicHeight);
             bgWidth = (int) (intrinsicWidth * minScale);
-            bgHeight = (int) (intrinsicHeight *minScale);
+            bgHeight = (int) (intrinsicHeight * minScale);
             bgX = (keyWidth - bgWidth) / 2;
             bgY = (keyHeight - bgHeight) / 2;
         } else {
@@ -550,7 +551,7 @@ public class KeyboardView extends View {
                 final float hintLabelWidth = TypefaceUtils.getStringWidth(hintLabel, paint);
                 hintX = keyWidth - mKeyHintLetterPadding
                         - Math.max(hintDigitWidth, hintLabelWidth) / 1.3f;
-                hintBaseline = - paint.ascent() + 2;
+                hintBaseline = -paint.ascent() + 2;
                 paint.setTextAlign(Align.CENTER);
             }
             final float adjustmentY = params.mHintLabelVerticalAdjustment * labelCharHeight;
