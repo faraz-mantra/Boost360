@@ -16,6 +16,7 @@
 
 package com.android.inputmethod.keyboard;
 
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -628,6 +629,10 @@ public class Key implements Comparable<Key> {
 
     public void markAsRightEdge(final KeyboardParams params) {
         mHitBox.right = params.mOccupiedWidth - params.mRightPadding;
+    }
+
+    public boolean isPeriodKey(Context context) {
+        return mLabel.equalsIgnoreCase(context.getResources().getString(R.string.separator).trim());
     }
 
     public void markAsTopEdge(final KeyboardParams params) {

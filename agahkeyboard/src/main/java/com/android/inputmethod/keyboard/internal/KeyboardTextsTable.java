@@ -252,9 +252,9 @@ public final class KeyboardTextsTable {
             /* 166: 0 */ "morekeys_tablet_double_quote",
             /* 167: 0 */ "keyspec_emoji_action_key",
             /* 168: 0 */ "keyspec_settings_action_key",
-            /* 168: 0 */ "keyspec_one_by_four",
-            /* 168: 0 */ "keyspec_two_by_four",
-            /* 168: 0 */ "keyspec_three_by_four",
+            /* 169: 0 */ "keyspec_one_by_four",
+            /* 170: 0 */ "keyspec_two_by_four",
+            /* 171: 0 */ "keyspec_three_by_four",
     };
 
     private static final String EMPTY = "";
@@ -510,6 +510,112 @@ public final class KeyboardTextsTable {
             /* keyspec_symbols_0 */ "\u0966",
             // Label for "switch to symbols" key.
             /* keylabel_to_symbol */ "?\u0967\u0968\u0969",
+            /* morekeys_a ~ */
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            /* ~ morekeys_x */
+            /* keyspec_q */ "q",
+            /* keyspec_w */ "w",
+            /* keyspec_y */ "y",
+            /* keyspec_x */ "x",
+            /* keyspec_nordic_row1_11 ~ */
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY,
+            /* ~ morekeys_swiss_row2_11 */
+            /* single_quotes */ "!text/single_lqm_rqm",
+            /* double_quotes */ "!text/double_lqm_rqm",
+            /* single_angle_quotes */ "!text/single_laqm_raqm",
+            /* double_angle_quotes */ "!text/double_laqm_raqm",
+            // $ - I'm making ₹ as default
+            // U+00A2: "¢" CENT SIGN
+            // U+00A3: "£" POUND SIGN
+            // U+20AC: "€" EURO SIGN
+            // U+00A5: "¥" YEN SIGN
+            // U+20B1: "₱" PESO SIGN
+            /* morekeys_currency_dollar */ "$,\u00A2,\u00A3,\u20AC,\u00A5,\u20B1",
+            /* keylabel_for_currency */ "$",
+            /* morekeys_currency_generic */ "$,\u00A2,\u20AC,\u00A3,\u00A5,\u20B1",
+            /* morekeys_punctuation */ "!autoColumnOrder!8,\\,,?,!,#,!text/keyspec_right_parenthesis,!text/keyspec_left_parenthesis,/,;,',@,:,-,\",+,\\%,&",
+            /* morekeys_tablet_punctuation */ "!autoColumnOrder!7,\\,,',#,!text/keyspec_right_parenthesis,!text/keyspec_left_parenthesis,/,;,@,:,-,\",+,\\%,&",
+            // U+00F1: "ñ" LATIN SMALL LETTER N WITH TILDE
+            /* keyspec_spanish_row2_10 */ "\u00F1",
+            // U+2020: "†" DAGGER
+            // U+2021: "‡" DOUBLE DAGGER
+            // U+2605: "★" BLACK STAR
+            /* morekeys_star */ "\u2020,\u2021,\u2605",
+            // U+266A: "♪" EIGHTH NOTE
+            // U+2665: "♥" BLACK HEART SUIT
+            // U+2660: "♠" BLACK SPADE SUIT
+            // U+2666: "♦" BLACK DIAMOND SUIT
+            // U+2663: "♣" BLACK CLUB SUIT
+            /* morekeys_bullet */ "\u266A,\u2665,\u2660,\u2666,\u2663",
+            // U+00B1: "±" PLUS-MINUS SIGN
+            /* morekeys_plus */ "\u00B1",
+            /* morekeys_left_parenthesis */ "!fixedColumnOrder!3,!text/keyspecs_left_parenthesis_more_keys",
+            /* morekeys_right_parenthesis */ "!fixedColumnOrder!3,!text/keyspecs_right_parenthesis_more_keys",
+            /* morekeys_less_than */ "!fixedColumnOrder!3,!text/keyspec_left_single_angle_quote,!text/keyspec_less_than_equal,!text/keyspec_left_double_angle_quote",
+            /* morekeys_greater_than */ "!fixedColumnOrder!3,!text/keyspec_right_single_angle_quote,!text/keyspec_greater_than_equal,!text/keyspec_right_double_angle_quote",
+            /* morekeys_arabic_diacritics */ EMPTY,
+            // U+00B9: "¹" SUPERSCRIPT ONE
+            // U+00BD: "½" VULGAR FRACTION ONE HALF
+            // U+2153: "⅓" VULGAR FRACTION ONE THIRD
+            // U+00BC: "¼" VULGAR FRACTION ONE QUARTER
+            // U+215B: "⅛" VULGAR FRACTION ONE EIGHTH
+            /* morekeys_symbols_1 */ "\u00B9,\u00BD,\u2153,\u00BC,\u215B",
+            // U+00B2: "²" SUPERSCRIPT TWO
+            // U+2154: "⅔" VULGAR FRACTION TWO THIRDS
+            /* morekeys_symbols_2 */ "\u00B2,\u2154",
+            // U+00B3: "³" SUPERSCRIPT THREE
+            // U+00BE: "¾" VULGAR FRACTION THREE QUARTERS
+            // U+215C: "⅜" VULGAR FRACTION THREE EIGHTHS
+            /* morekeys_symbols_3 */ "\u00B3,\u00BE,\u215C",
+            // U+2074: "⁴" SUPERSCRIPT FOUR
+            /* morekeys_symbols_4 */ "\u2074",
+            // U+215D: "⅝" VULGAR FRACTION FIVE EIGHTHS
+            /* morekeys_symbols_5 */ "\u215D",
+            /* morekeys_symbols_6 */ EMPTY,
+            // U+215E: "⅞" VULGAR FRACTION SEVEN EIGHTHS
+            /* morekeys_symbols_7 */ "\u215E",
+            /* morekeys_symbols_8 */ EMPTY,
+            /* morekeys_symbols_9 */ EMPTY,
+            // U+207F: "ⁿ" SUPERSCRIPT LATIN SMALL LETTER N
+            // U+2205: "∅" EMPTY SET
+            /* morekeys_symbols_0 */ "\u207F,\u2205",
+            // The all letters need to be mirrored are found at
+            // http://www.unicode.org/Public/6.1.0/ucd/BidiMirroring.txt
+            // U+2039: "‹" SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+            // U+203A: "›" SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+            // U+2264: "≤" LESS-THAN OR EQUAL TO
+            // U+2265: "≥" GREATER-THAN EQUAL TO
+            // U+00AB: "«" LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+            // U+00BB: "»" RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+            /* keyspec_left_parenthesis */ "(",
+            /* keyspec_right_parenthesis */ ")",
+            /* keyspec_left_square_bracket */ "[",
+            /* keyspec_right_square_bracket */ "]",
+            /* keyspec_left_curly_bracket */ "{",
+            /* keyspec_right_curly_bracket */ "}",
+            /* keyspec_less_than */ "<",
+            /* keyspec_greater_than */ ">",
+            /* keyspec_less_than_equal */ "\u2264",
+            /* keyspec_greater_than_equal */ "\u2265",
+            /* keyspec_left_double_angle_quote */ "\u00AB",
+            /* keyspec_right_double_angle_quote */ "\u00BB",
+            /* keyspec_left_single_angle_quote */ "\u2039",
+            /* keyspec_right_single_angle_quote */ "\u203A",
+            // Comma key
+            /* keyspec_comma */ ",",
+            /* keyspec_tablet_comma */ ",",
+            /* keyhintlabel_tablet_comma */ EMPTY,
+            /* morekeys_tablet_comma */ EMPTY,
+            // Period key
+            /* keyspec_period */ "।",
+            /* keyhintlabel_period */ EMPTY,
+            /* morekeys_period */ "!text/morekeys_punctuation",
+            /* keyspec_tablet_period */ "।",
+            /* keyhintlabel_tablet_period */ EMPTY,
+            /* morekeys_tablet_period */ "!text/morekeys_tablet_punctuation",
     };
 
     /* Locale en: English */
