@@ -211,7 +211,7 @@
         android:padding="12dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        android:text="done"
+        android:text="@string/tv_done"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         app:layout_constraintTop_toBottomOf="@id/btn_seven"
         app:layout_constraintEnd_toEndOf="parent"/>

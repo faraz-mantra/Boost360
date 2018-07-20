@@ -148,7 +148,7 @@ public class TopDisplayController {
         }*/
         ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(200);
-        final RotateAnimation rotateAnimation = new RotateAnimation(-135f, 0f,  Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        final RotateAnimation rotateAnimation = new RotateAnimation(-135f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimation.setInterpolator(new OvershootInterpolator(1.5f));
         rotateAnimation.setDuration(400);
         rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -218,11 +218,12 @@ public class TopDisplayController {
         //mActionRowView.postDelayed(this.hideSuggestionAfter, 20000);
         mSuggestionsStripView.setVisibility(GONE);
         if (mActionRowView.findViewById(R.id.tv_products) != null) {
-            ScaleAnimation scaleAnimation = new ScaleAnimation(0f,1f, 0f, 1f,  Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
             scaleAnimation.setDuration(200);
             scaleAnimation.setInterpolator(new OvershootInterpolator(1.2f));
             mActionRowView.findViewById(R.id.img_back).startAnimation(scaleAnimation);
-            ScaleAnimation anim1  = new ScaleAnimation(0,1,1,1);
+            ScaleAnimation anim1 = new ScaleAnimation(0, 1, 1, 1);
             anim1.setInterpolator(new AccelerateDecelerateInterpolator());
             mActionRowView.findViewById(R.id.tv_photos).setVisibility(View.VISIBLE);
             mActionRowView.findViewById(R.id.tv_updates).setVisibility(View.VISIBLE);

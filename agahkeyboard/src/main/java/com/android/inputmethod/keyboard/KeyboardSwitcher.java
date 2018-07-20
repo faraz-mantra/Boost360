@@ -43,10 +43,13 @@ import com.android.inputmethod.keyboard.KeyboardLayoutSet.KeyboardLayoutSetExcep
 import com.android.inputmethod.keyboard.internal.KeyboardState;
 import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
 import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
+import com.android.inputmethod.keyboard.top.UpdateActionBarEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,6 +92,7 @@ import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 
 public final class KeyboardSwitcher implements KeyboardState.SwitchActions, ItemClickListener, ApiCallToKeyboardViewInterface, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
     private static final String TAG = KeyboardSwitcher.class.getSimpleName();
+    private EventBusHandler mEventHandler;
 
     private SubtypeSwitcher mSubtypeSwitcher;
     private SharedPreferences mPrefs;
@@ -122,6 +126,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private ProgressBar pbOffers;
     private TextView tvImageNotSupported;
     public static int MAIN_KEYBOARD_HEIGHT;
+    private TextView tvPhotos;
 
     public LatinIME getmLatinIME() {
         return mLatinIME;
@@ -147,6 +152,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     private KeyboardSwitcher() {
         // Intentional empty constructor for singleton.
+
+        mEventHandler = new EventBusHandler();
+        mEventHandler.register();
+
     }
 
     public static void init(final LatinIME latinIme) {
@@ -686,6 +695,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         selectionLayout = shareLayout.findViewById(R.id.cl_selection_layout);
 
         totalImagesTv = shareLayout.findViewById(R.id.tv_total);
+        tvPhotos = shareLayout.findViewById(R.id.photos);
         shareBtn = shareLayout.findViewById(R.id.btn_share);
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1109,5 +1119,27 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     public void hideProgressbar() {
         pbOffers.setVisibility(View.GONE);
+    }
+
+
+    public class EventBusHandler {
+        public void register() {
+            if (!EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().register(this);
+            }
+        }
+
+        public void unregister() {
+            if (EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().unregister(this);
+            }
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEventMainThread(UpdateActionBarEvent event) {
+            tvPhotos.setText(R.string.tv_photos);
+            deselectBtn.setText(R.string.deselect_all);
+
+        }
     }
 }

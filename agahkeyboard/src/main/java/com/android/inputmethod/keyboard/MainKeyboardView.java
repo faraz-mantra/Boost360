@@ -34,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
 import com.android.inputmethod.keyboard.internal.DrawingHandler;
@@ -840,7 +841,11 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
     @Override
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
         // Overlay a dark rectangle to dim.
         if (mNeedsToDimEntireKeyboard) {
             canvas.drawRect(0.0f, 0.0f, getWidth(), getHeight(), mBackgroundDimAlphaPaint);

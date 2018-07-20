@@ -17,6 +17,7 @@
 package io.separ.neural.inputmethod.indic;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -40,6 +41,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.PrintWriterPrinter;
 import android.util.Printer;
@@ -56,11 +58,13 @@ import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputBinding;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.inputmethod.keyboard.Key;
 import com.android.inputmethod.keyboard.Keyboard;
 import com.android.inputmethod.keyboard.KeyboardActionListener;
 import com.android.inputmethod.keyboard.KeyboardId;
@@ -73,6 +77,7 @@ import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
 import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
 import com.android.inputmethod.keyboard.top.ShowSuggestionsEventAnimated;
 import com.android.inputmethod.keyboard.top.TopDisplayController;
+import com.android.inputmethod.keyboard.top.UpdateActionBarEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.keyboard.top.actionrow.FrequentEmojiHandler;
 import com.android.inputmethod.keyboard.top.services.LaunchSettingsEvent;
@@ -152,6 +157,7 @@ import io.separ.neural.inputmethod.slash.SearchRetryErrorEvent;
 import io.separ.neural.inputmethod.slash.ServiceRequestEvent;
 import nfkeyboard.interface_contracts.PresenterToImeInterface;
 import nfkeyboard.keyboards.ImePresenterImpl;
+import nfkeyboard.util.LocaleUtils;
 import nfkeyboard.util.MixPanelUtils;
 import nfkeyboard.util.SharedPrefUtil;
 
@@ -245,6 +251,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     private TopDisplayController mTopDisplayController;
     private ImePresenterImpl.TabType serviceTab;
+    private boolean isWindowHidden = false;
+    public static Context mResContext;
+    private int mLanguageIndex = 0;
 
     @Override
     public void onCopy() {
@@ -754,6 +763,32 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         RichInputMethodManager.init(this);
         mRichImm = RichInputMethodManager.getInstance();
 
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLocale(new Locale(locale));
+        } else {
+            configuration.locale = new Locale(locale);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            getApplicationContext().createConfigurationContext(configuration);
+        } else {
+            resources.updateConfiguration(configuration, displayMetrics);
+        }
+        if (locale.equalsIgnoreCase("en_US")) {
+            mLanguageIndex = 0;
+        } else {
+            mLanguageIndex = 1;
+        }
+        LocaleUtils.initialize(this, locale);
+
         SubtypeSwitcher.init(this);
         KeyboardSwitcher.init(this);
         AudioAndHapticFeedbackManager.init(this);
@@ -1029,7 +1064,63 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
         if (isInputViewShown())
             handleKeyboardColor(editorInfo);
+
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
+        mResContext = setLocale(getApplicationContext(), locale);
         mHandler.onStartInput(editorInfo, restarting);
+        CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
+        if (inputSequence == null) {
+            PointerTracker.KEYBOARD_TYPED_KEY = null;
+        }
+        if (inputSequence != null) {
+            if (!inputSequence.toString().trim().isEmpty()) {
+                PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                        null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+            } else {
+                PointerTracker.KEYBOARD_TYPED_KEY = null;
+            }
+        }
+    }
+
+
+    public static Context setLocale(Context context, String language) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return updateResources(context, language);
+        }
+
+        return updateResourcesLegacy(context, language);
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private static Context updateResources(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+
+        return context.createConfigurationContext(configuration);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Context updateResourcesLegacy(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Resources resources = context.getResources();
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
+        return context;
     }
 
     @Override
@@ -1065,6 +1156,19 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mInputLogic.onSubtypeChanged(SubtypeLocaleUtils.getCombiningRulesExtraValue(subtype),
                 mSettings.getCurrent());
         loadKeyboard();
+        //setInputView(onCreateInputView());
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
+        mResContext = setLocale(getApplicationContext(), locale);
+        if (++mLanguageIndex >= LocaleUtils.LocaleDef.SUPPORTED_LOCALES.length) {
+            mLanguageIndex = 0;
+        }
+
+        LocaleUtils.setLocale(this, mLanguageIndex);
+        EventBusExt.getDefault().post(new UpdateActionBarEvent());
     }
 
     private void onStartInputInternal(final EditorInfo editorInfo, final boolean restarting) {
@@ -1256,10 +1360,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     public void onWindowShown() {
         super.onWindowShown();
+        isWindowHidden = false;
         if (this.navManager != null) {
             this.navManager.show();
         }
-        PointerTracker.KEYBOARD_TYPED_KEY = null;
         /*if (mTopDisplayController.isActionViewVisible() && serviceTab != null) {
             EventBusExt.getDefault().post(new ShowActionRowEvent());
             this.mKeyboardSwitcher.setProductShareKeyboardFrame(serviceTab);
@@ -2519,6 +2623,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 }
             });
         }
+
     }
 
     public void setMixPanel(Context mContext) {

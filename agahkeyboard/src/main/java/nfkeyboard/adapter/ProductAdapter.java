@@ -25,13 +25,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.inputmethod.keyboard.top.UpdateActionBarEvent;
 import com.bumptech.glide.Glide;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import io.separ.neural.inputmethod.indic.R;
+import io.separ.neural.inputmethod.slash.EventBusExt;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.util.MethodUtils;
@@ -46,25 +51,43 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
     private final String LABEL = "copy";
     private final ItemClickListener listener;
     private final int MIN_OFFER_PRICE = 10;
+    private final EventBusHandler mEventHandler;
 
     ViewGroup parent;
+    private ImageHolder mHolder;
 
     ProductAdapter(Context context, ItemClickListener listener) {
         super(context, listener);
         this.listener = listener;
+        this.mEventHandler = new EventBusHandler();
+        this.mEventHandler.register();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         this.parent = parent;
         View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_product, parent, false);
-        return new ImageHolder(view);
+        mHolder = new ImageHolder(view);
+        return mHolder;
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, AllSuggestionModel suggestion) {
         if (holder instanceof ImageHolder) {
             ImageHolder myHolder = (ImageHolder) holder;
+            myHolder.copyButton.setText(R.string.share_link);
+            myHolder.makeOfferButton.setText(R.string.create_offer);
+            myHolder.cancelButton.setText(R.string.cancel);
+            myHolder.cancelBtn.setText(R.string.cancel);
+            myHolder.createButton.setText(R.string.share);
+            myHolder.tvBack.setText(R.string.back);
+            myHolder.offerCurrencyTv.setText(R.string.currency);
+            myHolder.productPriceTv.setText(R.string.price);
+            myHolder.doneButton.setText(R.string.tv_done);
+            mHolder.validity = mContext.getResources().getStringArray(R.array.validity_items);
+            if (mHolder.validity != null && mHolder.validity.length > 0) {
+                mHolder.selectedValidityTv.setText(mHolder.validity[0]);
+            }
             myHolder.setModelData(suggestion);
         }
     }
@@ -72,7 +95,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
     class ImageHolder extends RecyclerView.ViewHolder {
 
         private TextView nameTv, priceTv, discountTv, descriptionTv, productNameTv, productPriceTv,
-                keyboardCurrencyTv, offerCurrencyTv, selectedQuantityTv, selectedValidityTv;
+                keyboardCurrencyTv, offerCurrencyTv, selectedQuantityTv, selectedValidityTv, tvBack;
 
         private ImageView productImage, productIv;
         private AllSuggestionModel dataModel;
@@ -122,6 +145,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             offerPriceEt = itemView.findViewById(R.id.et_offer_price);
             createButton = itemView.findViewById(R.id.button_create);
             cancelButton = itemView.findViewById(R.id.button_cancel);
+            tvBack = itemView.findViewById(R.id.back);
 
             oneButton = itemView.findViewById(R.id.btn_one);
             twoButton = itemView.findViewById(R.id.btn_two);
@@ -344,21 +368,26 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                     MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_SHARE_OFFER, null);
                     dataModel.setQuantity(Integer.valueOf(selectedQuantityTv.getText().toString()));
                     dataModel.setMaxUsage(Integer.valueOf(selectedQuantityTv.getText().toString()));
-                    int validity = Integer.valueOf(selectedValidityTv.getText().toString().replaceAll("Hrs", "").trim());
+                    String text = selectedValidityTv.getText().toString();
+                    String textToReplace = text.indexOf("Hrs") > 0 ? "Hrs" : text.indexOf("घंटे") > 0 ? "घंटे" : "";
                     String linkExpiryTime = null;
-                    switch (validity) {
-                        case 24:
-                            linkExpiryTime = dateFormatter(24);
-                            break;
-                        case 36:
-                            linkExpiryTime = dateFormatter(36);
-                            break;
-                        case 48:
-                            linkExpiryTime = dateFormatter(48);
-                            break;
-                        case 96:
-                            linkExpiryTime = dateFormatter(96);
-                            break;
+                    if (textToReplace.trim().length() > 0) {
+                        int validity = Integer.valueOf(selectedValidityTv.getText().toString().replaceAll(textToReplace, "").trim());
+                        linkExpiryTime = null;
+                        switch (validity) {
+                            case 24:
+                                linkExpiryTime = dateFormatter(24);
+                                break;
+                            case 36:
+                                linkExpiryTime = dateFormatter(36);
+                                break;
+                            case 48:
+                                linkExpiryTime = dateFormatter(48);
+                                break;
+                            case 96:
+                                linkExpiryTime = dateFormatter(96);
+                                break;
+                        }
                     }
                     dataModel.setLinkExpiryDateTime(linkExpiryTime);
                     if (offerPriceEt.getText().toString().equals("")) {
@@ -403,11 +432,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 Glide.with(mContext).load(model.getImageUrl()).into(productImage);
                 Glide.with(mContext).load(model.getImageUrl()).into(productIv);
             }
-            priceTv.setText(MethodUtils.fromHtml(String.format("Price: %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
-            productPriceTv.setText(MethodUtils.fromHtml(String.format("Price:<br> %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
-            discountTv.setText(MethodUtils.fromHtml(String.format("Discount: %s <b>%s</b>", model.getCurrencyCode(), model.getDiscount())));
-            descriptionTv.setText(MethodUtils.fromHtml(String.format("Description: <b>%s</b>", model.getDescription())));
-            nameTv.setText(MethodUtils.fromHtml(String.format("Name: <b>%s</b>", model.getText())));
+            productPriceTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_price) + "<br> %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
+            priceTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_price) + "%s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
+            discountTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_discount) + "%s <b>%s</b>", model.getCurrencyCode(), model.getDiscount())));
+            descriptionTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_description)
+                    + "<b>%s</b>", model.getDescription())));
+            nameTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_name) + " <b>%s</b>", model.getText())));
             productNameTv.setText(MethodUtils.fromHtml(String.format("<b>%s</b>", model.getText())));
             keyboardCurrencyTv.setText(model.getCurrencyCode());
             offerCurrencyTv.setText(model.getCurrencyCode());
@@ -673,6 +703,44 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 }
             });
 
+        }
+    }
+
+
+    public class EventBusHandler {
+        public void register() {
+            if (!EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().register(this);
+            }
+        }
+
+        public void unregister() {
+            if (EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().unregister(this);
+            }
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEventMainThread(UpdateActionBarEvent event) {
+            if (mHolder != null) {
+                mHolder.validity = mContext.getResources().getStringArray(R.array.validity_items);
+                if (mHolder.validity != null && mHolder.validity.length > 0) {
+                    mHolder.selectedValidityTv.setText(mHolder.validity[0]);
+                }
+                mHolder.copyButton.setText(R.string.share_link);
+                mHolder.makeOfferButton.setText(R.string.create_offer);
+                mHolder.cancelButton.setText(R.string.cancel);
+                mHolder.cancelBtn.setText(R.string.cancel);
+                mHolder.createButton.setText(R.string.share);
+                mHolder.tvBack.setText(R.string.back);
+                mHolder.offerCurrencyTv.setText(R.string.currency);
+                mHolder.productPriceTv.setText(R.string.price);
+                mHolder.nameTv.setText(R.string.tv_name);
+                mHolder.priceTv.setText(R.string.tv_price);
+                mHolder.discountTv.setText(R.string.tv_discount);
+                mHolder.descriptionTv.setText(R.string.tv_description);
+                mHolder.doneButton.setText(R.string.tv_done);
+            }
         }
     }
 }

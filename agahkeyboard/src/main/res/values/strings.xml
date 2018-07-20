@@ -643,6 +643,18 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="keyboard_layout_two">Keyboard layout two</string>
     <string name="keyboard_layout_three">Keyboard layout three</string>
     <string name="keyboard_layout_four">Keyboard layout four</string>
+    <string name="tv_updates">Updates</string>
+    <string name="tv_products">Products</string>
+    <string name="tv_photos">Photos</string>
+    <string name="tv_details">Details</string>
+    <string name="tv_share_link">Share Link</string>
+    <string name="tv_share">Share</string>
+    <string name="tv_name">Name:</string>
+    <string name="tv_price">Price:</string>
+    <string name="tv_discount">Discount:</string>
+    <string name="tv_description">Description:</string>
+    <string name="deselect_all">Deselect all</string>
+    <string name="tv_done">Done</string>
 
 
     <string-array name="validity_items">
