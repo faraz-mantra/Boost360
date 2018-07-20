@@ -893,6 +893,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="wait_while_loading_category">Loading Categories&#8230;</string>
     <string name="wait_while_loading_salesman">Loading Salesman&#8230;</string>
     <string name="select_category">Select a Category</string>
+    <string name="select_salesman">Select Sales Person</string>
     <string name="both_password_not_matched">Both the passwords don\'t match.</string>
     <string name="min_6char_required">Min 6 characters are required.</string>
     <string name="wait_while_unsubscribing">Wait While UnSubscribing&#8230;</string>
@@ -1329,10 +1330,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
 
     <string-array name="order_analytics">
-        <item>Successful Orders</item>
-        <item>Received Orders</item>
-        <item>Cancelled Orders</item>
-        <item>Abandoned Orders</item>
+        <item>Successful\nOrders</item>
+        <item>Received\nOrders</item>
+        <item>Cancelled\nOrders</item>
+        <item>Abandoned\nOrders</item>
     </string-array>
 
     <string-array name="tabs">

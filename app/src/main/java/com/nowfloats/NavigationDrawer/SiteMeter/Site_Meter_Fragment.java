@@ -64,7 +64,7 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class Site_Meter_Fragment extends Fragment implements DomainApiService.DomainCallback{
+public class Site_Meter_Fragment extends Fragment implements DomainApiService.DomainCallback {
     public final static int businessNameWeight = 5;
     public final static int businessDescriptionWeight = 10;
     public final static int businessCategoryWeight = 5;
@@ -91,7 +91,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     public final int domain = 11, phone = 4, category = 2, image = 7, businessName = 0, description = 1,
             social = 10, address = 5, email = 3, post = 9, logo = 8, businessHours = 6;
     private Activity activity;
-    private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
+    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
     private SharedPreferences mSharedPreferences, pref;
     private DomainApiService domainApiService;
 
@@ -417,9 +417,9 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight){
+        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight) {
             session.setSiteHealth(siteMeterTotalWeight);
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("site_health:%s",siteMeterTotalWeight));
+            OnBoardingApiCalls.updateData(session.getFpTag(), String.format("site_health:%s", siteMeterTotalWeight));
         }
 
         MixPanelController.setProperties("SiteHealth", "" + siteMeterTotalWeight);
@@ -503,14 +503,14 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                     if (!activity.isFinishing()) {
                         builder.show();
                     }
-                } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")){
+                } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
                     showExpiryDialog(DEMO);
-                }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
-                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
+                } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
+                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
                     showExpiryDialog(DEMO_EXPIRED);
                 } else if (Utils.isNetworkConnected(getActivity())) {
                     showLoader(getString(R.string.please_wait));
-                    domainApiService.getDomainDetails(activity,session.getFpTag(), getDomainDetailsParam());
+                    domainApiService.getDomainDetails(activity, session.getFpTag(), getDomainDetailsParam());
                 } else {
                     Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                 }
@@ -576,7 +576,8 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                                     Home_Fragment_Tab.viewPager = null;
                                     dialog.dismiss();
 //                                                    activity.getSupportFragmentManager().popBackStack();
-                                    ((HomeActivity) activity).onClick("Store");
+                                    Intent i = new Intent(activity, NewPricingPlansActivity.class);
+                                    startActivity(i);
                                 }
                             }).show();
                 }
@@ -652,6 +653,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -676,10 +678,10 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 
 
     /*
-    ************************************* DOMAIN BOOKING PROCESS ***********************************
-    *
-    *
-    */
+     ************************************* DOMAIN BOOKING PROCESS ***********************************
+     *
+     *
+     */
 
     private static final String DOMAIN_SUCCESS_STATUS = "17";
 
@@ -703,20 +705,20 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 //        domainDetails = null;
         hideLoader();
 
-        if(!isAlreadyCalled) {
-            if (domainDetails == null){
-                Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
-            } else if(domainDetails.isFailed()){
+        if (!isAlreadyCalled) {
+            if (domainDetails == null) {
+                Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong));
+            } else if (domainDetails.isFailed()) {
                 showCustomDialog(getString(R.string.domain_booking_failed),
-                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
-                                getString(R.string.drop_us_contact):domainDetails.getErrorMessage()).toString(),
+                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage()) ?
+                                getString(R.string.drop_us_contact) : domainDetails.getErrorMessage()).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else if(domainDetails.isPending()){
+            } else if (domainDetails.isPending()) {
 
                 showCustomDialog(getString(R.string.domain_booking_process),
                         getString(R.string.domain_booking_process_message),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else{
+            } else {
                 showDomainDetails();
             }
         }

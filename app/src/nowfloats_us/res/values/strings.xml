@@ -486,10 +486,20 @@
         <item>Log out</item>
     </string-array>
 
-
+    <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>RedTim representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
     <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#1F80AD\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
     <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#1F80AD\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
     <string name="onboarding_about_product_url">https://redtim.com/product</string>
     <string name="update_nowfloats_app">You are using an old version of RedTim. Update the app to get new features and enhancements</string>
+
+    <string-array name="dictate_parent_0">
+        <item>A dedicated RedTim representative gets in touch with you regularly, to know your business properly and updates your website 2&#8211;3 times a week on your behalf, thereby saving your time.</item>
+    </string-array>
+    <string-array name="dictate_parent_1">
+        <item><![CDATA[Our representative will first understand your business so that the updates are highly relevant. More so because we fine-tune the messages to search trends yielding higher traffic per message.<br />Then the dedicated RedTim Dictate representative will be provided access to your website through the Manage Portal to update it regularly.]]></item>
+    </string-array>
+    <string-array name="dictate_parent_2">
+        <item><![CDATA[<b>For which plans can the RedTim Dictate be used?</b><br />RedTim Dictate can be used for Boost Lite customers.]]></item>
+    </string-array>
 
 </resources>

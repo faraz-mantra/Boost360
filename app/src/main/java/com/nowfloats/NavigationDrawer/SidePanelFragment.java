@@ -352,8 +352,10 @@ public class SidePanelFragment extends Fragment {
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
         if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
             keyboardTextView.setText("RedTim Keyboard");
+            addOnLayout.setVisibility(View.GONE);
         } else {
             keyboardTextView.setText("Boost Keyboard");
+            addOnLayout.setVisibility(View.VISIBLE);
         }
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
 

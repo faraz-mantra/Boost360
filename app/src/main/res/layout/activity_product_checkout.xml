@@ -155,9 +155,61 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Sales Assisted Purchase?"
+                    android:textSize="@dimen/medium_text_size"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgSalesman"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioButton_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/gray"
+                        android:text="Yes"
+                        android:textColor="@color/light_gray" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/gray"
+                        android:checked="true"
+                        android:text="No"
+                        android:textColor="@color/light_gray" />
+                </RadioGroup>
+
+
+                <EditText
+                    android:id="@+id/edtSalesman"
+                    style="@style/SignUp_EditText_Style_Ria"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dip"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:backgroundTint="#383838"
+                    android:drawableRight="@drawable/dropselect"
+                    android:hint="@string/select_salesman"
+                    android:maxLines="1"
+                    android:textCursorDrawable="@drawable/custom_edit_text_cursor"
+                    tools:ignore="MissingPrefix" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:orientation="horizontal">
 
                     <EditText
@@ -229,6 +281,8 @@
                         android:text="10%" />
 
                 </LinearLayout>
+
+
             </LinearLayout>
 
             <TableLayout

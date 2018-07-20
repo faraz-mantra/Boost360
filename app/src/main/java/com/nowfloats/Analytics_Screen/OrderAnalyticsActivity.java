@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -37,6 +38,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.renderer.XAxisRenderer;
+import com.github.mikephil.charting.utils.MPPointF;
+import com.github.mikephil.charting.utils.Transformer;
+import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nowfloats.Analytics_Screen.Fragments.OrderAnalyticsFragment;
 import com.nowfloats.Analytics_Screen.model.OrderStatusSummary;
@@ -235,6 +240,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
         mChart.getAxisLeft().setAxisMinValue(0);
         mChart.getAxisLeft().setSpaceBottom(0);
 
+
         XAxis xaxis = mChart.getXAxis();
         YAxis leftAxis = mChart.getAxisLeft();
         YAxis rightAxis = mChart.getAxisRight();
@@ -245,14 +251,32 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
         rightAxis.setDrawGridLines(false);
         leftAxis.setEnabled(false);
         rightAxis.setEnabled(false);
+        leftAxis.setTextSize(12.0f);
+        rightAxis.setTextSize(12.0f);
         leftAxis.setTextColor(Color.argb(0, 0, 0, 0));
         rightAxis.setTextColor(Color.argb(0, 0, 0, 0));
 
         Description description = new Description();
         description.setText("");
+        mChart.setExtraBottomOffset(5);
         mChart.setDescription(description);
+        mChart.setXAxisRenderer(new CustomXAxisRenderer(mChart.getViewPortHandler(), mChart.getXAxis(),
+                mChart.getTransformer(YAxis.AxisDependency.LEFT)));
         mChart.invalidate();
 
+    }
+
+    public class CustomXAxisRenderer extends XAxisRenderer {
+        public CustomXAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
+            super(viewPortHandler, xAxis, trans);
+        }
+
+        @Override
+        protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
+            String line[] = formattedLabel.split("\n");
+            Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
+            Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
+        }
     }
 
     public class MyYAxisValueFormatter implements IValueFormatter {

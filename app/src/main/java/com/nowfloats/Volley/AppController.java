@@ -2,6 +2,7 @@ package com.nowfloats.Volley;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -130,6 +131,12 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
     public static synchronized AppController getInstance() {
         return mInstance;
+    }
+
+    public static String getApplicationName(Context context) {
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        int stringId = applicationInfo.labelRes;
+        return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
     }
 
     public RequestQueue getRequestQueue() {

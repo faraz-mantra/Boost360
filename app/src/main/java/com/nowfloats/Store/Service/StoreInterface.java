@@ -1,5 +1,6 @@
 package com.nowfloats.Store.Service;
 
+import com.google.gson.JsonObject;
 import com.nowfloats.Store.DiscountCoupon;
 import com.nowfloats.Store.Model.ChequePaymentModel;
 import com.nowfloats.Store.Model.EnablePackageResponse;
@@ -11,12 +12,15 @@ import com.nowfloats.Store.Model.OPCModels.UpdateDraftInvoiceModel;
 import com.nowfloats.Store.Model.PaymentTokenResult;
 import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.Model.ReceivedDraftInvoice;
+import com.nowfloats.Store.Model.SalesmanModel;
 import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreMainModel;
 import com.nowfloats.Store.Model.SupportedPaymentMethods;
 import com.nowfloats.Store.RedeemDiscountRequestModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -89,6 +93,10 @@ public interface StoreInterface {
 
     @POST("/Payment/v1/Discount/RedeemDiscountCouponCode")
     void redeemDiscountCode(@Body RedeemDiscountRequestModel redeemDiscountRequestModel, Callback<DiscountCoupon> res);
+
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @POST("/v1/GetActiveEmployees")
+    void getActiveEmployees(@Body JsonObject jsonObject, Callback<ArrayList<SalesmanModel>> res);
 
     @POST("/payment/v1/floatingpoints/initiate/{clientId}")
     void initiate(@Path("clientId") String clientId, @Body InitiateModel model, Callback<String> res);

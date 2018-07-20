@@ -52,12 +52,15 @@ public class ChequePaymentModel {
     @SerializedName("paymentDate")
     @Expose
     private String paymentDate;
+    @SerializedName("activationDate")
+    @Expose
+    private String activationDate;
     @SerializedName("paymentFor")
     @Expose
     private String paymentFor;
     @SerializedName("paymentStatus")
     @Expose
-    private String paymentStatus;
+    private int paymentStatus;
     @SerializedName("paymentTransactionChannel")
     @Expose
     private Integer paymentTransactionChannel;
@@ -107,6 +110,14 @@ public class ChequePaymentModel {
 
     public String getBankName() {
         return bankName;
+    }
+
+    public String getActivationDate() {
+        return activationDate;
+    }
+
+    public void setActivationDate(String activationDate) {
+        this.activationDate = activationDate;
     }
 
     public void setBankName(String bankName) {
@@ -217,11 +228,11 @@ public class ChequePaymentModel {
         this.paymentFor = paymentFor;
     }
 
-    public String getPaymentStatus() {
+    public int getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
+    public void setPaymentStatus(int paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
@@ -312,5 +323,15 @@ public class ChequePaymentModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public enum PaymentTransactionStatus {
+        INITIATED,
+        PENDING,
+        REFUNDED,
+        SUCCESSFUL,
+        FAILED,
+        CANCELLED_BY_USER,
+        CANCELLED_BY_VERIFICATION_TEAM
     }
 }

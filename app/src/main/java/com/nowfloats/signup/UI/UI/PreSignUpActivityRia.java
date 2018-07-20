@@ -609,7 +609,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                                 if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                                     verifyPhoneNumberAndSendOTP(number.getText().toString().trim());
                                 } else {
-                                    API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim());
+                                    API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim(), data_country_code);
                                 }
                             }
                         } else {
@@ -1492,7 +1492,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         if (emailResult.equals("valid")) {
             String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
-            API_Layer_Signup.checkUniqueNumber(activity, data_phone);
+            API_Layer_Signup.checkUniqueNumber(activity, data_phone, data_country_code);
         } else {
             Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
         }
@@ -1595,7 +1595,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void reSendOTPOverCall(String number) {
-       // showProgressbar();
+        // showProgressbar();
         Toast.makeText(PreSignUpActivityRia.this, "You will receive a call shortly", Toast.LENGTH_SHORT).show();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();

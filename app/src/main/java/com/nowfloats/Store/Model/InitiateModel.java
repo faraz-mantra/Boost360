@@ -31,6 +31,12 @@ public class InitiateModel {
     @SerializedName("phoneNumberExtension")
     @Expose
     private String phoneNumberExtension;
+    @SerializedName("_NFInternalSalesPersonId")
+    @Expose
+    private String salesPersonId;
+    @SerializedName("paymentMode")
+    @Expose
+    private int paymentMode;
     @SerializedName("products")
     @Expose
     private List<ProductPaymentModel> products = null;
@@ -127,6 +133,30 @@ public class InitiateModel {
 
     public void setTdsPercentage(Double tdsPercentage) {
         this.tdsPercentage = tdsPercentage;
+    }
+
+    public String getSalesPersonId() {
+        return salesPersonId;
+    }
+
+    public void setSalesPersonId(String salesPersonId) {
+        this.salesPersonId = salesPersonId;
+    }
+
+    public int getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(int paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
+    public enum PAYMENT_MODE {
+        CASH,
+        CHEQUE,
+        PDC,
+        NEFT,
+        ONLINEPAYMENTGATEWAY
     }
 }
 
