@@ -57,7 +57,7 @@ public class BankTransferFragment extends ImagesPaymentFragment {
             Calendar calendar = Calendar.getInstance();
             String s = formatter.format(calendar.getTime());
             paymentDateEt.setText(s);
-            
+
             paymentMode = InitiateModel.PAYMENT_MODE.NEFT.ordinal();
             return super.validateAllFields();
         }

@@ -19,6 +19,7 @@ import com.nowfloats.Store.Model.InvoiceDetailsResult;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.TopUpPlansActivity;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
@@ -235,7 +236,7 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
                 Intent i = new Intent(mContext, NewPricingPlansActivity.class);
                 i.putExtra("fragmentName", "BasePlans");
                 mContext.startActivity(i);
-            } else {
+            } else if (!Constants.PACKAGE_NAME.equals("com.redtim")) {
                 showTopUps();
             }
         }
