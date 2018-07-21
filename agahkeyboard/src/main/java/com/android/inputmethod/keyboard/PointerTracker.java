@@ -1253,7 +1253,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
         if (!key.isHeaderKey() && !key.isModifier()) {
             KEYBOARD_TYPED_KEY = key;
-        } else if (!key.getLabel().equalsIgnoreCase("2/3") && !key.getLabel().equalsIgnoreCase("3/3") && !key.getLabel().equalsIgnoreCase("1/3")) {
+        } else if (key.getLabel() != null && !key.getLabel().equalsIgnoreCase("2/3") && !key.getLabel().equalsIgnoreCase("3/3") && !key.getLabel().equalsIgnoreCase("1/3")) {
             PREV_KEYBOARD_TYPED_KEY = KEYBOARD_TYPED_KEY;
             KEYBOARD_TYPED_KEY = null;
         }
