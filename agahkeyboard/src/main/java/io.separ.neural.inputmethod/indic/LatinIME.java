@@ -254,6 +254,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     private boolean isWindowHidden = false;
     public static Context mResContext;
     private int mLanguageIndex = 0;
+    public static InputConnection mInputCOnnection;
 
     @Override
     public void onCopy() {
@@ -389,6 +390,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public InputConnection getImeCurrentInputConnection() {
+        mInputCOnnection = getCurrentInputConnection();
         return getCurrentInputConnection();
     }
 
