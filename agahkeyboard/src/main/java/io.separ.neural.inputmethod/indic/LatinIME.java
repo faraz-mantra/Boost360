@@ -254,6 +254,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     private boolean isWindowHidden = false;
     public static Context mResContext;
     private int mLanguageIndex = 0;
+    public static InputConnection mInputCOnnection;
 
     @Override
     public void onCopy() {
@@ -389,6 +390,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public InputConnection getImeCurrentInputConnection() {
+        mInputCOnnection = getCurrentInputConnection();
         return getCurrentInputConnection();
     }
 
@@ -762,6 +764,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
         RichInputMethodManager.init(this);
         mRichImm = RichInputMethodManager.getInstance();
+        PointerTracker.KEYBOARD_TYPED_KEY = null;
 
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -1074,13 +1077,18 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mResContext = setLocale(getApplicationContext(), locale);
         mHandler.onStartInput(editorInfo, restarting);
         CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
+
         if (inputSequence == null) {
             PointerTracker.KEYBOARD_TYPED_KEY = null;
         }
         if (inputSequence != null) {
             if (!inputSequence.toString().trim().isEmpty()) {
-                PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
-                        null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                } else {
+                    PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                            null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                }
             } else {
                 PointerTracker.KEYBOARD_TYPED_KEY = null;
             }
