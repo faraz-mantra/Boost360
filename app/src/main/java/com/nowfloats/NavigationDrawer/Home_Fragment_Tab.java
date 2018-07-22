@@ -66,9 +66,7 @@ public class Home_Fragment_Tab extends Fragment {
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
     private MaterialDialog overLayDialog;
 
-    public static enum DrawOverLay {FromHome, FromTab}
-
-    ;
+    public static enum DrawOverLay {FromHome, FromTab};
 
     @Override
     public void onResume() {

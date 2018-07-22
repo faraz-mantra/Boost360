@@ -46,6 +46,8 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nowfloats.Analytics_Screen.Fragments.OrderAnalyticsFragment;
 import com.nowfloats.Analytics_Screen.model.OrderStatusSummary;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.SlidingTabLayout;
+import com.nowfloats.NavigationDrawer.TabPagerAdapter;
 import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.SellerSummary;
 import com.nowfloats.util.BoostLog;
@@ -67,7 +69,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
     private ImageView spinner;
     private LinearLayout layout;
     private BarChart mChart;
-    private ViewPager vwCharts;
+    private ViewPager vwCharts, vwOrderAnalytics;
     private MaterialDialog materialProgress;
     private UserSessionManager mSession;
     private TextView tvYear;
@@ -76,6 +78,9 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
 
     private int count = 0;
     private OrderStatusSummary previousOrderSummary, currentOrderSummary;
+
+    private TabPagerAdapter tabPagerAdapter;
+    private SlidingTabLayout slidingTabLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,14 +94,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        count = 0;
-        mSession = new UserSessionManager(this, this);
-        layout = (LinearLayout) findViewById(R.id.linearlayout);
-        spinner = (ImageView) findViewById(R.id.toolbar_spinner);
-        mChart = findViewById(R.id.barChart);
-        vwCharts = (ViewPager) findViewById(R.id.vwCharts);
-        ivLeftNav = (ImageView) findViewById(R.id.ivLeftNav);
-        ivRightNav = (ImageView) findViewById(R.id.ivRightNav);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView title = (TextView) findViewById(R.id.title);
@@ -107,6 +105,35 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+
+        count = 0;
+        mSession = new UserSessionManager(this, this);
+        vwOrderAnalytics = (ViewPager) findViewById(R.id.vwOrderAnalytics);
+
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setCustomTabView(R.layout.tab_text, R.id.tab_textview);
+        //((ViewGroup)tabs.getChildAt(0)).getChildAt(1).setVisibility(View.VISIBLE);
+//                        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
+        slidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return ContextCompat.getColor(OrderAnalyticsActivity.this, R.color.white);
+            }
+        });
+        // Setting the ViewPager For the SlidingTabsLayout
+        slidingTabLayout.setViewPager(vwOrderAnalytics, ContextCompat.getColorStateList(OrderAnalyticsActivity.this, R.color.selector));
+
+
+        layout = (LinearLayout) findViewById(R.id.linearlayout);
+        spinner = (ImageView) findViewById(R.id.toolbar_spinner);
+        mChart = findViewById(R.id.barChart);
+        vwCharts = (ViewPager) findViewById(R.id.vwCharts);
+        ivLeftNav = (ImageView) findViewById(R.id.ivLeftNav);
+        ivRightNav = (ImageView) findViewById(R.id.ivRightNav);
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.slidingTabLayout);
+        tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
+
 
         tvYear = findViewById(R.id.tvYear);
         tvYear.setCompoundDrawablesWithIntrinsicBounds(null, null,
