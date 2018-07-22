@@ -1143,12 +1143,16 @@ public final class InputLogic {
                 setComposingTextInternal(getTextWithUnderline(mWordComposer.getTypedWord()), 1);
             } else {
                 mConnection.commitText("", 1);
+                PointerTracker.KEYBOARD_TYPED_KEY = null;
             }
             inputTransaction.setRequiresUpdateSuggestions();
         } else {
             if (mLastComposedWord.canRevertCommit()) {
                 final String lastComposedWord = mLastComposedWord.mTypedWord;
                 revertCommit(inputTransaction, inputTransaction.mSettingsValues);
+                if (mConnection.getTextLenght() == 0) {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                }
                 StatsUtils.getInstance().onRevertAutoCorrect();
                 StatsUtils.getInstance().onWordCommitUserTyped(lastComposedWord, mWordComposer.isBatchMode());
                 // Restart suggestions when backspacing into a reverted word. This is required for
@@ -1173,8 +1177,14 @@ public final class InputLogic {
                 // like the smiley key or the .com key.
                 if (PointerTracker.KEYBOARD_TYPED_KEY == null) {
                     mConnection.deleteSurroundingText(mEnteredText.length(), 0);
+                    if (mConnection.getTextLenght() == 0) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
                 } else {
                     mConnection.deleteSurroundingText(1, 0);
+                    if (mConnection.getTextLenght() == 0) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
                 }
                 StatsUtils.getInstance().onDeleteMultiCharInput(mEnteredText.length());
                 mEnteredText = null;
@@ -1265,6 +1275,9 @@ public final class InputLogic {
                     final int lengthToDelete =
                             Character.isSupplementaryCodePoint(codePointBeforeCursor) ? 2 : 1;
                     mConnection.deleteTextBeforeCursor(lengthToDelete);
+                    if (mConnection.getTextLenght() == 0) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
                     int totalDeletedLength = lengthToDelete;
                     if (mDeleteCount > Constants.DELETE_ACCELERATE_AT) {
                         // If this is an accelerated (i.e., double) deletion, then we need to

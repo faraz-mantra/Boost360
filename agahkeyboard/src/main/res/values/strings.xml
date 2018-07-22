@@ -665,6 +665,9 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
         <item>"96 Hrs"</item>
     </string-array>
 
+    <string-array name="normal_key">
+    </string-array>
+
     <string-array name="CountryCodes">
         <item>93,AF</item>
         <item>355,AL</item>

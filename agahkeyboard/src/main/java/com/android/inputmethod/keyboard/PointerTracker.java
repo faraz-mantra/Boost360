@@ -250,6 +250,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private final BatchInputArbiter mBatchInputArbiter;
     private final GestureStrokeDrawingPoints mGestureStrokeDrawingPoints;
 
+    static Resources res;
+
     // TODO: Add PointerTrackerFactory singleton and move some class static methods into it.
     public static void init(final TypedArray mainKeyboardViewAttr, final TimerProxy timerProxy,
                             final DrawingProxy drawingProxy) {
@@ -260,7 +262,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 sGestureStrokeRecognitionParams.mStaticTimeThresholdAfterFastTyping,
                 sParams.mSuppressKeyPreviewAfterBatchInputDuration);
 
-        final Resources res = mainKeyboardViewAttr.getResources();
+        res = mainKeyboardViewAttr.getResources();
         sNeedsPhantomSuddenMoveEventHack = Boolean.parseBoolean(
                 ResourceUtils.getDeviceOverrideValue(res,
                         R.array.phantom_sudden_move_event_device_list, Boolean.FALSE.toString()));
@@ -1255,12 +1257,20 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         if (!key.isHeaderKey() && !key.isModifier()) {
             if (key.isDelete()) {
                 CharSequence inputSequence = LatinIME.mInputCOnnection.getTextBeforeCursor(2, 0);
+                if (inputSequence != null && inputSequence.length() == 1) {
+                    PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                }
                 if (inputSequence != null && inputSequence.length() > 1) {
                     inputSequence = inputSequence.toString().substring(0, 1);
                 }
-                if (inputSequence != null) {
-                    PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
-                            null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                if (inputSequence != null && inputSequence.length() != 0) {
+                    if (isNormalKeyLabel(inputSequence.toString())) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                    } else {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
                 }
             } else {
                 KEYBOARD_TYPED_KEY = key;
@@ -1275,6 +1285,18 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         final int code = key.getCode();
         callListenerOnCodeInput(key, code, x, y, eventTime, false /* isKeyRepeat */);
         callListenerOnRelease(key, code, false /* withSliding */);
+    }
+
+    private boolean isNormalKeyLabel(String inputSequence) {
+        String[] normalKeys = res.getStringArray(R.array.normal_key);
+        if (normalKeys != null) {
+            for (int i = 0; i < normalKeys.length; i++) {
+                if (inputSequence.equalsIgnoreCase(normalKeys[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void startRepeatKey(final Key key) {

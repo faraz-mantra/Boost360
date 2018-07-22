@@ -40,7 +40,44 @@
     <string name="tv_done">ठीक</string>
     <string name="separator">" । "</string>
 
-
+    <string-array name="normal_key">
+        <item>"क"</item>
+        <item>"ख"</item>
+        <item>"ग"</item>
+        <item>"घ"</item>
+        <item>"ङ"</item>
+        <item>"च"</item>
+        <item>"छ"</item>
+        <item>"ज"</item>
+        <item>"झ"</item>
+        <item>"ञ</item>
+        <item>"ट"</item>
+        <item>"ठ"</item>
+        <item>"ड"</item>
+        <item>"ढ"</item>
+        <item>"ण"</item>
+        <item>"त"</item>
+        <item>"थ"</item>
+        <item>"द"</item>
+        <item>"ध"</item>
+        <item>"न"</item>
+        <item>"प"</item>
+        <item>"फ"</item>
+        <item>"ब"</item>
+        <item>"भ"</item>
+        <item>"म"</item>
+        <item>"य"</item>
+        <item>"र"</item>
+        <item>"ल"</item>
+        <item>"व"</item>
+        <item>"ह"</item>
+        <item>"श"</item>
+        <item>"ष"</item>
+        <item>"स"</item>
+        <item>"ज्ञ"</item>
+        <item>"क्ष"</item>
+        <item>"श्र"</item>
+    </string-array>
 
     <string-array name="validity_items">
         <item>"24 घंटे"</item>
