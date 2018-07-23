@@ -1183,6 +1183,23 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         LocaleUtils.setLocale(this, mLanguageIndex);
         EventBusExt.getDefault().post(new UpdateActionBarEvent());
+        CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
+
+        if (inputSequence == null) {
+            PointerTracker.KEYBOARD_TYPED_KEY = null;
+        }
+        if (inputSequence != null) {
+            if (!inputSequence.toString().trim().isEmpty()) {
+                if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                } else {
+                    PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                            null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                }
+            } else {
+                PointerTracker.KEYBOARD_TYPED_KEY = null;
+            }
+        }
     }
 
     private void onStartInputInternal(final EditorInfo editorInfo, final boolean restarting) {
