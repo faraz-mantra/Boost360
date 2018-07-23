@@ -1258,7 +1258,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             if (key.isDelete()) {
                 CharSequence inputSequence = LatinIME.mInputCOnnection.getTextBeforeCursor(2, 0);
                 if (inputSequence != null && inputSequence.length() == 1) {
-                    PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
                     PointerTracker.KEYBOARD_TYPED_KEY = null;
                 }
                 if (inputSequence != null && inputSequence.length() > 1) {
@@ -1289,7 +1288,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         callListenerOnRelease(key, code, false /* withSliding */);
     }
 
-    private boolean isNormalKeyLabel(String inputSequence) {
+    public static boolean isNormalKeyLabel(String inputSequence) {
         String[] normalKeys = res.getStringArray(R.array.normal_key);
         if (normalKeys != null) {
             for (int i = 0; i < normalKeys.length; i++) {

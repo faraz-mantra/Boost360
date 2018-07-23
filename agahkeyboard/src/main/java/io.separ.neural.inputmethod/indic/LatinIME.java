@@ -1083,7 +1083,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         }
         if (inputSequence != null) {
             if (!inputSequence.toString().trim().isEmpty()) {
-                if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
+                if (!PointerTracker.isNormalKeyLabel(inputSequence.toString())) {
                     PointerTracker.KEYBOARD_TYPED_KEY = null;
                 } else {
                     PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
