@@ -31,6 +31,7 @@ import android.view.inputmethod.CorrectionInfo;
 import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.EditorInfo;
 
+import com.android.inputmethod.keyboard.Key;
 import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.keyboard.ProximityInfo;
@@ -1152,6 +1153,24 @@ public final class InputLogic {
                 revertCommit(inputTransaction, inputTransaction.mSettingsValues);
                 if (mConnection.getTextLenght() == 0) {
                     PointerTracker.KEYBOARD_TYPED_KEY = null;
+                } else {
+                    CharSequence inputSequence = mConnection.getTextBeforeCursor(2, 0);
+                    if (inputSequence != null && inputSequence.length() == 1) {
+                        PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
+                    if (inputSequence != null && inputSequence.length() > 1) {
+                        inputSequence = inputSequence.toString().substring(0, 1);
+                    }
+                    if (inputSequence != null && inputSequence.length() != 0) {
+                        if (Character.UnicodeBlock.of(inputSequence.charAt(0)) == Character.UnicodeBlock.DEVANAGARI) {
+                            PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                    null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                        } else {
+                            PointerTracker.KEYBOARD_TYPED_KEY = null;
+                        }
+                    }
+
                 }
                 StatsUtils.getInstance().onRevertAutoCorrect();
                 StatsUtils.getInstance().onWordCommitUserTyped(lastComposedWord, mWordComposer.isBatchMode());
@@ -1277,6 +1296,23 @@ public final class InputLogic {
                     mConnection.deleteTextBeforeCursor(lengthToDelete);
                     if (mConnection.getTextLenght() == 0) {
                         PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    } else {
+                        CharSequence inputSequence = mConnection.getTextBeforeCursor(1, 0);
+                        if (inputSequence != null && inputSequence.length() == 1) {
+                            PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
+                            PointerTracker.KEYBOARD_TYPED_KEY = null;
+                        }
+                        if (inputSequence != null && inputSequence.length() > 1) {
+                            inputSequence = inputSequence.toString().substring(0, 1);
+                        }
+                        if (inputSequence != null && inputSequence.length() != 0) {
+                            if (Character.UnicodeBlock.of(inputSequence.charAt(0)) == Character.UnicodeBlock.DEVANAGARI) {
+                                PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                        null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                            } else {
+                                PointerTracker.KEYBOARD_TYPED_KEY = null;
+                            }
+                        }
                     }
                     int totalDeletedLength = lengthToDelete;
                     if (mDeleteCount > Constants.DELETE_ACCELERATE_AT) {
