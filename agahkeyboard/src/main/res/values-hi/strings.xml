@@ -79,6 +79,11 @@
         <item>"श्र"</item>
     </string-array>
 
+    <string-array name="header_key">
+        <item>"अं"</item>
+        <item>"अः"</item>
+    </string-array>
+
     <string-array name="validity_items">
         <item>"24 घंटे"</item>
         <item>"36 घंटे"</item>

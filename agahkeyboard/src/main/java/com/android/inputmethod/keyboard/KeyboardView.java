@@ -525,7 +525,9 @@ public class KeyboardView extends View {
            /* Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
-            if ((key.isHeaderKey() || key.getHeaderKeySpec() != null && key.getHeaderKeySpec() != null) && PointerTracker.KEYBOARD_TYPED_KEY != null && PointerTracker.KEYBOARD_TYPED_KEY.getLabel() != null && !PointerTracker.KEYBOARD_TYPED_KEY.isPeriodKey(getContext())) {
+            if ((key.isHeaderKey() || key.getHeaderKeySpec() != null && key.getHeaderKeySpec() != null) &&
+                    PointerTracker.KEYBOARD_TYPED_KEY != null && PointerTracker.KEYBOARD_TYPED_KEY.getLabel() != null &&
+                    !PointerTracker.KEYBOARD_TYPED_KEY.isPeriodKey(getContext())) {
                 key.setLabelModified(true);
                 String[] moreKeys = new String[]{label};
                 MoreKeySpec[] mMoreKeys = new MoreKeySpec[moreKeys.length];
