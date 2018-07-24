@@ -1255,9 +1255,10 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
 
         if (!key.isHeaderKey() && !key.isModifier()) {
+            CharSequence inputSequence = LatinIME.mInputCOnnection.getTextBeforeCursor(2, 0);
             if (key.isDelete()) {
-                CharSequence inputSequence = LatinIME.mInputCOnnection.getTextBeforeCursor(2, 0);
                 if (inputSequence != null && inputSequence.length() == 1) {
+                    PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
                     PointerTracker.KEYBOARD_TYPED_KEY = null;
                 }
                 if (inputSequence != null && inputSequence.length() > 1) {
@@ -1271,13 +1272,14 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                         PointerTracker.KEYBOARD_TYPED_KEY = null;
                     }
                 }
+            } else if (key.getLabel() != null && isHeaderKey(key.getLabel())) {
+                KEYBOARD_TYPED_KEY = null;
             } else {
                 KEYBOARD_TYPED_KEY = key;
             }
-        } else if (key.getLabel() != null && !key.getLabel().equalsIgnoreCase("2/3") && !key.getLabel().equalsIgnoreCase("3/3") && !key.getLabel().equalsIgnoreCase("1/3")) {
+        } else if (key.getLabel() != null && !key.getLabel().equalsIgnoreCase("2/3") && !key.getLabel().equalsIgnoreCase("3/3") &&
+                !key.getLabel().equalsIgnoreCase("1/3")) {
             PREV_KEYBOARD_TYPED_KEY = KEYBOARD_TYPED_KEY;
-            KEYBOARD_TYPED_KEY = null;
-        } else {
             KEYBOARD_TYPED_KEY = null;
         }
 
@@ -1286,6 +1288,18 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         final int code = key.getCode();
         callListenerOnCodeInput(key, code, x, y, eventTime, false /* isKeyRepeat */);
         callListenerOnRelease(key, code, false /* withSliding */);
+    }
+
+    private boolean isHeaderKey(String inputSequence) {
+        String[] headerKeys = res.getStringArray(R.array.header_key);
+        if (headerKeys != null) {
+            for (int i = 0; i < headerKeys.length; i++) {
+                if (inputSequence.equalsIgnoreCase(headerKeys[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean isNormalKeyLabel(String inputSequence) {
