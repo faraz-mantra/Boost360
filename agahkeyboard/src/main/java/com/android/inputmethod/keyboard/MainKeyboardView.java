@@ -949,7 +949,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
         // paint.setColor(colorProfile.getIcon());
         paint.setAlpha(mLanguageOnSpacebarAnimAlpha);
         paint.setColor(Color.WHITE);
-        canvas.drawText("SPACE", width / 2, baseline - descent, paint);
+        canvas.drawText(getResources().getString(R.string.text_space), width / 2, baseline - descent, paint);
         paint.clearShadowLayer();
         paint.setTextScaleX(1.0f);
     }

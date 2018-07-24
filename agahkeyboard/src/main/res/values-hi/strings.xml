@@ -97,4 +97,6 @@
         <item>"96 घंटे"</item>
     </string-array>
 
+    <string name="text_space">""</string>
+
 </resources>

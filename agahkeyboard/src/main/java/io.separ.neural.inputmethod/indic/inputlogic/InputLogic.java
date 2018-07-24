@@ -74,6 +74,7 @@ import io.separ.neural.inputmethod.indic.settings.SettingsValuesForSuggestion;
 import io.separ.neural.inputmethod.indic.settings.SpacingAndPunctuations;
 import io.separ.neural.inputmethod.indic.suggestions.SuggestionStripViewAccessor;
 import io.separ.neural.inputmethod.slash.EventBusExt;
+import nfkeyboard.util.LocaleUtils;
 
 import static io.separ.neural.inputmethod.event.InputTransaction.SHIFT_UPDATE_NOW;
 import static io.separ.neural.inputmethod.indic.LastComposedWord.COMMIT_TYPE_MANUAL_PICK;
@@ -1162,8 +1163,8 @@ public final class InputLogic {
                     if (inputSequence != null && inputSequence.length() > 1) {
                         inputSequence = inputSequence.toString().substring(0, 1);
                     }
-                    if (inputSequence != null && inputSequence.length() != 0) {
-                        if (Character.UnicodeBlock.of(inputSequence.charAt(0)) == Character.UnicodeBlock.DEVANAGARI) {
+                    if (inputSequence != null && inputSequence.length() != 0 && LatinIME.mResContext != null) {
+                        if (LatinIME.mAppContext != null && LocaleUtils.isNormalKeyLabel(LatinIME.mAppContext.getResources(), inputSequence.toString())) {
                             PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                     null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                         } else {
@@ -1296,7 +1297,7 @@ public final class InputLogic {
                     mConnection.deleteTextBeforeCursor(lengthToDelete);
                     if (mConnection.getTextLenght() == 0) {
                         PointerTracker.KEYBOARD_TYPED_KEY = null;
-                    } else if (mConnection != null){
+                    } else if (mConnection != null) {
                         CharSequence inputSequence = mConnection.getTextBeforeCursor(1, 0);
                         if (inputSequence != null && inputSequence.length() == 1) {
                             PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
@@ -1306,7 +1307,7 @@ public final class InputLogic {
                             inputSequence = inputSequence.toString().substring(0, 1);
                         }
                         if (inputSequence != null && inputSequence.length() != 0) {
-                            if (Character.UnicodeBlock.of(inputSequence.charAt(0)) == Character.UnicodeBlock.DEVANAGARI) {
+                            if (LatinIME.mAppContext != null && LocaleUtils.isNormalKeyLabel(LatinIME.mAppContext.getResources(), inputSequence.toString())) {
                                 PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                         null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                             } else {
@@ -1341,7 +1342,7 @@ public final class InputLogic {
                             inputSequence = inputSequence.toString().substring(0, 1);
                         }
                         if (inputSequence != null && inputSequence.length() != 0) {
-                            if (Character.UnicodeBlock.of(inputSequence.charAt(0)) == Character.UnicodeBlock.DEVANAGARI) {
+                            if (LatinIME.mAppContext != null && LocaleUtils.isNormalKeyLabel(LatinIME.mAppContext.getResources(), inputSequence.toString())) {
                                 PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                         null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                             } else {

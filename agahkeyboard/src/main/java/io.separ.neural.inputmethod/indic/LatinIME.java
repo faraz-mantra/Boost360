@@ -77,7 +77,6 @@ import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
 import com.android.inputmethod.keyboard.top.ShowSuggestionsEvent;
 import com.android.inputmethod.keyboard.top.ShowSuggestionsEventAnimated;
 import com.android.inputmethod.keyboard.top.TopDisplayController;
-import com.android.inputmethod.keyboard.top.UpdateActionBarEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.keyboard.top.actionrow.FrequentEmojiHandler;
 import com.android.inputmethod.keyboard.top.services.LaunchSettingsEvent;
@@ -255,6 +254,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public static Context mResContext;
     private int mLanguageIndex = 0;
     public static InputConnection mInputCOnnection;
+    public static Context mAppContext;
 
     @Override
     public void onCopy() {
@@ -759,6 +759,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onCreate() {
+        mAppContext = this;
         Fabric.with(this, new Crashlytics());
         Settings.init(this);
         DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
@@ -966,6 +967,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onConfigurationChanged(final Configuration conf) {
+
+        //setInputView(onCreateInputView());
+        LocaleUtils.handleConfigurationChange(this);
+
         SettingsValues settingsValues = mSettings.getCurrent();
         if (settingsValues.mDisplayOrientation != conf.orientation) {
             mHandler.startOrientationChanging();
@@ -1086,7 +1091,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 if (!inputSequence.toString().trim().isEmpty()) {
                     if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
                         PointerTracker.KEYBOARD_TYPED_KEY = null;
-                    } else {
+                    } else if (LocaleUtils.isNormalKeyLabel(getResources(), inputSequence.toString())) {
                         PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                 null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                     }
@@ -1166,25 +1171,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mInputLogic.onSubtypeChanged(SubtypeLocaleUtils.getCombiningRulesExtraValue(subtype),
                 mSettings.getCurrent());
         loadKeyboard();
-        //setInputView(onCreateInputView());
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
-
-        String locale = ims.getLocale();
-        if (locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
-            mLanguageIndex = 0;
-        } else {
-            PointerTracker.KEYBOARD_TYPED_KEY = null;
-            mLanguageIndex = 1;
-        }
-       /* mResContext = setLocale(getApplicationContext(), locale);
-        if (++mLanguageIndex >= LocaleUtils.LocaleDef.SUPPORTED_LOCALES.length) {
-            mLanguageIndex = 0;
-        }*/
-
-        LocaleUtils.setLocale(this, mLanguageIndex);
-        EventBusExt.getDefault().post(new UpdateActionBarEvent());
+        LocaleUtils.handleConfigurationChange(this);
         if (getImeCurrentInputConnection() != null) {
             CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
 
@@ -1195,7 +1182,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 if (!inputSequence.toString().trim().isEmpty()) {
                     if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
                         PointerTracker.KEYBOARD_TYPED_KEY = null;
-                    } else {
+                    } else if (LocaleUtils.isNormalKeyLabel(getResources(), inputSequence.toString())) {
                         PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                 null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                     }

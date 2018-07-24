@@ -42,6 +42,7 @@ import io.separ.neural.inputmethod.indic.LatinIME;
 import io.separ.neural.inputmethod.indic.R;
 import io.separ.neural.inputmethod.indic.define.DebugFlags;
 import io.separ.neural.inputmethod.indic.settings.Settings;
+import nfkeyboard.util.LocaleUtils;
 
 public final class PointerTracker implements PointerTrackerQueue.Element,
         BatchInputArbiterListener {
@@ -1266,7 +1267,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                         inputSequence = inputSequence.toString().substring(0, 1);
                     }
                     if (inputSequence != null && inputSequence.length() != 0) {
-                        if (isNormalKeyLabel(inputSequence.toString())) {
+                        if (LocaleUtils.isNormalKeyLabel(res, inputSequence.toString())) {
                             PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                     null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                         } else {
@@ -1274,10 +1275,12 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                         }
                     }
                 }
-            } else if (key.getLabel() != null && isHeaderKey(key.getLabel())) {
-                KEYBOARD_TYPED_KEY = null;
-            } else {
+                //} else if (key.getLabel() != null && isHeaderKey(key.getLabel()) && key.isNumKey()) {
+            } else if (key.getLabel() != null && !isHeaderKey(key.getLabel()) && !key.isNumKey() && (key.isFontResizeKey() ||
+                    LocaleUtils.isNormalKeyLabel(res, key.getLabel()))) {
                 KEYBOARD_TYPED_KEY = key;
+            } else {
+                KEYBOARD_TYPED_KEY = null;
             }
         } else if (key.getLabel() != null && !isScreenChangeKey(key.getLabel()) && !key.isModifier()) {
             PREV_KEYBOARD_TYPED_KEY = KEYBOARD_TYPED_KEY;
@@ -1308,18 +1311,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         if (headerKeys != null) {
             for (int i = 0; i < headerKeys.length; i++) {
                 if (label.equalsIgnoreCase(headerKeys[i])) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean isNormalKeyLabel(String inputSequence) {
-        String[] normalKeys = res.getStringArray(R.array.normal_key);
-        if (normalKeys != null) {
-            for (int i = 0; i < normalKeys.length; i++) {
-                if (inputSequence.equalsIgnoreCase(normalKeys[i])) {
                     return true;
                 }
             }
