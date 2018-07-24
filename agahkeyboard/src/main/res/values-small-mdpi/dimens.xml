@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="adapter_item_product_flipped_padding">4dp</dimen>
-    <dimen name="adapter_item_product_flipped_text_size">12sp</dimen>
-</resources>
