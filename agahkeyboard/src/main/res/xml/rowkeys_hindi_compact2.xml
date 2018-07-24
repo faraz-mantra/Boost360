@@ -51,8 +51,8 @@
         latin:keySpec="&#x093C;" />
     <Key
         latin:backgroundType="headerkey"
-        latin:headerKeySpec="&#x0902;"
-        latin:keySpec="&#x0902;" />
+        latin:headerKeySpec="ं"
+        latin:keySpec="&#x093A;" />
 
     <!-- <Key
          latin:keySpec="&#x0909;"

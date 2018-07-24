@@ -1302,7 +1302,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         return false;
     }
 
-    public static boolean isNormalKeyLabel(String inputSequence) {
+    private boolean isNormalKeyLabel(String inputSequence) {
         String[] normalKeys = res.getStringArray(R.array.normal_key);
         if (normalKeys != null) {
             for (int i = 0; i < normalKeys.length; i++) {

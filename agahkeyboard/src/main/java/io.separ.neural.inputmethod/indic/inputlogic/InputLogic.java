@@ -1163,7 +1163,7 @@ public final class InputLogic {
                         inputSequence = inputSequence.toString().substring(0, 1);
                     }
                     if (inputSequence != null && inputSequence.length() != 0) {
-                        if (PointerTracker.isNormalKeyLabel(inputSequence.toString())) {
+                        if (Character.UnicodeBlock.of(inputSequence.charAt(0)) == Character.UnicodeBlock.DEVANAGARI) {
                             PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                     null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                         } else {
@@ -1306,7 +1306,7 @@ public final class InputLogic {
                             inputSequence = inputSequence.toString().substring(0, 1);
                         }
                         if (inputSequence != null && inputSequence.length() != 0) {
-                            if (PointerTracker.isNormalKeyLabel(inputSequence.toString())) {
+                            if (Character.UnicodeBlock.of(inputSequence.charAt(0)) == Character.UnicodeBlock.DEVANAGARI) {
                                 PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
                                         null, 0, 0, 0, 0, 0, 0, 0, 0, false);
                             } else {
@@ -1327,25 +1327,6 @@ public final class InputLogic {
                             final int lengthToDeleteAgain = Character.isSupplementaryCodePoint(
                                     codePointBeforeCursorToDeleteAgain) ? 2 : 1;
                             mConnection.deleteTextBeforeCursor(lengthToDeleteAgain);
-                            if (mConnection.getTextLenght() == 0) {
-                                PointerTracker.KEYBOARD_TYPED_KEY = null;
-                            } else {
-                                CharSequence inputSequence = mConnection.getTextBeforeCursor(1, 0);
-                                if (inputSequence != null && inputSequence.length() == 1) {
-                                    PointerTracker.KEYBOARD_TYPED_KEY = null;
-                                }
-                                if (inputSequence != null && inputSequence.length() > 1) {
-                                    inputSequence = inputSequence.toString().substring(0, 1);
-                                }
-                                if (inputSequence != null && inputSequence.length() != 0) {
-                                    if (PointerTracker.isNormalKeyLabel(inputSequence.toString())) {
-                                        PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
-                                                null, 0, 0, 0, 0, 0, 0, 0, 0, false);
-                                    } else {
-                                        PointerTracker.KEYBOARD_TYPED_KEY = null;
-                                    }
-                                }
-                            }
                             totalDeletedLength += lengthToDeleteAgain;
                         }
                     }
