@@ -155,7 +155,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
         mEventHandler = new EventBusHandler();
         mEventHandler.register();
-
     }
 
     public static void init(final LatinIME latinIme) {
@@ -235,6 +234,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (mKeyboardView != null) {
             mKeyboardView.onHideWindow();
         }
+        mEventHandler.unregister();
     }
 
     private void setKeyboard(final Keyboard keyboard) {
@@ -1139,7 +1139,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         public void onEventMainThread(UpdateActionBarEvent event) {
             tvPhotos.setText(R.string.tv_photos);
             deselectBtn.setText(R.string.deselect_all);
-
         }
     }
 }

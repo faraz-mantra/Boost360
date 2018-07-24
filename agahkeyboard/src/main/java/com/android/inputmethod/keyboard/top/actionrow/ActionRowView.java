@@ -257,6 +257,11 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
         }
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        this.mEventHandler.register();
+    }
 
     public static Context setLocale(Context context, String language) {
 
