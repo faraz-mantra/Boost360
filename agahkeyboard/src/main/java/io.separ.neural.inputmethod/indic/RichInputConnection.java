@@ -185,7 +185,8 @@ public final class RichInputConnection {
         Log.i(RichInputConnection.class.getName(), "getTextAfterCursor(512, 0) " + getTextAfterCursor(512, 0) + " selectedText - > " +
                 selectedText);
         return (getTextAfterCursor(512, 0) != null ? getTextAfterCursor(512, 0).length() : 0)
-                + (getTextBeforeCursor(512, 0) != null ? getTextBeforeCursor(512, 0).length() : 0) + (selectedText == null ? 0 : selectedText.length());
+                + (getTextBeforeCursor(512, 0) != null ? getTextBeforeCursor(512, 0).length() : 0) + (selectedText == null ? 0
+                : selectedText.length());
     }
 
     public void beginBatchEdit() {

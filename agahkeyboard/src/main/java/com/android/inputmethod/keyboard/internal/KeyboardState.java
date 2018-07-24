@@ -25,6 +25,8 @@ import io.separ.neural.inputmethod.Utils.FontUtils;
 import io.separ.neural.inputmethod.indic.Constants;
 
 import static com.android.inputmethod.keyboard.internal.AlphabetShiftState.IS_SHIFTED;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_SHIFT;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_SYMBOL_SHIFT;
 
 /**
  * Keyboard state machine.
@@ -404,12 +406,12 @@ public final class KeyboardState {
             Log.d(TAG, "onPressKey: code=" + Constants.printableCode(code) + " single="
                     + isSinglePointer + " autoCaps=" + currentAutoCapsState + ' ' + this);
         }
-        if (code != Constants.CODE_SHIFT) {
+        if (code != CODE_SHIFT) {
             // Because the double tap shift key timer is to detect two consecutive shift key press,
             // it should be canceled when a non-shift key is pressed.
             mSwitchActions.cancelDoubleTapShiftKeyTimer();
         }
-        if (code == Constants.CODE_SHIFT) {
+        if (code == CODE_SHIFT) {
             onPressShift();
         } else if (code == Constants.CODE_CAPSLOCK) {
             // Nothing to do here. See {@link #onReleaseKey(int,boolean)}.
@@ -446,7 +448,7 @@ public final class KeyboardState {
             Log.d(TAG, "onReleaseKey: code=" + Constants.printableCode(code)
                     + " sliding=" + withSliding + ' ' + this);
         }
-        if (code == Constants.CODE_SHIFT) {
+        if (code == CODE_SHIFT) {
             onReleaseShift(withSliding, currentAutoCapsState, currentRecapitalizeState);
         } else if (code == Constants.CODE_CAPSLOCK) {
             setShiftLocked(!mAlphabetShiftState.isShiftLocked());
@@ -455,7 +457,8 @@ public final class KeyboardState {
         } else if (code == Constants.CODE_SWITCH_SCREEN_MAIN) {
             onReleaseSwitchScreenMain(withSliding);
         }
-        if (screenNumber != 1 && code != Constants.CODE_SWITCH_SCREEN_MAIN && !withSliding) {
+        if (screenNumber != 1 && code != Constants.CODE_SWITCH_SCREEN_MAIN && code != Constants.CODE_SWITCH_ALPHA_SYMBOL && code != CODE_SHIFT
+                && code != CODE_SYMBOL_SHIFT && !withSliding) {
             screenNumber = 1;
             mSwitchActions.setAlphabetKeyboard();
         }
@@ -714,7 +717,7 @@ public final class KeyboardState {
                 }
                 break;
             case SWITCH_STATE_MOMENTARY_SYMBOL_AND_MORE:
-                if (code == Constants.CODE_SHIFT) {
+                if (code == CODE_SHIFT) {
                     // Detected only the shift key has been pressed on symbol layout, and then
                     // released.
                     mSwitchState = SWITCH_STATE_SYMBOL_BEGIN;

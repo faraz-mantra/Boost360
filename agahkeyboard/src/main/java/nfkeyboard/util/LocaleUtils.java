@@ -4,18 +4,83 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.StringDef;
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
+
+import com.android.inputmethod.keyboard.PointerTracker;
+import com.android.inputmethod.keyboard.top.UpdateActionBarEvent;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Locale;
 
+import io.separ.neural.inputmethod.indic.R;
+import io.separ.neural.inputmethod.slash.EventBusExt;
+
 public class LocaleUtils {
+    private static int mLanguageIndex = 0;
+
+    public static void handleConfigurationChange(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
+        if (locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
+            mLanguageIndex = 0;
+        } else {
+            PointerTracker.KEYBOARD_TYPED_KEY = null;
+            mLanguageIndex = 1;
+        }
+
+        LocaleUtils.setLocale(context, mLanguageIndex);
+        EventBusExt.getDefault().post(new UpdateActionBarEvent());
+    }
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({ENGLISH, HINDI})
     public @interface LocaleDef {
         String[] SUPPORTED_LOCALES = {ENGLISH, HINDI};
     }
+
+    private static String[] NORMAL_KEYS = {
+            "क",
+            "ख",
+            "ग",
+            "घ",
+            "ङ",
+            "च",
+            "छ",
+            "ज",
+            "झ",
+            "ञ",
+            "ट",
+            "ठ",
+            "ड",
+            "ढ",
+            "ण",
+            "त",
+            "थ",
+            "द",
+            "ध",
+            "न",
+            "प",
+            "फ",
+            "ब",
+            "भ",
+            "म",
+            "य",
+            "र",
+            "ल",
+            "व",
+            "ह",
+            "श",
+            "ष",
+            "स",
+            "ज्ञ",
+            "क्ष",
+            "श्र",
+    };
 
     public static final String ENGLISH = "en_US";
     public static final String HINDI = "hi";
@@ -73,5 +138,20 @@ public class LocaleUtils {
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
 
         return true;
+    }
+
+    public static boolean isNormalKeyLabel(Resources res, String label) {
+        String[] normalKeys = res.getStringArray(R.array.normal_key);
+        if (normalKeys.length == 0) {
+            normalKeys = NORMAL_KEYS;
+        }
+        if (normalKeys != null) {
+            for (int i = 0; i < normalKeys.length; i++) {
+                if (label.equalsIgnoreCase(normalKeys[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
