@@ -1255,21 +1255,23 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
 
         if (!key.isHeaderKey() && !key.isModifier()) {
-            CharSequence inputSequence = LatinIME.mInputCOnnection.getTextBeforeCursor(2, 0);
             if (key.isDelete()) {
-                if (inputSequence != null && inputSequence.length() == 1) {
-                    PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
-                    PointerTracker.KEYBOARD_TYPED_KEY = null;
-                }
-                if (inputSequence != null && inputSequence.length() > 1) {
-                    inputSequence = inputSequence.toString().substring(0, 1);
-                }
-                if (inputSequence != null && inputSequence.length() != 0) {
-                    if (isNormalKeyLabel(inputSequence.toString())) {
-                        PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
-                                null, 0, 0, 0, 0, 0, 0, 0, 0, false);
-                    } else {
+                if (LatinIME.mInputCOnnection != null) {
+                    CharSequence inputSequence = LatinIME.mInputCOnnection.getTextBeforeCursor(2, 0);
+                    if (inputSequence != null && inputSequence.length() == 1) {
+                        PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
                         PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
+                    if (inputSequence != null && inputSequence.length() > 1) {
+                        inputSequence = inputSequence.toString().substring(0, 1);
+                    }
+                    if (inputSequence != null && inputSequence.length() != 0) {
+                        if (isNormalKeyLabel(inputSequence.toString())) {
+                            PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                    null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                        } else {
+                            PointerTracker.KEYBOARD_TYPED_KEY = null;
+                        }
                     }
                 }
             } else if (key.getLabel() != null && isHeaderKey(key.getLabel())) {
@@ -1277,8 +1279,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             } else {
                 KEYBOARD_TYPED_KEY = key;
             }
-        } else if (key.getLabel() != null && !key.getLabel().equalsIgnoreCase("2/3") && !key.getLabel().equalsIgnoreCase("3/3") &&
-                !key.getLabel().equalsIgnoreCase("1/3") && !key.isModifier()) {
+        } else if (key.getLabel() != null && !isScreenChangeKey(key.getLabel()) && !key.isModifier()) {
             PREV_KEYBOARD_TYPED_KEY = KEYBOARD_TYPED_KEY;
             KEYBOARD_TYPED_KEY = null;
         }
@@ -1295,6 +1296,18 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         if (headerKeys != null) {
             for (int i = 0; i < headerKeys.length; i++) {
                 if (inputSequence.equalsIgnoreCase(headerKeys[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isScreenChangeKey(String label) {
+        String[] headerKeys = res.getStringArray(R.array.screen_change_key);
+        if (headerKeys != null) {
+            for (int i = 0; i < headerKeys.length; i++) {
+                if (label.equalsIgnoreCase(headerKeys[i])) {
                     return true;
                 }
             }

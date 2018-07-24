@@ -1076,21 +1076,23 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         String locale = ims.getLocale();
         mResContext = setLocale(getApplicationContext(), locale);
         mHandler.onStartInput(editorInfo, restarting);
-        CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
+        if (getImeCurrentInputConnection() != null && !locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
+            CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
 
-        if (inputSequence == null) {
-            PointerTracker.KEYBOARD_TYPED_KEY = null;
-        }
-        if (inputSequence != null) {
-            if (!inputSequence.toString().trim().isEmpty()) {
-                if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
-                    PointerTracker.KEYBOARD_TYPED_KEY = null;
-                } else {
-                    PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
-                            null, 0, 0, 0, 0, 0, 0, 0, 0, false);
-                }
-            } else {
+            if (inputSequence == null) {
                 PointerTracker.KEYBOARD_TYPED_KEY = null;
+            }
+            if (inputSequence != null) {
+                if (!inputSequence.toString().trim().isEmpty()) {
+                    if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    } else {
+                        PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                    }
+                } else {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                }
             }
         }
     }
@@ -1183,21 +1185,23 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         LocaleUtils.setLocale(this, mLanguageIndex);
         EventBusExt.getDefault().post(new UpdateActionBarEvent());
-        CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
+        if (getImeCurrentInputConnection() != null) {
+            CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
 
-        if (inputSequence == null) {
-            PointerTracker.KEYBOARD_TYPED_KEY = null;
-        }
-        if (inputSequence != null) {
-            if (!inputSequence.toString().trim().isEmpty()) {
-                if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
-                    PointerTracker.KEYBOARD_TYPED_KEY = null;
-                } else {
-                    PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
-                            null, 0, 0, 0, 0, 0, 0, 0, 0, false);
-                }
-            } else {
+            if (inputSequence == null) {
                 PointerTracker.KEYBOARD_TYPED_KEY = null;
+            }
+            if (inputSequence != null) {
+                if (!inputSequence.toString().trim().isEmpty()) {
+                    if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    } else {
+                        PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                    }
+                } else {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                }
             }
         }
     }
@@ -2210,6 +2214,12 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     // related to handling of hardware key events that we may want to implement in the future:
     // boolean onKeyLongPress(final int keyCode, final KeyEvent event);
     // boolean onKeyMultiple(final int keyCode, final int count, final KeyEvent event);
+
+
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        return super.onKeyLongPress(keyCode, event);
+    }
 
     // receive ringer mode change and network state change.
     private final BroadcastReceiver mConnectivityAndRingerModeChangeReceiver =
