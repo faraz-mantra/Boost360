@@ -417,6 +417,7 @@ public final class KeyboardState {
             // Nothing to do here. See {@link #onReleaseKey(int,boolean)}.
         } else if (code == Constants.CODE_SWITCH_ALPHA_SYMBOL) {
             onPressSymbol(currentAutoCapsState, currentRecapitalizeState);
+            screenNumber = 1;
         } else if (code == Constants.CODE_SWITCH_SCREEN_MAIN) {
             onPressSwitchScreenMain();
         } else {

@@ -19,7 +19,7 @@
             android:id="@+id/tv_keyboard_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="@dimen/adapter_item_product_keyboard_text_size"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
             android:text="@string/currency" />
@@ -33,6 +33,7 @@
             android:layout_weight="2"
             android:longClickable="false"
             android:cursorVisible="true"
+            android:textSize="@dimen/adapter_item_product_keyboard_text_size"
             android:maxLines="1"
             android:focusable="false"
             android:background="@android:color/transparent"
