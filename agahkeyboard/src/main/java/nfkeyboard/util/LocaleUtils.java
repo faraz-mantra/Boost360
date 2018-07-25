@@ -27,8 +27,10 @@ public class LocaleUtils {
 
         String locale = ims.getLocale();
         if (locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.SET_ENGLISH_KEYBOARD, null);
             mLanguageIndex = 0;
         } else {
+            MixPanelUtils.getInstance().track(MixPanelUtils.SET_HINDI_KEYBOARD, null);
             PointerTracker.KEYBOARD_TYPED_KEY = null;
             mLanguageIndex = 1;
         }
