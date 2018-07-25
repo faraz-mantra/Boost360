@@ -40,6 +40,9 @@ public class MixPanelUtils {
     public static final String KEYBOARD_PRODUCT_SHARE = "KeyboardProductShare";
     public static final String KEYBOARD_UPDATE_SHARE = "KeyboardUpdateShare";
     public static final String KEYBOARD_INPUT_CONNECTION_NULL = "NullInputConnection";
+    public static final String KEYBOARD_THEME_CHANGE_TO_LXX_DARK = "KeyboardThemeChangeToLxxDark";
+    public static final String KEYBOARD_THEME_CHANGE_TO_LXX_DARK_UNBORDERED = "KeyboardThemeChangeToLxxDarkUnboredered";
+    public static final String KEYBOARD_THEME_NAVIGATION_THROUGH_KEYBOARD = "KeyboardThemeNavigationThroughKeyboard";
     private static MixPanelUtils mixPanelUtils = new MixPanelUtils();
     private static MixpanelAPI mixPanel;
     public static MixpanelAPI.People people = null;
