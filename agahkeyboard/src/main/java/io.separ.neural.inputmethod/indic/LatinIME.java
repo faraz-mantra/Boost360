@@ -1718,6 +1718,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
         if (intent.resolveActivity(getPackageManager()) != null) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_NAVIGATION_THROUGH_KEYBOARD, null);
             startActivity(intent);
         }
     }
