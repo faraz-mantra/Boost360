@@ -1,6 +1,5 @@
 package nfkeyboard.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -40,6 +39,7 @@ public class MixPanelUtils {
     public static final String KEYBOARD_UPDATE_IMAGE_SHARE = "KeyboardUpdateImageShare";
     public static final String KEYBOARD_PRODUCT_SHARE = "KeyboardProductShare";
     public static final String KEYBOARD_UPDATE_SHARE = "KeyboardUpdateShare";
+    public static final String KEYBOARD_INPUT_CONNECTION_NULL = "NullInputConnection";
     private static MixPanelUtils mixPanelUtils = new MixPanelUtils();
     private static MixpanelAPI mixPanel;
     public static MixpanelAPI.People people = null;

@@ -154,7 +154,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         // Intentional empty constructor for singleton.
 
         mEventHandler = new EventBusHandler();
-        mEventHandler.register();
     }
 
     public static void init(final LatinIME latinIme) {
@@ -193,6 +192,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     public void loadKeyboard(final EditorInfo editorInfo, final SettingsValues settingsValues,
                              final int currentAutoCapsState, final int currentRecapitalizeState) {
         clearResources();
+        mEventHandler.register();
         FontUtils.setCurrentLocale(mSubtypeSwitcher.getCurrentSubtypeLocale().getLanguage());
         FontUtils.setIsEmoji(false);
         final KeyboardLayoutSet.Builder builder = new KeyboardLayoutSet.Builder(
@@ -234,7 +234,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (mKeyboardView != null) {
             mKeyboardView.onHideWindow();
         }
-        mEventHandler.unregister();
+        // mEventHandler.unregister();
     }
 
     private void setKeyboard(final Keyboard keyboard) {
@@ -362,6 +362,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     public void setProductShareKeyboardFrame(final ImePresenterImpl.TabType tabType) {
+        if (tvPhotos != null) {
+            tvPhotos.setText(R.string.tv_photos);
+            deselectBtn.setText(R.string.deselect_all);
+        }
         this.mTabType = tabType;
         shareLayout.setVisibility(View.VISIBLE);
         mKeyboardView.setVisibility(View.INVISIBLE);
@@ -1042,6 +1046,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     productList.add(createSuggestionModel("No products available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 shareAdapter.setSuggestionModels(productList);
+                mEventHandler.unregister();
                 break;
             case PHOTOS:
                 isPhotosCompleted = true;
@@ -1052,7 +1057,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     imagesList.add(createSuggestionModel("No photos available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 shareAdapter1.setSuggestionModels(imagesList);*/
+                shareAdapter.unRegisterEventBus();
                 break;
+
         }
     }
 
@@ -1137,8 +1144,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
         @Subscribe(threadMode = ThreadMode.MAIN)
         public void onEventMainThread(UpdateActionBarEvent event) {
-            tvPhotos.setText(R.string.tv_photos);
-            deselectBtn.setText(R.string.deselect_all);
+            if (tvPhotos != null) {
+                tvPhotos.setText(R.string.tv_photos);
+                deselectBtn.setText(R.string.deselect_all);
+            }
         }
     }
 }

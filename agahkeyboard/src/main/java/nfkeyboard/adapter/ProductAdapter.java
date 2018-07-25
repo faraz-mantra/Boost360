@@ -743,4 +743,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             }
         }
     }
+
+    @Override
+    void unRegisterEventBus() {
+        super.unRegisterEventBus();
+        if (mEventHandler != null) {
+            this.mEventHandler.unregister();
+        }
+    }
 }

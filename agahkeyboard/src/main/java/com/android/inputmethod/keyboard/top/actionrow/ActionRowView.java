@@ -260,7 +260,7 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        this.mEventHandler.register();
+        this.mEventHandler.unregister();
     }
 
     public static Context setLocale(Context context, String language) {

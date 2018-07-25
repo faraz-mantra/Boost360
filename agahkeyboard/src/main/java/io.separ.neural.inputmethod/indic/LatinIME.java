@@ -1081,7 +1081,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         String locale = ims.getLocale();
         mResContext = setLocale(getApplicationContext(), locale);
         mHandler.onStartInput(editorInfo, restarting);
-        if (getImeCurrentInputConnection() != null && !locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
+        if (getImeCurrentInputConnection() == null) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_INPUT_CONNECTION_NULL, null);
+        } else if (getImeCurrentInputConnection() != null && !locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
             CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
 
             if (inputSequence == null) {
@@ -1172,7 +1174,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 mSettings.getCurrent());
         loadKeyboard();
         LocaleUtils.handleConfigurationChange(this);
-        if (getImeCurrentInputConnection() != null) {
+        if (getImeCurrentInputConnection() == null) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_INPUT_CONNECTION_NULL, null);
+        } else if (getImeCurrentInputConnection() != null) {
             CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
 
             if (inputSequence == null) {
