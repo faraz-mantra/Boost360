@@ -1,6 +1,7 @@
 package com.nowfloats.manageinventory.interfaces;
 
 import com.nowfloats.Analytics_Screen.model.OrderStatusSummary;
+import com.nowfloats.Analytics_Screen.model.RevenueSummary;
 import com.nowfloats.manageinventory.models.CommonStatus;
 import com.nowfloats.manageinventory.models.MarkOrderAsShipped;
 import com.nowfloats.manageinventory.models.OrderDataModel;
@@ -82,5 +83,10 @@ public interface WebActionCallInterface {
     void getOrderStatusSummary(@Query("sellerId") String sellerId, @Query("startDate") String startDate,
                                @Query("endDate") String endDate,
                                Callback<OrderStatusSummary>callback);
+
+    @GET("/DailySellerRevenue")
+    void dailySellerRevenue(@Query("sellerId") String sellerId, @Query("deliveredStartDate") String deliveredStartDate,
+                               @Query("deliveredEndDate") String deliveredEndDate,
+                               Callback<RevenueSummary>callback);
 
 }

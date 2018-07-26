@@ -556,6 +556,7 @@ public class Methods {
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
         long daysInMilli = hoursInMilli * 24;
+        long weekInMilli = daysInMilli * 7;
 
         long elapsedDays = different / daysInMilli;
         return elapsedDays;
@@ -567,6 +568,7 @@ public class Methods {
         }
         return getFormattedDate(getDateMillSecond(date), format);
     }
+
 
     public static Long getDateMillSecond(String date) {
         String[] dateTime = null;

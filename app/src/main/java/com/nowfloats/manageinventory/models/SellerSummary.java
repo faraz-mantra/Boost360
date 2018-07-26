@@ -20,6 +20,10 @@ public class SellerSummary {
         @Expose
         private String totalRevenue;
 
+        @SerializedName("CurrencyCode")
+        @Expose
+        private String currencyCode;
+
         @SerializedName("TotalOrders")
         @Expose
         private Integer totalOrders;
@@ -98,6 +102,14 @@ public class SellerSummary {
 
         public void setTotalOrdersInProgress(Integer totalOrdersInProgress) {
             this.totalOrdersInProgress = totalOrdersInProgress;
+        }
+
+        public String getCurrencyCode() {
+            return currencyCode;
+        }
+
+        public void setCurrencyCode(String currencyCode) {
+            this.currencyCode = currencyCode;
         }
     }
 
