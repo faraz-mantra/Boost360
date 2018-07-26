@@ -2,4 +2,5 @@
 <resources>
     <string name="keyboard_name_en">English</string>
     <string name="keyboard_name_fa">فارسی</string>
+    <string name="keyboard_name_hi_compact">Hindi</string>
 </resources>

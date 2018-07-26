@@ -31,7 +31,9 @@ import android.view.inputmethod.CorrectionInfo;
 import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.EditorInfo;
 
+import com.android.inputmethod.keyboard.Key;
 import com.android.inputmethod.keyboard.KeyboardSwitcher;
+import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.keyboard.ProximityInfo;
 import com.android.inputmethod.keyboard.TextDecorator;
 import com.android.inputmethod.keyboard.TextDecoratorUiOperator;
@@ -72,6 +74,7 @@ import io.separ.neural.inputmethod.indic.settings.SettingsValuesForSuggestion;
 import io.separ.neural.inputmethod.indic.settings.SpacingAndPunctuations;
 import io.separ.neural.inputmethod.indic.suggestions.SuggestionStripViewAccessor;
 import io.separ.neural.inputmethod.slash.EventBusExt;
+import nfkeyboard.util.LocaleUtils;
 
 import static io.separ.neural.inputmethod.event.InputTransaction.SHIFT_UPDATE_NOW;
 import static io.separ.neural.inputmethod.indic.LastComposedWord.COMMIT_TYPE_MANUAL_PICK;
@@ -270,12 +273,15 @@ public final class InputLogic {
         if (mWordComposer.isComposingWord()) {
             commitCurrentAutoCorrection(settingsValues, rawText, handler);
         } else {
-            resetComposingState(true /* alsoResetLastComposedWord */);
+            resetComposingState(true /* a lsoResetLastComposedWord */);
         }
         handler.postUpdateSuggestionStrip(SuggestedWords.INPUT_STYLE_TYPING);
         final String text = performSpecificTldProcessingOnTextInput(rawText);
         if (SpaceState.PHANTOM == mSpaceState) {
             promotePhantomSpace(settingsValues);
+        }
+        if (PointerTracker.KEYBOARD_TYPED_KEY == null && PointerTracker.isLebelModified && PointerTracker.PREV_KEYBOARD_TYPED_KEY != null && PointerTracker.PREV_KEYBOARD_TYPED_KEY.getLabel() != null) {
+            mConnection.deleteTextBeforeCursor(PointerTracker.PREV_KEYBOARD_TYPED_KEY.getLabel().length());
         }
         mConnection.commitText(text, 1);
         StatsUtils.getInstance().onWordCommitUserTyped(mEnteredText, mWordComposer.isBatchMode());
@@ -793,6 +799,8 @@ public final class InputLogic {
                 break;
             case Constants.CODE_INLINESETTINGS:
                 break;
+            case Constants.CODE_SWITCH_SCREEN_MAIN:
+                break;
             default:
                 throw new RuntimeException("Unknown key code : " + event.mKeyCode);
         }
@@ -966,6 +974,9 @@ public final class InputLogic {
             if (swapWeakSpace && trySwapSwapperAndSpace(event, inputTransaction)) {
                 mSpaceState = SpaceState.WEAK;
             } else {
+              /*  if (PointerTracker.KEYBOARD_TYPED_KEY == null) {
+                    revertCommit(inputTransaction, inputTransaction.mSettingsValues);
+                }*/
                 sendKeyCodePoint(settingsValues, codePoint, isTransliteration);
             }
         }
@@ -1134,12 +1145,34 @@ public final class InputLogic {
                 setComposingTextInternal(getTextWithUnderline(mWordComposer.getTypedWord()), 1);
             } else {
                 mConnection.commitText("", 1);
+                PointerTracker.KEYBOARD_TYPED_KEY = null;
             }
             inputTransaction.setRequiresUpdateSuggestions();
         } else {
             if (mLastComposedWord.canRevertCommit()) {
                 final String lastComposedWord = mLastComposedWord.mTypedWord;
                 revertCommit(inputTransaction, inputTransaction.mSettingsValues);
+                if (mConnection.getTextLenght() == 0) {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                } else {
+                    CharSequence inputSequence = mConnection.getTextBeforeCursor(2, 0);
+                    if (inputSequence != null && inputSequence.length() == 1) {
+                        PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
+                    if (inputSequence != null && inputSequence.length() > 1) {
+                        inputSequence = inputSequence.toString().substring(0, 1);
+                    }
+                    if (inputSequence != null && inputSequence.length() != 0 && LatinIME.mResContext != null) {
+                        if (LatinIME.mAppContext != null && LocaleUtils.isNormalKeyLabel(LatinIME.mAppContext.getResources(), inputSequence.toString())) {
+                            PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                    null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                        } else {
+                            PointerTracker.KEYBOARD_TYPED_KEY = null;
+                        }
+                    }
+
+                }
                 StatsUtils.getInstance().onRevertAutoCorrect();
                 StatsUtils.getInstance().onWordCommitUserTyped(lastComposedWord, mWordComposer.isBatchMode());
                 // Restart suggestions when backspacing into a reverted word. This is required for
@@ -1162,7 +1195,17 @@ public final class InputLogic {
                 // Cancel multi-character input: remove the text we just entered.
                 // This is triggered on backspace after a key that inputs multiple characters,
                 // like the smiley key or the .com key.
-                mConnection.deleteSurroundingText(mEnteredText.length(), 0);
+                if (PointerTracker.KEYBOARD_TYPED_KEY == null) {
+                    mConnection.deleteSurroundingText(mEnteredText.length(), 0);
+                    if (mConnection.getTextLenght() == 0) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
+                } else {
+                    mConnection.deleteSurroundingText(1, 0);
+                    if (mConnection.getTextLenght() == 0) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    }
+                }
                 StatsUtils.getInstance().onDeleteMultiCharInput(mEnteredText.length());
                 mEnteredText = null;
                 // If we have mEnteredText, then we know that mHasUncommittedTypedChars == false.
@@ -1252,6 +1295,26 @@ public final class InputLogic {
                     final int lengthToDelete =
                             Character.isSupplementaryCodePoint(codePointBeforeCursor) ? 2 : 1;
                     mConnection.deleteTextBeforeCursor(lengthToDelete);
+                    if (mConnection.getTextLenght() == 0) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    } else if (mConnection != null) {
+                        CharSequence inputSequence = mConnection.getTextBeforeCursor(1, 0);
+                        if (inputSequence != null && inputSequence.length() == 1) {
+                            PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
+                            PointerTracker.KEYBOARD_TYPED_KEY = null;
+                        }
+                        if (inputSequence != null && inputSequence.length() > 1) {
+                            inputSequence = inputSequence.toString().substring(0, 1);
+                        }
+                        if (inputSequence != null && inputSequence.length() != 0) {
+                            if (LatinIME.mAppContext != null && LocaleUtils.isNormalKeyLabel(LatinIME.mAppContext.getResources(), inputSequence.toString())) {
+                                PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                        null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                            } else {
+                                PointerTracker.KEYBOARD_TYPED_KEY = null;
+                            }
+                        }
+                    }
                     int totalDeletedLength = lengthToDelete;
                     if (mDeleteCount > Constants.DELETE_ACCELERATE_AT) {
                         // If this is an accelerated (i.e., double) deletion, then we need to
@@ -1269,6 +1332,24 @@ public final class InputLogic {
                         }
                     }
                     StatsUtils.getInstance().onBackspacePressed(totalDeletedLength);
+                    if (mConnection != null) {
+                        CharSequence inputSequence = mConnection.getTextBeforeCursor(1, 0);
+                        if (inputSequence != null && inputSequence.length() == 1) {
+                            PointerTracker.PREV_KEYBOARD_TYPED_KEY = null;
+                            PointerTracker.KEYBOARD_TYPED_KEY = null;
+                        }
+                        if (inputSequence != null && inputSequence.length() > 1) {
+                            inputSequence = inputSequence.toString().substring(0, 1);
+                        }
+                        if (inputSequence != null && inputSequence.length() != 0) {
+                            if (LatinIME.mAppContext != null && LocaleUtils.isNormalKeyLabel(LatinIME.mAppContext.getResources(), inputSequence.toString())) {
+                                PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                        null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                            } else {
+                                PointerTracker.KEYBOARD_TYPED_KEY = null;
+                            }
+                        }
+                    }
                 }
             }
             if (!hasUnlearnedWordBeingDeleted) {
@@ -2356,7 +2437,7 @@ public final class InputLogic {
     private void commitChosenWord(final SettingsValues settingsValues, final String chosenWord,
                                   final int commitType, final String separatorString) {
         final SuggestedWords suggestedWords = mSuggestedWords;
-        final CharSequence chosenWordWithSuggestions =
+        CharSequence chosenWordWithSuggestions =
                 SuggestionSpanUtils.getTextWithSuggestionSpan(mLatinIME, chosenWord,
                         suggestedWords);
         // When we are composing word, get previous words information from the 2nd previous word

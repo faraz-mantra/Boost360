@@ -59,4 +59,8 @@ public abstract class BaseAdapter<T extends AllSuggestionModel> {
     void onItemClicked(AllSuggestionModel model) {
         mItemClickListener.onItemClick(model);
     }
+
+    void unRegisterEventBus(){
+
+    }
 }

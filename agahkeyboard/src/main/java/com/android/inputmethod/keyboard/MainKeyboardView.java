@@ -34,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
 import com.android.inputmethod.keyboard.internal.DrawingHandler;
@@ -173,6 +174,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
     private final DrawingHandler mDrawingHandler = new DrawingHandler(this);
 
     private MainKeyboardAccessibilityDelegate mAccessibilityDelegate;
+    public static int MAIN_KEYBOARD_HEIGHT;
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
@@ -438,6 +440,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
 
     private void locatePreviewPlacerView() {
         getLocationInWindow(mOriginCoords);
+        MAIN_KEYBOARD_HEIGHT = getHeight();
         mDrawingPreviewPlacerView.setKeyboardViewGeometry(mOriginCoords, getWidth(), getHeight());
     }
 
@@ -578,7 +581,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
             return null;
         }
         Keyboard moreKeysKeyboard = mMoreKeysKeyboardCache.get(key);
-        if (moreKeysKeyboard == null) {
+        if (moreKeysKeyboard == null || key.isHeaderKey()) {
             // {@link KeyPreviewDrawParams#mPreviewVisibleWidth} should have been set at
             // {@link KeyPreviewChoreographer#placeKeyPreview(Key,TextView,KeyboardIconsSet,KeyDrawParams,int,int[]},
             // though there may be some chances that the value is zero. <code>width == 0</code>
@@ -619,6 +622,9 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
         final Key key = tracker.getKey();
         if (key == null) {
             return;
+        }
+        if (key.isHeaderKey()) {
+            PointerTracker.KEYBOARD_TYPED_KEY = null;
         }
         final KeyboardActionListener listener = mKeyboardActionListener;
         if (key.hasNoPanelAutoMoreKey()) {
@@ -835,7 +841,11 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
     @Override
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
         // Overlay a dark rectangle to dim.
         if (mNeedsToDimEntireKeyboard) {
             canvas.drawRect(0.0f, 0.0f, getWidth(), getHeight(), mBackgroundDimAlphaPaint);
@@ -939,7 +949,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
         // paint.setColor(colorProfile.getIcon());
         paint.setAlpha(mLanguageOnSpacebarAnimAlpha);
         paint.setColor(Color.WHITE);
-        canvas.drawText("SPACE", width / 2, baseline - descent, paint);
+        canvas.drawText(getResources().getString(R.string.text_space), width / 2, baseline - descent, paint);
         paint.clearShadowLayer();
         paint.setTextScaleX(1.0f);
     }

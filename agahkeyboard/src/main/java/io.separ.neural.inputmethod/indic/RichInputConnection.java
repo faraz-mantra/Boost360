@@ -78,7 +78,7 @@ import static io.separ.neural.inputmethod.Utils.SwipeUtils.changedLanguage;
 
 /**
  * Enrichment class for InputConnection to simplify interaction and add functionality.
- *
+ * <p>
  * This class serves as a wrapper to be able to simply add hooks to any calls to the underlying
  * InputConnection. It also keeps track of a number of things to avoid having to call upon IPC
  * all the time to find out what text is in the buffer, when we need it to determine caps mode
@@ -141,6 +141,7 @@ public final class RichInputConnection {
 
     InputConnection mIC;
     int mNestLevel;
+
     public RichInputConnection(final InputMethodService parent) {
         mParent = parent;
         mIC = null;
@@ -165,14 +166,14 @@ public final class RichInputConnection {
         }
         final String reference = (beforeCursor.length() <= actualLength) ? beforeCursor.toString()
                 : beforeCursor.subSequence(beforeCursor.length() - actualLength,
-                        beforeCursor.length()).toString();
+                beforeCursor.length()).toString();
         if (et.selectionStart != mExpectedSelStart
                 || !(reference.equals(internal.toString()))) {
             final String context = "Expected selection start = " + mExpectedSelStart
                     + "\nActual selection start = " + et.selectionStart
                     + "\nExpected text = " + internal.length() + ' ' + internal
                     + "\nActual text = " + reference.length() + ' ' + reference;
-            ((LatinIME)mParent).debugDumpStateAndCrashWithException(context);
+            ((LatinIME) mParent).debugDumpStateAndCrashWithException(context);
         } else {
             Log.e(TAG, DebugLogUtils.getStackTrace(2));
             Log.e(TAG, "Exp <> Actual : " + mExpectedSelStart + " <> " + et.selectionStart);
@@ -181,7 +182,11 @@ public final class RichInputConnection {
 
     public int getTextLenght() {
         CharSequence selectedText = getSelectedText(0);
-        return (getTextAfterCursor(512, 0).length() + getTextBeforeCursor(512, 0).length()) + (selectedText == null ? 0 : selectedText.length());
+        Log.i(RichInputConnection.class.getName(), "getTextAfterCursor(512, 0) " + getTextAfterCursor(512, 0) + " selectedText - > " +
+                selectedText);
+        return (getTextAfterCursor(512, 0) != null ? getTextAfterCursor(512, 0).length() : 0)
+                + (getTextBeforeCursor(512, 0) != null ? getTextBeforeCursor(512, 0).length() : 0) + (selectedText == null ? 0
+                : selectedText.length());
     }
 
     public void beginBatchEdit() {
@@ -211,22 +216,22 @@ public final class RichInputConnection {
 
     /**
      * Reset the cached text and retrieve it again from the editor.
-     *
+     * <p>
      * This should be called when the cursor moved. It's possible that we can't connect to
      * the application when doing this; notably, this happens sometimes during rotation, probably
      * because of a race condition in the framework. In this case, we just can't retrieve the
      * data, so we empty the cache and note that we don't know the new cursor position, and we
      * return false so that the caller knows about this and can retry later.
      *
-     * @param newSelStart the new position of the selection start, as received from the system.
-     * @param newSelEnd the new position of the selection end, as received from the system.
+     * @param newSelStart             the new position of the selection start, as received from the system.
+     * @param newSelEnd               the new position of the selection end, as received from the system.
      * @param shouldFinishComposition whether we should finish the composition in progress.
      * @return true if we were able to connect to the editor successfully, false otherwise. When
-     *   this method returns false, the caches could not be correctly refreshed so they were only
-     *   reset: the caller should try again later to return to normal operation.
+     * this method returns false, the caches could not be correctly refreshed so they were only
+     * reset: the caller should try again later to return to normal operation.
      */
     public boolean resetCachesUponCursorMoveAndReturnSuccess(final int newSelStart,
-            final int newSelEnd, final boolean shouldFinishComposition) {
+                                                             final int newSelEnd, final boolean shouldFinishComposition) {
         mExpectedSelStart = newSelStart;
         mExpectedSelEnd = newSelEnd;
         mComposingText.setLength(0);
@@ -290,8 +295,8 @@ public final class RichInputConnection {
 
     static int firstDivergence(String str1, String str2) {
         int length = str1.length() > str2.length() ? str2.length() : str1.length();
-        for(int i = 0; i < length; i++) {
-            if(str1.charAt(i) != str2.charAt(i)) {
+        for (int i = 0; i < length; i++) {
+            if (str1.charAt(i) != str2.charAt(i)) {
                 return i;
             }
         }
@@ -300,10 +305,11 @@ public final class RichInputConnection {
 
     /**
      * Synonym of {@code commitTextWithBackgroundColor(text, newCursorPosition, Color.TRANSPARENT}.
-     * @param text The text to commit. This may include styles.
-     * See {@link InputConnection#commitText(CharSequence, int)}.
+     *
+     * @param text              The text to commit. This may include styles.
+     *                          See {@link InputConnection#commitText(CharSequence, int)}.
      * @param newCursorPosition The new cursor position around the text.
-     * See {@link InputConnection#commitText(CharSequence, int)}.
+     *                          See {@link InputConnection#commitText(CharSequence, int)}.
      */
     public void commitText(final CharSequence text, final int newCursorPosition) {
         commitTextWithBackgroundColor(text, newCursorPosition, Color.TRANSPARENT, text.length());
@@ -311,22 +317,23 @@ public final class RichInputConnection {
 
     /**
      * Calls {@link InputConnection#commitText(CharSequence, int)} with the given background color.
-     * @param text The text to commit. This may include styles.
-     * See {@link InputConnection#commitText(CharSequence, int)}.
+     *
+     * @param text              The text to commit. This may include styles.
+     *                          See {@link InputConnection#commitText(CharSequence, int)}.
      * @param newCursorPosition The new cursor position around the text.
-     * See {@link InputConnection#commitText(CharSequence, int)}.
-     * @param color The background color to be attached. Set {@link Color#TRANSPARENT} to disable
-     * the background color. Note that this method specifies {@link BackgroundColorSpan} with
-     * {@link Spanned#SPAN_COMPOSING} flag, meaning that the background color persists until
-     * {@link #finishComposingText()} is called.
+     *                          See {@link InputConnection#commitText(CharSequence, int)}.
+     * @param color             The background color to be attached. Set {@link Color#TRANSPARENT} to disable
+     *                          the background color. Note that this method specifies {@link BackgroundColorSpan} with
+     *                          {@link Spanned#SPAN_COMPOSING} flag, meaning that the background color persists until
+     *                          {@link #finishComposingText()} is called.
      * @param coloredTextLength the length of text, in Java chars, which should be rendered with
-     * the given background color.
+     *                          the given background color.
      */
     public void commitTextWithBackgroundColor(final CharSequence text, final int newCursorPosition,
-            final int color, final int coloredTextLength) {
+                                              final int color, final int coloredTextLength) {
         if (DEBUG_BATCH_NESTING) checkBatchEdit();
         if (DEBUG_PREVIOUS_TEXT) checkConsistencyForDebug();
-        if(text.equals(" ") && changedLanguage) {
+        if (text.equals(" ") && changedLanguage) {
             changedLanguage = false;
             return;
         }
@@ -357,7 +364,7 @@ public final class RichInputConnection {
     /**
      * Removes the background color from the highlighted text if necessary. Should be called while
      * there is no on-going composing text.
-     *
+     * <p>
      * <p>CAVEAT: This method internally calls {@link InputConnection#finishComposingText()}.
      * Be careful of any unexpected side effects.</p>
      */
@@ -385,7 +392,7 @@ public final class RichInputConnection {
 
     /**
      * Gets the caps modes we should be in after this specific string.
-     *
+     * <p>
      * This returns a bit set of TextUtils#CAP_MODE_*, masked by the inputType argument.
      * This method also supports faking an additional space after the string passed in argument,
      * to support cases where a space will be added automatically, like in phantom space
@@ -393,13 +400,13 @@ public final class RichInputConnection {
      * Note that for English, we are using American typography rules (which are not specific to
      * American English, it's just the most common set of rules for English).
      *
-     * @param inputType a mask of the caps modes to test for.
+     * @param inputType              a mask of the caps modes to test for.
      * @param spacingAndPunctuations the values of the settings to use for locale and separators.
-     * @param hasSpaceBefore if we should consider there should be a space after the string.
+     * @param hasSpaceBefore         if we should consider there should be a space after the string.
      * @return the caps modes that should be on as a set of bits
      */
     public int getCursorCapsMode(final int inputType,
-            final SpacingAndPunctuations spacingAndPunctuations, final boolean hasSpaceBefore) {
+                                 final SpacingAndPunctuations spacingAndPunctuations, final boolean hasSpaceBefore) {
         mIC = mParent.getCurrentInputConnection();
         if (null == mIC) return Constants.TextUtils.CAP_MODE_OFF;
         if (!TextUtils.isEmpty(mComposingText)) {
@@ -431,12 +438,12 @@ public final class RichInputConnection {
 
     private final String twoCharEmojiRegex = "([🇦-🇿]){2}$"; //A to Z
 
-    public int getDeleteCountConsideringEmoji(){
+    public int getDeleteCountConsideringEmoji() {
         Matcher matchEmo = Pattern.compile(twoCharEmojiRegex).matcher(mCommittedTextBeforeComposingText.toString());
-        if(matchEmo.find())
+        if (matchEmo.find())
             return 4;
         int code = getCodePointBeforeCursor();
-        if(code == Constants.NOT_A_CODE)
+        if (code == Constants.NOT_A_CODE)
             return code;
         return Character.isSupplementaryCodePoint(code) ? 2 : 1;
     }
@@ -572,40 +579,40 @@ public final class RichInputConnection {
             // sending the key events for only Enter and Backspace because some applications
             // mistakenly catch them to do some stuff.
             switch (keyEvent.getKeyCode()) {
-            case KeyEvent.KEYCODE_ENTER:
-                mCommittedTextBeforeComposingText.append('\n');
-                mExpectedSelStart += 1;
-                mExpectedSelEnd = mExpectedSelStart;
-                break;
-            case KeyEvent.KEYCODE_DEL:
-                if (0 == mComposingText.length()) {
-                    if (mCommittedTextBeforeComposingText.length() > 0) {
-                        mCommittedTextBeforeComposingText.delete(
-                                mCommittedTextBeforeComposingText.length() - 1,
-                                mCommittedTextBeforeComposingText.length());
-                    }
-                } else {
-                    mComposingText.delete(mComposingText.length() - 1, mComposingText.length());
-                }
-                if (mExpectedSelStart > 0 && mExpectedSelStart == mExpectedSelEnd) {
-                    // TODO: Handle surrogate pairs.
-                    mExpectedSelStart -= 1;
-                }
-                mExpectedSelEnd = mExpectedSelStart;
-                break;
-            case KeyEvent.KEYCODE_UNKNOWN:
-                if (null != keyEvent.getCharacters()) {
-                    mCommittedTextBeforeComposingText.append(keyEvent.getCharacters());
-                    mExpectedSelStart += keyEvent.getCharacters().length();
+                case KeyEvent.KEYCODE_ENTER:
+                    mCommittedTextBeforeComposingText.append('\n');
+                    mExpectedSelStart += 1;
                     mExpectedSelEnd = mExpectedSelStart;
-                }
-                break;
-            default:
-                final String text = StringUtils.newSingleCodePointString(keyEvent.getUnicodeChar());
-                mCommittedTextBeforeComposingText.append(text);
-                mExpectedSelStart += text.length();
-                mExpectedSelEnd = mExpectedSelStart;
-                break;
+                    break;
+                case KeyEvent.KEYCODE_DEL:
+                    if (0 == mComposingText.length()) {
+                        if (mCommittedTextBeforeComposingText.length() > 0) {
+                            mCommittedTextBeforeComposingText.delete(
+                                    mCommittedTextBeforeComposingText.length() - 1,
+                                    mCommittedTextBeforeComposingText.length());
+                        }
+                    } else {
+                        mComposingText.delete(mComposingText.length() - 1, mComposingText.length());
+                    }
+                    if (mExpectedSelStart > 0 && mExpectedSelStart == mExpectedSelEnd) {
+                        // TODO: Handle surrogate pairs.
+                        mExpectedSelStart -= 1;
+                    }
+                    mExpectedSelEnd = mExpectedSelStart;
+                    break;
+                case KeyEvent.KEYCODE_UNKNOWN:
+                    if (null != keyEvent.getCharacters()) {
+                        mCommittedTextBeforeComposingText.append(keyEvent.getCharacters());
+                        mExpectedSelStart += keyEvent.getCharacters().length();
+                        mExpectedSelEnd = mExpectedSelStart;
+                    }
+                    break;
+                default:
+                    final String text = StringUtils.newSingleCodePointString(keyEvent.getUnicodeChar());
+                    mCommittedTextBeforeComposingText.append(text);
+                    mExpectedSelStart += text.length();
+                    mExpectedSelEnd = mExpectedSelStart;
+                    break;
             }
         }
         if (null != mIC) {
@@ -653,11 +660,11 @@ public final class RichInputConnection {
 
     /**
      * Set the selection of the text editor.
-     *
+     * <p>
      * Calls through to {@link InputConnection#setSelection(int, int)}.
      *
      * @param start the character index where the selection should start.
-     * @param end the character index where the selection should end.
+     * @param end   the character index where the selection should end.
      * @return Returns true on success, false on failure: either the input connection is no longer
      * valid when setting the selection or when retrieving the text cache at that point, or
      * invalid arguments were passed.
@@ -728,7 +735,7 @@ public final class RichInputConnection {
                 if (!(reference.equals(internal.toString()))) {
                     final String context =
                             "Expected text = " + internal + "\nActual text = " + reference;
-                    ((LatinIME)mParent).debugDumpStateAndCrashWithException(context);
+                    ((LatinIME) mParent).debugDumpStateAndCrashWithException(context);
                 }
             }
         }
@@ -741,23 +748,23 @@ public final class RichInputConnection {
     }
 
     private static boolean isPartOfCompositionForScript(final int codePoint,
-            final SpacingAndPunctuations spacingAndPunctuations, final int scriptId, final boolean transliteration) {
+                                                        final SpacingAndPunctuations spacingAndPunctuations, final int scriptId, final boolean transliteration) {
         // We always consider word connectors part of compositions.
         return spacingAndPunctuations.isWordConnector(codePoint)
                 // Otherwise, it's part of composition if it's part of script and not a separator.
                 || (!spacingAndPunctuations.isWordSeparator(codePoint)
-                        && (transliteration || ScriptUtils.isLetterPartOfScript(codePoint, scriptId)));
+                && (transliteration || ScriptUtils.isLetterPartOfScript(codePoint, scriptId)));
     }
 
     /**
      * Returns the text surrounding the cursor.
      *
      * @param spacingAndPunctuations the rules for spacing and punctuation
-     * @param scriptId the script we consider to be writing words, as one of ScriptUtils.SCRIPT_*
+     * @param scriptId               the script we consider to be writing words, as one of ScriptUtils.SCRIPT_*
      * @return a range containing the text surrounding the cursor
      */
     public TextRange getWordRangeAtCursor(final SpacingAndPunctuations spacingAndPunctuations,
-            final int scriptId, final boolean transliteration) {
+                                          final int scriptId, final boolean transliteration) {
         mIC = mParent.getCurrentInputConnection();
         if (mIC == null) {
             return null;
@@ -797,14 +804,14 @@ public final class RichInputConnection {
 
         final boolean hasUrlSpans =
                 SpannableStringUtils.hasUrlSpans(before, startIndexInBefore, before.length())
-                || SpannableStringUtils.hasUrlSpans(after, 0, endIndexInAfter);
+                        || SpannableStringUtils.hasUrlSpans(after, 0, endIndexInAfter);
         // We don't use TextUtils#concat because it copies all spans without respect to their
         // nature. If the text includes a PARAGRAPH span and it has been split, then
         // TextUtils#concat will crash when it tries to concat both sides of it.
         return new TextRange(
                 SpannableStringUtils.concatWithNonParagraphSuggestionSpansOnly(before, after),
-                        startIndexInBefore, before.length() + endIndexInAfter, before.length(),
-                        hasUrlSpans);
+                startIndexInBefore, before.length() + endIndexInAfter, before.length(),
+                hasUrlSpans);
     }
 
     public boolean isCursorTouchingWord(final SpacingAndPunctuations spacingAndPunctuations) {
@@ -896,7 +903,7 @@ public final class RichInputConnection {
 
     /**
      * Heuristic to determine if this is an expected update of the cursor.
-     *
+     * <p>
      * Sometimes updates to the cursor position are late because of their asynchronous nature.
      * This method tries to determine if this update is one, based on the values of the cursor
      * position in the update, and the currently expected position of the cursor according to
@@ -910,12 +917,12 @@ public final class RichInputConnection {
      *
      * @param oldSelStart The value of the old selection in the update.
      * @param newSelStart The value of the new selection in the update.
-     * @param oldSelEnd The value of the old selection end in the update.
-     * @param newSelEnd The value of the new selection end in the update.
+     * @param oldSelEnd   The value of the old selection end in the update.
+     * @param newSelEnd   The value of the new selection end in the update.
      * @return whether this is a belated expected update or not.
      */
     public boolean isBelatedExpectedUpdate(final int oldSelStart, final int newSelStart,
-            final int oldSelEnd, final int newSelEnd) {
+                                           final int oldSelEnd, final int newSelEnd) {
         // This update is "belated" if we are expecting it. That is, mExpectedSelStart and
         // mExpectedSelEnd match the new values that the TextView is updating TO.
         if (mExpectedSelStart == newSelStart && mExpectedSelEnd == newSelEnd) return true;
@@ -936,7 +943,7 @@ public final class RichInputConnection {
 
     /**
      * Looks at the text just before the cursor to find out if it looks like a URL.
-     *
+     * <p>
      * The weakest point here is, if we don't have enough text bufferized, we may fail to realize
      * we are in URL situation, but other places in this class have the same limitation and it
      * does not matter too much in the practice.
@@ -947,7 +954,7 @@ public final class RichInputConnection {
 
     /**
      * Looks at the text just before the cursor to find out if we are inside a double quote.
-     *
+     * <p>
      * As with #textBeforeCursorLooksLikeURL, this is dependent on how much text we have cached.
      * However this won't be a concrete problem in most situations, as the cache is almost always
      * long enough for this use.
@@ -956,7 +963,7 @@ public final class RichInputConnection {
         return StringUtils.isInsideDoubleQuoteOrAfterDigit(mCommittedTextBeforeComposingText);
     }
 
-    private static final String[] OPERATION_NAMES = new String[] {
+    private static final String[] OPERATION_NAMES = new String[]{
             "GET_TEXT_BEFORE_CURSOR",
             "GET_TEXT_AFTER_CURSOR",
             "GET_WORD_RANGE_AT_CURSOR",
@@ -990,7 +997,7 @@ public final class RichInputConnection {
             final int textLength = textBeforeCursor.length();
             if (textLength < Constants.EDITOR_CONTENTS_CACHE_SIZE
                     && (textLength > mExpectedSelStart
-                            ||  mExpectedSelStart < Constants.EDITOR_CONTENTS_CACHE_SIZE)) {
+                    || mExpectedSelStart < Constants.EDITOR_CONTENTS_CACHE_SIZE)) {
                 // It should not be possible to have only one of those variables be
                 // NOT_A_CURSOR_POSITION, so if they are equal, either the selection is zero-sized
                 // (simple cursor, no selection) or there is no cursor/we don't know its pos
@@ -1028,12 +1035,12 @@ public final class RichInputConnection {
 
     /**
      * Work around a bug that was present before Jelly Bean upon rotation.
-     *
+     * <p>
      * Before Jelly Bean, there is a bug where setComposingRegion and other committing
      * functions on the input connection get ignored until the cursor moves. This method works
      * around the bug by wiggling the cursor first, which reactivates the connection and has
      * the subsequent methods work, then restoring it to its original position.
-     *
+     * <p>
      * On platforms on which this method is not present, this is a no-op.
      */
     public void maybeMoveTheCursorAroundAndRestoreToWorkaroundABug() {
@@ -1051,17 +1058,18 @@ public final class RichInputConnection {
 
     /**
      * Requests the editor to call back {@link InputMethodManager#updateCursorAnchorInfo}.
-     * @param enableMonitor {@code true} to request the editor to call back the method whenever the
-     * cursor/anchor position is changed.
+     *
+     * @param enableMonitor            {@code true} to request the editor to call back the method whenever the
+     *                                 cursor/anchor position is changed.
      * @param requestImmediateCallback {@code true} to request the editor to call back the method
-     * as soon as possible to notify the current cursor/anchor position to the input method.
+     *                                 as soon as possible to notify the current cursor/anchor position to the input method.
      * @return {@code true} if the request is accepted. Returns {@code false} otherwise, which
      * includes "not implemented" or "rejected" or "temporarily unavailable" or whatever which
      * prevents the application from fulfilling the request. (TODO: Improve the API when it turns
      * out that we actually need more detailed error codes)
      */
     public boolean requestCursorUpdates(final boolean enableMonitor,
-            final boolean requestImmediateCallback) {
+                                        final boolean requestImmediateCallback) {
         mIC = mParent.getCurrentInputConnection();
         final boolean scheduled = null != mIC && InputConnectionCompatUtils.requestCursorUpdates(mIC, enableMonitor, requestImmediateCallback);
         mCursorAnchorInfoMonitorEnabled = (scheduled && enableMonitor);
@@ -1194,7 +1202,7 @@ public final class RichInputConnection {
     }
 
     public Intent doCommitContent(@NonNull String description, @NonNull String mimeType,
-                                 @NonNull File file) {
+                                  @NonNull File file) {
         final EditorInfo editorInfo = mParent.getCurrentInputEditorInfo();
 
         final Uri contentUri = FileProvider.getUriForFile(mParent.getApplicationContext(), AUTHORITY, file);
@@ -1208,7 +1216,7 @@ public final class RichInputConnection {
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
             return Intent.createChooser(shareIntent, "Choose an app");
         }
-        if(!isCommitContentSupported(editorInfo, mimeType)){
+        if (!isCommitContentSupported(editorInfo, mimeType)) {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -1239,7 +1247,7 @@ public final class RichInputConnection {
                 // TODO: Use revokeUriPermission to revoke as needed.
                 mParent.grantUriPermission(
                         editorInfo.packageName, contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.e(TAG, "grantUriPermission failed packageName=" + editorInfo.packageName
                         + " contentUri=" + contentUri, e);
             }
@@ -1281,7 +1289,7 @@ public final class RichInputConnection {
                 if (!(reference.equals(internal.toString()))) {
                     final String context =
                             "Expected text = " + internal + "\nActual text = " + reference;
-                    ((LatinIME)mParent).debugDumpStateAndCrashWithException(context);
+                    ((LatinIME) mParent).debugDumpStateAndCrashWithException(context);
                 }
             }
         }

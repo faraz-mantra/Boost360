@@ -1,6 +1,10 @@
 package com.android.inputmethod.keyboard.top.actionrow;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,9 +24,14 @@ import com.android.inputmethod.keyboard.KeyboardActionListener;
 import com.android.inputmethod.keyboard.emojifast.EmojiView;
 import com.android.inputmethod.keyboard.emojifast.RecentEmojiPageModel;
 import com.android.inputmethod.keyboard.top.ShowSuggestionsEventAnimated;
+import com.android.inputmethod.keyboard.top.UpdateActionBarEvent;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import io.separ.neural.inputmethod.colors.ColorManager;
 import io.separ.neural.inputmethod.colors.ColorProfile;
@@ -42,12 +53,17 @@ import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 public class ActionRowView extends ViewPager implements ColorManager.OnColorChange, View.OnTouchListener {
     public static final String[] DEFAULT_SUGGESTED_EMOJI;
     private static final int[] SERVICE_IMAGE_IDS;
+    private EventBusHandler mEventHandler;
     private ActionRowAdapter adapter;
     private String[] layoutToShow;
     private Listener mListener;
     private HashMap<String, LinearLayout> layouts;
     private static final String[] DEFAULT_SERVICES;
     private KeyboardActionListener keyboardActionListener;
+    private TextView tvUpdates;
+    private TextView tvProducts;
+    private TextView tvPhotos;
+    private TextView tvDetails;
 
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getActionMasked() != MotionEvent.ACTION_DOWN) {
@@ -199,7 +215,87 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
 
     public ActionRowView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
+        setLocale(getContext(), locale);
         init();
+        this.mEventHandler = new EventBusHandler();
+        this.mEventHandler.register();
+    }
+
+    public class EventBusHandler {
+        public void register() {
+            if (!EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().register(this);
+            }
+        }
+
+        public void unregister() {
+            if (EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().unregister(this);
+            }
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEventMainThread(UpdateActionBarEvent event) {
+            if (tvUpdates != null) {
+                tvUpdates.setText(R.string.tv_updates);
+                tvProducts.setText(R.string.tv_products);
+                tvPhotos.setText(R.string.tv_photos);
+                tvDetails.setText(R.string.tv_details);
+
+                tvUpdates.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvProducts.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvPhotos.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvDetails.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            }
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        this.mEventHandler.unregister();
+    }
+
+    public static Context setLocale(Context context, String language) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return updateResources(context, language);
+        }
+
+        return updateResourcesLegacy(context, language);
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private static Context updateResources(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+
+        return context.createConfigurationContext(configuration);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Context updateResourcesLegacy(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Resources resources = context.getResources();
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
+        return context;
     }
 
     public void setAdapter(ActionRowAdapter adapter) {
@@ -290,7 +386,7 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             @Override
             public void onClick(final View v) {
                 ivBack.setClickable(false);
-                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, ivBack.getX() + ivBack.getWidth()/2, ivBack.getY() + ivBack.getHeight()/2);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, ivBack.getX() + ivBack.getWidth() / 2, ivBack.getY() + ivBack.getHeight() / 2);
                 scaleAnimation.setDuration(200);
                 scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -322,13 +418,17 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
                 ivBack.startAnimation(scaleAnimation);
             }
         });
-        TextView tvUpdates = layout.findViewById(R.id.tv_updates);
+        tvUpdates = layout.findViewById(R.id.tv_updates);
+        tvUpdates.setText(R.string.tv_updates);
         tvUpdates.setOnClickListener(new serviceClickListener(0));
-        TextView tvProducts = layout.findViewById(R.id.tv_products);
+        tvProducts = layout.findViewById(R.id.tv_products);
+        tvProducts.setText(R.string.tv_products);
         tvProducts.setOnClickListener(new serviceClickListener(1));
-        TextView tvPhotos = layout.findViewById(R.id.tv_photos);
+        tvPhotos = layout.findViewById(R.id.tv_photos);
+        tvPhotos.setText(R.string.tv_photos);
         tvPhotos.setOnClickListener(new serviceClickListener(2));
-        TextView tvDetails = layout.findViewById(R.id.tv_details);
+        tvDetails = layout.findViewById(R.id.tv_details);
+        tvDetails.setText(R.string.tv_details);
         tvDetails.setOnClickListener(new serviceClickListener(3));
         return layout;
     }

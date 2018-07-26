@@ -52,6 +52,7 @@
         <item name="keyTextColor">@color/white</item>
         <item name="keyTextInactivatedColor">@color/white</item>
         <item name="functionalTextColor">@color/white</item>
+        <item name="headerKeyTextColor">@color/key_text_color_lxx_dark</item>
         <item name="keyHintLetterColor">@color/white</item>
         <item name="keyHintLabelColor">@color/white</item>
         <item name="keyShiftedLetterHintInactivatedColor">@color/white</item>

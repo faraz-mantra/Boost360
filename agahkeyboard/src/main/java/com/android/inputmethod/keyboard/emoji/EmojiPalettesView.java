@@ -44,6 +44,7 @@ import android.widget.TabWidget;
 import com.android.inputmethod.keyboard.KeyboardActionListener;
 import com.android.inputmethod.keyboard.KeyboardLayoutSet;
 import com.android.inputmethod.keyboard.KeyboardView;
+import com.android.inputmethod.keyboard.MainKeyboardView;
 import com.android.inputmethod.keyboard.emojifast.EmojiPageModel;
 import com.android.inputmethod.keyboard.emojifast.EmojiPageView;
 import com.android.inputmethod.keyboard.emojifast.EmojiPages;
@@ -158,14 +159,14 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         // The main keyboard expands to the entire this {@link KeyboardView}.
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
-        final int height = ResourceUtils.getDefaultKeyboardHeight(res) /*-
-                res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)*/
-                + getPaddingTop() + getPaddingBottom() - 40;
+        int height = MainKeyboardView.MAIN_KEYBOARD_HEIGHT;
         setMeasuredDimension(width, height);
+
     }
 
     private static class DeleteKeyOnTouchListener implements OnTouchListener {
-        static final long MAX_REPEAT_COUNT_TIME = TimeUnit.SECONDS.toMillis(30);
+        static final long MAX_REPEAT_COUNT_TIME = TimeUnit.SECONDS.toMillis(
+                30);
         final long mKeyRepeatStartTimeout;
         final long mKeyRepeatInterval;
 

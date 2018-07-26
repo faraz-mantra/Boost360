@@ -250,6 +250,7 @@ public final class Constants {
     // Code value representing the code is not specified.
     public static final int CODE_UNSPECIFIED = -15;
     public static final int CODE_INLINESETTINGS = -16;
+    public static final int CODE_SWITCH_SCREEN_MAIN = -17;
 
     public static boolean isLetterCode(final int code) {
         return code >= CODE_SPACE;
@@ -274,6 +275,7 @@ public final class Constants {
         case CODE_TAB: return "tab";
         case CODE_ENTER: return "enter";
         case CODE_SPACE: return "space";
+            case CODE_SWITCH_SCREEN_MAIN: return "switch";
         default:
             if (code < CODE_SPACE) return String.format("\\u%02X", code);
             if (code < 0x100) return String.format("%c", code);

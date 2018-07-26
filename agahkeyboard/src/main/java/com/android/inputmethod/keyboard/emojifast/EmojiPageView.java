@@ -19,7 +19,7 @@ import io.separ.neural.inputmethod.indic.R;
 public class EmojiPageView extends FrameLayout {
     private static final String TAG = EmojiPageView.class.getSimpleName();
 
-    private GridView               grid;
+    private GridView grid;
 
     public EmojiPageView(Context context) {
         this(context, null);
@@ -47,27 +47,28 @@ public class EmojiPageView extends FrameLayout {
     }
 
     public void setEmojiSelectedListener(EmojiSelectionListener listener) {
-        ((EmojiGridAdapter)grid.getAdapter()).setListener(listener);
+        ((EmojiGridAdapter) grid.getAdapter()).setListener(listener);
     }
 
     private static class EmojiGridAdapter extends BaseAdapter {
 
-        protected final Context                context;
-        private   final int                    emojiSize;
+        protected final Context context;
+        private final int emojiSize;
         private final String[] modelEmojis;
         private EmojiSelectionListener listener;
 
         public EmojiGridAdapter(Context context, EmojiPageModel model) {
-            this.context   = context;
+            this.context = context;
             this.emojiSize = (int) context.getResources().getDimension(R.dimen.emoji_drawer_size);
             modelEmojis = model.getEmoji();
         }
 
-        public void setListener(EmojiSelectionListener listener){
+        public void setListener(EmojiSelectionListener listener) {
             this.listener = listener;
         }
 
-        @Override public int getCount() {
+        @Override
+        public int getCount() {
             return modelEmojis.length;
         }
 
@@ -78,7 +79,7 @@ public class EmojiPageView extends FrameLayout {
 
         @Override
         public long getItemId(int position) {
-            if(listener != null)
+            if (listener != null)
                 listener.onEmojiSelected(modelEmojis[position]);
             return position;
         }
@@ -88,7 +89,7 @@ public class EmojiPageView extends FrameLayout {
             final EmojiView view;
             final int pad = context.getResources().getDimensionPixelSize(R.dimen.emoji_drawer_item_padding);
             if (convertView != null && convertView instanceof EmojiView) {
-                view = (EmojiView)convertView;
+                view = (EmojiView) convertView;
             } else {
                 final EmojiView emojiView = new EmojiView(context);
                 emojiView.setPadding(pad, pad, pad, pad);

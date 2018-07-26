@@ -85,7 +85,8 @@ public class WildFireAdsActivity extends AppCompatActivity{
 
     private void getWildFireData(String sourceId){
         showProgress();
-        WildFireApis apis = Constants.restAdapter.create(WildFireApis.class);
+        WildFireApis apis = WildFireApis.adapter.create(WildFireApis.class);
+        //WildFireApis apis = Constants.restAdapter.create(WildFireApis.class);
         apis.getWildFireData(sourceId, Constants.clientId, new Callback<WildFireDataModel>() {
             @Override
             public void success(WildFireDataModel wildFireDataModel, Response response) {
