@@ -25,7 +25,8 @@ public interface WildFireApis {
     @GET("/v1/account/keywordstats")// google keywords data
     void getGoogleStats(@QueryMap Map map, Callback<ArrayList<WildFireKeyStatsModel>> response);
 
-    @GET("/WildFire/v1/account/detailswithexternalsourceid/{sourceId}")
+    //@GET("/WildFire/v1/account/detailswithexternalsourceid/{sourceId}")
+    @GET("/v1/account/detailswithexternalsourceid/{sourceId}")
     void getWildFireData(@Path("sourceId") String sourceId, @Query("clientId") String clientId, Callback<WildFireDataModel> response);
 
     @GET("/v1/account/wildfirechanneltype")// ads enabled channel types

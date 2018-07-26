@@ -12,4 +12,7 @@
     <dimen name="search_results_height">112.0dip</dimen>
     <dimen name="preview_img_size">30.0dip</dimen>
     <dimen name="spb_default_stroke_width">2.0dip</dimen>
+    <dimen name="adapter_item_product_flipped_padding">16dp</dimen>
+    <dimen name="adapter_item_product_flipped_text_size">14sp</dimen>
+    <dimen name="adapter_item_product_keyboard_text_size">18sp</dimen>
 </resources>

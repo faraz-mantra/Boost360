@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,10 +43,13 @@ import com.android.inputmethod.keyboard.KeyboardLayoutSet.KeyboardLayoutSetExcep
 import com.android.inputmethod.keyboard.internal.KeyboardState;
 import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
 import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
+import com.android.inputmethod.keyboard.top.UpdateActionBarEvent;
 import com.android.inputmethod.keyboard.top.actionrow.ActionRowView;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,6 +92,7 @@ import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 
 public final class KeyboardSwitcher implements KeyboardState.SwitchActions, ItemClickListener, ApiCallToKeyboardViewInterface, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
     private static final String TAG = KeyboardSwitcher.class.getSimpleName();
+    private EventBusHandler mEventHandler;
 
     private SubtypeSwitcher mSubtypeSwitcher;
     private SharedPreferences mPrefs;
@@ -122,6 +125,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private ProgressBar pbOffers;
     private TextView tvImageNotSupported;
+    public static int MAIN_KEYBOARD_HEIGHT;
+    private TextView tvPhotos;
 
     public LatinIME getmLatinIME() {
         return mLatinIME;
@@ -147,6 +152,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     private KeyboardSwitcher() {
         // Intentional empty constructor for singleton.
+
+        mEventHandler = new EventBusHandler();
     }
 
     public static void init(final LatinIME latinIme) {
@@ -185,6 +192,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     public void loadKeyboard(final EditorInfo editorInfo, final SettingsValues settingsValues,
                              final int currentAutoCapsState, final int currentRecapitalizeState) {
         clearResources();
+        mEventHandler.register();
         FontUtils.setCurrentLocale(mSubtypeSwitcher.getCurrentSubtypeLocale().getLanguage());
         FontUtils.setIsEmoji(false);
         final KeyboardLayoutSet.Builder builder = new KeyboardLayoutSet.Builder(
@@ -192,6 +200,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         final Resources res = mThemeContext.getResources();
         final int keyboardWidth = ResourceUtils.getDefaultKeyboardWidth(res);
         final int keyboardHeight = ResourceUtils.getDefaultKeyboardHeight(res);
+        MAIN_KEYBOARD_HEIGHT = keyboardHeight;
         builder.setKeyboardGeometry(keyboardWidth, keyboardHeight);
         builder.setSubtype(mSubtypeSwitcher.getCurrentSubtype());
         builder.setVoiceInputKeyEnabled(settingsValues.mShowsVoiceInputKey);
@@ -225,6 +234,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         if (mKeyboardView != null) {
             mKeyboardView.onHideWindow();
         }
+        // mEventHandler.unregister();
     }
 
     private void setKeyboard(final Keyboard keyboard) {
@@ -352,6 +362,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     }
 
     public void setProductShareKeyboardFrame(final ImePresenterImpl.TabType tabType) {
+        if (tvPhotos != null) {
+            tvPhotos.setText(R.string.tv_photos);
+            deselectBtn.setText(R.string.deselect_all);
+        }
         this.mTabType = tabType;
         shareLayout.setVisibility(View.VISIBLE);
         mKeyboardView.setVisibility(View.INVISIBLE);
@@ -578,6 +592,16 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_SYMBOLS_SHIFTED));
     }
 
+    @Override
+    public void setMainLayoutTwo() {
+        setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_TWO));
+    }
+
+    @Override
+    public void setMainLayoutThree() {
+        setKeyboard(mKeyboardLayoutSet.getKeyboard(KeyboardId.KEYBOARD_MAIN_LAYOUT_THREE));
+    }
+
     // Future method for requesting an updating to the shift state.
     public void requestUpdatingShiftState(final int currentAutoCapsState,
                                           final int currentRecapitalizeState) {
@@ -675,6 +699,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         selectionLayout = shareLayout.findViewById(R.id.cl_selection_layout);
 
         totalImagesTv = shareLayout.findViewById(R.id.tv_total);
+        tvPhotos = shareLayout.findViewById(R.id.photos);
         shareBtn = shareLayout.findViewById(R.id.btn_share);
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1021,6 +1046,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     productList.add(createSuggestionModel("No products available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 shareAdapter.setSuggestionModels(productList);
+                mEventHandler.unregister();
                 break;
             case PHOTOS:
                 isPhotosCompleted = true;
@@ -1031,7 +1057,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     imagesList.add(createSuggestionModel("No photos available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 shareAdapter1.setSuggestionModels(imagesList);*/
+                shareAdapter.unRegisterEventBus();
                 break;
+
         }
     }
 
@@ -1098,5 +1126,28 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     public void hideProgressbar() {
         pbOffers.setVisibility(View.GONE);
+    }
+
+
+    public class EventBusHandler {
+        public void register() {
+            if (!EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().register(this);
+            }
+        }
+
+        public void unregister() {
+            if (EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().unregister(this);
+            }
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEventMainThread(UpdateActionBarEvent event) {
+            if (tvPhotos != null) {
+                tvPhotos.setText(R.string.tv_photos);
+                deselectBtn.setText(R.string.deselect_all);
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
 /*
 **
 ** Copyright 2008, The Android Open Source Project
@@ -207,4 +206,5 @@
     <string name="user_dict_settings_more_languages" msgid="7131268499685180461">"More languages…"</string>
     <string name="user_dict_settings_delete" msgid="110413335187193859">"Delete"</string>
     <string name="user_dict_fast_scroll_alphabet" msgid="5431919401558285473">" ABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
+    <string name="tv_updates">Updates</string>
 </resources>

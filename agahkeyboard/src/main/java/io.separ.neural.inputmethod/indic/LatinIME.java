@@ -17,6 +17,7 @@
 package io.separ.neural.inputmethod.indic;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -40,6 +41,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.PrintWriterPrinter;
 import android.util.Printer;
@@ -56,16 +58,19 @@ import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputBinding;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.inputmethod.keyboard.Key;
 import com.android.inputmethod.keyboard.Keyboard;
 import com.android.inputmethod.keyboard.KeyboardActionListener;
 import com.android.inputmethod.keyboard.KeyboardId;
 import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.android.inputmethod.keyboard.MainKeyboardView;
+import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.keyboard.TextDecoratorUi;
 import com.android.inputmethod.keyboard.sticker.InsertPngEvent;
 import com.android.inputmethod.keyboard.top.ShowActionRowEvent;
@@ -151,6 +156,7 @@ import io.separ.neural.inputmethod.slash.SearchRetryErrorEvent;
 import io.separ.neural.inputmethod.slash.ServiceRequestEvent;
 import nfkeyboard.interface_contracts.PresenterToImeInterface;
 import nfkeyboard.keyboards.ImePresenterImpl;
+import nfkeyboard.util.LocaleUtils;
 import nfkeyboard.util.MixPanelUtils;
 import nfkeyboard.util.SharedPrefUtil;
 
@@ -244,6 +250,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     private TopDisplayController mTopDisplayController;
     private ImePresenterImpl.TabType serviceTab;
+    private boolean isWindowHidden = false;
+    public static Context mResContext;
+    private int mLanguageIndex = 0;
+    public static InputConnection mInputCOnnection;
+    public static Context mAppContext;
 
     @Override
     public void onCopy() {
@@ -379,6 +390,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public InputConnection getImeCurrentInputConnection() {
+        mInputCOnnection = getCurrentInputConnection();
         return getCurrentInputConnection();
     }
 
@@ -747,11 +759,41 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onCreate() {
+        mAppContext = this;
         Fabric.with(this, new Crashlytics());
         Settings.init(this);
         DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
         RichInputMethodManager.init(this);
         mRichImm = RichInputMethodManager.getInstance();
+        PointerTracker.KEYBOARD_TYPED_KEY = null;
+
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLocale(new Locale(locale));
+        } else {
+            configuration.locale = new Locale(locale);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            getApplicationContext().createConfigurationContext(configuration);
+        } else {
+            resources.updateConfiguration(configuration, displayMetrics);
+        }
+        if (locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.SET_ENGLISH_KEYBOARD, null);
+            mLanguageIndex = 0;
+        } else {
+            MixPanelUtils.getInstance().track(MixPanelUtils.SET_HINDI_KEYBOARD, null);
+            mLanguageIndex = 1;
+        }
+        LocaleUtils.initialize(this, locale);
 
         SubtypeSwitcher.init(this);
         KeyboardSwitcher.init(this);
@@ -927,6 +969,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onConfigurationChanged(final Configuration conf) {
+
+        //setInputView(onCreateInputView());
+        LocaleUtils.handleConfigurationChange(this);
+
         SettingsValues settingsValues = mSettings.getCurrent();
         if (settingsValues.mDisplayOrientation != conf.orientation) {
             mHandler.startOrientationChanging();
@@ -1028,7 +1074,72 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
         if (isInputViewShown())
             handleKeyboardColor(editorInfo);
+
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+
+        String locale = ims.getLocale();
+        mResContext = setLocale(getApplicationContext(), locale);
         mHandler.onStartInput(editorInfo, restarting);
+        if (getImeCurrentInputConnection() == null) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_INPUT_CONNECTION_NULL, null);
+        } else if (getImeCurrentInputConnection() != null && !locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
+            CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
+
+            if (inputSequence == null) {
+                PointerTracker.KEYBOARD_TYPED_KEY = null;
+            }
+            if (inputSequence != null) {
+                if (!inputSequence.toString().trim().isEmpty()) {
+                    if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    } else if (LocaleUtils.isNormalKeyLabel(getResources(), inputSequence.toString())) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                    }
+                } else {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                }
+            }
+        }
+    }
+
+
+    public static Context setLocale(Context context, String language) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return updateResources(context, language);
+        }
+
+        return updateResourcesLegacy(context, language);
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private static Context updateResources(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+
+        return context.createConfigurationContext(configuration);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Context updateResourcesLegacy(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Resources resources = context.getResources();
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
+        return context;
     }
 
     @Override
@@ -1064,6 +1175,28 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mInputLogic.onSubtypeChanged(SubtypeLocaleUtils.getCombiningRulesExtraValue(subtype),
                 mSettings.getCurrent());
         loadKeyboard();
+        LocaleUtils.handleConfigurationChange(this);
+        if (getImeCurrentInputConnection() == null) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_INPUT_CONNECTION_NULL, null);
+        } else if (getImeCurrentInputConnection() != null) {
+            CharSequence inputSequence = getImeCurrentInputConnection().getTextBeforeCursor(1, 0);
+
+            if (inputSequence == null) {
+                PointerTracker.KEYBOARD_TYPED_KEY = null;
+            }
+            if (inputSequence != null) {
+                if (!inputSequence.toString().trim().isEmpty()) {
+                    if (Character.UnicodeBlock.of(inputSequence.charAt(0)) != Character.UnicodeBlock.DEVANAGARI) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = null;
+                    } else if (LocaleUtils.isNormalKeyLabel(getResources(), inputSequence.toString())) {
+                        PointerTracker.KEYBOARD_TYPED_KEY = new Key(inputSequence.toString(), 0, 0, inputSequence.toString(),
+                                null, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                    }
+                } else {
+                    PointerTracker.KEYBOARD_TYPED_KEY = null;
+                }
+            }
+        }
     }
 
     private void onStartInputInternal(final EditorInfo editorInfo, final boolean restarting) {
@@ -1255,6 +1388,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     public void onWindowShown() {
         super.onWindowShown();
+        isWindowHidden = false;
         if (this.navManager != null) {
             this.navManager.show();
         }
@@ -1584,6 +1718,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
         if (intent.resolveActivity(getPackageManager()) != null) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_NAVIGATION_THROUGH_KEYBOARD, null);
             startActivity(intent);
         }
     }
@@ -2074,6 +2209,12 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     // boolean onKeyLongPress(final int keyCode, final KeyEvent event);
     // boolean onKeyMultiple(final int keyCode, final int count, final KeyEvent event);
 
+
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        return super.onKeyLongPress(keyCode, event);
+    }
+
     // receive ringer mode change and network state change.
     private final BroadcastReceiver mConnectivityAndRingerModeChangeReceiver =
             new MyBroadcastReceiver();
@@ -2517,6 +2658,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 }
             });
         }
+
     }
 
     public void setMixPanel(Context mContext) {

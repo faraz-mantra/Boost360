@@ -58,8 +58,7 @@ public final class SpacingAndPunctuations {
         mSortedWordSeparators = StringUtils.toSortedCodePointArray(
                 res.getString(R.string.symbols_word_separators));
         mSentenceSeparator = res.getInteger(R.integer.sentence_separator);
-        mSentenceSeparatorAndSpace = new String(new int[] {
-                mSentenceSeparator, Constants.CODE_SPACE }, 0, 2);
+        mSentenceSeparatorAndSpace = res.getString(R.string.separator);
         mCurrentLanguageHasSpaces = res.getBoolean(R.bool.current_language_has_spaces);
         final Locale locale = res.getConfiguration().locale;
         // Heuristic: we use American Typography rules because it's the most common rules for all

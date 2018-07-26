@@ -75,4 +75,10 @@ public class MainAdapter extends RecyclerView.Adapter {
         });
 
     }
+
+    public void unRegisterEventBus() {
+        baseAdapterManager.unRegisterEventBus();
+    }
+
+
 }

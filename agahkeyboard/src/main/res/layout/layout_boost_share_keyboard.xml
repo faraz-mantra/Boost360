@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="4dp"
-            android:text="Photos"
+            android:text="@string/tv_photos"
             android:textColor="@color/white_70"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_total"
@@ -62,7 +62,7 @@
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Deselect all"
+            android:text="@string/deselect_all"
             android:textColor="@color/white_30"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/btn_share" />

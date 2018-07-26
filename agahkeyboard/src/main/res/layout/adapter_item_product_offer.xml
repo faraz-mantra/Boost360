@@ -47,6 +47,7 @@
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:layout_marginBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_offer"
@@ -59,6 +60,7 @@
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:layout_marginBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_product_name"
@@ -72,6 +74,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:maxLines="2"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:ellipsize="end"
         app:layout_constraintHorizontal_weight="1"
         android:gravity="start|center_vertical"
@@ -80,7 +83,6 @@
         app:layout_constraintBaseline_toBaselineOf="@id/et_offer_price"
         app:layout_constraintTop_toBottomOf="@id/border"
         app:layout_constraintStart_toEndOf="@id/card_view_image"
-        android:textSize="14sp"
         android:text="@string/offer_price" />
 
     <EditText
@@ -88,10 +90,10 @@
         android:layout_width="0dp"
         android:focusable="false"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
         android:paddingLeft="8dp"
         android:layout_marginTop="8dp"
         android:maxLines="1"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:paddingTop="0dp"
         android:paddingBottom="8dp"
         android:layout_marginBottom="4dp"
@@ -107,6 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:padding="8dp"
         android:layout_marginRight="4dp"
         app:layout_constraintHorizontal_weight="0.2"
@@ -122,6 +125,7 @@
         android:layout_marginLeft="8dp"
         android:maxLines="2"
         android:ellipsize="end"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:gravity="start|center_vertical"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintTop_toTopOf="@id/card_view_image"
@@ -129,7 +133,6 @@
         app:layout_constraintBottom_toBottomOf="@id/ll_quantity"
         app:layout_constraintStart_toEndOf="@id/card_view_image"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
         android:text="@string/quantity" />
 
     <LinearLayout
@@ -148,6 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:textSize="@dimen/adapter_item_product_flipped_text_size"
             android:gravity="bottom"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="8dp"
@@ -177,7 +181,7 @@
         app:layout_constraintTop_toTopOf="@id/ll_validity"
         app:layout_constraintBottom_toBottomOf="@id/ll_validity"
         app:layout_constraintStart_toEndOf="@id/card_view_image"
-        android:textSize="14sp"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:text="@string/validity" />
 
     <LinearLayout
@@ -199,6 +203,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="bottom"
+            android:textSize="@dimen/adapter_item_product_flipped_text_size"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="8dp"
             android:textColor="@android:color/black"
@@ -234,6 +239,7 @@
         android:padding="12dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         app:layout_constraintEnd_toStartOf="@id/button_create"
         app:layout_constraintTop_toBottomOf="@id/et_offer_price"
@@ -246,6 +252,7 @@
         android:layout_marginTop="8dp"
         android:padding="12dp"
         android:minWidth="0dp"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:minHeight="0dp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         app:layout_constraintRight_toRightOf="@id/cl_offer"

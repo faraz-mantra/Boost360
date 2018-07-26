@@ -17,10 +17,13 @@
 package com.android.inputmethod.keyboard;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
+import android.os.Build;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -41,6 +44,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
+import java.util.Locale;
 
 import io.separ.neural.inputmethod.Utils.FontUtils;
 import io.separ.neural.inputmethod.compat.EditorInfoCompatUtils;
@@ -182,6 +186,19 @@ public final class KeyboardLayoutSet {
     }
 
     private Keyboard getKeyboard(final ElementParams elementParams, final KeyboardId id) {
+        Resources resources = mContext.getResources();
+        Configuration configuration = resources.getConfiguration();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLocale(new Locale(SubtypeLocaleUtils.getSubtypeLocale(mParams.mSubtype).getLanguage()));
+        } else {
+            configuration.locale = new Locale(SubtypeLocaleUtils.getSubtypeLocale(mParams.mSubtype).getLanguage());
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mContext.createConfigurationContext(configuration);
+        } else {
+            resources.updateConfiguration(configuration, displayMetrics);
+        }
         final SoftReference<Keyboard> ref = sKeyboardCache.get(id);
         final Keyboard cachedKeyboard = (ref == null) ? null : ref.get();
         if (cachedKeyboard != null) {

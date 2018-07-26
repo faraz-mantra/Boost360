@@ -16,8 +16,8 @@
 
 package com.android.inputmethod.keyboard;
 
+import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -48,22 +48,31 @@ import static io.separ.neural.inputmethod.indic.Constants.CODE_DELETE;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_OUTPUT_TEXT;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_SHIFT;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_SWITCH_ALPHA_SYMBOL;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_SWITCH_SCREEN_MAIN;
 import static io.separ.neural.inputmethod.indic.Constants.CODE_UNSPECIFIED;
 
 /**
  * Class for describing the position and characteristics of a single key in the keyboard.
  */
 public class Key implements Comparable<Key> {
+    private String mKeySpec;
     /**
      * The key code (unicode or custom code) that this key generates.
      */
-    private final int mCode;
+    public int mCode;
 
-    /** Label to display */
-    private final String mLabel;
-    /** Hint label to display on the key in conjunction with the label */
+    /**
+     * Label to display
+     */
+    private String mLabel;
+    private String mHeaderKeySpec;
+    /**
+     * Hint label to display on the key in conjunction with the label
+     */
     private final String mHintLabel;
-    /** Flags of the label */
+    /**
+     * Flags of the label
+     */
     private final int mLabelFlags;
     private static final int LABEL_FLAGS_ALIGN_HINT_LABEL_TO_BOTTOM = 0x02;
     private static final int LABEL_FLAGS_ALIGN_ICON_TO_BOTTOM = 0x04;
@@ -98,23 +107,40 @@ public class Key implements Comparable<Key> {
     private static final int LABEL_FLAGS_DISABLE_HINT_LABEL = 0x40000000;
     private static final int LABEL_FLAGS_DISABLE_ADDITIONAL_MORE_KEYS = 0x80000000;
 
-    /** Icon to display instead of a label. Icon takes precedence over a label */
+    /**
+     * Icon to display instead of a label. Icon takes precedence over a label
+     */
     private final int mIconId;
 
-    /** Width of the key, excluding the gap */
+    /**
+     * Width of the key, excluding the gap
+     */
     private final int mWidth;
-    /** Height of the key, excluding the gap */
+    /**
+     * Height of the key, excluding the gap
+     */
     private final int mHeight;
-    /** X coordinate of the key in the keyboard layout */
+    /**
+     * X coordinate of the key in the keyboard layout
+     */
     private final int mX;
-    /** Y coordinate of the key in the keyboard layout */
+    /**
+     * Y coordinate of the key in the keyboard layout
+     */
     private final int mY;
-    /** Hit bounding box of the key */
+    /**
+     * Hit bounding box of the key
+     */
     private final Rect mHitBox = new Rect();
 
-    /** More keys. It is guaranteed that this is null or an array of one or more elements */
-    private final MoreKeySpec[] mMoreKeys;
-    /** More keys column number and flags */
+    /**
+     * More keys. It is guaranteed that this is null or an array of one or more elements
+     */
+    public MoreKeySpec[] mMoreKeys;
+    public MoreKeySpec[] mHeaderMoreKeys;
+    /**
+     * More keys column number and flags
+     */
     private final int mMoreKeysColumnAndFlags;
     private static final int MORE_KEYS_COLUMN_NUMBER_MASK = 0x000000ff;
     // If this flag is specified, more keys keyboard should have the specified number of columns.
@@ -139,7 +165,9 @@ public class Key implements Comparable<Key> {
     private static final String MORE_KEYS_NEEDS_DIVIDERS = "!needsDividers!";
     private static final String MORE_KEYS_NO_PANEL_AUTO_MORE_KEY = "!noPanelAutoMoreKey!";
 
-    /** Background type that represents different key background visual than normal one. */
+    /**
+     * Background type that represents different key background visual than normal one.
+     */
     private final int mBackgroundType;
     public static final int BACKGROUND_TYPE_EMPTY = 0;
     public static final int BACKGROUND_TYPE_NORMAL = 1;
@@ -149,6 +177,9 @@ public class Key implements Comparable<Key> {
     public static final int BACKGROUND_TYPE_ACTION = 5;
     public static final int BACKGROUND_TYPE_SPACEBAR = 6;
     public static final int BACKGROUND_TYPE_ENTERKEY = 7;
+    public static final int BACKGROUND_TYPE_HEADERKEY = 8;
+    public static final int BACKGROUND_TYPE_FONTRESIZEKEY = 9;
+    public static final int BACKGROUND_TYPE_NUMKEY = 10;
 
     private final int mActionFlags;
     private static final int ACTION_FLAGS_IS_REPEATABLE = 0x01;
@@ -158,25 +189,40 @@ public class Key implements Comparable<Key> {
 
     private final KeyVisualAttributes mKeyVisualAttributes;
 
-    private final OptionalAttributes mOptionalAttributes;
+    public OptionalAttributes mOptionalAttributes;
     private boolean moreKey = false;
+    private boolean isLabelModified;
 
     public boolean isMoreKey() {
         return moreKey;
     }
 
-    private static final class OptionalAttributes {
-        /** Text to output when pressed. This can be multiple characters, like ".com" */
+    public void setLabelModified(boolean isLabelModified) {
+        this.isLabelModified = isLabelModified;
+    }
+
+    public boolean isLabelModified() {
+        return isLabelModified;
+    }
+
+    public static final class OptionalAttributes {
+        /**
+         * Text to output when pressed. This can be multiple characters, like ".com"
+         */
         public final String mOutputText;
         public final int mAltCode;
-        /** Icon for disabled state */
+        /**
+         * Icon for disabled state
+         */
         public final int mDisabledIconId;
-        /** The visual insets */
+        /**
+         * The visual insets
+         */
         public final int mVisualInsetsLeft;
         public final int mVisualInsetsRight;
 
         private OptionalAttributes(final String outputText, final int altCode,
-                final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
+                                   final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
             mOutputText = outputText;
             mAltCode = altCode;
             mDisabledIconId = disabledIconId;
@@ -185,7 +231,7 @@ public class Key implements Comparable<Key> {
         }
 
         public static OptionalAttributes newInstance(final String outputText, final int altCode,
-                final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
+                                                     final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
             if (outputText == null && altCode == CODE_UNSPECIFIED
                     && disabledIconId == ICON_UNDEFINED && visualInsetsLeft == 0
                     && visualInsetsRight == 0) {
@@ -198,9 +244,13 @@ public class Key implements Comparable<Key> {
 
     private final int mHashCode;
 
-    /** The current pressed state of this key */
+    /**
+     * The current pressed state of this key
+     */
     private boolean mPressed;
-    /** Key is enabled and responds on press */
+    /**
+     * Key is enabled and responds on press
+     */
     private boolean mEnabled = true;
 
     private boolean mShowColorFilter = false;
@@ -239,13 +289,13 @@ public class Key implements Comparable<Key> {
      * and in a <GridRows/>.
      */
     public Key(final String label, final int iconId, final int code, final String outputText,
-            final String hintLabel, final int labelFlags, final int backgroundType, final int x,
-            final int y, final int width, final int height, final int horizontalGap,
-            final int verticalGap) {
+               final String hintLabel, final int labelFlags, final int backgroundType, final int x,
+               final int y, final int width, final int height, final int horizontalGap,
+               final int verticalGap) {
         this(label, iconId, code, outputText,
-        hintLabel, labelFlags, backgroundType, x,
-        y, width, height, horizontalGap,
-        verticalGap, false);
+                hintLabel, labelFlags, backgroundType, x,
+                y, width, height, horizontalGap,
+                verticalGap, false);
     }
 
     /**
@@ -254,15 +304,18 @@ public class Key implements Comparable<Key> {
      *
      * @param keySpec the key specification.
      * @param keyAttr the Key XML attributes array.
-     * @param style the {@link KeyStyle} of this key.
-     * @param params the keyboard building parameters.
-     * @param row the row that this key belongs to. row's x-coordinate will be the right edge of
-     *        this key.
+     * @param style   the {@link KeyStyle} of this key.
+     * @param params  the keyboard building parameters.
+     * @param row     the row that this key belongs to. row's x-coordinate will be the right edge of
+     *                this key.
      */
-    public Key(final String keySpec, final TypedArray keyAttr, final KeyStyle style,
-            final KeyboardParams params, final KeyboardRow row) {
+    public Key(final String keySpec, final String headerKeySpec, final String headerKeys, final TypedArray keyAttr, final KeyStyle style,
+               final KeyboardParams params, final KeyboardRow row) {
+        mHeaderKeySpec = headerKeySpec;
+        this.mKeySpec = keySpec;
         final float horizontalGap = isSpacer() ? 0 : params.mHorizontalGap;
         final int rowHeight = row.getRowHeight();
+        //mHeight = rowHeight - params.mVerticalGap;
         mHeight = rowHeight - params.mVerticalGap;
 
         final float keyXPos = row.getKeyX(keyAttr);
@@ -293,6 +346,8 @@ public class Key implements Comparable<Key> {
         final Locale locale = params.mId.mLocale;
         int actionFlags = style.getFlags(keyAttr, R.styleable.Keyboard_Key_keyActionFlags);
         String[] moreKeys = style.getStringArray(keyAttr, R.styleable.Keyboard_Key_moreKeys);
+        String[] headerMoreKeys = new String[1];
+        headerMoreKeys[0] = headerKeys;
 
         // Get maximum column order number and set a relevant mode value.
         int moreKeysColumnAndFlags = style.getInt(keyAttr, R.styleable.Keyboard_Key_maxMoreKeysColumn,
@@ -335,6 +390,12 @@ public class Key implements Comparable<Key> {
             }
         } else {
             mMoreKeys = null;
+        }
+        if (headerKeys != null && headerMoreKeys != null && headerMoreKeys.length > 0) {
+            mHeaderMoreKeys = new MoreKeySpec[headerMoreKeys.length];
+            mHeaderMoreKeys[0] = new MoreKeySpec(headerMoreKeys[0], needsToUpperCase, locale);
+        } else {
+            mHeaderMoreKeys = null;
         }
         mActionFlags = actionFlags;
 
@@ -432,18 +493,18 @@ public class Key implements Comparable<Key> {
     private static boolean needsToUpperCase(final int labelFlags, final int keyboardElementId) {
         if ((labelFlags & LABEL_FLAGS_PRESERVE_CASE) != 0) return false;
         switch (keyboardElementId) {
-        case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
-        case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
-        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
-        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
-            return true;
-        default:
-            return false;
+            case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
+            case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
+            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
+            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
+                return true;
+            default:
+                return false;
         }
     }
 
     private static int computeHashCode(final Key key) {
-        return Arrays.hashCode(new Object[] {
+        return Arrays.hashCode(new Object[]{
                 key.mX,
                 key.mY,
                 key.mWidth,
@@ -487,7 +548,7 @@ public class Key implements Comparable<Key> {
 
     @Override
     public boolean equals(final Object o) {
-        return o instanceof Key && equalsInternal((Key)o);
+        return o instanceof Key && equalsInternal((Key) o);
     }
 
     @Override
@@ -518,15 +579,24 @@ public class Key implements Comparable<Key> {
 
     private static String backgroundName(final int backgroundType) {
         switch (backgroundType) {
-        case BACKGROUND_TYPE_EMPTY: return "empty";
-        case BACKGROUND_TYPE_NORMAL: return "normal";
-        case BACKGROUND_TYPE_FUNCTIONAL: return "functional";
-        case BACKGROUND_TYPE_STICKY_OFF: return "stickyOff";
-        case BACKGROUND_TYPE_STICKY_ON: return "stickyOn";
-        case BACKGROUND_TYPE_ACTION: return "action";
-        case BACKGROUND_TYPE_SPACEBAR: return "spacebar";
-        case BACKGROUND_TYPE_ENTERKEY: return "enter";
-        default: return null;
+            case BACKGROUND_TYPE_EMPTY:
+                return "empty";
+            case BACKGROUND_TYPE_NORMAL:
+                return "normal";
+            case BACKGROUND_TYPE_FUNCTIONAL:
+                return "functional";
+            case BACKGROUND_TYPE_STICKY_OFF:
+                return "stickyOff";
+            case BACKGROUND_TYPE_STICKY_ON:
+                return "stickyOn";
+            case BACKGROUND_TYPE_ACTION:
+                return "action";
+            case BACKGROUND_TYPE_SPACEBAR:
+                return "spacebar";
+            case BACKGROUND_TYPE_ENTERKEY:
+                return "enter";
+            default:
+                return null;
         }
     }
 
@@ -538,12 +608,20 @@ public class Key implements Comparable<Key> {
         return mLabel;
     }
 
+    public void setLabel(String mLabel) {
+        this.mLabel = mLabel;
+    }
+
+    public String getHeaderKeySpec() {
+        return mHeaderKeySpec;
+    }
+
     public String getHintLabel() {
         return mHintLabel;
     }
 
     public MoreKeySpec[] getMoreKeys() {
-        return mMoreKeys;
+        return mMoreKeys != null ? mMoreKeys : mHeaderMoreKeys;
     }
 
     public void markAsLeftEdge(final KeyboardParams params) {
@@ -552,6 +630,10 @@ public class Key implements Comparable<Key> {
 
     public void markAsRightEdge(final KeyboardParams params) {
         mHitBox.right = params.mOccupiedWidth - params.mRightPadding;
+    }
+
+    public boolean isPeriodKey(Context context) {
+        return mLabel.equalsIgnoreCase(context.getResources().getString(R.string.separator).trim());
     }
 
     public void markAsTopEdge(final KeyboardParams params) {
@@ -582,6 +664,18 @@ public class Key implements Comparable<Key> {
         return mCode == CODE_SHIFT;
     }
 
+    public final boolean isHeaderKey() {
+        return mBackgroundType == BACKGROUND_TYPE_HEADERKEY;
+    }
+
+    public final boolean isFontResizeKey() {
+        return mBackgroundType == BACKGROUND_TYPE_FONTRESIZEKEY;
+    }
+
+    public final boolean isNumKey() {
+        return mBackgroundType == BACKGROUND_TYPE_NUMKEY;
+    }
+
     public final boolean isDelete() {
         return getCode() == CODE_DELETE;
     }
@@ -591,7 +685,7 @@ public class Key implements Comparable<Key> {
     }
 
     public final boolean isModifier() {
-        return mCode == CODE_SHIFT || mCode == CODE_SWITCH_ALPHA_SYMBOL;
+        return mCode == CODE_SHIFT || mCode == CODE_SWITCH_ALPHA_SYMBOL || mCode == CODE_SWITCH_SCREEN_MAIN;
     }
 
     public final boolean isRepeatable() {
@@ -633,20 +727,23 @@ public class Key implements Comparable<Key> {
 
     public final int selectTextSize(final KeyDrawParams params) {
         switch (mLabelFlags & LABEL_FLAGS_FOLLOW_KEY_TEXT_RATIO_MASK) {
-        case LABEL_FLAGS_FOLLOW_KEY_LETTER_RATIO:
-            return params.mLetterSize;
-        case LABEL_FLAGS_FOLLOW_KEY_LARGE_LETTER_RATIO:
-            return params.mLargeLetterSize;
-        case LABEL_FLAGS_FOLLOW_KEY_LABEL_RATIO:
-            return params.mLabelSize;
-        case LABEL_FLAGS_FOLLOW_KEY_HINT_LABEL_RATIO:
-            return params.mHintLabelSize;
-        default: // No follow key ratio flag specified.
-            return StringUtils.codePointCount(mLabel) == 1 ? params.mLetterSize : params.mLabelSize;
+            case LABEL_FLAGS_FOLLOW_KEY_LETTER_RATIO:
+                return params.mLetterSize;
+            case LABEL_FLAGS_FOLLOW_KEY_LARGE_LETTER_RATIO:
+                return params.mLargeLetterSize;
+            case LABEL_FLAGS_FOLLOW_KEY_LABEL_RATIO:
+                return params.mLabelSize;
+            case LABEL_FLAGS_FOLLOW_KEY_HINT_LABEL_RATIO:
+                return params.mHintLabelSize;
+            default: // No follow key ratio flag specified.
+                return StringUtils.codePointCount(mLabel) == 1 ? params.mLetterSize : params.mLabelSize;
         }
     }
 
     public final int selectTextColor(final KeyDrawParams params) {
+        if (isHeaderKey() || (isFontResizeKey() && getHeaderKeySpec() != null)) {
+            return params.mHeaderKeyTextColor;
+        }
         if ((mLabelFlags & LABEL_FLAGS_FOLLOW_FUNCTIONAL_TEXT_COLOR) != 0) {
             return params.mFunctionalTextColor;
         }
@@ -838,6 +935,7 @@ public class Key implements Comparable<Key> {
     /**
      * Informs the key that it has been pressed, in case it needs to change its appearance or
      * state.
+     *
      * @see #onReleased()
      */
     public void onPressed() {
@@ -847,6 +945,7 @@ public class Key implements Comparable<Key> {
     /**
      * Informs the key that it has been released, in case it needs to change its appearance or
      * state.
+     *
      * @see #onPressed()
      */
     public void onReleased() {
@@ -867,6 +966,7 @@ public class Key implements Comparable<Key> {
 
     /**
      * Detects if a point falls on this key.
+     *
      * @param x the x-coordinate of the point
      * @param y the y-coordinate of the point
      * @return whether or not the point falls on the key. If the key is attached to an edge, it
@@ -879,6 +979,7 @@ public class Key implements Comparable<Key> {
 
     /**
      * Returns the square of the distance to the nearest edge of the key and the given point.
+     *
      * @param x the x-coordinate of the point
      * @param y the y-coordinate of the point
      * @return the square of the distance of the point from the nearest edge of the key
@@ -899,7 +1000,7 @@ public class Key implements Comparable<Key> {
         private final int[] mReleasedState;
         private final int[] mPressedState;
 
-        private KeyBackgroundState(final int ... attrs) {
+        private KeyBackgroundState(final int... attrs) {
             mReleasedState = attrs;
             mPressedState = Arrays.copyOf(attrs, attrs.length + 1);
             mPressedState[attrs.length] = android.R.attr.state_pressed;
@@ -914,32 +1015,39 @@ public class Key implements Comparable<Key> {
         }
 
         public static final KeyBackgroundState[] STATES = {
-            // 0: BACKGROUND_TYPE_EMPTY
-            new KeyBackgroundState(android.R.attr.state_empty),
-            // 1: BACKGROUND_TYPE_NORMAL
-            new KeyBackgroundState(),
-            // 2: BACKGROUND_TYPE_FUNCTIONAL
-            new KeyBackgroundState(),
-            // 3: BACKGROUND_TYPE_STICKY_OFF
-            new KeyBackgroundState(android.R.attr.state_checkable),
-            // 4: BACKGROUND_TYPE_STICKY_ON
-            new KeyBackgroundState(android.R.attr.state_checkable, android.R.attr.state_checked),
-            // 5: BACKGROUND_TYPE_ACTION
-            new KeyBackgroundState(android.R.attr.state_active),
-            // 6: BACKGROUND_TYPE_SPACEBAR
-            new KeyBackgroundState(),
-            // 7: BACKGROUND_TYPE_ENTER
-            new KeyBackgroundState(android.R.attr.state_active),
+                // 0: BACKGROUND_TYPE_EMPTY
+                new KeyBackgroundState(android.R.attr.state_empty),
+                // 1: BACKGROUND_TYPE_NORMAL
+                new KeyBackgroundState(),
+                // 2: BACKGROUND_TYPE_FUNCTIONAL
+                new KeyBackgroundState(),
+                // 3: BACKGROUND_TYPE_STICKY_OFF
+                new KeyBackgroundState(android.R.attr.state_checkable),
+                // 4: BACKGROUND_TYPE_STICKY_ON
+                new KeyBackgroundState(android.R.attr.state_checkable, android.R.attr.state_checked),
+                // 5: BACKGROUND_TYPE_ACTION
+                new KeyBackgroundState(android.R.attr.state_active),
+                // 6: BACKGROUND_TYPE_SPACEBAR
+                new KeyBackgroundState(),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(android.R.attr.state_active),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
         };
     }
 
     /**
      * Returns the background drawable for the key, based on the current state and type of the key.
+     *
      * @return the background drawable of the key.
      * @see android.graphics.drawable.StateListDrawable#setState(int[])
      */
     public final Drawable selectBackgroundDrawable(final Drawable keyBackground,
-            final Drawable functionalKeyBackground, final Drawable spacebarBackground, int color, int colorPressed) {
+                                                   final Drawable functionalKeyBackground, final Drawable spacebarBackground, int color, int colorPressed) {
         final Drawable background;
         if (mBackgroundType == BACKGROUND_TYPE_FUNCTIONAL) {
             background = functionalKeyBackground;
@@ -968,15 +1076,15 @@ public class Key implements Comparable<Key> {
 
     public static class Spacer extends Key {
         public Spacer(final TypedArray keyAttr, final KeyStyle keyStyle,
-                final KeyboardParams params, final KeyboardRow row) {
-            super(null /* keySpec */, keyAttr, keyStyle, params, row);
+                      final KeyboardParams params, final KeyboardRow row) {
+            super(null /* keySpec */, null, null, keyAttr, keyStyle, params, row);
         }
 
         /**
          * This constructor is being used only for divider in more keys keyboard.
          */
         protected Spacer(final KeyboardParams params, final int x, final int y, final int width,
-                final int height) {
+                         final int height) {
             super(null /* label */, ICON_UNDEFINED, CODE_UNSPECIFIED, null /* outputText */,
                     null /* hintLabel */, 0 /* labelFlags */, BACKGROUND_TYPE_EMPTY, x, y, width,
                     height, params.mHorizontalGap, params.mVerticalGap);

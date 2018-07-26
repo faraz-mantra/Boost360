@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2015, The Android Open Source Project
@@ -311,6 +310,9 @@
             <enum name="action" value="5" />
             <enum name="spacebar" value="6" />
             <enum name="enter" value="7" />
+            <enum name="headerkey" value="8" />
+            <enum name="fontResizeKey" value="9" />
+            <enum name="numKey" value="10" />
         </attr>
         <!-- The key action flags. -->
         <attr name="keyActionFlags" format="integer">
@@ -322,6 +324,8 @@
         </attr>
         <!-- The label, icon to display on the key. And code, outputText of the key. -->
         <attr name="keySpec" format="string" />
+        <attr name="headerKeySpec" format="string" />
+        <attr name="headerMoreKeys" format="string" />
         <!-- The hint label to display on the key in conjunction with the label. -->
         <attr name="keyHintLabel" format="string" />
         <!-- The vertical adjustment of key hint label in proportion to its height. -->
@@ -420,6 +424,8 @@
         <attr name="keyTextInactivatedColor" format="color" />
         <!-- Color to use for the label in a key that has followFunctionalTextColor keyLabelFlags. -->
         <attr name="functionalTextColor" format="color" />
+        <!-- Color to use for the label in a key that has followHeaderTextColor keyLabelFlags. -->
+        <attr name="headerKeyTextColor" format="color" />
         <!-- Key hint letter (= one character hint label) color -->
         <attr name="keyHintLetterColor" format="color" />
         <!-- Key hint label color -->
@@ -449,10 +455,10 @@
             <enum name="alphabetShiftLocked" value="3" />
             <enum name="alphabetShiftLockShifted" value="4" />
             <enum name="symbols" value="5" />
-            <enum name="symbolsShifted" value="6"  />
-            <enum name="phone" value="7"  />
-            <enum name="phoneSymbols" value="8"  />
-            <enum name="number" value="9"  />
+            <enum name="symbolsShifted" value="6" />
+            <enum name="phone" value="7" />
+            <enum name="phoneSymbols" value="8" />
+            <enum name="number" value="9" />
             <enum name="emojiRecents" value="10" />
             <enum name="emojiCategory1" value="11" />
             <enum name="emojiCategory2" value="12" />
@@ -470,6 +476,8 @@
             <enum name="emojiCategory14" value="24" />
             <enum name="emojiCategory15" value="25" />
             <enum name="emojiCategory16" value="26" />
+            <enum name="mainLayoutTwo" value="28" />
+            <enum name="mainLayoutThree" value="29" />
         </attr>
         <!-- This should be aligned with Keyboard.themeId and KeyboardTheme.THEME_ID_* -->
         <attr name="keyboardTheme" format="enum|string">
@@ -529,10 +537,10 @@
             <enum name="alphabetShiftLocked" value="3" />
             <enum name="alphabetShiftLockShifted" value="4" />
             <enum name="symbols" value="5" />
-            <enum name="symbolsShifted" value="6"  />
-            <enum name="phone" value="7"  />
-            <enum name="phoneSymbols" value="8"  />
-            <enum name="number" value="9"  />
+            <enum name="symbolsShifted" value="6" />
+            <enum name="phone" value="7" />
+            <enum name="phoneSymbols" value="8" />
+            <enum name="number" value="9" />
             <enum name="emojiRecents" value="10" />
             <enum name="emojiCategory1" value="11" />
             <enum name="emojiCategory2" value="12" />
@@ -550,8 +558,11 @@
             <enum name="emojiCategory14" value="24" />
             <enum name="emojiCategory15" value="25" />
             <enum name="emojiCategory16" value="26" />
+            <enum name="mainLayoutTwo" value="28" />
+            <enum name="mainLayoutThree" value="29" />
+            <enum name="mainLayoutFour" value="30" />
         </attr>
-        <attr name="elementKeyboard" format="reference"/>
+        <attr name="elementKeyboard" format="reference" />
         <!-- Enable proximity characters correction. Disabled by default. -->
         <attr name="enableProximityCharsCorrection" format="boolean" />
         <!-- Indicates if the keyboard layout supports being split or not. false by default -->
@@ -564,6 +575,7 @@
         <!-- This should be aligned with ScriptUtils.SCRIPT_* -->
         <attr name="supportedScript" format="enum">
             <enum name="farsi" value="0" />
+            <enum name="devanagari" value="1" />
         </attr>
     </declare-styleable>
 

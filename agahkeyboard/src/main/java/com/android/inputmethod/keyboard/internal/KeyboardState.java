@@ -25,6 +25,8 @@ import io.separ.neural.inputmethod.Utils.FontUtils;
 import io.separ.neural.inputmethod.indic.Constants;
 
 import static com.android.inputmethod.keyboard.internal.AlphabetShiftState.IS_SHIFTED;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_SHIFT;
+import static io.separ.neural.inputmethod.indic.Constants.CODE_SYMBOL_SHIFT;
 
 /**
  * Keyboard state machine.
@@ -60,6 +62,10 @@ public final class KeyboardState {
 
         void setSymbolsShiftedKeyboard();
 
+        void setMainLayoutTwo();
+
+        void setMainLayoutThree();
+
         /**
          * Request to call back {@link KeyboardState#onUpdateShiftState(int, int)}.
          */
@@ -77,6 +83,7 @@ public final class KeyboardState {
 
     private final ShiftKeyState mShiftKeyState = new ShiftKeyState("Shift");
     private final ModifierKeyState mSymbolKeyState = new ModifierKeyState("Symbol");
+    private final ModifierKeyState mSwitchScreenMainKeyState = new ModifierKeyState("switchScreen");
 
     // TODO: Merge {@link #mSwitchState}, {@link #mIsAlphabetMode}, {@link #mAlphabetShiftState},
     // {@link #mIsSymbolShifted}, {@link #mPrevMainKeyboardWasShiftLocked}, and
@@ -102,6 +109,7 @@ public final class KeyboardState {
     // For handling double tap.
     private boolean mIsInAlphabetUnshiftedFromShifted;
     private boolean mIsInDoubleTapShiftKey;
+    private int screenNumber = 1;
 
     private final SavedKeyboardState mSavedKeyboardState = new SavedKeyboardState();
 
@@ -111,6 +119,7 @@ public final class KeyboardState {
         public boolean mIsAlphabetShiftLocked;
         public boolean mIsEmojiMode;
         public int mShiftMode;
+        public int screenNumber;
 
         @Override
         public String toString() {
@@ -142,6 +151,7 @@ public final class KeyboardState {
         mPrevSymbolsKeyboardWasShifted = false;
         mShiftKeyState.onRelease();
         mSymbolKeyState.onRelease();
+        mSwitchScreenMainKeyState.onRelease();
         onRestoreKeyboardState(currentAutoCapsState, currentRecapitalizeState);
     }
 
@@ -154,6 +164,7 @@ public final class KeyboardState {
         final SavedKeyboardState state = mSavedKeyboardState;
         state.mIsAlphabetMode = mIsAlphabetMode;
         state.mIsEmojiMode = mIsEmojiMode;
+        state.screenNumber = screenNumber;
         if (mIsAlphabetMode) {
             state.mIsAlphabetShiftLocked = mAlphabetShiftState.isShiftLocked();
             state.mShiftMode = mAlphabetShiftState.isAutomaticShifted() ? AUTOMATIC_SHIFT
@@ -287,6 +298,24 @@ public final class KeyboardState {
         }
     }
 
+    private void toggleMainLayouts() {
+        screenNumber++;
+        if (screenNumber > 3) {
+            screenNumber = 1;
+        }
+        switch (screenNumber) {
+            case 1:
+                mSwitchActions.setAlphabetKeyboard();
+                break;
+            case 2:
+                mSwitchActions.setMainLayoutTwo();
+                break;
+            case 3:
+                mSwitchActions.setMainLayoutThree();
+                break;
+        }
+    }
+
     // TODO: Remove this method. Come up with a more comprehensive way to reset the keyboard layout
     // when a keyboard layout set doesn't get reloaded in LatinIME.onStartInputViewInternal().
     private void resetKeyboardStateToAlphabet(final int currentAutoCapsState,
@@ -377,20 +406,24 @@ public final class KeyboardState {
             Log.d(TAG, "onPressKey: code=" + Constants.printableCode(code) + " single="
                     + isSinglePointer + " autoCaps=" + currentAutoCapsState + ' ' + this);
         }
-        if (code != Constants.CODE_SHIFT) {
+        if (code != CODE_SHIFT) {
             // Because the double tap shift key timer is to detect two consecutive shift key press,
             // it should be canceled when a non-shift key is pressed.
             mSwitchActions.cancelDoubleTapShiftKeyTimer();
         }
-        if (code == Constants.CODE_SHIFT) {
+        if (code == CODE_SHIFT) {
             onPressShift();
         } else if (code == Constants.CODE_CAPSLOCK) {
             // Nothing to do here. See {@link #onReleaseKey(int,boolean)}.
         } else if (code == Constants.CODE_SWITCH_ALPHA_SYMBOL) {
             onPressSymbol(currentAutoCapsState, currentRecapitalizeState);
+            screenNumber = 1;
+        } else if (code == Constants.CODE_SWITCH_SCREEN_MAIN) {
+            onPressSwitchScreenMain();
         } else {
             mShiftKeyState.onOtherKeyPressed();
             mSymbolKeyState.onOtherKeyPressed();
+            mSwitchScreenMainKeyState.onOtherKeyPressed();
             // It is required to reset the auto caps state when all of the following conditions
             // are met:
             // 1) two or more fingers are in action
@@ -416,12 +449,19 @@ public final class KeyboardState {
             Log.d(TAG, "onReleaseKey: code=" + Constants.printableCode(code)
                     + " sliding=" + withSliding + ' ' + this);
         }
-        if (code == Constants.CODE_SHIFT) {
+        if (code == CODE_SHIFT) {
             onReleaseShift(withSliding, currentAutoCapsState, currentRecapitalizeState);
         } else if (code == Constants.CODE_CAPSLOCK) {
             setShiftLocked(!mAlphabetShiftState.isShiftLocked());
         } else if (code == Constants.CODE_SWITCH_ALPHA_SYMBOL) {
             onReleaseSymbol(withSliding, currentAutoCapsState, currentRecapitalizeState);
+        } else if (code == Constants.CODE_SWITCH_SCREEN_MAIN) {
+            onReleaseSwitchScreenMain(withSliding);
+        }
+        if (screenNumber != 1 && code != Constants.CODE_SWITCH_SCREEN_MAIN && code != Constants.CODE_SWITCH_ALPHA_SYMBOL && code != CODE_SHIFT
+                && code != CODE_SYMBOL_SHIFT && !withSliding) {
+            screenNumber = 1;
+            mSwitchActions.setAlphabetKeyboard();
         }
     }
 
@@ -430,6 +470,11 @@ public final class KeyboardState {
         toggleAlphabetAndSymbols(currentAutoCapsState, currentRecapitalizeState);
         mSymbolKeyState.onPress();
         mSwitchState = SWITCH_STATE_MOMENTARY_ALPHA_AND_SYMBOL;
+    }
+
+    private void onPressSwitchScreenMain() {
+        toggleMainLayouts();
+        mSwitchScreenMainKeyState.onPress();
     }
 
     private void onReleaseSymbol(final boolean withSliding, final int currentAutoCapsState,
@@ -445,6 +490,20 @@ public final class KeyboardState {
             mPrevSymbolsKeyboardWasShifted = false;
         }
         mSymbolKeyState.onRelease();
+    }
+
+    private void onReleaseSwitchScreenMain(final boolean withSliding) {
+        if (mSwitchScreenMainKeyState.isChording()) {
+            // Switch back to the previous keyboard mode if the user chords the mode change key and
+            // another key, then releases the mode change key.
+            toggleMainLayouts();
+        } else if (!withSliding) {
+            // If the mode change key is being released without sliding, we should forget the
+            // previous symbols keyboard shift state and simply switch back to symbols layout
+            // (never symbols shifted) next time the mode gets changed to symbols layout.
+            //mPrevSymbolsKeyboardWasShifted = false;
+        }
+        mSwitchScreenMainKeyState.onRelease();
     }
 
     public void onUpdateShiftState(final int autoCaps, final int recapitalizeMode) {
@@ -659,7 +718,7 @@ public final class KeyboardState {
                 }
                 break;
             case SWITCH_STATE_MOMENTARY_SYMBOL_AND_MORE:
-                if (code == Constants.CODE_SHIFT) {
+                if (code == CODE_SHIFT) {
                     // Detected only the shift key has been pressed on symbol layout, and then
                     // released.
                     mSwitchState = SWITCH_STATE_SYMBOL_BEGIN;

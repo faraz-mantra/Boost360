@@ -136,7 +136,7 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
     public static final String TAG_KEY_STYLE = "key-style";
 
     private static final int DEFAULT_KEYBOARD_COLUMNS = 10;
-    private static final int DEFAULT_KEYBOARD_ROWS = 4;
+    private static final int DEFAULT_KEYBOARD_ROWS = 6;
 
     protected final KP mParams;
     protected final Context mContext;
@@ -261,8 +261,8 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
             // TODO: Fix keyboard geometry calculation clearer. Historically vertical gap between
             // rows are determined based on the entire keyboard height including top and bottom
             // paddings.
-            /*params.mVerticalGap = (int)keyboardAttr.getFraction(
-                    R.styleable.Keyboard_verticalGap, height, height, 0);*/
+           /* params.mVerticalGap = (int) keyboardAttr.getFraction(
+                    R.styleable.Keyboard_verticalGap, height, height, height / DEFAULT_KEYBOARD_ROWS);*/
             params.mVerticalGap = params.mBottomPadding;
             final int baseHeight = params.mOccupiedHeight - params.mTopPadding
                     - params.mBottomPadding + params.mVerticalGap;
@@ -476,10 +476,12 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
                 Xml.asAttributeSet(parser), R.styleable.Keyboard_Key);
         final KeyStyle keyStyle = mParams.mKeyStyles.getKeyStyle(keyAttr, parser);
         final String keySpec = keyStyle.getString(keyAttr, R.styleable.Keyboard_Key_keySpec);
+        final String headerKeySpec = keyStyle.getString(keyAttr, R.styleable.Keyboard_Key_headerKeySpec);
+        final String headerMoreKeys = keyStyle.getString(keyAttr, R.styleable.Keyboard_Key_headerMoreKeys);
         if (TextUtils.isEmpty(keySpec)) {
             throw new ParseException("Empty keySpec", parser);
         }
-        final Key key = new Key(keySpec, keyAttr, keyStyle, mParams, row);
+        final Key key = new Key(keySpec, headerKeySpec, headerMoreKeys, keyAttr, keyStyle, mParams, row);
         keyAttr.recycle();
         if (DEBUG) {
             startEndTag("<%s%s %s moreKeys=%s />", TAG_KEY, (key.isEnabled() ? "" : " disabled"),

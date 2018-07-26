@@ -49,10 +49,10 @@ public class WildFireDataModel {
     private Boolean isNfStoreFront;
     @SerializedName("Lat")
     @Expose
-    private Integer lat;
+    private Long lat;
     @SerializedName("Lng")
     @Expose
-    private Integer lng;
+    private Long lng;
     @SerializedName("LocalAds")
     @Expose
     private List<LocalAd> localAds = null;
@@ -73,7 +73,7 @@ public class WildFireDataModel {
     private String primaryNumber;
     @SerializedName("Radius")
     @Expose
-    private String radius;
+    private Long radius;
     @SerializedName("StartDate")
     @Expose
     private String startDate;
@@ -189,19 +189,19 @@ public class WildFireDataModel {
         this.isNfStoreFront = isNfStoreFront;
     }
 
-    public Integer getLat() {
+    public Long getLat() {
         return lat;
     }
 
-    public void setLat(Integer lat) {
+    public void setLat(Long lat) {
         this.lat = lat;
     }
 
-    public Integer getLng() {
+    public Long getLng() {
         return lng;
     }
 
-    public void setLng(Integer lng) {
+    public void setLng(Long lng) {
         this.lng = lng;
     }
 
@@ -253,11 +253,11 @@ public class WildFireDataModel {
         this.primaryNumber = primaryNumber;
     }
 
-    public String getRadius() {
+    public Long getRadius() {
         return radius;
     }
 
-    public void setRadius(String radius) {
+    public void setRadius(Long radius) {
         this.radius = radius;
     }
 
