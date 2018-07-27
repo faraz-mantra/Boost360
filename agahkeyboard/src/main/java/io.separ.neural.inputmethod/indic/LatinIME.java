@@ -787,8 +787,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             resources.updateConfiguration(configuration, displayMetrics);
         }
         if (locale.equalsIgnoreCase(LocaleUtils.ENGLISH)) {
+            MixPanelUtils.getInstance().track(MixPanelUtils.SET_ENGLISH_KEYBOARD, null);
             mLanguageIndex = 0;
         } else {
+            MixPanelUtils.getInstance().track(MixPanelUtils.SET_HINDI_KEYBOARD, null);
             mLanguageIndex = 1;
         }
         LocaleUtils.initialize(this, locale);
