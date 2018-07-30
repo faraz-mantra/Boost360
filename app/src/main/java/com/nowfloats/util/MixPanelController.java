@@ -76,7 +76,7 @@ public class MixPanelController {
     public static final String ORDER_LIST = "OrderList";
     public static final String ORDER_DETAILS = "OrderDetails";
     public static final String ORDER_ANALYTICS = "OrderAnalytics";
-    public static final String REVNEVUE_ANALYTICS = "RevenueAnalytics";
+    public static final String REVENUE_ANALYTICS = "RevenueAnalytics";
     public static final String FILTER_ORDER_ANALYTICS = "FilterOrderAnalytics";
     public static final String CONFIRM_ORDER = "ConfirmOrder";
     public static final String CANCEL_ORDER = "CancelOrder";
