@@ -702,6 +702,10 @@
         <item>ANALYTICS</item>
         <item>ALERTS</item>
     </string-array>
+    <string-array name="order_analytics_tabs">
+        <item>SELLER SUMMARY</item>
+        <item>REVENUE SUMMARY</item>
+    </string-array>
     <string-array name="themeIds">
         <item>575bfec79bfed51e10df0e5d</item>
         <item>57c3c1a65d64370d7cf4eb17</item>
@@ -894,6 +898,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="wait_while_loading_salesman">Loading Salesman&#8230;</string>
     <string name="select_category">Select a Category</string>
     <string name="select_salesman">Select Sales Person</string>
+    <string name="revenue_distribution">Revenue Distribution</string>
     <string name="both_password_not_matched">Both the passwords don\'t match.</string>
     <string name="min_6char_required">Min 6 characters are required.</string>
     <string name="wait_while_unsubscribing">Wait While UnSubscribing&#8230;</string>
@@ -1329,6 +1334,21 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Dec</item>
     </string-array>
 
+    <string-array name="months_short">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sept</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
+
     <string-array name="order_analytics">
         <item>Successful\nOrders</item>
         <item>Received\nOrders</item>
@@ -1540,6 +1560,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="total_orders">Total Orders</string>
     <string name="orders">Orders</string>
     <string name="order_analytics">Order Analytics</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="revenue_summary">Revenue Summary</string>
     <string name="assured_purchase">Assured Purchase</string>
     <string name="select_payment_method">Select yout payment method</string>
     <string name="use_own_payment_link">Use own payment link</string>
@@ -1661,6 +1683,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Image Gallery</item>
         <item>Custom Pages</item>
     </string-array>
+
+    <string-array name="order_analytics_tab_items">
+        <item>Order Summary</item>
+        <item>Revenue Summary</item>
+    </string-array>
+
     <string-array name="account_setting_tab_items">
         <item>Site Appearance</item>
         <item>Domain and Email</item>

@@ -19,11 +19,12 @@
             android:background="@color/primary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/CustomToolbarTheme">
+
             <include
                 android:id="@+id/layout_ria"
-                android:layout_height="match_parent"
+                layout="@layout/toolbar_website_create_form"
                 android:layout_width="match_parent"
-                layout="@layout/toolbar_website_create_form" />
+                android:layout_height="match_parent" />
         </android.support.v7.widget.Toolbar>
 
     </FrameLayout>
@@ -91,9 +92,9 @@
                     android:id="@+id/et_street_address"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
-                    android:inputType="textNoSuggestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -135,10 +136,10 @@
                         style="@style/SignUp_EditText_Style_Ria"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:inputType="textNoSuggestions"
                         android:drawableRight="@drawable/dropselect"
+                        android:imeOptions="actionNext"
+                        android:inputType="textNoSuggestions"
+                        android:maxLines="1"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
@@ -332,11 +333,11 @@
                     android:id="@+id/ivPhoneStatus"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:padding="4dp"
                     android:layout_gravity="bottom"
-                    android:src="@drawable/icon_info"
                     android:layout_marginBottom="@dimen/margin_10"
-                    android:layout_marginLeft="@dimen/margin_5" />
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:padding="4dp"
+                    android:src="@drawable/icon_info" />
             </LinearLayout>
 
             <TextView
@@ -362,6 +363,7 @@
         android:layout_marginLeft="@dimen/margin_20"
         android:layout_marginRight="@dimen/margin_20"
         android:background="@drawable/rounded_corner_pre_signup"
+        android:gravity="bottom"
         android:isScrollContainer="false">
 
 

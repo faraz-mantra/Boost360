@@ -481,7 +481,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                                 pd.dismiss();
                             }
                             categories = strings;
-                            showCountryDialog(categories);
+                            showCategoriesDialog(categories);
                             //showCategoryDialog(categories);
                         }
 
@@ -490,13 +490,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                             if (pd != null && pd.isShowing()) {
                                 pd.dismiss();
                             }
-                            showCountryDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
+                            showCategoriesDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
                             //showCategoryDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
                             Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
-                    showCountryDialog(categories);
+                    showCategoriesDialog(categories);
                     //showCategoryDialog(categories);
                 }
             }
@@ -709,13 +709,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 .show();
     }
 
-    private void showCountryDialog(ArrayList<String> countries) {
+    private void showCategoriesDialog(ArrayList<String> categories) {
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(PreSignUpActivityRia.this,
-                R.layout.search_list_item_layout, countries);
+                R.layout.search_list_item_layout, categories);
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(PreSignUpActivityRia.this);
-        builderSingle.setTitle("Select a Country");
+        builderSingle.setTitle(getString(R.string.select_category));
 
         View view = LayoutInflater.from(PreSignUpActivityRia.this).inflate(R.layout.search_list_layout, null);
         builderSingle.setView(view);
@@ -1813,7 +1813,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         if (TextUtils.isEmpty(fpId)) {
             hideLoader();
             setEnableCreateWebsiteButton(true);
-            Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
             return;
         }
         dataBase.insertLoginStatus(fpId);

@@ -141,7 +141,7 @@
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivityRia"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -169,6 +169,15 @@
         </activity>
 
         <activity
+            android:name="com.nowfloats.Analytics_Screen.OrderSummaryActivity"
+            android:label="Order Analytics"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Analytics_Screen.OrderSummaryActivity" />
+        </activity>
+        <activity
             android:name="com.nowfloats.Analytics_Screen.OrderAnalyticsActivity"
             android:label="Order Analytics"
             android:launchMode="singleTop"
@@ -176,6 +185,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Analytics_Screen.OrderAnalyticsActivity" />
+        </activity>
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.RevenueSummaryActivity"
+            android:label="Order Analytics"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Analytics_Screen.RevenueSummaryActivity" />
         </activity>
         <activity
             android:name="com.nowfloats.signup.UI.UI.WebSiteAddressActivity"

@@ -45,7 +45,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
@@ -139,15 +138,8 @@ public class Analytics_Fragment extends Fragment {
 
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
+        enableLockScreen();
 
-        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false)
-                && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
-            //onBoardingManager.getOnBoardingData(session.getFpTag());
-            mLockLayout.setVisibility(View.VISIBLE);
-        } else {
-            mLockLayout.setVisibility(View.GONE);
-        }
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
             visitorsCount.setText(session.getVisitorsCount());
@@ -193,6 +185,18 @@ public class Analytics_Fragment extends Fragment {
             }, 200);
         }
         super.onResume();
+    }
+
+    private void enableLockScreen() {
+
+        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false)
+                && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
+            //onBoardingManager.getOnBoardingData(session.getFpTag());
+            mLockLayout.setVisibility(View.VISIBLE);
+        } else {
+            mLockLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -272,7 +276,7 @@ public class Analytics_Fragment extends Fragment {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBoardingManager.getOnBoardingData(session.getFpTag());
+                onBoardingManager.getOnBoardingData(session.getFpTag(), mLockLayout);
             }
         });
     }
@@ -582,6 +586,8 @@ public class Analytics_Fragment extends Fragment {
         if (!session.getISEnterprise().equalsIgnoreCase("true")) {
             getMapVisitsCount();
         }
+
+        enableLockScreen();
         return rootView;
     }
 
