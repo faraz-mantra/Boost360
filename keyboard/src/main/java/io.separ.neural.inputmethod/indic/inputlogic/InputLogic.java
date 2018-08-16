@@ -1755,7 +1755,7 @@ public final class InputLogic {
                 // how to segment them yet.
                 || !settingsValues.mSpacingAndPunctuations.mCurrentLanguageHasSpaces
                 // If no suggestions are requested, don't try restarting suggestions.
-                || true
+                || !settingsValues.needsToLookupSuggestions()
                 // If we are currently in a batch input, we must not resume suggestions, or the result
                 // of the batch input will replace the new composition. This may happen in the corner case
                 // that the app moves the cursor on its own accord during a batch input.
