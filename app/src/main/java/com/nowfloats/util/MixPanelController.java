@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.apxor.androidsdk.ApxorSDK;
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +46,7 @@ public class MixPanelController {
     public static final String DOMAIN_SEARCH = "DomainSearch";
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
     public static final String VMN_CALL_TRACKER_LOGS = "VmnCallTrackerLogs";
+    public static final String IMAGE_GALLERY = "ImageGallery";
     public static final String MANAGE_INVENTORY = "ManageInventory";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
@@ -56,6 +56,7 @@ public class MixPanelController {
     public static final String BUSINESS_APP_PUBLISHED = "BusinessAppPublished";
     public static final String SHARE_BUSINESS_APP = "BusinessAppShare";
     public static final String BUSINESS_APP = "BusinessApps";
+    public static final String BUSINESS_ENQUIRY = "BusinessEnquiry";
     public static final String FACEBOOK_PAGE_NOT_FOUND = "FacebookPageNotFound";
     public static final String CREATE_FACEBOOK_PAGE = "CreateFacebookPage";
     public static final String FACEBOOK_PAGE_CREATED_WITH_LOGO = "FacebookPageCreatedWithLogo";
@@ -124,7 +125,7 @@ public class MixPanelController {
     public static final String SEARCH_RANKING_NEW = "SearchRankingNew";
     public static final String SEARCH_RANKING_SAME = "SearchRankingSame";
 
-    private static MixpanelAPI mixPanel;
+    //    private static MixpanelAPI mixPanel;
     public static String Bhours = "bhours", Signup = "SignUpActivity",
             landingPage = "LandingPage",
             BusinessDetailActivity = "BIZdetailActivity",
@@ -137,15 +138,15 @@ public class MixPanelController {
             MessageDetailView = "MessageDetailView",
             FacebookActivity = "FacebookAnalytics";
     private static String KEY = "";
-    public static MixpanelAPI.People people = null;
+    //    public static MixpanelAPI.People people = null;
     public static String TERM_AND_POLICY_CHECKBOX = "termAndPolicyUnCheck";
 
     public static void setMixPanel(Activity app, String key) {
         KEY = key;
-        if (mixPanel != null)
-            mixPanel.flush();
+//        if (mixPanel != null)
+//            mixPanel.flush();
         /** Boost App **/
-        mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");
+//        mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");
 
         /**New Test Id**/
 //        mixPanel = MixpanelAPI.getInstance(app,"21d1bf26130e59cc8a0189372c010c25");
@@ -163,15 +164,15 @@ public class MixPanelController {
     }
 
     public static void flushMixPanel(String key) {
-        if (KEY.equals(key))
-            mixPanel.flush();
+//        if (KEY.equals(key))
+//            mixPanel.flush();
     }
 
     public static void track(String event, JSONObject props) {
         try {
             ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(props));
-            if (mixPanel != null)
-                mixPanel.track(event, props);
+//            if (mixPanel != null)
+//                mixPanel.track(event, props);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -230,20 +231,21 @@ public class MixPanelController {
     public static void identify(String id, JSONObject param, String fpid) {
         Log.v("mixpanel", id);
         try {
-            if (mixPanel == null) return;
-            mixPanel.identify(id);
-            people = mixPanel.getPeople();
-            people.identify(id);
-            people.set(param);
-            //	people.set("$email", Constants.StoreEmail);
-            //  669302602295 - Boost Project ID
-            // 150516431070 - Test Project ID
-            people.initPushHandling("669302602295");
-            // people.initPushHandling("276987746927");
-            people.set("Notification", fpid);
 
             ApxorSDK.setUserIdentifier(id);
             ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
+
+//            if (mixPanel == null) return;
+//            mixPanel.identify(id);
+//            people = mixPanel.getPeople();
+//            people.identify(id);
+//            people.set(param);
+//            //	people.set("$email", Constants.StoreEmail);
+//            //  669302602295 - Boost Project ID
+//            // 150516431070 - Test Project ID
+//            people.initPushHandling("669302602295");
+//            // people.initPushHandling("276987746927");
+//            people.set("Notification", fpid);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -272,8 +274,8 @@ public class MixPanelController {
 
     public static void setProperties(String plan, String status) {
         try {
-            if (mixPanel != null)
-                mixPanel.getPeople().set(plan, status);
+//            if (mixPanel != null)
+//                mixPanel.getPeople().set(plan, status);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -282,14 +284,14 @@ public class MixPanelController {
     public static void createUser(String id, JSONObject store) {
 //		Log.v("mixpanel", id);
         try {
-            mixPanel.identify(id);
-            people = mixPanel.getPeople();
-            people.identify(id);
-            people.set(store);
+//            mixPanel.identify(id);
+//            people = mixPanel.getPeople();
+//            people.identify(id);
+//            people.set(store);
             //people.set("$email", Constants.StoreEmail);
             //  669302602295 - Boost Project ID
             // 150516431070 - Test Project ID
-            people.initPushHandling("669302602295");
+//            people.initPushHandling("669302602295");
 //            ApxorSDK.setUserIdentifier(id);
 //            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(store));
             //people.initPushHandling("276987746927");

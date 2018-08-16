@@ -23,7 +23,9 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.thinksity.R;
@@ -36,14 +38,16 @@ public class ExpandableCardView extends LinearLayout {
     private ViewGroup containerView;
 
     private ImageButton arrowBtn;
-    //    private ImageButton headerIcon;
+    private ImageView headerIcon;
     private TextView textViewTitle, tvMsg;
 
     private TypedArray typedArray;
-    private int innerViewRes;
+    private int innerViewRes, textColor, backgroundColor;
     private Drawable iconDrawable;
 
     private CardView card;
+
+    private Space space;
 
     public static final int DEFAULT_ANIM_DURATION = 350;
     private long animDuration = DEFAULT_ANIM_DURATION;
@@ -98,6 +102,7 @@ public class ExpandableCardView extends LinearLayout {
         inflater.inflate(R.layout.expandable_cardview, this);
         llHeader = findViewById(R.id.llHeader);
         card = findViewById(R.id.card);
+        space = findViewById(R.id.spView);
         llHeader.post(new Runnable() {
             public void run() {
                 previousHeight = initHeight = llHeader.getHeight() + 20;
@@ -123,6 +128,8 @@ public class ExpandableCardView extends LinearLayout {
         //Ottengo attributi
         typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableCardView);
         title = typedArray.getString(R.styleable.ExpandableCardView_title);
+        backgroundColor = typedArray.getInteger(R.styleable.ExpandableCardView_backgroundColor, View.NO_ID);
+        textColor = typedArray.getInteger(R.styleable.ExpandableCardView_cardTextColor, View.NO_ID);
         message = typedArray.getString(R.styleable.ExpandableCardView_message);
         iconDrawable = typedArray.getDrawable(R.styleable.ExpandableCardView_icon);
         innerViewRes = typedArray.getResourceId(R.styleable.ExpandableCardView_inner_view, View.NO_ID);
@@ -140,26 +147,47 @@ public class ExpandableCardView extends LinearLayout {
         arrowBtn = findViewById(R.id.arrow);
         textViewTitle = findViewById(R.id.title);
         tvMsg = findViewById(R.id.tvMsg);
-//        headerIcon = findViewById(R.id.icon);
+        headerIcon = findViewById(R.id.icon);
 
         //Setting attributes
         if (!TextUtils.isEmpty(title)) textViewTitle.setText(title);
 
         //Setting attributes
-        if (!TextUtils.isEmpty(message)) tvMsg.setText(message);
+        if (!TextUtils.isEmpty(message)) {
+            tvMsg.setText(message);
+            tvMsg.setVisibility(View.VISIBLE);
+            space.setVisibility(View.GONE);
+        } else {
+            tvMsg.setVisibility(View.GONE);
+            space.setVisibility(View.VISIBLE);
+        }
 
-//        if (iconDrawable != null) {
-//            headerIcon.setVisibility(VISIBLE);
-//            headerIcon.setBackground(iconDrawable);
-//        }
+        if (iconDrawable != null) {
+            headerIcon.setVisibility(VISIBLE);
+            headerIcon.setImageDrawable(iconDrawable);
+        }
 
         card = findViewById(R.id.card);
+
+
+        if (textColor != -1) {
+            textViewTitle.setTextColor(textColor);
+        }
+
+        if (backgroundColor != -1) {
+            textViewTitle.setTextSize(convertDpToPixels(getContext(), 6));
+            card.setBackgroundColor(backgroundColor);
+            findViewById(R.id.vwDivider).setVisibility(View.GONE);
+            card.setRadius(convertDpToPixels(getContext(), 5));
+            setElevation(convertDpToPixels(getContext(), 5));
+        } else {
+            setElevation(convertDpToPixels(getContext(), 20));
+        }
 
         setInnerView(innerViewRes);
 
         containerView = findViewById(R.id.viewContainer);
 
-        setElevation(convertDpToPixels(getContext(), 20));
 
         if (expandOnClick) {
 //            card.setOnClickListener(defaultClickListener);

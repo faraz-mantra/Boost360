@@ -699,7 +699,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void
+    onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         hideLoader();

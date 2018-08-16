@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 /**
@@ -35,7 +36,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_appearance);
-
+        MixPanelController.track(MixPanelController.IMAGE_GALLERY, null);
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         ivDelete = (ImageView) findViewById(R.id.ivDelete);
         setSupportActionBar(toolbar);
@@ -75,7 +76,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
                             }
                         });
 
-               builder.show();
+                builder.show();
 
             }
         });

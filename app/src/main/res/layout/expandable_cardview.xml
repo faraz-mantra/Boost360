@@ -26,7 +26,7 @@
             <LinearLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_5"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:src="@drawable/app_launcher"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/llMsg"
@@ -65,11 +65,16 @@
                         android:id="@+id/tvMsg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/margin_5"
                         android:paddingRight="@dimen/margin_10"
                         android:paddingTop="@dimen/margin_2"
                         android:textColor="@color/biz_msg_txt_color"
-                        android:textSize="@dimen/medium_text_size" />
+                        android:textSize="@dimen/medium_text_size"
+                        android:visibility="gone" />
+
+                    <Space
+                        android:id="@+id/spView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_15" />
                 </LinearLayout>
 
                 <ImageButton
@@ -85,6 +90,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/vwDivider"
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/primaryColor" />
@@ -96,21 +102,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:inflatedId="@+id/innerView" />
-        <!--
-                <TextView
-                    android:id="@+id/tvDismiss"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#EEEEEE"
-                    android:gravity="left"
-                    android:paddingBottom="@dimen/margin_15"
-                    android:paddingLeft="@dimen/margin_10"
-                    android:paddingRight="@dimen/margin_10"
-                    android:paddingTop="@dimen/margin_10"
-                    android:text="@string/dismiss"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="@dimen/medium_text_size"
-                    android:textStyle="bold" />-->
+
 
     </LinearLayout>
 

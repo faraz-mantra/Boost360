@@ -299,12 +299,15 @@ public class NewPricingPlansActivity extends AppCompatActivity {
                         for (PackageDetails topUp : mTopUps) {
                             List<String> featuresList = new ArrayList<>();
                             int count = 0;
-                            for (WidgetPacks widget : topUp.getWidgetPacks()) {
-                                if (widget.Name != null) {
-                                    featuresList.add(widget.Name);
-                                    count++;
-                                    if (count >= 8) {
-                                        break;
+                            if (topUp.getWidgetPacks() != null
+                                    && topUp.getWidgetPacks().size()>0) {
+                                for (WidgetPacks widget : topUp.getWidgetPacks()) {
+                                    if (widget.Name != null) {
+                                        featuresList.add(widget.Name);
+                                        count++;
+                                        if (count >= 8) {
+                                            break;
+                                        }
                                     }
                                 }
                             }

@@ -1,25 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg">
+    android:background="@color/screen_bg"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/tool_bar_business_profile" />
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_marginLeft="2dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="2dp">
+            android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -28,27 +29,28 @@
                 card_view:cardCornerRadius="1dp">
 
                 <LinearLayout
-                    android:background="@color/white"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
-                        android:orientation="vertical"
-                        android:gravity="bottom">
+                        android:gravity="bottom"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/business_address_textline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/address_line"
-                            android:textSize="10sp"
                             android:paddingLeft="5dp"
+                            android:text="@string/address_line"
                             android:textColor="#BDBDBD"
-                            android:visibility="gone"/>
+                            android:textSize="10sp"
+                            android:visibility="gone" />
 
                         <EditText
                             android:id="@+id/addressLine"
@@ -57,80 +59,79 @@
                             android:gravity="bottom"
                             android:hint="@string/address_line"
                             android:inputType="textCapWords"
-                            android:textSize="14sp"
-                            android:textColor="#575757"/>
+                            android:textColor="#575757"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
+                        android:gravity="bottom"
                         android:orientation="horizontal"
-                        android:weightSum="3"
-                        android:gravity="bottom">
+                        android:weightSum="3">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="52dp"
-                            android:orientation="vertical"
-                            android:gravity="bottom"
                             android:layout_weight="2"
-                            >
+                            android:gravity="bottom"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/business_address_citytext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/town_city"
-                                android:textSize="10sp"
                                 android:paddingLeft="5dp"
+                                android:text="@string/town_city"
                                 android:textColor="#BDBDBD"
-                                android:visibility="gone"/>
+                                android:textSize="10sp"
+                                android:visibility="gone" />
 
                             <AutoCompleteTextView
                                 android:id="@+id/businessAddress_cityEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="@string/town_city"
-                                android:textSize="14sp"
                                 android:gravity="bottom"
+                                android:hint="@string/town_city"
                                 android:inputType="textCapWords|textNoSuggestions"
-                                android:textColor="#575757"/>
+                                android:textColor="#575757"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="2dp"
-                            android:background="#ececec"
+                            android:layout_height="match_parent"
                             android:layout_marginBottom="5dp"
-                            android:layout_height="match_parent" />
+                            android:background="#ececec" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="52dp"
-                            android:orientation="vertical"
+                            android:layout_weight="1"
                             android:gravity="bottom"
-                            android:layout_weight="1">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/business_address_pincodetext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/pin_area_code"
-                                android:textSize="10sp"
                                 android:paddingLeft="5dp"
+                                android:text="@string/pin_area_code"
                                 android:textColor="#BDBDBD"
-                                android:visibility="gone"/>
+                                android:textSize="10sp"
+                                android:visibility="gone" />
 
                             <EditText
                                 android:id="@+id/businessAddress_pinCodeEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="@string/pin_area_code"
-                                android:textSize="14sp"
                                 android:gravity="bottom"
+                                android:hint="@string/pin_area_code"
                                 android:inputType="text"
-                                android:textColor="#575757"/>
+                                android:textColor="#575757"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -139,21 +140,20 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
-                        android:orientation="vertical"
-                        android:gravity="bottom"
                         android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <TextView
                             android:id="@+id/business_address_statetext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/state_province"
-                            android:textSize="10sp"
                             android:paddingLeft="5dp"
+                            android:text="@string/state_province"
                             android:textColor="#BDBDBD"
-                            android:visibility="gone"/>
-
+                            android:textSize="10sp"
+                            android:visibility="gone" />
 
 
                         <EditText
@@ -162,24 +162,25 @@
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
                             android:hint="@string/state_province"
-                            android:textSize="14sp"
-                            android:textColor="#575757"/>
+                            android:textColor="#575757"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
-                        android:orientation="vertical"
-                        android:gravity="bottom">
+                        android:gravity="bottom"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/business_address_countrytext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/country"
-                            android:textSize="10sp"
                             android:paddingLeft="5dp"
-                            android:textColor="#BDBDBD"/>
+                            android:text="@string/country"
+                            android:textColor="#BDBDBD"
+                            android:textSize="10sp" />
+
                         <EditText
 
                             android:id="@+id/businessAddress_countryEditText"
@@ -187,8 +188,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
                             android:hint="@string/country"
-                            android:textSize="14sp"
-                            android:textColor="@color/light_gray"/>
+                            android:textColor="@color/light_gray"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -198,16 +199,16 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
                 android:layout_margin="10dp"
-                card_view:cardCornerRadius="3dp"
-                app:cardElevation="3dp">
+                android:background="@color/white"
+                app:cardElevation="3dp"
+                card_view:cardCornerRadius="3dp">
 
                 <ImageView
                     android:id="@+id/iv_map"
-                    android:layout_margin="13dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_margin="13dp" />
 
             </android.support.v7.widget.CardView>
 

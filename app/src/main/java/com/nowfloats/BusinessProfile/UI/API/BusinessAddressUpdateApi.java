@@ -1,8 +1,7 @@
 package com.nowfloats.BusinessProfile.UI.API;
 
 
-
-//Uncomment all the lines to the changes the location from the map for and using the locatingbusinessaddress() 
+//Uncomment all the lines to the changes the location from the map for and using the locatingbusinessaddress()
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -28,13 +27,13 @@ import retrofit.http.POST;
 public class BusinessAddressUpdateApi {
 
     private Activity appContext = null;
-    ProgressDialog pd 	= null;
+    ProgressDialog pd = null;
     UserSessionManager session;
-    String city,pincode,address;
-    double latitude,longitude;
+    String city, pincode, address;
+    double latitude, longitude;
 
-    BusinessAddressUpdateModel addressModel=new BusinessAddressUpdateModel();
-    List<BusinessAddressUpdateModel.Update> list=new ArrayList<>();
+    BusinessAddressUpdateModel addressModel = new BusinessAddressUpdateModel();
+    List<BusinessAddressUpdateModel.Update> list = new ArrayList<>();
 
     public BusinessAddressUpdateApi(double latitude,
                                     double longitude,
@@ -43,71 +42,68 @@ public class BusinessAddressUpdateApi {
                                     String address, boolean addressAdd, String fpTag) {
 //values are coming from the bussiness address fragment
         this.appContext = context;
-        String location = latitude+","+longitude;
+        String location = latitude + "," + longitude;
 //Log.v("ggg","constructor geocoordinate "+location);
-        if(addressAdd){
-            this.city= city;
-            this.latitude =latitude;
+        if (addressAdd) {
+            this.city = city;
+            this.latitude = latitude;
             this.longitude = longitude;
             this.address = address;
             this.pincode = pincode;
-            BusinessAddressUpdateModel.Update update1=new BusinessAddressUpdateModel().new Update();
+            BusinessAddressUpdateModel.Update update1 = new BusinessAddressUpdateModel().new Update();
             update1.setKey("ADDRESS");
             update1.setValue(address);
             list.add(update1);
-            BusinessAddressUpdateModel.Update update2=new BusinessAddressUpdateModel().new Update();
+            BusinessAddressUpdateModel.Update update2 = new BusinessAddressUpdateModel().new Update();
             update2.setKey("CITY");
             update2.setValue(city);
             list.add(update2);
-            BusinessAddressUpdateModel.Update update3=new BusinessAddressUpdateModel().new Update();
+            BusinessAddressUpdateModel.Update update3 = new BusinessAddressUpdateModel().new Update();
             update3.setKey("PINCODE");
             update3.setValue(pincode);
             list.add(update3);
         }
-        BusinessAddressUpdateModel.Update update4=new BusinessAddressUpdateModel().new Update();
+        BusinessAddressUpdateModel.Update update4 = new BusinessAddressUpdateModel().new Update();
         update4.setKey("GEOLOCATION");
         update4.setValue(location);
         list.add(update4);
         addressModel.setClientId(Constants.clientId);
         addressModel.setUpdates(list);
         addressModel.setFpTag(fpTag);
-        session = new UserSessionManager(appContext,context);
+        session = new UserSessionManager(appContext, context);
 
     }
-    public void update(){
-        pd= ProgressDialog.show(appContext, null, "Updating Your Address");
+
+    public void update() {
+        pd = ProgressDialog.show(appContext, null, "Updating Your Address");
         pd.show();
-        RestAdapter adapter=new RestAdapter.Builder()
-                .setEndpoint(Constants.NOW_FLOATS_API_URL)
-                /*.setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("ggg"))*/
-                .build();
-        UpdateCallApi callApi=adapter.create(UpdateCallApi.class);
+        UpdateCallApi callApi = Constants.restAdapter.create(UpdateCallApi.class);
         callApi.updateAddress(addressModel, new Callback<JsonArray>() {
             @Override
             public void success(JsonArray jsonElements, Response response) {
-                if(pd!=null && pd.isShowing())
+                if (pd != null && pd.isShowing())
                     pd.dismiss();
-                if(response.getStatus()!=200 ||jsonElements==null) return;
+                if (response.getStatus() != 200 || jsonElements == null) return;
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, city);
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE, pincode);
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, address);
                 session.storeFPDetails(Key_Preferences.LATITUDE, String.valueOf(latitude));
                 session.storeFPDetails(Key_Preferences.LONGITUDE, String.valueOf(longitude));
-                Methods.showSnackBarPositive(appContext,"Update Address successful");
+                Methods.showSnackBarPositive(appContext, "Update Address successful");
                 NewMapViewDialogBusinessAddress.updatingPostionFromMap = true;
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd!=null && pd.isShowing())
+                if (pd != null && pd.isShowing())
                     pd.dismiss();
                 //Log.v("ggg",error+"update address json error");
             }
         });
     }
-    interface UpdateCallApi{
+
+    interface UpdateCallApi {
         @POST("/Discover/v1/FloatingPoint/update/")
         void updateAddress(@Body BusinessAddressUpdateModel model, Callback<JsonArray> response);
     }

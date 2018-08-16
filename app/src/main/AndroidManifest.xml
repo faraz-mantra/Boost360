@@ -83,7 +83,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/app_launcher2" />
-
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
         <meta-data
             android:name="com.webengage.sdk.android.small_icon"
             android:resource="@drawable/app_launcher2" />
@@ -565,6 +567,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.sellerprofile.SellerProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"

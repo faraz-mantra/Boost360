@@ -34,8 +34,8 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
     useLibrary 'org.apache.http.legacy'
 
     lintOptions {
@@ -45,20 +45,17 @@ android {
 
     defaultConfig {
         applicationId 'com.biz2.nowfloats'
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 2018070030
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 2018080015
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a", "x86"
         }
     }
-    sourceSets {
-        aaptOptions {
-            noCompress ".dict"
-        }
-
+    aaptOptions {
+        noCompress ".dict"
     }
     buildTypes {
 
@@ -124,7 +121,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "4.9.27"
+            versionName "4.9.28"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -201,13 +198,18 @@ dependencies {
     implementation 'me.biubiubiu.justifytext:library:1.1'
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'com.squareup.okhttp3:okhttp:3.7.0'
-    implementation 'com.mixpanel.android:mixpanel-android:5.+'
     implementation 'com.android.support:gridlayout-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.webengage:android-sdk:2.+'
     implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.8.2@aar') {
         exclude group: 'com.google.firebase'
     }
+    implementation ('com.apxor.android:apxor-android-sdk-push:1.0.9@aar') {
+        exclude group: 'com.google.firebase'
+    }
+    implementation 'com.apxor.android:apxor-android-sdk-qe:1.0.4@aar'
+    implementation 'com.apxor.android:apxor-android-sdk-rtm:1.0.4@aar'
+    implementation 'com.apxor.android:apxor-android-crash-reporter:1.0.0@aar'
     implementation project(':keyboard')
 }
 

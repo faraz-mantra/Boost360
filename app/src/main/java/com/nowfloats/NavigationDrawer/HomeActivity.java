@@ -1069,6 +1069,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 if (nextScreen.equals(getString(R.string.keyboard))) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
+
+//                    Intent i = new Intent(HomeActivity.this, SellerProfileActivity.class);
+//                    startActivity(i);
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)

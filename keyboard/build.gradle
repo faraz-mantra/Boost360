@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
-project.ext.set("archivesBaseName", "IndicKeyboard");
+project.ext.set("archivesBaseName", "IndicKeyboard")
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         /* ndk {
@@ -20,11 +21,8 @@ android {
         }
     }
 
-    sourceSets {
-        aaptOptions {
-            noCompress ".dict"
-        }
-
+    aaptOptions {
+        noCompress ".dict"
     }
 
     lintOptions {
