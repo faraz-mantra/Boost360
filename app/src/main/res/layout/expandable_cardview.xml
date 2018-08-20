@@ -67,6 +67,7 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="@dimen/margin_10"
                         android:paddingTop="@dimen/margin_2"
+                        android:paddingBottom="@dimen/margin_5"
                         android:textColor="@color/biz_msg_txt_color"
                         android:textSize="@dimen/medium_text_size"
                         android:visibility="gone" />

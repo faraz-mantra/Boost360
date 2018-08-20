@@ -1987,13 +1987,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         startChat(mAllNodes.get(0));
     }
 
-    public void hideSoftKeyboard() {
+    public void hideSoftKeyboard()
+    {
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
-
     private void handleGetRequest(final RiaCardModel node) {
 
         progressBar.setVisibility(View.VISIBLE);
@@ -2155,7 +2155,16 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
                 for (String key : node.getRequiredVariables()) {
-                    param.put(key, mDataMap.get("[~" + key + "]"));
+                    String value = mDataMap.get("[~" + key + "]");
+
+                    try {
+                        value = URLEncoder.encode(value, "UTF-8");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    param.put(key, value);
+
                 }
                 return param;
             }

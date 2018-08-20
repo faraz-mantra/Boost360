@@ -97,9 +97,6 @@ import com.crashlytics.android.Crashlytics;
 import com.permissioneverywhere.PermissionEverywhere;
 import com.permissioneverywhere.PermissionResponse;
 import com.permissioneverywhere.PermissionResultCallback;
-import com.rarepebble.colorpicker.ColorPickerView;
-import com.turkialkhateeb.materialcolorpicker.ColorChooserDialog;
-import com.turkialkhateeb.materialcolorpicker.ColorListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -161,8 +158,6 @@ import nfkeyboard.util.MixPanelUtils;
 import nfkeyboard.util.SharedPrefUtil;
 
 import static io.separ.neural.inputmethod.colors.ColorManager.addObserver;
-import static io.separ.neural.inputmethod.colors.ColorManager.getLastProfile;
-import static io.separ.neural.inputmethod.colors.ColorUtils.convertColor;
 import static io.separ.neural.inputmethod.indic.Constants.ImeOption.FORCE_ASCII;
 import static io.separ.neural.inputmethod.indic.Constants.ImeOption.NO_MICROPHONE;
 import static io.separ.neural.inputmethod.indic.Constants.ImeOption.NO_MICROPHONE_COMPAT;
@@ -310,12 +305,12 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             try {
                 LinearLayout linearLayout = new LinearLayout(context);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
-                final ColorPickerView colorPickerView = new ColorPickerView(context);
-                colorPickerView.showAlpha(false);
-                colorPickerView.showHex(false);
-                colorPickerView.setOriginalColor(getLastProfile().getPrimary());
-                colorPickerView.setCurrentColor(getLastProfile().getPrimary());
-                linearLayout.addView(colorPickerView);
+//                final ColorPickerView colorPickerView = new ColorPickerView(context);
+//                colorPickerView.showAlpha(false);
+//                colorPickerView.showHex(false);
+//                colorPickerView.setOriginalColor(getLastProfile().getPrimary());
+//                colorPickerView.setCurrentColor(getLastProfile().getPrimary());
+//                linearLayout.addView(colorPickerView);
                 final CheckBox checkBox = new CheckBox(context);
                 checkBox.setText(R.string.set_as_default_theme);
                 linearLayout.addView(checkBox);
@@ -323,12 +318,12 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 builder.setView(linearLayout).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        ColorDatabase.addColors(LatinIME.this, currentPackageName, new String[]{convertColor(colorPickerView.getColor())});
-                        if (checkBox.isChecked()) {
-                            ColorDatabase.addTheme(LatinIME.this, colorPickerView.getColor());
-                            PreferenceManager.getDefaultSharedPreferences(LatinIME.this).edit().putString("KeyboardTheme", "my_theme").apply();
-                        }
-                        colorManager.calculateProfile(LatinIME.this, currentPackageName);
+//                        ColorDatabase.addColors(LatinIME.this, currentPackageName, new String[]{convertColor(colorPickerView.getColor())});
+//                        if (checkBox.isChecked()) {
+//                            ColorDatabase.addTheme(LatinIME.this, colorPickerView.getColor());
+//                            PreferenceManager.getDefaultSharedPreferences(LatinIME.this).edit().putString("KeyboardTheme", "my_theme").apply();
+//                        }
+//                        colorManager.calculateProfile(LatinIME.this, currentPackageName);
                     }
                 }).setNegativeButton(android.R.string.cancel, null).setNeutralButton(R.string.default_coloring, new DialogInterface.OnClickListener() {
                     @Override
@@ -342,17 +337,17 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 dialog.setCanceledOnTouchOutside(true);
                 showOptionDialog(dialog);
             } catch (Exception exception) {
-                ColorChooserDialog dialog = new ColorChooserDialog(context);
-                dialog.setColorListener(new ColorListener() {
-                    @Override
-                    public void OnColorClick(View v, int color) {
-                        ColorDatabase.addColors(LatinIME.this, currentPackageName, new String[]{convertColor(color)});
-                        colorManager.calculateProfile(LatinIME.this, currentPackageName);
-                    }
-                });
-                dialog.setCancelable(true);
-                dialog.setCanceledOnTouchOutside(true);
-                showOldColorDialog(dialog);
+//                ColorChooserDialog dialog = new ColorChooserDialog(context);
+//                dialog.setColorListener(new ColorListener() {
+//                    @Override
+//                    public void OnColorClick(View v, int color) {
+//                        ColorDatabase.addColors(LatinIME.this, currentPackageName, new String[]{convertColor(color)});
+//                        colorManager.calculateProfile(LatinIME.this, currentPackageName);
+//                    }
+//                });
+//                dialog.setCancelable(true);
+//                dialog.setCanceledOnTouchOutside(true);
+//                showOldColorDialog(dialog);
             }
             return;
         }

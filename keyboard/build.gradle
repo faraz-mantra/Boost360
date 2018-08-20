@@ -63,8 +63,8 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
     implementation 'com.hannesdorfmann.smoothprogressbar:library:1.0.0'
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
-    implementation 'com.rarepebble:colorpicker:2.1.0'
-    implementation 'com.turki-alkhateeb:materialcolorpicker:1.0.7'
+//    implementation 'com.rarepebble:colorpicker:2.1.0'
+//    implementation 'com.turki-alkhateeb:materialcolorpicker:1.0.7'
     implementation 'com.mixpanel.android:mixpanel-android:5.+'
 
 
@@ -78,7 +78,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    implementation 'com.squareup.retrofit:retrofit:1.9.0'
     implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.8.2@aar') {
         exclude group: 'com.google.firebase'
     }

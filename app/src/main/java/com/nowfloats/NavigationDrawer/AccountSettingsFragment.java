@@ -38,6 +38,7 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
+import com.nowfloats.sellerprofile.SellerProfileActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -57,7 +58,7 @@ import java.util.HashMap;
  * Created by Admin on 29-01-2018.
  */
 
-public class AccountSettingsFragment extends Fragment implements DomainApiService.DomainCallback{
+public class AccountSettingsFragment extends Fragment implements DomainApiService.DomainCallback {
 
     private Context mContext;
     private EditText old_pwd, new_pwd, confirm_pwd;
@@ -66,12 +67,12 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     UserSessionManager sessionManager;
     private ProgressDialog progressDialog;
     private DomainApiService domainApiService;
-    private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
+    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_upgrade, container,false);
+        return inflater.inflate(R.layout.fragment_upgrade, container, false);
     }
 
     @Override
@@ -83,8 +84,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!isAdded() || getActivity() == null){
-            Methods.showSnackBar(view,getString(R.string.something_went_wrong_try_again), Color.RED);
+        if (!isAdded() || getActivity() == null) {
+            Methods.showSnackBar(view, getString(R.string.something_went_wrong_try_again), Color.RED);
             return;
         }
 
@@ -93,18 +94,21 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         final String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.account_settings);
         int[] adapterImages = new int[adapterTexts.length];
-        for (int i = 0; i<adapterTexts.length;i++){
-            adapterImages[i] = imagesArray.getResourceId(i,-1);
+        for (int i = 0; i < adapterTexts.length; i++) {
+            adapterImages[i] = imagesArray.getResourceId(i, -1);
         }
         imagesArray.recycle();
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-                switch(adapterTexts[pos]){
+                switch (adapterTexts[pos]) {
+                    case "Seller Profile":
+                        intent = new Intent(mContext, SellerProfileActivity.class);
+                        break;
                     case "Site Appearance":
                         intent = new Intent(mContext, SiteAppearanceActivity.class);
                         break;
@@ -127,14 +131,14 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             if (!getActivity().isFinishing()) {
                                 builder.show();
                             }
-                        } else if(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")){
+                        } else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
                             showExpiryDialog(DEMO);
-                        }else if(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
-                                sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
+                        } else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
+                                sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
                             showExpiryDialog(DEMO_EXPIRED);
                         } else if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
-                            domainApiService.getDomainDetails(mContext,sessionManager.getFpTag(), getDomainDetailsParam());
+                            domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
                         } else {
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
@@ -155,7 +159,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        adapter.setItems(adapterImages,adapterTexts);
+        adapter.setItems(adapterImages, adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(adapter);
 
@@ -300,6 +304,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             }
         });
     }
+
     private void showLoader(final String message) {
 
         if (getActivity() == null) return;
@@ -388,6 +393,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         TextView tvMessage = (TextView) maView.findViewById(R.id.toast_message_to_contact);
         tvMessage.setText(message);
     }
+
     private HashMap<String, String> getDomainDetailsParam() {
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("clientId", Constants.clientId);
@@ -467,26 +473,26 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     public void getDomainDetails(DomainDetails domainDetails) {
         hideLoader();
         if (!isAdded() || getActivity() == null) return;
-        if(!isAlreadyCalled) {
-            if(domainDetails == null && sessionManager.getRootAliasURI() != null) {
+        if (!isAlreadyCalled) {
+            if (domainDetails == null && sessionManager.getRootAliasURI() != null) {
                 showCustomDialog(getString(R.string.domain_linking_success),
                         getString(R.string.domain_linked),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
                 return;
             }
-            if (domainDetails == null){
-                Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
-            } else if(domainDetails.isFailed()){
+            if (domainDetails == null) {
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
+            } else if (domainDetails.isFailed()) {
                 showCustomDialog(getString(R.string.domain_booking_failed),
-                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
-                                getString(R.string.drop_us_contact):domainDetails.getErrorMessage()).toString(),
+                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage()) ?
+                                getString(R.string.drop_us_contact) : domainDetails.getErrorMessage()).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else if(domainDetails.isPending()){
+            } else if (domainDetails.isPending()) {
 
                 showCustomDialog(getString(R.string.domain_booking_process),
                         getString(R.string.domain_booking_process_message),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else if(!domainDetails.isHasDomain() && sessionManager.getRootAliasURI() != null){
+            } else if (!domainDetails.isHasDomain() && sessionManager.getRootAliasURI() != null) {
                 showCustomDialog(getString(R.string.domain_linking_success),
                         getString(R.string.domain_linked),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
@@ -543,8 +549,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     @Override
     public void onResume() {
         super.onResume();
-        if (mContext instanceof HomeActivity && HomeActivity.headerText != null)
-        {
+        if (mContext instanceof HomeActivity && HomeActivity.headerText != null) {
             HomeActivity.headerText.setText(getString(R.string.account_settings));
         }
     }

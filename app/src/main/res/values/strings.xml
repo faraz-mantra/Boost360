@@ -1696,6 +1696,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
 
     <string-array name="account_setting_tab_items">
+        <item>Seller Profile</item>
         <item>Site Appearance</item>
         <item>Domain and Email</item>
         <!--
