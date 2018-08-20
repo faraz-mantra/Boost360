@@ -472,13 +472,13 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onPause() {
         super.onPause();
-        
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        
+
     }
 
     private void sendIsInterested(FragmentActivity activity, String fpid, String planType, final Bus bus) {
@@ -492,7 +492,7 @@ public class Home_Main_Fragment extends Fragment implements
 
     @Override
     public void dataFetched(int skip, boolean isNewMessage) {
-        
+
         Create_Message_Activity.path = "";
         Constants.createMsg = false;
         loadDataFromDb(skip, isNewMessage);
@@ -538,7 +538,7 @@ public class Home_Main_Fragment extends Fragment implements
     }
 
 
-    
+
 
 
     public class MyOnClickListener implements View.OnClickListener {
@@ -620,13 +620,13 @@ public class Home_Main_Fragment extends Fragment implements
                 }
             }
 
-            
+
         }*/
         UploadMessageTask upa =new UploadMessageTask(act, path, task,session);
         upa.UploadPostService();
     }
 
-    
+
 
      interface OnRenewPlanClickListener {
          void onRenewPlanSelected();

@@ -212,8 +212,8 @@ public final class SettingsValues {
     }
 
     public boolean needsToLookupSuggestions() {
-        return true;
-//        mInputAttributes.mShouldShowSuggestions
+       // return true;
+       return mInputAttributes.mShouldShowSuggestions;
 //                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
     }
 
