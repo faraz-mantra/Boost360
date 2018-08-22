@@ -26,7 +26,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
     private WebView webView;
 
-    String url ;
+    String url;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -44,17 +44,25 @@ public class Mobile_Site_Activity extends AppCompatActivity {
             url = extras.getString("WEBSITE_NAME");
         }
 
-        TextView close = (TextView)findViewById(R.id.close_web);
+        TextView close = (TextView) findViewById(R.id.close_web);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
+                Uri webpage = Uri.parse(url);
+
+                if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                    webpage = Uri.parse("http://" + url);
+                }
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                if (browserIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(browserIntent);
+                }
             }
         });
 
-        ImageView back = (ImageView)findViewById(R.id.back_web);
+        ImageView back = (ImageView) findViewById(R.id.back_web);
         back.setColorFilter(whiteLabelFilter);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +70,10 @@ public class Mobile_Site_Activity extends AppCompatActivity {
                 finish();
             }
         });
-        webView = (WebView)findViewById(R.id.webView1);
+        webView = (WebView) findViewById(R.id.webView1);
 //        startWebView(url);
         startWebView(url);
     }
-
-
 
 
     private void startWebView(String url) {
@@ -76,6 +82,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
         webView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
+
             //If you will not use this method url links are opeen in new brower not in webview
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -85,12 +92,13 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
             //Show loader on url load
             @Override
-            public void onLoadResource (WebView view, String url) {}
+            public void onLoadResource(WebView view, String url) {
+            }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                try{
+                try {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -102,24 +110,24 @@ public class Mobile_Site_Activity extends AppCompatActivity {
                             progressDialog.show();
                         }
                     });
-                }catch(Exception exception){
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                try{
+                try {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (progressDialog!=null) {
+                            if (progressDialog != null) {
                                 progressDialog.dismiss();
                                 progressDialog = null;
                             }
                         }
                     });
-                }catch(Exception exception){
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
@@ -151,7 +159,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
     @Override
     // Detect when the back button is pressed
     public void onBackPressed() {
-        if(webView.canGoBack()) {
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             // Let the system handle the back button

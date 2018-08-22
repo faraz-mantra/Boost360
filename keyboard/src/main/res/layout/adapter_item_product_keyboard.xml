@@ -10,7 +10,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btn_one"
+        app:layout_constraintBottom_toTopOf="@+id/btn_one"
         android:background="@drawable/rounded_border_edittext"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp">
@@ -59,8 +59,8 @@
         android:text="@string/_1"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_offer"
-        app:layout_constraintEnd_toStartOf="@id/btn_two" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+        app:layout_constraintEnd_toStartOf="@+id/btn_two" />
 
     <Button
         android:id="@+id/btn_two"
@@ -70,21 +70,21 @@
         android:text="@string/_2"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_offer"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@id/btn_three" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_three" />
 
     <Button
         android:id="@+id/btn_three"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_offer"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_3"
         android:textColor="@android:color/black"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@id/guideline_vertical_offer" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_offer" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_vertical_offer"
@@ -108,9 +108,9 @@
         android:text="@string/_4"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_offer"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical_offer" />
+        app:layout_constraintStart_toEndOf="@+id/guideline_vertical_offer" />
 
     <Button
         android:id="@+id/btn_five"
@@ -120,9 +120,9 @@
         android:text="@string/_5"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_offer"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btn_four" />
+        app:layout_constraintStart_toEndOf="@+id/btn_four" />
 
     <Button
         android:id="@+id/btn_six"
@@ -132,9 +132,9 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_6"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_offer"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btn_five" />
+        app:layout_constraintStart_toEndOf="@+id/btn_five" />
 
     <Button
         android:id="@+id/btn_seven"
@@ -144,8 +144,8 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_7"
         android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_offer"
-        app:layout_constraintEnd_toStartOf="@id/btn_eight" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
+        app:layout_constraintEnd_toStartOf="@+id/btn_eight" />
 
     <Button
         android:id="@+id/btn_eight"
@@ -155,8 +155,8 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_8"
         android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_offer"
-        app:layout_constraintEnd_toStartOf="@id/btn_nine" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
+        app:layout_constraintEnd_toStartOf="@+id/btn_nine" />
 
     <Button
         android:id="@+id/btn_nine"
@@ -166,7 +166,7 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_9"
         android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_offer"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toEndOf="parent"/>
 
@@ -178,8 +178,8 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_0"
         android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_offer"
-        app:layout_constraintStart_toEndOf="@id/btn_nine" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
+        app:layout_constraintStart_toEndOf="@+id/btn_nine" />
 
     <Button
         android:id="@+id/btn_decimal"
@@ -189,8 +189,8 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/decimal"
         android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_offer"
-        app:layout_constraintStart_toEndOf="@id/btn_zero" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
+        app:layout_constraintStart_toEndOf="@+id/btn_zero" />
 
     <View
         android:layout_width="match_parent"
@@ -199,9 +199,9 @@
         android:background="@android:color/darker_gray"
         android:layout_marginRight="32dp"
         android:layout_marginLeft="32dp"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_offer"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_offer"
-        app:layout_constraintTop_toBottomOf="@id/btn_nine"/>
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical_offer"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_offer"
+        app:layout_constraintTop_toBottomOf="@+id/btn_nine"/>
 
     <Button
         android:id="@+id/button_done"
@@ -214,7 +214,7 @@
         android:minHeight="0dp"
         android:text="@string/tv_done"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        app:layout_constraintTop_toBottomOf="@id/btn_seven"
+        app:layout_constraintTop_toBottomOf="@+id/btn_seven"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
@@ -228,8 +228,8 @@
         android:textColor="@android:color/tab_indicator_text"
         android:text="@string/cancel"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        app:layout_constraintTop_toBottomOf="@id/btn_seven"
-        app:layout_constraintEnd_toStartOf="@id/button_done"/>
+        app:layout_constraintTop_toBottomOf="@+id/btn_seven"
+        app:layout_constraintEnd_toStartOf="@+id/button_done"/>
 
 
 </android.support.constraint.ConstraintLayout>

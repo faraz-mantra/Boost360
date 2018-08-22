@@ -111,11 +111,13 @@ public class SharedPrefUtil {
     public String getWebsite() {
         if (sBoostPref != null) {
             String rootAlisasURI = sBoostPref.getString("GET_FP_DETAILS_ROOTALIASURI", null);
-            String normalURI = "http://" + sBoostPref.getString("GET_FP_DETAILS_TAG", null).toLowerCase() + ".nowfloats.com";
-            if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
-                return rootAlisasURI;
-            } else {
-                return normalURI;
+            if (sBoostPref.getString("GET_FP_DETAILS_TAG", null) != null) {
+                String normalURI = "http://" + sBoostPref.getString("GET_FP_DETAILS_TAG", null).toLowerCase() + ".nowfloats.com";
+                if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
+                    return rootAlisasURI;
+                } else {
+                    return normalURI;
+                }
             }
         }
         return null;

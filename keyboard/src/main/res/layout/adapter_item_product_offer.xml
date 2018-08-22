@@ -29,7 +29,7 @@
         app:cardCornerRadius="8dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_offer"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
         android:layout_marginBottom="4dp"
         android:elevation="1dp">
 
@@ -50,7 +50,7 @@
         android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:layout_marginBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_offer"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
         android:maxLines="2"
         android:ellipsize="end"
         android:text="@string/product_name"/>
@@ -63,7 +63,7 @@
         android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:layout_marginBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
         android:maxLines="2"
         android:ellipsize="end"
         android:text="@string/price"/>
@@ -79,10 +79,10 @@
         app:layout_constraintHorizontal_weight="1"
         android:gravity="start|center_vertical"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/et_offer_price"
-        app:layout_constraintBaseline_toBaselineOf="@id/et_offer_price"
-        app:layout_constraintTop_toBottomOf="@id/border"
-        app:layout_constraintStart_toEndOf="@id/card_view_image"
+        app:layout_constraintEnd_toStartOf="@+id/et_offer_price"
+        app:layout_constraintBaseline_toBaselineOf="@+id/et_offer_price"
+        app:layout_constraintTop_toBottomOf="@+id/border"
+        app:layout_constraintStart_toEndOf="@+id/card_view_image"
         android:text="@string/offer_price" />
 
     <EditText
@@ -99,9 +99,9 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintRight_toRightOf="@id/cl_offer"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_offer"
-        app:layout_constraintTop_toBottomOf="@id/border"
+        app:layout_constraintRight_toRightOf="@+id/cl_offer"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_offer"
+        app:layout_constraintTop_toBottomOf="@+id/border"
         android:hint="@string/enter_offer_price" />
 
     <TextView
@@ -113,10 +113,10 @@
         android:padding="8dp"
         android:layout_marginRight="4dp"
         app:layout_constraintHorizontal_weight="0.2"
-        app:layout_constraintRight_toRightOf="@id/cl_offer"
-        app:layout_constraintBaseline_toBaselineOf="@id/et_offer_price"
-        app:layout_constraintEnd_toEndOf="@id/et_offer_price"
-        app:layout_constraintBottom_toTopOf="@id/ll_quantity"
+        app:layout_constraintRight_toRightOf="@+id/cl_offer"
+        app:layout_constraintBaseline_toBaselineOf="@+id/et_offer_price"
+        app:layout_constraintEnd_toEndOf="@+id/et_offer_price"
+        app:layout_constraintBottom_toTopOf="@+id/ll_quantity"
         android:text="@string/currency"/>
 
     <TextView
@@ -128,10 +128,10 @@
         android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:gravity="start|center_vertical"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintTop_toTopOf="@id/card_view_image"
-        app:layout_constraintEnd_toStartOf="@id/ll_quantity"
-        app:layout_constraintBottom_toBottomOf="@id/ll_quantity"
-        app:layout_constraintStart_toEndOf="@id/card_view_image"
+        app:layout_constraintTop_toTopOf="@+id/card_view_image"
+        app:layout_constraintEnd_toStartOf="@+id/ll_quantity"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_quantity"
+        app:layout_constraintStart_toEndOf="@+id/card_view_image"
         android:layout_height="wrap_content"
         android:text="@string/quantity" />
 
@@ -141,9 +141,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintRight_toRightOf="@id/cl_offer"
-        app:layout_constraintTop_toTopOf="@id/card_view_image"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_offer">
+        app:layout_constraintRight_toRightOf="@+id/cl_offer"
+        app:layout_constraintTop_toTopOf="@+id/card_view_image"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_offer">
 
         <TextView
             android:id="@+id/tv_selected_quantity"
@@ -177,10 +177,10 @@
         android:layout_height="0dp"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintVertical_weight="1"
-        app:layout_constraintEnd_toStartOf="@id/ll_validity"
-        app:layout_constraintTop_toTopOf="@id/ll_validity"
-        app:layout_constraintBottom_toBottomOf="@id/ll_validity"
-        app:layout_constraintStart_toEndOf="@id/card_view_image"
+        app:layout_constraintEnd_toStartOf="@+id/ll_validity"
+        app:layout_constraintTop_toTopOf="@+id/ll_validity"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_validity"
+        app:layout_constraintStart_toEndOf="@+id/card_view_image"
         android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:text="@string/validity" />
 
@@ -192,9 +192,9 @@
         android:layout_marginTop="4dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintRight_toRightOf="@id/cl_offer"
-        app:layout_constraintTop_toBottomOf="@id/tv_quantity"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_offer">
+        app:layout_constraintRight_toRightOf="@+id/cl_offer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_quantity"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_offer">
 
         <TextView
             android:id="@+id/tv_selected_validity"
@@ -227,8 +227,8 @@
         android:layout_marginRight="32dp"
         android:layout_marginLeft="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/card_view_image"
-        app:layout_constraintTop_toBottomOf="@id/tv_validity"/>
+        app:layout_constraintStart_toEndOf="@+id/card_view_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_validity"/>
 
     <Button
         android:id="@+id/button_cancel"
@@ -241,8 +241,8 @@
         android:minHeight="0dp"
         android:textSize="@dimen/adapter_item_product_flipped_text_size"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        app:layout_constraintEnd_toStartOf="@id/button_create"
-        app:layout_constraintTop_toBottomOf="@id/et_offer_price"
+        app:layout_constraintEnd_toStartOf="@+id/button_create"
+        app:layout_constraintTop_toBottomOf="@+id/et_offer_price"
         android:text="@string/cancel" />
 
     <Button
@@ -255,8 +255,8 @@
         android:textSize="@dimen/adapter_item_product_flipped_text_size"
         android:minHeight="0dp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        app:layout_constraintRight_toRightOf="@id/cl_offer"
-        app:layout_constraintTop_toBottomOf="@id/et_offer_price"
+        app:layout_constraintRight_toRightOf="@+id/cl_offer"
+        app:layout_constraintTop_toBottomOf="@+id/et_offer_price"
         android:text="@string/share" />
 
 </android.support.constraint.ConstraintLayout>

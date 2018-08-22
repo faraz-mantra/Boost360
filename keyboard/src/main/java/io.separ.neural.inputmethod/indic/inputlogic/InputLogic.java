@@ -1250,6 +1250,18 @@ public final class InputLogic {
                         mConnection.getExpectedSelectionEnd());
                 mConnection.deleteTextBeforeCursor(numCharsDeleted);
                 StatsUtils.getInstance().onBackspaceSelectedText(numCharsDeleted);
+            } else if (mConnection.getSelectedText(0) != null && mConnection.getSelectedText(0).length() != 0) {
+                final CharSequence selection = mConnection.getSelectedText(0 /* 0 for no styles */);
+                if (!TextUtils.isEmpty(selection)) {
+                    unlearnWord(selection.toString(), inputTransaction.mSettingsValues,
+                            Constants.EVENT_BACKSPACE);
+                    hasUnlearnedWordBeingDeleted = true;
+                }
+                final int numChardDeleted = mConnection.getSelectedText(0).length();
+                mConnection.setSelection(mConnection.getTextBeforeCursor(512, 0).length() + 1,
+                        mConnection.getTextBeforeCursor(512, 0).length() + 1);
+                mConnection.deleteSurroundingText(mConnection.getTextBeforeCursor(512, 0).length(), mConnection.getTextAfterCursor(512, 0).length());
+                StatsUtils.getInstance().onBackspaceSelectedText(numChardDeleted);
             } else {
                 // There is no selection, just delete one character.
                 if (inputTransaction.mSettingsValues.isBeforeJellyBean()

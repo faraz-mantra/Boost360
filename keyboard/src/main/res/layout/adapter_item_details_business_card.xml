@@ -21,7 +21,7 @@
             app:layout_constraintGuide_percent="0.5"/>
 
         <TextView
-            android:id="@id/tv_name"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/cardview_dark_background"
@@ -60,7 +60,7 @@
             android:text="Website URL"/>
 
         <Button
-            android:id="@id/btn_share"
+            android:id="@+id/btn_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/share"

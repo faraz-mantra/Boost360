@@ -10,14 +10,14 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '26.0.2'
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         versionCode 1
         versionName version
-        minSdkVersion 9
-        targetSdkVersion 19
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
     }
 }
 

@@ -39,6 +39,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.LoggingBehavior;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -157,6 +158,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if(BuildConfig.DEBUG){
+            FacebookSdk.setIsDebugEnabled(true);
+            FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
+        }
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.activity_social_sharing, container, false);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -699,7 +705,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void
+    onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         hideLoader();

@@ -39,7 +39,7 @@
         android:background="@drawable/round_check_mark_background_primary_color"/>
 
     <ImageView
-        android:id="@id/iv_check_mark"
+        android:id="@+id/iv_check_mark"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/checkmark_icon"

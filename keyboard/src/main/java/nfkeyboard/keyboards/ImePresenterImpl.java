@@ -214,10 +214,12 @@ public class ImePresenterImpl implements ItemClickListener,
         ExtractedText et = imeListener.getImeCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
         int selectionStart = et.selectionStart;
         CharSequence inputSequence = imeListener.getImeCurrentInputConnection().getTextBeforeCursor(1000, 0);
-        int index = inputSequence.toString().lastIndexOf(" ");
-        String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
-        imeListener.getImeCurrentInputConnection().deleteSurroundingText(inputSequence.toString().indexOf(" ") != -1 ?
-                oldText.length() - 1 : oldText.length(), 0);
+        if (inputSequence != null) {
+            int index = inputSequence.toString().lastIndexOf(" ");
+            String oldText = inputSequence.toString().substring(index > 0 ? index : 0, selectionStart);
+            imeListener.getImeCurrentInputConnection().deleteSurroundingText(!inputSequence.toString().contains(" ") ?
+                    oldText.length() - 1 : oldText.length(), 0);
+        }
         imeListener.getImeCurrentInputConnection().finishComposingText();
         imeListener.getImeCurrentInputConnection().commitText(word.getWord().trim(), 1);
         imeListener.getImeCurrentInputConnection().finishComposingText();
@@ -639,7 +641,9 @@ public class ImePresenterImpl implements ItemClickListener,
             }
         }
 
-        imeListener.getImeCurrentInputConnection().commitText(description + (description.equals("") ? "" : "\n"), 1);
+        if (imeListener.getImeCurrentInputConnection() != null) {
+            imeListener.getImeCurrentInputConnection().commitText(description + (description.equals("") ? "" : "\n"), 1);
+        }
         if (isCommitContentSupported(editorInfo, mimeType)) {
             MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_IMAGE_SHARING, null);
             inputContentInfoCompat = new InputContentInfoCompat(
@@ -686,17 +690,19 @@ public class ImePresenterImpl implements ItemClickListener,
                     } catch (Exception e) {
                     }
                 }
-                inputContentInfoCompat = new InputContentInfoCompat(
-                        uris.get(i),
-                        new ClipDescription("", new String[]{mimeType}),
-                        null /* linkUrl */);
-                InputConnectionCompat.commitContent(
-                        imeListener.getImeCurrentInputConnection(),
-                        imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
-                        flag, null);
+                if (uris.get(i) != null) {
+                    inputContentInfoCompat = new InputContentInfoCompat(
+                            uris.get(i),
+                            new ClipDescription("", new String[]{mimeType}),
+                            null /* linkUrl */);
+                    InputConnectionCompat.commitContent(
+                            imeListener.getImeCurrentInputConnection(),
+                            imeListener.getImeCurrentEditorInfo(), inputContentInfoCompat,
+                            flag, null);
+                }
 
-                imeListener.getImeCurrentInputConnection().endBatchEdit();
             }
+            imeListener.getImeCurrentInputConnection().endBatchEdit();
 
         }
 
