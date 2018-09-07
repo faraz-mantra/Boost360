@@ -710,17 +710,26 @@
         <item>575bfec79bfed51e10df0e5d</item>
         <item>57c3c1a65d64370d7cf4eb17</item>
         <item>571f7f789bfed52c543d888d</item>
+        <item>571f7f789bfed52c543d888d</item>
+        <item>571f7f789bfed52c543d888d</item>
+        <item>571f7f789bfed52c543d888d</item>
     </string-array>
     <string-array name="themeNames">
         <item>Bold and Beautiful</item>
         <item>Fresh Milk Lite</item>
         <item>The First Fox</item>
+        <item>Luxor</item>
+        <item>Alexandria</item>
+        <item>Cairo</item>
     </string-array>
 
     <string-array name="themeMessages">
         <item>Display your products or services boldly. An image-led look to showcase your products, select this if you have already uploaded your products and picture updates.</item>
         <item>A clean white approach to website design, this theme smoothly bridges form and function. Smart use of white space makes it a clean, elegant looking website.</item>
         <item>A smart approach to a balance between imagery and updates. If you post business updates often, this is the theme for you. Customise the background and it will make sure your updates look stunning.</item>
+        <item>With impeccable design in every detail, this theme makes an excellent choice for putting your products front and center with style.</item>
+        <item>A perfect combination of simplicity and detail, this versatile theme is designed for clarity and is an ideal choice for anyone that wants to emphasize their story.</item>
+        <item>A modern, functional theme designed for visual storytelling. The immersive image gallery makes it a great option for anyone looking to showcase their work.</item>
     </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>
@@ -1696,14 +1705,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
 
     <string-array name="account_setting_tab_items">
-<!--
         <item>Seller Profile</item>
--->
         <item>Site Appearance</item>
         <item>Domain and Email</item>
-        <!--
-                <item>Your Plans</item>
-        -->
+      <!--  <item>Your Plans</item>-->
         <item>Change Password</item>
         <item>Log out</item>
     </string-array>

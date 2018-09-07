@@ -33,7 +33,8 @@ import retrofit.client.Response;
  */
 
 public class ThemeSelectorFragment extends Fragment {
-    public static final int[] imageIds = new int[]{R.drawable.theme_bnb, R.drawable.theme_fml, R.drawable.theme_ttf};
+    public static final int[] imageIds = new int[]{R.drawable.theme_bnb, R.drawable.theme_fml, R.drawable.theme_ttf,
+            R.drawable.theme_luxor, R.drawable.theme_alexandria, R.drawable.theme_cairo};
     String[] themeNames, themeMessages;
     String[] themeIds;
     int pos;
@@ -43,7 +44,7 @@ public class ThemeSelectorFragment extends Fragment {
     ProgressDialog dialog;
     TextView setLook;
 
-    public static Fragment getInstanse(int pos) {
+    public static Fragment getInstance(int pos) {
         Fragment frag = new ThemeSelectorFragment();
         Bundle b = new Bundle();
         b.putInt("pos", pos);
