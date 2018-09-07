@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -45,6 +46,7 @@ public class ThemeSelectorFragment extends Fragment {
     TextView setLook;
 
     public static Fragment getInstance(int pos) {
+        BoostLog.e("","d");
         Fragment frag = new ThemeSelectorFragment();
         Bundle b = new Bundle();
         b.putInt("pos", pos);
