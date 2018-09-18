@@ -64,6 +64,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -571,6 +572,14 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             i++;
         }
         if (isChangedProductCategory) {
+
+            if( ! checkIfOnlyLetters(customProductCategory.getText().toString())) {
+                //Util.toast("Business Name has to be more than 3 characters", this);
+                Methods.showSnackBarNegative(Edit_Profile_Activity.this, getResources().getString(R.string.invalid_custom_product_category));
+                allBoundaryCondtn = false;
+
+            }
+
             JSONObject productCategoryObj = new JSONObject();
             try {
 
@@ -878,5 +887,20 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     public void hideSoftKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private boolean checkIfOnlyLetters(String string){
+        //return someString.chars().allMatch(Character::isLetter);.*[a-zA-Z]+.*[a-zA-Z]
+        string = string.replace(" ", "A"); // so that  special charater  regex ignores spaces
+        Pattern specialCharactersRegex = Pattern.compile("[$&+,:;=\\\\?@#|\\/'<>.^*()%!-]");
+        Pattern onlyNumbers = Pattern.compile("\\d");
+        if(  onlyNumbers.matcher(string).find() ||  specialCharactersRegex.matcher(string).find())
+        {
+           return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
