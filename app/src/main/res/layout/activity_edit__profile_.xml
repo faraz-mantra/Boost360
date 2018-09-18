@@ -197,9 +197,14 @@
                             android:textSize="17sp"
                             android:textColor="#383838"
                             android:text="Product Category"/>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                         <RadioGroup
                             android:id="@+id/rbgroup"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:paddingTop="5dp"
@@ -220,7 +225,24 @@
                                 android:layout_weight="1"
                                 android:buttonTint="@color/light_gray"
                                 android:text="Services" />
+
+                            <RadioButton
+                                android:id="@+id/rb_custom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/light_gray"
+                                />
                         </RadioGroup>
+                            <EditText
+                               android:background="@android:color/transparent"
+                                android:textSize="15dp"
+                                android:gravity="bottom"
+                                android:id="@+id/et_customCategory"
+                                android:hint="Custom "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>

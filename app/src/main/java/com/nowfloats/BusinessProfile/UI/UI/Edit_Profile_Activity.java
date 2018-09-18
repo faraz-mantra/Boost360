@@ -22,6 +22,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +70,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class Edit_Profile_Activity extends AppCompatActivity {
-    public static EditText yourname, category, buzzname, buzzdescription;
+    public static EditText yourname, category, buzzname, buzzdescription , customProductCategory;
     public static ImageView featuredImage, businessCategoryImage;
     private Toolbar toolbar;
     private RadioGroup productCategory;
@@ -115,6 +117,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         gmbHandler = new GMBHandler(this,session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
+        customProductCategory = findViewById(R.id.et_customCategory);
         category = (EditText) findViewById(R.id.businessCategory);
         productCategory = (RadioGroup) findViewById(R.id.rbgroup);
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
@@ -126,6 +129,40 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 isChangedProductCategory = true;
                 saveTextView.setVisibility(View.VISIBLE);
+                if(checkedId == R.id.rb_custom){
+                    showSoftKeyboard(customProductCategory);
+                }else{
+                    hideSoftKeyboard(customProductCategory);
+                }
+            }
+        });
+
+        customProductCategory.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                  if(! TextUtils.isEmpty(editable.toString())) {
+                      isChangedProductCategory = true;
+                      saveTextView.setVisibility(View.VISIBLE);
+                      RadioButton rb_custom = findViewById(R.id.rb_custom);
+                      rb_custom.setChecked(true);
+
+                  }else{
+                      RadioButton rb_custom = findViewById(R.id.rb_custom);
+                      rb_custom.setChecked(false);
+                      RadioButton rb_product = findViewById(R.id.rb_products);
+                      rb_product.setChecked(true);
+                  }
+
             }
         });
 //        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
@@ -399,6 +436,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 return "Products";
             case R.id.rb_services:
                 return "Services";
+            case R.id.rb_custom:
+                return customProductCategory.getText().toString();
             default:
                 return "";
         }
@@ -635,6 +674,14 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         return true;
     }
 
+    public void showSoftKeyboard(View view) {
+        if (view.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -821,5 +868,10 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void hideSoftKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 }
