@@ -74,7 +74,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     public static ImageView featuredImage, businessCategoryImage;
     private Toolbar toolbar;
     private RadioGroup productCategory;
-
+    private RadioButton rb_Products , rb_Services , rb_Custom;
     Boolean flag4name = false, flag4category = false, flag4buzzname = false, flag4buzzdescriptn = false, allBoundaryCondtn = true;
     public static String msgtxt4_name, msgtxt4buzzname, msgtxt4buzzdescriptn, msgtxtcategory;
     String[] profilesattr = new String[20];
@@ -120,6 +120,11 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         customProductCategory = findViewById(R.id.et_customCategory);
         category = (EditText) findViewById(R.id.businessCategory);
         productCategory = (RadioGroup) findViewById(R.id.rbgroup);
+
+        rb_Custom = findViewById(R.id.rb_custom);
+        rb_Products = findViewById(R.id.rb_products);
+        rb_Services = findViewById(R.id.rb_services);
+
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
 
         mRiaNodeDataModel = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
@@ -153,14 +158,10 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                   if(! TextUtils.isEmpty(editable.toString())) {
                       isChangedProductCategory = true;
                       saveTextView.setVisibility(View.VISIBLE);
-                      RadioButton rb_custom = findViewById(R.id.rb_custom);
-                      rb_custom.setChecked(true);
+                    rb_Custom.setChecked(true);
 
                   }else{
-                      RadioButton rb_custom = findViewById(R.id.rb_custom);
-                      rb_custom.setChecked(false);
-                      RadioButton rb_product = findViewById(R.id.rb_products);
-                      rb_product.setChecked(true);
+                      rb_Products.setChecked(true);
                   }
 
             }
@@ -572,6 +573,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         if (isChangedProductCategory) {
             JSONObject productCategoryObj = new JSONObject();
             try {
+
                 productCategoryObj.put("key", "PRODUCTCATEGORYVERB");
                 productCategoryObj.put("value", getProductCategory());
                 session.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY, getProductCategory());
@@ -630,14 +632,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         buzzname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         yourname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
-        if (session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY).equals("Services")) {
-            productCategory.check(R.id.rb_services);
-        } else {
-            productCategory.check(R.id.rb_products);
-        }
-        // String baseNameProfileImage = "https://api.withfloats.com/"+ Constants.storePrimaryImage;
-        /*if(!Constants.IMAGEURIUPLOADED)
-        {*/
+        setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+
         String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
         if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
             String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
@@ -664,6 +660,15 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
         saveTextView.setVisibility(View.GONE);
         flag4category = false;
+    }
+
+    private void setProductCategory(String initialCustomProductCategory) {
+        rb_Products.setChecked(initialCustomProductCategory.equalsIgnoreCase("products"));
+        rb_Services.setChecked(initialCustomProductCategory.equalsIgnoreCase("services"));
+        if(! initialCustomProductCategory.equalsIgnoreCase("products")&& ! initialCustomProductCategory.equalsIgnoreCase("services")) {
+            rb_Custom.setChecked(true);
+            customProductCategory.setText(initialCustomProductCategory);
+        }
     }
 
 

@@ -231,6 +231,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void getMapVisitsCount() {
+
         HashMap<String, String> map = new HashMap<>();
         map.put("batchType", UniqueVisitorsFragment.BatchType.yy.name());
         map.put("startDate", Methods.getFormattedDate(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON), UniqueVisitorsFragment.pattern));
