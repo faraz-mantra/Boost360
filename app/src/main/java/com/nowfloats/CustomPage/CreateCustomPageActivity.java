@@ -35,6 +35,7 @@ import com.nowfloats.util.RiaEventLogger;
 import com.thinksity.R;
 
 import java.util.HashMap;
+import java.util.List;
 
 import jp.wasabeef.richeditor.RichEditor;
 import retrofit.Callback;
@@ -105,22 +106,25 @@ public class CreateCustomPageActivity extends AppCompatActivity{
             try {
                 CustomPageInterface pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
                 pageInterface.getPageDetail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-                        getIntent().getStringExtra("pageid"), Constants.clientId, new Callback<PageDetail>() {
+                        getIntent().getStringExtra("pageid"), Constants.clientId, new Callback<List<PageDetail>>() {
                             @Override
-                            public void success(PageDetail pageDetail, Response response) {
+                            public void success(List<PageDetail> pageDetail, Response response) {
                                 materialProgress.dismiss();
                                 //Intent intent = new Intent(CreateCustomPageActivity, CreateCustomPageActivity.class);
-                                curName =  pageDetail.DisplayName;
-                                curHtml = pageDetail.HtmlCode;
-                                curPageid =  pageDetail._id;
-                                titleTxt.setText(curName);
-                                title.setText(curName);
-                                richText.setHtml(curHtml);
-                                mHtmlFormat = curHtml;
-                                editCheck = true;
-                                deletePage.setVisibility(View.VISIBLE);
+                              if(pageDetail.size() > 0){
+                                  curName =  pageDetail.get(0).DisplayName;
+                                  curHtml = pageDetail.get(0).HtmlCode;
+                                  curPageid =  pageDetail.get(0)._id;
+                                  titleTxt.setText(curName);
+                                  title.setText(curName);
+                                  richText.setHtml(curHtml);
+                                  mHtmlFormat = curHtml;
+                                  editCheck = true;
+                                  deletePage.setVisibility(View.VISIBLE);
+                              }else{
+                                  Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                              }
                             }
-
                             @Override
                             public void failure(RetrofitError error) {
                                 materialProgress.dismiss();

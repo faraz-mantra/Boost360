@@ -6,6 +6,7 @@ import com.nowfloats.CustomPage.Model.PageDetail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -29,7 +30,7 @@ public interface CustomPageInterface {
     public void getPageDetail(@Path("FPTAG") String FPTAG,
                               @Path("PAGEID") String PAGEID,
                               @Path("CLIENTID") String CLIENTID,
-                              Callback<PageDetail> callback);
+                              Callback<List<PageDetail>> callback);
     @POST("/Discover/v1/floatingpoint/custompage/update")
     public void updatePage(@Body HashMap<String,String> s,Callback<String> callback);
 

@@ -416,8 +416,6 @@ public class GMBHandler {
         };
 
         Volley.newRequestQueue(context).add(jsonObjectRequest);
-
-
     }
 
 
