@@ -851,6 +851,11 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
     }
 
     @Override
+    public void onDetailsLoaded(ArrayList<AllSuggestionModel> details) {
+
+    }
+
+    @Override
     public void imagesReceived() {
 
     }

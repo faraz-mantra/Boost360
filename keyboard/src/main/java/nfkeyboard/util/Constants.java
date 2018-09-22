@@ -16,7 +16,7 @@ public class Constants {
 
     public final static String HTTP_POST = "POST";
 
-    public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
+    public final static String NOW_FLOATS_API_URL = "https://api2.withfloats.com";
 
     public static final String BG_SERVICE_CONTENT_TYPE_JSON = "application/json";
 

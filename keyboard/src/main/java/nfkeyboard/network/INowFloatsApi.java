@@ -8,6 +8,7 @@ import nfkeyboard.models.networkmodels.Product;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 /**
@@ -23,4 +24,8 @@ public interface INowFloatsApi {
 
     @POST("/api/Offers/CreateOffer")
     Observable<CreatedOffer> createProductOffers(@Body CreateOrderRequest request);
+
+    @GET("/discover/v2/floatingPoint/nf-web/{fpTag}")
+    Observable<CustomerDetails> getAllDetails(@Path("fpTag") String fpTag , @QueryMap Map<String,String> queries);
+
 }
