@@ -474,7 +474,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 //
 //    private void getGoogleAccounts() {
 //
-//        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+//        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.GET_ACCOUNTS) != Packagear.PERMISSION_GRANTED) {
 //            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.GET_ACCOUNTS}, 33);
 //        } else {
 //            fetchAccountInfo();
@@ -712,11 +712,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         hideLoader();
         if (requestCode == GMBHandler.REQUEST_CODE) {
             if (resultCode == RESULT_OK || true) {
-
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 try {
-
-
                     GoogleSignInAccount account = task.getResult(ApiException.class);
                     String authCode = account.getServerAuthCode();
                     BoostLog.i(Constants.LogTag, authCode);
@@ -729,7 +726,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                     if (e.toString().contains("ApiException: 8")) {
 
-                        BoostLog.e("android23235616", "here 2");
+                        BoostLog.e(SocialSharingFragment.class.getSimpleName(), "here 2");
 
                         gmbCheckBox.setChecked(false);
                         gmbCheckBox.performClick();

@@ -1,14 +1,10 @@
 package nfkeyboard.network;
 
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
 import nfkeyboard.interface_contracts.CandidateToPresenterInterface;
@@ -49,6 +45,28 @@ public class ApiCallPresenter {
         }
     }
 
+    private CallBack<CustomerDetails> customerDetailsCallBack = new CallBack<CustomerDetails>() {
+        @Override
+        public void onSuccess(CustomerDetails data) {
+            Details details = new Details();
+            details.setAddress(data.getAddress());
+            details.setName(data.getContactName());
+            details.setEmail(data.getEmail());
+            details.setPhoneNumber(data.getPrimaryNumber());
+            details.setWebsite(SharedPrefUtil.fromBoostPref().getWebsite());
+            details.setBusinessName(data.getName());
+            String location = "http://maps.google.com/maps?q=loc:" + data.lat+ "," + data.lng;
+            details.setLocation(location);
+            ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
+            modelList.add(details.toAllSuggestion());
+            apiCallListener.onDetailsLoaded(modelList);
+        }
+
+        @Override
+        public void onError(Throwable t) {
+            apiCallListener.onError(ImePresenterImpl.TabType.DETAILS);
+        }
+    };
 
     private CallBack<List<Product>> productCallback = new CallBack<List<Product>>() {
         ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
@@ -149,5 +167,9 @@ public class ApiCallPresenter {
         details.setLocation(location);
         modelList.add(details.toAllSuggestion());
         return modelList;
+    }
+
+    public void getAllDetails2() {
+        adapter.getAllDetails(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(R.string.client_id) , customerDetailsCallBack);
     }
 }

@@ -22,6 +22,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,17 +64,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class Edit_Profile_Activity extends AppCompatActivity {
-    public static EditText yourname, category, buzzname, buzzdescription;
+    public static EditText yourname, category, buzzname, buzzdescription , customProductCategory;
     public static ImageView featuredImage, businessCategoryImage;
     private Toolbar toolbar;
     private RadioGroup productCategory;
-
+    private RadioButton rb_Products , rb_Services , rb_Custom;
     Boolean flag4name = false, flag4category = false, flag4buzzname = false, flag4buzzdescriptn = false, allBoundaryCondtn = true;
     public static String msgtxt4_name, msgtxt4buzzname, msgtxt4buzzdescriptn, msgtxtcategory;
     String[] profilesattr = new String[20];
@@ -115,8 +118,14 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         gmbHandler = new GMBHandler(this,session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
+        customProductCategory = findViewById(R.id.et_customCategory);
         category = (EditText) findViewById(R.id.businessCategory);
         productCategory = (RadioGroup) findViewById(R.id.rbgroup);
+
+        rb_Custom = findViewById(R.id.rb_custom);
+        rb_Products = findViewById(R.id.rb_products);
+        rb_Services = findViewById(R.id.rb_services);
+
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
 
         mRiaNodeDataModel = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
@@ -126,6 +135,36 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 isChangedProductCategory = true;
                 saveTextView.setVisibility(View.VISIBLE);
+                if(checkedId == R.id.rb_custom){
+                    showSoftKeyboard(customProductCategory);
+                }else{
+                    hideSoftKeyboard(customProductCategory);
+                }
+            }
+        });
+
+        customProductCategory.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                  if(! TextUtils.isEmpty(editable.toString())) {
+                      isChangedProductCategory = true;
+                      saveTextView.setVisibility(View.VISIBLE);
+                    rb_Custom.setChecked(true);
+
+                  }else{
+                      rb_Products.setChecked(true);
+                  }
+
             }
         });
 //        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
@@ -399,6 +438,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 return "Products";
             case R.id.rb_services:
                 return "Services";
+            case R.id.rb_custom:
+                return customProductCategory.getText().toString();
             default:
                 return "";
         }
@@ -531,8 +572,17 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             i++;
         }
         if (isChangedProductCategory) {
+
+            if( ! checkIfOnlyLetters(customProductCategory.getText().toString())) {
+                //Util.toast("Business Name has to be more than 3 characters", this);
+                Methods.showSnackBarNegative(Edit_Profile_Activity.this, getResources().getString(R.string.invalid_custom_product_category));
+                allBoundaryCondtn = false;
+
+            }
+
             JSONObject productCategoryObj = new JSONObject();
             try {
+
                 productCategoryObj.put("key", "PRODUCTCATEGORYVERB");
                 productCategoryObj.put("value", getProductCategory());
                 session.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY, getProductCategory());
@@ -591,14 +641,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         buzzname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         yourname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
-        if (session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY).equals("Services")) {
-            productCategory.check(R.id.rb_services);
-        } else {
-            productCategory.check(R.id.rb_products);
-        }
-        // String baseNameProfileImage = "https://api.withfloats.com/"+ Constants.storePrimaryImage;
-        /*if(!Constants.IMAGEURIUPLOADED)
-        {*/
+        setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+
         String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
         if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
             String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
@@ -627,12 +671,29 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         flag4category = false;
     }
 
+    private void setProductCategory(String initialCustomProductCategory) {
+        rb_Products.setChecked(initialCustomProductCategory.equalsIgnoreCase("products"));
+        rb_Services.setChecked(initialCustomProductCategory.equalsIgnoreCase("services"));
+        if(! initialCustomProductCategory.equalsIgnoreCase("products")&& ! initialCustomProductCategory.equalsIgnoreCase("services")) {
+            rb_Custom.setChecked(true);
+            customProductCategory.setText(initialCustomProductCategory);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit__profile, menu);
         return true;
+    }
+
+    public void showSoftKeyboard(View view) {
+        if (view.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
 
@@ -820,6 +881,26 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             gmbHandler.sendDetailsToGMB(true);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void hideSoftKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private boolean checkIfOnlyLetters(String string){
+        //return someString.chars().allMatch(Character::isLetter);.*[a-zA-Z]+.*[a-zA-Z]
+        string = string.replace(" ", "A"); // so that  special charater  regex ignores spaces
+        Pattern specialCharactersRegex = Pattern.compile("[$&+,:;=\\\\?@#|\\/'<>.^*()%!-]");
+        Pattern onlyNumbers = Pattern.compile("\\d");
+        if(  onlyNumbers.matcher(string).find() ||  specialCharactersRegex.matcher(string).find())
+        {
+           return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }

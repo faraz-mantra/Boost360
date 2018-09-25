@@ -18,6 +18,7 @@
             android:theme="@style/noAnimTheme"
             android:windowSoftInputMode="adjustResize">
 
+
         </activity>
 
         <activity

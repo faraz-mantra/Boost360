@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
@@ -159,6 +160,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                             if (CustomPageFragment.recyclerView!=null)
                                 CustomPageFragment.recyclerView.invalidate();
                         }else {
+                            BoostLog.d(CustomPageAdapter.class.getSimpleName() , storeData.get(POs).PageId+" "+POs);
                             editPage(storeData.get(POs).PageId, POs);
                         }
                     }

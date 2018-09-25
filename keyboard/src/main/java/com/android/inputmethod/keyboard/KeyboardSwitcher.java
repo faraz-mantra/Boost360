@@ -76,6 +76,7 @@ import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.interface_contracts.UrlToBitmapInterface;
 import nfkeyboard.keyboards.ImePresenterImpl;
 import nfkeyboard.models.AllSuggestionModel;
+import nfkeyboard.models.networkmodels.Details;
 import nfkeyboard.models.networkmodels.Photo;
 import nfkeyboard.network.ApiCallPresenter;
 import nfkeyboard.util.Constants;
@@ -219,7 +220,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         updatesList.clear();
         productList.clear();
         imagesList.clear();
-        isProductCompleted = isUpdatesCompleted = isPhotosCompleted = false;
+        detailsList.clear();
+        isDetailsCompleted =  isProductCompleted = isUpdatesCompleted = isPhotosCompleted = false;
         if (shareAdapter != null)
             shareAdapter.setSuggestionModels(null);
     }
@@ -438,11 +440,12 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         mRecyclerView.setLayoutManager(linearLayoutManager);
                         mRecyclerView.setVisibility(View.VISIBLE);
                         recyclerViewPhotos.setVisibility(View.GONE);
-                        if (detailsList.size() > 0) {
-                            shareAdapter.setSuggestionModels(detailsList);
-                        } else {
-                            callLoadingApi(DETAILS);
-                        }
+//                        if (detailsList.size() > 0) {
+//                            shareAdapter.setSuggestionModels(detailsList);
+//                        } else {
+//                            callLoadingApi(DETAILS);
+//                        }
+                        callLoadingApi(DETAILS);
                         break;
                 }
             } else {
@@ -528,16 +531,16 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         apiCallPresenter.loadMore(imagesList.size() - 1, PHOTOS, galleryImagesListener);
                     case DETAILS:
                         if (isDetailsCompleted) {
+                            shareAdapter.setSuggestionModels(detailsList);
                             return;
                         }
-                        if (detailsList.size() > 0 && detailsList.get(detailsList.size() - 1).getTypeEnum() ==
+                        if (detailsList.size() > 0 || detailsList.size() > 0 && detailsList.get(detailsList.size() - 1).getTypeEnum() ==
                                 BaseAdapterManager.SectionTypeEnum.loader) {
                             return;
                         }
                         detailsList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
                         shareAdapter.setSuggestionModels(detailsList);
-                        detailsList = apiCallPresenter.getAllDetails();
-                        shareAdapter.setSuggestionModels(detailsList);
+                        apiCallPresenter.getAllDetails2();
                     default:
                         break;
                 }
@@ -971,6 +974,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 }
                 Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
                 break;
+            default:
+                Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
         if (type == mTabType) {
             shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList);
@@ -1061,6 +1066,21 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 break;
 
         }
+    }
+
+    @Override
+    public void onDetailsLoaded(ArrayList<AllSuggestionModel> details) {
+       isDetailsCompleted = true;
+        if (detailsList.size() > 0|| detailsList.get(detailsList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+            detailsList.remove(detailsList.size() - 1);
+            //detailsList.clear();
+        }
+        detailsList.addAll(details);
+
+        if (detailsList.size() == 0) {
+            detailsList.add(createSuggestionModel("No details available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
+        }
+        shareAdapter.setSuggestionModels(detailsList);
     }
 
     @Override

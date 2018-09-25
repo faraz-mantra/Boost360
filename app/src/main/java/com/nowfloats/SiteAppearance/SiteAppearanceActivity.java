@@ -74,7 +74,7 @@ public class SiteAppearanceActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return ThemeSelectorFragment.getInstanse(position);
+            return ThemeSelectorFragment.getInstance(position);
         }
 
         @Override

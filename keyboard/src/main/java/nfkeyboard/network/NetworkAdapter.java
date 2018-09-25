@@ -14,6 +14,7 @@ import nfkeyboard.models.AllSuggestionModel;
 import nfkeyboard.models.networkmodels.Product;
 import nfkeyboard.util.Constants;
 import nfkeyboard.util.SharedPrefUtil;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -37,6 +38,7 @@ public class NetworkAdapter {
                 .addConverterFactory(GsonConverterFactory.create())
 //                .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
                 .build();
 
         mNfApi = retrofit.create(INowFloatsApi.class);
@@ -49,6 +51,26 @@ public class NetworkAdapter {
                 .build();
 
         mCreateOfferApi = retrofit1.create(INowFloatsApi.class);
+    }
+
+    public void getAllDetails(String fpTag , String clientId , final CallBack<CustomerDetails> callBack) {
+        Map<String,String> queries = new HashMap<>();
+        //queries.put("fpTag" , fpTag);
+        queries.put("clientId" , clientId);
+        mNfApi.getAllDetails(fpTag ,queries).subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<CustomerDetails>() {
+                            @Override
+                            public void accept(CustomerDetails customerDetails) throws Exception {
+                            callBack.onSuccess(customerDetails);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                callBack.onError(throwable);
+                                Log.d(NetworkAdapter.class.getSimpleName() , throwable.getMessage());
+                            }
+                        });
     }
 
     public void getAllProducts(String fpTag, String clientId, int skipBy, String identifierType,
