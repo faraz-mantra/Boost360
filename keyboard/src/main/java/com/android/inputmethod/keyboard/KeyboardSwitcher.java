@@ -76,7 +76,6 @@ import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.interface_contracts.UrlToBitmapInterface;
 import nfkeyboard.keyboards.ImePresenterImpl;
 import nfkeyboard.models.AllSuggestionModel;
-import nfkeyboard.models.networkmodels.Details;
 import nfkeyboard.models.networkmodels.Photo;
 import nfkeyboard.network.ApiCallPresenter;
 import nfkeyboard.util.Constants;
@@ -540,7 +539,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         }
                         detailsList.add(createSuggestionModel("", BaseAdapterManager.SectionTypeEnum.loader));
                         shareAdapter.setSuggestionModels(detailsList);
-                        apiCallPresenter.getAllDetails2();
+                        apiCallPresenter.getAllDetailsFromApi();
                     default:
                         break;
                 }

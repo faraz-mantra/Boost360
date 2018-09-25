@@ -169,7 +169,7 @@ public class ApiCallPresenter {
         return modelList;
     }
 
-    public void getAllDetails2() {
+    public void getAllDetailsFromApi() {
         adapter.getAllDetails(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(R.string.client_id) , customerDetailsCallBack);
     }
 }

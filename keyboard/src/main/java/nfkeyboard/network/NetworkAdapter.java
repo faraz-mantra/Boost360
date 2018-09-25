@@ -55,7 +55,6 @@ public class NetworkAdapter {
 
     public void getAllDetails(String fpTag , String clientId , final CallBack<CustomerDetails> callBack) {
         Map<String,String> queries = new HashMap<>();
-        //queries.put("fpTag" , fpTag);
         queries.put("clientId" , clientId);
         mNfApi.getAllDetails(fpTag ,queries).subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())

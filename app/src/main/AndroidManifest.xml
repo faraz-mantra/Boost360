@@ -53,6 +53,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name,android:theme">
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
             android:screenOrientation="portrait" />
