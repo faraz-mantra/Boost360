@@ -16,6 +16,7 @@ public interface EventKeysWL
 
     String PRE_SIGNUP_SCREEN_SEVEN			=	"PRESIGNUPSCREENSEVEN";
 
+
     String CREATE_WEBSITE_BUTTON = "SignUpWithEmail";
     String FACEBOOK_ANAYTICS="FacebookAnalytics";
     String LOGIN_BUTTON = "Login";
@@ -43,6 +44,7 @@ public interface EventKeysWL
     String SIDE_PANEL_DASHBOARD = "Dashboard";
     String SIDE_PANEL_BUSINESS_PROFILE = "BusinessProfile";
     String SIDE_PANEL_THIRD_PARTY_INTEGRATIONS = "ThirdPartyIntegrations";
+    String SIDE_PANEL_SELLER_PROFILE = "SellerProfile";
     String SIDE_PANEL_BUSINESS_ENQUIRIES = "BusinessEnquiries";
     String SIDE_PANEL_SUBSCRIBERS = "Subscribers";
     String SIDE_PANEL_PAYMENT_SETTING = "PaymentSetting";

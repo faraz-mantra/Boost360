@@ -16,6 +16,10 @@
     <color name="dark_black_color">#6e6e6e</color>
 
     <color name="seller_profile_v2_background">#efefef</color>
+    <color name="seller_profile_v2_not_selected_card">#bbbbbb</color>
+    <color name="seller_profile_v2_btn_not_selected">#747474</color>
+    <color name="seller_profile_v2_not_elected_btn_text_color">#4a4a4a</color>
+    <color name="seller_profile_v2_btn_selected">#ffb900</color>
 
     <color name="light_black_color">#a4a4a4</color>
     <color name="search_date_color">#8c8c8c</color>

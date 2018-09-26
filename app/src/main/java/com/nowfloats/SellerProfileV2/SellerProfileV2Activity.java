@@ -3,9 +3,10 @@ package com.nowfloats.SellerProfileV2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.nowfloats.SellerProfileV2.Fragment.OperationModeFragment;
 import com.thinksity.R;
 
-public class SellerProfileV2Activity extends AppCompatActivity implements OperationModeFragment.OperationModeInterface{
+public class SellerProfileV2Activity extends AppCompatActivity implements OperationModeFragment.OperationModeInterface {
 
     private int operationModeIndex;
 

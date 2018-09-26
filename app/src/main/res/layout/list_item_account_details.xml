@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical"
     android:padding="@dimen/margin_10"
+    android:orientation="vertical"
     tools:ignore="MissingPrefix">
 
     <LinearLayout
@@ -20,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Building name and Street address*"
+            android:text="Account Holder Name"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -32,7 +31,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="Building name and Street address*"
+            android:hint="Account Holder Name"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -51,19 +50,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Locality and Road Number*"
+            android:text="Account number"
             android:textColor="#383838"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/edtAddressLine2"
+            android:id="@+id/et_accountNumber"
             style="@style/SignUp_EditText_Style_Ria"
             fontPath="Roboto-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="Locality and Road Number"
+            android:hint="Account number"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -83,19 +82,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="City*"
+            android:text="Re-enter account number"
             android:textColor="#383838"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/edtCity"
+            android:id="@+id/etReAccountNumber"
             style="@style/SignUp_EditText_Style_Ria"
             fontPath="Roboto-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="City"
+            android:hint="Re-enter account number"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -104,32 +103,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:orientation="vertical">
-
-        <TextView
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Country*"
-            android:textColor="#383838"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/edtCountry"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#383838"
-            android:drawableRight="@drawable/dropselect"
-            android:hint="@string/country"
-            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-    </LinearLayout>
 
 </LinearLayout>

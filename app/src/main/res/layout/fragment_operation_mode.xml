@@ -4,7 +4,7 @@
     android:padding="10dp"
     android:layout_height="match_parent"
     android:background="#efefef"
-    tools:context="com.nowfloats.SellerProfileV2.OperationModeFragment">
+    tools:context="com.nowfloats.SellerProfileV2.Fragment.OperationModeFragment">
 
     <!-- TODO: Update blank fragment layout -->
   <android.support.v7.widget.RecyclerView

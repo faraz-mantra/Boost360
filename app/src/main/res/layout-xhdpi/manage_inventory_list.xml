@@ -135,6 +135,7 @@
                 android:background="#d3d3d3" />
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/tvSellerProfile"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/textview_height_business_profile"

@@ -1,4 +1,4 @@
-package com.nowfloats.SellerProfileV2;
+package com.nowfloats.SellerProfileV2.Fragment;
 
 
 import android.os.Bundle;
@@ -14,16 +14,12 @@ import com.thinksity.R;
 
 
 public class OperationModeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 
     private RecyclerView rv_operationRecyclerView;
     private OperationModeAdapter operationModeAdapter;
     private OperationModeInterface operationModeInterface;
 
-    private OperationModeFragment() {
-        // Required empty public constructor
-    }
 
 
     // TODO: Rename and change types and number of parameters

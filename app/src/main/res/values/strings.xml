@@ -1501,6 +1501,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="guidlines">Guidelines for posting\nto Quikr</string>
     <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
     <string name="search_ranking">Search Ranking</string>
+    <string name="minimum_order">MINIMUM ORDERS</string>
     <string name="spinner_title">Filter</string>
     <string name="bubble_in_app_message">We have made it easier for you to now share your products on WhatsApp through this bubble.</string>
     <string name="boost_bubble">Boost Bubble</string>
@@ -1533,7 +1534,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="get_facebook_page">Get a Facebook page</string>
     <string name="fb_page_creation_title">Looks like you don’t have a\nFacebook page</string>
     <string name="more_details">More details</string>
+    <string name="agreement1">Assured Purchase would add shipping cost (calculated based on distance <and></and> package measurement), Transaction cost (2.1%) and Convenience fee (0.9%) to the price you entered for a product/service on your website. User will be able to see the price break-up at the time of payments.</string>
+    <string name="agreement2">I  agree to Nowfloats TnC and Seller Policy mentioned on assuredpurchase.com</string>
     <string name="fb_page_unavailable">A Facebook page with\nyour business name is\nunavailable.</string>
+
     <string name="suggestions_for_page_name">Here\'s a suggestion\nfor an available Page name</string>
     <string name="your_facebook_page_is_created">Your facebook page is created</string>
     <string name="connect_page_to_nowfloats">Connect your account to\nautomatically share all updates\nto your Facebook Page.</string>
@@ -1589,6 +1593,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="site_appearance">SITE APPEARANCE</string>
     <string name="shipping_metrics">SHIPPING METRICS</string>
     <string name="bank_details">BANK DETAILS</string>
+    <string name="account_details">ACCOUNT DETAILS</string>
     <string name="payment_methods">PAYMENT METHODS</string>
     <string name="delivery_methods">DELIVERY METHODS</string>
     <string name="gst_identification_number">GST Identification Number</string>
@@ -1726,14 +1731,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Pay By Cheque</item>
         <item>Bank Transfer</item>
     </string-array>
-    
+
     <string-array name="operation_mode_headers">
         <item>Cruise control your orders &amp; delivery with Assured Purchase.</item>
         <item>You be the boss with self delivery and your own payment links.</item>
         <item>Not interested in sales!</item>
     </string-array>
-    
-    
+
+
     <string-array name="operation_mode_description">
         <item>Assured Purchase by NowFloats is the new benchmark for online selling by SME’s and MSME’s in India. It’s a suggested model also because the site visitor spends more time on this site until the purchase happens which results for better site ranking on search engines like Google and Bing. See more benefits</item>
         <item>If you have your own website with an online store and payment gateway integrated, you can use the link of the respective product while adding a product on NowFloats platform.</item>

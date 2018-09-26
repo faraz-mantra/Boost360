@@ -20,19 +20,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Building name and Street address*"
+            android:text="Minimum order amount for Cash-on-delivery"
             android:textColor="#383838"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/edtAccountNumber"
+            android:id="@+id/et_minOrderCashOnDelivery"
             style="@style/SignUp_EditText_Style_Ria"
             fontPath="Roboto-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="Building name and Street address*"
+            android:hint="Minimum order amount for Cash-on-delivery"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -51,12 +51,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Locality and Road Number*"
+            android:text="Minimumn order amount for online payment"
             android:textColor="#383838"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/edtAddressLine2"
+            android:id="@+id/et_minOrderOnlinePayment"
             style="@style/SignUp_EditText_Style_Ria"
             fontPath="Roboto-Regular.ttf"
             android:layout_width="match_parent"
@@ -71,65 +71,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:hint="IFSC Code"
-        android:orientation="vertical">
-
-        <TextView
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="City*"
-            android:textColor="#383838"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/edtCity"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#383838"
-            android:ellipsize="end"
-            android:hint="City"
-            android:inputType="textNoSuggestions"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textAllCaps="true"
-            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:orientation="vertical">
-
-        <TextView
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Country*"
-            android:textColor="#383838"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/edtCountry"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#383838"
-            android:drawableRight="@drawable/dropselect"
-            android:hint="@string/country"
-            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-    </LinearLayout>
 
 </LinearLayout>

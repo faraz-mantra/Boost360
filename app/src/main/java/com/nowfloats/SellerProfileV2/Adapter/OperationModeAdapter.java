@@ -1,6 +1,6 @@
 package com.nowfloats.SellerProfileV2.Adapter;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nowfloats.SellerProfileV2.OperationModeFragment;
+import com.nowfloats.SellerProfileV2.Fragment.OperationModeFragment;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 public class OperationModeAdapter extends RecyclerView.Adapter<OperationModeAdapter.OperationModeViewHolder> {
@@ -46,41 +47,43 @@ public class OperationModeAdapter extends RecyclerView.Adapter<OperationModeAdap
         operationModeViewHolder.tv_Header.setText(operationHeaders[operationModeViewHolder.getAdapterPosition()]);
         operationModeViewHolder.btn_selectOption.setText(operationSelectOptions[operationModeViewHolder.getAdapterPosition()]);
 
-        if( !renderedOnce ) {
-            unCheckPreviousCard(operationModeViewHolder);
+        if( !renderedOnce && operationModeViewHolder.getAdapterPosition() == 0) {
+            unCheckPreviousCard(operationModeViewHolder , operationModeViewHolder.btn_selectOption.getContext());
             renderedOnce = true;
         }
 
-        operationModeViewHolder.btn_selectOption.setOnClickListener(new View.OnClickListener() {
+        operationModeViewHolder.cv_ParentCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                unCheckPreviousCard(operationModeViewHolder);
+                unCheckPreviousCard(operationModeViewHolder , operationModeViewHolder.btn_selectOption.getContext());
                 operationModeInterface.onInterfaceSelected(operationModeViewHolder.getAdapterPosition());
             }
         });
 
     }
 
-    public void unCheckPreviousCard(OperationModeViewHolder holder){
+    public void unCheckPreviousCard(OperationModeViewHolder holder , Context context){
 
         if(cv_SelectedParentCard != null ){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 cv_SelectedParentCard.setElevation(0f);
             }
-            cv_SelectedParentCard.setCardBackgroundColor(Color.parseColor("#bbbbbb"));
-            btn_SelectedselectOption.setBackgroundColor(Color.parseColor("#e4e4e4"));
+            cv_SelectedParentCard.setCardBackgroundColor(Methods.getColor(context , R.color.seller_profile_v2_not_selected_card));
+            btn_SelectedselectOption.setBackgroundColor(Methods.getColor(context , R.color.seller_profile_v2_btn_not_selected));
+            btn_SelectedselectOption.setTextColor(Methods.getColor(context , R.color.seller_profile_v2_not_elected_btn_text_color));
 
         }
 
         cv_SelectedParentCard = holder.cv_ParentCard;
         btn_SelectedselectOption = holder.btn_selectOption;
 
-        cv_SelectedParentCard.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        cv_SelectedParentCard.setCardBackgroundColor(Methods.getColor(context , R.color.white));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cv_SelectedParentCard.setElevation(10f);
         }
-        btn_SelectedselectOption.setBackgroundColor(Color.parseColor("#ffb900"));
+        btn_SelectedselectOption.setBackgroundColor(Methods.getColor(context , R.color.seller_profile_v2_btn_selected));
+        btn_SelectedselectOption.setTextColor(Methods.getColor(context , R.color.white));
 
 
     }

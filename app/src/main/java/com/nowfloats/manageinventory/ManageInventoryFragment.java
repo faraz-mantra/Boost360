@@ -1,7 +1,6 @@
 package com.nowfloats.manageinventory;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
+import com.nowfloats.SellerProfileV2.SellerProfileV2Activity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
@@ -46,7 +45,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInventoryFragment extends Fragment {
-    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics;
+    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics , tvSellerProfile;
     ImageView ivLockWidget;
     Typeface robotoLight;
     private SharedPreferences pref = null;
@@ -153,6 +152,19 @@ public class ManageInventoryFragment extends Fragment {
             tvSellerAnalytics = (TextView) mainView.findViewById(R.id.tvSellerAnalytics);
             tvSellerAnalytics.setTypeface(robotoMedium);
 
+            tvSellerProfile = mainView.findViewById(R.id.tvSellerProfile);
+            tvSellerProfile.setTypeface(robotoMedium);
+
+            tvSellerProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_PROFILE, null);
+                    Intent i = new Intent(getActivity(), SellerProfileV2Activity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
+
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -206,6 +218,7 @@ public class ManageInventoryFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }
 
