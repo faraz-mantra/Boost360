@@ -5,6 +5,7 @@ dependencies {
 }
 
 android {
+    useLibrary  'org.apache.http.legacy'
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
