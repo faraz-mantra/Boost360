@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
+import com.nowfloats.SellerProfileV2.SellerProfileV2Activity;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -19,7 +20,7 @@ import com.thinksity.R;
  */
 public class ManageInventoryActivity extends AppCompatActivity {
 
-    TextView tvPaymentSetting, tvProductGallery, tvTotalNoOfOrders, tvTotalRevenue;
+    TextView tvPaymentSetting, tvProductGallery, tvTotalNoOfOrders, tvTotalRevenue, tvSellerProfile;
     Toolbar toolbar;
 
     @Override
@@ -43,6 +44,9 @@ public class ManageInventoryActivity extends AppCompatActivity {
         tvProductGallery = (TextView) findViewById(R.id.tvProductGallery);
         tvProductGallery.setTypeface(robotoMedium);
 
+        tvSellerProfile = findViewById(R.id.tvSellerProfile);
+        tvSellerProfile.setTypeface(robotoMedium);
+
         tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +59,15 @@ public class ManageInventoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ManageInventoryActivity.this, ProductGalleryActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        tvSellerProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ManageInventoryActivity.this, SellerProfileV2Activity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

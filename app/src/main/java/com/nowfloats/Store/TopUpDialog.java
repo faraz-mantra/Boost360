@@ -119,7 +119,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
         View view = topUpDialog.getCustomView();
         if (view == null) return;
         view.findViewById(R.id.img_cancel).setOnClickListener(this);
-        TextView title = view.findViewById(R.id.tv_title);
+        TextView title = view.findViewById(R.id.tv_operation_description);
         TextView description = view.findViewById(R.id.tv_description);
         title.setText(String.format("%s Pricing",planType));
         description.setText(String.format("Select the duration of %s package that suits your requirements.",planType));

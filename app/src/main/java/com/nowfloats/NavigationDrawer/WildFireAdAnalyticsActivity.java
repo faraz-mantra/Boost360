@@ -214,7 +214,7 @@ public class WildFireAdAnalyticsActivity extends AppCompatActivity {
             super(itemView);
             image = itemView.findViewById(R.id.image1);
             countTv = itemView.findViewById(R.id.tv_count);
-            titleTv = itemView.findViewById(R.id.tv_title);
+            titleTv = itemView.findViewById(R.id.tv_operation_description);
             infoImage = itemView.findViewById(R.id.img_info);
             infoImage.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -261,7 +261,7 @@ public class WildFireAdAnalyticsActivity extends AppCompatActivity {
             return;
         }
         TextView contentTv = v.findViewById(R.id.tv_content);
-        TextView titleTv = v.findViewById(R.id.tv_title);
+        TextView titleTv = v.findViewById(R.id.tv_operation_description);
         ImageView contentImg = v.findViewById(R.id.img_content);
         v.findViewById(R.id.img_cancel).setOnClickListener(new View.OnClickListener() {
             @Override

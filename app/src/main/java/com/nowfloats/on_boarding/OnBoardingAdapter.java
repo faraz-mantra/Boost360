@@ -132,8 +132,8 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             this.itemView = (CardView) itemView;
             itemView.setLayoutParams(linearLayoutParams);
             layout = itemView.findViewById(R.id.card_layout);
-            titleTv = itemView.findViewById(R.id.tv_title);
-            cardNumberTv = itemView.findViewById(R.id.tv_card_number);
+            titleTv = itemView.findViewById(R.id.tv_operation_description);
+            cardNumberTv = itemView.findViewById(R.id.tv_opreation_header);
             descriptionTv = itemView.findViewById(R.id.tv_description);
             completeImg = itemView.findViewById(R.id.img_complete);
             btnTv = itemView.findViewById(R.id.btn_tv);

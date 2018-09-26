@@ -50,6 +50,17 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/payment_setting" />
 
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="10dp"
+                android:tint="#808080"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_seller_profile" />
+
+
 
         </LinearLayout>
 
@@ -114,6 +125,22 @@
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/payment_setting"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d3d3d3" />
+
+            <TextView
+                android:id="@+id/tvSellerProfile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height_business_profile"
+                android:background="?android:selectableItemBackground"
+                android:gravity="center_vertical"
+                android:text="@string/seller_profile_new"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 

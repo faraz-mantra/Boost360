@@ -233,7 +233,7 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
         public MySmsViewHolder(View itemView) {
             super(itemView);
             addressTextView = (TextView) itemView.findViewById(R.id.tv_address);
-            titleTextView = (TextView) itemView.findViewById(R.id.tv_title);
+            titleTextView = (TextView) itemView.findViewById(R.id.tv_operation_description);
             timeTextView = (TextView) itemView.findViewById(R.id.tv_time);
             sourceImg = itemView.findViewById(R.id.img_source);
             responseTextView = (TextView) itemView.findViewById(R.id.tv_response);

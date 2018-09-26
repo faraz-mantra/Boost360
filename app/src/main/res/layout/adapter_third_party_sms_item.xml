@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_operation_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Helium Balloon decoration service in best prices - Kandivali west"

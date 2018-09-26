@@ -3,16 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="350dp"
+    android:id="@+id/cv_operation_parentlayout"
     android:layout_margin="10dp"
     app:cardBackgroundColor="@color/white"
     app:cardElevation="2dp">
-    <ImageView
-        android:id="@+id/img_complete"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="end"
-        app:srcCompat="@drawable/ic_complete" />
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_layout"
@@ -24,12 +19,13 @@
         <TextView
             android:id="@+id/tv_operation_description"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="155dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Awesome,\nyou are using NowFloats Boost!"
+            android:layout_marginTop="24dp"
+
+            android:text="@string/operation_mode_assured_purchase_description"
+            android:textColor="#747474"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,37 +33,27 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_opreation_header" />
 
         <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center_horizontal"
-            android:text="Manage your website on-the-go and get discovered online, real-time. Your business in your hands now."
-            app:layout_constraintBottom_toTopOf="@+id/btn_tv"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_operation_description"
-            app:layout_constraintVertical_weight="1" />
 
-        <TextView
-            android:id="@+id/btn_tv"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_selectOption"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:padding="10dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_bg"
             android:gravity="center"
             android:minWidth="190dp"
-            android:text="What's Next"
-            android:textAllCaps="true"
+            android:text="Using Assured Purchase"
+            android:textAllCaps="false"
             android:textColor="@drawable/yellow_btn_hover_text_color"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_operation_description" />
 
         <TextView
             android:id="@+id/tv_opreation_header"
@@ -75,10 +61,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:text="@string/operation_mode_assured_purchase"
             android:layout_marginTop="8dp"
-            android:text="1"
-            android:textColor="@color/primary_color"
-            android:textSize="40sp"
+            android:textColor="#4a4a4a"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

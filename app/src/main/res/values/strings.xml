@@ -801,6 +801,7 @@
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="enquiries_title">Enquiries</string>
     <string name="payment_setting">Payment Settings</string>
+    <string name="seller_profile_new">Seller Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>
     <string name="title_activity_splash_screen_">Thinksity</string>
     <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
@@ -902,7 +903,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_password_6to12_char">Phone number should be between 6 &#8211; 12 characters</string>
     <string name="basic_info">Basic Information</string>
     <string name="business_name_more_than_3char">Business Name should be more than 3 letters</string>
-    <string name = "invalid_custom_product_category">Enter only english characters in product category</string>
+    <string name="invalid_custom_product_category">Enter only english characters in product category</string>
     <string name="try_again">Try again&#8230;</string>
     <string name="wait_while_loading_category">Loading Categories&#8230;</string>
     <string name="wait_while_loading_salesman">Loading Salesman&#8230;</string>
@@ -1173,6 +1174,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="update_your_website_to_increase_discoverability">Update your website regularly to get more customers</string>
     <string name="update_logo">Update Logo</string>
     <string name="of">of</string>
+    <string name="operation_mode_assured_purchase">Cruise control your orders and delivery with Assured Purchase.</string>
+    <string name="operation_mode_assured_purchase_description">Assured Purchase by NowFloats is the new benchmark for online selling by SME’s and MSME’s in India. It’s a suggested model also because the site visitor spends more time on this site until the purchase happens which results for better site ranking on search engines like Google and Bing. See more benefits</string>
     <string name="password">password</string>
     <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your user name is nowfloats</string>
     <string name="forgot_your_password">Forgot password?</string>
@@ -1709,7 +1712,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Seller Profile</item>
         <item>Site Appearance</item>
         <item>Domain and Email</item>
-      <!--  <item>Your Plans</item>-->
+        <!--  <item>Your Plans</item>-->
         <item>Change Password</item>
         <item>Log out</item>
     </string-array>
@@ -1723,4 +1726,24 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Pay By Cheque</item>
         <item>Bank Transfer</item>
     </string-array>
+    
+    <string-array name="operation_mode_headers">
+        <item>Cruise control your orders &amp; delivery with Assured Purchase.</item>
+        <item>You be the boss with self delivery and your own payment links.</item>
+        <item>Not interested in sales!</item>
+    </string-array>
+    
+    
+    <string-array name="operation_mode_description">
+        <item>Assured Purchase by NowFloats is the new benchmark for online selling by SME’s and MSME’s in India. It’s a suggested model also because the site visitor spends more time on this site until the purchase happens which results for better site ranking on search engines like Google and Bing. See more benefits</item>
+        <item>If you have your own website with an online store and payment gateway integrated, you can use the link of the respective product while adding a product on NowFloats platform.</item>
+        <item>By selecting this, the cart and other purchase related options will be disabled on your website. However, your site visitors can still view the your offerings and enquire about your them.</item>
+    </string-array>
+
+    <string-array name="operation_mode_selection_option">
+        <item>Using Assured Purchase</item>
+        <item>You be the boss with self delivery and your own payment links.</item>
+        <item>Not interested in sales!</item>
+    </string-array>
+
 </resources>

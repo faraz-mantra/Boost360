@@ -177,7 +177,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
             super(itemView);
             ivMainOffer = (ImageView) itemView.findViewById(R.id.imageView);
             ivShareOffer = (ImageView) itemView.findViewById(R.id.shareData);
-            tvOfferTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvOfferTitle = (TextView) itemView.findViewById(R.id.tv_operation_description);
             tvOfferContent = (TextView) itemView.findViewById(R.id.tv_offer_message);
             tvOfferTimeLine = (TextView) itemView.findViewById(R.id.tv_offer_date);
             tvOfferCreatedOn = (TextView) itemView.findViewById(R.id.textViewEmail);

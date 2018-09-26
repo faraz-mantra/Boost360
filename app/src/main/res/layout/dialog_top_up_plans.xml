@@ -9,7 +9,7 @@
     android:paddingRight="15dp">
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_operation_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -24,9 +24,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:padding="7dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_operation_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_operation_description"
         app:srcCompat="@drawable/card_cancel" />
 
     <View
@@ -37,7 +37,7 @@
         android:background="@color/light_gray"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_operation_description" />
 
     <TextView
         android:id="@+id/tv_description"
@@ -46,7 +46,7 @@
         android:layout_marginTop="10dp"
         android:text="Select the duration of Dictate package that suits your requirements."
         app:layout_constraintEnd_toEndOf="@+id/img_cancel"
-        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_operation_description"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
     <android.support.v7.widget.RecyclerView
