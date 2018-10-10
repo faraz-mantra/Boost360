@@ -1,12 +1,14 @@
 package com.nowfloats.SellerProfileV2;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.nowfloats.SellerProfileV2.Fragment.OperationModeFragment;
+import com.nowfloats.SellerProfileV2.Fragment.SellerPofileV2OtherDetailsFragment;
 import com.thinksity.R;
 
-public class SellerProfileV2Activity extends AppCompatActivity implements OperationModeFragment.OperationModeInterface {
+public class SellerProfileV2Activity extends AppCompatActivity implements OperationModeFragment.OperationModeInterface , SellerPofileV2OtherDetailsFragment.OnAddressSelectedListener {
 
     private int operationModeIndex;
 
@@ -27,6 +29,11 @@ public class SellerProfileV2Activity extends AppCompatActivity implements Operat
     @Override
     public void onInterfaceSelected(int operationIndex) {
         operationModeIndex = operationIndex;
+
+    }
+
+    @Override
+    public void onAddressSelected(Uri uri) {
 
     }
 }

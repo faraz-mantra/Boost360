@@ -9,14 +9,7 @@ import android.view.ViewGroup;
 
 import com.thinksity.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnAddressSelectedListener} interface
- * to handle interaction events.
- * Use the {@link SellerPofileV2OtherDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SellerPofileV2OtherDetailsFragment extends Fragment {
 
 
@@ -39,7 +32,8 @@ public class SellerPofileV2OtherDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seller_profile_v2_address, container, false);
+        View v = inflater.inflate(R.layout.fragment_seller_profile_v2_address, container, false);;
+        return v;
     }
 
     public interface OnAddressSelectedListener {

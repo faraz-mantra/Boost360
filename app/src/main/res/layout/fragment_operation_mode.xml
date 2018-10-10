@@ -1,19 +1,29 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="10dp"
+
     android:layout_height="match_parent"
     android:background="#efefef"
     tools:context="com.nowfloats.SellerProfileV2.Fragment.OperationModeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-  <android.support.v7.widget.RecyclerView
+  <android.support.v7.widget.RecyclgiterView
       android:padding="10dp"
       android:background="@color/seller_profile_v2_background"
       android:id="@+id/rv_OperationMode"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-  </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_gravity="bottom"
+        android:text="Next  >"
+        android:textSize="20dp"
+        android:background="@color/primary"
+        android:paddingRight="20dp"
+        android:gravity="center|right"
+        android:layout_height="@dimen/actionBar_layout_height"
+        android:layout_width="match_parent"
+        ></TextView>
 
 </FrameLayout>
