@@ -491,55 +491,71 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
         }
 
         void AnimationFlip(final boolean endShare) {
-            try {
-                itemView.setCameraDistance(4000f);
-                if (flippable || endShare) {
-                    final AnimatorSet animatorSetFlipIn = (AnimatorSet) AnimatorInflater.loadAnimator(mContext, R.animator.flip_in);
-                    AnimatorSet animatorSetFlipOut = (AnimatorSet) AnimatorInflater.loadAnimator(mContext, R.animator.flip_out);
-                    animatorSetFlipIn.setTarget(itemView);
-                    animatorSetFlipOut.setTarget(itemView);
 
-                    animatorSetFlipOut.start();
-
-                    animatorSetFlipOut.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animator) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animator) {
-                            if (constraintLayout.getVisibility() == View.VISIBLE && !endShare) {
-                                constraintLayout.setVisibility(View.GONE);
-                                constraintLayoutFlipped.setVisibility(View.VISIBLE);
-                                constraintLayoutFlipped.setAlpha(1);
-                                offerCl.setVisibility(View.GONE);
-                            } else {
-                                constraintLayout.setVisibility(View.VISIBLE);
-                                constraintLayoutFlipped.setVisibility(View.GONE);
-                                constraintLayoutFlipped.setAlpha(1);
-                                offerCl.setVisibility(View.GONE);
-                                if (endShare) {
-                                    flippable = true;
-                                }
-                            }
-                            animatorSetFlipIn.start();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animator) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animator) {
-
-                        }
-                    });
+            if (constraintLayout.getVisibility() == View.VISIBLE && !endShare) {
+                constraintLayout.setVisibility(View.GONE);
+                constraintLayoutFlipped.setVisibility(View.VISIBLE);
+                constraintLayoutFlipped.setAlpha(1);
+                offerCl.setVisibility(View.GONE);
+            } else {
+                constraintLayout.setVisibility(View.VISIBLE);
+                constraintLayoutFlipped.setVisibility(View.GONE);
+                constraintLayoutFlipped.setAlpha(1);
+                offerCl.setVisibility(View.GONE);
+                if (endShare) {
+                    flippable = true;
                 }
-            } catch (Exception e) {
-                Log.d("here", e.toString());
             }
+
+//            try {
+//                itemView.setCameraDistance(4000f);
+//                if (flippable || endShare) {
+//                    final AnimatorSet animatorSetFlipIn = (AnimatorSet) AnimatorInflater.loadAnimator(mContext, R.animator.flip_in);
+//                    AnimatorSet animatorSetFlipOut = (AnimatorSet) AnimatorInflater.loadAnimator(mContext, R.animator.flip_out);
+//                    animatorSetFlipIn.setTarget(itemView);
+//                    animatorSetFlipOut.setTarget(itemView);
+//
+//                    animatorSetFlipOut.start();
+//
+//                    animatorSetFlipOut.addListener(new Animator.AnimatorListener() {
+//                        @Override
+//                        public void onAnimationStart(Animator animator) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onAnimationEnd(Animator animator) {
+//                            if (constraintLayout.getVisibility() == View.VISIBLE && !endShare) {
+//                                constraintLayout.setVisibility(View.GONE);
+//                                constraintLayoutFlipped.setVisibility(View.VISIBLE);
+//                                constraintLayoutFlipped.setAlpha(1);
+//                                offerCl.setVisibility(View.GONE);
+//                            } else {
+//                                constraintLayout.setVisibility(View.VISIBLE);
+//                                constraintLayoutFlipped.setVisibility(View.GONE);
+//                                constraintLayoutFlipped.setAlpha(1);
+//                                offerCl.setVisibility(View.GONE);
+//                                if (endShare) {
+//                                    flippable = true;
+//                                }
+//                            }
+//                            animatorSetFlipIn.start();
+//                        }
+//
+//                        @Override
+//                        public void onAnimationCancel(Animator animator) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onAnimationRepeat(Animator animator) {
+//
+//                        }
+//                    });
+//                }
+//            } catch (Exception e) {
+//                Log.d("here", e.toString());
+//            }
 
 
         }
@@ -548,55 +564,66 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
             flippable = false;
 
+            if (reversed) {
+                constraintLayoutFlipped.setVisibility(View.GONE);
+                offerCl.setVisibility(View.VISIBLE);
+
+            } else {
+                offerCl.setVisibility(View.GONE);
+
+                constraintLayoutFlipped.setVisibility(View.VISIBLE);
+                flippable = true;
+            }
+
             ObjectAnimator objectAnimatorFadeOut = ObjectAnimator.ofFloat(
                     (reversed) ? constraintLayoutFlipped : offerCl,
                     "alpha",
                     1f,
                     0f
             );
-            objectAnimatorFadeOut.setDuration(200);
-
-            final ObjectAnimator objectAnimatorFadeIn = ObjectAnimator.ofFloat(
-                    (reversed) ? offerCl : constraintLayoutFlipped,
-                    "alpha",
-                    0f,
-                    1f
-            );
-            objectAnimatorFadeIn.setDuration(200);
-
-            objectAnimatorFadeOut.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    if (reversed) {
-                        constraintLayoutFlipped.setVisibility(View.GONE);
-                        offerCl.setVisibility(View.VISIBLE);
-                        objectAnimatorFadeIn.start();
-                    } else {
-                        offerCl.setVisibility(View.GONE);
-                        objectAnimatorFadeIn.start();
-                        constraintLayoutFlipped.setVisibility(View.VISIBLE);
-                        flippable = true;
-                    }
-
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-
-                }
-            });
-
-            objectAnimatorFadeOut.start();
+//            objectAnimatorFadeOut.setDuration(200);
+//
+//            final ObjectAnimator objectAnimatorFadeIn = ObjectAnimator.ofFloat(
+//                    (reversed) ? offerCl : constraintLayoutFlipped,
+//                    "alpha",
+//                    0f,
+//                    1f
+//            );
+//            objectAnimatorFadeIn.setDuration(200);
+//
+//            objectAnimatorFadeOut.addListener(new Animator.AnimatorListener() {
+//                @Override
+//                public void onAnimationStart(Animator animator) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationEnd(Animator animator) {
+//                    if (reversed) {
+//                        constraintLayoutFlipped.setVisibility(View.GONE);
+//                        offerCl.setVisibility(View.VISIBLE);
+//                        objectAnimatorFadeIn.start();
+//                    } else {
+//                        offerCl.setVisibility(View.GONE);
+//                        objectAnimatorFadeIn.start();
+//                        constraintLayoutFlipped.setVisibility(View.VISIBLE);
+//                        flippable = true;
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onAnimationCancel(Animator animator) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(Animator animator) {
+//
+//                }
+//            });
+//
+//            objectAnimatorFadeOut.start();
 
         }
 

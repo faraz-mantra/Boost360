@@ -172,7 +172,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
 
             }
         });
-        objectAnimator.start();
+       // objectAnimator.start();
     }
 
     public void clearResources() {

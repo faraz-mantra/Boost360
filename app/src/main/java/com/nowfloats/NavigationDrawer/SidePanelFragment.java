@@ -149,7 +149,6 @@ public class SidePanelFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Log.d("ILUD", "Hello");
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
