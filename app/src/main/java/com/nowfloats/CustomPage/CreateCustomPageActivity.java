@@ -1,11 +1,24 @@
 package com.nowfloats.CustomPage;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,8 +38,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.CustomPage.Model.PageDetail;
+import com.nowfloats.CustomPage.Model.UploadImageToS3Model;
+import com.nowfloats.CustomPage.Model.UploadImageToS3ResponseModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -34,11 +50,14 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
 import com.thinksity.R;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+
 import jp.wasabeef.richeditor.RichEditor;
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -54,15 +73,21 @@ public class CreateCustomPageActivity extends AppCompatActivity{
     Activity activity;
     EditText titleTxt;
     RichEditor richText;
-    private String mHtmlFormat = "";
+    private String mHtmlFormat = "" ;
+    private Uri picUri;
     private HorizontalScrollView editor;
     private boolean editCheck = false;
     String curName,curHtml,curPageid;
     int curPos;
     private ImageView deletePage;
 
+    String imageTagName = "CustomePage";
+    
     private int GALLERY_PHOTO =5;
     private RiaNodeDataModel mRiaNodedata;
+
+    private final int gallery_req_id = 6;
+    private final int media_req_id = 5;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -437,12 +462,12 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showUrlDialog(getString(R.string.enter_image_url), 1);
-
+               // showUrlDialog(getString(R.string.enter_image_url), 1);
+                choosePicture();
             }
         });
 
-       findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
+         findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showUrlDialog(getString(R.string.enter_hyperlink_url), 2);
@@ -544,6 +569,210 @@ public class CreateCustomPageActivity extends AppCompatActivity{
 //        }
 //        return null;
 //    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        
+        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
+            
+            Bitmap CameraBitmap = null;
+            String path = null;
+            if (data != null) {
+                picUri = data.getData();
+                if (picUri == null) {
+                     CameraBitmap = (Bitmap) data.getExtras().get("data");
+                     path = Util.saveBitmap(CameraBitmap, activity, imageTagName + System.currentTimeMillis());
+                    picUri = Uri.parse(path);
+                } else {
+                     path = Methods.getRealPathFromURI(picUri , this);
+                     CameraBitmap = Util.getBitmap(path, activity);
+                    
+                }
+            }
+            if(CameraBitmap != null ) {
+                uploadImageToS3(new File(path).getName() ,Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap , .5f)));
+            }
+            
+        } else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
+            
+            Bitmap CameraBitmap = null ;
+            String path = null;
+            
+            try {
+                if (picUri == null) {
+                    if (data != null) {
+                        picUri = data.getData();
+                        if (picUri == null) {
+                             CameraBitmap = (Bitmap) data.getExtras().get("data");
+                             path = Util.saveCameraBitmap(CameraBitmap, activity, imageTagName + System.currentTimeMillis());
+                            picUri = Uri.parse(path);
+                            
+                        } else {
+                             path = Methods.getRealPathFromURI(picUri , this);
+                             CameraBitmap = Util.getBitmap(path, activity);
+            
+                        }
+                    } else {
+                        Methods.showSnackBar(activity, getString(R.string.try_again));
+                    }
+                } else {
+                     path = Methods.getRealPathFromURI(picUri , this);
+                    CameraBitmap = Util.getBitmap(path, activity);
+              
+                }
+
+                if(CameraBitmap != null ) {
+                    uploadImageToS3(new File(path).getName() ,Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap , .5f)));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } catch (OutOfMemoryError E) {
+                E.printStackTrace();
+                CameraBitmap.recycle();
+                System.gc();
+                Methods.showSnackBar(activity, getString(R.string.try_again));
+            }
+        }
+    }
+
+    public void choosePicture() {
+        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                .customView(R.layout.featuredimage_popup, true)
+                .show();
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+
+        View view = dialog.getCustomView();
+        TextView header = (TextView) view.findViewById(R.id.textview_heading);
+        header.setText(R.string.upload_image);
+        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+
+        takeCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraIntent();
+                dialog.dismiss();
+            }
+        });
+
+        takeGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryIntent();
+                dialog.dismiss();
+
+            }
+        });
+    }
+
+    public void cameraIntent() {
+        try {
+            // use standard intent to capture an image
+            if (ActivityCompat.checkSelfPermission(CreateCustomPageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(CreateCustomPageActivity.this, Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
+                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", CreateCustomPageActivity.this);
+                } else {
+                    ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
+                }
+
+            } else {
+
+                ContentValues Cvalues = new ContentValues();
+                Intent captureIntent;
+                Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");
+                Cvalues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                picUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Cvalues);
+                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
+                startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
+            }
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
+            Methods.showSnackBarNegative(activity, errorMessage);
+        }
+    }
+
+    public void galleryIntent() {
+        try {
+            if (ActivityCompat.checkSelfPermission(CreateCustomPageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", CreateCustomPageActivity.this);
+                } else {
+                    ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
+                }
+
+            } else {
+
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, Constants.GALLERY_PHOTO);
+            }
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
+            Methods.showSnackBarNegative(activity, errorMessage);
+        }
+    }
+
+
+    private void uploadImageToS3(String fileName , String fileContent ) {
+
+        final MaterialDialog materialProgress = new MaterialDialog.Builder(this)
+                .widgetColorRes(R.color.accentColor)
+                .content(getString(R.string.loading))
+                .progress(true, 0)
+                .show();
+
+        final UploadImageToS3Model uploadImageToS3Model = new UploadImageToS3Model();
+        uploadImageToS3Model.setFileName(fileName);
+        uploadImageToS3Model.setFileData(fileContent);
+        uploadImageToS3Model.setFileCategory(1);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.UPLOAD_TO_S3_ENDPOINT)
+                .build();
+
+        Callback<UploadImageToS3ResponseModel> callback = new Callback<UploadImageToS3ResponseModel>() {
+            @Override
+            public void success(UploadImageToS3ResponseModel uploadImageToS3ResponseModel, Response response) {
+
+                materialProgress.dismiss();
+
+                if(response.getStatus() == 200 && uploadImageToS3ResponseModel != null  ) {
+                    if(uploadImageToS3ResponseModel.getBody() != null ){
+                        richText.insertImage(uploadImageToS3ResponseModel.getBody().getResult() , getString(R.string.no_image));
+                    }else{
+                        Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.upload_image_err));
+                    }
+                }else{
+                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.upload_image_err));
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                materialProgress.dismiss();
+                Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.upload_image_err));
+            }
+        };
+        
+        restAdapter.create(CustomPageInterface.class).uploadImageToS3(uploadImageToS3Model , callback);
+    }
 
     @Override
     protected void onStop() {

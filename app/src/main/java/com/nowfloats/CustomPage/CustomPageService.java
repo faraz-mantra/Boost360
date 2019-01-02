@@ -16,6 +16,9 @@ import retrofit.client.Response;
  * Created by guru on 25/08/2015.
  */
 public class CustomPageService {
+
+
+
     public void GetPages(String tag, String id,
                          CustomPageInterface anInterface, final Bus bus){
         try {

@@ -301,7 +301,24 @@ public class Methods {
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+
+
     }
+
+
+    public static String getRealPathFromURI(Uri contentUri , Context c) {
+
+        String val = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = c.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            val = cursor.getString(column_index);
+            cursor.close();
+        }
+        return val;
+    }
+
 
     public static String getPath(Activity c, Uri uri) {
         try {
@@ -1033,5 +1050,9 @@ public class Methods {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    public static Bitmap scaleBitmap(Bitmap oldBitmap , float ratio){
+        return Bitmap.createScaledBitmap(oldBitmap , (int)(oldBitmap.getWidth() * ratio) , (int)(oldBitmap.getHeight()*ratio) , false);
     }
 }

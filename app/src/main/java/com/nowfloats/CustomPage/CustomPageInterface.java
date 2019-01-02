@@ -3,6 +3,8 @@ package com.nowfloats.CustomPage;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.CustomPage.Model.PageDetail;
+import com.nowfloats.CustomPage.Model.UploadImageToS3Model;
+import com.nowfloats.CustomPage.Model.UploadImageToS3ResponseModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +35,9 @@ public interface CustomPageInterface {
                               Callback<List<PageDetail>> callback);
     @POST("/Discover/v1/floatingpoint/custompage/update")
     public void updatePage(@Body HashMap<String,String> s,Callback<String> callback);
+
+    @POST("/v1")
+    void uploadImageToS3(@Body UploadImageToS3Model uploadImageToS3Model , Callback<UploadImageToS3ResponseModel> callback);
 
 //    @DELETE("/Discover/v1/floatingpoint/custompage/delete")
 //    public void deletePage(@Body HashMap<String,String> s,Callback<String> callback);

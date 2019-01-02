@@ -9,13 +9,13 @@
 
 
     <ImageView
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_80"
-        android:layout_marginRight="@dimen/margin_80"
         android:layout_marginTop="@dimen/margin_90"
         android:layout_weight="0.55"
-        android:src="@drawable/signup_logo" />
+        android:src="@drawable/sign_up_logo_v3"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

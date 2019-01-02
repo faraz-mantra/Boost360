@@ -6,6 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash_screen_image" />
+        android:src="@drawable/splash_screen_v2" />
 
 </RelativeLayout>

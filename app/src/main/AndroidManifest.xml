@@ -107,7 +107,7 @@
         <receiver
             android:name="com.webengage.sdk.android.InstallTracker"
             android:exported="true">
-            <intent-filter>
+            <intent-filter>Contact_Info_Activity
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>

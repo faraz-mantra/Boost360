@@ -1484,7 +1484,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON));
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout =  findViewById(R.id.drawer_layout);
         homeFragment = new Home_Fragment_Tab();
         businessFragment = new Business_Profile_Fragment_V2();
         manageCustomerFragment = new ManageCustomerFragment();

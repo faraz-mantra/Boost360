@@ -77,6 +77,8 @@ public class Constants {
 
     public static String LogTag = "android23235616";
 
+    public static String UPLOAD_TO_S3_ENDPOINT = "https://6psfkele8l.execute-api.ap-south-1.amazonaws.com";
+
     public static String deviceId = "123456789";
     public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
