@@ -171,7 +171,7 @@ public class MixPanelController {
     public static void track(String event, JSONObject props) {
         try {
             ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(props));
-//            if (mixPanel != null)
+//            if (mixPanel != null)n
 //                mixPanel.track(event, props);
         } catch (Exception e) {
             e.printStackTrace();

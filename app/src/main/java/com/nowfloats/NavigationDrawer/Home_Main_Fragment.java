@@ -68,6 +68,7 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 public class Home_Main_Fragment extends Fragment implements
         Fetch_Home_Data.Fetch_Home_Data_Interface {
+
     public static LinearLayout retryLayout,emptyMsgLayout;
     public static ButteryProgressBar progressBar;
     public static CardView progressCrd;

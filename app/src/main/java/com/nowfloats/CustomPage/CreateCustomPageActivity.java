@@ -59,6 +59,7 @@ import jp.wasabeef.richeditor.RichEditor;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -745,6 +746,9 @@ public class CreateCustomPageActivity extends AppCompatActivity{
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.UPLOAD_TO_S3_ENDPOINT)
+                .setClient(Methods.getHttpclient(60))
+                .setLog(new AndroidLog(CreateCustomPageActivity.class.getName()))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
         Callback<UploadImageToS3ResponseModel> callback = new Callback<UploadImageToS3ResponseModel>() {

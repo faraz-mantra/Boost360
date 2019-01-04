@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
@@ -1054,5 +1055,14 @@ public class Methods {
 
     public static Bitmap scaleBitmap(Bitmap oldBitmap , float ratio){
         return Bitmap.createScaledBitmap(oldBitmap , (int)(oldBitmap.getWidth() * ratio) , (int)(oldBitmap.getHeight()*ratio) , false);
+    }
+
+    public static OkClient getHttpclient(int timeout) {
+
+        final OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(timeout, TimeUnit.MINUTES);
+        okHttpClient.setConnectTimeout(20, TimeUnit.MINUTES);
+
+        return new OkClient(okHttpClient);
     }
 }

@@ -109,16 +109,6 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
             if (isInputMethodActivated()) {
                 keyboardSettingSwitchTv.setChecked(true);
             }
-           /* if (isInputMethodActivated()) {
-                MixPanelController.track(MixPanelController.KEYBOARD_ENABLED, null);
-                if (imeManager != null)
-                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            imeManager.showInputMethodPicker();
-                        }
-                    }, 1000);
-            }*/
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

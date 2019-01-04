@@ -323,6 +323,7 @@ public class ImePresenterImpl implements ItemClickListener,
         } catch (Exception e) {
             Log.e("here", e.getMessage());
         }
+        
 
         doCommitContent("Offer on: " + name + "\nPrice: " + currency + " " + Double.toString(oldPrice) + "\n\nOffer Price: "
                 + currency + " " + Double.toString(newPrice) + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" +
