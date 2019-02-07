@@ -397,7 +397,6 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-
         return mainView;
     }
 
@@ -405,6 +404,11 @@ public class Home_Main_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BoostLog.d("Home_Main_Fragment","onViewCreated");
+
+        /**
+         * Call this API to get visitsCount list and display in Analytics
+         */
+        new Fetch_Home_Data(getActivity(),session).getVisitors();
     }
 
     private void startSync() {
