@@ -588,8 +588,12 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 .titleColorRes(R.color.primary_color)
                 .title("Enter Mobile Number")
                 .negativeText("Cancel")
-                .positiveText(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")
-                        ? "Verify & Send OTP" : "Confirm")
+
+                /*.positiveText(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")
+                        ? "Verify & Send OTP" : "Confirm")*/
+
+                .positiveText("Confirm")
+
                 //               .positiveText("Confirm")
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
@@ -607,7 +611,15 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                                 Toast.makeText(PreSignUpActivityRia.this, "Enter valid number", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
-                                    verifyPhoneNumberAndSendOTP(number.getText().toString().trim());
+
+                                    //verifyPhoneNumberAndSendOTP(number.getText().toString().trim());
+
+                                    /**
+                                     * Below two lines added to store phone number on data_phone by skipping verifyPhoneNumberAndSendOTP method
+                                     */
+                                    data_phone = number.getText().toString().trim();
+                                    phoneEditText.setText(String.valueOf(data_country_code + " - " + data_phone));
+                                    dialog.dismiss();
                                 } else {
                                     API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim(), data_country_code);
                                 }
@@ -874,9 +886,22 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 emailEditText.setText(mBundle.getString(Save_Email, ""));
             }
 
-            if (TextUtils.isEmpty(mBundle.getString(Save_Phone)) || TextUtils.isEmpty(mBundle.getString(Save_Otp))) {
+            /*if (TextUtils.isEmpty(mBundle.getString(Save_Phone)) || TextUtils.isEmpty(mBundle.getString(Save_Otp))) {
 
-            } else if (mBundle.getString(Save_Otp).equalsIgnoreCase("true")) {
+            }*/
+
+            /**
+             * Modified above condition and added because OTP verification is removed from the flow
+             */
+            if (!TextUtils.isEmpty(mBundle.getString(Save_Phone)))
+            {
+                data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
+                phoneEditText.setText(mBundle.getString(Save_Phone_Code, "") + " - " +
+                        mBundle.getString(Save_Phone, ""));
+                data_phone = mBundle.getString(Save_Phone, "");
+            }
+
+            else if (mBundle.getString(Save_Otp).equalsIgnoreCase("true")) {
 
                 ivPhoneStatus.setImageResource(R.drawable.green_check);
                 data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
@@ -915,10 +940,18 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             if (!TextUtils.isEmpty(mBundle.getString(Save_Pin_Code))) {
                 etPinCode.setText(mBundle.getString(Save_Pin_Code, ""));
             }
-            if (TextUtils.isEmpty(mBundle.getString(Save_Website_Address)) || TextUtils.isEmpty(mBundle.getString(Save_IS_FP_AVAILABLE))) {
+
+            Log.d("WEBSITE_VALUE", "Website 0 : " + mBundle.getString(Save_Website_Address, ""));
+            Log.d("WEBSITE_VALUE", "Website 0 : " + mBundle.getString(Save_IS_FP_AVAILABLE, ""));
+
+            if (TextUtils.isEmpty(mBundle.getString(Save_Website_Address)) || TextUtils.isEmpty(mBundle.getString(Save_IS_FP_AVAILABLE)))
+            {
                 if (ivWebsiteStatus.getVisibility() == View.VISIBLE) {
                     ivWebsiteStatus.setVisibility(View.GONE);
                 }
+
+                Log.d("WEBSITE_VALUE", "Website 1 : " + mBundle.getString(Save_Website_Address, ""));
+
             } else if (mBundle.getString(Save_IS_FP_AVAILABLE).equalsIgnoreCase("true")) {
                 if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
                     ivWebsiteStatus.setVisibility(View.VISIBLE);
@@ -927,6 +960,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 fpTag = mBundle.getString(Save_Website_Address, "");
                 etWebsiteAddress.setText(mBundle.getString(Save_Website_Address, ""));
 
+                Log.d("WEBSITE_VALUE", "Website 2 : " + mBundle.getString(Save_Website_Address, ""));
             } else {
                 if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
                     ivWebsiteStatus.setVisibility(View.VISIBLE);
@@ -936,7 +970,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                         countryEditText.getText().toString(), cityEditText.getText().toString(),
                         businessCategoryEditText.getText().toString());
 
-
+                Log.d("WEBSITE_VALUE", "Website 3 : " + mBundle.getString(Save_Website_Address, ""));
             }
 
             etWebsiteAddress.setClickable(true);
@@ -1080,6 +1114,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             data_city = cityEditText.getText().toString().trim();
             data_country = countryEditText.getText().toString().trim();
             data_email = emailEditText.getText().toString().trim();
+
+            fpTag = etWebsiteAddress.getText().toString().trim();
+
 //            data_phone = phoneEditText.getText().toString();
 //            data_country_code = countryPhoneCode.getText().toString();
             allFieldsValid = true;
@@ -1211,6 +1248,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             phoneEditText.setText("+" + data_country_code + " - " + phoneNumber);
             ivPhoneStatus.setImageResource(R.drawable.green_check);
             data_phone = phoneNumber;
+
             numberDialog.dismiss();
 
         } else if (value.equalsIgnoreCase("Error")) {
@@ -1366,6 +1404,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     hideKeyBoard();
                     MixPanelController.track("CreateMyWebsite", null);
                     createStore_retrofit(PreSignUpActivityRia.this, getJSONData(), bus);
+
+                    Log.d("PRE_SIGN_UP", "I AM HERE");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1492,6 +1532,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         if (emailResult.equals("valid")) {
             String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
+
             API_Layer_Signup.checkUniqueNumber(activity, data_phone, data_country_code);
         } else {
             Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
@@ -1678,6 +1719,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     phoneEditText.setText("+" + data_country_code + " - " + number);
                     ivPhoneStatus.setImageResource(R.drawable.green_check);
                     data_phone = number;
+
                 } else {
                     hideProgressbar();
                     Toast.makeText(PreSignUpActivityRia.this, "Please enter valid OTP", Toast.LENGTH_SHORT).show();

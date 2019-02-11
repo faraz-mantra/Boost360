@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RiaCardModel implements Serializable {
@@ -67,7 +68,7 @@ public class RiaCardModel implements Serializable {
 
     @SerializedName("RequiredVariables")
     @Expose
-    private List<String> requiredVariables = null;
+    private List<String> requiredVariables = new ArrayList<>();
 
     private boolean isToShowInput = true;
 

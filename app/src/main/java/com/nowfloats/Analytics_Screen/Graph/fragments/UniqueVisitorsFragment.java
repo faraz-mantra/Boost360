@@ -407,13 +407,19 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     }
 
     private void getVisitsData(HashMap<String, String> map, Callback<VisitsModel> callback) {
+
+        Log.i("getVisitsData", "i am here");
+
         map.put("clientId", Constants.clientId);
         map.put("scope", manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
         AnalyticsFetch.FetchDetails visitsApi = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
         switch (mVisitType) {
+
             case UNIQUE:
                 visitsApi.getUniqueVisits(manager.getFpTag(), map, callback);
+                getVisitsData();
                 break;
+
             case TOTAL:
                 visitsApi.getTotalVisits(manager.getFpTag(), map, callback);
                 break;
@@ -464,8 +470,32 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     }
 
 
+
+
+    /**
+     * CHIRANJIT
+     */
     private void getVisitsData()
     {
+
+        /*switch (batchType)
+        {
+            case dy:
+
+                break;
+
+            case mm:
+
+                break;
+
+            case ww:
+
+                break;
+        }*/
+
+
+        Log.d("BATCH_TYPE", batchType.name());
+
         /**
          * Create calendar instance
          */
@@ -577,5 +607,62 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         return new Date(sdf.format(date));
+    }
+
+
+    public void updateData1(List<VisitAnalytics> visitAnalyticsList) {
+        if (!isAdded() || isDetached())
+            return;
+        progressBar.setVisibility(View.GONE);
+        //currVisitsModel = visitsModel;
+        if (visitAnalyticsList == null) {
+            Toast.makeText(mContext, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        addDataToGraph(getGraphDataSet1(visitAnalyticsList));
+        // update data here
+    }
+
+    private BarDataSet getGraphDataSet1(List<VisitAnalytics> visitAnalyticsList) {
+//        List<IBarDataSet> dataSets = null;
+
+        List<BarEntry> valueSet1 = new ArrayList<>();
+        List<VisitsModel.UniqueVisitsList> data = currVisitsModel.getUniqueVisitsList();
+        labels.clear();
+        Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        String[] months = getResources().getStringArray(R.array.months);
+//        for (int i =0;i<12;i++){
+//            valueSet1.add(new BarEntry(2000000000,i));
+//            labels.add(months[i]);
+//        }
+        for (int i = 0; i < data.size(); i++) {
+
+            Log.d("DataSize", "" + data.size());
+
+            valueSet1.add(new BarEntry(i, data.get(i).getDataCount(), ""));
+            c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getStartDate()));
+            switch (batchType) {
+                case ww:
+                    int month = c.get(Calendar.MONTH);
+                    int startDate = c.get(Calendar.DAY_OF_MONTH);
+                    c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getEndDate()));
+                    labels.add(String.format(Locale.ENGLISH, "%d-%d %s'%d", startDate, c.get(Calendar.DAY_OF_MONTH), months[month], c.get(Calendar.YEAR) % 100));
+                    break;
+                case mm:
+                    labels.add(String.format(Locale.ENGLISH, "%s %d", months[c.get(Calendar.MONTH)], c.get(Calendar.YEAR)));
+                    break;
+                case dy:
+                    labels.add(String.format(Locale.ENGLISH, "%d %s'%s", c.get(Calendar.DAY_OF_MONTH), months[c.get(Calendar.MONTH)], c.get(Calendar.YEAR) % 100));
+                    break;
+            }
+        }
+        //visitsCount.setText(String.valueOf(totalCount));
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, dataType);
+        barDataSet1.setColor(Color.GRAY);
+
+//        dataSets = new ArrayList<>();
+//        dataSets.add(barDataSet1);
+        return barDataSet1;
     }
 }
