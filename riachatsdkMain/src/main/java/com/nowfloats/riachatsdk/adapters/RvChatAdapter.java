@@ -270,8 +270,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 cardViewHolder.tvConfirmSubText.setVisibility(View.VISIBLE);
 
                 fpTagChecker = true;
-
-                Log.d("WEB_CONFIRM_CLICKED", "I AM HERE");
             } else {
 
                 fpTagChecker = false;
@@ -305,8 +303,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME, mChatSections.get(position).getCardModel().getButtons().get(0),
                                 cardViewHolder.tvConfirmationText.getText().toString(),
                                 mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-
-                        Log.i("FP_VALUE", "Is_FP_Tag_Available 0 : Confirmed Clicked ");
                     }
                 });
             } else {
@@ -322,8 +318,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                         cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
-
-                        Log.i("FP_VALUE", "Is_FP_Tag_Available 1 : Confirmed Clicked ");
 
                         if (fpTagChecker)
                         {
@@ -364,9 +358,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                     cardViewHolder.tvConfirmationText.getText().toString(),
                                     mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
                         }
-
-
-                        Log.i("FP_VALUE", "Is_FP_Tag_Available : Edit Clicked ");
                     }
                 });
             }
@@ -402,8 +393,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.OTP, mChatSections.get(position).getCardModel().getButtons().get(0),
                                 otpViewHolder.etOTPConfirmation.getText().toString(),
                                 mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-
-                        Log.i("FP_VALUE", "Is_FP_Tag_Available 6 : Confirmed Clicked ");
                     }
                 });
             } else {
@@ -425,8 +414,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.OTP, mChatSections.get(position).getCardModel().getButtons().get(0),
                                 otpViewHolder.etOTPConfirmation.getText().toString(),
                                 mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-
-                        Log.i("FP_VALUE", "Is_FP_Tag_Available 7 : Confirmed Clicked ");
                     }
                 });
 
@@ -917,8 +904,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(0),
                                 items.getTitle(),
                                 riaCardModel.getButtons().get(0).getNextNodeId());
-
-                        Log.i("FP_VALUE", "Is_FP_Tag_Available 3 : Confirmed Clicked ");
                     }
                 });
             } else {
@@ -942,8 +927,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(0),
                                 items.getTitle(),
                                 riaCardModel.getButtons().get(0).getNextNodeId());
-
-                        Log.i("FP_VALUE", "Is_FP_Tag_Available 4 : Confirmed Clicked ");
                     }
                 });
 
@@ -1216,8 +1199,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     mConfirmationCallback.onCardResponse(Constants.ConfirmationType.ADDRESS_ENTRY, mChatSections.get(getAdapterPosition()).getCardModel().getButtons().get(0),
                             tvAddressText.getText().toString(),
                             mChatSections.get(getAdapterPosition()).getCardModel().getButtons().get(0).getNextNodeId());
-
-                    Log.i("FP_VALUE", "Is_FP_Tag_Available 5 : Confirmed Clicked ");
                 }
             });
 

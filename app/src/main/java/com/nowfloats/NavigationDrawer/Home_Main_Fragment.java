@@ -408,7 +408,7 @@ public class Home_Main_Fragment extends Fragment implements
         /**
          * Call this API to get visitsCount list and display in Analytics
          */
-        new Fetch_Home_Data(getActivity(),session).getVisitors();
+        //new Fetch_Home_Data(getActivity(),session).getVisitors();
     }
 
     private void startSync() {

@@ -50,22 +50,18 @@ public class Create_Tag_Service {
     }
     public Create_Tag_Service(final PreSignUpActivityRia activity, HashMap<String, String> jsonObject, final Bus bus)
     {
-        Log.d("Create_Tag_Service", "Request " + jsonObject);
-
         Retro_Signup_Interface createStore = Constants.restAdapter.create(Retro_Signup_Interface.class);
 
         createStore.put_createStore(jsonObject, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
 
-                Log.d("Create_Tag_Service", "Response " + response.getBody());
                 bus.post(new Create_Store_Event(s));
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                Log.d("Create_Tag_Service", "Error " + error.getBody());
                 bus.post(new Create_Store_Event(null));
             }
         });
