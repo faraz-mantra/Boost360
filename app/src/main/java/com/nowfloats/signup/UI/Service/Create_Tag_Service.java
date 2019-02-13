@@ -1,6 +1,7 @@
 package com.nowfloats.signup.UI.Service;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Create_Store_Event;
@@ -60,7 +61,21 @@ public class Create_Tag_Service {
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(final RetrofitError error) {
+
+                activity.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run()
+                    {
+                        Methods.showSnackBarNegative(activity, String.valueOf(error.getBody()));
+
+                        if (activity.pd != null)
+                        {
+                            activity.pd.dismiss();
+                        }
+                    }
+                });
 
                 bus.post(new Create_Store_Event(null));
             }

@@ -34,15 +34,21 @@ allprojects {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'nfmanage'
+            keyPassword 'NowFloatsManage2013'
+            storeFile file("../keystore/boost/my-release-key.keystore")
+            storePassword 'NowFloatsManage2013'
+        }
+    }
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
-
     lintOptions {
         abortOnError true
         checkReleaseBuilds false
     }
-
     defaultConfig {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
@@ -50,7 +56,7 @@ android {
         versionCode 2018080034
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-           ndk {
+        ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
@@ -58,18 +64,16 @@ android {
         noCompress ".dict"
     }
     buildTypes {
-
         applicationVariants.all { variant ->
-
             variant.outputs.all {
                 outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}.apk"
             }
         }
-
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 //    signingConfigs {
@@ -132,7 +136,6 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/DEPENDENCIES'
     }
-
     dexOptions {
         jumboMode true
         preDexLibraries false
@@ -204,7 +207,7 @@ dependencies {
     implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.8.2@aar') {
         exclude group: 'com.google.firebase'
     }
-    implementation ('com.apxor.android:apxor-android-sdk-push:1.0.9@aar') {
+    implementation('com.apxor.android:apxor-android-sdk-push:1.0.9@aar') {
         exclude group: 'com.google.firebase'
     }
     implementation 'com.apxor.android:apxor-android-sdk-qe:1.0.4@aar'

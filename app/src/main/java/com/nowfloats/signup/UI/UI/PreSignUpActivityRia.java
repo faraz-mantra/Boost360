@@ -1851,6 +1851,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     @Subscribe
     public void put_createStore(Create_Store_Event response) {
+
+        Log.d("Store_Event_Response", "" + response.fpId);
+
         final String fpId = response.fpId;
         if (TextUtils.isEmpty(fpId)) {
             hideLoader();

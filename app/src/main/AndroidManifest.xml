@@ -426,6 +426,7 @@
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_edit__profile_"
             android:screenOrientation="portrait" />
         <!-- <activity -->
