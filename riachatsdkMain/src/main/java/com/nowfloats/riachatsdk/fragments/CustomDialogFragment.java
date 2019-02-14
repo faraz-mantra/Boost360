@@ -371,5 +371,8 @@ public class CustomDialogFragment extends DialogFragment {
         void finishActivity();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
 
+    }
 }
