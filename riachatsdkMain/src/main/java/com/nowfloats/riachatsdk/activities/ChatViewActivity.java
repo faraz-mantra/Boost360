@@ -1867,6 +1867,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         RestAdapter adapter;
         ChatJsonInterface chatJsonInterface;
 
+        Log.d("CHAT_ERROR_CHECK", "" + chatType);
+
         switch (chatType) {
             case CREATE_WEBSITE:
                 adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
