@@ -108,6 +108,7 @@ public class Constants {
         String ADDRESS_ENTRY = "address_entry";
         String SUBMIT_FORM = "submit_form";
         String FB_PAGE = "fb_page";
-
+        String FP_TAG_CONFIRM = "fp_tag_confirm";
+        String FP_TAG_EDIT = "fp_tag_edit";
     }
 }

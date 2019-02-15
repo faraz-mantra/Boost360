@@ -261,12 +261,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 model.setCardHeader("");
             cardViewHolder.tvConfirmationTitle.setText(Html.fromHtml(getParsedPrefixPostfixText(model.getCardHeader())));
 
+            final boolean fpTagChecker;
+
             String riaText = getParsedPrefixPostfixText(model.getSections().get(0).getText());
 
             if (riaText.contains(".nowfloats.com")) {
                 riaText = riaText.split(".nowfloats.com")[0].replace("<br>", "");
                 cardViewHolder.tvConfirmSubText.setVisibility(View.VISIBLE);
+
+                fpTagChecker = true;
             } else {
+
+                fpTagChecker = false;
                 cardViewHolder.tvConfirmSubText.setVisibility(View.GONE);
             }
 
@@ -313,9 +319,19 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
-                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME, mChatSections.get(position).getCardModel().getButtons().get(0),
-                                cardViewHolder.tvConfirmationText.getText().toString(),
-                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                        if (fpTagChecker)
+                        {
+                            mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FP_TAG_CONFIRM, mChatSections.get(position).getCardModel().getButtons().get(0),
+                                    cardViewHolder.tvConfirmationText.getText().toString(),
+                                    mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                        }
+
+                        else
+                        {
+                            mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME, mChatSections.get(position).getCardModel().getButtons().get(0),
+                                    cardViewHolder.tvConfirmationText.getText().toString(),
+                                    mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                        }
                     }
                 });
 
@@ -329,9 +345,19 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
-                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME, mChatSections.get(position).getCardModel().getButtons().get(1),
-                                cardViewHolder.tvConfirmationText.getText().toString(),
-                                mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
+                        if(fpTagChecker)
+                        {
+                            mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FP_TAG_EDIT, mChatSections.get(position).getCardModel().getButtons().get(1),
+                                    cardViewHolder.tvConfirmationText.getText().toString(),
+                                    mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
+                        }
+
+                        else
+                        {
+                            mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME, mChatSections.get(position).getCardModel().getButtons().get(1),
+                                    cardViewHolder.tvConfirmationText.getText().toString(),
+                                    mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
+                        }
                     }
                 });
             }

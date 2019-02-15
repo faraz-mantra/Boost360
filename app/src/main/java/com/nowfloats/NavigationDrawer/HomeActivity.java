@@ -1660,7 +1660,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
             SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
             smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, session.getFPID()).apply();
-            getPermissions();
+            //getPermissions();
         }
 
     }

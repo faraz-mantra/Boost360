@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,17 +35,22 @@ import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.API.VisitorsApiInterface;
+import com.nowfloats.NavigationDrawer.model.VisitAnalytics;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -371,6 +377,9 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 //            labels.add(months[i]);
 //        }
         for (int i = 0; i < data.size(); i++) {
+
+            Log.d("DataSize", "" + data.size());
+
             valueSet1.add(new BarEntry(i, data.get(i).getDataCount(), ""));
             c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getStartDate()));
             switch (batchType) {
@@ -398,13 +407,19 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     }
 
     private void getVisitsData(HashMap<String, String> map, Callback<VisitsModel> callback) {
+
+        Log.i("getVisitsData", "i am here");
+
         map.put("clientId", Constants.clientId);
         map.put("scope", manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
         AnalyticsFetch.FetchDetails visitsApi = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
         switch (mVisitType) {
+
             case UNIQUE:
                 visitsApi.getUniqueVisits(manager.getFpTag(), map, callback);
+                getVisitsData();
                 break;
+
             case TOTAL:
                 visitsApi.getTotalVisits(manager.getFpTag(), map, callback);
                 break;
@@ -417,12 +432,16 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     private Callback<VisitsModel> visitsModelCallback = new Callback<VisitsModel>() {
         @Override
         public void success(VisitsModel visitsModel, Response response) {
+
+            Log.v("visitsModelCallback", "Success 0");
             updateData(visitsModel);
         }
 
         @Override
         public void failure(RetrofitError error) {
             updateData(null);
+
+            Log.v("visitsModelCallback", "Failure 0");
         }
     };
 
@@ -441,10 +460,209 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         @Override
         public void failure(RetrofitError error) {
             visitsCount.setText("0");
+
+            Log.v("visitsModelCallback", "Failure 1");
         }
     };
 
     public interface ViewCallback {
         void onChartBarClicked(HashMap<String, String> map, int val);
+    }
+
+
+
+
+    /**
+     * CHIRANJIT
+     */
+    private void getVisitsData()
+    {
+
+        /*switch (batchType)
+        {
+            case dy:
+
+                break;
+
+            case mm:
+
+                break;
+
+            case ww:
+
+                break;
+        }*/
+
+
+        Log.d("BATCH_TYPE", batchType.name());
+
+        /**
+         * Create calendar instance
+         */
+        Calendar calendar = Calendar.getInstance();
+
+        /**
+         * Get current date object from calendar and call method to convert to UTC
+         */
+        Date currentDate = localToGMT(calendar.getTime());
+
+        /**
+         * Subtract 2 months from current date
+         */
+        calendar.add(Calendar.MONTH, -2);
+
+        /**
+         * Get date object 2 months before
+         */
+        Date previousDate = localToGMT(calendar.getTime());
+
+        /**
+         * Format current date and previous date
+         */
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        String startDate = df.format(previousDate);
+        String endDate = df.format(currentDate);
+
+        Log.d("VisitorsApiInterface", "Start Date : " + startDate);
+        Log.d("VisitorsApiInterface", "End Date : " + endDate);
+
+        List<String> array = new ArrayList<>();
+        array.add(manager.getFPID());
+
+        Log.d("VisitorsApiInterface", "FP ID : " + array);
+
+
+        /**
+         * Create HashMap for query string parameter
+         */
+        HashMap<String,String> map = new HashMap<>();
+
+        map.put("clientId",Constants.clientId);
+        map.put("startDate", startDate /*"2018-12-05"*/);
+        map.put("endDate", endDate /*"2019-02-05"*/);
+        map.put("batchType", "DAILY");
+        map.put("scope", manager.getISEnterprise().equals("true") ? "1" : "0");
+
+        //map.put("clientId", Constants.clientId);
+        //map.put("scope", manager.getISEnterprise().equals("true") ? "Enterprise" : "Store");
+
+        /**
+         * Create object for retrofit API interface
+         */
+        VisitorsApiInterface visitors_interface = Constants.restAdapter.create(VisitorsApiInterface.class);
+
+        visitors_interface.getVisitors(array, map, new Callback<List<VisitAnalytics>>() {
+
+            @Override
+            public void success(List<VisitAnalytics> visitAnalyticsList, retrofit.client.Response response)
+            {
+                /**
+                 * Store visit count on session
+                 */
+                //sessionManager.setVisitsCount(String.valueOf(getTotalVisits(visitAnalyticsList)));
+                /**
+                 * Store visitors count on session
+                 */
+                //sessionManager.setVisitorsCount(String.valueOf(getTotalVisitors(visitAnalyticsList)));
+
+                Log.d("VisitorsApiInterface", "Total Analytics Data - " + (visitAnalyticsList == null ? "NULL" : "" + visitAnalyticsList.size()));
+                //Log.d("VisitorsApiInterface", "Total Visits - " + sessionManager.getVisitsCount());
+                //Log.d("VisitorsApiInterface", "Total Visitors - " + sessionManager.getVisitorsCount());
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                Log.d("VisitorsApiInterface", "Fail - " + error.getMessage());
+            }
+        });
+
+
+        //AnalyticsFetch.FetchDetails visitsApi = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
+
+        /*switch (mVisitType)
+        {
+            case UNIQUE:
+                visitsApi.getUniqueVisits(manager.getFpTag(), map, callback);
+                break;
+            case TOTAL:
+                visitsApi.getTotalVisits(manager.getFpTag(), map, callback);
+                break;
+            case MAP_VISITS:
+                visitsApi.getMapVisits(manager.getFpTag(), map, callback);
+                break;
+        }*/
+    }
+
+
+    /**
+     * Convert local date to UTC date
+     * @param date local date object
+     * @return UTC date
+     */
+    private Date localToGMT(Date date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return new Date(sdf.format(date));
+    }
+
+
+    public void updateData1(List<VisitAnalytics> visitAnalyticsList) {
+        if (!isAdded() || isDetached())
+            return;
+        progressBar.setVisibility(View.GONE);
+        //currVisitsModel = visitsModel;
+        if (visitAnalyticsList == null) {
+            Toast.makeText(mContext, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        addDataToGraph(getGraphDataSet1(visitAnalyticsList));
+        // update data here
+    }
+
+    private BarDataSet getGraphDataSet1(List<VisitAnalytics> visitAnalyticsList) {
+//        List<IBarDataSet> dataSets = null;
+
+        List<BarEntry> valueSet1 = new ArrayList<>();
+        List<VisitsModel.UniqueVisitsList> data = currVisitsModel.getUniqueVisitsList();
+        labels.clear();
+        Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        String[] months = getResources().getStringArray(R.array.months);
+//        for (int i =0;i<12;i++){
+//            valueSet1.add(new BarEntry(2000000000,i));
+//            labels.add(months[i]);
+//        }
+        for (int i = 0; i < data.size(); i++) {
+
+            Log.d("DataSize", "" + data.size());
+
+            valueSet1.add(new BarEntry(i, data.get(i).getDataCount(), ""));
+            c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getStartDate()));
+            switch (batchType) {
+                case ww:
+                    int month = c.get(Calendar.MONTH);
+                    int startDate = c.get(Calendar.DAY_OF_MONTH);
+                    c.setTimeInMillis(Methods.getDateMillSecond(data.get(i).getEndDate()));
+                    labels.add(String.format(Locale.ENGLISH, "%d-%d %s'%d", startDate, c.get(Calendar.DAY_OF_MONTH), months[month], c.get(Calendar.YEAR) % 100));
+                    break;
+                case mm:
+                    labels.add(String.format(Locale.ENGLISH, "%s %d", months[c.get(Calendar.MONTH)], c.get(Calendar.YEAR)));
+                    break;
+                case dy:
+                    labels.add(String.format(Locale.ENGLISH, "%d %s'%s", c.get(Calendar.DAY_OF_MONTH), months[c.get(Calendar.MONTH)], c.get(Calendar.YEAR) % 100));
+                    break;
+            }
+        }
+        //visitsCount.setText(String.valueOf(totalCount));
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, dataType);
+        barDataSet1.setColor(Color.GRAY);
+
+//        dataSets = new ArrayList<>();
+//        dataSets.add(barDataSet1);
+        return barDataSet1;
     }
 }

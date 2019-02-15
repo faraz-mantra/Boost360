@@ -1,6 +1,7 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -22,11 +23,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -48,6 +51,7 @@ import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NotificationCenter.AlertArchive;
+import com.nowfloats.helper.ui.BaseActivity;
 import com.nowfloats.signup.UI.API.API_Layer;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -70,9 +74,13 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class Edit_Profile_Activity extends AppCompatActivity {
+public class Edit_Profile_Activity extends BaseActivity {
+
     public static EditText yourname, category, buzzname, buzzdescription , customProductCategory;
     public static ImageView featuredImage, businessCategoryImage;
+
+    public LinearLayout linearProductCategory;
+    public ImageView ibProductCategoryEdit;
     private Toolbar toolbar;
     private RadioGroup productCategory;
     private RadioButton rb_Products , rb_Services , rb_Custom;
@@ -106,7 +114,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit__profile_);
+        setContentView(R.layout.activity_edit__profile_v1);
         Methods.isOnline(Edit_Profile_Activity.this);
 
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
@@ -122,6 +130,9 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         category = (EditText) findViewById(R.id.businessCategory);
         productCategory = (RadioGroup) findViewById(R.id.rbgroup);
 
+        linearProductCategory = findViewById(R.id.linear_product_category);
+        ibProductCategoryEdit = findViewById(R.id.ib_product_category_edit);
+
         rb_Custom = findViewById(R.id.rb_custom);
         rb_Products = findViewById(R.id.rb_products);
         rb_Services = findViewById(R.id.rb_services);
@@ -129,6 +140,11 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
 
         mRiaNodeDataModel = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
+
+        rb_Products.setEnabled(false);
+        rb_Services.setEnabled(false);
+        rb_Custom.setEnabled(false);
+        customProductCategory.setEnabled(false);
 
         productCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -173,7 +189,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
         //category_text = (EditText) findViewById(R.id.buss_address_select_buzz_category);
 
-        category.setOnClickListener(new View.OnClickListener() {
+        /*category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (categories == null) {
@@ -210,7 +226,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                     //showCategoryDialog(categories);
                 }
             }
-        });
+        });*/
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         saveTextView = (ImageView) toolbar.findViewById(R.id.saveTextView);
         saveTextView.setColorFilter(whitecolorFilter);
@@ -902,5 +918,43 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         {
             return true;
         }
+    }
+
+    public void onProductCategoryEdit(View view)
+    {
+        displayEditConfirmation(Edit_Profile_Activity.this);
+    }
+
+    public void displayEditConfirmation(final Activity mContext)
+    {
+        new MaterialDialog.Builder(mContext)
+                .title("Are you sure ?")
+                .content(Html.fromHtml("It is <b>not advised to change</b> your product category, as this can cause search related problems and a drop in search rank leading to less traffic."))
+                .positiveText("Change Category")
+                .negativeText("Cancel")
+                .positiveColorRes(R.color.primaryColor)
+                .cancelable(false)
+                .callback(new MaterialDialog.ButtonCallback() {
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog)
+                    {
+                        super.onPositive(dialog);
+
+                        ibProductCategoryEdit.setVisibility(View.INVISIBLE);
+
+                        rb_Products.setEnabled(true);
+                        rb_Services.setEnabled(true);
+                        rb_Custom.setEnabled(true);
+                        customProductCategory.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog)
+                    {
+                        super.onNegative(dialog);
+                    }
+
+                }).show();
     }
 }

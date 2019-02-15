@@ -3,8 +3,10 @@ package com.nowfloats.NavigationDrawer.API;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 
+import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Analytics_Fragment;
 import com.nowfloats.util.Constants;
@@ -44,7 +46,6 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
         //super.onPreExecute();
 
         new GetSearchQueryCountAsyncTask(mContext, sessionManager).execute();
-       
     }
     
     @Override
@@ -86,7 +87,6 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                             Analytics_Fragment.visitCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.visits_progressBar.setVisibility(View.GONE);
                             Analytics_Fragment.visitCount.setText(numberOfViews);
-                            //Log.i("Visitors",""+numberOfViews);
                         }
                         if(Analytics_Fragment.visitorsCount != null && Analytics_Fragment.visitors_progressBar!=null)
                         {
@@ -115,7 +115,7 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
             if(sessionManager.getISEnterprise().equals("true"))
             {
                 String queryURL = Constants.NOW_FLOATS_API_URL+"/Dashboard/v1/"+
-                        sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID)+"/summary?clientId="+Constants.clientId+
+                        sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"/summary?clientId="+Constants.clientId+
                         "&fpId="+sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID)+"&scope=1";
                 website = new URI(queryURL);
             } else {

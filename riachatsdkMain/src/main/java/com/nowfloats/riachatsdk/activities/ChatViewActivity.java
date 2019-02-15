@@ -141,6 +141,9 @@ import static android.view.View.INVISIBLE;
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
         IConfirmationCallback, IChatAnimCallback, FacebookHandler.FacebookCallbacks {
 
+    private boolean isTagCheck = false;
+    private String suggestedFP;
+
     private Toolbar toolbar;
 
     private RecyclerView rvChatData, rvButtonsContainer;
@@ -415,6 +418,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void onClick(View v) {
                 if (!etChatInput.getText().toString().trim().equals("") && mNextNodeId != null && !mNextNodeId.equals("-1")
                         && isValidInput(etChatInput.getText().toString().trim())) {
+
                     hideSoftKeyboard();
                     StringBuffer chatText = new StringBuffer("");
                     if (mCurrButton.getPrefixText() != null) {
@@ -426,6 +430,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     }
 
                     if (!mCurrButton.isPostToChat()) {
+
                         if (rlButtons != null)
                             rlButtons.setVisibility(View.GONE);
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
@@ -435,6 +440,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                     etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
+
                         } else {
                             ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
@@ -445,6 +451,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         mButtonList.clear();
                         mButtonsAdapter.notifyDataSetChangedRequest();
                     } else {
+
                         replyToRia(Constants.SectionType.TYPE_TEXT, chatText.toString());
                         if (mCurrVarName != null) {
                             if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
@@ -452,7 +459,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                         etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
+
                             } else {
+
                                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
                                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
@@ -2010,14 +2019,18 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         }
         urlBuilder.append("deviceId=" + DeviceDetails.getDeviceId(this));
-        Log.e("urlBuilder", urlBuilder.toString());
+
+
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlBuilder.toString(), null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
                         Log.d("ChatView", response.toString());
                         Iterator<?> keys = response.keys();
-                        while (keys.hasNext()) {
+                        while (keys.hasNext())
+                        {
                             String key = (String) keys.next();
 
                             if (key.equalsIgnoreCase(KEY_FP_CREATION_STATUSCODE)) {
@@ -2026,6 +2039,16 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 try {
                                     mDataMap.put("[~" + key + "]", response.getString(key));
                                     //Log.d("Hello", mDataMap.toString());
+
+                                    if((key.equals("SUGGESTED_TAG")) && !response.getString(key).isEmpty())
+                                    {
+                                        isTagCheck = true;
+                                        suggestedFP = response.getString(key);
+
+                                        //mDataMap.put("[~" + "TAG" + "]", response.getString(key));
+                                        //mDataMap.put("[~" + "IsFPTagAvailable" + "]", "true");
+                                    }
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     //TODO:Add unable to process in the sectionList
@@ -2053,7 +2076,29 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 if (TextUtils.isEmpty(response.optString(KEY_NEXT_NODE_ID))) {
                                     showNextNode(node.getNextNodeId());
                                 } else {
-                                    showNextNode(response.getString(KEY_NEXT_NODE_ID));
+                                    //showNextNode(response.getString(KEY_NEXT_NODE_ID));
+
+                                    if(response.has("IsFPTagAvailable") && response.getBoolean("IsFPTagAvailable"))
+                                    {
+                                        suggestedFP = response.getString("TAG");
+                                        mDataMap.put("[~" + "TAG" + "]", suggestedFP);
+
+                                        if(isTagCheck)
+                                        {
+                                            isTagCheck = false;
+                                            showNextNode(null);
+                                        }
+
+                                        else
+                                        {
+                                            showNextNode(response.getString(KEY_NEXT_NODE_ID));
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        showNextNode(response.getString(KEY_NEXT_NODE_ID));
+                                    }
                                 }
 
 
@@ -2084,7 +2129,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void handlePostRequest(final RiaCardModel node) {
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, node.getApiUrl() +
                 "?deviceId=" + DeviceDetails.getDeviceId(this),
@@ -2191,6 +2235,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, mButton.getId(), mButton.getButtonText(), null,
                         data[0], mButton.getButtonType(), appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
+
             } else {
 
                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
@@ -2200,6 +2245,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
         if (TextUtils.isEmpty(data[1])) {
+
             switch (confirmationType) {
                 case Constants.ConfirmationType.SUBMIT_FORM:
 
@@ -2221,10 +2267,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     break;
             }
         } else {
+
             RiaCardModel nextNode = getNextNode(data[1]);
             if (nextNode != null && (nextNode.getNodeType().equals(Constants.NodeType.TYPE_CARD) && nextNode.getPlacement().equals("Outgoing")) ||
                     nextNode.getNodeType().equals(Constants.NodeType.TYPE_API_CALL)) {
+
                 if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
+
                 /*if (mAutoComplDataHash == null || !TextUtils.isEmpty(mAutoComplDataHash.get(etChatInput.getText().toString().trim()))) {
                     mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
                 } else {
@@ -2244,6 +2293,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //                        break;
 //                }
             } else {
+
                 mSectionList.remove(mSectionList.size() - 1);
                 mAdapter.notifyItemRemoved(mSectionList.size());
 //                switch (confirmationType) {
@@ -2257,8 +2307,27 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
 
             switch (confirmationType) {
+
+                case Constants.ConfirmationType.FP_TAG_EDIT:
+
+                    isTagCheck = false;
+
+                case Constants.ConfirmationType.FP_TAG_CONFIRM:
+
+                    if(isTagCheck)
+                    {
+                        RiaCardModel model = getNextNode("58daf4c4c7d8bf2c80901c9c");
+                        //model.setApiUrl("https://onboarding-boost.withfloats.com/plugin/api/Service/CheckFPTagAvailability");
+                        model.getRequiredVariables().add("TAG");
+                        mDataMap.put("[~" + "TAG" + "]", suggestedFP);
+
+                        handleGetRequest(model);
+                    }
+
                 case Constants.ConfirmationType.BIZ_NAME:
+
                 case Constants.ConfirmationType.OTP:
+
                 case Constants.ConfirmationType.FB_PAGE:
                     showNextNode(data[1]);
                     break;
