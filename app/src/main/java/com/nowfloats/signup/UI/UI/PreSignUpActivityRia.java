@@ -864,6 +864,11 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
             mBundle = mBundle.getBundle("mBundle");
 
+            if(mBundle == null)
+            {
+                return;
+            }
+
             if (!TextUtils.isEmpty(mBundle.getString(Save_Name))) {
                 businessNameEditText.setText(mBundle.getString(Save_Name, ""));
 
@@ -896,17 +901,17 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             if (!TextUtils.isEmpty(mBundle.getString(Save_Phone)))
             {
                 data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
-                phoneEditText.setText(mBundle.getString(Save_Phone_Code, "") + " - " +
-                        mBundle.getString(Save_Phone, ""));
+                phoneEditText.setText(String.valueOf(mBundle.getString(Save_Phone_Code, "") + " - " +
+                        mBundle.getString(Save_Phone, "")));
                 data_phone = mBundle.getString(Save_Phone, "");
             }
 
-            else if (mBundle.getString(Save_Otp).equalsIgnoreCase("true")) {
+            else if (mBundle.getString(Save_Otp, "").equalsIgnoreCase("true")) {
 
                 ivPhoneStatus.setImageResource(R.drawable.green_check);
                 data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
-                phoneEditText.setText(mBundle.getString(Save_Phone_Code, "") + " - " +
-                        mBundle.getString(Save_Phone, ""));
+                phoneEditText.setText(String.valueOf(mBundle.getString(Save_Phone_Code, "") + " - " +
+                        mBundle.getString(Save_Phone, "")));
                 data_phone = mBundle.getString(Save_Phone, "");
 
                 phoneEditText.setFocusable(false);
@@ -941,26 +946,18 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 etPinCode.setText(mBundle.getString(Save_Pin_Code, ""));
             }
 
-            Log.d("WEBSITE_VALUE", "Website 0 : " + mBundle.getString(Save_Website_Address, ""));
-            Log.d("WEBSITE_VALUE", "Website 0 : " + mBundle.getString(Save_IS_FP_AVAILABLE, ""));
-
             if (TextUtils.isEmpty(mBundle.getString(Save_Website_Address)) || TextUtils.isEmpty(mBundle.getString(Save_IS_FP_AVAILABLE)))
             {
                 if (ivWebsiteStatus.getVisibility() == View.VISIBLE) {
                     ivWebsiteStatus.setVisibility(View.GONE);
                 }
-
-                Log.d("WEBSITE_VALUE", "Website 1 : " + mBundle.getString(Save_Website_Address, ""));
-
-            } else if (mBundle.getString(Save_IS_FP_AVAILABLE).equalsIgnoreCase("true")) {
+            } else if (mBundle.getString(Save_IS_FP_AVAILABLE, "").equalsIgnoreCase("true")) {
                 if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
                     ivWebsiteStatus.setVisibility(View.VISIBLE);
                 }
                 ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
                 fpTag = mBundle.getString(Save_Website_Address, "");
                 etWebsiteAddress.setText(mBundle.getString(Save_Website_Address, ""));
-
-                Log.d("WEBSITE_VALUE", "Website 2 : " + mBundle.getString(Save_Website_Address, ""));
             } else {
                 if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
                     ivWebsiteStatus.setVisibility(View.VISIBLE);
@@ -969,8 +966,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 API_Layer_Signup.getTag(activity, businessNameEditText.getText().toString(),
                         countryEditText.getText().toString(), cityEditText.getText().toString(),
                         businessCategoryEditText.getText().toString());
-
-                Log.d("WEBSITE_VALUE", "Website 3 : " + mBundle.getString(Save_Website_Address, ""));
             }
 
             etWebsiteAddress.setClickable(true);

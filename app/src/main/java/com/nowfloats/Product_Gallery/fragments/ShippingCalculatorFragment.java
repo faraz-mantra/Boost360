@@ -38,7 +38,7 @@ import retrofit.client.Response;
 
 public class ShippingCalculatorFragment extends DialogFragment implements TextWatcher{
 
-    EditText etLength, etWidth, etHeight, etWeight;
+    EditText etLength, etWidth, etHeight, etWeight/*, etShippingCharges, etGST*/;
 
     ProgressDialog progressDialog;
 
@@ -96,6 +96,9 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         etHeight = (EditText) view.findViewById(R.id.et_height);
         etWeight = (EditText) view.findViewById(R.id.et_weight);
 
+        //etShippingCharges = view.findViewById(R.id.et_shipping_charge);
+        //etGST = view.findViewById(R.id.et_gst_charge);
+
         tvShippingCharge = (TextView) view.findViewById(R.id.tv_shipping_charge);
 
         progressDialog = new ProgressDialog(getActivity());
@@ -137,7 +140,11 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             etHeight.setText(mShippingMetric.getHeight()+"");
             etWidth.setText(mShippingMetric.getWidth()+"");
             etWeight.setText(mShippingMetric.getWeight()+"");
+
             tvShippingCharge.setText("INR " + mShippingMetric.getShippingCharge());
+
+            //etShippingCharges.setText(String.valueOf(mShippingMetric.getShippingCharge()));
+            //etGST.setText(String.valueOf(mShippingMetric.getGstCharge()));
         }
 
         etLength.addTextChangedListener(this);
@@ -145,6 +152,8 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         etWidth.addTextChangedListener(this);
         etWeight.addTextChangedListener(this);
 
+        //etShippingCharges.addTextChangedListener(this);
+        //etGST.addTextChangedListener(this);
 
         return view;
     }
@@ -158,7 +167,11 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         shippingMetric.setWidth(etWidth.getText().toString().trim());
         shippingMetric.setWeight(etWeight.getText().toString().trim());
         shippingMetric.setLength(etLength.getText().toString().trim());
+
         shippingMetric.setShippingCharge(mShippingCharge);
+
+        //shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
+        //shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
 
         update.setQuery(String.format("{product_id:'%s'}", mShippingMetric.getProductId()));
         update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s}}",
@@ -166,7 +179,8 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                 shippingMetric.getWidth(),
                 shippingMetric.getWeight(),
                 shippingMetric.getHeight(),
-                shippingMetric.getShippingCharge().toString()));
+                shippingMetric.getShippingCharge().toString()));/*,
+                shippingMetric.getGstCharge().toString()));*/
         update.setMulti(true);
         Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .updateProductMetrics(update, new Callback<String>() {
@@ -192,6 +206,10 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         shippingMetric.setWeight(etWeight.getText().toString().trim());
         shippingMetric.setLength(etLength.getText().toString().trim());
         shippingMetric.setShippingCharge(mShippingCharge);
+
+        //shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
+        //shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
+
         mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.ADD);
         ShippingCalculatorFragment.this.dismiss();
     }

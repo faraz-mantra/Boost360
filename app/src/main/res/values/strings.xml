@@ -1231,7 +1231,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_product_descr">Product Description</string>
     <string name="product_detail_currency">Select Currency</string>
     <string name="product_detail_product_price">Product Price</string>
-    <string name="product_details_discount">Discount (If Any)</string>
+    <string name="product_details_discount">Discount Amount (If Any)</string>
     <string name="product_detail_online_link">Buy Online Link (If Any)</string>
     <string name="product_detail_priority">Select Priority</string>
     <string name="product_details_shipment_dur">Shipment Duration In Days</string>
@@ -1591,6 +1591,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="gst_identification_number">GST Identification Number</string>
     <string name="payment_details">Bank Account Details</string>
     <string name="product_shipping_charges">Shipping Charges(In INR)</string>
+    <string name="product_gst_charges">GST(%)</string>
     <string name="product_transaction_charges">Transaction Charges (In INR)</string>
     <string name="product_net_amount">Net Amount (In INR)</string>
     <string name="assured_purchase_note">Note: Following fields are applicable only in case if assured purchase is enabled otherwise please ignore.</string>
