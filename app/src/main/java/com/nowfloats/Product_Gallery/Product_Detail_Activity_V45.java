@@ -45,6 +45,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
@@ -68,6 +69,7 @@ import com.nowfloats.Product_Gallery.Service.ProductImageUploadV45;
 import com.nowfloats.Product_Gallery.fragments.ShippingCalculatorFragment;
 import com.nowfloats.Product_Gallery.widgets.NonScrollListView;
 import com.nowfloats.Product_Gallery.widgets.TagView;
+import com.nowfloats.helper.ui.BaseActivity;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.riachatsdk.utils.Utils;
@@ -107,16 +109,16 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Created by guru on 09-06-2015.
  */
-public class Product_Detail_Activity_V45 extends AppCompatActivity implements ShippingCalculatorFragment.ProductMetricCallBack {
+public class Product_Detail_Activity_V45 extends BaseActivity implements ShippingCalculatorFragment.ProductMetricCallBack {
     private static final double NF_ASSURANCE_CHARGE = 9.0;
     public Toolbar toolbar;
     public ImageView save;
     public ProductListModel product_data;
-    MaterialEditText productName, productDesc, productCurrency, productPrice, productDiscount, productLink, etShipmentDuration,
-            etPriority, etShippingCharge, etTransactionCharge, etAvailableUnits, etNetAmount;
-    TextView tvApEnabledText;
+    MaterialEditText productName, productDesc, productCurrency, productPrice, productDiscount, productLink; /*etShipmentDuration,*/
+            /*etPriority;*/ /*etShippingCharge,*/ /*etTransactionCharge,*/ /*etAvailableUnits*//*, etNetAmount*/;
+    //TextView tvApEnabledText;
     ImageView productImage;
-    Switch switchView, svFreeShipment;
+    Switch switchView/*, svFreeShipment*/;
     NonScrollListView lvInventoryData;
     private String currencyType = "";
     public UserSessionManager session;
@@ -155,7 +157,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.product_detail_v45);
+        setContentView(R.layout.product_detail_v46);
         toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
         setSupportActionBar(toolbar);
 
@@ -172,7 +174,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         switchView = (Switch) findViewById(R.id.switchView);
-        svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
+        //svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         switchView.setChecked(true);
 
         mInventoryAdapter = new InventoryListAdapter(this, R.layout.inventory_list_row_layout, mInventoryWebActionList);
@@ -191,14 +193,14 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         productPrice = (MaterialEditText) findViewById(R.id.product_retail_price);
         productDiscount = (MaterialEditText) findViewById(R.id.product_disc_price);
         productLink = (MaterialEditText) findViewById(R.id.product_link);
-        etShipmentDuration = (MaterialEditText) findViewById(R.id.et_shipping_days);
-        etPriority = (MaterialEditText) findViewById(R.id.product_priority);
-        etShippingCharge = (MaterialEditText) findViewById(R.id.et_shipping_charge);
-        etTransactionCharge = (MaterialEditText) findViewById(R.id.et_transaction_charge);
-        etAvailableUnits = (MaterialEditText) findViewById(R.id.et_available_unit);
-        etNetAmount = (MaterialEditText) findViewById(R.id.et_net_amount);
+        //etShipmentDuration = (MaterialEditText) findViewById(R.id.et_shipping_days);
+        //etPriority = (MaterialEditText) findViewById(R.id.product_priority);
+        //etShippingCharge = (MaterialEditText) findViewById(R.id.et_shipping_charge);
+        //etTransactionCharge = (MaterialEditText) findViewById(R.id.et_transaction_charge);
+        //etAvailableUnits = (MaterialEditText) findViewById(R.id.et_available_unit);
+        //etNetAmount = (MaterialEditText) findViewById(R.id.et_net_amount);
 
-        tvApEnabledText = (TextView) findViewById(R.id.tv_is_ap_enabled);
+        //tvApEnabledText = (TextView) findViewById(R.id.tv_is_ap_enabled);
 
         Button deleteProduct = (Button) findViewById(R.id.delete_product);
         findViewById(R.id.btn_calculate_shipping_charges).setOnClickListener(new View.OnClickListener() {
@@ -222,12 +224,12 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 showCurrencyList(activity, array);
             }
         });
-        etPriority.setOnClickListener(new View.OnClickListener() {
+        /*etPriority.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPriorityList();
             }
-        });
+        });*/
 
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,7 +242,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             mIsApEnabled = getIntent().getBooleanExtra("isApEnabled", false);
         }
 
-        if (mIsApEnabled) {
+        Log.d("IS_ASSURED_PURCHASE", "" + mIsApEnabled);
+
+        /*if (mIsApEnabled) {
             etShipmentDuration.setEnabled(false);
             svFreeShipment.setEnabled(false);
             productLink.setEnabled(false);
@@ -251,7 +255,8 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         } else {
             tvApEnabledText.setText("**Assured purchase is currently disabled");
             tvApEnabledText.setTextColor(Color.RED);
-        }
+        }*/
+
         enableRealTimePriceUpdate();
         if (getIntent().hasExtra("product")) {
 //            product_data = getIntent().getExtras().getParcelable("product");
@@ -319,7 +324,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                         }
                     }
                     //freeShipment
-                    String freeShipment = product_data.IsFreeShipmentAvailable;
+                    /*String freeShipment = product_data.IsFreeShipmentAvailable;
                     if (freeShipment != null && freeShipment.trim().length() > 0 && !freeShipment.equals("0")) {
                         if (mIsApEnabled) {
                             svFreeShipment.setChecked(true);
@@ -332,7 +337,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                                 mIsFreeShipment = false;
                             }
                         }
-                    }
+                    }*/
 
                     //link
                     String link = product_data.BuyOnlineLink;
@@ -340,16 +345,16 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                         productLink.setText(link);
                     textEditListener(productLink);
                     //shipment duration
-                    String shipmentDuration = product_data.ShipmentDuration;
+                    /*String shipmentDuration = product_data.ShipmentDuration;
                     if (shipmentDuration != null && shipmentDuration.trim().length() > 0 && !shipmentDuration.equals("0"))
                         etShipmentDuration.setText(shipmentDuration);
-                    textEditListener(etShipmentDuration);
+                    textEditListener(etShipmentDuration);*/
 
-                    int availableUnit = product_data.availableUnits;
+                    /*int availableUnit = product_data.availableUnits;
                     if (availableUnit != -1)
                         etAvailableUnits.setText(String.valueOf(availableUnit));
 
-                    textEditListener(etAvailableUnits);
+                    textEditListener(etAvailableUnits);*/
                     //Currency Code
                     String currencyCode = product_data.CurrencyCode;
                     if (currencyCode != null && currencyCode.trim().length() > 0 && !currencyCode.equals("0"))
@@ -357,7 +362,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                     //textEditListener(productCurrency);
 
                     //priority
-                    String priority = product_data.Priority;
+                    /*String priority = product_data.Priority;
                     mPriorityVal = Integer.parseInt(priority);
                     switch (priority) {
                         case "1":
@@ -372,19 +377,24 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                         case "3":
                             etPriority.setText(mPriorityList[3]);
                             break;
-                    }
+                    }*/
 
 
                     //update onclick listener
                     save.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
+                            Log.d("SAVE_MATRIX", "I AM HERE - 1");
+
                             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                                 Methods.showFeatureNotAvailDialog(Product_Detail_Activity_V45.this);
                             } else {
                                 MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATE, null);
                                 try {
-                                    if (mIsApEnabled && (TextUtils.isEmpty(etNetAmount.getText().toString().trim()) ||
+
+                                    Log.d("SAVE_MATRIX", "I AM HERE - 2");
+                                    /*if (mIsApEnabled && (TextUtils.isEmpty(etNetAmount.getText().toString().trim()) ||
                                             TextUtils.isEmpty(etShippingCharge.getText().toString().trim()) ||
                                             TextUtils.isEmpty(etTransactionCharge.getText().toString().trim()))) {
                                         Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "Please enter the shipping metrices");
@@ -393,7 +403,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                                             < Double.parseDouble(etShippingCharge.getText().toString().trim())) {
                                         Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "NetAmount can't be less than Shipping charge");
                                         return;
-                                    }
+                                    }*/
                                     materialProgress = new MaterialDialog.Builder(activity)
                                             .widgetColorRes(R.color.accentColor)
                                             .content(getString(R.string.updating))
@@ -521,7 +531,10 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mIsApEnabled && (TextUtils.isEmpty(etNetAmount.getText().toString().trim()) ||
+
+                    Log.d("SAVE_MATRIX", "I AM HERE - 3");
+
+                    /*if (mIsApEnabled && (TextUtils.isEmpty(etNetAmount.getText().toString().trim()) ||
                             TextUtils.isEmpty(etShippingCharge.getText().toString().trim()) ||
                             TextUtils.isEmpty(etTransactionCharge.getText().toString().trim()))) {
                         Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "Please enter the shipping metrices");
@@ -531,7 +544,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                             ) {
                         Methods.showSnackBarNegative(Product_Detail_Activity_V45.this, "NetAmount can't be less than Shipping charge");
                         return;
-                    }
+                    }*/
                     materialProgress = new MaterialDialog.Builder(activity)
                             .widgetColorRes(R.color.accentColor)
                             .content(getString(R.string.loading))
@@ -561,6 +574,8 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                                     }
                                     Log.i("PRODUCT ID__", "" + productId);
 
+                                    mShippingMetrix.setProductId(productId);
+                                    addShippingMetric(mShippingMetrix, true);
 
                                     if (createKeywordList != null && createKeywordList.size() > 0) {
                                         keyWordCount = 0;
@@ -623,13 +638,13 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 else switchValue = "false";
             }
         });
-        svFreeShipment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*svFreeShipment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mIsFreeShipment = isChecked;
                 save.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         webAction = new WebAction.WebActionBuilder()
                 .setAuthHeader("58ede4d4ee786c1604f6c535")
                 .build();
@@ -873,7 +888,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
 
             @Override
             public void afterTextChanged(Editable s) {
-                updateNetAmount();
+                //updateNetAmount();
             }
         });
 
@@ -890,12 +905,12 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
 
             @Override
             public void afterTextChanged(Editable s) {
-                updateNetAmount();
+                //updateNetAmount();
             }
         });
     }
 
-    private void updateNetAmount() {
+    /*private void updateNetAmount() {
 
         if (mShippingMetrix != null) {
             String price = TextUtils.isEmpty(productPrice.getText().toString().trim()) ? "0" : productPrice.getText().toString().trim();
@@ -906,23 +921,28 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             etTransactionCharge.setText(transactionCharge + "");
             etNetAmount.setText(netAmount + "");
         }
-    }
+    }*/
 
     private void getShippingMetrix(String productId) {
+
+        Log.d("SHIPPING_DETAILS", "PRO-" + productId);
         final ProgressDialog pd = ProgressDialog.show(this, "", "Please Wait...");
         Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .getShippingMetric(String.format("{product_id:'%s'}", productId), new Callback<WebActionModel<ShippingMetricsModel>>() {
                     @Override
                     public void success(WebActionModel<ShippingMetricsModel> shippingMetricsModelWebActionModel, Response response) {
                         pd.dismiss();
+
+                        Log.d("SHIPPING_DETAILS", "PRO-" + shippingMetricsModelWebActionModel.getData().size());
+
                         if (shippingMetricsModelWebActionModel.getData().size() > 0) {
                             mShippingMetrix = shippingMetricsModelWebActionModel.getData().get(0);
-                            String discount = TextUtils.isEmpty(product_data.DiscountAmount) ? "0" : product_data.DiscountAmount;
-                            etShippingCharge.setText(mShippingMetrix.getShippingCharge() + "");
-                            double transactionCharge = ((Double.parseDouble(product_data.Price) - Double.parseDouble(discount)) * NF_ASSURANCE_CHARGE) / 100.0;
-                            double netAmount = ((Double.parseDouble(product_data.Price) - (Double.parseDouble(discount) + transactionCharge + mShippingMetrix.getShippingCharge())) * 100.0) / 100.0;
-                            etTransactionCharge.setText(transactionCharge + "");
-                            etNetAmount.setText(netAmount + "");
+                            //String discount = TextUtils.isEmpty(product_data.DiscountAmount) ? "0" : product_data.DiscountAmount;
+                            //etShippingCharge.setText(mShippingMetrix.getShippingCharge() + "");
+                            //double transactionCharge = ((Double.parseDouble(product_data.Price) - Double.parseDouble(discount)) * NF_ASSURANCE_CHARGE) / 100.0;
+                            //double netAmount = ((Double.parseDouble(product_data.Price) - (Double.parseDouble(discount) + transactionCharge + mShippingMetrix.getShippingCharge())) * 100.0) / 100.0;
+                            //etTransactionCharge.setText(transactionCharge + "");
+                            //etNetAmount.setText(netAmount + "");
                         }
                     }
 
@@ -934,7 +954,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 });
     }
 
-    private void showPriorityList() {
+    /*private void showPriorityList() {
         String priorityVal = etPriority.getText().toString().trim();
         int index = 0;
         if (!Util.isNullOrEmpty(priorityVal)) {
@@ -972,7 +992,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                         return true;
                     }
                 }).show();
-    }
+    }*/
 
     private boolean ValidateFields(boolean keyCheck) {
         boolean flag = true;
@@ -1010,11 +1030,11 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             values.put(desc, "");
         }
 
-        if (etShipmentDuration != null && etShipmentDuration.getText().toString().trim().length() > 0) {
+        /*if (etShipmentDuration != null && etShipmentDuration.getText().toString().trim().length() > 0) {
             values.put(ship, etShipmentDuration.getText().toString());
         } else {
             values.put(ship, null);
-        }
+        }*/
 
         if (productName != null && productName.getText().toString().trim().length() > 0) {
             values.put(name, productName.getText().toString().trim());
@@ -1054,7 +1074,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             }
         }
 
-        if (etAvailableUnits != null && etAvailableUnits.getText().toString().trim().length() > 0) {
+        /*if (etAvailableUnits != null && etAvailableUnits.getText().toString().trim().length() > 0) {
             values.put(availableUnits, etAvailableUnits.getText().toString());
         } else {
             values.put(availableUnits, "-1");
@@ -1063,7 +1083,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 Methods.showSnackBarNegative(activity, "Please enter product available units");
                 flag = false;
             }
-        }
+        }*/
         System.out.println(values);
 
         return flag;
@@ -1491,17 +1511,23 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
 
     @Override
     public void onProductMetricCalculated(ShippingMetricsModel shippingMetricsModel, ShippingCalculatorFragment.ShippingAddOrUpdate val) {
-        String price = TextUtils.isEmpty(productPrice.getText().toString().trim()) ? "0" : productPrice.getText().toString().trim();
-        String discount = TextUtils.isEmpty(productDiscount.getText().toString().trim()) ? "0" : productPrice.getText().toString().trim();
-        double transactionCharge = ((Double.parseDouble(price) - Double.parseDouble(price)) * NF_ASSURANCE_CHARGE) / 100.0;
-        double netAmount = ((Double.parseDouble(price) - (Double.parseDouble(discount) + transactionCharge + shippingMetricsModel.getShippingCharge())) * 100.0) / 100.0;
-        if (netAmount < shippingMetricsModel.getShippingCharge()) {
+
+        Log.d("SAVE_MATRIX", "I AM HERE");
+
+        //String price = TextUtils.isEmpty(productPrice.getText().toString().trim()) ? "0" : productPrice.getText().toString().trim();
+        //String discount = TextUtils.isEmpty(productDiscount.getText().toString().trim()) ? "0" : productPrice.getText().toString().trim();
+        //double transactionCharge = ((Double.parseDouble(price) - Double.parseDouble(price)) * NF_ASSURANCE_CHARGE) / 100.0;
+        //double netAmount = ((Double.parseDouble(price) - (Double.parseDouble(discount) + transactionCharge + shippingMetricsModel.getShippingCharge())) * 100.0) / 100.0;
+
+        /*if (netAmount < shippingMetricsModel.getShippingCharge()) {
             Methods.showSnackBarNegative(this, "NetAmount can't be less than Shipping Charge");
             return;
-        }
-        etShippingCharge.setText(shippingMetricsModel.getShippingCharge() + "");
-        etTransactionCharge.setText(transactionCharge + "");
-        etNetAmount.setText(netAmount + "");
+        }*/
+
+        //etShippingCharge.setText(shippingMetricsModel.getShippingCharge() + "");
+        //etTransactionCharge.setText(transactionCharge + "");
+        //etNetAmount.setText(netAmount + "");
+
         if (mShippingMetrix == null) {
             mShippingMetrix = new ShippingMetricsModel();
         }
@@ -1510,12 +1536,18 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
         }
         mShippingMetrix.setMerchantId(session.getFPID());
         mShippingMetrix.setShippingCharge(shippingMetricsModel.getShippingCharge());
+        mShippingMetrix.setGstCharge(shippingMetricsModel.getGstCharge());
         mShippingMetrix.setLength(shippingMetricsModel.getLength());
         mShippingMetrix.setHeight(shippingMetricsModel.getHeight());
         mShippingMetrix.setWeight(shippingMetricsModel.getWeight());
         mShippingMetrix.setWidth(shippingMetricsModel.getWidth());
         if (val == ShippingCalculatorFragment.ShippingAddOrUpdate.ADD && product_data != null) {
             addShippingMetric(mShippingMetrix, true);
+        }
+
+        else if (val == ShippingCalculatorFragment.ShippingAddOrUpdate.UPDATE && product_data != null)
+        {
+            Methods.showSnackBarPositive(activity, "Shipping Matrix Updated Successfully");
         }
     }
 
@@ -1533,6 +1565,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                 .addProductMetrics(waModel, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+
                         materialProgress.dismiss();
                         if (!isFromcallBack) {
                             uploadProductImage(mShippingMetrix.getProductId());
@@ -1541,6 +1574,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
 
                     @Override
                     public void failure(RetrofitError error) {
+
                         materialProgress.dismiss();
                         if (!isFromcallBack) {
                             uploadProductImage(mShippingMetrix.getProductId());

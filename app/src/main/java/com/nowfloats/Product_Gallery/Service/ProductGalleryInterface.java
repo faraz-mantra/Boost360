@@ -24,6 +24,7 @@ import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Query;
 import retrofit.http.QueryMap;
+import retrofit2.Call;
 
 /**
  * Created by guru on 08-06-2015.

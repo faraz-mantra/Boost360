@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +40,13 @@ import retrofit.client.Response;
 
 public class ShippingCalculatorFragment extends DialogFragment implements TextWatcher{
 
-    EditText etLength, etWidth, etHeight, etWeight/*, etShippingCharges, etGST*/;
+    EditText etLength, etWidth, etHeight, etWeight;
+
+    /**
+     * Added Shipping and GST
+     */
+    EditText etShippingCharges, etGST;
+    Switch switchHidePrice;
 
     ProgressDialog progressDialog;
 
@@ -89,15 +97,19 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shipping_calculator, container, false);
+        View view = inflater.inflate(R.layout.fragment_shipping_calculator_v1, container, false);
 
         etLength = (EditText) view.findViewById(R.id.et_length);
         etWidth = (EditText) view.findViewById(R.id.et_width);
         etHeight = (EditText) view.findViewById(R.id.et_height);
         etWeight = (EditText) view.findViewById(R.id.et_weight);
 
-        //etShippingCharges = view.findViewById(R.id.et_shipping_charge);
-        //etGST = view.findViewById(R.id.et_gst_charge);
+        /**
+         * Newly Added
+         */
+        etShippingCharges = view.findViewById(R.id.et_shipping_charge);
+        etGST = view.findViewById(R.id.et_gst_charge);
+        switchHidePrice = view.findViewById(R.id.switch_hide_price);
 
         tvShippingCharge = (TextView) view.findViewById(R.id.tv_shipping_charge);
 
@@ -143,8 +155,9 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
             tvShippingCharge.setText("INR " + mShippingMetric.getShippingCharge());
 
-            //etShippingCharges.setText(String.valueOf(mShippingMetric.getShippingCharge()));
-            //etGST.setText(String.valueOf(mShippingMetric.getGstCharge()));
+            etShippingCharges.setText(String.valueOf(mShippingMetric.getShippingCharge()));
+            etGST.setText(String.valueOf(mShippingMetric.getGstCharge()));
+            switchHidePrice.setChecked(mShippingMetric.getHidePrice());
         }
 
         etLength.addTextChangedListener(this);
@@ -158,7 +171,38 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         return view;
     }
 
-    private void updateMetric() {
+    private void updateMetric()
+    {
+        if(TextUtils.isEmpty(etLength.getText().toString().trim())){
+            etLength.setError("Length is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
+            etWidth.setError("Width is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
+            etHeight.setError("Height is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
+            etWeight.setError("Weight is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(String.valueOf(etShippingCharges.getText().toString().trim()))){
+            etShippingCharges.setError("Shipping Charge is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(String.valueOf(etGST.getText().toString().trim()))){
+            etGST.setError("GST is required");
+            return;
+        }
+
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
         WaUpdateDataModel update = new WaUpdateDataModel();
@@ -168,31 +212,38 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         shippingMetric.setWeight(etWeight.getText().toString().trim());
         shippingMetric.setLength(etLength.getText().toString().trim());
 
-        shippingMetric.setShippingCharge(mShippingCharge);
-
-        //shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
-        //shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
+        shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
+        shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
+        shippingMetric.setHidePrice(switchHidePrice.isChecked());
 
         update.setQuery(String.format("{product_id:'%s'}", mShippingMetric.getProductId()));
-        update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s}}",
+        update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
                 shippingMetric.getLength(),
                 shippingMetric.getWidth(),
                 shippingMetric.getWeight(),
                 shippingMetric.getHeight(),
-                shippingMetric.getShippingCharge().toString()));/*,
-                shippingMetric.getGstCharge().toString()));*/
+                shippingMetric.getShippingCharge().toString(),
+                shippingMetric.getGstCharge().toString(), shippingMetric.getHidePrice()));
         update.setMulti(true);
         Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .updateProductMetrics(update, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
                         progressDialog.dismiss();
-                        ShippingCalculatorFragment.this.dismiss();
-                        mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
+
+                        Log.d("METRIX_UPDATE", "Success - " + response.getBody());
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
+
+                        if(error.getResponse().getStatus() == 200)
+                        {
+                            ShippingCalculatorFragment.this.dismiss();
+                            mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
+                        }
+
+                        Log.d("METRIX_UPDATE", "Error - " + error.getResponse().getStatus());
                         progressDialog.dismiss();
                     }
                 });
@@ -200,15 +251,46 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
     }
 
     private void addMetric() {
+
         final ShippingMetricsModel shippingMetric = new ShippingMetricsModel();
+
+        if(TextUtils.isEmpty(etLength.getText().toString().trim())){
+            etLength.setError("Length is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
+            etWidth.setError("Width is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
+            etHeight.setError("Height is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
+            etWeight.setError("Weight is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(String.valueOf(etShippingCharges.getText().toString().trim()))){
+            etShippingCharges.setError("Shipping Charge is required");
+            return;
+        }
+
+        if(TextUtils.isEmpty(String.valueOf(etGST.getText().toString().trim()))){
+            etGST.setError("GST is required");
+            return;
+        }
+
         shippingMetric.setHeight(etHeight.getText().toString().trim());
         shippingMetric.setWidth(etWidth.getText().toString().trim());
         shippingMetric.setWeight(etWeight.getText().toString().trim());
         shippingMetric.setLength(etLength.getText().toString().trim());
-        shippingMetric.setShippingCharge(mShippingCharge);
-
-        //shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
-        //shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
+        shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
+        shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
+        shippingMetric.setHidePrice(switchHidePrice.isChecked());
 
         mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.ADD);
         ShippingCalculatorFragment.this.dismiss();
@@ -257,7 +339,6 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                         mShippingCharge = shippingCharge.Result;
                         btnCalculateShippingCharge.setVisibility(View.GONE);
                         btnSaveMetrics.setVisibility(View.VISIBLE);
-
                     }
 
                     @Override
@@ -281,10 +362,20 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
     @Override
     public void afterTextChanged(Editable s) {
-        btnSaveMetrics.setVisibility(View.GONE);
-        btnCalculateShippingCharge.setVisibility(View.VISIBLE);
+        //btnSaveMetrics.setVisibility(View.GONE);
+        //btnCalculateShippingCharge.setVisibility(View.VISIBLE);
 
     }
+
+
+    /**
+     * Check weather all input fields are valid
+     * @return
+     */
+    /*private boolean isValidForm()
+    {
+
+    }*/
 
     public interface ProductMetricCallBack{
         void onProductMetricCalculated(ShippingMetricsModel shippingMetricsModel, ShippingAddOrUpdate val);

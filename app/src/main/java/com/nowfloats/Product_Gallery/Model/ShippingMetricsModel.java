@@ -29,6 +29,9 @@ public class ShippingMetricsModel implements Parcelable{
     @SerializedName("shipping_charge")
     @Expose
     private Double shippingCharge;
+    @SerializedName("gst_slab")
+    @Expose
+    private Double gstCharge;
     @SerializedName("product_id")
     @Expose
     private String productId;
@@ -53,6 +56,9 @@ public class ShippingMetricsModel implements Parcelable{
     @SerializedName("IsArchived")
     @Expose
     private Boolean isArchived;
+    @SerializedName("hide_price")
+    @Expose
+    private Boolean isHidePrice = false;
 
     public ShippingMetricsModel(){
 
@@ -216,5 +222,21 @@ public class ShippingMetricsModel implements Parcelable{
 
     public void setIsArchived(Boolean isArchived) {
         this.isArchived = isArchived;
+    }
+
+    public Double getGstCharge() {
+        return gstCharge;
+    }
+
+    public void setGstCharge(Double gstCharge) {
+        this.gstCharge = gstCharge;
+    }
+
+    public Boolean getHidePrice() {
+        return isHidePrice;
+    }
+
+    public void setHidePrice(Boolean hidePrice) {
+        isHidePrice = hidePrice;
     }
 }
