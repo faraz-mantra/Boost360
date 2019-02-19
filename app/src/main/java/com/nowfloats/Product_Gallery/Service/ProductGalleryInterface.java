@@ -8,6 +8,8 @@ import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
 import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.sellerprofile.model.SellerProfile;
+import com.nowfloats.sellerprofile.model.WebResponseModel;
 import com.nowfloats.util.Constants;
 
 import java.util.ArrayList;
@@ -72,4 +74,8 @@ public interface ProductGalleryInterface {
     @GET("/merchant_profile3/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getMerchantProfileData(@Query("query") String query, Callback<WebActionModel<MerchantProfileModel>> callback);
+
+    @GET("/SellerInformationFetch")
+    //@Headers({"Authorization: " + Constants.WA_KEY})
+    void getSellerProfileData(@Query("sellerId") String sellerId, Callback<WebResponseModel<SellerProfile>> callback);
 }

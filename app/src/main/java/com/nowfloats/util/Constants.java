@@ -118,6 +118,7 @@ public class Constants {
     public final static String SUGGESTIONS_TEXT_API_URL = "http://boosttest.nowfloatsdev.com";
     public final static String WA_BASE_URL = "https://webactions.kitsune.tools/api/v1/";
     public final static String AP_BASE_URL = "https://assuredpurchase.withfloats.com/api/AssuredPurchase/";
+    public final static String AP_BOOST_BASE_URL = "https://boost.nowfloats.com/AssuredPurchase";
     public final static String ANA_CHAT_API_URL = /*"http://chat-dev.nowfloatsdev.com";//*/"https://gateway.api.ana.chat";
     public final static String ANA_BUSINESS_ID = /*"Boost-Web";//*/"boost-agent-chat";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
@@ -156,6 +157,11 @@ public class Constants {
     public static final RestAdapter apAdapter = new RestAdapter.Builder().setEndpoint(AP_BASE_URL).setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Order Response"))*/.build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
+
+    /**
+     * Added newly for boost assured purchase API adapter
+     */
+    public static final RestAdapter apApiAdapter = new RestAdapter.Builder().setEndpoint(AP_BOOST_BASE_URL).setConverter(new GsonConverter(new GsonBuilder().setLenient().create())).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Assured Purchase Response")).build();
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
     public static String NFX_DEV_NOWFLOATS = "http://nfx.nowfloatsdev.com";
@@ -527,4 +533,19 @@ public class Constants {
     public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
     public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGE_ID;
 
+
+    public enum DeliveryMethod {
+
+        ASSURED_PURCHASE("ASSUREDPURCHASE"), SELF("SELF"), NOT_AVAILABLE("NA");
+
+        public String value;
+
+        DeliveryMethod(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return this.value;
+        }
+    }
 }

@@ -3,22 +3,16 @@ package com.nowfloats.Product_Gallery.fragments;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +50,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
     private ShippingMetricsModel mShippingMetric;
     private ProductMetricCallBack mProductMetricCallBack;
-
+    private String deliveryMethod;
     private double mShippingCharge = 0;
 
     public enum ShippingAddOrUpdate{
@@ -73,6 +67,11 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
         if(getArguments()!=null && getArguments().containsKey("shippingMetric")){
             mShippingMetric = getArguments().getParcelable("shippingMetric");
+        }
+
+        if(getArguments() != null && getArguments().containsKey("deliveryMethod"))
+        {
+            deliveryMethod = getArguments().getString("deliveryMethod", "");
         }
     }
 
@@ -119,6 +118,25 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         btnSaveMetrics = (Button) view.findViewById(R.id.btn_save_metrics);
 
 
+        if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+        {
+            etLength.setVisibility(View.VISIBLE);
+            etWidth.setVisibility(View.VISIBLE);
+            etHeight.setVisibility(View.VISIBLE);
+            etWeight.setVisibility(View.VISIBLE);
+            etShippingCharges.setVisibility(View.VISIBLE);
+            etGST.setVisibility(View.VISIBLE);
+        }
+
+        else
+        {
+            etLength.setVisibility(View.GONE);
+            etWidth.setVisibility(View.GONE);
+            etHeight.setVisibility(View.GONE);
+            etWeight.setVisibility(View.GONE);
+            etShippingCharges.setVisibility(View.VISIBLE);
+            etGST.setVisibility(View.VISIBLE);
+        }
 
         btnCalculateShippingCharge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,24 +191,27 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
     private void updateMetric()
     {
-        if(TextUtils.isEmpty(etLength.getText().toString().trim())){
-            etLength.setError("Length is required");
-            return;
-        }
+        if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+        {
+            if(TextUtils.isEmpty(etLength.getText().toString().trim())){
+                etLength.setError("Length is required");
+                return;
+            }
 
-        if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
-            etWidth.setError("Width is required");
-            return;
-        }
+            if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
+                etWidth.setError("Width is required");
+                return;
+            }
 
-        if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
-            etHeight.setError("Height is required");
-            return;
-        }
+            if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
+                etHeight.setError("Height is required");
+                return;
+            }
 
-        if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
-            etWeight.setError("Weight is required");
-            return;
+            if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
+                etWeight.setError("Weight is required");
+                return;
+            }
         }
 
         if(TextUtils.isEmpty(String.valueOf(etShippingCharges.getText().toString().trim()))){
@@ -203,35 +224,63 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             return;
         }
 
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.show();
         WaUpdateDataModel update = new WaUpdateDataModel();
         final ShippingMetricsModel shippingMetric = new ShippingMetricsModel();
-        shippingMetric.setHeight(etHeight.getText().toString().trim());
-        shippingMetric.setWidth(etWidth.getText().toString().trim());
-        shippingMetric.setWeight(etWeight.getText().toString().trim());
-        shippingMetric.setLength(etLength.getText().toString().trim());
 
-        shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
-        shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
-        shippingMetric.setHidePrice(switchHidePrice.isChecked());
+        try
+        {
+            if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+            {
+                shippingMetric.setHeight(etHeight.getText().toString().trim());
+                shippingMetric.setWidth(etWidth.getText().toString().trim());
+                shippingMetric.setWeight(etWeight.getText().toString().trim());
+                shippingMetric.setLength(etLength.getText().toString().trim());
+            }
+
+            shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
+            shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
+            shippingMetric.setHidePrice(switchHidePrice.isChecked());
+        }
+
+        catch (Exception e)
+        {
+            Toast.makeText(getActivity(), "Please enter valid input", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         update.setQuery(String.format("{product_id:'%s'}", mShippingMetric.getProductId()));
-        update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
-                shippingMetric.getLength(),
-                shippingMetric.getWidth(),
-                shippingMetric.getWeight(),
-                shippingMetric.getHeight(),
-                shippingMetric.getShippingCharge().toString(),
-                shippingMetric.getGstCharge().toString(), shippingMetric.getHidePrice()));
+
+        if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+        {
+            update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
+                    shippingMetric.getLength(),
+                    shippingMetric.getWidth(),
+                    shippingMetric.getWeight(),
+                    shippingMetric.getHeight(),
+                    shippingMetric.getShippingCharge().toString(),
+                    shippingMetric.getGstCharge().toString(), shippingMetric.getHidePrice()));
+        }
+
+        else
+        {
+            update.setUpdateValue(String.format("{$set:{shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
+                    shippingMetric.getShippingCharge().toString(),
+                    shippingMetric.getGstCharge().toString(), shippingMetric.getHidePrice()));
+        }
+
         update.setMulti(true);
+
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+
         Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .updateProductMetrics(update, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
-                        progressDialog.dismiss();
 
-                        Log.d("METRIX_UPDATE", "Success - " + response.getBody());
+                        ShippingCalculatorFragment.this.dismiss();
+                        mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
+                        progressDialog.dismiss();
                     }
 
                     @Override
@@ -243,7 +292,6 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                             mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
                         }
 
-                        Log.d("METRIX_UPDATE", "Error - " + error.getResponse().getStatus());
                         progressDialog.dismiss();
                     }
                 });
@@ -254,24 +302,27 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
         final ShippingMetricsModel shippingMetric = new ShippingMetricsModel();
 
-        if(TextUtils.isEmpty(etLength.getText().toString().trim())){
-            etLength.setError("Length is required");
-            return;
-        }
+        if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+        {
+            if(TextUtils.isEmpty(etLength.getText().toString().trim())){
+                etLength.setError("Length is required");
+                return;
+            }
 
-        if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
-            etWidth.setError("Width is required");
-            return;
-        }
+            if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
+                etWidth.setError("Width is required");
+                return;
+            }
 
-        if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
-            etHeight.setError("Height is required");
-            return;
-        }
+            if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
+                etHeight.setError("Height is required");
+                return;
+            }
 
-        if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
-            etWeight.setError("Weight is required");
-            return;
+            if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
+                etWeight.setError("Weight is required");
+                return;
+            }
         }
 
         if(TextUtils.isEmpty(String.valueOf(etShippingCharges.getText().toString().trim()))){
@@ -284,13 +335,26 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             return;
         }
 
-        shippingMetric.setHeight(etHeight.getText().toString().trim());
-        shippingMetric.setWidth(etWidth.getText().toString().trim());
-        shippingMetric.setWeight(etWeight.getText().toString().trim());
-        shippingMetric.setLength(etLength.getText().toString().trim());
-        shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
-        shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
-        shippingMetric.setHidePrice(switchHidePrice.isChecked());
+        try
+        {
+            if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+            {
+                shippingMetric.setHeight(etHeight.getText().toString().trim());
+                shippingMetric.setWidth(etWidth.getText().toString().trim());
+                shippingMetric.setWeight(etWeight.getText().toString().trim());
+                shippingMetric.setLength(etLength.getText().toString().trim());
+            }
+
+            shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
+            shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
+            shippingMetric.setHidePrice(switchHidePrice.isChecked());
+        }
+
+        catch (Exception e)
+        {
+            Toast.makeText(getActivity(), "Please enter valid input", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.ADD);
         ShippingCalculatorFragment.this.dismiss();

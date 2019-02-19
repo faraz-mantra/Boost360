@@ -1046,6 +1046,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="can_not_delete_image">Couldn\'t Delete Image</string>
     <string name="select_priority">Select Priority</string>
     <string name="enter_product_name">Please enter product name</string>
+    <string name="enter_product_desc">Please enter product description</string>
     <string name="enter_product_price">Please enter product price</string>
     <string name="discount_amount_can_not_more_than_price">Discount amount cannot be more than the product price</string>
     <string name="select_currency">Select Currency</string>

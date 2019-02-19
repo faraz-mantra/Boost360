@@ -35,6 +35,8 @@ import com.nowfloats.accessbility.BubbleInAppDialog;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.on_boarding.OnBoardingApiCalls;
+import com.nowfloats.sellerprofile.model.SellerProfile;
+import com.nowfloats.sellerprofile.model.WebResponseModel;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -88,6 +90,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
     public static final String KEY_FROM = "KEY_FROM";
 
     private boolean isAnyProductSelected = false, mIsApEnabled = false;
+    private String deliveryMethod;
 
     public enum FROM {
         BUBBLE,
@@ -145,7 +148,8 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
     }
 
     private void checkIfAPEnabled() {
-        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+
+        /*Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .getMerchantProfileData(String.format("{merchant_id:'%s'}", session.getFPID()), new Callback<WebActionModel<MerchantProfileModel>>() {
                     @Override
                     public void success(WebActionModel<MerchantProfileModel> merchantProfileModelWebActionModel, Response response) {
@@ -159,6 +163,24 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                     public void failure(RetrofitError error) {
                         progressLayout.setVisibility(View.GONE);
                     }
+                });*/
+
+
+        Constants.apApiAdapter.create(ProductGalleryInterface.class)
+                .getSellerProfileData(session.getFpTag(), new Callback<WebResponseModel<SellerProfile>>() {
+                    @Override
+                    public void success(WebResponseModel<SellerProfile> webResponseModel, Response response) {
+                        progressLayout.setVisibility(View.GONE);
+
+                        if(webResponseModel != null && webResponseModel.getData() != null)
+                        {
+                            deliveryMethod = webResponseModel.getData().getDeliveryMethod();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progressLayout.setVisibility(View.GONE);                    }
                 });
     }
 
@@ -191,7 +213,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                     intent = new Intent(activity, Product_Detail_Activity_V45.class);
                     intent.putExtra("new", "");
                     intent.putExtra("isApEnabled", mIsApEnabled);
-
+                    intent.putExtra("deliveryMethod", deliveryMethod);
                     startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -213,6 +235,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                         intent = new Intent(activity, Product_Detail_Activity_V45.class);
                         intent.putExtra("product", position + "");
                         intent.putExtra("isApEnabled", mIsApEnabled);
+                        intent.putExtra("deliveryMethod", deliveryMethod);
 
                         Methods.launchFromFragment(activity, view, intent);
                     }

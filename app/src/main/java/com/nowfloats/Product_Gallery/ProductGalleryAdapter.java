@@ -136,7 +136,9 @@ public class ProductGalleryAdapter extends BaseAdapter {
                 picasso.load(R.drawable.default_product_image).into(imageView);
             }
             String originalPrice = productItemModel.Price;
-            String disc = productItemModel.DiscountAmount;
+
+            /*String disc = productItemModel.DiscountAmount;
+
             if (disc != null && disc.trim().length() > 0
                     && !disc.equals("0")) {
                 double discAmt = Double.parseDouble(disc);
@@ -146,10 +148,11 @@ public class ProductGalleryAdapter extends BaseAdapter {
                     double result = actual - discAmt;
                     originalPrice = result + "";
                 }
-            }
+            }*/
+
             if (originalPrice != null) {
                 viewHolder.Currency_Type.setText(productItemModel.CurrencyCode);
-                DecimalFormat formatter = new DecimalFormat("#,##,##,##,##,##,##,###");
+                DecimalFormat formatter = new DecimalFormat("#,##,##,##,##,##,##,###.##");
                 String yourFormattedString = formatter.format(Float.parseFloat(originalPrice));
                 viewHolder.OriginalPrice.setText(yourFormattedString);
             }
