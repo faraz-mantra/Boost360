@@ -90,7 +90,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
     public static final String KEY_FROM = "KEY_FROM";
 
     private boolean isAnyProductSelected = false, mIsApEnabled = false;
-    private String deliveryMethod;
+    private String deliveryMethod = Constants.DeliveryMethod.NOT_AVAILABLE.getValue();
 
     public enum FROM {
         BUBBLE,
