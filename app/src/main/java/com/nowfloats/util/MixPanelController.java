@@ -3,7 +3,8 @@ package com.nowfloats.util;
 import android.app.Activity;
 import android.util.Log;
 
-import com.apxor.androidsdk.ApxorSDK;
+
+import com.apxor.androidsdk.core.ApxorSDK;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONArray;
