@@ -132,7 +132,7 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/product_detail_currency"
                     android:imeOptions="flagNoExtractUi"
-                    android:text="@string/inr"
+                    android:text="@string/currency_text"
                     android:textColor="@color/primaryColor"
                     android:textColorHint="@color/primaryColor"
                     android:textSize="14sp"

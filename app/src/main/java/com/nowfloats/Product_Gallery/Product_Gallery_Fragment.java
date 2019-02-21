@@ -90,7 +90,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
     public static final String KEY_FROM = "KEY_FROM";
 
     private boolean isAnyProductSelected = false, mIsApEnabled = false;
-    private String deliveryMethod = Constants.DeliveryMethod.NOT_AVAILABLE.getValue();
+    private String deliveryMethod = Constants.DeliveryMethod.ASSURED_PURCHASE.getValue();
 
     public enum FROM {
         BUBBLE,
@@ -165,6 +165,10 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                     }
                 });*/
 
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        {
+            return;
+        }
 
         Constants.apApiAdapter.create(ProductGalleryInterface.class)
                 .getSellerProfileData(session.getFpTag(), new Callback<WebResponseModel<SellerProfile>>() {

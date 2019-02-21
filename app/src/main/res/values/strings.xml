@@ -1053,6 +1053,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="replace_photo">Replace Photo</string>
     <string name="upload_photo">Upload Photo</string>
     <string name="inr">INR</string>
+    <string name="currency_text">INR</string>
     <string name="email_validation__failed">Email validation failed</string>
     <string name="suggest_tag_failed_try_again">Suggest Tag Failed, Please try again</string>
     <string name="number_already_registered">Number already registered</string>
