@@ -109,7 +109,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         apiService = new ProductAPIService();
-        currencyValue = getString(R.string.inr);
+        currencyValue = getString(R.string.currency_text);
 
         new Thread(new Runnable() {
             @Override
