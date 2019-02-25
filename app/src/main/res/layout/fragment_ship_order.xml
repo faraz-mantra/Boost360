@@ -128,7 +128,7 @@
             android:layout_gravity="right"
             android:layout_weight="1"
             android:background="@drawable/red_btn_bg"
-            android:text="@string/close"
+            android:text="Close"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:visibility="gone" />

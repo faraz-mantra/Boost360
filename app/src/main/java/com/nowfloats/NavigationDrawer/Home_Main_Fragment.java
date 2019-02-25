@@ -370,7 +370,7 @@ public class Home_Main_Fragment extends Fragment implements
                     if(!loadDataFromDb(skipVal, false)){
                         fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
                         fetch_home_data.getMessages(session.getFPID(), String.valueOf(skipVal));
-                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
 
 

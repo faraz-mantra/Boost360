@@ -3,7 +3,7 @@ package nfkeyboard.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.apxor.androidsdk.ApxorSDK;
+import com.apxor.androidsdk.core.ApxorSDK;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONArray;

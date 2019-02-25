@@ -47,7 +47,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  */
 public class ManageInventoryFragment extends Fragment {
     TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics;
-    ImageView ivLockWidget;
+    ImageView ivLockWidget, ivPaymentIcon;
     Typeface robotoLight;
     private SharedPreferences pref = null;
     UserSessionManager session;
@@ -69,6 +69,7 @@ public class ManageInventoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.fragment_manage_inventory, container, false);
         ivLockWidget = (ImageView) mainView.findViewById(R.id.lock_widget);
+        ivPaymentIcon = mainView.findViewById(R.id.secondrow_ImageView_ProfileV2);
 
         session = new UserSessionManager(getContext(), activity);
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
@@ -207,6 +208,17 @@ public class ManageInventoryFragment extends Fragment {
             e.printStackTrace();
         }
 
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        {
+            tvPaymentSetting.setVisibility(View.VISIBLE);
+            ivPaymentIcon.setVisibility(View.VISIBLE);
+        }
+
+        else
+        {
+            tvPaymentSetting.setVisibility(View.GONE);
+            ivPaymentIcon.setVisibility(View.GONE);
+        }
     }
 
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -28,10 +29,11 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
 
 
     private TextView tvTotalRevenue, tvTotalOrders, tvCurrencyCode, tvSuccessfullOrders, tvReceivedOrders, tvCancelledOrders, tvDisputedOrders,
-            tvReturnedPrders, tvAbandonedOrders;
+            tvReturnedPrders, tvAbandonedOrders, tvRevenueText;
     private ProgressBar pgTotalRevenue, pgTotalOrders, pgSuccessfullOrders, pgReceivedOrders, pgCancelledOrders, pgRefundedOrders, pgDisputedOrders,
             pgAbandonedOrders;
     private Toolbar toolBar;
+    private LinearLayout revenueContainer;
 
     private UserSessionManager mSession;
 
@@ -62,6 +64,8 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
         pgRefundedOrders = (ProgressBar) findViewById(R.id.pg_refunded_orders);
         pgAbandonedOrders = (ProgressBar) findViewById(R.id.pg_abandoned_orders);
         pgDisputedOrders = (ProgressBar) findViewById(R.id.pg_disputed_orders);
+        revenueContainer = findViewById(R.id.ll_revenue_container);
+        tvRevenueText = findViewById(R.id.tv_revenue_text);
 
         toolBar = (Toolbar) findViewById(R.id.toolbar);
         toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
@@ -78,6 +82,17 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
         init();
 
 
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        {
+            revenueContainer.setVisibility(View.INVISIBLE);
+            tvRevenueText.setVisibility(View.INVISIBLE);
+        }
+
+        else
+        {
+            revenueContainer.setVisibility(View.VISIBLE);
+            tvRevenueText.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -589,14 +589,14 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void uploadedPictureListener(String imageURL) {
         BoostLog.d("Image", "uploadPictureListener imageURL : " + imageURL);
         MixPanelController.track("AddImageSuccess", null);
-        if (progressLayout != null) {
+        /*if (progressLayout != null) {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     progressLayout.setVisibility(View.VISIBLE);
                 }
             });
-        }
+        }*/
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

@@ -56,7 +56,7 @@
     <string name="side_panel_row_five">Settings</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
-
+    <string name="currency_text">INR</string>
 
     <!-- Deep Linking URLs  -->
 

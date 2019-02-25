@@ -181,9 +181,12 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         switchView.setChecked(true);
         btnShippingMatrix = findViewById(R.id.btn_calculate_shipping_charges);
 
+
         mInventoryAdapter = new InventoryListAdapter(this, R.layout.inventory_list_row_layout, mInventoryWebActionList);
         lvInventoryData = findViewById(R.id.lv_inventory_data);
         lvInventoryData.setAdapter(mInventoryAdapter);
+
+        this.addWebActions();
 
         mPriorityList = getResources().getStringArray(R.array.priority_list);
 
@@ -673,7 +676,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                 .build();
 
 //        if(product_data != null && !TextUtils.isEmpty(product_data._id)) {
-        displayAssociatedWebActions();
+        //displayAssociatedWebActions();
 //        } else {
 //            lvInventoryData.setVisibility(View.GONE);
 //        }
@@ -685,6 +688,30 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             }
         });
     }
+
+
+    private void addWebActions()
+    {
+        com.nowfloats.webactions.models.WebAction action1 = new com.nowfloats.webactions.models.WebAction();
+        action1.setDisplayName("Category");
+
+        com.nowfloats.webactions.models.WebAction action2 = new com.nowfloats.webactions.models.WebAction();
+        action2.setDisplayName("Image");
+
+        List<com.nowfloats.webactions.models.WebAction> actionList = new ArrayList<>();
+        actionList.add(action1);
+        actionList.add(action2);
+
+        //mInventoryWebActionList.add(action1);
+        //mInventoryWebActionList.add(action2);
+
+        mInventoryAdapter.addAll(actionList);
+        ViewGroup.LayoutParams lp = lvInventoryData.getLayoutParams();
+        lp.height = Utils.dpToPx(Product_Detail_Activity_V45.this, 60) * actionList.size();
+        lvInventoryData.setLayoutParams(lp);
+        lvInventoryData.requestLayout();
+    }
+
 
     private void afterExecutingKeywords(String productId) {
         runOnUiThread(new Runnable() {
