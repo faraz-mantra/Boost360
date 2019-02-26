@@ -71,6 +71,7 @@ import com.nowfloats.Product_Gallery.widgets.NonScrollListView;
 import com.nowfloats.Product_Gallery.widgets.TagView;
 import com.nowfloats.helper.ui.BaseActivity;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
+import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.riachatsdk.utils.Utils;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -119,6 +120,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
     //TextView tvApEnabledText;
     ImageView productImage;
     Switch switchView/*, svFreeShipment*/;
+    Switch switchHidePrice;
     private Button btnShippingMatrix;
 
     NonScrollListView lvInventoryData;
@@ -137,6 +139,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
     public ProductAPIService apiService;
     public int retryImage = 0;
     private boolean mIsFreeShipment = false;
+    private boolean isHidePrice;
 
     private final int gallery_req_id = 6;
     private final int media_req_id = 5;
@@ -177,6 +180,16 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         switchView = (Switch) findViewById(R.id.switchView);
+        switchHidePrice = findViewById(R.id.switch_hide_price);
+
+        switchHidePrice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isHidePrice = isChecked;
+                save.setVisibility(View.VISIBLE);
+            }
+        });
+
         //svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         switchView.setChecked(true);
         btnShippingMatrix = findViewById(R.id.btn_calculate_shipping_charges);
@@ -461,6 +474,8 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                                             public void run() {
                                                                 materialProgress.dismiss();
                                                                 invokeGetProductList(product_data._id);
+
+                                                                updateShippingMetric();
                                                                 Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
                                                             }
                                                         });
@@ -594,14 +609,17 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                     Log.i("PRODUCT ID__", "" + productId);
 
                                     /**
-                                     * If delivery method ASSUREDPURCHASE OR SELF then add shipping metrix
+                                     * Add shipping matrix
                                      */
-                                    if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
-                                            || deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue()))
+                                    if(mShippingMetrix == null)
                                     {
-                                        mShippingMetrix.setProductId(productId);
-                                        addShippingMetric(mShippingMetrix, true);
+                                        mShippingMetrix = new ShippingMetricsModel();
                                     }
+
+                                    mShippingMetrix.setProductId(productId);
+                                    onProductMetricCalculated(mShippingMetrix, ShippingCalculatorFragment.ShippingAddOrUpdate.ADD);
+                                    addShippingMetric(mShippingMetrix, true);
+
 
                                     if (createKeywordList != null && createKeywordList.size() > 0) {
                                         keyWordCount = 0;
@@ -992,6 +1010,12 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                             //double netAmount = ((Double.parseDouble(product_data.Price) - (Double.parseDouble(discount) + transactionCharge + mShippingMetrix.getShippingCharge())) * 100.0) / 100.0;
                             //etTransactionCharge.setText(transactionCharge + "");
                             //etNetAmount.setText(netAmount + "");
+
+                            if(mShippingMetrix != null && mShippingMetrix.getHidePrice() != null)
+                            {
+                                isHidePrice = mShippingMetrix.getHidePrice();
+                                switchHidePrice.setChecked(isHidePrice);
+                            }
                         }
                     }
 
@@ -1579,7 +1603,8 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         //double transactionCharge = ((Double.parseDouble(price) - Double.parseDouble(price)) * NF_ASSURANCE_CHARGE) / 100.0;
         //double netAmount = ((Double.parseDouble(price) - (Double.parseDouble(discount) + transactionCharge + shippingMetricsModel.getShippingCharge())) * 100.0) / 100.0;
 
-        /*if (netAmount < shippingMetricsModel.getShippingCharge()) {
+        /*if (netAmount < shippingMetricsModel.getShippingCharge())
+        {
             Methods.showSnackBarNegative(this, "NetAmount can't be less than Shipping Charge");
             return;
         }*/
@@ -1594,24 +1619,108 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         if (product_data != null) {
             mShippingMetrix.setProductId(product_data._id);
         }
+
         mShippingMetrix.setMerchantId(session.getFPID());
-        mShippingMetrix.setShippingCharge(shippingMetricsModel.getShippingCharge());
-        mShippingMetrix.setGstCharge(shippingMetricsModel.getGstCharge());
-        mShippingMetrix.setLength(shippingMetricsModel.getLength());
-        mShippingMetrix.setHeight(shippingMetricsModel.getHeight());
-        mShippingMetrix.setWeight(shippingMetricsModel.getWeight());
-        mShippingMetrix.setWidth(shippingMetricsModel.getWidth());
-        if (val == ShippingCalculatorFragment.ShippingAddOrUpdate.ADD && product_data != null) {
-            addShippingMetric(mShippingMetrix, true);
+
+        if(shippingMetricsModel != null)
+        {
+            mShippingMetrix.setShippingCharge(shippingMetricsModel.getShippingCharge());
+            mShippingMetrix.setGstCharge(shippingMetricsModel.getGstCharge());
+            mShippingMetrix.setLength(shippingMetricsModel.getLength());
+            mShippingMetrix.setHeight(shippingMetricsModel.getHeight());
+            mShippingMetrix.setWeight(shippingMetricsModel.getWeight());
+            mShippingMetrix.setWidth(shippingMetricsModel.getWidth());
         }
 
-        else if (val == ShippingCalculatorFragment.ShippingAddOrUpdate.UPDATE && product_data != null)
+        mShippingMetrix.setHidePrice(isHidePrice);
+
+        /*if (val == ShippingCalculatorFragment.ShippingAddOrUpdate.ADD && product_data != null)
+        {
+            addShippingMetric(mShippingMetrix, true);
+        }*/
+
+        /*else if (val == ShippingCalculatorFragment.ShippingAddOrUpdate.UPDATE && product_data != null)
         {
             Methods.showSnackBarPositive(activity, "Shipping Matrix Updated Successfully");
+        }*/
+    }
+
+
+    private void updateShippingMetric()
+    {
+        try
+        {
+            this.onProductMetricCalculated(mShippingMetrix, ShippingCalculatorFragment.ShippingAddOrUpdate.UPDATE);
+
+            WaUpdateDataModel update = new WaUpdateDataModel();
+
+            update.setQuery(String.format("{product_id:'%s'}", mShippingMetrix.getProductId()));
+
+            if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+            {
+                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+                {
+                    update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
+                            mShippingMetrix.getLength(),
+                            mShippingMetrix.getWidth(),
+                            mShippingMetrix.getWeight(),
+                            mShippingMetrix.getHeight(),
+                            mShippingMetrix.getShippingCharge().toString(),
+                            mShippingMetrix.getGstCharge().toString(), mShippingMetrix.getHidePrice()));
+                }
+
+                else
+                {
+                    update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, hide_price:%s}}",
+                            mShippingMetrix.getLength(),
+                            mShippingMetrix.getWidth(),
+                            mShippingMetrix.getWeight(),
+                            mShippingMetrix.getHeight(),
+                            mShippingMetrix.getShippingCharge().toString(), mShippingMetrix.getHidePrice()));
+                }
+            }
+
+            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue()))
+            {
+                update.setUpdateValue(String.format("{$set:{shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
+                        mShippingMetrix.getShippingCharge().toString(),
+                        mShippingMetrix.getGstCharge().toString(), mShippingMetrix.getHidePrice()));
+            }
+
+            else
+            {
+                update.setUpdateValue(String.format("{$set:{hide_price:%s}}", mShippingMetrix.getHidePrice()));
+            }
+
+            update.setMulti(true);
+
+            Constants.webActionAdapter.create(ProductGalleryInterface.class)
+                    .updateProductMetrics(update, new Callback<String>() {
+                        @Override
+                        public void success(String s, Response response) {
+
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+
+                            /*if(error.getResponse().getStatus() == 200)
+                            {
+
+                            }*/
+                        }
+                    });
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
+
     private void addShippingMetric(final ShippingMetricsModel mShippingMetrix, final boolean isFromcallBack) {
+
         materialProgress = new MaterialDialog.Builder(activity)
                 .widgetColorRes(R.color.accentColor)
                 .content("Adding Shipping Matrics...")

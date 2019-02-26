@@ -136,6 +136,7 @@
                 app:met_primaryColor="@color/primaryColor"
                 app:met_singleLineEllipsis="true" />
 
+            <!--
             <Switch
                 android:id="@+id/switch_hide_price"
                 android:layout_width="match_parent"
@@ -144,6 +145,7 @@
                 android:checked="false"
                 android:text="Hide Price"
                 android:textColorHighlight="@color/product_price" />
+            -->
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -40,7 +40,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
      * Added Shipping and GST
      */
     EditText etShippingCharges, etGST;
-    Switch switchHidePrice;
+    //Switch switchHidePrice;
 
     ProgressDialog progressDialog;
 
@@ -108,7 +108,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
          */
         etShippingCharges = view.findViewById(R.id.et_shipping_charge);
         etGST = view.findViewById(R.id.et_gst_charge);
-        switchHidePrice = view.findViewById(R.id.switch_hide_price);
+        //switchHidePrice = view.findViewById(R.id.switch_hide_price);
 
         tvShippingCharge = (TextView) view.findViewById(R.id.tv_shipping_charge);
 
@@ -175,21 +175,21 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
         if(mShippingMetric!=null){
 
-            etLength.setText(mShippingMetric.getLength()+"");
-            etHeight.setText(mShippingMetric.getHeight()+"");
-            etWidth.setText(mShippingMetric.getWidth()+"");
-            etWeight.setText(mShippingMetric.getWeight()+"");
+            etLength.setText(isNullOrEmplty(mShippingMetric.getLength()));
+            etHeight.setText(isNullOrEmplty(mShippingMetric.getHeight()));
+            etWidth.setText(isNullOrEmplty(mShippingMetric.getWidth()));
+            etWeight.setText(isNullOrEmplty(mShippingMetric.getWeight()));
 
-            tvShippingCharge.setText("INR " + mShippingMetric.getShippingCharge());
+            //tvShippingCharge.setText("INR " + isNullOrEmplty(mShippingMetric.getLength()));
 
-            etShippingCharges.setText(String.valueOf(mShippingMetric.getShippingCharge()));
+            etShippingCharges.setText(isNullOrEmplty(String.valueOf(mShippingMetric.getShippingCharge())));
 
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
             {
-                etGST.setText(String.valueOf(mShippingMetric.getGstCharge()));
+                etGST.setText(isNullOrEmplty(String.valueOf(mShippingMetric.getGstCharge())));
             }
 
-            switchHidePrice.setChecked(mShippingMetric.getHidePrice());
+            //switchHidePrice.setChecked(mShippingMetric.getHidePrice());
         }
 
         etLength.addTextChangedListener(this);
@@ -210,7 +210,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             return;
         }
 
-        WaUpdateDataModel update = new WaUpdateDataModel();
+        //WaUpdateDataModel update = new WaUpdateDataModel();
         final ShippingMetricsModel shippingMetric = initShippingMatrix();
 
         if(shippingMetric == null)
@@ -218,7 +218,10 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             return;
         }
 
-        update.setQuery(String.format("{product_id:'%s'}", mShippingMetric.getProductId()));
+        mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
+        ShippingCalculatorFragment.this.dismiss();
+
+        /*update.setQuery(String.format("{product_id:'%s'}", mShippingMetric.getProductId()));
 
         if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
         {
@@ -277,7 +280,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
                         progressDialog.dismiss();
                     }
-                });
+                });*/
 
     }
 
@@ -396,7 +399,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                 shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
             }
 
-            shippingMetric.setHidePrice(switchHidePrice.isChecked());
+            //shippingMetric.setHidePrice(switchHidePrice.isChecked());
         }
 
         catch (Exception e)
@@ -408,6 +411,11 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         return shippingMetric;
     }
 
+
+    private String isNullOrEmplty(String value)
+    {
+        return value == null ? "" : (value.equalsIgnoreCase("null") ? "" : value);
+    }
 
     /**
      * Check weather all input fields are valid
