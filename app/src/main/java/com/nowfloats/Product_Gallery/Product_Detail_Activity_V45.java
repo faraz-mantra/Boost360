@@ -259,9 +259,9 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             }
         });
 
-        if (getIntent() != null && getIntent().hasExtra("isApEnabled")) {
+        /*if (getIntent() != null && getIntent().hasExtra("isApEnabled")) {
             mIsApEnabled = getIntent().getBooleanExtra("isApEnabled", false);
-        }
+        }*/
 
         if (getIntent() != null && getIntent().hasExtra("deliveryMethod")) {
             deliveryMethod = getIntent().getStringExtra("deliveryMethod");
@@ -611,13 +611,8 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                     /**
                                      * Add shipping matrix
                                      */
-                                    if(mShippingMetrix == null)
-                                    {
-                                        mShippingMetrix = new ShippingMetricsModel();
-                                    }
-
-                                    mShippingMetrix.setProductId(productId);
                                     onProductMetricCalculated(mShippingMetrix, ShippingCalculatorFragment.ShippingAddOrUpdate.ADD);
+                                    mShippingMetrix.setProductId(productId);
                                     addShippingMetric(mShippingMetrix, true);
 
 
@@ -1164,10 +1159,44 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
          * If delivery method ASSUREDPURCHASE OR SELF then add shipping metrix
          */
         if((deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
-                || deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue())) && mShippingMetrix == null)
+                || deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue())))
         {
-            Methods.showSnackBarNegative(activity, "Shipping Details Required");
-            return false;
+            if(mShippingMetrix == null)
+            {
+                Methods.showSnackBarNegative(activity, "Shipping Details Required");
+                return false;
+            }
+
+            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
+                    && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+            {
+                if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
+                        mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null || mShippingMetrix.getGstCharge() == null)
+                {
+                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+                    return false;
+                }
+            }
+
+            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
+                    && !Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+            {
+                if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
+                        mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null)
+                {
+                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+                    return false;
+                }
+            }
+
+            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue()))
+            {
+                if(mShippingMetrix.getShippingCharge() == null || mShippingMetrix.getGstCharge() == null)
+                {
+                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+                    return false;
+                }
+            }
         }
 
         System.out.println(values);
@@ -1723,7 +1752,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
         materialProgress = new MaterialDialog.Builder(activity)
                 .widgetColorRes(R.color.accentColor)
-                .content("Adding Shipping Matrics...")
+                .content("Adding Shipping Matrix ...")
                 .progress(true, 0).show();
         materialProgress.setCancelable(false);
         WAAddDataModel<ShippingMetricsModel> waModel = new WAAddDataModel<>();
