@@ -116,7 +116,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/businessCategory_change_label"
+                        android:id="@+id/business_category_change_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="If you wish to change business category, please contact ria@nowfloats.com"

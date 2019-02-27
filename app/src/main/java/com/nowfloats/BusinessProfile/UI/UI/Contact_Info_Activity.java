@@ -32,6 +32,7 @@ import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.helper.ui.BaseActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
@@ -60,7 +61,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class Contact_Info_Activity extends AppCompatActivity implements View.OnTouchListener {
+public class Contact_Info_Activity extends BaseActivity implements View.OnTouchListener {
 
     private Toolbar toolbar;
     public static TextView saveTextView;
@@ -77,6 +78,8 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     public static String msgtxt4_email = null, msgtxt4website = null, msgtxt4fbpage = null, msgtxt4primaryno = null, msgtxt4alternateno1 = null, msgtxtalternate2 = null, msgtxtalternate3 = null;
     String[] profilesattr = new String[20];
     private TextView titleTextView;
+    private TextView tvEmailChangeLevel;
+
     public static String primary = "", alternate1 = "", alternate2 = "", alternate3 = "";
     private boolean allBoundaryCondtn = true;
     Spinner protocolSpinner;
@@ -119,6 +122,10 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.contact__info));
+
+        tvEmailChangeLevel = findViewById(R.id.email_change_label);
+        tvEmailChangeLevel.setText(R.string.email_change_level);
+
        /* progressDialog = new MaterialDialog.Builder(this)
                 .autoDismiss(false)
                 *//*.backgroundColorRes(R.color.transparent)*//*

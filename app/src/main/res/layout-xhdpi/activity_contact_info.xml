@@ -25,15 +25,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/screen_bg"
-                android:paddingBottom="10dp"
-                android:paddingLeft="5dp"
                 android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:text="Phone Numbers" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
                 android:gravity="bottom"
                 android:orientation="vertical">
 
@@ -42,9 +45,10 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="@string/primary_number"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
@@ -53,15 +57,18 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
                     android:textColor="#575757"
-                    android:textSize="14sp"></EditText>
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -69,9 +76,10 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="@string/alternate_number1"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
@@ -87,8 +95,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -96,10 +107,11 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="@string/alternate_number2"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:inputType="text"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
@@ -115,8 +127,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="12dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -124,9 +140,10 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="@string/alternate_number3"
-                    android:textSize="10sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:textSize="12sp"
                     android:inputType="text"
                     tools:ignore="MissingPrefix" />
 
@@ -145,16 +162,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/screen_bg"
-                android:paddingBottom="10dp"
-                android:paddingLeft="5dp"
                 android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:text="Other Information" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
                 android:gravity="bottom"
+                android:padding="12dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -162,9 +180,10 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="@string/title_activity_web_site_address"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
                     tools:ignore="MissingPrefix" />
 
                 <LinearLayout
@@ -187,14 +206,18 @@
                         android:background="@drawable/bg_spinner">
 
                     </android.support.v7.widget.AppCompatSpinner>
-                    <!--<Spinner
+
+                    <!--
+                    <Spinner
                         android:background="@drawable/bg_spinner"
                         android:gravity="right"
                         android:id="@+id/sp_web_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                    </Spinner>-->
+                    </Spinner>
+                    -->
+
                     <EditText
                         android:id="@+id/websiteAddress"
                         android:layout_width="match_parent"
@@ -204,33 +227,8 @@
                         android:inputType="text"
                         android:textColor="#575757"
                         android:textSize="14sp" />
+
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:gravity="bottom"
-                android:orientation="vertical">
-
-                <TextView
-                    fontPath="Roboto-Regular.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/email_address"
-                    android:textSize="10sp"
-                    tools:ignore="MissingPrefix" />
-
-                <EditText
-                    android:id="@+id/contactInfo_emailId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:inputType="textEmailAddress"
-                    android:textColor="#575757"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -238,6 +236,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_address"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    tools:ignore="MissingPrefix" />
+
+                <EditText
+                    android:id="@+id/contactInfo_emailId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:enabled="false"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#828282"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/email_change_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="If you wish to change email address, please contact ria@nowfloats.com"
+                    android:textSize="12sp"
+                    android:textStyle="italic"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:textColor="#828282" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:padding="12dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -245,15 +287,13 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="@string/facebook_page_name"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     tools:ignore="MissingPrefix" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp">
+                    android:layout_height="wrap_content" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -269,22 +309,26 @@
                         android:maxLines="1"
                         android:textColor="#575757"
                         android:textSize="14sp" />
+
                 </LinearLayout>
+
             </LinearLayout>
 
             <TextView
                 fontPath="Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:text="@string/facebook_url_message"
-                android:textSize="10sp"
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp"
                 tools:ignore="MissingPrefix" />
-        </LinearLayout>
-    </ScrollView>
 
+        </LinearLayout>
+
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressbar"

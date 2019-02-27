@@ -79,6 +79,8 @@ public class Edit_Profile_Activity extends BaseActivity {
     public static EditText yourname, category, buzzname, buzzdescription , customProductCategory;
     public static ImageView featuredImage, businessCategoryImage;
 
+    private TextView tvBusinessCategoryChangeLabel;
+
     public LinearLayout linearProductCategory;
     public ImageView ibProductCategoryEdit;
     private Toolbar toolbar;
@@ -132,6 +134,7 @@ public class Edit_Profile_Activity extends BaseActivity {
 
         linearProductCategory = findViewById(R.id.linear_product_category);
         ibProductCategoryEdit = findViewById(R.id.ib_product_category_edit);
+        tvBusinessCategoryChangeLabel = findViewById(R.id.business_category_change_label);
 
         rb_Custom = findViewById(R.id.rb_custom);
         rb_Products = findViewById(R.id.rb_products);
@@ -140,6 +143,8 @@ public class Edit_Profile_Activity extends BaseActivity {
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
 
         mRiaNodeDataModel = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
+
+        tvBusinessCategoryChangeLabel.setText(R.string.business_category_change_level);
 
         rb_Products.setEnabled(false);
         rb_Services.setEnabled(false);

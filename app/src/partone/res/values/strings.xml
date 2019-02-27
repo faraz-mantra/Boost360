@@ -57,7 +57,8 @@
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
     <string name="currency_text">INR</string>
-
+    <string name="email_change_level">If you wish to change email address, please contact ria@nowfloats.com</string>
+    <string name="business_category_change_level">If you wish to change business category, please contact ria@nowfloats.com</string>
     <!-- Deep Linking URLs  -->
 
     <string name="deeplink_update">update</string>

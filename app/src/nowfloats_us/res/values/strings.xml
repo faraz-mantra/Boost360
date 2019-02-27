@@ -176,6 +176,8 @@
     <string name="contact_us_number">18448112065</string>
 
     <string name="currency_text">USD</string>
+    <string name="email_change_level">If you wish to change email address, please contact ria@nowfloats.com</string>
+    <string name="business_category_change_level">If you wish to change business category, please contact ria@nowfloats.com</string>
 
     <string-array name="CountryCodes">
         <item>93,AF</item>
