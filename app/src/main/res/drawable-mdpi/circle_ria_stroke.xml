@@ -10,6 +10,6 @@
         android:width="1dp"
         android:color="@color/cell_onclick_text_color" />
     <padding
-        android:right="@dimen/margin_40"
+        android:right="@dimen/margin_20"
         android:top="@dimen/margin_20" />
 </shape>
