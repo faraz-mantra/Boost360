@@ -124,7 +124,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
     //Switch switchHidePrice;
     //private Button btnShippingMatrix;
 
-    private LinearLayout layoutLroductLink;
+    private LinearLayout layoutProductLink;
 
     NonScrollListView lvInventoryData;
     private String currencyType = "";
@@ -185,7 +185,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         switchView = (Switch) findViewById(R.id.switchView);
-        layoutLroductLink = findViewById(R.id.layout_product_link);
+        layoutProductLink = findViewById(R.id.layout_product_link);
 
         //switchHidePrice = findViewById(R.id.switch_hide_price);
 
@@ -280,12 +280,12 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
         if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
         {
-            layoutLroductLink.setVisibility(View.GONE);
+            layoutProductLink.setVisibility(View.GONE);
         }
 
         else
         {
-            layoutLroductLink.setVisibility(View.VISIBLE);
+            layoutProductLink.setVisibility(View.VISIBLE);
         }
 
         /**
