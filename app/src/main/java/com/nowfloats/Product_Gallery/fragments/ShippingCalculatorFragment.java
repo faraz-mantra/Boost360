@@ -1,7 +1,8 @@
 package com.nowfloats.Product_Gallery.fragments;
 
-import android.app.Activity;
-import android.app.DialogFragment;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,8 +14,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.Product_Gallery.Model.ShippingMetricsModel;
@@ -34,91 +33,90 @@ import retrofit.client.Response;
 
 public class ShippingCalculatorFragment extends DialogFragment implements TextWatcher{
 
-    EditText etLength, etWidth, etHeight, etWeight;
+    EditText etLength, etWidth, etHeight, etWeight, etShippingCharges;
 
-    /**
-     * Added Shipping and GST
-     */
-    EditText etShippingCharges, etGST;
+    //EditText etGST;
     //Switch switchHidePrice;
 
     ProgressDialog progressDialog;
 
-    TextView tvShippingCharge;
+    //TextView tvShippingCharge;
+    //Button btnCalculateShippingCharge;
 
-    Button btnCalculateShippingCharge, btnSaveMetrics;
+    Button btnSaveMetrics;
 
     private ShippingMetricsModel mShippingMetric;
     private ProductMetricCallBack mProductMetricCallBack;
-    private String deliveryMethod;
-    private double mShippingCharge = 0;
 
-    public enum ShippingAddOrUpdate{
+    public enum ShippingAddOrUpdate
+    {
         ADD,
         UPDATE
     }
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setStyle(STYLE_NO_TITLE, 0);
 
-        if(getArguments()!=null && getArguments().containsKey("shippingMetric")){
+        if(getArguments()!=null && getArguments().containsKey("shippingMetric"))
+        {
             mShippingMetric = getArguments().getParcelable("shippingMetric");
         }
 
-        if(getArguments() != null && getArguments().containsKey("deliveryMethod"))
+        /*if(getArguments() != null && getArguments().containsKey("deliveryMethod"))
         {
             deliveryMethod = getArguments().getString("deliveryMethod", "");
-        }
+        }*/
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if(activity instanceof ProductMetricCallBack){
-            mProductMetricCallBack = (ProductMetricCallBack) activity;
-        }else {
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+
+        if(context instanceof ProductMetricCallBack)
+        {
+            mProductMetricCallBack = (ProductMetricCallBack) context;
+        }
+
+        else
+        {
             throw new RuntimeException("Implement ProductMetricCallBack");
         }
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
-        getDialog().getWindow()
-                .setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+        getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_shipping_calculator_v1, container, false);
 
-        etLength = (EditText) view.findViewById(R.id.et_length);
-        etWidth = (EditText) view.findViewById(R.id.et_width);
-        etHeight = (EditText) view.findViewById(R.id.et_height);
-        etWeight = (EditText) view.findViewById(R.id.et_weight);
-
-        /**
-         * Newly Added
-         */
+        etLength = view.findViewById(R.id.et_length);
+        etWidth = view.findViewById(R.id.et_width);
+        etHeight = view.findViewById(R.id.et_height);
+        etWeight = view.findViewById(R.id.et_weight);
         etShippingCharges = view.findViewById(R.id.et_shipping_charge);
-        etGST = view.findViewById(R.id.et_gst_charge);
-        //switchHidePrice = view.findViewById(R.id.switch_hide_price);
+        btnSaveMetrics = view.findViewById(R.id.btn_save_metrics);
 
-        tvShippingCharge = (TextView) view.findViewById(R.id.tv_shipping_charge);
+        //etGST = view.findViewById(R.id.et_gst_charge);
+        //switchHidePrice = view.findViewById(R.id.switch_hide_price);
+        //tvShippingCharge = view.findViewById(R.id.tv_shipping_charge);
+        //btnCalculateShippingCharge = view.findViewById(R.id.btn_calculate_shipping_charges);
 
         progressDialog = new ProgressDialog(getActivity());
 
-        btnCalculateShippingCharge = (Button) view.findViewById(R.id.btn_calculate_shipping_charges);
-        btnSaveMetrics = (Button) view.findViewById(R.id.btn_save_metrics);
-
-
-        if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+        /*if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
         {
             etLength.setVisibility(View.VISIBLE);
             etWidth.setVisibility(View.VISIBLE);
@@ -145,49 +143,71 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             etWeight.setVisibility(View.GONE);
             etShippingCharges.setVisibility(View.VISIBLE);
             etGST.setVisibility(View.VISIBLE);
-        }
+        }*/
 
-        btnCalculateShippingCharge.setOnClickListener(new View.OnClickListener() {
+        /*btnCalculateShippingCharge.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 calculateShippingCharge();
             }
-        });
+        });*/
 
         btnSaveMetrics.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                if(mShippingMetric==null){
+            public void onClick(View v)
+            {
+                if(mShippingMetric == null || mShippingMetric.getProductId() == null || mShippingMetric.getProductId().isEmpty())
+                {
+                    /**
+                     * if it is a new product entry
+                     */
                     addMetric();
-                }else {
+                }
+
+                else
+                {
+                    /**
+                     * if it is product update
+                     */
                     updateMetric();
                 }
             }
         });
 
         view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 dismiss();
             }
         });
 
 
-        if(mShippingMetric!=null){
+        /**
+         * if update product request set shipping matrix value in fields
+         */
+        if(mShippingMetric != null){
 
-            etLength.setText(isNullOrEmplty(mShippingMetric.getLength()));
-            etHeight.setText(isNullOrEmplty(mShippingMetric.getHeight()));
-            etWidth.setText(isNullOrEmplty(mShippingMetric.getWidth()));
-            etWeight.setText(isNullOrEmplty(mShippingMetric.getWeight()));
+            etLength.setText(getValue(mShippingMetric.getLength()));
+            etHeight.setText(getValue(mShippingMetric.getHeight()));
+            etWidth.setText(getValue(mShippingMetric.getWidth()));
+            etWeight.setText(getValue(mShippingMetric.getWeight()));
 
-            //tvShippingCharge.setText("INR " + isNullOrEmplty(mShippingMetric.getLength()));
+            String shippingCharge = getValue(String.valueOf(mShippingMetric.getShippingCharge()));
 
-            etShippingCharges.setText(isNullOrEmplty(String.valueOf(mShippingMetric.getShippingCharge())));
+            if(!shippingCharge.isEmpty() && !shippingCharge.equals("0") && !shippingCharge.equals("0.0"))
+            {
+                etShippingCharges.setText(shippingCharge);
+            }
 
-            if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+            /*if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
             {
                 etGST.setText(isNullOrEmplty(String.valueOf(mShippingMetric.getGstCharge())));
-            }
+            }*/
 
             //switchHidePrice.setChecked(mShippingMetric.getHidePrice());
         }
@@ -210,7 +230,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             return;
         }
 
-        //WaUpdateDataModel update = new WaUpdateDataModel();
+        WaUpdateDataModel update = new WaUpdateDataModel();
         final ShippingMetricsModel shippingMetric = initShippingMatrix();
 
         if(shippingMetric == null)
@@ -218,47 +238,57 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             return;
         }
 
-        mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
-        ShippingCalculatorFragment.this.dismiss();
+        //mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
+        //ShippingCalculatorFragment.this.dismiss();
 
-        /*update.setQuery(String.format("{product_id:'%s'}", mShippingMetric.getProductId()));
+        update.setQuery(String.format("{product_id:'%s'}", mShippingMetric.getProductId()));
 
-        if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+        update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s}}",
+                shippingMetric.getLength(),
+                shippingMetric.getWidth(),
+                shippingMetric.getWeight(),
+                shippingMetric.getHeight(),
+                shippingMetric.getShippingCharge().toString()));
+
+        /*if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
         {
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
             {
-                update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
+                update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, gst_slab:%s}}",
                         shippingMetric.getLength(),
                         shippingMetric.getWidth(),
                         shippingMetric.getWeight(),
                         shippingMetric.getHeight(),
                         shippingMetric.getShippingCharge().toString(),
-                        shippingMetric.getGstCharge().toString(), shippingMetric.getHidePrice()));
+                        shippingMetric.getGstCharge().toString()));
             }
 
             else
             {
-                update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s, hide_price:%s}}",
+                update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', shipping_charge:%s}}",
                         shippingMetric.getLength(),
                         shippingMetric.getWidth(),
                         shippingMetric.getWeight(),
                         shippingMetric.getHeight(),
-                        shippingMetric.getShippingCharge().toString(), shippingMetric.getHidePrice()));
+                        shippingMetric.getShippingCharge().toString()));
             }
         }
 
         else
         {
-            update.setUpdateValue(String.format("{$set:{shipping_charge:%s, gst_slab:%s, hide_price:%s}}",
+            update.setUpdateValue(String.format("{$set:{shipping_charge:%s, gst_slab:%s}}",
                     shippingMetric.getShippingCharge().toString(),
-                    shippingMetric.getGstCharge().toString(), shippingMetric.getHidePrice()));
-        }
+                    shippingMetric.getGstCharge().toString()));
+        }*/
 
         update.setMulti(true);
 
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage("Updating Shipping Matrix...");
         progressDialog.show();
 
+        /**
+         * Update API request
+         */
         Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .updateProductMetrics(update, new Callback<String>() {
                     @Override
@@ -280,7 +310,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
                         progressDialog.dismiss();
                     }
-                });*/
+                });
 
     }
 
@@ -303,28 +333,33 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
     }
 
 
-    private void calculateShippingCharge(){
+    private void calculateShippingCharge()
+    {
         String length = etLength.getText().toString().trim();
         String width = etWidth.getText().toString().trim();
         String height = etHeight.getText().toString().trim();
         String weight = etWeight.getText().toString().trim();
 
-        if(TextUtils.isEmpty(length)){
+        if(TextUtils.isEmpty(length))
+        {
             etLength.setError("Length is required");
             return;
         }
 
-        if(TextUtils.isEmpty(width)){
+        if(TextUtils.isEmpty(width))
+        {
             etWidth.setError("Width is required");
             return;
         }
 
-        if(TextUtils.isEmpty(height)){
+        if(TextUtils.isEmpty(height))
+        {
             etHeight.setError("Height is required");
             return;
         }
 
-        if(TextUtils.isEmpty(weight)){
+        if(TextUtils.isEmpty(weight))
+        {
             etWeight.setError("Weight is required");
             return;
         }
@@ -334,23 +369,28 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         query.put("width", width);
         query.put("height", height);
         query.put("weight", weight);
+
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
+
         Constants.restAdapter.create(ProductGalleryInterface.class)
                 .getShippingCharge(query, new Callback<APIResponseModel<Integer>>() {
+
                     @Override
-                    public void success(APIResponseModel<Integer> shippingCharge, Response response) {
-                        progressDialog.dismiss();
-                        tvShippingCharge.setText("INR " + shippingCharge.Result);
-                        mShippingCharge = shippingCharge.Result;
-                        btnCalculateShippingCharge.setVisibility(View.GONE);
-                        btnSaveMetrics.setVisibility(View.VISIBLE);
+                    public void success(APIResponseModel<Integer> shippingCharge, Response response)
+                    {
+                        //progressDialog.dismiss();
+                        //tvShippingCharge.setText("INR " + shippingCharge.Result);
+                        //mShippingCharge = shippingCharge.Result;
+                        //btnCalculateShippingCharge.setVisibility(View.GONE);
+                        //btnSaveMetrics.setVisibility(View.VISIBLE);
                     }
 
                     @Override
-                    public void failure(RetrofitError error) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
+                    public void failure(RetrofitError error)
+                    {
+                        //progressDialog.dismiss();
+                        //Toast.makeText(getActivity(), "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -367,37 +407,56 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
+    public void afterTextChanged(Editable s)
+    {
         //btnSaveMetrics.setVisibility(View.GONE);
         //btnCalculateShippingCharge.setVisibility(View.VISIBLE);
-
     }
 
 
     /**
      * Initialize ShippingMatixModel
      */
-
     private ShippingMetricsModel initShippingMatrix()
     {
         ShippingMetricsModel shippingMetric = new ShippingMetricsModel();
 
         try
         {
-            if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+            /*if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
             {
                 shippingMetric.setHeight(etHeight.getText().toString().trim());
                 shippingMetric.setWidth(etWidth.getText().toString().trim());
                 shippingMetric.setWeight(etWeight.getText().toString().trim());
                 shippingMetric.setLength(etLength.getText().toString().trim());
+            }*/
+
+            double height = Double.valueOf(etHeight.getText().toString().trim());
+            shippingMetric.setHeight(String.valueOf(height));
+
+            double width = Double.valueOf(etWidth.getText().toString().trim());
+            shippingMetric.setWidth(String.valueOf(width));
+
+            double weight = Double.valueOf(etWeight.getText().toString().trim());
+            shippingMetric.setWeight(String.valueOf(weight));
+
+            double length = Double.valueOf(etLength.getText().toString().trim());
+            shippingMetric.setLength(String.valueOf(length));
+
+            if(!etShippingCharges.getText().toString().trim().isEmpty())
+            {
+                shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
             }
 
-            shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
+            else
+            {
+                shippingMetric.setShippingCharge(0.0);
+            }
 
-            if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+            /*if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
             {
                 shippingMetric.setGstCharge(Double.valueOf(etGST.getText().toString().trim()));
-            }
+            }*/
 
             //shippingMetric.setHidePrice(switchHidePrice.isChecked());
         }
@@ -411,19 +470,49 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         return shippingMetric;
     }
 
-
-    private String isNullOrEmplty(String value)
+    /**
+     * if value is null
+     * @param value
+     * @return empty string
+     */
+    private String getValue(String value)
     {
         return value == null ? "" : (value.equalsIgnoreCase("null") ? "" : value);
     }
 
     /**
      * Check weather all input fields are valid
-     * @return
+     * @return true
      */
     private boolean isValidForm()
     {
-        if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
+        if(TextUtils.isEmpty(etLength.getText().toString().trim())){
+            etLength.setError("Length is required");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
+            etWidth.setError("Width is required");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
+            etHeight.setError("Height is required");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
+            etWeight.setError("Weight is required");
+            return false;
+        }
+
+        /*if(TextUtils.isEmpty(String.valueOf(etShippingCharges.getText().toString().trim())))
+        {
+            etShippingCharges.setError("Shipping Charge is required");
+            return false;
+        }*/
+
+        /*if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
         {
             if(TextUtils.isEmpty(etLength.getText().toString().trim())){
                 etLength.setError("Length is required");
@@ -446,7 +535,8 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             }
         }
 
-        if(TextUtils.isEmpty(String.valueOf(etShippingCharges.getText().toString().trim()))){
+        if(TextUtils.isEmpty(String.valueOf(etShippingCharges.getText().toString().trim())))
+        {
             etShippingCharges.setError("Shipping Charge is required");
             return false;
         }
@@ -457,12 +547,13 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                 etGST.setError("GST is required");
                 return false;
             }
-        }
+        }*/
 
         return true;
     }
 
-    public interface ProductMetricCallBack{
+    public interface ProductMetricCallBack
+    {
         void onProductMetricCalculated(ShippingMetricsModel shippingMetricsModel, ShippingAddOrUpdate val);
     }
 }

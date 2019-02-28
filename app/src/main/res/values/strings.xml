@@ -1232,7 +1232,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_product_name">Product Name</string>
     <string name="product_detail_product_descr">Product Description</string>
     <string name="product_detail_currency">Select Currency</string>
-    <string name="product_detail_product_price">Product Price</string>
+    <string name="product_detail_product_price">Product Price (Including all Taxes)</string>
     <string name="product_details_discount">Discount Amount (If Any)</string>
     <string name="product_detail_online_link">Buy Online Link (If Any)</string>
     <string name="product_detail_priority">Select Priority</string>

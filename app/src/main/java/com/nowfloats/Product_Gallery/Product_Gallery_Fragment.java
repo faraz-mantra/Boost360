@@ -239,7 +239,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                         intent = new Intent(activity, Product_Detail_Activity_V45.class);
                         intent.putExtra("product", position + "");
                         intent.putExtra("isApEnabled", mIsApEnabled);
-                        intent.putExtra("deliveryMethod", deliveryMethod);
+                        //intent.putExtra("deliveryMethod", deliveryMethod);
 
                         Methods.launchFromFragment(activity, view, intent);
                     }
@@ -439,38 +439,56 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
     @Subscribe
     public void getProductList(ArrayList<ProductListModel> data) {
 
-        if (data != null) {
+        if (data != null)
+        {
             //Log.i("","PRoduct List Size--"+data.size());
             //Log.d("Product Id", data.get(0)._id);
-            checkIfAPEnabled();
+            //checkIfAPEnabled();
+
             productItemModelList = data;
             productGalleryAdapter = new ProductGalleryAdapter(activity, currencyValue, from);
             gridView.setAdapter(productGalleryAdapter);
             gridView.invalidateViews();
             productGalleryAdapter.refreshDetails(productItemModelList);
 
-            if (productItemModelList.size() == 0) {
+            if (productItemModelList.size() == 0)
+            {
                 empty_layout.setVisibility(View.VISIBLE);
                 session.setBubbleShareProducts(false);
-                if (from == FROM.BUBBLE) {
+
+                if (from == FROM.BUBBLE)
+                {
                     getActivity().finish();
                     startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
                 }
-            } else {
+            }
+
+            else
+            {
                 session.setBubbleShareProducts(true);
                 empty_layout.setVisibility(View.GONE);
             }
-        } else {
+        }
+
+        else
+        {
             progressLayout.setVisibility(View.GONE);
-            if (productItemModelList == null || productItemModelList.size() == 0) {
+
+            if (productItemModelList == null || productItemModelList.size() == 0)
+            {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
-            } else {
+            }
+
+            else
+            {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
             }
+
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
 
-        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
+        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount())
+        {
             session.setProductsCount(productItemModelList.size());
             OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
         }
