@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -60,6 +61,8 @@ public class OnBoardingManager implements OnBoardingCallback {
     }
 
     public void getOnBoardingData(final String fptag, final View mLockLayout) {
+
+        Log.d("getOnBoardingData", "I am here");
         OnBoardingWebActionApis apis = Constants.webActionAdapter.create(OnBoardingWebActionApis.class);
         apis.getData(String.format("{fptag:'%s'}", fptag), new Callback<WebActionModel<OnBoardingDataModel>>() {
             @Override

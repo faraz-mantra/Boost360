@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.SearchQueryApi;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SearchQueryAdapter;
+import com.nowfloats.Analytics_Screen.model.AnalyticsResponse;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -26,8 +28,13 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -43,10 +50,14 @@ public class SearchQueriesActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     public LinearLayout emptySearchLayout;
     UserSessionManager session;
-    ArrayList<SearchQueryModel> mSearchArrayList = new ArrayList<>();
+    ArrayList<AnalyticsResponse> mSearchArrayList = new ArrayList<>();
     JsonObject obj;
     private boolean stop = false;
     ProgressBar progressBar;
+
+    private boolean isLoading;
+    private int CURRENT_PAGE, LAST_PAGE;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,22 +84,134 @@ public class SearchQueriesActivity extends AppCompatActivity {
         adapter = new SearchQueryAdapter(SearchQueriesActivity.this,mSearchArrayList);
         new AlertArchive(Constants.alertInterface,"SEARCHQUERIES",session.getFPID());
         recyclerView.setAdapter(adapter);
-        createObj();
-        getSearch();
+        //createObj();
+        //getSearch();
+        getSearchQueries();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 if(lastVisibleItem>=totalItemCount-1 && !stop){
-                   getSearch();
+                   //getSearch();
+                   getSearchQueries();
                 }
+        }
+        });
+    }
+
+
+    private Map<String, Object> getJsonBody(int offset)
+    {
+        List<String> list = new ArrayList<>();
+        list.add(session.getFPID());
+
+        Map<String, Object> map = new HashMap<>();
+
+        //JSONObject json = new JSONObject();
+
+        try
+        {
+            map.put("WebsiteIds", list);
+            map.put("Limit", 50);
+            map.put("Offset", offset);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return map;
+    }
+
+    private void getSearchQueries(){
+
+        final int count = mSearchArrayList.size();
+        int offset = count + 1;
+
+        Map<String, Object> map = getJsonBody(offset);
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        SearchQueryApi searchQueryApi = Constants.restAdapterAnalytics.create(SearchQueryApi.class);
+
+        searchQueryApi.getSearchQueries(map, new Callback<List<AnalyticsResponse>>() {
+
+            @Override
+            public void success(List<AnalyticsResponse> searchQueryModels, Response response) {
+
+                Log.d("SEARCH_ANALYTICS", "Success " + response.getStatus());
+
+                progressBar.setVisibility(View.GONE);
+
+                if(response.getStatus() == 204)
+                {
+                    if(mSearchArrayList.size() == 0)
+                    {
+                        emptySearchLayout.setVisibility(View.VISIBLE);
+                    }
+
+                    stop = true;
+                    return;
+                }
+
+                /*if(mSearchArrayList.size() == 0 && response.getStatus() == 204)
+                {
+                    stop = true;
+                    emptySearchLayout.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                else if(mSearchArrayList.size() != 0 && response.getStatus() == 204)
+                {
+                    stop = true;
+                    return;
+                }*/
+
+                /*if(searchQueryModels == null || (searchQueryModels.size() == 0 && count == 0))
+                {
+                    emptySearchLayout.setVisibility(View.VISIBLE);
+                    return;
+                }*/
+
+                if(response.getStatus() == 200 && searchQueryModels != null)
+                {
+                    for (int i =0; i<searchQueryModels.size() ;i++)
+                    {
+                        mSearchArrayList.add(searchQueryModels.get(i));
+                        adapter.notifyItemChanged(count+i);
+                    }
+
+                    //stop = false;
+                }
+
+                adapter.notifyDataSetChanged();
+
+                //stop = count>0 ? searchQueryModels.size()<11 : searchQueryModels.size()<10;
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                Log.d("SEARCH_ANALYTICS", "Error - " + error.getMessage());
+
+                /*if(count == 0)
+                {
+                    emptySearchLayout.setVisibility(View.VISIBLE);
+                }*/
+
+                //stop = false;
+                progressBar.setVisibility(View.GONE);
+                Methods.showSnackBarNegative(SearchQueriesActivity.this,getString(R.string.something_went_wrong_try_again));
             }
         });
     }
 
-    private void createObj() {
+
+   /* private void createObj() {
         obj = new JsonObject();
         obj.addProperty("clientId", Constants.clientId);
         obj.addProperty("fpIdentifierType", session.getISEnterprise().equals("true")?"MULTI":"SINGLE");
@@ -129,7 +252,7 @@ public class SearchQueriesActivity extends AppCompatActivity {
                 Methods.showSnackBarNegative(SearchQueriesActivity.this,getString(R.string.something_went_wrong_try_again));
             }
         });
-    }
+    }*/
     @Override
     protected void onResume() {
         super.onResume();

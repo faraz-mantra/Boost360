@@ -219,6 +219,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Methods.isOnline(HomeActivity.this);
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
+
+        Log.d("WEBSITE_ID", "ID : " + session.getFPID());
         //setHotlineUser();
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();

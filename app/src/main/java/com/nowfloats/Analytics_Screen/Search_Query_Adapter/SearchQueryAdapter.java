@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nowfloats.Analytics_Screen.model.AnalyticsResponse;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  */
 public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.MyViewHolder>{
 
-    private ArrayList<SearchQueryModel> queryList;
+    private ArrayList<AnalyticsResponse> queryList;
     Activity activity;
     PorterDuffColorFilter porterDuffColorFilter;
 
@@ -41,7 +42,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
             this.search_query_image_icon = (ImageView) itemView.findViewById(R.id.search_query_image);
         }
     }
-    public SearchQueryAdapter(Activity activity, ArrayList<SearchQueryModel> list){
+    public SearchQueryAdapter(Activity activity, ArrayList<AnalyticsResponse> list){
         this.activity = activity;
         queryList = list;
     }
@@ -58,12 +59,12 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         porterDuffColorFilter = new PorterDuffColorFilter(activity.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-        try {
+        /*try {
             String sDate = queryList.get(position).getCreatedOn().replace("/Date(", "").replace("+0530)/", "");;
             holder.search_query_date_text.setText(Methods.getFormattedDate(sDate));
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
         holder.search_query_header_text.setText(queryList.get(position).getKeyword());
         holder.search_query_date_text.setTypeface(null, Typeface.ITALIC);
         holder.search_query_image_icon.setColorFilter(porterDuffColorFilter);

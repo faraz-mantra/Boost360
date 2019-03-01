@@ -1,11 +1,15 @@
 package com.nowfloats.Analytics_Screen.API;
 
 import com.google.gson.JsonObject;
+import com.nowfloats.Analytics_Screen.model.AnalyticsResponse;
 import com.nowfloats.Analytics_Screen.model.SearchAnalyticsSummaryForFP;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
 import com.nowfloats.Analytics_Screen.model.SearchRankModel;
 
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -28,4 +32,10 @@ public interface SearchQueryApi {
     @GET("/market/api/SearchAnalytics/GetSearchAnalyticsSummaryForFP")
     void GetSearchAnalyticsSummaryForFP(@Query("fpTag") String fpTag, Callback<SearchAnalyticsSummaryForFP> response);
 
-  }
+
+    /**
+     * New Analytics Api
+     */
+    @POST("/GetSearchAnalytics")
+    void getSearchQueries(@Body Map<String, Object> map, Callback<List<AnalyticsResponse>> response);
+}
