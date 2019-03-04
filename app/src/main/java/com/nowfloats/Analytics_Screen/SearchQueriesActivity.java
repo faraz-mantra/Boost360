@@ -151,6 +151,7 @@ public class SearchQueriesActivity extends AppCompatActivity {
                      return;
                 }
 
+                stop = true;
                 Toast.makeText(getApplicationContext(), "No More Data", Toast.LENGTH_SHORT).show();
             }
 
