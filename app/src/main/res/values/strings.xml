@@ -1429,6 +1429,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>LOST</item>
     </string-array>
 
+    <string-array name="spinner_list_item_array_search_ranking">
+        <item>Avg. Position</item>
+        <item>Impressions</item>
+        <item>Clicks</item>
+        <item>CTR(%)</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="visits_this_week">visits this week</string>
     <string name="visits_this_year">visits this year</string>

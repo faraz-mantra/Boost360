@@ -1065,4 +1065,25 @@ public class Methods {
 
         return new OkClient(okHttpClient);
     }
+
+
+    public static String getISO8601FormattedDate(String datetime)
+    {
+        try
+        {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date date = df.parse(datetime);
+
+            df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+            df.setTimeZone(TimeZone.getDefault());
+            return df.format(date);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 }

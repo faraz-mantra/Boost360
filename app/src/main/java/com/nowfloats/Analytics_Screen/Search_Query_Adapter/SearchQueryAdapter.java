@@ -3,7 +3,7 @@ package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Analytics_Screen.model.AnalyticsResponse;
-import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
+import com.nowfloats.Analytics_Screen.model.SearchAnalytics;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -23,9 +22,8 @@ import java.util.ArrayList;
  */
 public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.MyViewHolder>{
 
-    private ArrayList<AnalyticsResponse> queryList;
-    Activity activity;
-    PorterDuffColorFilter porterDuffColorFilter;
+    private ArrayList<SearchAnalytics> queryList;
+    private Activity activity;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -34,21 +32,26 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
         TextView search_query_date_text;
         ImageView search_query_image_icon;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView)
+        {
             super(itemView);
 
-            this.search_query_header_text = (TextView) itemView.findViewById(R.id.search_query_header_text_1);
-            this.search_query_date_text = (TextView) itemView.findViewById(R.id.search_query_header_text_2);
-            this.search_query_image_icon = (ImageView) itemView.findViewById(R.id.search_query_image);
+            this.search_query_header_text = itemView.findViewById(R.id.search_query_header_text_1);
+            this.search_query_date_text = itemView.findViewById(R.id.search_query_header_text_2);
+            this.search_query_image_icon = itemView.findViewById(R.id.search_query_image);
         }
     }
-    public SearchQueryAdapter(Activity activity, ArrayList<AnalyticsResponse> list){
+
+    public SearchQueryAdapter(Activity activity, ArrayList<SearchAnalytics> list)
+    {
         this.activity = activity;
         queryList = list;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
 
        View view = LayoutInflater.from(parent.getContext())
                .inflate(R.layout.search_query_adapter, parent, false);
@@ -56,23 +59,42 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        porterDuffColorFilter = new PorterDuffColorFilter(activity.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-        /*try {
+        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(activity.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+
+        SearchAnalytics response = queryList.get(position);
+
+        /*try
+        {
             String sDate = queryList.get(position).getCreatedOn().replace("/Date(", "").replace("+0530)/", "");;
             holder.search_query_date_text.setText(Methods.getFormattedDate(sDate));
-        }catch (Exception e){
+        }
+
+        catch (Exception e)
+        {
             e.printStackTrace();
         }*/
-        holder.search_query_header_text.setText(queryList.get(position).getKeyword());
-        holder.search_query_date_text.setTypeface(null, Typeface.ITALIC);
+
+        try
+        {
+            String dateTime = Methods.getISO8601FormattedDate(response.getDate());
+            holder.search_query_date_text.setText(dateTime);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        holder.search_query_header_text.setText(response.getKeyword());
+        //holder.search_query_date_text.setTypeface(null, Typeface.ITALIC);
         holder.search_query_image_icon.setColorFilter(porterDuffColorFilter);
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return queryList.size();
     }
-
 }

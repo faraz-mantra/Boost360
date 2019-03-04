@@ -13,23 +13,19 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.SearchQueryApi;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SearchQueryAdapter;
-import com.nowfloats.Analytics_Screen.model.AnalyticsResponse;
-import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
+import com.nowfloats.Analytics_Screen.model.SearchAnalytics;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,18 +42,14 @@ import retrofit.client.Response;
 public class SearchQueriesActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
-    private static RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter;
     private LinearLayoutManager layoutManager;
     public LinearLayout emptySearchLayout;
     UserSessionManager session;
-    ArrayList<AnalyticsResponse> mSearchArrayList = new ArrayList<>();
+    ArrayList<SearchAnalytics> mSearchArrayList = new ArrayList<>();
     JsonObject obj;
     private boolean stop = false;
     ProgressBar progressBar;
-
-    private boolean isLoading;
-    private int CURRENT_PAGE, LAST_PAGE;
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +76,12 @@ public class SearchQueriesActivity extends AppCompatActivity {
         adapter = new SearchQueryAdapter(SearchQueriesActivity.this,mSearchArrayList);
         new AlertArchive(Constants.alertInterface,"SEARCHQUERIES",session.getFPID());
         recyclerView.setAdapter(adapter);
+
         //createObj();
         //getSearch();
+
         getSearchQueries();
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -110,8 +105,6 @@ public class SearchQueriesActivity extends AppCompatActivity {
 
         Map<String, Object> map = new HashMap<>();
 
-        //JSONObject json = new JSONObject();
-
         try
         {
             map.put("WebsiteIds", list);
@@ -129,8 +122,7 @@ public class SearchQueriesActivity extends AppCompatActivity {
 
     private void getSearchQueries(){
 
-        final int count = mSearchArrayList.size();
-        int offset = count + 1;
+        final int offset = mSearchArrayList.size();
 
         Map<String, Object> map = getJsonBody(offset);
 
@@ -138,72 +130,33 @@ public class SearchQueriesActivity extends AppCompatActivity {
 
         SearchQueryApi searchQueryApi = Constants.restAdapterAnalytics.create(SearchQueryApi.class);
 
-        searchQueryApi.getSearchQueries(map, new Callback<List<AnalyticsResponse>>() {
+        searchQueryApi.getSearchQueries(map, new Callback<List<SearchAnalytics>>() {
 
             @Override
-            public void success(List<AnalyticsResponse> searchQueryModels, Response response) {
-
-                Log.d("SEARCH_ANALYTICS", "Success " + response.getStatus());
+            public void success(List<SearchAnalytics> searchQueryModels, Response response) {
 
                 progressBar.setVisibility(View.GONE);
 
-                if(response.getStatus() == 204)
+                if(response.getStatus() == 204 && mSearchArrayList.isEmpty())
                 {
-                    if(mSearchArrayList.size() == 0)
-                    {
-                        emptySearchLayout.setVisibility(View.VISIBLE);
-                    }
-
+                    emptySearchLayout.setVisibility(View.VISIBLE);
                     stop = true;
                     return;
                 }
-
-                /*if(mSearchArrayList.size() == 0 && response.getStatus() == 204)
-                {
-                    stop = true;
-                    emptySearchLayout.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                else if(mSearchArrayList.size() != 0 && response.getStatus() == 204)
-                {
-                    stop = true;
-                    return;
-                }*/
-
-                /*if(searchQueryModels == null || (searchQueryModels.size() == 0 && count == 0))
-                {
-                    emptySearchLayout.setVisibility(View.VISIBLE);
-                    return;
-                }*/
 
                 if(response.getStatus() == 200 && searchQueryModels != null)
                 {
-                    for (int i =0; i<searchQueryModels.size() ;i++)
-                    {
-                        mSearchArrayList.add(searchQueryModels.get(i));
-                        adapter.notifyItemChanged(count+i);
-                    }
-
-                    //stop = false;
+                     mSearchArrayList.addAll(searchQueryModels);
+                     adapter.notifyItemInserted(offset);
+                     return;
                 }
 
-                adapter.notifyDataSetChanged();
-
-                //stop = count>0 ? searchQueryModels.size()<11 : searchQueryModels.size()<10;
+                Toast.makeText(getApplicationContext(), "No More Data", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error)
             {
-                Log.d("SEARCH_ANALYTICS", "Error - " + error.getMessage());
-
-                /*if(count == 0)
-                {
-                    emptySearchLayout.setVisibility(View.VISIBLE);
-                }*/
-
-                //stop = false;
                 progressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SearchQueriesActivity.this,getString(R.string.something_went_wrong_try_again));
             }

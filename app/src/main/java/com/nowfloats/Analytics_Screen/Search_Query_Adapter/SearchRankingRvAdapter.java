@@ -1,20 +1,16 @@
 package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Analytics_Screen.SearchRankingActivity;
-import com.nowfloats.Analytics_Screen.model.SearchRankModel;
-import com.nowfloats.util.Methods;
+import com.nowfloats.Analytics_Screen.model.SearchAnalytics;
 import com.thinksity.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,15 +19,20 @@ import java.util.List;
 
 public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRvAdapter.SearchRankingViewHolder> {
 
-    private List<SearchRankModel> mSearchRankList;
+    private List<SearchAnalytics> mSearchRankList = new ArrayList<>();
     private int mFilter;
     private Context mContext;
+    private int sortType;
 
-
-    public SearchRankingRvAdapter(List<SearchRankModel> list, int filter, Context context){
+    /*public SearchRankingRvAdapter(List<SearchRankModel> list, int filter, Context context)
+    {
         this.mSearchRankList = list;
         this.mFilter = filter;
         mContext = context;
+    }*/
+
+    public SearchRankingRvAdapter(Context context){
+        this.mContext = context;
     }
 
     @Override
@@ -51,7 +52,35 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
     @Override
     public void onBindViewHolder(SearchRankingViewHolder holder, int position) {
 
-        SearchRankModel data = mSearchRankList.get(position);
+        SearchAnalytics analytics = mSearchRankList.get(position);
+
+        holder.tvSearchQuery.setText(analytics.getKeyword());
+
+        switch (sortType)
+        {
+            case 0:
+
+                holder.tvValue.setText(String.valueOf(analytics.getAveragePosition()));
+                break;
+
+            case 1:
+
+                holder.tvValue.setText(String.valueOf(analytics.getImpressions()));
+                break;
+
+            case 2:
+
+                holder.tvValue.setText(String.valueOf(analytics.getClicks()));
+                break;
+
+            case 3:
+
+                int ctr = (int)(analytics.getCtr() * 100);
+                holder.tvValue.setText(String.valueOf(ctr));
+                break;
+        }
+
+        /*SearchRankModel data = mSearchRankList.get(position);
         if(null!=data) {
             holder.tvSearchQuery.setText(data.getKeyword());
             if (data.getOldRank() == -1) {
@@ -84,7 +113,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
 
             }
 
-        }
+        }*/
     }
 
     private String getPage(int rank){
@@ -108,16 +137,37 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
 
     class SearchRankingViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvSearchQuery, tvOldPage, tvNewPage;
-        ImageView ivArrow;
+        TextView tvValue;
+        TextView tvSearchQuery;
 
-        public SearchRankingViewHolder(View itemView) {
+        //TextView tvOldPage, tvNewPage;
+        //ImageView ivArrow;
+
+        public SearchRankingViewHolder(View itemView)
+        {
             super(itemView);
 
-            tvSearchQuery = (TextView) itemView.findViewById(R.id.tv_search_query);
-            tvOldPage = (TextView) itemView.findViewById(R.id.tv_old_page_rank);
-            tvNewPage = (TextView) itemView.findViewById(R.id.tv_new_rank);
-            ivArrow = (ImageView) itemView.findViewById(R.id.iv_arrow);
+            tvSearchQuery = itemView.findViewById(R.id.tv_search_query);
+
+            //tvOldPage = (TextView) itemView.findViewById(R.id.tv_old_page_rank);
+            //tvNewPage = (TextView) itemView.findViewById(R.id.tv_new_rank);
+            //ivArrow = (ImageView) itemView.findViewById(R.id.iv_arrow);
+
+            tvValue = itemView.findViewById(R.id.tv_value);
         }
+    }
+
+
+    public void setData(List<SearchAnalytics> mSearchRankList)
+    {
+        this.mSearchRankList.clear();
+        this.mSearchRankList.addAll(mSearchRankList);
+        notifyDataSetChanged();
+    }
+
+    public void filter(int value)
+    {
+        this.sortType = value;
+        notifyDataSetChanged();
     }
 }

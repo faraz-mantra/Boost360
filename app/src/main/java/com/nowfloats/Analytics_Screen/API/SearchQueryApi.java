@@ -1,12 +1,10 @@
 package com.nowfloats.Analytics_Screen.API;
 
 import com.google.gson.JsonObject;
-import com.nowfloats.Analytics_Screen.model.AnalyticsResponse;
+import com.nowfloats.Analytics_Screen.model.SearchAnalytics;
 import com.nowfloats.Analytics_Screen.model.SearchAnalyticsSummaryForFP;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
 import com.nowfloats.Analytics_Screen.model.SearchRankModel;
-
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -37,5 +35,5 @@ public interface SearchQueryApi {
      * New Analytics Api
      */
     @POST("/GetSearchAnalytics")
-    void getSearchQueries(@Body Map<String, Object> map, Callback<List<AnalyticsResponse>> response);
+    void getSearchQueries(@Body Map<String, Object> map, Callback<List<SearchAnalytics>> response);
 }

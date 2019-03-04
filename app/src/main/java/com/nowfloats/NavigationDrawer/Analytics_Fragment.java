@@ -197,6 +197,8 @@ public class Analytics_Fragment extends Fragment {
         } else {
             mLockLayout.setVisibility(View.GONE);
         }
+
+        mLockLayout.setVisibility(View.GONE);
     }
 
     @Override
