@@ -126,7 +126,7 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
         tvEmailChangeLevel = findViewById(R.id.email_change_label);
         tvEmailChangeLevel.setText(R.string.email_change_level);
 
-       /* progressDialog = new MaterialDialog.Builder(this)
+        /*progressDialog = new MaterialDialog.Builder(this)
                 .autoDismiss(false)
                 *//*.backgroundColorRes(R.color.transparent)*//*
                 .content("Fetching OTP from SMS inbox")
@@ -177,6 +177,19 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
         protocolSpinner = (Spinner) findViewById(R.id.sp_web_address);
         protocolSpinner.setAdapter(new ArrayAdapter<>(this, R.layout.protocol_spinner_bg, mProtoCols));
         initializeData();
+
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        {
+            tvEmailChangeLevel.setVisibility(View.VISIBLE);
+            emailAddress.setEnabled(false);
+        }
+
+        else
+        {
+            tvEmailChangeLevel.setVisibility(View.GONE);
+            emailAddress.setEnabled(true);
+        }
+
         if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {

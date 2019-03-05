@@ -278,7 +278,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             deliveryMethod = getIntent().getStringExtra("deliveryMethod");
         }
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        /*if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
         {
             layoutProductLink.setVisibility(View.GONE);
         }
@@ -286,7 +286,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         else
         {
             layoutProductLink.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         /**
          * Check for delivery method
