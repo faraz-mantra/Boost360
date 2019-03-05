@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="account_settings">
-        <item>@drawable/ic_seller_profile</item>
+        <!--<item>@drawable/ic_seller_profile</item>-->
         <item>@drawable/ic_site_apperance</item>
         <item>@drawable/ic_domain_enad_emails</item>
         <item>@drawable/icon_change_password</item>

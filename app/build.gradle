@@ -53,7 +53,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2018070017
+        versionCode 2018080038
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         ndk {

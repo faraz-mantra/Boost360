@@ -106,9 +106,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
-                    case "Seller Profile":
+                    /*case "Seller Profile":
                         intent = new Intent(mContext, SellerProfileActivity.class);
-                        break;
+                        break;*/
                     case "Site Appearance":
                         intent = new Intent(mContext, SiteAppearanceActivity.class);
                         break;
