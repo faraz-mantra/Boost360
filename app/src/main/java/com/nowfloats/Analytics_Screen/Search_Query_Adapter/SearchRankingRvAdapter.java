@@ -22,7 +22,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
     private List<SearchAnalytics> mSearchRankList = new ArrayList<>();
     private int mFilter;
     private Context mContext;
-    private int sortType;
+    private int filterType;
 
     /*public SearchRankingRvAdapter(List<SearchRankModel> list, int filter, Context context)
     {
@@ -56,7 +56,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
 
         holder.tvSearchQuery.setText(analytics.getKeyword());
 
-        switch (sortType)
+        switch (filterType)
         {
             case 0:
 
@@ -165,9 +165,9 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
         notifyDataSetChanged();
     }
 
-    public void filter(int value)
+    public void filter(List<SearchAnalytics> mSearchRankList, int value)
     {
-        this.sortType = value;
-        notifyDataSetChanged();
+        this.filterType = value;
+        this.setData(mSearchRankList);
     }
 }

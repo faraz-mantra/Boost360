@@ -158,6 +158,9 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
     private List<com.nowfloats.webactions.models.WebAction> mInventoryWebActionList = new ArrayList<>();
     private int keyWordCount = 0, imageCount = 0;
 
+    private String productCategory;
+
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -199,6 +202,8 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
         //svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         //btnShippingMatrix = findViewById(R.id.btn_calculate_shipping_charges);
+
+        this.productCategory = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
 
         switchView.setChecked(true);
 
@@ -631,7 +636,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
                         if (flag && (path == null || path.trim().length() == 0)) {
                             flag = false;
-                            Methods.showSnackBarNegative(activity, getString(R.string.upload_product_image));
+                            Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.upload_product_image)), productCategory.toLowerCase()));
                         }
                         if (flag) {
                             productInterface.addProduct(values, new Callback<String>() {
@@ -1145,7 +1150,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         else
         {
             YoYo.with(Techniques.Shake).playOn(productName);
-            Methods.showSnackBarNegative(activity, getString(R.string.enter_product_name));
+            Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.enter_product_name)), productCategory.toLowerCase()));
             return false;
         }
 
@@ -1157,7 +1162,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         else
         {
             YoYo.with(Techniques.Shake).playOn(productDesc);
-            Methods.showSnackBarNegative(activity, getString(R.string.enter_product_desc));
+            Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.enter_product_desc)), productCategory.toLowerCase()));
             return false;
         }
 
