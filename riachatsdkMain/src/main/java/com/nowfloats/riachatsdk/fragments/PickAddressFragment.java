@@ -24,6 +24,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ import java.util.Map;
 public class PickAddressFragment extends DialogFragment implements LocationListener,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private TextInputEditText etStreetAddr, etPin, etLocality, etHousePlotNum, etLandmark, etCountry;
+    private TextInputEditText etStreetAddr, etPin, etLocality, etHousePlotNum, etLandmark, etState, etCountry;
     private Button btnSave, btnCancel;
     private AutoCompleteTextView etCity;
     private TextView tvAddress;
@@ -155,6 +156,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             //showKeyBoard();
         }
 
+        makeAutoCompleteFilter(null);
         nfGeoCoder = new NFGeoCoder(getActivity());
     }
 
@@ -204,6 +206,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         btnSave.setText(getActivity().getResources().getString(R.string.locate_on_map));
 
         etCity = v.findViewById(R.id.et_city);
+        etState = v.findViewById(R.id.et_state);
         etStreetAddr = v.findViewById(R.id.et_street_address);
         etCountry = v.findViewById(R.id.et_country);
         etPin = v.findViewById(R.id.et_pincode);
@@ -452,17 +455,33 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 {
 
                     String city = ((TextView) view).getText().toString();
+                    String state = "";
+                    String country = "";
 
-                    if (city.contains(","))
+                    try
                     {
-                        String country[] = city.split(",");
-                        city = country[0];
+                        if (city.contains(","))
+                        {
+                            String result[] = city.split(",");
+                            city = result[0];
+                            state = result.length > 1 ? result[result.length-2].replaceFirst("^ *", "") : "";
+                            country = result[result.length-1].replaceFirst("^ *", "");
+                        }
+                    }
+
+                    catch (ArrayIndexOutOfBoundsException e)
+                    {
+                        e.printStackTrace();
                     }
 
                     etCity.setTag(false);
                     etCity.setText(city);
+                    etState.setText(state);
                     etCity.setTag(true);
                     hasCitySelected = true;
+
+                    etCountry.setText(country);
+                    etPin.requestFocus();
                 }
             });
 
@@ -477,10 +496,20 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         updateErrorList();
         addTextChangeListners();
         addListener();
+        //addTextChangeListener();
 
         return v;
     }
 
+
+    /*private void addTextChangeListener()
+    {
+        etHousePlotNum.addTextChangedListener(new GenericTextWatcher(etHousePlotNum));
+        etStreetAddr.addTextChangedListener(new GenericTextWatcher(etStreetAddr));
+        etCity.addTextChangedListener(new GenericTextWatcher(etCity));
+        etCountry.addTextChangedListener(new GenericTextWatcher(etCountry));
+        etPin.addTextChangedListener(new GenericTextWatcher(etPin));
+    }*/
 
     private void addListener()
     {
@@ -591,16 +620,24 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void makeAutoCompleteFilter(String country_code)
     {
-        filter = null;
-        AutocompleteFilter.Builder builder = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES);
-
-        if (country_code != null)
+        try
         {
-            builder.setCountry(country_code.toUpperCase());
+            filter = null;
+            AutocompleteFilter.Builder builder = new AutocompleteFilter.Builder()
+                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES);
+
+            if (country_code != null)
+            {
+                builder.setCountry(country_code.toUpperCase());
+            }
+
+            filter = builder.build();
         }
 
-        filter = builder.build();
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void reverseGeoCode() {
@@ -902,4 +939,65 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             mGoogleApiClient.disconnect();
         }
     }
+
+
+    /*class GenericTextWatcher implements TextWatcher
+    {
+        private GenericTextWatcher(View view)
+        {
+
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        public void afterTextChanged(Editable editable) {
+
+            if (checkFields())
+            {
+                btnSave.setEnabled(true);
+                //btnSave.setBackgroundColor(Color.TRANSPARENT);
+            }
+
+            else
+            {
+                btnSave.setEnabled(false);
+            }
+        }
+    }
+
+    private boolean checkFields() {
+
+        if (etStreetAddr.getText().toString().trim().equals(""))
+        {
+            return false;
+        }
+
+        if (etCity.getText().toString().trim().equals(""))
+        {
+            return false;
+        }
+
+        if (etCountry.getText().toString().trim().equals(""))
+        {
+            return false;
+        }
+
+        if (etPin.getText().toString().trim().equals(""))
+        {
+            return false;
+        }
+
+        if (etPin.getText().toString().trim().length() > 6)
+        {
+            return false;
+        }
+
+        if (etHousePlotNum.getText().toString().trim().equals(""))
+        {
+            return false;
+        }
+
+        return hasCitySelected;
+    }*/
 }

@@ -14,6 +14,7 @@
     <string name="house_plot_num">House/Plot Number</string>
     <string name="street_address_opt">Street Address 2 (Optional)</string>
     <string name="land_mark">Landmark (Optional)</string>
+    <string name="state">State</string>
     <string name="noInternet">No Internet Connection</string>
 
     <string name="business_name">BUSINESS NAME</string>
