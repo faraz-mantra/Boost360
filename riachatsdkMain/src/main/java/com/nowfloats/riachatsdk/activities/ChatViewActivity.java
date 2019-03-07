@@ -147,46 +147,32 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private Toolbar toolbar;
 
     private RecyclerView rvChatData, rvButtonsContainer;
-
     private LinearLayout cvChatInput;
-
     private AutoCompleteTextView etChatInput;
-
     private ImageView ivSendMessage, ivScrollDown, ivBack, ivScrollUp, ivScrollDownBtn;
-
     private TextView tvPrefix, tvPostfix, tvSkip;
-
-//    private StringBuilder mStringBuilder;
-
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-    ;
-
     private Button mCurrButton, mDefaultButton;
 
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+
     private List<RiaCardModel> mAllNodes = new ArrayList<>(0);
-
     private Map<String, String> mDataMap = new HashMap<>();
-
     private List<Section> mSectionList = new ArrayList<>();
-
     private List<Button> mButtonList = new ArrayList<>();
 
     private String mCurrVarName = null, mNextNodeId = "-1", appVersion = "", mCurrNodeId, mCurrentDeepLink, mSessionId, mCurrFlowId;
 
     private final String KEY_NEXT_NODE_ID = "NextNodeId";
-
     private final String KEY_FP_CREATION_STATUSCODE = "FPCREATION_STATUSCODE";
 
     private Map<String, String> mAutoComplDataHash;
 
     private RvChatAdapter mAdapter;
-
     private RvButtonsAdapter mButtonsAdapter;
 
     private RequestQueue mRequestQueue;
 
     private PickAddressFragment pickAddressFragment;
-
 
     private FileUploadResultReceiver mReceiver;
 
@@ -199,17 +185,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private int FP_STATUS_CODE = -100;
 
     private static final int FP_CREATED = 1;
-
     private static final int FP_NOT_CREATED = -100;
-
     private static final int AUDIO_REQUEST_CODE = 56;
 
-    private Gson gson;
-
     private ChatManager.ChatType chatType;
-
     private RelativeLayout rlButtons;
-
     private SharedPreferences pref;
 
     private static final String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
@@ -281,7 +261,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null)
+        {
             chatType = (ChatManager.ChatType) getIntent().getExtras().get(Constants.CHAT_TYPE);
             pref = getSharedPreferences(NF_PREF_NAME, Context.MODE_PRIVATE);
         }
@@ -295,8 +276,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 break;
         }
 
-//        mStringBuilder = new StringBuilder();
-        gson = new Gson();
         try {
             appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
@@ -313,9 +292,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         setListeners();
 
-//        syncChatHistory();
-        syncChat();
+        //syncChatHistory();
 
+        syncChat();
     }
 
 
@@ -350,22 +329,22 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.doodle_bg));
 
         displayMetrics = getResources().getDisplayMetrics();
-        rvChatData = (RecyclerView) findViewById(R.id.rv_chat_data);
-        rvButtonsContainer = (RecyclerView) findViewById(R.id.rv_reply_button_container);
-        rlButtons = (RelativeLayout) findViewById(R.id.rlButtons);
-        cvChatInput = (LinearLayout) findViewById(R.id.cv_chat_input);
-        etChatInput = (AutoCompleteTextView) findViewById(R.id.et_chat_input);
-        ivSendMessage = (ImageView) findViewById(R.id.iv_send_msg);
-        ivScrollDown = (ImageView) findViewById(R.id.iv_scroll_down);
-        ivBack = (ImageView) findViewById(R.id.ivBack);
-        ivScrollUp = (ImageView) findViewById(R.id.iv_scroll_up);
-        ivScrollDownBtn = (ImageView) findViewById(R.id.iv_scroll_btn_down);
-        tvPrefix = (TextView) findViewById(R.id.tv_prefix);
-        tvSkip = (TextView) findViewById(R.id.tv_skip);
-        tvPostfix = (TextView) findViewById(R.id.tv_postfix);
-        tvRiaTyping = (TextView) findViewById(R.id.tv_ria_typing);
+        rvChatData = findViewById(R.id.rv_chat_data);
+        rvButtonsContainer = findViewById(R.id.rv_reply_button_container);
+        rlButtons = findViewById(R.id.rlButtons);
+        cvChatInput = findViewById(R.id.cv_chat_input);
+        etChatInput = findViewById(R.id.et_chat_input);
+        ivSendMessage = findViewById(R.id.iv_send_msg);
+        ivScrollDown = findViewById(R.id.iv_scroll_down);
+        ivBack = findViewById(R.id.ivBack);
+        ivScrollUp = findViewById(R.id.iv_scroll_up);
+        ivScrollDownBtn = findViewById(R.id.iv_scroll_btn_down);
+        tvPrefix = findViewById(R.id.tv_prefix);
+        tvSkip = findViewById(R.id.tv_skip);
+        tvPostfix = findViewById(R.id.tv_postfix);
+        tvRiaTyping = findViewById(R.id.tv_ria_typing);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        progressBar = findViewById(R.id.progressbar);
 
         progressBar.getIndeterminateDrawable()
                 .setColorFilter(getResources().getColor(R.color.white),
@@ -811,18 +790,32 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void onItemClick(final Button button) {
+
+        Log.d("CHECK_FOR_NODE", "CLICKED");
+
         if (button == null)
             return;
+
         //TODO:sent_check ButtonType and do the action accordingly
         hideSoftKeyboard();
-        mButtonList.clear();
-        mButtonsAdapter.notifyDataSetChangedRequest();
+
+        /**
+         * For GetAddress type button button should not disappear on click
+         */
+        if(!button.getButtonType().equals("GetAddress"))
+        {
+            mButtonList.clear();
+            mButtonsAdapter.notifyDataSetChangedRequest();
+            rvButtonsContainer.setVisibility(View.INVISIBLE);
+        }
+
         if (rlButtons != null)
             rlButtons.setVisibility(View.GONE);
-        rvButtonsContainer.setVisibility(View.INVISIBLE);
+
         cvChatInput.setVisibility(View.INVISIBLE);
         switch (button.getButtonType()) {
             case Constants.ButtonType.TYPE_NEXT_NODE:
+
                 if (mCurrVarName != null && button.getVariableValue() != null && !button.getVariableValue().isEmpty()) {
                     String str = null;
                     if (button.getVariableValue() != null) {
@@ -847,12 +840,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 showNextNode(button.getNextNodeId());
                 break;
             case Constants.ButtonType.TYPE_GET_ADDR:
+
                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
                 getUserAddress(button);
                 break;
             case Constants.ButtonType.TYPE_SHOW_CONFIRMATION:
+
                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
@@ -887,12 +882,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 handleAutoComplete(button);
                 break;
             case Constants.ButtonType.TYPE_DEEP_LINK:
+
                 handleDeepLink(button);
                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
                 break;
             default:
+
                 ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId, pref.getString(GET_FP_DETAILS_TAG, null));
@@ -956,6 +953,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 
     private void getUserAddress(final Button btn) {
+
         pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.MANUAL, (HashMap<String, String>) mDataMap);
 
         pickAddressFragment.setResultListener(new PickAddressFragment.OnResultReceive() {
@@ -963,6 +961,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark) {
                 //TODO: saveREsult
                 //replyToRia(address + "\nCity: " + city + "\nCountry: " + country + "\nPin: " + pin, Constants.SectionType.TYPE_TEXT);
+
+                /**
+                 * Added for clearing button layout after address selection on map
+                 */
+                mButtonList.clear();
+                mButtonsAdapter.notifyDataSetChangedRequest();
+                rvButtonsContainer.setVisibility(View.INVISIBLE);
 
                 String landmarkMap = TextUtils.isEmpty(landmark) ? "" : ", " + landmark;
                 String locality = TextUtils.isEmpty(area) ? "" : ", " + area;
@@ -1009,7 +1014,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 //showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
             }
         });
-        pickAddressFragment.show(getFragmentManager(), "Test");
+
+        pickAddressFragment.show(getSupportFragmentManager(), "Test");
     }
 
 
