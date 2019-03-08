@@ -217,11 +217,12 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         tvTip = v.findViewById(R.id.tvTip);
         rlMapContainer = v.findViewById(R.id.mapFragment);
 
-        populateData();
-
         btnSave = v.findViewById(R.id.btn_save);
 
         llManual.bringToFront();
+
+        btnSave.setClickable(false);
+        btnSave.setEnabled(false);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
 
@@ -230,9 +231,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                 if (verifyData())
                 {
-                    btnSave.setClickable(false);
-                    btnSave.setEnabled(false);
-                    btnSave.setVisibility(View.INVISIBLE);
+                    //btnSave.setClickable(false);
+                    //btnSave.setEnabled(false);
+                    //btnSave.setVisibility(View.INVISIBLE);
 
                     if (btnSave.getText().toString().equalsIgnoreCase(getResources().getString(R.string.locate_on_map)))
                     {
@@ -317,7 +318,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                             }
 
                             mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
-                                    etLocality.getText().toString(), etCity.getText().toString(), "",
+                                    etLocality.getText().toString(), etCity.getText().toString(), etState.getText().toString(),
                                     etCountry.getText().toString(), lat, lng,
                                     etPin.getText().toString(),
                                     etHousePlotNum.getText().toString(), etLandmark.getText().toString());
@@ -496,20 +497,21 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         updateErrorList();
         addTextChangeListners();
         addListener();
-        //addTextChangeListener();
+        addTextChangeListener();
+        populateData();
 
         return v;
     }
 
 
-    /*private void addTextChangeListener()
+    private void addTextChangeListener()
     {
         etHousePlotNum.addTextChangedListener(new GenericTextWatcher(etHousePlotNum));
         etStreetAddr.addTextChangedListener(new GenericTextWatcher(etStreetAddr));
         etCity.addTextChangedListener(new GenericTextWatcher(etCity));
         etCountry.addTextChangedListener(new GenericTextWatcher(etCountry));
         etPin.addTextChangedListener(new GenericTextWatcher(etPin));
-    }*/
+    }
 
     private void addListener()
     {
@@ -613,8 +615,21 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             etStreetAddr.setText(mDataMap.get("[~" + "PICK_ADDRESS" + "]"));
             etLandmark.setText(mDataMap.get("[~" + "PICK_LANDMARK" + "]"));
             etCity.setText(mDataMap.get("[~" + "CITY" + "]"));
+            etState.setText(mDataMap.get("[~" + "STATE" + "]"));
             etCountry.setText(mDataMap.get("[~" + "COUNTRY" + "]"));
             etPin.setText(mDataMap.get("[~" + "PINCODE" + "]"));
+
+            if(!etCity.getText().toString().trim().isEmpty())
+            {
+                hasCitySelected = true;
+            }
+
+            if(checkFields())
+            {
+                btnSave.setClickable(true);
+                btnSave.setEnabled(true);
+                btnSave.setBackgroundResource(R.drawable.done_button_enabled);
+            }
         }
     }
 
@@ -913,7 +928,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         String address = etHousePlotNum.getText().toString() + ", " + etStreetAddr.getText().toString() + ", " +
                 locality +
                 landmark +
-                etCity.getText().toString() + ", " + etCountry.getText().toString() + ", " +
+                etCity.getText().toString() + ", " + etState.getText().toString() + ", "+ etCountry.getText().toString() + ", " +
                 etPin.getText().toString();
 
         tvAddress.setText(address);
@@ -941,7 +956,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     }
 
 
-    /*class GenericTextWatcher implements TextWatcher
+    class GenericTextWatcher implements TextWatcher
     {
         private GenericTextWatcher(View view)
         {
@@ -955,13 +970,16 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
             if (checkFields())
             {
+                btnSave.setClickable(true);
                 btnSave.setEnabled(true);
-                //btnSave.setBackgroundColor(Color.TRANSPARENT);
+                btnSave.setBackgroundResource(R.drawable.done_button_enabled);
             }
 
             else
             {
+                btnSave.setClickable(false);
                 btnSave.setEnabled(false);
+                btnSave.setBackgroundResource(R.drawable.done_button_disabled);
             }
         }
     }
@@ -999,5 +1017,5 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         }
 
         return hasCitySelected;
-    }*/
+    }
 }

@@ -205,6 +205,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     public static final String Save_Email = "emailKey";
     public static final String Save_Country = "countryKey";
     public static final String Save_City = "cityKey";
+    public static final String Save_State = "stateKey";
     public static final String Save_Lat = "ria_latKey";
     public static final String Save_Lng = "ria_lngKey";
 
@@ -969,10 +970,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mButtonsAdapter.notifyDataSetChangedRequest();
                 rvButtonsContainer.setVisibility(View.INVISIBLE);
 
+                Log.d("ON_RESULT_CLICKED", "State : " + state);
+
                 String landmarkMap = TextUtils.isEmpty(landmark) ? "" : ", " + landmark;
                 String locality = TextUtils.isEmpty(area) ? "" : ", " + area;
 
                 mDataMap.put("[~" + "CITY" + "]", city);
+                mDataMap.put("[~" + "STATE" + "]", state);
                 mDataMap.put("[~" + "COUNTRY" + "]", country);
                 mDataMap.put("[~" + "PICK_HOUSEPLOTNO" + "]", housePlotNum);
                 mDataMap.put("[~" + "PICK_AREA" + "]", area);
@@ -987,6 +991,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 HashMap<String, String> userData = new HashMap<String, String>();
                 userData.put("CITY", city);
+                userData.put("STATE", state);
                 userData.put("COUNTRY", country);
                 userData.put("PICK_HOUSEPLOTNO", housePlotNum);
                 userData.put("PICK_AREA", area);
@@ -1195,7 +1200,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             userData.put("COUNTRY_CODE", mDataMap.get("[~COUNTRYCODE]") + "");
             userData.put("PHONE", mDataMap.get("[~PHONE]") + "");
             userData.put("BUSINESS_CATEGORY", mDataMap.get("[~BUSINESS_CATEGORY]") + "");
-            userData.put("ADDRESS", mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~COUNTRY]") + "");
+            userData.put("ADDRESS", mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~STATE]") + ", " + mDataMap.get("[~COUNTRY]") + "");
             userData.put("EMAIL", mDataMap.get("[~EMAIL]") + "");
             userData.put("TAG", mDataMap.get("[~TAG]") + "");
 
@@ -1210,6 +1215,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mBundle.putString(Save_Name, mDataMap.get("[~BUSINESS_NAME]"));
         mBundle.putString(Save_Cat, mDataMap.get("[~BUSINESS_CATEGORY]"));
         mBundle.putString(Save_City, mDataMap.get("[~CITY]"));
+        mBundle.putString(Save_State, mDataMap.get("[~STATE]"));
         mBundle.putString(Save_Country, mDataMap.get("[~COUNTRY]"));
         mBundle.putString(Save_Email, mDataMap.get("[~EMAIL]"));
 
@@ -2260,7 +2266,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     userData.put("COUNTRY_CODE", mDataMap.get("[~COUNTRYCODE]") + "");
                     userData.put("PHONE", mDataMap.get("[~PHONE]") + "");
                     userData.put("BUSINESS_CATEGORY", mDataMap.get("[~BUSINESS_CATEGORY]") + "");
-                    userData.put("ADDRESS", mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~COUNTRY]") + "");
+                    userData.put("ADDRESS", mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~STATE]") + ", " + mDataMap.get("[~COUNTRY]") + "");
                     userData.put("EMAIL", mDataMap.get("[~EMAIL]") + "");
                     userData.put("TAG", mDataMap.get("[~TAG]") + "");
 

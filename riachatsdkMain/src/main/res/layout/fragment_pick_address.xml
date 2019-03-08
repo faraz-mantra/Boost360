@@ -151,11 +151,15 @@
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/et_country"
                             android:layout_width="match_parent"
-                            android:drawableRight="@drawable/dropselect"
                             android:layout_height="wrap_content"
                             android:inputType="textCapWords"
                             android:textSize="14sp"
+                            android:enabled="false"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                        <!--
+                        android:drawableRight="@drawable/dropselect"
+                        -->
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -249,7 +253,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <View
             android:layout_width="1dp"
@@ -262,11 +266,11 @@
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/done_button_disabled"
             android:text="@string/done"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

@@ -436,7 +436,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             formViewHolder.tvBusinessName.setText(mDataMap.get("[~BUSINESS_NAME]") + "");
             formViewHolder.tvPhoneNumber.setText(mDataMap.get("[~COUNTRYCODE]") + " " + mDataMap.get("[~PHONE]") + "");
             formViewHolder.tvCategory.setText(mDataMap.get("[~BUSINESS_CATEGORY]") + "");
-            formViewHolder.tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~COUNTRY]") + "");
+            formViewHolder.tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~STATE]") + ", " + mDataMap.get("[~COUNTRY]") + "");
             formViewHolder.tvEmailAddress.setText(mDataMap.get("[~EMAIL]") + "");
             formViewHolder.tvWebsiteURL.setText("https://" + mDataMap.get("[~TAG]") + ".nowfloats.com");
 
