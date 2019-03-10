@@ -61,7 +61,7 @@
                     android:inputType="textCapWords|textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -79,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/dropselect"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -97,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textNoSuggestions"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -141,7 +141,7 @@
                     android:maxLines="1"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
                 <ProgressBar
@@ -171,7 +171,7 @@
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -192,7 +192,7 @@
                     android:inputType="none"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -215,7 +215,7 @@
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -236,7 +236,7 @@
                     android:inputType="textNoSuggestions"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
             </android.support.design.widget.TextInputLayout>
@@ -275,7 +275,7 @@
                         android:ellipsize="end"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
 
@@ -337,7 +337,7 @@
                         android:layout_marginLeft="28dp"
                         android:text="+91"
                         android:textColor="#B6B6B6"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:visibility="gone"
                         tools:ignore="MissingPrefix" />
 
@@ -350,7 +350,7 @@
                         android:ellipsize="end"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
                 </android.support.design.widget.TextInputLayout>
