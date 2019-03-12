@@ -1734,6 +1734,50 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         }, time);
 
+        /**
+         * If last node/ login node
+         */
+        if(node.getId() != null && node.getId().equals("59675de6b02a290bac836f0e"))
+        {
+            autoLogin(node, 13500);
+        }
+
+        else
+        {
+            autoLogin(node, 18500);
+        }
+    }
+
+    /**
+     * method for auto login
+     * @param node
+     */
+    private void autoLogin(RiaCardModel node, int duration)
+    {
+        if(node.getButtons() != null)
+        {
+            for(final Button button: node.getButtons())
+            {
+                /**
+                 * if deeplink is login
+                 */
+                if(button.getDeepLinkUrl() != null && button.getDeepLinkUrl().equals(Constants.DeepLinkUrl.LOGIN))
+                {
+                    /**
+                     * execute login method after 13.5 second so that all login node message display before attempting login
+                     */
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            login();
+                        }
+                    }, duration);
+
+                    break;
+                }
+            }
+        }
     }
 
     private void showKeyBoard() {

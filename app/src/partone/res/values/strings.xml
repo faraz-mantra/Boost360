@@ -332,10 +332,10 @@
     <string name="your_site_health">Your Site Health</string>
 
     <string name="settings_feedback_link">ria@nowfloats.com</string>
-    <string name="settings_about_us_link">http://nowfloats.com/</string>
+    <string name="settings_about_us_link">https://www.nowfloats.com/about-us/</string>
 
-    <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
-    <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
+    <string name="settings_tou_url">https://www.nowfloats.com/tnc/</string>
+    <string name="settings_privacy_url">https://www.nowfloats.com/privacy/</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
 
     <!--this part is for FAQ harcoded strings -->
@@ -355,7 +355,7 @@
 
     <string name="email_id_to_request_plans">lead@nowfloats.com</string>
 
-    <string name="setting_faq_url">https://hello.nowfloats.com/faqs</string>
+    <string name="setting_faq_url">https://www.nowfloats.com/faqs/</string>
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
     <string name="renew_light_house_plan">Renew Boost plan to get all the features</string>
