@@ -1,0 +1,195 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp" >
+
+            <RelativeLayout
+                android:id="@+id/item_category_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/margin_25"
+                android:paddingRight="@dimen/margin_25"
+                android:paddingTop="@dimen/margin_15"
+                android:paddingBottom="@dimen/margin_10"
+                android:background="?attr/selectableItemBackground" >
+
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginRight="12dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:gravity="bottom"
+                    android:layout_toRightOf="@+id/thumbnail" >
+
+                    <TextView
+                        android:id="@+id/label_brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:paddingBottom="5dp"
+                        android:text="Watch by Fastrack"/>
+
+                    <TextView
+                        android:id="@+id/label_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_below="@+id/label_brand"
+                        android:text="Fastrack Bare Basic Watch"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/label_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/thumbnail"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="14sp"
+                    android:maxLines="3"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:ellipsize="end"
+                    android:text="This is a wedding makeup description"/>
+
+                <View
+                    android:id="@+id/dotted_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/label_description"
+                    android:background="@drawable/dotted_line"/>
+
+               <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dotted_line"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp" >
+
+                    <TextView
+                        android:id="@+id/label_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/secondaryLightTextColor"
+                        android:textSize="14sp"
+                        android:text="Base Price: "
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/label_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"
+                        android:text="INR 100"
+                        android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:id="@+id/label_discounted_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/secondaryLightTextColor"
+                        android:textSize="14sp"
+                        android:text="INR 80"
+                        android:layout_weight="1"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="10dp"
+                        android:gravity="center_vertical" />
+
+                    <Button
+                        android:id="@+id/button_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:textColor="@color/secondaryLightTextColor"
+                        android:background="@android:color/transparent"
+                        android:textSize="12sp"
+                        android:layout_gravity="end"
+                        android:gravity="center_vertical|end"
+                        android:text="Edit"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <!--
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#e9e9e9"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp"
+            android:layout_marginTop="-3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp" >
+
+            <TextView
+                android:id="@+id/label_variants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryLightTextColor"
+                android:textSize="14sp"
+                android:text="4 Variants"
+                android:padding="8dp"
+                android:layout_gravity="center_vertical"/>
+
+        </android.support.v7.widget.CardView>
+        -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/variant_background"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp" >
+
+
+            <TextView
+                android:id="@+id/label_variants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryLightTextColor"
+                android:textSize="14sp"
+                android:text="4 Variants"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:drawableLeft="@drawable/ic_variants"
+                android:drawablePadding="@dimen/margin_8"
+                android:layout_gravity="center_vertical"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

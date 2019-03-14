@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Product_Gallery.ProductCatalogActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
@@ -167,7 +168,8 @@ public class ManageInventoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                    Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
+                    //Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
+                    Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

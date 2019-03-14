@@ -902,7 +902,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_password_6to12_char">Phone number should be between 6 &#8211; 12 characters</string>
     <string name="basic_info">Basic Information</string>
     <string name="business_name_more_than_3char">Business Name should be more than 3 letters</string>
-    <string name = "invalid_custom_product_category">Enter only english characters in product category</string>
+    <string name="invalid_custom_product_category">Enter only english characters in product category</string>
     <string name="try_again">Try again&#8230;</string>
     <string name="wait_while_loading_category">Loading Categories&#8230;</string>
     <string name="wait_while_loading_salesman">Loading Salesman&#8230;</string>
@@ -1723,7 +1723,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <!--<item>Seller Profile</item>-->
         <item>Site Appearance</item>
         <item>Domain and Email</item>
-      <!--  <item>Your Plans</item>-->
+        <!--  <item>Your Plans</item>-->
         <item>Change Password</item>
         <item>Log out</item>
     </string-array>

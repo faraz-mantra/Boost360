@@ -102,6 +102,14 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="AppThemeActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="colorAccent">@color/accentColor</item>
+    </style>
+
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/primaryColor</item>
         <item name="colorControlActivated">@color/primaryColor</item>
@@ -180,4 +188,28 @@
         <item name="android:textColorHint">#B6B6B6</item>
     </style>
 
+    <style name="ProductEditTextStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/input_background</item>
+    </style>
+
+    <style name="ProductLabelTextStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="ProductHelpButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_marginLeft">@dimen/margin_5</item>
+        <item name="srcCompat">@drawable/ic_info</item>
+    </style>
 </resources>

@@ -110,4 +110,8 @@
 
     <color name="f3f3f3">#F3F3F3</color>
 
+    <color name="primaryTextColor">#4a4a4a</color>
+    <color name="secondaryTextColor">#7f7f7f</color>
+    <color name="secondaryLightTextColor">#949494</color>
+
 </resources>
