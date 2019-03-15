@@ -6,14 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.ProductCatagoryRecyclerAdapter;
@@ -25,7 +20,6 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
 
@@ -37,10 +31,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class ProductCatalogActivity extends AppCompatActivity {
-
-    //private Toolbar toolbar;
-    //private TextView headerText;
-    //private ImageView ivDelete;
 
     private ActivityProductCatalogBinding binding;
     private ProductCatagoryRecyclerAdapter adapter;
@@ -58,11 +48,6 @@ public class ProductCatalogActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
-
-        //toolbar = findViewById(R.id.app_bar_site_appearance);
-        //ivDelete = findViewById(R.id.ivDelete);
-        //setSupportActionBar(toolbar);
-        //headerText = toolbar.findViewById(R.id.titleTextView);
 
         if (getSupportActionBar() != null)
         {
@@ -92,57 +77,35 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
         ProductGalleryInterface galleryInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
 
+        binding.pbLoading.setVisibility(View.VISIBLE);
+
         galleryInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
 
             @Override
             public void success(ArrayList<ProductListModel> data, Response response) {
 
+                binding.pbLoading.setVisibility(View.GONE);
+
                 if(data != null && response.getStatus() == 200)
                 {
                     if(data.size() > 0)
                     {
+                        binding.layoutEmpty.setVisibility(View.GONE);
                         adapter.setData(data);
                         return;
                     }
+
+                    binding.layoutEmpty.setVisibility(View.VISIBLE);
                 }
 
                 stop = true;
-
-                /*try {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (Product_Gallery_Fragment.progressLayout != null)
-                                Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
-                        }
-                    });
-                    if (map.get("skipBy").equals("0") && Product_Detail_Activity_V45.replaceImage) {
-                        Product_Gallery_Fragment.productItemModelList = data;
-                    }
-                    if (bus != null) {
-                        if (map.get("skipBy").equals("0")) {
-                            bus.post(data);
-                        } else {
-                            bus.post(new LoadMoreProductEvent(data));
-                        }
-                    }
-                }catch(Exception e){e.printStackTrace();}*/
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                Log.d("PRODUCT_SIZE", "FAIL");
-                /*activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (Product_Gallery_Fragment.empty_layout!=null)
-                            Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
-                        if (Product_Gallery_Fragment.progressLayout!=null)
-                            Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
-                        Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
-                    }
-                });*/
+                binding.pbLoading.setVisibility(View.GONE);
+                Methods.showSnackBarNegative(ProductCatalogActivity.this, getString(R.string.something_went_wrong_try_again));
             }
         });
     }

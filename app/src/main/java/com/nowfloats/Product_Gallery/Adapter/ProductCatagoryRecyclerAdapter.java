@@ -16,7 +16,6 @@ import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

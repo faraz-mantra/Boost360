@@ -1,9 +1,11 @@
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <android.support.v4.widget.NestedScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,6 +14,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingBottom="@dimen/margin_60"
             tools:context="com.nowfloats.Product_Gallery.ManageProductFragment">
 
             <LinearLayout
@@ -19,6 +22,33 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/margin_20"
                 android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/layout_product_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Product Primary Image"/>
+
+                    <ImageButton
+                        android:id="@+id/ib_info_product_image"
+                        style="@style/ProductHelpButtonStyle"/>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/image_picker"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:clickable="true"
+                    android:background="@drawable/image_picker_backround" >
+
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/layout_brand"
@@ -135,6 +165,7 @@
                     android:maxLines="10"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
+                    android:maxLength="2000"
                     android:hint="Describe your product within 2000 characters max ..."
                     style="@style/ProductEditTextStyle" />
 
@@ -148,7 +179,43 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/ProductLabelTextStyle"
+                                android:text="Currency" />
+
+                            <ImageButton
+                                android:id="@+id/ib_info_product_currency"
+                                style="@style/ProductHelpButtonStyle" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/edit_currency"
+                            android:layout_marginTop="@dimen/margin_5"
+                            style="@style/ProductEditTextStyle" />
+
+                        <!--
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/spinner_currency"
+                            style="@style/ProductEditTextStyle"
+                            android:minHeight="36dp"
+                            android:layout_marginTop="@dimen/margin_5"/>
+                        -->
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight=".9"
+                        android:layout_marginLeft="@dimen/margin_10"
                         android:orientation="vertical" >
 
                         <LinearLayout
@@ -192,44 +259,35 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:layout_height="24dp"
+                        android:layout_gravity="start"
+                        android:text="Final Price" />
+
+                    <TextView
+                        android:id="@+id/label_final_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:layout_height="24dp"
-                            android:layout_gravity="start"
-                            android:text="Final Price" />
-
-                        <TextView
-                            android:id="@+id/label_final_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="38dp"
-                            android:layout_marginTop="@dimen/margin_5"
-                            android:hint="XX,XXX"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
+                        android:hint="XX,XXX"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/button_book_now"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="12sp"
-                    android:textAllCaps="false"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:background="@drawable/button_rectangle"
-                    android:text="Add Property"/>
+                <include
+                    android:id="@+id/layout_variants"
+                    layout="@layout/layout_variants_info" />
 
             </LinearLayout>
 
