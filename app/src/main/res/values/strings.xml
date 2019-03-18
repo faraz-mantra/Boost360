@@ -1737,4 +1737,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Pay By Cheque</item>
         <item>Bank Transfer</item>
     </string-array>
+    <array name="stock_availability">
+        <item>in stock</item>
+        <item>out of stock</item>
+    </array>
+    <array name="stock_options">
+        <item>YES</item>
+        <item>NO</item>
+    </array>
 </resources>

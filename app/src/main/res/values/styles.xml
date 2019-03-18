@@ -198,6 +198,16 @@
         <item name="android:background">@drawable/input_background</item>
     </style>
 
+    <style name="ProductSpinnerStyle" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:spinnerMode">dropdown</item>
+    </style>
+
     <style name="ProductLabelTextStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

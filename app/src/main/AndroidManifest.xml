@@ -496,6 +496,13 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.darsh.multipleimageselect.activities.AlbumSelectActivity"
+            android:theme="@style/MultipleImageSelectTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <!--
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

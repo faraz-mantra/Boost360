@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/layout_product_image___"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/ProductLabelTextStyle"
+                    android:text="Inventory Availability"/>
+
+                <ImageButton
+                    android:id="@+id/ib_info_product_image____"
+                    style="@style/ProductHelpButtonStyle"/>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/ProductLabelTextStyle"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Available Qty."/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/input_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:background="@drawable/input_background"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/spinner_stock_availability"
+                    style="@style/ProductSpinnerStyle"
+                    android:layout_weight="1"
+                    android:entries="@array/stock_availability"
+                    android:background="@drawable/spinner_background_instock" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/secondaryLightTextColor"/>
+
+                <EditText
+                    android:id="@+id/edit_available_qty"
+                    style="@style/ProductEditTextStyle"
+                    android:layout_weight="1"
+                    android:background="@null" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_20"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Allow COD Orders"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1.4"
+                        android:text="Max Qty."/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="1dp"
+                    android:background="@drawable/input_background"
+                    android:orientation="horizontal" >
+
+                    <Spinner
+                        android:id="@+id/spinner_cod_availability"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_weight="1"
+                        android:entries="@array/stock_options"
+                        android:background="@drawable/spinner_background_instock" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/secondaryLightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/edit_cod_max__qty"
+                        style="@style/ProductEditTextStyle"
+                        android:layout_weight="1.4"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_image__"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Allow prepaid online orders"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image_"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1.4"
+                        android:text="Max Qty."/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="1dp"
+                    android:background="@drawable/input_background"
+                    android:orientation="horizontal" >
+
+                    <Spinner
+                        android:id="@+id/spinner_prepaid_online_availability"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_weight="1"
+                        android:entries="@array/stock_options"
+                        android:background="@drawable/spinner_background_instock" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/secondaryLightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/edit_prepaid_online_max_qty"
+                        style="@style/ProductEditTextStyle"
+                        android:layout_weight="1.4"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

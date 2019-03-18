@@ -1,7 +1,6 @@
 package com.nowfloats.Product_Gallery;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -22,30 +21,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.helper.Helper;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Currency;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import static com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_LIMIT;
 import static com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE;
@@ -56,11 +52,16 @@ public class ManageProductFragment extends Fragment {
     private String currencyType = "";
 
     private List<Product.Property> propertyList = new ArrayList<>();
+    private List<Product.Image> imageList = new ArrayList<>();
+
     private ProductSpecificationRecyclerAdapter adapter;
+    private ProductImageRecyclerAdapter adapterImage;
 
     private final int CAMERA_REQUEST_CODE = 1;
     private final int GALLERY_REQUEST_CODE = 2;
     private Uri picUri;
+    private UserSessionManager session;
+
 
     public static ManageProductFragment newInstance()
     {
@@ -86,20 +87,33 @@ public class ManageProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        session = new UserSessionManager(getContext(), getActivity());
 
         initProductSpecificationRecyclerView(binding.layoutVariants.productSpecificationList);
+        initProductImageRecyclerView(binding.productImageList);
 
-        initCurrencySpinner();
+        initCurrencyList();
         addPropertyListener();
+        addSpinnerListener();
         addSwitchVariantListener();
         addImagePickerListener();
-
-        return binding.getRoot();
     }
 
 
     private void addPropertyListener()
     {
+        imageList.add(new Product().new Image());
+        imageList.add(new Product().new Image());
+        imageList.add(new Product().new Image());
+
         propertyList.add(new Product().new Property("Key 1", "Value 1"));
         propertyList.add(new Product().new Property("Key 2", "Value 2"));
         propertyList.add(new Product().new Property("Key 3", "Value 3"));
@@ -130,12 +144,25 @@ public class ManageProductFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+
+    /**
+     * Initialize product image adapter
+     * @param recyclerView
+     */
+    private void initProductImageRecyclerView(RecyclerView recyclerView)
+    {
+        adapterImage = new ProductImageRecyclerAdapter();
+        recyclerView.setAdapter(adapterImage);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
     private void addImagePickerListener()
     {
         binding.imagePicker.setOnClickListener(v -> choosePicture());
+        binding.btnSecondaryImage.setOnClickListener(v -> choosePicture());
     }
 
-    public void choosePicture()
+    private void choosePicture()
     {
         final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.featuredimage_popup, true)
@@ -165,48 +192,113 @@ public class ManageProductFragment extends Fragment {
         });
     }
 
-    private void initCurrencySpinner()
+    private void initCurrencyList()
     {
-        loadCurrency();
+        currencyValue = getString(R.string.currency_text);
+        binding.editCurrency.setText(currencyValue);
 
-        String[] array = Constants.currencyArray.toArray(new String[Constants.currencyArray.size()]);
-        Arrays.sort(array);
+        Helper.loadCurrency();
 
-        //List<String> currency = Constants.currencyArray;
-        //Collections.sort(currency);
+        binding.editCurrency.setOnClickListener(view -> {
 
-        binding.editCurrency.setOnClickListener(new View.OnClickListener() {
+            String[] array = Constants.currencyArray.toArray(new String[Constants.currencyArray.size()]);
+            Arrays.sort(array);
 
-            @Override
-            public void onClick(View v)
-            {
-                showCurrencyList(array);
-            }
+            showCurrencyList(array);
         });
 
-        /*ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, currency);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        try
+        {
+            currencyValue = Constants.Currency_Country_Map.get(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
+        }
 
-        binding.spinnerCurrency.setAdapter(adapter);
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-        binding.spinnerCurrency.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+
+    private void addSpinnerListener()
+    {
+        binding.layoutInventory.spinnerStockAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
 
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
+                if(pos == 0)
+                {
+                    binding.layoutInventory.spinnerStockAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_instock));
+
+                    binding.layoutInventory.spinnerCodAvailability.setEnabled(true);
+                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setEnabled(true);
+                    binding.layoutInventory.editCodMaxQty.setEnabled(true);
+                    binding.layoutInventory.editPrepaidOnlineMaxQty.setEnabled(true);
+
+                    binding.layoutInventory.editAvailableQty.setEnabled(true);
+                }
+
+                else
+                {
+                    binding.layoutInventory.spinnerStockAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
+
+                    binding.layoutInventory.spinnerCodAvailability.setEnabled(false);
+                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setEnabled(false);
+                    binding.layoutInventory.editCodMaxQty.setEnabled(false);
+                    binding.layoutInventory.editPrepaidOnlineMaxQty.setEnabled(false);
+
+                    binding.layoutInventory.editAvailableQty.setEnabled(false);
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+
+        });
+
+        binding.layoutInventory.spinnerCodAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                if(pos == 0)
+                {
+                    binding.layoutInventory.spinnerCodAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_instock));
+                }
+
+                else
+                {
+                    binding.layoutInventory.spinnerCodAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
+                }
 
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
 
-        });*/
-    }
+        });
 
+        binding.layoutInventory.spinnerPrepaidOnlineAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                if(pos == 0)
+                {
+                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_instock));
+                }
+
+                else
+                {
+                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+
+        });
+    }
 
     public String showCurrencyList(final String[] currencyList)
     {
-        Toast.makeText(getActivity(), "" + currencyList.length, Toast.LENGTH_SHORT).show();
-
         String currencyVal = binding.editCurrency.getText().toString().trim();
         int index = 0;
 
@@ -240,70 +332,12 @@ public class ManageProductFragment extends Fragment {
         return currencyType;
     }
 
-    private void loadCurrency()
-    {
-        currencyValue = getString(R.string.currency_text);
-        binding.editCurrency.setText(currencyValue);
-
-        new Thread(() -> {
-
-            if (Constants.Currency_Country_Map == null)
-            {
-                Constants.Currency_Country_Map = new HashMap<>();
-                Constants.currencyArray = new ArrayList<>();
-            }
-
-            if (Constants.Currency_Country_Map.size() == 0)
-            {
-                for (Locale locale : Locale.getAvailableLocales())
-                {
-                    //try
-                    {
-                        if (locale != null && locale.getISO3Country() != null && Currency.getInstance(locale) != null)
-                        {
-                            Currency currency = Currency.getInstance(locale);
-                            String loc_currency = currency.getCurrencyCode();
-                            String country = locale.getDisplayCountry();
-
-                            if (!Constants.Currency_Country_Map.containsKey(country.toLowerCase()))
-                            {
-                                Constants.Currency_Country_Map.put(country.toLowerCase(), loc_currency);
-                                Constants.currencyArray.add(country + "-" + loc_currency);
-                            }
-                        }
-                    }
-
-                    /*catch (Exception e)
-                    {
-                        System.gc();
-                        e.printStackTrace();
-                    }*/
-                }
-
-                Toast.makeText(getActivity(), "" + Constants.currencyArray.size(), Toast.LENGTH_SHORT).show();
-            }
-
-            /*try
-            {
-                currencyValue = Constants.Currency_Country_Map.get(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
-            }
-
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }*/
-        }).start();
-    }
-
-
 
     /**
      * Product Specification Dynamic Input Filed
      */
     class ProductSpecificationRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
-
-
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
@@ -364,6 +398,64 @@ public class ManageProductFragment extends Fragment {
         }
     }
 
+
+
+    /**
+     * Product Image Dynamic Input Filed
+     */
+    class ProductImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+    {
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
+        {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_product_secondary_image, viewGroup, false);
+            return new ProductImageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i)
+        {
+            if (holder instanceof ProductImageViewHolder)
+            {
+                final ProductImageViewHolder viewHolder = (ProductImageViewHolder) holder;
+
+                viewHolder.btn_change.setOnClickListener(view -> choosePicture());
+
+                viewHolder.ib_remove.setOnClickListener(view -> {
+
+                    imageList.remove(viewHolder.getAdapterPosition());
+                    notifyItemRemoved(viewHolder.getAdapterPosition());
+                });
+
+                Product.Property property = propertyList.get(i);
+            }
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return imageList.size();
+        }
+
+
+        class ProductImageViewHolder extends RecyclerView.ViewHolder
+        {
+            Button btn_change;
+            ImageButton ib_remove;
+
+            private ProductImageViewHolder(View itemView)
+            {
+                super(itemView);
+
+                btn_change = itemView.findViewById(R.id.btn_change);
+                ib_remove = itemView.findViewById(R.id.ib_remove);
+            }
+        }
+    }
+
+
+
     class Product
     {
         class Property
@@ -396,6 +488,11 @@ public class ManageProductFragment extends Fragment {
             public void setValue(String value) {
                 this.value = value;
             }
+        }
+
+        class Image
+        {
+
         }
     }
 
