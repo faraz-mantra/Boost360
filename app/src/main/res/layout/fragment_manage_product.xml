@@ -7,6 +7,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <android.support.v4.widget.NestedScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +18,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingBottom="@dimen/margin_60"
+            android:paddingBottom="@dimen/margin_50"
             tools:context="com.nowfloats.Product_Gallery.ManageProductFragment">
 
             <LinearLayout
@@ -376,6 +380,7 @@
 
         </android.support.v4.widget.NestedScrollView>
 
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -383,6 +388,30 @@
             android:textColor="@android:color/white"
             android:layout_gravity="bottom"
             android:text="PUBLISH PRODUCT" />
+
+        </FrameLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <include
+                android:id="@+id/layout_bottom_sheet"
+                layout="@layout/bottom_sheet_payment_configuration" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <include
+                android:id="@+id/layout_bottom_sheet_address"
+                layout="@layout/layout_pickup_address" />
+
+        </android.support.design.widget.CoordinatorLayout>
 
     </FrameLayout>
 

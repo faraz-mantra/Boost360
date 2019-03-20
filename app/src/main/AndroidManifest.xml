@@ -52,9 +52,10 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name,android:theme">
+        <activity android:name="com.nowfloats.Product_Gallery.PickupAddressActivity"></activity>
         <activity
             android:name="com.nowfloats.Product_Gallery.ManageProductActivity"
-            android:theme="@style/AppThemeActionBar" />
+            android:theme="@style/MyTheme" />
         <activity
             android:name="com.nowfloats.Product_Gallery.ProductCatalogActivity"
             android:theme="@style/AppThemeActionBar" />

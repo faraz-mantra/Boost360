@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,12 +50,16 @@ public class ProductCatalogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
 
+        setSupportActionBar(binding.layoutToolbar.toolbar);
+
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-            getSupportActionBar().setTitle("Product Catalog");
+            getSupportActionBar().setTitle("");
+
+            binding.layoutToolbar.toolbarTitle.setText("Product Catalog");
         }
 
         this.initProductRecyclerView(binding.productList);

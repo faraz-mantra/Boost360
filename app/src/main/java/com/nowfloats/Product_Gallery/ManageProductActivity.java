@@ -1,29 +1,36 @@
 package com.nowfloats.Product_Gallery;
 
-import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.nowfloats.helper.ui.BaseActivity;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivityManageProductBinding;
 
 import static com.nowfloats.Product_Gallery.ProductGalleryActivity.TAG_PRODUCT;
 
-public class ManageProductActivity extends AppCompatActivity
+public class ManageProductActivity extends BaseActivity
 {
+    private ActivityManageProductBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_product);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_product);
+
+        setSupportActionBar(binding.layoutToolbar.toolbar);
 
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-            getSupportActionBar().setTitle("Product Catalog");
+            getSupportActionBar().setTitle("");
+
+            binding.layoutToolbar.toolbarTitle.setText("Manage Product");
         }
 
         loadFragment(ManageProductFragment.newInstance());

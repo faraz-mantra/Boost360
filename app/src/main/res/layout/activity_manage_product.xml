@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/ParentLayoutStyle"
         tools:context="com.nowfloats.Product_Gallery.ManageProductActivity">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/appbar_layout" />
 
         <FrameLayout
             android:id="@+id/fm_site_appearance"
@@ -14,6 +17,6 @@
             android:layout_height="match_parent"
             android:visibility="visible" />
 
-    </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -27,10 +28,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
 import com.nowfloats.helper.Helper;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -62,6 +65,8 @@ public class ManageProductFragment extends Fragment {
     private Uri picUri;
     private UserSessionManager session;
 
+    private BottomSheetBehavior sheetBehavior;
+    private BottomSheetBehavior sheetBehaviorAddress;
 
     public static ManageProductFragment newInstance()
     {
@@ -87,6 +92,8 @@ public class ManageProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false);
+        sheetBehavior = BottomSheetBehavior.from(binding.layoutBottomSheet.getRoot());
+        sheetBehaviorAddress = BottomSheetBehavior.from(binding.layoutBottomSheetAddress.getRoot());
         return binding.getRoot();
     }
 
@@ -105,6 +112,9 @@ public class ManageProductFragment extends Fragment {
         addSpinnerListener();
         addSwitchVariantListener();
         addImagePickerListener();
+        addPaymentConfigListener();
+        initPaymentAdapter();
+        spinnerAddressListener();
     }
 
 
@@ -125,6 +135,15 @@ public class ManageProductFragment extends Fragment {
         });
     }
 
+    private void initPaymentAdapter()
+    {
+        //this.mFamilyList.add(new Patient(0, Helper.toCamelCase(mController.getSession().getFullName()) + " (Myself)", mController.getSession().getAvatarLink()));
+
+        SpinnerAdapter mFamilyAdapter = new SpinnerAdapter(getContext());
+        binding.layoutBottomSheet.spinnerPaymentOption.setAdapter(mFamilyAdapter);
+    }
+
+
     private void addSwitchVariantListener()
     {
         binding.switchVariants.setOnToggledListener((labeledSwitch, isOn) ->{
@@ -132,6 +151,25 @@ public class ManageProductFragment extends Fragment {
 
         });
     }
+
+
+    private void spinnerAddressListener()
+    {
+        binding.layoutBottomSheet.spinnerPickupAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //toggleAddressBottomSheet();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
 
     /**
      * Initialize service adapter
@@ -154,6 +192,15 @@ public class ManageProductFragment extends Fragment {
         adapterImage = new ProductImageRecyclerAdapter();
         recyclerView.setAdapter(adapterImage);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+
+    public void addPaymentConfigListener()
+    {
+        binding.layoutPaymentMethod.tvPaymentConfiguration.setOnClickListener(view -> {
+
+            toggleBottomSheet();
+        });
     }
 
     private void addImagePickerListener()
@@ -576,6 +623,34 @@ public class ManageProductFragment extends Fragment {
         {
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(getActivity(), errorMessage);
+        }
+    }
+
+
+    private void toggleBottomSheet()
+    {
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED)
+        {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+
+        else
+        {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+    }
+
+
+    private void toggleAddressBottomSheet()
+    {
+        if (sheetBehaviorAddress.getState() != BottomSheetBehavior.STATE_EXPANDED)
+        {
+            sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+
+        else
+        {
+            sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 }

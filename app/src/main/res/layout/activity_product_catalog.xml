@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.nowfloats.Product_Gallery.ProductCatalogActivity">
+        style="@style/ParentLayoutStyle"
+        tools:context="com.nowfloats.Product_Gallery.ManageProductActivity">
 
         <include
-            android:id="@+id/layout_empty"
-            android:visibility="gone"
-            layout="@layout/product_catalog_empty_view" />
+            android:id="@+id/layout_toolbar"
+            layout="@layout/appbar_layout" />
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:visibility="gone"
-            android:layout_gravity="center" />
-
-        <LinearLayout
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:orientation="vertical"
+            android:layout_marginTop="?attr/actionBarSize"
             tools:context="com.nowfloats.Product_Gallery.ProductCatalogActivity">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/product_list"
+            <include
+                android:id="@+id/layout_empty"
+                android:visibility="gone"
+                layout="@layout/product_catalog_empty_view" />
+
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="gone"
+                android:layout_gravity="center" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:orientation="vertical"
+                tools:context="com.nowfloats.Product_Gallery.ProductCatalogActivity">
 
-        </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/product_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:scrollbars="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </FrameLayout>
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>
