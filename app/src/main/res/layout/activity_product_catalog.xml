@@ -18,12 +18,11 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="com.nowfloats.Product_Gallery.ProductCatalogActivity">
 
             <include
                 android:id="@+id/layout_empty"
-                android:visibility="gone"
                 layout="@layout/product_catalog_empty_view" />
 
             <ProgressBar

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -95,12 +94,15 @@ public class ProductCatalogActivity extends AppCompatActivity {
                 {
                     if(data.size() > 0)
                     {
-                        binding.layoutEmpty.setVisibility(View.GONE);
+                        binding.layoutEmpty.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data);
                         return;
                     }
 
-                    binding.layoutEmpty.setVisibility(View.VISIBLE);
+                    if(adapter.getItemCount() == 0)
+                    {
+                        binding.layoutEmpty.layoutEmptyView.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 stop = true;
