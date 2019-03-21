@@ -55,6 +55,7 @@
         <activity android:name="com.nowfloats.Product_Gallery.PickupAddressActivity"></activity>
         <activity
             android:name="com.nowfloats.Product_Gallery.ManageProductActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/MyTheme" />
         <activity
             android:name="com.nowfloats.Product_Gallery.ProductCatalogActivity"

@@ -45,7 +45,7 @@
                     android:id="@+id/layout_child"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_20"
+                    android:layout_margin="@dimen/margin_10"
                     android:orientation="vertical" >
 
                     <LinearLayout
@@ -89,6 +89,7 @@
                                     android:id="@+id/spinner_cod_availability__"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
+                                    android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
 
                                 <View
@@ -99,7 +100,10 @@
                                 <EditText
                                     android:id="@+id/edit_cod_max__qty__"
                                     style="@style/ProductEditTextStyle"
-                                    android:layout_weight="1.4"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:digits="0123456789."
+                                    android:hint="XXXX"
                                     android:background="@null" />
 
                             </LinearLayout>
@@ -143,6 +147,7 @@
                                     android:id="@+id/spinner_cod_availability"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
+                                    android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
 
                                 <View
@@ -153,7 +158,10 @@
                                 <EditText
                                     android:id="@+id/edit_cod_max__qty"
                                     style="@style/ProductEditTextStyle"
-                                    android:layout_weight="1.4"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:digits="0123456789."
+                                    android:hint="XXXX"
                                     android:background="@null" />
 
                             </LinearLayout>
@@ -204,6 +212,7 @@
                                     android:id="@+id/spinner_cod_availability______"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
+                                    android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
 
                                 <View
@@ -214,7 +223,10 @@
                                 <EditText
                                     android:id="@+id/edit_cod_max__qty_______"
                                     style="@style/ProductEditTextStyle"
-                                    android:layout_weight="1.4"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:digits="0123456789."
+                                    android:hint="XXXX"
                                     android:background="@null" />
 
                             </LinearLayout>
@@ -258,6 +270,7 @@
                                     android:id="@+id/spinner_cod_availability___"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
+                                    android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options"/>
 
                                 <View
@@ -268,7 +281,10 @@
                                 <EditText
                                     android:id="@+id/edit_cod_max__qty______"
                                     style="@style/ProductEditTextStyle"
-                                    android:layout_weight="1.4"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:digits="0123456789."
+                                    android:hint="XXXX"
                                     android:background="@null" />
 
                             </LinearLayout>

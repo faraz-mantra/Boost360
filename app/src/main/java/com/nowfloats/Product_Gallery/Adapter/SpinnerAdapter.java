@@ -61,8 +61,6 @@ public class SpinnerAdapter extends BaseAdapter
         }
 
 
-
-
         /*if (parent == null)
         {
             itemView = LayoutInflater.from(painitViewrent.getContext()).inflate(R.layout.spinner_item_dynamic, null);

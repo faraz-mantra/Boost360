@@ -6,9 +6,7 @@
     android:paddingRight="@dimen/margin_20"
     android:paddingTop="@dimen/margin_10"
     android:paddingBottom="@dimen/margin_10"
-    android:background="#e9e9e9"
-    android:layout_marginLeft="@dimen/margin_20"
-    android:layout_marginRight="@dimen/margin_20"
+    android:background="@color/spinner_grey_background"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView

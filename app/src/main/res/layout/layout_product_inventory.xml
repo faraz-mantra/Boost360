@@ -66,6 +66,9 @@
                     android:id="@+id/edit_available_qty"
                     style="@style/ProductEditTextStyle"
                     android:layout_weight="1"
+                    android:gravity="center"
+                    android:digits="0123456789."
+                    android:hint="XXXX"
                     android:background="@null" />
 
             </LinearLayout>
@@ -74,7 +77,7 @@
                 android:id="@+id/layout_child"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_20"
+                android:layout_margin="@dimen/margin_10"
                 android:orientation="vertical" >
 
                 <LinearLayout
@@ -131,6 +134,9 @@
                         android:id="@+id/edit_cod_max__qty"
                         style="@style/ProductEditTextStyle"
                         android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:digits="0123456789."
+                        android:hint="XXXX"
                         android:background="@null" />
 
                 </LinearLayout>
@@ -172,6 +178,7 @@
                     android:background="@drawable/input_background"
                     android:orientation="horizontal" >
 
+
                     <Spinner
                         android:id="@+id/spinner_prepaid_online_availability"
                         style="@style/ProductSpinnerStyle"
@@ -188,6 +195,9 @@
                         android:id="@+id/edit_prepaid_online_max_qty"
                         style="@style/ProductEditTextStyle"
                         android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:digits="0123456789."
+                        android:hint="XXXX"
                         android:background="@null" />
 
                 </LinearLayout>
