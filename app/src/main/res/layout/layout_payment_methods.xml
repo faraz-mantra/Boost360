@@ -39,10 +39,11 @@
                     android:padding="8dp"
                     android:onClick="onPaymentConfigurationClick"
                     android:clickable="true"
+                    android:background="@drawable/grey_rounded_spinner_background"
                     android:text="Assured Purchase" />
 
                 <LinearLayout
-                    android:id="@+id/layout_child"
+                    android:id="@+id/layout_payment_assured_purchase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_10"
@@ -85,12 +86,22 @@
                                 android:background="@drawable/input_background"
                                 android:orientation="horizontal" >
 
+                                <TextView
+                                    android:id="@+id/spinner_package_weight"
+                                    style="@style/ProductEditTextStyle"
+                                    android:layout_weight="1"
+                                    android:text="kg"
+                                    android:textColor="@color/secondaryTextColor"
+                                    android:background="@color/spinner_grey_background" />
+
+                                <!--
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability__"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
+                                -->
 
                                 <View
                                     android:layout_width="1dp"
@@ -143,12 +154,22 @@
                                 android:background="@drawable/input_background"
                                 android:orientation="horizontal" >
 
+                                <TextView
+                                    android:id="@+id/spinner_package_length"
+                                    style="@style/ProductEditTextStyle"
+                                    android:layout_weight="1"
+                                    android:text="inch"
+                                    android:textColor="@color/secondaryTextColor"
+                                    android:background="@color/spinner_grey_background" />
+
+                                <!--
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
+                                -->
 
                                 <View
                                     android:layout_width="1dp"
@@ -208,12 +229,22 @@
                                 android:background="@drawable/input_background"
                                 android:orientation="horizontal" >
 
+                                <TextView
+                                    android:id="@+id/spinner_package_height"
+                                    style="@style/ProductEditTextStyle"
+                                    android:layout_weight="1"
+                                    android:text="inch"
+                                    android:textColor="@color/secondaryTextColor"
+                                    android:background="@color/spinner_grey_background" />
+
+                                <!--
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability______"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
+                                -->
 
                                 <View
                                     android:layout_width="1dp"
@@ -266,12 +297,22 @@
                                 android:background="@drawable/input_background"
                                 android:orientation="horizontal" >
 
+                                <TextView
+                                    android:id="@+id/spinner_package_thickness"
+                                    style="@style/ProductEditTextStyle"
+                                    android:layout_weight="1"
+                                    android:text="inch"
+                                    android:textColor="@color/secondaryTextColor"
+                                    android:background="@color/spinner_grey_background" />
+
+                                <!--
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability___"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options"/>
+                                -->
 
                                 <View
                                     android:layout_width="1dp"
@@ -294,6 +335,61 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/layout_payment_my_payment_gateway"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Paypal account configured"
+                    android:drawableLeft="@drawable/ic_check_circle_green"
+                    android:drawablePadding="5dp"
+                    android:textSize="16sp"
+                    android:padding="20dp"
+                    android:visibility="gone"
+                    android:textColor="@color/secondaryTextColor" />
+
+                <LinearLayout
+                    android:id="@+id/layout_payment_external_purchase_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_20"
+                    android:visibility="gone"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_image__________"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="External Info / Purchase URL"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image______"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_purchase_url_link"
+                        style="@style/ProductEditTextStyle"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXXXXXXXXXXXX"  />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/layout_payment_dont_want_to_sell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your site visitors will be able to ask questions and enquiries about this product"
+                    android:textSize="16sp"
+                    android:padding="20dp"
+                    android:visibility="gone"
+                    android:textColor="@color/secondaryTextColor" />
 
         </LinearLayout>
 

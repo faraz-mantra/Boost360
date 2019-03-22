@@ -1745,4 +1745,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>YES</item>
         <item>NO</item>
     </array>
+    <array name="payment_options_v1">
+        <item>Paypal</item>
+        <item>Pay By Cheque</item>
+        <item>Bank Transfer</item>
+    </array>
 </resources>

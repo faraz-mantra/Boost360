@@ -243,7 +243,9 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_country"
                     android:gravity="top"
+                    android:editable="false"
                     android:layout_marginTop="@dimen/margin_5"
                     style="@style/ProductEditTextStyle" />
 
@@ -289,24 +291,26 @@
                     android:layout_height="wrap_content">
 
                     <Button
+                        android:id="@+id/btn_cancel"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:minWidth="100dp"
                         android:background="@android:color/transparent"
                         android:textColor="@color/secondaryTextColor"
-                        android:layout_toLeftOf="@+id/btn_save_info"
+                        android:layout_toLeftOf="@+id/btn_save"
                         android:textSize="14sp"
                         android:text="CANCEL" />
 
                     <Button
-                        android:id="@+id/btn_save_info"
+                        android:id="@+id/btn_save"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:minWidth="100dp"
+                        android:minWidth="130dp"
                         android:background="@color/primaryColor"
                         android:textColor="@android:color/white"
                         android:layout_alignParentRight="true"
                         android:textSize="14sp"
+                        android:gravity="center"
                         android:text="SAVE ADDRESS" />
 
                 </RelativeLayout>

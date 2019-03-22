@@ -7,7 +7,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:behavior_hideable="true"
+        app:behavior_hideable="false"
         app:behavior_peekHeight="0dp"
         android:background="#747474"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
@@ -126,142 +126,231 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout_product_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Package pickup address"/>
-
-                    <ImageButton
-                        android:id="@+id/ib_info_product_image"
-                        style="@style/ProductHelpButtonStyle"/>
-
-                </LinearLayout>
-
-                <Spinner
-                    android:id="@+id/spinner_pickup_address"
-                    style="@style/ProductSpinnerStyle"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:background="@drawable/input_background"
-                    android:entries="@array/stock_options" />
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description"
+                    android:id="@+id/layout_assured_purchase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="horizontal" >
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Package pickup address"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <!--
+                    <Spinner
+                        android:id="@+id/spinner_pickup_address"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:background="@drawable/input_background"
+                        android:entries="@array/stock_options" />
+                    -->
 
                     <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Bank account number for payment receipt" />
+                        android:id="@+id/tv_pick_address"
+                        style="@style/ProductEditTextStyle"
+                        android:drawableRight="@drawable/ic_lead_pencil_grey600_18dp"
+                        android:layout_width="match_parent"
+                        android:padding="8dp"
+                        android:onClick="onPickAddressClick"
+                        android:clickable="true"
+                        android:text="Address Here" />
 
-                    <ImageButton
-                        android:id="@+id/ib_info_product_description"
-                        style="@style/ProductHelpButtonStyle" />
 
-                </LinearLayout>
-
-                <EditText
-                    android:gravity="top"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:hint="XXXXXXXXXX"
-                    style="@style/ProductEditTextStyle" />
-
-                <LinearLayout
-                    android:id="@+id/layout_product_description__"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Branch Code (IFSC)" />
-
-                    <ImageButton
-                        android:id="@+id/ib_info_product_description_"
-                        style="@style/ProductHelpButtonStyle" />
-
-                </LinearLayout>
-
-                <EditText
-                    android:gravity="top"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:hint="XXXXXX"
-                    style="@style/ProductEditTextStyle" />
-
-                <LinearLayout
-                    android:id="@+id/layout_product_description_"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Your tax ID/Number (GST)" />
-
-                    <ImageButton
-                        android:id="@+id/ib_info_product_description__"
-                        style="@style/ProductHelpButtonStyle" />
-
-                </LinearLayout>
-
-                <EditText
-                    android:gravity="top"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:hint="XXXXXX"
-                    style="@style/ProductEditTextStyle" />
-
-                <View
-                    android:id="@+id/dotted_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="@dimen/margin_20"
-                    android:layout_marginBottom="@dimen/margin_10"
-                    android:background="@drawable/dotted_line"/>
-
-                <LinearLayout
-                    android:id="@+id/layout_product_description___"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:orientation="horizontal" >
-
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"/>
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/layout_product_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="12sp"
-                        android:text="I agree that boost will keep 3% of the final cart value as convenience fee. (Towards payment and delivery enablement)"/>
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Bank account number for payment receipt" />
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_description"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXXXXXX"
+                        style="@style/ProductEditTextStyle" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_description__"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Branch Code (IFSC)" />
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_description_"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXX"
+                        style="@style/ProductEditTextStyle" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_description_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Your tax ID/Number (GST)" />
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_description__"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXX"
+                        style="@style/ProductEditTextStyle" />
+
+                    <View
+                        android:id="@+id/dotted_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:background="@drawable/dotted_line"/>
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_description___"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="12sp"
+                            android:text="I agree that boost will keep 3% of the final cart value as convenience fee. (Towards payment and delivery enablement)"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/dotted_line_"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@drawable/dotted_line"/>
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/dotted_line_"
+
+                <LinearLayout
+                    android:id="@+id/layout_my_payment_gateway"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:layout_marginBottom="@dimen/margin_15"
-                    android:background="@drawable/dotted_line"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_image________"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Your payment gateway name"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image_______"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_payment_mode"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:background="@drawable/input_background"
+
+                        android:entries="@array/payment_options_v1" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_description_________________"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Salt and Key ID for identification" />
+
+                        <ImageButton
+                            android:id="@+id/ib_info_salt"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXXXXXXXXXXXXXXXXXXX"
+                        style="@style/ProductEditTextStyle" />
+
+                    <View
+                        android:id="@+id/dotted_line____"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:background="@drawable/dotted_line"/>
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15">
 
                     <Button
+                        android:id="@+id/btn_cancel"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:minWidth="100dp"

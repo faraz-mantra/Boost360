@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
@@ -28,12 +29,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
+import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
 import com.nowfloats.helper.Helper;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -59,6 +61,7 @@ public class ManageProductFragment extends Fragment {
 
     private ProductSpecificationRecyclerAdapter adapter;
     private ProductImageRecyclerAdapter adapterImage;
+    private ProductPickupAddressRecyclerAdapter adapterAddress;
 
     private final int CAMERA_REQUEST_CODE = 1;
     private final int GALLERY_REQUEST_CODE = 2;
@@ -67,6 +70,8 @@ public class ManageProductFragment extends Fragment {
 
     private BottomSheetBehavior sheetBehavior;
     private BottomSheetBehavior sheetBehaviorAddress;
+
+    private ProductPickupAddressFragment pickupAddressFragment;
 
     public static ManageProductFragment newInstance()
     {
@@ -106,6 +111,10 @@ public class ManageProductFragment extends Fragment {
 
         initProductSpecificationRecyclerView(binding.layoutVariants.productSpecificationList);
         initProductImageRecyclerView(binding.productImageList);
+        initProductPickupAddressRecyclerView(binding.layoutBottomSheetAddress.pickupAddressList);
+
+        //sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        //sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         initCurrencyList();
         addPropertyListener();
@@ -115,6 +124,7 @@ public class ManageProductFragment extends Fragment {
         addPaymentConfigListener();
         initPaymentAdapter();
         spinnerAddressListener();
+        addBottomSheetListener();
     }
 
 
@@ -137,10 +147,90 @@ public class ManageProductFragment extends Fragment {
 
     private void initPaymentAdapter()
     {
-        //this.mFamilyList.add(new Patient(0, Helper.toCamelCase(mController.getSession().getFullName()) + " (Myself)", mController.getSession().getAvatarLink()));
+        //((LinearLayout)binding.layoutBottomSheet).getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        SpinnerAdapter mFamilyAdapter = new SpinnerAdapter(getContext());
-        binding.layoutBottomSheet.spinnerPaymentOption.setAdapter(mFamilyAdapter);
+        binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
+        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.GONE);
+
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getContext());
+        binding.layoutBottomSheet.spinnerPaymentOption.setAdapter(spinnerAdapter);
+
+        binding.layoutBottomSheet.spinnerPaymentOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position)
+                {
+                    case 0:
+
+                        binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.VISIBLE);
+                        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.GONE);
+                        break;
+
+                    case 1:
+
+                        binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
+                        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.VISIBLE);
+                        break;
+
+                    default:
+
+                        binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
+                        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        binding.layoutBottomSheet.btnCancel.setOnClickListener(v -> toggleBottomSheet());
+        binding.layoutBottomSheet.btnSaveInfo.setOnClickListener(v -> {
+
+            toggleBottomSheet();
+
+            switch (binding.layoutBottomSheet.spinnerPaymentOption.getSelectedItemPosition())
+            {
+                case 0:
+
+                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
+                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Assured Purchase"));
+                    break;
+
+                case 1:
+
+                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.VISIBLE);
+                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("My payment gateway"));
+                    break;
+
+                case 2:
+
+                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.VISIBLE);
+                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Variant's unique payment URL"));
+                    break;
+
+                case 3:
+
+                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.VISIBLE);
+                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Don't want to sell online"));
+                    break;
+            }
+        });
     }
 
 
@@ -148,23 +238,34 @@ public class ManageProductFragment extends Fragment {
     {
         binding.switchVariants.setOnToggledListener((labeledSwitch, isOn) ->{
 
-
         });
     }
 
 
     private void spinnerAddressListener()
     {
-        binding.layoutBottomSheet.spinnerPickupAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       binding.layoutBottomSheetAddress.buttonAddNew.setOnClickListener(v -> {
+
+           sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
+           openAddressDialog();
+       });
+
+       binding.layoutBottomSheet.tvPickAddress.setOnClickListener(view -> toggleAddressBottomSheet());
+    }
+
+
+    private void addBottomSheetListener()
+    {
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onStateChanged(@NonNull View view, int i) {
 
-                //toggleAddressBottomSheet();
+                sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onSlide(@NonNull View view, float v) {
 
             }
         });
@@ -194,6 +295,27 @@ public class ManageProductFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+
+    /**
+     * Initialize service adapter
+     * @param recyclerView
+     */
+    private void initProductPickupAddressRecyclerView(RecyclerView recyclerView)
+    {
+        adapterAddress = new ProductPickupAddressRecyclerAdapter();
+        recyclerView.setAdapter(adapterAddress);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    private void openAddressDialog()
+    {
+        if(pickupAddressFragment == null)
+        {
+            pickupAddressFragment = ProductPickupAddressFragment.newInstance();
+        }
+
+        pickupAddressFragment.show(getFragmentManager(), "Address");
+    }
 
     public void addPaymentConfigListener()
     {
@@ -501,6 +623,76 @@ public class ManageProductFragment extends Fragment {
         }
     }
 
+
+
+    /**
+     * Product Pickup Address Dynamic Input Filed
+     */
+    class ProductPickupAddressRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+    {
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
+        {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_pickup_address, viewGroup, false);
+            return new ProductPickupAddressViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i)
+        {
+            if (holder instanceof ProductPickupAddressViewHolder)
+            {
+                final ProductPickupAddressViewHolder viewHolder = (ProductPickupAddressViewHolder) holder;
+
+                /*viewHolder.ibRemove.setVisibility(View.VISIBLE);
+
+                viewHolder.ibRemove.setOnClickListener(view -> {
+
+                    propertyList.remove(viewHolder.getAdapterPosition());
+                    notifyItemRemoved(viewHolder.getAdapterPosition());
+                });
+
+                Product.Property property = propertyList.get(i);
+
+                viewHolder.editKey.setText(property.getKey());
+                viewHolder.editValue.setText(property.getValue());*/
+            }
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return propertyList.size();
+        }
+
+
+        class ProductPickupAddressViewHolder extends RecyclerView.ViewHolder
+        {
+            TextView tvType;
+            TextView tvAddress;
+
+            private ProductPickupAddressViewHolder(View itemView)
+            {
+                super(itemView);
+
+                tvType = itemView.findViewById(R.id.label_type);
+                tvAddress = itemView.findViewById(R.id.label_address);
+
+                tvType.setPaintFlags(tvType.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+                tvType.setOnClickListener(v -> {
+
+                    sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    openAddressDialog();
+                });
+
+                itemView.setOnClickListener(v -> {
+
+                });
+            }
+        }
+    }
 
 
     class Product

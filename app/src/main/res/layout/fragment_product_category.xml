@@ -28,9 +28,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/grey_rounded_background"
+                        android:background="@drawable/grey_rounded_spinner_background"
                         android:orientation="vertical">
 
+                        <Spinner
+                            android:id="@+id/spinner_item_option"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <!--
                         <TextView
                             android:id="@+id/label_payment_type"
                             android:layout_width="match_parent"
@@ -46,6 +52,7 @@
                             android:text="Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc."
                             android:textColor="@color/secondaryTextColor"
                             android:textSize="14sp" />
+                         -->
 
                     </LinearLayout>
 

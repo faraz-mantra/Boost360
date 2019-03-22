@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nowfloats.Product_Gallery.Adapter.SpinnerItemCategoryAdapter;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
 
@@ -45,5 +46,8 @@ public class ProductCategoryFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
+
+        SpinnerItemCategoryAdapter spinnerAdapter = new SpinnerItemCategoryAdapter(getContext());
+        binding.spinnerItemOption.setAdapter(spinnerAdapter);
     }
 }

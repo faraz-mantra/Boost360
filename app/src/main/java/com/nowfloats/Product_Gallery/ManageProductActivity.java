@@ -33,7 +33,7 @@ public class ManageProductActivity extends BaseActivity
             binding.layoutToolbar.toolbarTitle.setText("Manage Product");
         }
 
-        loadFragment(ManageProductFragment.newInstance());
+        loadFragment(ProductCategoryFragment.newInstance());
     }
 
 
