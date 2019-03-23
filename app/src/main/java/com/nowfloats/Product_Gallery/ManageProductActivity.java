@@ -29,15 +29,18 @@ public class ManageProductActivity extends BaseActivity
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
             getSupportActionBar().setTitle("");
-
-            binding.layoutToolbar.toolbarTitle.setText("Manage Product");
         }
 
         loadFragment(ProductCategoryFragment.newInstance());
     }
 
 
-    private void loadFragment(Fragment fragment)
+    public void setTitle(String title)
+    {
+        binding.layoutToolbar.toolbarTitle.setText(String.valueOf(title));
+    }
+
+    public void loadFragment(Fragment fragment)
     {
         getSupportFragmentManager()
                 .beginTransaction()

@@ -433,6 +433,11 @@ public class Constants {
         }
     }
 
+    public enum Type
+    {
+        PRODUCT, SERVICE
+    }
+
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;
     public static boolean imageNotSet = false;

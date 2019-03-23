@@ -74,6 +74,7 @@
                     </LinearLayout>
 
                     <EditText
+                        android:id="@+id/edit_category"
                         style="@style/ProductEditTextStyle"
                         android:layout_marginTop="@dimen/margin_5"
                         android:hint="Write the item type eg. Book, Smartphone etc." />

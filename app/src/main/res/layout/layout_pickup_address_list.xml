@@ -30,7 +30,7 @@
             android:layout_margin="@dimen/margin_20"
             android:gravity="center"
             android:textStyle="bold"
-            android:background="@drawable/input_background"
+            android:background="@drawable/white_rectangle_background"
             android:text="ADD NEW PICKUP ADDRESS"/>
 
     </LinearLayout>

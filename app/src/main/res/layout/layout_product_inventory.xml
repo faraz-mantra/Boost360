@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:background="@drawable/input_background">
+            android:background="@drawable/white_rectangle_background">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                     android:gravity="center"
                     android:digits="0123456789."
                     android:hint="XXXX"
-                    android:background="@null" />
+                    android:background="#FFF" />
 
             </LinearLayout>
 
@@ -137,7 +137,7 @@
                         android:gravity="center"
                         android:digits="0123456789."
                         android:hint="XXXX"
-                        android:background="@null" />
+                        android:background="#FFF" />
 
                 </LinearLayout>
 
@@ -198,7 +198,7 @@
                         android:gravity="center"
                         android:digits="0123456789."
                         android:hint="XXXX"
-                        android:background="@null" />
+                        android:background="#FFF" />
 
                 </LinearLayout>
 

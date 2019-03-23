@@ -5,6 +5,7 @@ import android.util.Log;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -72,4 +73,14 @@ public class Helper
             }*/
         }).start();
     }
+
+    public static boolean fileExist(String file_name)
+    {
+
+        File imgFile = new File(file_name);
+        {
+            return imgFile.exists();
+        }
+    }
+
 }

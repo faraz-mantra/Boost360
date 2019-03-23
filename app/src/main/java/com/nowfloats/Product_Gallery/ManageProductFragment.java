@@ -6,19 +6,26 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
@@ -44,10 +52,12 @@ import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_LIMIT;
 import static com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE;
 
@@ -73,14 +83,14 @@ public class ManageProductFragment extends Fragment {
 
     private ProductPickupAddressFragment pickupAddressFragment;
 
-    public static ManageProductFragment newInstance()
+    public static ManageProductFragment newInstance(Constants.Type category, String type)
     {
         ManageProductFragment fragment = new ManageProductFragment();
 
-//      Bundle args = new Bundle();
-//      args.putString(ARG_PARAM1, param1);
-//      args.putString(ARG_PARAM2, param2);
-//      fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putString("CATEGORY", category.name());
+        args.putString("TYPE", type);
+        fragment.setArguments(args);
 
         return fragment;
     }
@@ -113,8 +123,13 @@ public class ManageProductFragment extends Fragment {
         initProductImageRecyclerView(binding.productImageList);
         initProductPickupAddressRecyclerView(binding.layoutBottomSheetAddress.pickupAddressList);
 
-        //sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        //sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_HIDDEN);
+        Bundle bundle = getArguments();
+
+        if(bundle != null)
+        {
+            String type = bundle.getString("TYPE");
+            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + type));
+        }
 
         initCurrencyList();
         addPropertyListener();
@@ -327,7 +342,7 @@ public class ManageProductFragment extends Fragment {
 
     private void addImagePickerListener()
     {
-        binding.imagePicker.setOnClickListener(v -> choosePicture());
+        binding.cardPrimaryImage.setOnClickListener(v -> choosePicture());
         binding.btnSecondaryImage.setOnClickListener(v -> choosePicture());
     }
 
@@ -797,17 +812,19 @@ public class ManageProductFragment extends Fragment {
             {
                 //mIsImagePicking = true;
 
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.Images.Media.TITLE, "New Picture");
-                contentValues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                //ContentValues contentValues = new ContentValues();
+                //contentValues.put(MediaStore.Images.Media.TITLE, "New Picture");
+                //contentValues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
 
-                Intent captureIntent;
+                //Intent captureIntent;
 
-                picUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                //picUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
-                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
-                startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
+                //captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
+                //startActivityForResult(captureIntent, CAMERA_REQUEST_CODE);
+
+                startCamera();
             }
         }
 
@@ -818,6 +835,44 @@ public class ManageProductFragment extends Fragment {
         }
     }
 
+
+    private void startCamera()
+    {
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "boost");
+
+        if(!mediaStorageDir.exists())
+        {
+            mediaStorageDir.mkdir();
+        }
+
+        /**
+         * Check if we're running on Android 5.0 or higher
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            picUri = FileProvider.getUriForFile(getActivity(),
+                    Constants.PACKAGE_NAME + ".provider",
+                    new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
+        }
+
+        else
+        {
+            picUri = Uri.fromFile(new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
+        }
+
+
+        try
+        {
+            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
+            startActivityForResult(intent, CAMERA_REQUEST_CODE);
+        }
+
+        catch (Exception e)
+        {
+            Toast.makeText(getContext(), "Failed to Open Camera", Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void toggleBottomSheet()
     {
@@ -845,4 +900,62 @@ public class ManageProductFragment extends Fragment {
             sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        Log.d("onActivityResult", "1");
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == CAMERA_REQUEST_CODE) {
+            Log.d("onActivityResult", "" + picUri.getPath());
+
+            File file = new File(picUri.getPath());
+            long length = file.length() / 1024; // Size in KB
+
+            display_image(picUri.getPath());
+        }
+
+        Log.d("onActivityResult", "3");
+
+    }
+
+
+    private void display_image(String path)
+    {
+        if(Helper.fileExist(path))
+        {
+            /*if(!new InternetConnectionDetector(ProfileActivity.this).isConnected())
+            {
+                new CustomAlertDialog(getApplicationContext(), this, layout_root_view).snackbarForInternetConnectivity();
+                return;
+            }*/
+
+            try
+            {
+                File f = new File(path);
+                // bitmap factory
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                // downsizing image as it throws OutOfMemory Exception for larger
+                // images
+                options.inSampleSize = 4;
+                final Bitmap bitmap = BitmapFactory.decodeFile(f.getPath(), options);
+                binding.ivPrimaryImage.setImageBitmap(bitmap);
+            }
+
+            catch(Exception e)
+            {
+                Toast.makeText(getContext(), "Failed to Set Image", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
+
+        else
+        {
+            Toast.makeText(getContext(), "File Not Found", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

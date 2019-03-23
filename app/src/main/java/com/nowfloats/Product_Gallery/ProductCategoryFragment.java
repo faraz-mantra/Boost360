@@ -7,12 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.nowfloats.Product_Gallery.Adapter.SpinnerItemCategoryAdapter;
+import com.nowfloats.util.Constants;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
 
 public class ProductCategoryFragment extends Fragment {
+
+    private Constants.Type type;
 
     public static ProductCategoryFragment newInstance()
     {
@@ -49,5 +53,31 @@ public class ProductCategoryFragment extends Fragment {
 
         SpinnerItemCategoryAdapter spinnerAdapter = new SpinnerItemCategoryAdapter(getContext());
         binding.spinnerItemOption.setAdapter(spinnerAdapter);
+        binding.spinnerItemOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position)
+                {
+                    case 0:
+
+                        type = Constants.Type.PRODUCT;
+                        break;
+
+                    case 1:
+
+                        type = Constants.Type.SERVICE;
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(type, binding.editCategory.getText().toString())));
     }
 }

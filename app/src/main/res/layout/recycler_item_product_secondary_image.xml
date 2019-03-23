@@ -5,7 +5,7 @@
     android:id="@+id/layout_display_image"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/input_background"
+    android:background="@drawable/white_rectangle_background"
     android:layout_marginTop="@dimen/margin_5"
     android:layout_marginBottom="@dimen/margin_5"
     android:padding="8dp"
