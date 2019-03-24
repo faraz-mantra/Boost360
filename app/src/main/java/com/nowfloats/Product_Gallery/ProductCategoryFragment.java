@@ -51,6 +51,8 @@ public class ProductCategoryFragment extends Fragment {
     {
         super.onActivityCreated(savedInstanceState);
 
+        ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing an item"));
+
         SpinnerItemCategoryAdapter spinnerAdapter = new SpinnerItemCategoryAdapter(getContext());
         binding.spinnerItemOption.setAdapter(spinnerAdapter);
         binding.spinnerItemOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

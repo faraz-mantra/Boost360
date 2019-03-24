@@ -45,6 +45,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
 import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
 import com.nowfloats.helper.Helper;
+import com.nowfloats.helper.ui.ImageLoader;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -73,9 +74,14 @@ public class ManageProductFragment extends Fragment {
     private ProductImageRecyclerAdapter adapterImage;
     private ProductPickupAddressRecyclerAdapter adapterAddress;
 
-    private final int CAMERA_REQUEST_CODE = 1;
+    private final int CAMERA_PERMISSION_REQUEST_CODE = 1;
+
+    private final int CAMERA_PRIMARY_IMAGE_REQUEST_CODE = 100;
+    private final int CAMERA_SECONDARY_IMAGE_REQUEST_CODE = 200;
+
     private final int GALLERY_REQUEST_CODE = 2;
     private Uri picUri;
+    private String CATEGORY;
     private UserSessionManager session;
 
     private BottomSheetBehavior sheetBehavior;
@@ -127,8 +133,28 @@ public class ManageProductFragment extends Fragment {
 
         if(bundle != null)
         {
+            CATEGORY = bundle.getString("CATEGORY");
+
             String type = bundle.getString("TYPE");
             ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + type));
+
+            if(CATEGORY.equals(Constants.Type.SERVICE.name()))
+            {
+                binding.layoutInventory.layoutInventoryRoot.setVisibility(View.GONE);
+                binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+
+                binding.layoutBottomSheet.tvPickAddress.setVisibility(View.GONE);
+                binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
+            }
+
+            else
+            {
+                binding.layoutInventory.layoutInventoryRoot.setVisibility(View.VISIBLE);
+                binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
+
+                binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
+                binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
+            }
         }
 
         initCurrencyList();
@@ -145,9 +171,9 @@ public class ManageProductFragment extends Fragment {
 
     private void addPropertyListener()
     {
-        imageList.add(new Product().new Image());
-        imageList.add(new Product().new Image());
-        imageList.add(new Product().new Image());
+        //imageList.add(new Product().new Image());
+        //imageList.add(new Product().new Image());
+        //imageList.add(new Product().new Image());
 
         propertyList.add(new Product().new Property("Key 1", "Value 1"));
         propertyList.add(new Product().new Property("Key 2", "Value 2"));
@@ -211,7 +237,16 @@ public class ManageProductFragment extends Fragment {
             {
                 case 0:
 
-                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
+                    if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
+                    {
+                        binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
+                    }
+
+                    else
+                    {
+                        binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                    }
+
                     binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
                     binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
                     binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
@@ -342,11 +377,11 @@ public class ManageProductFragment extends Fragment {
 
     private void addImagePickerListener()
     {
-        binding.cardPrimaryImage.setOnClickListener(v -> choosePicture());
-        binding.btnSecondaryImage.setOnClickListener(v -> choosePicture());
+        binding.cardPrimaryImage.setOnClickListener(v -> choosePicture(CAMERA_PRIMARY_IMAGE_REQUEST_CODE));
+        binding.btnSecondaryImage.setOnClickListener(v -> choosePicture(CAMERA_SECONDARY_IMAGE_REQUEST_CODE));
     }
 
-    private void choosePicture()
+    private void choosePicture(int requestCode)
     {
         final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.featuredimage_popup, true)
@@ -365,7 +400,7 @@ public class ManageProductFragment extends Fragment {
 
         takeCamera.setOnClickListener(v -> {
 
-            cameraIntent();
+            cameraIntent(requestCode);
             dialog.dismiss();
         });
 
@@ -604,7 +639,7 @@ public class ManageProductFragment extends Fragment {
             {
                 final ProductImageViewHolder viewHolder = (ProductImageViewHolder) holder;
 
-                viewHolder.btn_change.setOnClickListener(view -> choosePicture());
+                //viewHolder.btn_change.setOnClickListener(view -> choosePicture());
 
                 viewHolder.ib_remove.setOnClickListener(view -> {
 
@@ -612,7 +647,9 @@ public class ManageProductFragment extends Fragment {
                     notifyItemRemoved(viewHolder.getAdapterPosition());
                 });
 
-                Product.Property property = propertyList.get(i);
+                Product.Image image = imageList.get(i);
+
+                ImageLoader.load(getContext(), image.url, viewHolder.iv_image);
             }
         }
 
@@ -623,10 +660,17 @@ public class ManageProductFragment extends Fragment {
         }
 
 
+        public void setData(List<Product.Image> images)
+        {
+            imageList.addAll(images);
+            notifyDataSetChanged();
+        }
+
         class ProductImageViewHolder extends RecyclerView.ViewHolder
         {
             Button btn_change;
             ImageButton ib_remove;
+            ImageView iv_image;
 
             private ProductImageViewHolder(View itemView)
             {
@@ -634,6 +678,7 @@ public class ManageProductFragment extends Fragment {
 
                 btn_change = itemView.findViewById(R.id.btn_change);
                 ib_remove = itemView.findViewById(R.id.ib_remove);
+                iv_image = itemView.findViewById(R.id.iv_image);
             }
         }
     }
@@ -746,7 +791,21 @@ public class ManageProductFragment extends Fragment {
 
         class Image
         {
+            private String url;
 
+            Image(String url)
+            {
+                this.url = url;
+            }
+
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
         }
     }
 
@@ -788,7 +847,7 @@ public class ManageProductFragment extends Fragment {
         }
     }
 
-    private void cameraIntent()
+    private void cameraIntent(int requestCode)
     {
         try
         {
@@ -804,7 +863,7 @@ public class ManageProductFragment extends Fragment {
 
                 else
                 {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
                 }
             }
 
@@ -824,7 +883,7 @@ public class ManageProductFragment extends Fragment {
                 //captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
                 //startActivityForResult(captureIntent, CAMERA_REQUEST_CODE);
 
-                startCamera();
+                startCamera(requestCode);
             }
         }
 
@@ -836,7 +895,7 @@ public class ManageProductFragment extends Fragment {
     }
 
 
-    private void startCamera()
+    private void startCamera(int requestCode)
     {
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "boost");
 
@@ -865,7 +924,7 @@ public class ManageProductFragment extends Fragment {
         {
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
-            startActivityForResult(intent, CAMERA_REQUEST_CODE);
+            startActivityForResult(intent, requestCode);
         }
 
         catch (Exception e)
@@ -905,25 +964,21 @@ public class ManageProductFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        Log.d("onActivityResult", "1");
-
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == CAMERA_REQUEST_CODE) {
+        if(resultCode == RESULT_OK && (requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE || requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE)) {
+
             Log.d("onActivityResult", "" + picUri.getPath());
 
             File file = new File(picUri.getPath());
             long length = file.length() / 1024; // Size in KB
 
-            display_image(picUri.getPath());
+            display_image(picUri.getPath(), requestCode);
         }
-
-        Log.d("onActivityResult", "3");
-
     }
 
 
-    private void display_image(String path)
+    private void display_image(String path, int requestCode)
     {
         if(Helper.fileExist(path))
         {
@@ -935,14 +990,28 @@ public class ManageProductFragment extends Fragment {
 
             try
             {
-                File f = new File(path);
+                File file = new File(path);
+
                 // bitmap factory
-                BitmapFactory.Options options = new BitmapFactory.Options();
+                // BitmapFactory.Options options = new BitmapFactory.Options();
                 // downsizing image as it throws OutOfMemory Exception for larger
                 // images
-                options.inSampleSize = 4;
-                final Bitmap bitmap = BitmapFactory.decodeFile(f.getPath(), options);
-                binding.ivPrimaryImage.setImageBitmap(bitmap);
+                // options.inSampleSize = 4;
+                // final Bitmap bitmap = BitmapFactory.decodeFile(f.getPath(), options);
+                // binding.ivPrimaryImage.setImageBitmap(bitmap);
+
+                if(requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE)
+                {
+                    ImageLoader.load(getContext(), file, binding.ivPrimaryImage);
+                }
+
+                if(requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE)
+                {
+                    List<Product.Image> imageList = new ArrayList<>();
+                    imageList.add(new Product().new Image(path));
+
+                    adapterImage.setData(imageList);
+                }
             }
 
             catch(Exception e)

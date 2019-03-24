@@ -137,7 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:background="@drawable/input_background"
+                    android:background="@drawable/white_rectangle_background"
                     android:padding="8dp"
                     android:orientation="horizontal" >
 
@@ -247,7 +247,8 @@
                     android:gravity="top"
                     android:editable="false"
                     android:layout_marginTop="@dimen/margin_5"
-                    style="@style/ProductEditTextStyle" />
+                    style="@style/ProductEditTextStyle"
+                    android:background="@drawable/white_rectangle_background"/>
 
                 <View
                     android:id="@+id/dotted_line"
