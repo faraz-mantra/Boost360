@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/layout_inventory_root"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/layout_product_image___"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/ProductLabelTextStyle"
-                    android:text="Inventory Availability"/>
+                    android:text="Inventory Availability" />
 
                 <ImageButton
                     android:id="@+id/ib_info_product_image____"
-                    style="@style/ProductHelpButtonStyle"/>
+                    style="@style/ProductHelpButtonStyle" />
 
             </LinearLayout>
 
@@ -33,44 +32,44 @@
                 style="@style/ProductLabelTextStyle"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="Available Qty."/>
+                android:text="Available Qty." />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:background="@drawable/white_rectangle_background">
+            android:background="@drawable/white_rectangle_background"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="1dp"
                 android:background="@drawable/input_background"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="1dp">
 
                 <Spinner
                     android:id="@+id/spinner_stock_availability"
                     style="@style/ProductSpinnerStyle"
                     android:layout_weight="1"
-                    android:entries="@array/stock_availability"
-                    android:background="@drawable/spinner_background_instock" />
+                    android:background="@drawable/spinner_background_instock"
+                    android:entries="@array/stock_availability" />
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/secondaryLightTextColor"/>
+                    android:background="@color/secondaryLightTextColor" />
 
                 <EditText
                     android:id="@+id/edit_available_qty"
                     style="@style/ProductEditTextStyle"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:background="#FFF"
                     android:digits="0123456789."
-                    android:hint="XXXX"
-                    android:background="#FFF" />
+                    android:gravity="center"
+                    android:hint="XXXX" />
 
             </LinearLayout>
 
@@ -79,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_10"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,15 +89,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Allow COD Orders"/>
+                            android:text="Allow COD Orders" />
 
                         <ImageButton
                             android:id="@+id/ib_info_product_image"
-                            style="@style/ProductHelpButtonStyle"/>
+                            style="@style/ProductHelpButtonStyle" />
 
                     </LinearLayout>
 
@@ -106,7 +105,7 @@
                         style="@style/ProductLabelTextStyle"
                         android:layout_width="match_parent"
                         android:layout_weight="1.4"
-                        android:text="Max Qty."/>
+                        android:text="Max Qty." />
 
                 </LinearLayout>
 
@@ -115,30 +114,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:padding="1dp"
                     android:background="@drawable/input_background"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:padding="1dp">
 
                     <Spinner
                         android:id="@+id/spinner_cod_availability"
                         style="@style/ProductSpinnerStyle"
                         android:layout_weight="1"
-                        android:entries="@array/stock_options"
-                        android:background="@drawable/spinner_background_instock" />
+                        android:background="@drawable/spinner_background_instock"
+                        android:entries="@array/stock_options" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/secondaryLightTextColor"/>
+                        android:background="@color/secondaryLightTextColor" />
 
                     <EditText
                         android:id="@+id/edit_cod_max__qty"
                         style="@style/ProductEditTextStyle"
                         android:layout_weight="1.4"
-                        android:gravity="center"
+                        android:background="#FFF"
                         android:digits="0123456789."
-                        android:hint="XXXX"
-                        android:background="#FFF" />
+                        android:gravity="center"
+                        android:hint="XXXX" />
 
                 </LinearLayout>
 
@@ -151,15 +150,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Allow prepaid online orders"/>
+                            android:text="Allow prepaid online orders" />
 
                         <ImageButton
                             android:id="@+id/ib_info_product_image_"
-                            style="@style/ProductHelpButtonStyle"/>
+                            style="@style/ProductHelpButtonStyle" />
 
                     </LinearLayout>
 
@@ -167,7 +166,7 @@
                         style="@style/ProductLabelTextStyle"
                         android:layout_width="match_parent"
                         android:layout_weight="1.4"
-                        android:text="Max Qty."/>
+                        android:text="Max Qty." />
 
                 </LinearLayout>
 
@@ -175,31 +174,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:padding="1dp"
                     android:background="@drawable/input_background"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:padding="1dp">
 
 
                     <Spinner
                         android:id="@+id/spinner_prepaid_online_availability"
                         style="@style/ProductSpinnerStyle"
                         android:layout_weight="1"
-                        android:entries="@array/stock_options"
-                        android:background="@drawable/spinner_background_instock" />
+                        android:background="@drawable/spinner_background_instock"
+                        android:entries="@array/stock_options" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/secondaryLightTextColor"/>
+                        android:background="@color/secondaryLightTextColor" />
 
                     <EditText
                         android:id="@+id/edit_prepaid_online_max_qty"
                         style="@style/ProductEditTextStyle"
                         android:layout_weight="1.4"
-                        android:gravity="center"
+                        android:background="#FFF"
                         android:digits="0123456789."
-                        android:hint="XXXX"
-                        android:background="#FFF" />
+                        android:gravity="center"
+                        android:hint="XXXX" />
 
                 </LinearLayout>
 

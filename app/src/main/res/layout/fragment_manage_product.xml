@@ -118,8 +118,8 @@
                         android:id="@+id/product_image_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:layout_marginBottom="@dimen/margin_5"
                         android:clipToPadding="false"
                         android:scrollbars="none"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -266,6 +266,7 @@
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
                     android:maxLength="2000"
+                    android:singleLine="false"
                     android:hint="Describe your product within 2000 characters max ..."
                     style="@style/ProductEditTextStyle" />
 
@@ -279,7 +280,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.1"
+                        android:layout_weight="1.2"
                         android:orientation="vertical" >
 
                         <LinearLayout
@@ -324,7 +325,7 @@
 
                             <TextView
                                 style="@style/ProductLabelTextStyle"
-                                android:text="Base Price(Incl. Tax)" />
+                                android:text="Base Price (Incl. Tax)" />
 
                             <ImageButton
                                 android:id="@+id/ib_info_product_base_price_help"
@@ -335,6 +336,7 @@
                         <EditText
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XX,XXX"
+                            android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 
                     </LinearLayout>
@@ -342,19 +344,21 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.1"
+                        android:layout_weight="1.2"
+                        android:layout_marginTop="3dp"
                         android:layout_marginLeft="@dimen/margin_10"
                         android:orientation="vertical" >
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:layout_height="24dp"
                             android:layout_gravity="start"
+                            android:paddingBottom="3dp"
                             android:text="Discount" />
 
                         <EditText
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XXX"
+                            android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 
                     </LinearLayout>
@@ -380,8 +384,7 @@
                         android:hint="XX,XXX"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp"
-                        android:gravity="center_vertical"
-                        android:textStyle="bold" />
+                        android:gravity="center_vertical"/>
 
                 </LinearLayout>
 

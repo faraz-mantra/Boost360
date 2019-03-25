@@ -58,7 +58,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        getDialog().getWindow().getAttributes().windowAnimations = com.nowfloats.riachatsdk.R.style.DialogAnimation;
+       // getDialog().getWindow().getAttributes().windowAnimations = com.nowfloats.riachatsdk.R.style.DialogAnimation;
     }
 
 
