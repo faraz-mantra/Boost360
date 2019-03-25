@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingLeft="@dimen/margin_20"
     android:paddingRight="@dimen/margin_20"
@@ -19,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_10"
-            android:src="@drawable/ic_product"/>
+            android:layout_marginRight="@dimen/margin_15"
+            app:srcCompat="@drawable/ic_product"/>
 
         <TextView
             android:id="@+id/label_item_type"
@@ -29,7 +30,7 @@
             android:text="Physical Product"
             android:layout_toRightOf="@+id/iv_icon"
             android:textColor="@color/primaryTextColor"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView

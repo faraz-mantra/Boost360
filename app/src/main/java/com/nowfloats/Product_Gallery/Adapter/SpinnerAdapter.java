@@ -52,13 +52,14 @@ public class SpinnerAdapter extends BaseAdapter
         if (itemView == null)
         {
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_payment_configuration_option, null /*parent, false*/);
-
-            TextView tvPaymentType = itemView.findViewById(R.id.label_payment_type);
-            TextView tvDescription = itemView.findViewById(R.id.label_description);
-
-            tvPaymentType.setText(option.title);
-            tvDescription.setText(option.body);
         }
+
+        TextView tvPaymentType = itemView.findViewById(R.id.label_payment_type);
+        TextView tvDescription = itemView.findViewById(R.id.label_description);
+
+        tvPaymentType.setText(option.title);
+        tvDescription.setText(option.body);
+
 
 
         /*if (parent == null)

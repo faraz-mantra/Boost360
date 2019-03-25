@@ -51,18 +51,18 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
 
         ItemCategory option = itemCategoryList.get(position);
 
-        if (itemView == null)
-        {
+        if (itemView == null) {
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_item_category_option, null /*parent, false*/);
-
-            TextView tvItemType = itemView.findViewById(R.id.label_item_type);
-            TextView tvItemDescription = itemView.findViewById(R.id.label_item_description);
-            ImageView ivIcon = itemView.findViewById(R.id.iv_icon);
-
-            tvItemType.setText(option.title);
-            tvItemDescription.setText(option.body);
-            ivIcon.setImageDrawable(ContextCompat.getDrawable(context, option.icon));
         }
+
+        TextView tvItemType = itemView.findViewById(R.id.label_item_type);
+        TextView tvItemDescription = itemView.findViewById(R.id.label_item_description);
+        ImageView ivIcon = itemView.findViewById(R.id.iv_icon);
+
+        tvItemType.setText(option.title);
+        tvItemDescription.setText(option.body);
+        ivIcon.setImageDrawable(ContextCompat.getDrawable(context, option.icon));
+
 
 
         /*if (parent == null)
@@ -168,7 +168,7 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
             List<ItemCategory> paymentOptions = new ArrayList<>();
 
             paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc.", R.drawable.ic_product));
-            paymentOptions.add(new ItemCategory("Service Offering", "Can be given in person and doesn’t need delivery e.g: Therapy, course, financial consultation.", R.drawable.ic_service));
+            paymentOptions.add(new ItemCategory("Service Offering", "Can be given in person and doesn’t need delivery e.g: Therapy, course, financial consultation.", R.drawable.ic_services));
 
             return paymentOptions;
         }

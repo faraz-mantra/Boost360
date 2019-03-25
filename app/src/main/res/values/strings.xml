@@ -1738,8 +1738,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Bank Transfer</item>
     </string-array>
     <array name="stock_availability">
-        <item>in stock</item>
-        <item>out of stock</item>
+        <item>In stock</item>
+        <item>Out of stock</item>
     </array>
     <array name="stock_options">
         <item>YES</item>

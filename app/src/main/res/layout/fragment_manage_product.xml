@@ -48,14 +48,17 @@
                     android:id="@+id/card_primary_image"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
+                    android:layout_marginTop="@dimen/margin_5"
                     android:padding="2dp"
                     android:clickable="true"
                     app:cardCornerRadius="4dp" >
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_image_placeholder">
 
+                        <!--
                         <RelativeLayout
                             android:id="@+id/image_placeholder"
                             android:layout_width="200dp"
@@ -87,6 +90,7 @@
                                 android:text="800x800px"/>
 
                         </RelativeLayout>
+                        -->
 
                         <ImageView
                             android:id="@+id/iv_primary_image"
@@ -148,7 +152,7 @@
                     android:id="@+id/layout_brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -192,6 +196,7 @@
                     android:id="@+id/layout_product_variants_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/margin_10"
                     android:orientation="horizontal" >
 
@@ -210,6 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5"
+                    android:visibility="gone"
                     android:orientation="horizontal" >
 
                     <TextView

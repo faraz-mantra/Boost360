@@ -33,8 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="for variant #1 "
-                android:textSize="14sp"
-                android:paddingRight="10dp"
+                android:textSize="12sp"
+                android:paddingRight="5dp"
                 android:textStyle="bold"
                 android:layout_below="@+id/label_payment_configuration"
                 android:textColor="@android:color/white" />
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="of Fastrack Bare Basic Watch"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:layout_below="@+id/label_payment_configuration"
                 android:layout_toRightOf="@+id/label_variants"
                 android:textColor="#c9c9c9" />
@@ -163,8 +163,9 @@
                     <TextView
                         android:id="@+id/tv_pick_address"
                         style="@style/ProductEditTextStyle"
-                        android:drawableRight="@drawable/ic_lead_pencil_grey600_18dp"
+                        android:drawableRight="@drawable/ic_pencil"
                         android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/margin_5"
                         android:padding="8dp"
                         android:onClick="onPickAddressClick"
                         android:clickable="true"

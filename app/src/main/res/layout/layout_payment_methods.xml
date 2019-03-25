@@ -34,7 +34,7 @@
                 <TextView
                     android:id="@+id/tv_payment_configuration"
                     style="@style/ProductEditTextStyle"
-                    android:drawableRight="@drawable/ic_lead_pencil_grey600_18dp"
+                    android:drawableRight="@drawable/ic_pencil"
                     android:layout_width="match_parent"
                     android:padding="8dp"
                     android:onClick="onPaymentConfigurationClick"

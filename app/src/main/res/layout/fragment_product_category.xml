@@ -2,99 +2,93 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <android.support.v4.widget.NestedScrollView
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
-                android:paddingBottom="@dimen/margin_50"
+                android:fillViewport="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context="com.nowfloats.Product_Gallery.ProductCategoryFragment">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="@dimen/margin_20">
+                    android:layout_height="match_parent" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/grey_rounded_spinner_background"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_20">
 
-                        <Spinner
-                            android:id="@+id/spinner_item_option"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-                        <!--
-                        <TextView
-                            android:id="@+id/label_payment_type"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Physical Product"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:background="@drawable/grey_rounded_spinner_background"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                            <Spinner
+                                android:id="@+id/spinner_item_option"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                            <!--
+                            <TextView
+                                android:id="@+id/label_payment_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Physical Product"
+                                android:textColor="@color/primaryTextColor"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc."
+                                android:textColor="@color/secondaryTextColor"
+                                android:textSize="14sp" />
+                             -->
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_brand"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc."
-                            android:textColor="@color/secondaryTextColor"
-                            android:textSize="14sp" />
-                         -->
+                            android:layout_marginTop="@dimen/margin_20"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/ProductLabelTextStyle"
+                                android:text="Product Type/Category" />
+
+                            <ImageButton
+                                android:id="@+id/ib_info_product_type"
+                                style="@style/ProductHelpButtonStyle" />
+
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edit_category"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:hint="Write the item type eg. Book, Smartphone etc." />
+
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/layout_brand"
+                    <Button
+                        android:id="@+id/btn_start"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_20"
-                        android:orientation="horizontal">
+                        android:background="@color/primaryColor"
+                        android:textColor="@android:color/white"
+                        android:layout_gravity="bottom"
+                        android:text="START" />
 
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:text="Product Type/Category" />
-
-                        <ImageButton
-                            android:id="@+id/ib_info_product_type"
-                            style="@style/ProductHelpButtonStyle" />
-
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/edit_category"
-                        style="@style/ProductEditTextStyle"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:hint="Write the item type eg. Book, Smartphone etc." />
-
-
-                </LinearLayout>
+                </FrameLayout>
 
             </android.support.v4.widget.NestedScrollView>
-
-            <Button
-                android:id="@+id/btn_start"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primaryColor"
-                android:textColor="@android:color/white"
-                android:layout_gravity="bottom"
-                android:text="START" />
-
-        </FrameLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
 
 </layout>
