@@ -1750,4 +1750,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Pay By Cheque</item>
         <item>Bank Transfer</item>
     </array>
+
+    <string name="hint_product_name">Write the name of your base %s</string>
+    <string name="label_product_name">%s Name<sup>*</sup></string>
+
+    <string name="hint_product_description">Describe your %s within 2000 characters max ...</string>
+    <string name="label_product_description">%s Description<sup>*</sup></string>
+    <string name="label_product_type">%s Type/Category</string>
+
 </resources>

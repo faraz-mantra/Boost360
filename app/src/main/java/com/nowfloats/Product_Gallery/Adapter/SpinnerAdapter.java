@@ -161,7 +161,7 @@ public class SpinnerAdapter extends BaseAdapter
         {
             List<PaymentOption> paymentOptions = new ArrayList<>();
 
-            paymentOptions.add(new PaymentOption("Assured Purchase", "A Boost service which ensures a secure payment and safe delivery of this product."));
+            paymentOptions.add(new PaymentOption("Assured Purchase™", "A Boost service which ensures a secure payment and safe delivery of this product."));
             paymentOptions.add(new PaymentOption("My Payment Gateway", "Simply receive payments in your account by adding salt & key of popular gateways. e.g paypal, ICICI etc. This works best if you've already sorted the delivery part."));
             paymentOptions.add(new PaymentOption("Variants Unique Payment URL", "If you already listed your product on some order platform simply enter the URL here and handle to purchase from there."));
             paymentOptions.add(new PaymentOption("Don't want to sell online", "If you just wish to list the product on the site and wants to only receive enquiries from your customers."));

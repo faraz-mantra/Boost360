@@ -166,6 +166,30 @@ public class ManageProductFragment extends Fragment {
         initPaymentAdapter();
         spinnerAddressListener();
         addBottomSheetListener();
+
+        placeholder();
+    }
+
+
+    private void placeholder()
+    {
+        String category;
+
+        if(CATEGORY.equals(Constants.Type.SERVICE.name()))
+        {
+            category = "Service";
+        }
+
+        else
+        {
+            category = "Product";
+        }
+
+        binding.labelProductName.setText(String.format(getString(R.string.label_product_name), category));
+        binding.editProductName.setHint(String.format(getString(R.string.hint_product_name), category.toLowerCase()));
+
+        binding.labelProductDescription.setText(String.format(getString(R.string.label_product_description), category));
+        binding.editProductDescription.setHint(String.format(getString(R.string.hint_product_description), category.toLowerCase()));
     }
 
 
@@ -188,8 +212,6 @@ public class ManageProductFragment extends Fragment {
 
     private void initPaymentAdapter()
     {
-        //((LinearLayout)binding.layoutBottomSheet).getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
-
         binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
         binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.GONE);
 

@@ -40,7 +40,7 @@
                     android:onClick="onPaymentConfigurationClick"
                     android:clickable="true"
                     android:background="@drawable/grey_rounded_spinner_background"
-                    android:text="Assured Purchase" />
+                    android:text="Assured Purchase™" />
 
                 <LinearLayout
                     android:id="@+id/layout_payment_assured_purchase"

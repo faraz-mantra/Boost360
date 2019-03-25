@@ -4,6 +4,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
+
 
 public class ProductCategoryFragment extends Fragment {
 
@@ -58,48 +61,97 @@ public class ProductCategoryFragment extends Fragment {
         ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing an item"));
 
         session = new UserSessionManager(getContext(), getActivity());
-        //setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+        setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
 
-        SpinnerItemCategoryAdapter spinnerAdapter = new SpinnerItemCategoryAdapter(getContext());
-        binding.spinnerItemOption.setAdapter(spinnerAdapter);
-        binding.spinnerItemOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(type, binding.editCategory.getText().toString()), "MANAGE_PRODUCT"));
+
+        binding.editCategory.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                switch (position)
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if(s.toString().trim().length() > 0)
                 {
-                    case 0:
+                    binding.btnStart.setBackgroundColor(getResources().getColor(R.color.primaryColor));
+                    binding.btnStart.setEnabled(true);
+                }
 
-                        type = Constants.Type.PRODUCT;
-                        break;
-
-                    case 1:
-
-                        type = Constants.Type.SERVICE;
-                        break;
+                else
+                {
+                    binding.btnStart.setBackgroundColor(getResources().getColor(R.color.disableButtonColor));
+                    binding.btnStart.setEnabled(false);
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void afterTextChanged(Editable s) {
 
             }
         });
-
-        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(type, binding.editCategory.getText().toString())));
     }
 
+    private void setProductCategory(String category) {
 
-    /*private void setProductCategory(String initialCustomProductCategory)
-    {
-        rb_Products.setChecked(initialCustomProductCategory.equalsIgnoreCase("products"));
-        rb_Services.setChecked(initialCustomProductCategory.equalsIgnoreCase("services"));
-
-        if(! initialCustomProductCategory.equalsIgnoreCase("products")&& ! initialCustomProductCategory.equalsIgnoreCase("services"))
+        if(category.equalsIgnoreCase("products"))
         {
-            rb_Custom.setChecked(true);
-            customProductCategory.setText(initialCustomProductCategory);
+            binding.layoutPhysicalProduct.setVisibility(View.VISIBLE);
+            binding.layoutServiceOffering.setVisibility(View.GONE);
+            binding.layoutCustomProduct.setVisibility(View.GONE);
+
+            type = Constants.Type.PRODUCT;
+            binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
         }
-    }*/
+
+        else if(category.equalsIgnoreCase("services"))
+        {
+            binding.layoutPhysicalProduct.setVisibility(View.GONE);
+            binding.layoutServiceOffering.setVisibility(View.VISIBLE);
+            binding.layoutCustomProduct.setVisibility(View.GONE);
+
+            type = Constants.Type.SERVICE;
+            binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
+        }
+
+        else
+        {
+            binding.layoutPhysicalProduct.setVisibility(View.GONE);
+            binding.layoutServiceOffering.setVisibility(View.GONE);
+            binding.layoutCustomProduct.setVisibility(View.VISIBLE);
+
+            SpinnerItemCategoryAdapter spinnerAdapter = new SpinnerItemCategoryAdapter(getContext());
+
+            binding.spinnerItemOption.setAdapter(spinnerAdapter);
+            binding.spinnerItemOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    switch (position)
+                    {
+                        case 0:
+
+                            type = Constants.Type.PRODUCT;
+                            binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
+                            break;
+
+                        case 1:
+
+                            type = Constants.Type.SERVICE;
+                            binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
+                            break;
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+    }
 }

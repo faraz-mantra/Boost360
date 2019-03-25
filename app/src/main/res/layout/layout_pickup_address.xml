@@ -124,7 +124,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Pickup address proof(jpeg/png/pdf 1mb)" />
+                        android:text="Pickup address proof (jpeg/png/pdf 1mb)" />
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description_______"

@@ -22,6 +22,7 @@
                         android:padding="@dimen/margin_20">
 
                         <LinearLayout
+                            android:id="@+id/layout_custom_product"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/grey_rounded_spinner_background"
@@ -32,25 +33,83 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
 
-                            <!--
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_physical_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:background="@drawable/white_rectangle_background"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/margin_15"
+                                app:srcCompat="@drawable/ic_product"/>
+
                             <TextView
-                                android:id="@+id/label_payment_type"
+                                android:id="@+id/label_item_type"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Physical Product"
+                                android:layout_toRightOf="@+id/iv_icon"
                                 android:textColor="@color/primaryTextColor"
-                                android:textSize="20sp"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/label_item_description"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/iv_icon"
+                                android:layout_below="@+id/label_item_type"
                                 android:text="Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc."
                                 android:textColor="@color/secondaryTextColor"
                                 android:textSize="14sp" />
-                             -->
 
-                        </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_service_offering"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:background="@drawable/white_rectangle_background"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_service_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/margin_15"
+                                app:srcCompat="@drawable/ic_services"/>
+
+                            <TextView
+                                android:id="@+id/label_item_service_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Service Offering"
+                                android:layout_toRightOf="@+id/iv_service_icon"
+                                android:textColor="@color/primaryTextColor"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/label_item_service_description"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/iv_service_icon"
+                                android:layout_below="@+id/label_item_service_type"
+                                android:text="Can be given in person and doesn't need delivery e.g: Therapy, course, financial consultation."
+                                android:textColor="@color/secondaryTextColor"
+                                android:textSize="14sp" />
+
+                        </RelativeLayout>
 
                         <LinearLayout
                             android:id="@+id/layout_brand"
@@ -60,6 +119,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/label_product_type"
                                 style="@style/ProductLabelTextStyle"
                                 android:text="Product Type/Category" />
 
@@ -82,7 +142,8 @@
                         android:id="@+id/btn_start"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/primaryColor"
+                        android:background="@color/disableButtonColor"
+                        android:enabled="false"
                         android:textColor="@android:color/white"
                         android:layout_gravity="bottom"
                         android:text="START" />

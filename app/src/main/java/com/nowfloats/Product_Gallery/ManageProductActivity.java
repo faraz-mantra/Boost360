@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -12,7 +13,6 @@ import com.nowfloats.helper.ui.BaseActivity;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityManageProductBinding;
 
-import static com.nowfloats.Product_Gallery.ProductGalleryActivity.TAG_PRODUCT;
 
 public class ManageProductActivity extends BaseActivity
 {
@@ -35,7 +35,7 @@ public class ManageProductActivity extends BaseActivity
             getSupportActionBar().setTitle("");
         }
 
-        loadFragment(ProductCategoryFragment.newInstance());
+        loadFragment(ProductCategoryFragment.newInstance(), "PRODUCT_CATEGORY");
     }
 
 
@@ -44,11 +44,13 @@ public class ManageProductActivity extends BaseActivity
         binding.layoutToolbar.toolbarTitle.setText(String.valueOf(title));
     }
 
-    public void loadFragment(Fragment fragment)
+    public void loadFragment(Fragment fragment, String tag)
     {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fm_site_appearance, fragment, TAG_PRODUCT)
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction
+                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                .replace(R.id.fm_site_appearance, fragment, tag)
                 .commit();
     }
 
@@ -60,7 +62,16 @@ public class ManageProductActivity extends BaseActivity
         {
             case android.R.id.home:
 
-                confirm();
+                if(isProductCategoryFragment())
+                {
+                    finish();
+                }
+
+                else
+                {
+                    confirm();
+                }
+
                 break;
         }
 
@@ -72,7 +83,7 @@ public class ManageProductActivity extends BaseActivity
     {
         new MaterialDialog.Builder(this)
                 .title("Are you sure ?")
-                .content("Information not saved. Are you sure want to close.")
+                .content("Information not saved. Do you want to close.")
                 .positiveText(getString(R.string.yes))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeText(getString(R.string.no))
@@ -101,7 +112,12 @@ public class ManageProductActivity extends BaseActivity
     @Override
     public void onBackPressed()
     {
-        if (doubleBackToExitPressedOnce)
+        if(isProductCategoryFragment())
+        {
+            super.onBackPressed();
+        }
+
+        else if (doubleBackToExitPressedOnce)
         {
             super.onBackPressed();
             return;
@@ -111,5 +127,19 @@ public class ManageProductActivity extends BaseActivity
         Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
+    }
+
+
+    private boolean isProductCategoryFragment()
+    {
+        /*ProductCategoryFragment fragment = (ProductCategoryFragment)getSupportFragmentManager().findFragmentByTag("PRODUCT_CATEGORY");
+
+        if (fragment != null && fragment.isVisible())
+        {
+            return true;
+        }*/
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fm_site_appearance);
+        return fragment instanceof ProductCategoryFragment;
     }
 }

@@ -218,7 +218,7 @@
         <item name="android:background">@drawable/input_background</item>
     </style>
 
-    <style name="ProductSpinnerStyle" parent="ThemeOverlay.AppCompat.Light">
+    <style name="ProductSpinnerStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textSize">14sp</item>
