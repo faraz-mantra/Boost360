@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerItemCategoryAdapter;
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
@@ -23,16 +24,20 @@ public class ProductCategoryFragment extends Fragment {
 
     private Constants.Type type;
     private UserSessionManager session;
+    private Product product;
 
-
-    public static ProductCategoryFragment newInstance()
+    public static ProductCategoryFragment newInstance(Product product)
     {
         ProductCategoryFragment fragment = new ProductCategoryFragment();
 
-//      Bundle args = new Bundle();
-//      args.putString(ARG_PARAM1, param1);
-//      args.putString(ARG_PARAM2, param2);
-//      fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putSerializable("PRODUCT", product);
+        fragment.setArguments(args);
+
+        //Bundle args = new Bundle();
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
+        //fragment.setArguments(args);
 
         return fragment;
     }
@@ -44,6 +49,13 @@ public class ProductCategoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+
+        if (bundle != null)
+        {
+            this.product = (Product) bundle.getSerializable("PRODUCT");
+        }
     }
 
     @Override
@@ -63,7 +75,7 @@ public class ProductCategoryFragment extends Fragment {
         session = new UserSessionManager(getContext(), getActivity());
         setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
 
-        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(type, binding.editCategory.getText().toString()), "MANAGE_PRODUCT"));
+        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(type, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
 
         binding.editCategory.addTextChangedListener(new TextWatcher() {
 

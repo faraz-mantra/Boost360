@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.helper.ui.BaseActivity;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityManageProductBinding;
@@ -18,6 +19,7 @@ public class ManageProductActivity extends BaseActivity
 {
     private ActivityManageProductBinding binding;
     private boolean doubleBackToExitPressedOnce = false;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,7 +37,18 @@ public class ManageProductActivity extends BaseActivity
             getSupportActionBar().setTitle("");
         }
 
-        loadFragment(ProductCategoryFragment.newInstance(), "PRODUCT_CATEGORY");
+        this.product = (Product) getIntent().getSerializableExtra("PRODUCT");
+        loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
+
+        /*if(this.product == null)
+        {
+            loadFragment(ProductCategoryFragment.newInstance(), "PRODUCT_CATEGORY");
+        }
+
+        else
+        {
+            loadFragment(ManageProductFragment.newInstance("", "", this.product), "PRODUCT_CATEGORY");
+        }*/
     }
 
 

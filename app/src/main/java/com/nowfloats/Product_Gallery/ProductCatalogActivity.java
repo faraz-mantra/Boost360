@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.ProductCatagoryRecyclerAdapter;
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
@@ -25,6 +26,7 @@ import com.thinksity.databinding.ActivityProductCatalogBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -83,10 +85,10 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
         binding.pbLoading.setVisibility(View.VISIBLE);
 
-        galleryInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
+        galleryInterface.getAllProducts(values, new Callback<List<Product>>() {
 
             @Override
-            public void success(ArrayList<ProductListModel> data, Response response) {
+            public void success(List<Product> data, Response response) {
 
                 binding.pbLoading.setVisibility(View.GONE);
 
@@ -129,8 +131,11 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.SetOnItemClickListener(productListModel -> {
+        adapter.SetOnItemClickListener(product -> {
 
+                    Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
+                    intent.putExtra("PRODUCT", product);
+                    startActivity(intent);
                 }
         );
 

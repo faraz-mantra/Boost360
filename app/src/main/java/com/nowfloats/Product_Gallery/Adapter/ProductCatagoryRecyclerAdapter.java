@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Product_Gallery.Model.ProductListModel;
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.helper.Helper;
 import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
@@ -22,7 +22,7 @@ import java.util.List;
 public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private List<ProductListModel> productList;
+    private List<Product> productList;
     private OnItemClicked callback;
 
     public ProductCatagoryRecyclerAdapter(Context context)
@@ -44,7 +44,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
         if (holder instanceof ProductListViewHolder)
         {
-            ProductListModel model = productList.get(i);
+            Product model = productList.get(i);
             final ProductListViewHolder viewHolder = (ProductListViewHolder) holder;
 
             viewHolder.tvName.setText(model.Name);
@@ -127,7 +127,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         }
     }
 
-    public void setData(List<ProductListModel> productList)
+    public void setData(List<Product> productList)
     {
         this.productList.addAll(productList);
         notifyDataSetChanged();
@@ -135,7 +135,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
     public interface OnItemClicked
     {
-        void onItemClick(ProductListModel productListModel);
+        void onItemClick(Product product);
     }
 
     public void SetOnItemClickListener(final OnItemClicked callback)

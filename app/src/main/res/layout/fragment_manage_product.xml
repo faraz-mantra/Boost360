@@ -166,6 +166,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_brand"
                     style="@style/ProductEditTextStyle"
                     android:hint="Write the name of the brand"
                     android:layout_marginTop="@dimen/margin_5"/>
@@ -343,6 +344,7 @@
                         </LinearLayout>
 
                         <EditText
+                            android:id="@+id/edit_base_price"
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XX,XXX"
                             android:digits="0123456789."
@@ -365,6 +367,7 @@
                             android:text="Discount" />
 
                         <EditText
+                            android:id="@+id/edit_discount"
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XXX"
                             android:digits="0123456789."
@@ -421,6 +424,7 @@
 
 
         <Button
+            android:id="@+id/btn_publish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primaryColor"

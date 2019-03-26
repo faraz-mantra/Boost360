@@ -2,16 +2,12 @@ package com.nowfloats.Product_Gallery;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +39,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
+import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
+import com.nowfloats.Product_Gallery.Service.UploadImage;
 import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
 import com.nowfloats.helper.Helper;
 import com.nowfloats.helper.ui.ImageLoader;
@@ -56,13 +54,18 @@ import com.thinksity.databinding.FragmentManageProductBinding;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_LIMIT;
 import static com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE;
 
-public class ManageProductFragment extends Fragment {
+public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener{
 
     private String currencyValue;
     private String currencyType = "";
@@ -83,23 +86,31 @@ public class ManageProductFragment extends Fragment {
     private Uri picUri;
     private String CATEGORY;
     private UserSessionManager session;
+    private MaterialDialog materialDialog;
+
+
+    private HashMap<String, String> values;
+
+    private com.nowfloats.Product_Gallery.Model.Product product;
 
     private BottomSheetBehavior sheetBehavior;
     private BottomSheetBehavior sheetBehaviorAddress;
 
     private ProductPickupAddressFragment pickupAddressFragment;
 
-    public static ManageProductFragment newInstance(Constants.Type category, String type)
+    public static ManageProductFragment newInstance(Constants.Type category, String type, com.nowfloats.Product_Gallery.Model.Product product)
     {
         ManageProductFragment fragment = new ManageProductFragment();
 
         Bundle args = new Bundle();
         args.putString("CATEGORY", category.name());
         args.putString("TYPE", type);
+        args.putSerializable("PRODUCT", product);
         fragment.setArguments(args);
 
         return fragment;
     }
+
 
     private FragmentManageProductBinding binding;
 
@@ -107,6 +118,13 @@ public class ManageProductFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        /*Bundle bundle = this.getArguments();
+
+        if (bundle != null)
+        {
+            this.product = (Product) bundle.getSerializable("PRODUCT");
+        }*/
     }
 
     @Override
@@ -134,6 +152,7 @@ public class ManageProductFragment extends Fragment {
         if(bundle != null)
         {
             CATEGORY = bundle.getString("CATEGORY");
+            this.product = (com.nowfloats.Product_Gallery.Model.Product) bundle.getSerializable("PRODUCT");
 
             String type = bundle.getString("TYPE");
             ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + type));
@@ -168,6 +187,24 @@ public class ManageProductFragment extends Fragment {
         addBottomSheetListener();
 
         placeholder();
+
+        if(product == null)
+        {
+            Log.d("PRODUCT_LOG", "NULL");
+        }
+
+        else
+        {
+            Log.d("PRODUCT_LOG", "PRODUCT IS NOT NULL");
+        }
+
+        binding.btnPublish.setOnClickListener(view -> {
+
+            if(product == null)
+            {
+                addProduct();
+            }
+        });
     }
 
 
@@ -1049,4 +1086,356 @@ public class ManageProductFragment extends Fragment {
         }
     }
 
+
+
+    private boolean isValid(boolean keyCheck) {
+
+        String desc = "description", disc = "discountAmount", link = "buyOnlineLink", name = "name",
+                price = "price", currency = "currencyCode", avail = "isAvailable", ship = "shipmentDuration",
+                freeShipment = "isFreeShipmentAvailable", priority = "priority", availableUnits = "availableUnits";
+
+        if (keyCheck)
+        {
+            desc = desc.toUpperCase();
+            disc = "DISCOUNTPRICE";
+            link = link.toUpperCase();
+            name = name.toUpperCase();
+            price = price.toUpperCase();
+            currency = currency.toUpperCase();
+            avail = "ISAVAIALABLE";
+            ship = ship.toUpperCase();
+            freeShipment = "FREESHIPMENT";
+        }
+
+        double product_price = 0, product_discount = 0;
+
+        //values.put(avail, switchValue);
+
+        //values.put(freeShipment, String.valueOf(mIsFreeShipment));
+        //values.put(priority, String.valueOf(mPriorityVal));
+
+        if (product == null && picUri == null)
+        {
+            Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
+            return false;
+            //Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.upload_product_image)), productCategory.toLowerCase()));
+        }
+
+        try
+        {
+            values.put(currency, binding.editCurrency.getText().toString());
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        if (binding.editProductName.getText().toString().trim().length() > 0)
+        {
+            values.put(name, binding.editProductName.getText().toString().trim());
+        }
+
+        else
+        {
+            //YoYo.with(Techniques.Shake).playOn(productName);
+            //Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.enter_product_name)), productCategory.toLowerCase()));
+
+            Toast.makeText(getContext(), "Enter product name", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (binding.editProductDescription.getText().toString().trim().length() > 0)
+        {
+            values.put(desc, binding.editProductDescription.getText().toString().trim());
+        }
+
+        else
+        {
+            //YoYo.with(Techniques.Shake).playOn(productDesc);
+            //Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.enter_product_desc)), productCategory.toLowerCase()));
+
+            Toast.makeText(getContext(), "Enter product description", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        /*if (etShipmentDuration != null && etShipmentDuration.getText().toString().trim().length() > 0)
+        {
+            values.put(ship, etShipmentDuration.getText().toString());
+        }
+
+        else
+        {
+            values.put(ship, null);
+        }*/
+
+        if (binding.editBasePrice.getText().toString().trim().length() > 0) {
+
+            try
+            {
+                product_price = Double.valueOf(binding.editBasePrice.getText().toString().trim());
+            }
+
+            catch (Exception e)
+            {
+                //YoYo.with(Techniques.Shake).playOn(productPrice);
+                //Methods.showSnackBarNegative(activity, "Please enter valid price");
+
+                Toast.makeText(getContext(), "Enter valid price", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        values.put(price, String.valueOf(product_price));
+
+        if (binding.editDiscount.getText().toString().trim().length() > 0)
+        {
+            try
+            {
+                product_discount = Double.valueOf(binding.editDiscount.getText().toString().trim());
+            }
+
+            catch (Exception e)
+            {
+                //YoYo.with(Techniques.Shake).playOn(productDiscount);
+                //Methods.showSnackBarNegative(activity, "Please enter valid discount");
+
+                Toast.makeText(getContext(), "Enter valid discount", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        values.put(disc, String.valueOf(product_discount));
+
+        /*if (productLink != null && productLink.getText().toString().trim().length() > 0)
+        {
+            values.put(link, productLink.getText().toString().trim());
+        }
+
+        else
+        {
+            values.put(link, "");
+        }
+
+        if ((productPrice != null && productPrice.getText().toString().trim().length() > 0) &&
+                (productDiscount != null && productDiscount.getText().toString().trim().length() > 0)) {
+
+            if (!(Double.parseDouble(productPrice.getText().toString().trim()) >= Double.parseDouble(productDiscount.getText().toString().trim()))) {
+
+                YoYo.with(Techniques.Shake).playOn(productDiscount);
+                Methods.showSnackBarNegative(activity, getString(R.string.discount_amount_can_not_more_than_price));
+                return false;
+            }
+        }
+
+        if(mShippingMetrix == null)
+        {
+            Methods.showSnackBarNegative(activity, "Shipping Details Required");
+            return false;
+        }
+
+        if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
+                mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null)
+        {
+            Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+            return false;
+        }*/
+
+        /*if (etAvailableUnits != null && etAvailableUnits.getText().toString().trim().length() > 0)
+        {
+            values.put(availableUnits, etAvailableUnits.getText().toString());
+        }
+
+        else
+        {
+            values.put(availableUnits, "-1");
+
+            if (!keyCheck && flag)
+            {
+                YoYo.with(Techniques.Shake).playOn(etAvailableUnits);
+                Methods.showSnackBarNegative(activity, "Please enter product available units");
+                flag = false;
+            }
+        }*/
+
+        /**
+         * If delivery method ASSUREDPURCHASE OR SELF then add shipping metrix
+         */
+        /*if((deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
+                || deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue())))
+        {
+            if(mShippingMetrix == null)
+            {
+                Methods.showSnackBarNegative(activity, "Shipping Details Required");
+                return false;
+            }
+
+            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
+                    && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+            {
+                if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
+                        mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null || mShippingMetrix.getGstCharge() == null)
+                {
+                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+                    return false;
+                }
+            }
+
+            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
+                    && !Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+            {
+                if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
+                        mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null)
+                {
+                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+                    return false;
+                }
+            }
+
+            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue()))
+            {
+                if(mShippingMetrix.getShippingCharge() == null || mShippingMetrix.getGstCharge() == null)
+                {
+                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+                    return false;
+                }
+            }
+        }*/
+
+        System.out.println(values);
+        return true;
+    }
+
+
+    private void uploadProductImage(String productId)
+    {
+        try
+        {
+            String valuesStr = "clientId=" + Constants.clientId
+                    + "&requestType=sequential&requestId=" + Constants.deviceId
+                    + "&totalChunks=1&currentChunkNumber=1&productId=" + productId;
+
+            String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" + valuesStr;
+
+            byte[] imageBytes = Methods.compressToByte(picUri.getPath(), getActivity());
+
+            //new ProductImageUploadV45(url, imageBytes, getActivity(), productId).execute();
+            //new UploadImage(url, imageBytes, productId, this).execute();
+
+            UploadImage upload = new UploadImage(url, imageBytes, productId);
+            upload.setImageUploadListener(this);
+            upload.execute();
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+        }
+    }
+
+
+    private void addProduct()
+    {
+        ProductGalleryInterface productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
+
+        try
+        {
+            values = new HashMap<>();
+
+            values.put("clientId", Constants.clientId);
+            values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
+
+            if (isValid(false))
+            {
+                showDialog("Adding product ...");
+
+                productInterface.addProduct(values, new Callback<String>() {
+
+                    @Override
+                    public void success(String productId, Response response) {
+
+                        Log.d("PRODUCT_RESPONSE", "" + productId);
+                        uploadProductImage(productId);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                        hideDialog();
+                        Toast.makeText(getContext(), "Failed to add product", Toast.LENGTH_LONG).show();
+                        Log.d("PRODUCT_RESPONSE", "FAIL");
+                    }
+                });
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void initProgressDialog(String content)
+    {
+        if(materialDialog != null)
+        {
+            return;
+        }
+
+        materialDialog = new MaterialDialog.Builder(getActivity())
+                .widgetColorRes(R.color.accentColor)
+                .content(content)
+                .progress(true, 0).build();
+
+        materialDialog.setCancelable(false);
+    }
+
+    private void hideDialog()
+    {
+        if(materialDialog != null && materialDialog.isShowing())
+        {
+            materialDialog.dismiss();
+        }
+    }
+
+    private void showDialog(String content)
+    {
+        initProgressDialog(content);
+
+        if(!materialDialog.isShowing())
+        {
+            materialDialog.show();
+        }
+    }
+
+    @Override
+    public void onPreExecute()
+    {
+
+    }
+
+    @Override
+    public void onPostExecute(String result, int responseCode)
+    {
+        hideDialog();
+
+        if(responseCode == 200 || responseCode == 202)
+        {
+            Toast.makeText(getContext(), "Product added successfully", Toast.LENGTH_LONG).show();
+        }
+
+        else
+        {
+            Toast.makeText(getContext(), "Failed to add product", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    /*interface HttpResponse
+    {
+        void onPreExecute();
+        void onPostExecute(String result);
+    }*/
 }
