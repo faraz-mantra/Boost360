@@ -95,6 +95,7 @@
                     android:id="@+id/dotted_line"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
+                    android:layerType="software"
                     android:layout_below="@+id/label_description"
                     android:background="@drawable/dotted_line"/>
 

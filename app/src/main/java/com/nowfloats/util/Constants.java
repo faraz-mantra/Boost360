@@ -438,6 +438,11 @@ public class Constants {
         PRODUCT, SERVICE
     }
 
+    public enum PaymentAndDeliveryMode
+    {
+        ASSURED_PURCHASE, MY_PAYMENT_GATEWAY, UNIQUE_PAYMENT_URL, DONT_WANT_TO_SELL
+    }
+
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;
     public static boolean imageNotSet = false;

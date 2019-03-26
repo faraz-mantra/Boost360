@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +45,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
     private ProductAPIService apiService;
 
     private boolean stop = false;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -74,7 +76,11 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
     private void getProducts()
     {
+        isLoading = true;
+
         final String skip = String.valueOf(adapter.getItemCount());
+
+        Log.d("PRODUCT_SKIP_VALUE", skip);
 
         HashMap<String, String> values = new HashMap<>();
         values.put("clientId", Constants.clientId);
@@ -89,6 +95,8 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
             @Override
             public void success(List<Product> data, Response response) {
+
+                isLoading = false;
 
                 binding.pbLoading.setVisibility(View.GONE);
 
@@ -112,6 +120,8 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
+
+                isLoading = false;
 
                 binding.pbLoading.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(ProductCatalogActivity.this, getString(R.string.something_went_wrong_try_again));
@@ -153,7 +163,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
 
-                if(lastVisibleItem>=totalItemCount-1 && !stop)
+                if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
                 {
                     getProducts();
                 }

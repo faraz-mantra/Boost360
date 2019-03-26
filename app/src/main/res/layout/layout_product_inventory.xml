@@ -69,6 +69,7 @@
                     android:background="#FFF"
                     android:digits="0123456789."
                     android:gravity="center"
+                    android:inputType="numberDecimal"
                     android:hint="XXXX" />
 
             </LinearLayout>
@@ -137,6 +138,7 @@
                         android:background="#FFF"
                         android:digits="0123456789."
                         android:gravity="center"
+                        android:inputType="numberDecimal"
                         android:hint="XXXX" />
 
                 </LinearLayout>
@@ -198,6 +200,7 @@
                         android:background="#FFF"
                         android:digits="0123456789."
                         android:gravity="center"
+                        android:inputType="numberDecimal"
                         android:hint="XXXX" />
 
                 </LinearLayout>

@@ -56,9 +56,11 @@
         <activity
             android:name="com.nowfloats.Product_Gallery.ManageProductActivity"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             android:theme="@style/MyTheme" />
         <activity
             android:name="com.nowfloats.Product_Gallery.ProductCatalogActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeActionBar" />
 
         <uses-library

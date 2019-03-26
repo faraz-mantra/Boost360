@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.thinksity.R;
 
@@ -26,6 +27,11 @@ public class ProductPickupAddressFragment extends DialogFragment {
     private ArrayList<String> signUpCountryList = new ArrayList<>();
 
     private EditText editCountry;
+    private EditText editWarehouseName;
+    private EditText editContactNumber;
+    private EditText editBuildingName;
+    private EditText editCity;
+    private EditText editState;
 
     public static ProductPickupAddressFragment newInstance() {
 
@@ -72,6 +78,11 @@ public class ProductPickupAddressFragment extends DialogFragment {
         Button btnCancel = view.findViewById(R.id.btn_cancel);
         Button btnSave = view.findViewById(R.id.btn_save);
 
+        editWarehouseName = view.findViewById(R.id.edit_warehouse_name);
+        editContactNumber = view.findViewById(R.id.edit_contact_number);
+        editBuildingName = view.findViewById(R.id.edit_building_name);
+        editCity = view.findViewById(R.id.edit_city);
+        editState = view.findViewById(R.id.edit_state);
         editCountry = view.findViewById(R.id.edit_country);
 
         editCountry.setFocusable(false);
@@ -85,9 +96,61 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
         btnSave.setOnClickListener(v -> {
 
+            if(isValid())
+            {
+                dismiss();
+            }
         });
 
         return view;
+    }
+
+
+    private boolean isValid()
+    {
+        if(editWarehouseName.getText().toString().trim().length() == 0)
+        {
+            editWarehouseName.requestFocus();
+            Toast.makeText(getContext(), "Enter warehouse details", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(editContactNumber.getText().toString().trim().length() == 0)
+        {
+            editContactNumber.requestFocus();
+            Toast.makeText(getContext(), "Enter warehouse contact number", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(editBuildingName.getText().toString().trim().length() == 0)
+        {
+            editBuildingName.requestFocus();
+            Toast.makeText(getContext(), "Enter building/plot no. and street address", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(editCity.getText().toString().trim().length() == 0)
+        {
+            editCity.requestFocus();
+            Toast.makeText(getContext(), "Enter city", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(editState.getText().toString().trim().length() == 0)
+        {
+            editState.requestFocus();
+            Toast.makeText(getContext(), "Enter state", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(editCountry.getText().toString().trim().length() == 0)
+        {
+            editCountry.requestFocus();
+            Toast.makeText(getContext(), "Select country", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return false;
     }
 
 

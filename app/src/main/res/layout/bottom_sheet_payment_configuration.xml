@@ -168,8 +168,7 @@
                         android:layout_marginTop="@dimen/margin_5"
                         android:padding="8dp"
                         android:onClick="onPickAddressClick"
-                        android:clickable="true"
-                        android:text="Address Here" />
+                        android:clickable="true" />
 
 
                     <LinearLayout
@@ -190,9 +189,11 @@
                     </LinearLayout>
 
                     <EditText
+                        android:id="@+id/edit_bank_account"
                         android:gravity="top"
                         android:layout_marginTop="@dimen/margin_5"
                         android:hint="XXXXXXXXXX"
+                        android:inputType="textCapSentences"
                         style="@style/ProductEditTextStyle" />
 
                     <LinearLayout
@@ -213,9 +214,11 @@
                     </LinearLayout>
 
                     <EditText
+                        android:id="@+id/edit_ifsc_code"
                         android:gravity="top"
                         android:layout_marginTop="@dimen/margin_5"
                         android:hint="XXXXXX"
+                        android:inputType="textCapSentences"
                         style="@style/ProductEditTextStyle" />
 
                     <LinearLayout
@@ -236,9 +239,11 @@
                     </LinearLayout>
 
                     <EditText
+                        android:id="@+id/edit_gst"
                         android:gravity="top"
                         android:layout_marginTop="@dimen/margin_5"
                         android:hint="XXXXXX"
+                        android:inputType="textCapSentences"
                         style="@style/ProductEditTextStyle" />
 
                     <View
@@ -247,6 +252,7 @@
                         android:layout_height="2dp"
                         android:layout_marginTop="@dimen/margin_20"
                         android:layout_marginBottom="@dimen/margin_10"
+                        android:layerType="software"
                         android:background="@drawable/dotted_line"/>
 
                     <LinearLayout
@@ -257,11 +263,13 @@
                         android:orientation="horizontal" >
 
                         <CheckBox
+                            android:id="@+id/check_payment_configuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"/>
 
                         <TextView
+                            android:id="@+id/tv_payment_configuration_acceptance_message"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -275,6 +283,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginTop="@dimen/margin_10"
+                        android:layerType="software"
                         android:background="@drawable/dotted_line"/>
 
                 </LinearLayout>
@@ -310,7 +319,6 @@
                         style="@style/ProductSpinnerStyle"
                         android:layout_marginTop="@dimen/margin_5"
                         android:background="@drawable/input_background"
-
                         android:entries="@array/payment_options_v1" />
 
                     <LinearLayout
@@ -331,6 +339,7 @@
                     </LinearLayout>
 
                     <EditText
+                        android:id="@+id/edit_salt_and_key"
                         android:gravity="top"
                         android:layout_marginTop="@dimen/margin_5"
                         android:hint="XXXXXXXXXXXXXXXXXXXXXXX"
@@ -341,6 +350,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginTop="@dimen/margin_20"
+                        android:layerType="software"
                         android:background="@drawable/dotted_line"/>
 
                 </LinearLayout>

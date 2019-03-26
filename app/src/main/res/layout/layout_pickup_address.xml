@@ -78,6 +78,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_warehouse_name"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
                     android:hint="e.g Banjara warehouse"
@@ -110,9 +111,12 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_contact_number"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
                     android:hint="XXXXXXXXXX"
+                    android:digits="0123456789"
+                    android:inputType="number"
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
@@ -174,6 +178,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_building_name"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
                     android:hint="e.g. D-234/K-4B, Road No 10, Banjara Hills"
@@ -197,6 +202,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_city"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
                     android:hint="e.g. Hyderabad"
@@ -220,6 +226,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_state"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
                     android:hint="e.g. Telangana"
@@ -256,6 +263,7 @@
                     android:layout_height="2dp"
                     android:layout_marginTop="@dimen/margin_20"
                     android:layout_marginBottom="@dimen/margin_10"
+                    android:layerType="software"
                     android:background="@drawable/dotted_line"/>
 
                 <LinearLayout
@@ -266,11 +274,13 @@
                     android:orientation="horizontal" >
 
                     <CheckBox
+                        android:id="@+id/check_address_acceptance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"/>
 
                     <TextView
+                        android:id="@+id/tv_address_acceptance_message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -285,6 +295,7 @@
                     android:layout_height="2dp"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_marginBottom="@dimen/margin_15"
+                    android:layerType="software"
                     android:background="@drawable/dotted_line"/>
 
                 <RelativeLayout

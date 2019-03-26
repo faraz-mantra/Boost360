@@ -109,11 +109,12 @@
                                     android:background="@color/secondaryLightTextColor"/>
 
                                 <EditText
-                                    android:id="@+id/edit_cod_max__qty__"
+                                    android:id="@+id/edit_weight"
                                     style="@style/ProductEditTextStyle"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:digits="0123456789."
+                                    android:inputType="numberDecimal"
                                     android:hint="XXXX"
                                     android:background="#FFF" />
 
@@ -177,11 +178,12 @@
                                     android:background="@color/secondaryLightTextColor"/>
 
                                 <EditText
-                                    android:id="@+id/edit_cod_max__qty"
+                                    android:id="@+id/edit_length"
                                     style="@style/ProductEditTextStyle"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:digits="0123456789."
+                                    android:inputType="numberDecimal"
                                     android:hint="XXXX"
                                     android:background="#FFF" />
 
@@ -252,11 +254,12 @@
                                     android:background="@color/secondaryLightTextColor"/>
 
                                 <EditText
-                                    android:id="@+id/edit_cod_max__qty_______"
+                                    android:id="@+id/edit_height"
                                     style="@style/ProductEditTextStyle"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:digits="0123456789."
+                                    android:inputType="numberDecimal"
                                     android:hint="XXXX"
                                     android:background="#FFF" />
 
@@ -320,11 +323,12 @@
                                     android:background="@color/secondaryLightTextColor"/>
 
                                 <EditText
-                                    android:id="@+id/edit_cod_max__qty______"
+                                    android:id="@+id/edit_thickness"
                                     style="@style/ProductEditTextStyle"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:digits="0123456789."
+                                    android:inputType="numberDecimal"
                                     android:hint="XXXX"
                                     android:background="#FFF" />
 
@@ -377,6 +381,7 @@
                         android:id="@+id/edit_purchase_url_link"
                         style="@style/ProductEditTextStyle"
                         android:layout_marginTop="@dimen/margin_5"
+                        android:inputType="textUri"
                         android:hint="XXXXXXXXXXXXXXXX"  />
 
                 </LinearLayout>

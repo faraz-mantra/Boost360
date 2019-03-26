@@ -21,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     private HashMap<String, String> values;
+    private Constants.PaymentAndDeliveryMode paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
 
     private com.nowfloats.Product_Gallery.Model.Product product;
 
@@ -198,6 +200,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             Log.d("PRODUCT_LOG", "PRODUCT IS NOT NULL");
         }
 
+        binding.layoutPaymentMethod.editWeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutPaymentMethod.editHeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutPaymentMethod.editLength.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutPaymentMethod.editThickness.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutInventory.editAvailableQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutInventory.editCodMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutInventory.editPrepaidOnlineMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
+
         binding.btnPublish.setOnClickListener(view -> {
 
             if(product == null)
@@ -290,35 +300,47 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutBottomSheet.btnCancel.setOnClickListener(v -> toggleBottomSheet());
         binding.layoutBottomSheet.btnSaveInfo.setOnClickListener(v -> {
 
-            toggleBottomSheet();
-
             switch (binding.layoutBottomSheet.spinnerPaymentOption.getSelectedItemPosition())
             {
                 case 0:
 
-                    if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
+                    if(isValidAssuredPurchase())
                     {
-                        binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
+                        if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
+                        {
+                            binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
+                        }
+
+                        else
+                        {
+                            binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                        }
+
+                        binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
+                        binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
+                        binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
+                        binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Assured Purchase"));
+
+                        paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
+                        toggleBottomSheet();
                     }
 
-                    else
-                    {
-                        binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
-                    }
-
-                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Assured Purchase"));
                     break;
 
                 case 1:
 
-                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.VISIBLE);
-                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("My payment gateway"));
+                    if(isValidMyPayementGateway())
+                    {
+                        binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                        binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.VISIBLE);
+                        binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
+                        binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
+                        binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("My payment gateway"));
+
+                        paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.MY_PAYMENT_GATEWAY;
+                        toggleBottomSheet();
+                    }
+
                     break;
 
                 case 2:
@@ -328,6 +350,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.VISIBLE);
                     binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
                     binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Variant's unique payment URL"));
+
+                    paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
+                    toggleBottomSheet();
                     break;
 
                 case 3:
@@ -337,6 +362,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
                     binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.VISIBLE);
                     binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Don't want to sell online"));
+
+                    paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL;
+                    toggleBottomSheet();
                     break;
             }
         });
@@ -892,10 +920,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 //Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 //startActivityForResult(i, Constants.GALLERY_PHOTO);
 
-                Intent intent = new Intent(getActivity(), AlbumSelectActivity.class);
+                //Intent intent = new Intent(getActivity(), AlbumSelectActivity.class);
                 //set limit on number of images that can be selected, default is 10
-                intent.putExtra(INTENT_EXTRA_LIMIT, 8);
-                startActivityForResult(intent, REQUEST_CODE);
+                //intent.putExtra(INTENT_EXTRA_LIMIT, 8);
+                //startActivityForResult(intent, REQUEST_CODE);
             }
         }
 
@@ -1207,6 +1235,122 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         values.put(disc, String.valueOf(product_discount));
 
+
+        if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE))
+        {
+            if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
+            {
+                if(binding.layoutPaymentMethod.editWeight.getText().toString().trim().length() == 0)
+                {
+                    binding.layoutPaymentMethod.editWeight.requestFocus();
+                    Toast.makeText(getContext(), "Enter product weight", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+                if(binding.layoutPaymentMethod.editLength.getText().toString().trim().length() == 0)
+                {
+                    binding.layoutPaymentMethod.editLength.requestFocus();
+                    Toast.makeText(getContext(), "Enter product length", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+                if(binding.layoutPaymentMethod.editHeight.getText().toString().trim().length() == 0)
+                {
+                    binding.layoutPaymentMethod.editHeight.requestFocus();
+                    Toast.makeText(getContext(), "Enter product height", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+                if(binding.layoutPaymentMethod.editThickness.getText().toString().trim().length() == 0)
+                {
+                    binding.layoutPaymentMethod.editThickness.requestFocus();
+                    Toast.makeText(getContext(), "Enter product thickness", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }
+
+            if(!isValidAssuredPurchase())
+            {
+                return false;
+            }
+
+            /*if(binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editBankAccount.requestFocus();
+                Toast.makeText(getContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            if(binding.layoutBottomSheet.editIfscCode.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editIfscCode.requestFocus();
+                Toast.makeText(getContext(), "Enter IFSC code", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            if(binding.layoutBottomSheet.editGst.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editGst.requestFocus();
+                Toast.makeText(getContext(), "Enter TAX/GST number", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            if(!binding.layoutBottomSheet.checkPaymentConfiguration.isChecked())
+            {
+                Toast.makeText(getContext(), "Please allow payment and delivery agreement", Toast.LENGTH_LONG).show();
+                return false;
+            }*/
+        }
+
+        /*if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.MY_PAYMENT_GATEWAY))
+        {
+            if(binding.layoutBottomSheet.editSaltAndKey.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editSaltAndKey.requestFocus();
+                Toast.makeText(getContext(), "Enter Salt and Key", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }*/
+
+        if(!isValidMyPayementGateway())
+        {
+            return false;
+        }
+
+        if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
+        {
+            /*if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
+            {
+                binding.layoutInventory.editAvailableQty.requestFocus();
+                Toast.makeText(getContext(), "Enter available quantity", Toast.LENGTH_LONG).show();
+                return false;
+            }*/
+
+            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
+            {
+                if(binding.layoutInventory.editAvailableQty.getText().toString().trim().length() == 0)
+                {
+                    binding.layoutInventory.editAvailableQty.requestFocus();
+                    Toast.makeText(getContext(), "Enter available quantity", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+                if(binding.layoutInventory.spinnerCodAvailability.getSelectedItemPosition() == 0)
+                {
+                    binding.layoutInventory.editCodMaxQty.requestFocus();
+                    Toast.makeText(getContext(), "Enter max quantity", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+                if(binding.layoutInventory.spinnerPrepaidOnlineAvailability.getSelectedItemPosition() == 0)
+                {
+                    binding.layoutInventory.editPrepaidOnlineMaxQty.requestFocus();
+                    Toast.makeText(getContext(), "Enter max quantity", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }
+        }
+
         /*if (productLink != null && productLink.getText().toString().trim().length() > 0)
         {
             values.put(link, productLink.getText().toString().trim());
@@ -1433,9 +1577,53 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    /*interface HttpResponse
+    private boolean isValidMyPayementGateway()
     {
-        void onPreExecute();
-        void onPostExecute(String result);
-    }*/
+        if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.MY_PAYMENT_GATEWAY))
+        {
+            if(binding.layoutBottomSheet.editSaltAndKey.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editSaltAndKey.requestFocus();
+                Toast.makeText(getContext(), "Enter Salt and Key", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValidAssuredPurchase()
+    {
+        if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE))
+        {
+            if(binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editBankAccount.requestFocus();
+                Toast.makeText(getContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            if(binding.layoutBottomSheet.editIfscCode.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editIfscCode.requestFocus();
+                Toast.makeText(getContext(), "Enter IFSC code", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            if(binding.layoutBottomSheet.editGst.getText().toString().trim().length() == 0)
+            {
+                binding.layoutBottomSheet.editGst.requestFocus();
+                Toast.makeText(getContext(), "Enter TAX/GST number", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            if(!binding.layoutBottomSheet.checkPaymentConfiguration.isChecked())
+            {
+                Toast.makeText(getContext(), "Please allow payment and delivery agreement", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

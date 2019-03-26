@@ -62,7 +62,7 @@ public class ManageProductActivity extends BaseActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction
-                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                //.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
                 .replace(R.id.fm_site_appearance, fragment, tag)
                 .commit();
     }
