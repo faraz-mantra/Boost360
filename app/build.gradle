@@ -119,9 +119,9 @@ android {
         }
 
         nowfloats_us {
-            versionName "1.0.6"
+            versionName "1.0.7"
             applicationId "com.redtim"
-            versionCode 2018070022
+            versionCode 2018070023
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
