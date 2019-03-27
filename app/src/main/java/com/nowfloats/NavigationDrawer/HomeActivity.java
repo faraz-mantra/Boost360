@@ -114,6 +114,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -240,6 +241,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             createView();
         }
 
+        WidgetKey.getWidgets(session);
     }
 
     private void getPermissions() {

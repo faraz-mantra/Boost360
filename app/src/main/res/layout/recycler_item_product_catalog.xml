@@ -55,6 +55,19 @@
                     android:layout_toRightOf="@+id/card_thumbnail" >
 
                     <TextView
+                        android:id="@+id/label_missing_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:textColor="#d0021b"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:paddingBottom="5dp"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/ic_info_red"
+                        android:text="Missing Information"/>
+
+                    <TextView
                         android:id="@+id/label_brand"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -62,6 +75,7 @@
                         android:textColor="@color/primaryColor"
                         android:textSize="14sp"
                         android:textStyle="bold"
+                        android:layout_below="@+id/label_missing_info"
                         android:paddingBottom="5dp"
                         android:text="Watch by Fastrack"/>
 

@@ -193,7 +193,8 @@
                         android:gravity="top"
                         android:layout_marginTop="@dimen/margin_5"
                         android:hint="XXXXXXXXXX"
-                        android:inputType="textCapSentences"
+                        android:inputType="number"
+                        android:digits="1234567890"
                         style="@style/ProductEditTextStyle" />
 
                     <LinearLayout
@@ -217,8 +218,9 @@
                         android:id="@+id/edit_ifsc_code"
                         android:gravity="top"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:hint="XXXXXX"
-                        android:inputType="textCapSentences"
+                        android:hint="XXXXXXXXXX"
+                        android:inputType="textCapCharacters"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                         style="@style/ProductEditTextStyle" />
 
                     <LinearLayout
@@ -242,8 +244,9 @@
                         android:id="@+id/edit_gst"
                         android:gravity="top"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:hint="XXXXXX"
-                        android:inputType="textCapSentences"
+                        android:hint="XXXXXXXXXX"
+                        android:inputType="textCapCharacters"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                         style="@style/ProductEditTextStyle" />
 
                     <View
