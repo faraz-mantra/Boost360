@@ -689,51 +689,51 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         });
     }
 
-    private void verifyPhoneNumberAndSendOTP(String phoneNumber) {
-        //data_country_code
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
-            startProgressDialog();
-        }
-        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("PHONE", phoneNumber);
-        hashMap.put("COUNTRYCODE", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
-        smsApi.verifyPhoneNumberAndSendOTP(hashMap, new Callback<VerifyPhoneNumberAndSendOTP>() {
-            @Override
-            public void success(VerifyPhoneNumberAndSendOTP model, Response response) {
-                if (model == null) {
-                    stopProgressDialog();
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!model.isPhoneNumberInUse() && model.isOTPSent()) {
-                    stopProgressDialog();
-                    if (numberDialog != null) {
-                        numberDialog.dismiss();
-                    }
-                    otpVerifyDialog(model.getPHONE());
-
-                } else {
-                    stopProgressDialog();
-                    if (model.isPhoneNumberInUse()) {
-                        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else if (!model.isOTPSent()) {
-                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                stopProgressDialog();
-                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-    }
+//    private void verifyPhoneNumberAndSendOTP(String phoneNumber) {
+//        //data_country_code
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+//            startProgressDialog();
+//        }
+//        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("PHONE", phoneNumber);
+//        hashMap.put("COUNTRYCODE", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+//        smsApi.verifyPhoneNumberAndSendOTP(hashMap, new Callback<VerifyPhoneNumberAndSendOTP>() {
+//            @Override
+//            public void success(VerifyPhoneNumberAndSendOTP model, Response response) {
+//                if (model == null) {
+//                    stopProgressDialog();
+//                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (!model.isPhoneNumberInUse() && model.isOTPSent()) {
+//                    stopProgressDialog();
+//                    if (numberDialog != null) {
+//                        numberDialog.dismiss();
+//                    }
+//                    otpVerifyDialog(model.getPHONE());
+//
+//                } else {
+//                    stopProgressDialog();
+//                    if (model.isPhoneNumberInUse()) {
+//                        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
+//                        //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+//                    } else if (!model.isOTPSent()) {
+//                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                stopProgressDialog();
+//                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//
+//    }
 
     private void showCategoryDialog(ArrayList<String> categories) {
         new MaterialDialog.Builder(activity)
@@ -1585,7 +1585,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 //((TextView) v).setTextColor(ContextCompat.getColor(PreSignUpActivityRia.this, R.color.gray_transparent));
-                sendSms(number);
+                //sendSms(number);
             }
         });
         otpDialog = new MaterialDialog.Builder(this)
@@ -1692,39 +1692,39 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         });
     }
 
-    private void sendSms(String number) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
-            startProgressDialog();
-        }
-        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("PHONE", number);
-        hashMap.put("COUNTRY", countryEditText.getText().toString().trim());
-        smsApi.reSendOTP(hashMap, new Callback<SmsVerifyModel>() {
-            @Override
-            public void success(SmsVerifyModel model, Response response) {
-                if (model == null) {
-                    stopProgressDialog();
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (model.isOTPSent()) {
-                    stopProgressDialog();
-
-                } else {
-                    stopProgressDialog();
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                stopProgressDialog();
-                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void sendSms(String number) {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+//            startProgressDialog();
+//        }
+//        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("PHONE", number);
+//        hashMap.put("COUNTRY", countryEditText.getText().toString().trim());
+//        smsApi.reSendOTP(hashMap, new Callback<SmsVerifyModel>() {
+//            @Override
+//            public void success(SmsVerifyModel model, Response response) {
+//                if (model == null) {
+//                    stopProgressDialog();
+//                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (model.isOTPSent()) {
+//                    stopProgressDialog();
+//
+//                } else {
+//                    stopProgressDialog();
+//                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                stopProgressDialog();
+//                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void verifySms(final String number, String otpCode) {
         showProgressbar();

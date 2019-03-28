@@ -29,7 +29,7 @@ import android.widget.RatingBar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nfx.leadmessages.ReadMessages;
+//import com.nfx.leadmessages.ReadMessages;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.adapters.ThirdPartyAdapter;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
@@ -75,8 +75,8 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
     private int noOfTimesResponded = 0;
     private SortType currentSortType = SortType.EXPIRE;
     private int noOfStars;
-    private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE};
+    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
+            , Manifest.permission.READ_PHONE_STATE};*/
     private final static int READ_MESSAGES_ID = 221;
     private PopupWindow popup;
 
@@ -144,7 +144,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         }
     }
 
-    private void getPermissions() {
+   /* private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
@@ -158,25 +158,25 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
 
         }
-    }
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_MESSAGES_ID) {
 
-            List<Integer> intList = new ArrayList<Integer>();
-            for (int i : grantResults) {
-                intList.add(i);
-            }
-            if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
-                Intent intent = new Intent(this, ReadMessages.class);
-                startService(intent);
-            }else if (ActivityCompat.shouldShowRequestPermissionRationale(ThirdPartyQueriesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                //Show permission explanation dialog...
-            }else{
-                //Never ask again selected, or device policy prohibits the app from having that permission.
-                //So, disable that feature, or fall back to another situation...
-            }
+//            List<Integer> intList = new ArrayList<Integer>();
+//            for (int i : grantResults) {
+//                intList.add(i);
+//            }
+//            if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
+//                Intent intent = new Intent(this, ReadMessages.class);
+//                startService(intent);
+//            }else if (ActivityCompat.shouldShowRequestPermissionRationale(ThirdPartyQueriesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                //Show permission explanation dialog...
+//            }else{
+//                //Never ask again selected, or device policy prohibits the app from having that permission.
+//                //So, disable that feature, or fall back to another situation...
+//            }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }

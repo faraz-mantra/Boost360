@@ -175,10 +175,10 @@ public class PhoneStates extends BroadcastReceiver {
         FirebaseDatabase secondDatabase = FirebaseDatabase.getInstance(secondApp);
         final DatabaseReference mDatabase = secondDatabase.getReference();
 
-        readCallLog(mDatabase);
+        //readCallLog(mDatabase);
     }
 
-    private void readCallLog(DatabaseReference mDatabase) {
+    /*private void readCallLog(DatabaseReference mDatabase) {
         if (ActivityCompat.checkSelfPermission(savedContext, android.Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
 
             return;
@@ -237,6 +237,6 @@ public class PhoneStates extends BroadcastReceiver {
         }
         if (wakeLock.isHeld())
             wakeLock.release();
-    }
+    }*/
 
 }

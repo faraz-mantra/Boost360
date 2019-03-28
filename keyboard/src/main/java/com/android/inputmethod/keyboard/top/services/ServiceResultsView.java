@@ -90,11 +90,11 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
 
     private void onActionClick(int position) {
         RSearchItem searchItem = (RSearchItem) this.mRecycler.getAdapter().getItem(position);
-        if (this.mRecycler.requiresPermissionAccess()) {
-            onPermissionClick(searchItem);
-        } else {
-            //onConnectClick(searchItem);
-        }
+//        if (this.mRecycler.requiresPermissionAccess()) {
+//            onPermissionClick(searchItem);
+//        } else {
+//            //onConnectClick(searchItem);
+//        }
     }
 
     private void onPermissionClick(RSearchItem searchItem) {
@@ -277,15 +277,15 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
                 searchString = currentContext;
         }
         setSearchMirror(searchString);
-        boolean skipRequest = mRecycler.trySetUnauthPreviewItems(null, true);
+        //boolean skipRequest = mRecycler.trySetUnauthPreviewItems(null, true);
         updateCategoryVisibility();
-        if (skipRequest) {
+        /*if (skipRequest) {
             setVisualState(VisualSate.Results);
             return;
         }
         //TODO anyone who calls this must change?
         ServiceRequestManager.getInstance().cancelLastRequest();
-        ServiceRequestManager.getInstance().postRequest(currentSlash, searchString, action, useCaching, instant);
+        ServiceRequestManager.getInstance().postRequest(currentSlash, searchString, action, useCaching, instant);*/
     }
 
     public void clear() {
@@ -334,15 +334,15 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
     public void setSearchItems(String slash, List<RSearchItem> items, String authorizedStatus) {
         setVisibility(VISIBLE);
         setService(slash);
-        if (getVisibility() == VISIBLE) {
-            boolean unauthPreview = this.mRecycler.trySetUnauthPreviewItems(authorizedStatus, true);
-            if ((items != null && !items.isEmpty()) || this.mRecycler.isShowingUnauthPreviewItems()) {
-                this.mRecycler.setItems(items);
-                setVisualState(VisualSate.Results);
-            } else if (!unauthPreview && !RServiceItem.PHOTOS.equals(slash)) {
-                this.mRecycler.setEmptyItem();
-            }
-        }
+//        if (getVisibility() == VISIBLE) {
+//            boolean unauthPreview = this.mRecycler.trySetUnauthPreviewItems(authorizedStatus, true);
+//            if ((items != null && !items.isEmpty()) || this.mRecycler.isShowingUnauthPreviewItems()) {
+//                this.mRecycler.setItems(items);
+//                setVisualState(VisualSate.Results);
+//            } else if (!unauthPreview && !RServiceItem.PHOTOS.equals(slash)) {
+//                this.mRecycler.setEmptyItem();
+//            }
+//        }
     }
 
     private void updateCategoryVisibility() {
