@@ -1160,6 +1160,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="use_custom_pages_to_describe_business">Use custom pages to describe your business offerings in detail. You can add and format paragraphs of text, links and images!</string>
     <string name="retry">Retry</string>
     <string name="new_in_capital">NEW</string>
+    <string name="get_in_capital">GET</string>
     <string name="powered_by">Powered By&#160; </string>
     <string name="nowfloats"> NowFloats</string>
     <string name="powered_by_company"> NowFloats</string>

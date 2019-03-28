@@ -485,4 +485,9 @@ public class Home_Fragment_Tab extends Fragment {
 //
 //    };
 
+
+    public int getCurrentItem()
+    {
+        return viewPager.getCurrentItem();
+    }
 }
