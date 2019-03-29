@@ -24,6 +24,7 @@
         <item>@drawable/ic_about</item>
         <item>@drawable/ic_image_gallery</item>
         <item>@drawable/ic_custom_pages</item>
+        <item>@drawable/ic_custom_pages</item>
     </array>
 
     <array name="order_analytics_img">

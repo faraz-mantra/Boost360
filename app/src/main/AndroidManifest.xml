@@ -487,6 +487,12 @@
         <activity
             android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.SocialSharingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.AccountInfoActivity"
+            android:screenOrientation="portrait" />
         <!--
             <activity android:name="com.nowfloats.CustomPage.CustomPageFragment"
             android:screenOrientation="portrait" ></activity>

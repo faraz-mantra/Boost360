@@ -111,7 +111,7 @@ public class Analytics_Fragment extends Fragment {
     CardView cvRiaCard, vmnCallCard;
     Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
-    LinearLayout mLockLayout;
+    //LinearLayout mLockLayout;
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
     private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
     private static final String BUTTON_TYPE_NEXT_NODE = "NextNode";
@@ -138,7 +138,7 @@ public class Analytics_Fragment extends Fragment {
 
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
-        enableLockScreen();
+        //enableLockScreen();
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
@@ -187,17 +187,17 @@ public class Analytics_Fragment extends Fragment {
         super.onResume();
     }
 
-    private void enableLockScreen() {
-
-        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false)
-                && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
-            //onBoardingManager.getOnBoardingData(session.getFpTag());
-            mLockLayout.setVisibility(View.VISIBLE);
-        } else {
-            mLockLayout.setVisibility(View.GONE);
-        }
-    }
+//    private void enableLockScreen() {
+//
+//        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false)
+//                && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") ||
+//                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))) {
+//            //onBoardingManager.getOnBoardingData(session.getFpTag());
+//            mLockLayout.setVisibility(View.VISIBLE);
+//        } else {
+//            mLockLayout.setVisibility(View.GONE);
+//        }
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -264,23 +264,23 @@ public class Analytics_Fragment extends Fragment {
         });
     }
 
-    private void setAnalyticsLockScreen() {
-        ((ImageView) mLockLayout.findViewById(R.id.image1)).setImageResource(R.drawable.ic_lock);
-        TextView actionButton = mLockLayout.findViewById(R.id.btn_action);
-        TextView title = mLockLayout.findViewById(R.id.main_text1);
-        title.setText("SEO DISABLED");
-        TextView message = mLockLayout.findViewById(R.id.message_text2);
-        title.setTextColor(ContextCompat.getColor(context, R.color.white));
-        message.setTextColor(ContextCompat.getColor(context, R.color.white));
-        message.setText("Complete onboarding to unlock analytics ");
-        actionButton.setText("Resume Onboarding");
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBoardingManager.getOnBoardingData(session.getFpTag(), mLockLayout);
-            }
-        });
-    }
+//    private void setAnalyticsLockScreen() {
+//        ((ImageView) mLockLayout.findViewById(R.id.image1)).setImageResource(R.drawable.ic_lock);
+//        TextView actionButton = mLockLayout.findViewById(R.id.btn_action);
+//        TextView title = mLockLayout.findViewById(R.id.main_text1);
+//        title.setText("SEO DISABLED");
+//        TextView message = mLockLayout.findViewById(R.id.message_text2);
+//        title.setTextColor(ContextCompat.getColor(context, R.color.white));
+//        message.setTextColor(ContextCompat.getColor(context, R.color.white));
+//        message.setText("Complete onboarding to unlock analytics ");
+//        actionButton.setText("Resume Onboarding");
+//        actionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBoardingManager.getOnBoardingData(session.getFpTag(), mLockLayout);
+//            }
+//        });
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -290,8 +290,8 @@ public class Analytics_Fragment extends Fragment {
         llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
         btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
         vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
-        mLockLayout = rootView.findViewById(R.id.lock_analytics);
-        setAnalyticsLockScreen();
+        //mLockLayout = rootView.findViewById(R.id.lock_analytics);
+        //setAnalyticsLockScreen();
         queryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -550,36 +550,53 @@ public class Analytics_Fragment extends Fragment {
             tvOrdersCount.setVisibility(View.GONE);
         }
 
-        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
-        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            vmnCallCard.setVisibility(View.GONE);
-        } else if (isVmnEnable) {
-            setVmnTotalCallCount();
-            vmnCallCard.setVisibility(View.VISIBLE);
-        } else if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
-            vmnCallCard.setVisibility(View.VISIBLE);
-            //request
-        }
+//        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+//                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+//                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
+//        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+//        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            vmnCallCard.setVisibility(View.GONE);
+//        }
+//
+//        else
+//        {
+//            setVmnTotalCallCount();
+//            vmnCallCard.setVisibility(View.VISIBLE);
+//        }
+
+//        else if (isVmnEnable) {
+//            setVmnTotalCallCount();
+//            vmnCallCard.setVisibility(View.VISIBLE);
+//        } else if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+//            vmnCallCard.setVisibility(View.VISIBLE);
+//            //request
+//        }
 
         vmnCallCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isVmnEnable) {
-                    if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
-                        Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                        startActivity(i);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    } else {
-                        Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
+
+                if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
+                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
                 }
+
+//                if (isVmnEnable) {
+//                    if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
+//                        Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+//                        startActivity(i);
+//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                    } else {
+//                        Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
+//                    startActivity(i);
+//                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                }
 
             }
         });
@@ -588,7 +605,7 @@ public class Analytics_Fragment extends Fragment {
             getMapVisitsCount();
         }
 
-        enableLockScreen();
+        //enableLockScreen();
         return rootView;
     }
 

@@ -3,7 +3,6 @@ package com.nowfloats.widget;
 import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -68,6 +67,21 @@ public class WidgetKey {
     //private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
 
 
+    public enum WidgetValue
+    {
+        UNLIMITED("-1"), FEATURE_NOT_AVAILABLE("0");
+
+        String value;
+
+        WidgetValue(String value)
+        {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
 
     public static void getWidgets(UserSessionManager mSessionManager) {
 
@@ -92,16 +106,16 @@ public class WidgetKey {
         params.put("country", country.toLowerCase());
         params.put("fpCategory", mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
 
-        Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
+        Constants.restAdapter.create(StoreInterface.class).getActiveWidgetList(params, new Callback<WidgetResponse>() {
 
             @Override
-            public void success(PricingPlansModel storeMainModel, Response response)
+            public void success(WidgetResponse widget, Response response)
             {
                 Log.d("WIDGET_RESPONSE", "SUCCESS");
 
-                if (storeMainModel != null)
+                if (widget != null && widget.getActivePackages() != null)
                 {
-                    //preProcessAndDispatchPlans(storeMainModel);
+                    Widget.getInstance().setActivePackage(widget.getActivePackages().get(0));
                 }
             }
 

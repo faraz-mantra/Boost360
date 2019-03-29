@@ -45,7 +45,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         MixPanelController.track(MixPanelController.VMN_CALL_TRACKER,null);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            setTitle("Call Tracker");
+            setTitle("Business Calls");
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

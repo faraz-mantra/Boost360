@@ -60,7 +60,7 @@ public class UpgradesFragment extends Fragment {
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
-                    case "Buy and Renew":
+                    case "Plan Details":
                         MixPanelController.track(MixPanelController.BUY_AND_RENEW, null);
                         intent = new Intent(mContext, NewPricingPlansActivity.class);
                         break;

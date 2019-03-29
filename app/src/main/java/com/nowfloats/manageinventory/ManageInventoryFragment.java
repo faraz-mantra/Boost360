@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.ProductCatalogActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
@@ -47,7 +49,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInventoryFragment extends Fragment {
-    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics;
+    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics, tvBusinessInquiries, tvBusinessCalls;
     ImageView ivLockWidget, ivPaymentIcon;
     Typeface robotoLight;
     private SharedPreferences pref = null;
@@ -155,6 +157,26 @@ public class ManageInventoryFragment extends Fragment {
             tvSellerAnalytics = (TextView) mainView.findViewById(R.id.tvSellerAnalytics);
             tvSellerAnalytics.setTypeface(robotoMedium);
 
+            tvBusinessCalls = (TextView) mainView.findViewById(R.id.tvBusinessCalls);
+            tvBusinessCalls.setTypeface(robotoMedium);
+
+            tvBusinessInquiries = (TextView) mainView.findViewById(R.id.tvBusinessInquiries);
+            tvBusinessInquiries.setTypeface(robotoMedium);
+
+            tvBusinessInquiries.setOnClickListener(v -> {
+
+                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            });
+
+            tvBusinessCalls.setOnClickListener(v -> {
+
+                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            });
+
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -206,11 +228,15 @@ public class ManageInventoryFragment extends Fragment {
 //                    }
                 }
             });
+
+            String category = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
+            tvProductGallery.setText(category);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        /*if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
         {
             tvPaymentSetting.setVisibility(View.VISIBLE);
             ivPaymentIcon.setVisibility(View.VISIBLE);
@@ -220,7 +246,7 @@ public class ManageInventoryFragment extends Fragment {
         {
             tvPaymentSetting.setVisibility(View.GONE);
             ivPaymentIcon.setVisibility(View.GONE);
-        }
+        }*/
     }
 
 

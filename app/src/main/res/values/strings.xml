@@ -36,7 +36,7 @@
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
-    <string name="manage_inventory">Manage Catalog</string>
+    <string name="manage_inventory">E-Commerce</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
@@ -434,7 +434,7 @@
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
     <string name="side_panel_row_six">Write to Ria</string>
-    <string name="side_panel_row_eight">Share My Website</string>
+    <string name="side_panel_row_eight">Share My Site</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
 
@@ -699,7 +699,7 @@
     </string-array>
     <string-array name="dashboard_tabs">
         <item>UPDATES</item>
-        <item>ANALYTICS</item>
+        <item>REPORTS</item>
         <item>ALERTS</item>
     </string-array>
     <string-array name="order_analytics_tabs">
@@ -875,6 +875,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="search_queries">Search Queries</string>
     <string name="subscribers">Subscribers</string>
     <string name="product_gallery">Product Gallery</string>
+    <string name="business_inquiries">Business Enquiries</string>
+    <string name="business_calls">Business Calls</string>
     <string name="check_internet_connection">Check your Network Connection</string>
     <string name="email">EMAIL</string>
     <string name="call">CALL</string>
@@ -1146,7 +1148,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_reason">Enter other reason</string>
     <string name="submit">SUBMIT</string>
     <string name="no_alerts">No alerts!</string>
-    <string name="overall_visits">Overall Visits</string>
+    <string name="overall_visits">Total Visits</string>
     <string name="address_line">Address Line</string>
     <string name="town_city">Town / City</string>
     <string name="pin_area_code">Pin/Area Code</string>
@@ -1578,10 +1580,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="action_sort_date">Recent</string>
     <string name="action_sort_expiry">Expiring</string>
     <string name="action_sort_source">Channel</string>
-    <string name="seller_analytics">Seller Analytics</string>
+    <string name="seller_analytics">Orders</string>
     <string name="total_orders">Total Orders</string>
     <string name="orders">Orders</string>
-    <string name="order_analytics">Order Analytics</string>
+    <string name="order_analytics">Sales</string>
     <string name="seller_profile">Seller Profile</string>
     <string name="order_summary">Order Summary</string>
     <string name="revenue_summary">Revenue Summary</string>
@@ -1674,9 +1676,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="upgrade_base_plan_description"><Data><![CDATA[BOOST Lite, BOOST Pro, BOOST Custom]]></Data></string>
     <string name="Year">Year</string>
     <string name="support_name">Support</string>
-    <string name="wildfire_analytics">WildFire Analytics</string>
+    <string name="wildfire_analytics">Inorganic</string>
     <string name="manage_content">Manage Content</string>
-    <string name="account_settings">Account Settings</string>
+    <string name="account_settings">Settings</string>
     <string name="about">About</string>
     <string name="upgrades">Upgrades</string>
     <string name="add_ons">Add-ons</string>
@@ -1709,10 +1711,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="upload_image_err">Failed to upload image</string>
 
     <string-array name="manage_content_tab_items">
-        <item>My Business Profile</item>
-        <item>Updates</item>
+        <item>All Updates</item>
         <item>Image Gallery</item>
         <item>Custom Pages</item>
+        <item>Business Profile</item>
+        <item>Content Sharing Settings</item>
     </string-array>
 
     <string-array name="order_analytics_tab_items">
@@ -1722,7 +1725,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string-array name="account_setting_tab_items">
         <!--<item>Seller Profile</item>-->
-        <item>Site Appearance</item>
+        <!--<item>Site Appearance</item>-->
+        <item>Account Info</item>
         <item>Domain and Email</item>
         <!--  <item>Your Plans</item>-->
         <item>Change Password</item>
@@ -1730,7 +1734,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
 
     <string-array name="upgrade_tab_items">
-        <item>Buy and Renew</item>
+        <item>Plan Details</item>
         <item>Subscription History</item>
     </string-array>
     <string-array name="payment_options">

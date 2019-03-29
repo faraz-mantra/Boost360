@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.apxor.androidsdk.core.ApxorSDK;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.nowfloats.helper.ui.TypefaceUtil;
 import com.nowfloats.util.Constants;
 import com.thinksity.BuildConfig;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
@@ -74,6 +75,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
     }
 
 

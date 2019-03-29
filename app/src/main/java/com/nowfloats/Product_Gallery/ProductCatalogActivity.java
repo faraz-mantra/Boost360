@@ -55,6 +55,8 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.layoutToolbar.toolbar);
 
+        session = new UserSessionManager(getApplicationContext(), this);
+
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,13 +64,13 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
             getSupportActionBar().setTitle("");
 
-            binding.layoutToolbar.toolbarTitle.setText("Product Catalog");
+            String category = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
+            binding.layoutToolbar.toolbarTitle.setText(category);
         }
 
         this.initProductRecyclerView(binding.productList);
 
         bus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(getApplicationContext(), this);
         apiService = new ProductAPIService();
 
         getProducts();

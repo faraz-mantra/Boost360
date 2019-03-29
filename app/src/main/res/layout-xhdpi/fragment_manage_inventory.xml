@@ -23,6 +23,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@color/white"
                 app:cardElevation="3dp"
+                android:visibility="gone"
                 card_view:cardCornerRadius="3dp">
 
                 <LinearLayout
