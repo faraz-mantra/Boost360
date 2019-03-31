@@ -54,7 +54,7 @@ import com.android.inputmethod.latin.utils.JniUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.nfx.leadmessages.ReadMessages;
+//import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
@@ -195,8 +195,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private RiaNodeDataModel mRiaNodeDataModel;
     private String mDeepLinkUrl, mPayload;
     private String TAG = HomeActivity.class.getSimpleName();
-    private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE};
+    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
+            , Manifest.permission.READ_PHONE_STATE};*/
     private final static int READ_MESSAGES_ID = 221;
     //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
 
@@ -247,7 +247,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //WidgetKey.getWidgets(session);
     }
 
-    private void getPermissions() {
+    /*private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
@@ -261,21 +261,21 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
 
         }
-    }
+    }*/
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_MESSAGES_ID) {
 
-            List<Integer> intList = new ArrayList<Integer>();
+            /*List<Integer> intList = new ArrayList<Integer>();
             for (int i : grantResults) {
                 intList.add(i);
             }
             if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
                 Intent intent = new Intent(this, ReadMessages.class);
                 startService(intent);
-            }
+            }*/
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
