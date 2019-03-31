@@ -17,10 +17,18 @@
         <item>@drawable/ic_privacy</item>
     </array>
 
+    <!--<array name="manage_content_sidepanel">
+        <item>@drawable/ic_manage_business</item>
+        <item>@drawable/ic_about</item>
+        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_custom_pages</item>
+    </array>-->
+
     <array name="manage_content_sidepanel">
         <item>@drawable/ic_manage_business</item>
         <item>@drawable/ic_about</item>
         <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_custom_pages</item>
         <item>@drawable/ic_custom_pages</item>
     </array>
 

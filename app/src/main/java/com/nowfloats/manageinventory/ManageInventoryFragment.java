@@ -190,8 +190,8 @@ public class ManageInventoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                    //Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
-                    Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
+                    Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
+                    //Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

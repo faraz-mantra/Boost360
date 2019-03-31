@@ -49,7 +49,7 @@ public class WildFireAdsActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
-            setTitle("WildFire Analytics");
+            setTitle("Inorganic");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }

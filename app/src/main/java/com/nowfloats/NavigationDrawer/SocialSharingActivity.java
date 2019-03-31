@@ -1,7 +1,9 @@
 package com.nowfloats.NavigationDrawer;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomPage.CustomPageFragment;
+import com.nowfloats.util.BoostLog;
 import com.thinksity.R;
 
 /**
@@ -30,14 +33,14 @@ public class SocialSharingActivity extends AppCompatActivity implements CustomPa
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("Social Sharing");
+        headerText.setText("Social Sharing Setting");
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         customPageFragment = new SocialSharingFragment();
 
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
-        getSupportFragmentManager().beginTransaction().add(R.id.fm_site_appearance, customPageFragment).
+        getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance, customPageFragment, "socialSharingFragment").
                 commit();
 
     }
@@ -56,5 +59,18 @@ public class SocialSharingActivity extends AppCompatActivity implements CustomPa
     @Override
     public void DeletePageTrigger(int position, boolean chk, View view) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (CardAdapter_V3.pd != null)
+            CardAdapter_V3.pd.dismiss();
+        BoostLog.d("onActivityResult", "i am here");
+
+        Fragment sociaSharingFragment = getSupportFragmentManager().findFragmentByTag("socialSharingFragment");
+        if (sociaSharingFragment != null) {
+            ((SocialSharingFragment) sociaSharingFragment).onSocialSharingResult(requestCode, resultCode, data);
+        }
     }
 }
