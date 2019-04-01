@@ -61,6 +61,7 @@ public class SearchRankingActivity extends AppCompatActivity {
     private SearchRankingRvAdapter mRvAdapter;
 
     private boolean stop = false;
+    private boolean isLoading = false;
     private Filter filterType = Filter.AVERAGE_POSITION;
     private Sort sortType = Sort.ASCENDING;
 
@@ -163,7 +164,7 @@ public class SearchRankingActivity extends AppCompatActivity {
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
 
-                if(lastVisibleItem>=totalItemCount-1 && !stop)
+                if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
                 {
                     getSearchRanking();
                 }
@@ -195,6 +196,8 @@ public class SearchRankingActivity extends AppCompatActivity {
 
     private void getSearchRanking(){
 
+        isLoading = true;
+
         final int offset = mSearchRankList.size();
 
         Map<String, Object> map = getJsonBody(offset);
@@ -207,6 +210,8 @@ public class SearchRankingActivity extends AppCompatActivity {
 
             @Override
             public void success(List<SearchAnalytics> searchQueryModels, Response response) {
+
+                isLoading = false;
 
                 progressBar.setVisibility(View.GONE);
 
@@ -238,6 +243,8 @@ public class SearchRankingActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error)
             {
+                isLoading = false;
+
                 progressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SearchRankingActivity.this,getString(R.string.something_went_wrong_try_again));
             }

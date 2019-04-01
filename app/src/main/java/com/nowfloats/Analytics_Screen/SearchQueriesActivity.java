@@ -49,6 +49,7 @@ public class SearchQueriesActivity extends AppCompatActivity {
     ArrayList<SearchAnalytics> mSearchArrayList = new ArrayList<>();
     JsonObject obj;
     private boolean stop = false;
+    private boolean isLoading = false;
     ProgressBar progressBar;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,7 @@ public class SearchQueriesActivity extends AppCompatActivity {
 
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                if(lastVisibleItem>=totalItemCount-1 && !stop){
+                if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading){
                    //getSearch();
                    getSearchQueries();
                 }
@@ -122,6 +123,8 @@ public class SearchQueriesActivity extends AppCompatActivity {
 
     private void getSearchQueries(){
 
+        isLoading = true;
+
         final int offset = mSearchArrayList.size();
 
         Map<String, Object> map = getJsonBody(offset);
@@ -134,6 +137,8 @@ public class SearchQueriesActivity extends AppCompatActivity {
 
             @Override
             public void success(List<SearchAnalytics> searchQueryModels, Response response) {
+
+                isLoading = false;
 
                 progressBar.setVisibility(View.GONE);
 
@@ -158,6 +163,7 @@ public class SearchQueriesActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error)
             {
+                isLoading = false;
                 progressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SearchQueriesActivity.this,getString(R.string.something_went_wrong_try_again));
             }
