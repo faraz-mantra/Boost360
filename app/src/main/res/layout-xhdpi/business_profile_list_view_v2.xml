@@ -20,55 +20,46 @@
 
             <ImageView
                 android:id="@+id/firstrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:background="?android:selectableItemBackground"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/address_grey" />
+                android:src="@drawable/ic_business_address" />
 
 
             <ImageView
                 android:id="@+id/secondrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/contact_grey"
-
-
-                />
+                android:src="@drawable/ic_contact_info" />
 
             <ImageView
                 android:id="@+id/thirdrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/time_grey"
-                android:visibility="visible"
-
-
-                />
+                android:src="@drawable/ic_business_hours"
+                android:visibility="visible" />
 
 
             <ImageView
                 android:id="@+id/fourth_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
-
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
-                android:src="@drawable/logo_grey"
-
-                />
+                android:padding="8dp"
+                android:src="@drawable/ic_business_logo" />
 
             <ImageView
                 android:id="@+id/sixth_ImageView_ProfileV2"

@@ -12,10 +12,10 @@
 
     <ImageView
         android:id="@+id/image1"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
+        android:layout_width="@dimen/icon_size_47"
+        android:layout_height="@dimen/icon_size_47"
         android:layout_marginLeft="@dimen/icon_left_margin"
-        android:padding="11dp"
+        android:padding="8dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

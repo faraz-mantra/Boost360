@@ -430,7 +430,7 @@ public class Analytics_Fragment extends Fragment {
         ImageView orderAnalyticsBack = rootView.findViewById(R.id.iv_order_analytics);
 
 
-        galleryBack.setColorFilter(porterDuffColorFilter);
+        /*galleryBack.setColorFilter(porterDuffColorFilter);
         mapBack.setColorFilter(porterDuffColorFilter);
         subsBack.setColorFilter(porterDuffColorFilter);
         searchBack.setColorFilter(porterDuffColorFilter);
@@ -440,7 +440,7 @@ public class Analytics_Fragment extends Fragment {
         visitorsBack.setColorFilter(porterDuffColorFilter);
         searchRankBack.setColorFilter(porterDuffColorFilter);
         wildfireBack.setColorFilter(porterDuffColorFilter);
-        orderAnalyticsBack.setColorFilter(porterDuffColorFilter);
+        orderAnalyticsBack.setColorFilter(porterDuffColorFilter);*/
 
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);

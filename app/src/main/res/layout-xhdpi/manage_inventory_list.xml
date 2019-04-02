@@ -18,49 +18,45 @@
             >
 
             <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="2dp"
-                android:tint="#808080"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
                 android:visibility="visible"
-                android:src="@drawable/payment_setting" />
+                android:src="@drawable/ic_business_enquiry" />
 
             <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="2dp"
-                android:tint="#808080"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
                 android:visibility="visible"
-                android:src="@drawable/payment_setting" />
+                android:src="@drawable/ic_business_calls" />
 
             <ImageView
                 android:id="@+id/firstrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:tint="#808080"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/seller_analytics" />
+                android:src="@drawable/ic_all_orders" />
 
 
             <ImageView
                 android:id="@+id/secondrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_width="@dimen/icon_size_47"
+                android:layout_height="@dimen/icon_size_47"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:tint="#808080"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/catalog" />
+                android:src="@drawable/ic_product_gallery" />
 
             <ImageView
                 android:layout_width="@dimen/icon_size"
@@ -151,7 +147,6 @@
                 android:id="@+id/tvProductGallery"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/textview_height_business_profile"
-                android:layout_marginTop="1dp"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/product_gallery"
