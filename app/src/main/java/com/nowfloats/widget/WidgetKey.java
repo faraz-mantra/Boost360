@@ -1,13 +1,27 @@
 package com.nowfloats.widget;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Store.Model.ActivePackage;
+import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -115,16 +129,96 @@ public class WidgetKey {
 
                 if (widget != null && widget.getActivePackages() != null)
                 {
-                    Widget.getInstance().setActivePackage(widget.getActivePackages().get(0));
+                    Widget.getInstance().setActivePackage(getActivePackage(widget.getActivePackages()));
+                    Log.d("ACTIVE_PACKAGE_NAME", "" + Widget.getInstance().getActivePackage().getName());
+                    Log.d("ACTIVE_PACKAGE_NAME", "" + getPropertyValue(WIDGET_CUSTOM_PAGES, "GROUP"));
                 }
             }
 
             @Override
             public void failure(RetrofitError error)
             {
-                Log.d("Test", error.getMessage());
                 Log.d("WIDGET_RESPONSE", "FAIL");
             }
         });
+    }
+
+
+    private static ActivePackage getActivePackage(List<ActivePackage> activePackageList)
+    {
+        ActivePackage activePackage = null;
+
+        for (ActivePackage aPackage: activePackageList)
+        {
+            if(aPackage.getActive() && aPackage.getProductClassification().getPackType() == 0)
+            {
+                activePackage = aPackage;
+                break;
+            }
+        }
+
+        return activePackage;
+    }
+
+
+    private static String getPropertyValue(String widgetKey, String key)
+    {
+        String value = WidgetValue.FEATURE_NOT_AVAILABLE.getValue();
+
+        for(WidgetPacks packs: Widget.getInstance().getActivePackage().getWidgetPacks())
+        {
+            if(packs.WidgetKey.equalsIgnoreCase(widgetKey))
+            {
+                for(WidgetPacks.Property property: packs.Properties)
+                {
+                    if(property.Key.equalsIgnoreCase(key))
+                    {
+                        value = property.Value;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return value == null ? WidgetValue.FEATURE_NOT_AVAILABLE.getValue() : value;
+    }
+
+
+    public static boolean isPackageExists(Context context, String id)
+    {
+        boolean flag = false;
+
+        try
+        {
+            InputStream is = context.getAssets().open("packages.json");
+
+            int size = is.available();
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+            is.close();
+
+            String json = new String(buffer, "UTF-8");
+
+            JSONArray array = new JSONArray(json);
+
+            for(int i=0; i<array.length(); i++)
+            {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                if(jsonObject.get("_id").equals(id))
+                {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return flag;
     }
 }
