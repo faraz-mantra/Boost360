@@ -25,6 +25,7 @@
     <dimen name="nav_icon_size">24dp</dimen>
 
     <dimen name="icon_size_47">47dp</dimen>
+    <dimen name="icon_size_55">55dp</dimen>
 
     <dimen name="ps_lbl1_size">22sp</dimen>
     <dimen name="ps_lbl2_size">40sp</dimen>
@@ -66,6 +67,7 @@
     <dimen name="cell_text_size">14sp</dimen>
 
     <dimen name="textview_height_business_profile">47dp</dimen>
+    <dimen name="cell_height">55dp</dimen>
 
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="medium_text_size">15sp</dimen>

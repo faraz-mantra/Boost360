@@ -44,7 +44,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     public static boolean deleteCheck = false;
     public Bus bus;
 //    Drawable drawableFromTheme;
-    PorterDuffColorFilter primary;
+    //PorterDuffColorFilter primary;
     public CustomPageAdapter(Activity appContext, ArrayList<CustomPageModel> storeData,
                              UserSessionManager session, CustomPageInterface pageInterface, Bus bus) {
         this.appContext = appContext;
@@ -56,8 +56,8 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         format = new SimpleDateFormat("MMM dd,yyyy hh:mm aa", Locale.US);
         format.setTimeZone(TimeZone.getDefault());
-        primary = new PorterDuffColorFilter(appContext.getResources()
-                .getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+//        primary = new PorterDuffColorFilter(appContext.getResources()
+//                .getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
 
     }
@@ -90,7 +90,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
             if (storeData.get(position)!=null){
                 holder.fullLayout.setTag(position+"");
                 holder.imageView.setTag(position+"");
-                holder.stencil.setColorFilter(primary);
+                //holder.stencil.setColorFilter(primary);
                 if (storeData.get(position).getSel()==0){
                     holder.imageView.setVisibility(View.INVISIBLE);
 

@@ -2,14 +2,14 @@
 <resources>
     <array name="account_settings">
         <!--<item>@drawable/ic_seller_profile</item>-->
-        <item>@drawable/ic_site_apperance</item>
-        <item>@drawable/ic_domain_enad_emails</item>
-        <item>@drawable/icon_change_password</item>
-        <item>@drawable/icon_logout</item>
+        <item>@drawable/ic_account_info</item>
+        <item>@drawable/ic_domain_email</item>
+        <item>@drawable/ic_change_password</item>
+        <item>@drawable/ic_logout</item>
     </array>
 
     <array name="about_sidepanel">
-        <item>@drawable/ic_nowfloats_gray</item>
+        <item>@drawable/ic_about_nf</item>
         <item>@drawable/ic_faqs</item>
         <item>@drawable/ic_feedback</item>
         <item>@drawable/ic_like_facebook</item>
@@ -24,22 +24,22 @@
         <item>@drawable/ic_manage_business</item>
         <item>@drawable/ic_about</item>
         <item>@drawable/ic_image_gallery</item>
-        <item>@drawable/ic_custom_pages</item>
-        <item>@drawable/ic_custom_pages</item>
+        <item>@drawable/ic_custom_page</item>
+        <item>@drawable/ic_custom_page</item>
     </array>
     -->
 
     <array name="manage_content_sidepanel">
         <item>@drawable/ic_updates</item>
-        <item>@drawable/ic_gallery</item>
-        <item>@drawable/ic_custom_pages</item>
+        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_custom_page</item>
         <item>@drawable/ic_business_profile</item>
         <item>@drawable/ic_content_sharing</item>
     </array>
 
     <array name="order_analytics_img">
-        <item>@drawable/ic_order_summary</item>
-        <item>@drawable/ic_revenue_summary</item>
+        <item>@drawable/ic_order_summary_new</item>
+        <item>@drawable/ic_revenue_summary_new</item>
     </array>
 
 </resources>

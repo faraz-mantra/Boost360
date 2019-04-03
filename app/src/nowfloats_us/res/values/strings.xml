@@ -87,7 +87,7 @@
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an update</string>
-    <string name="side_panel_row_one">Dashboard</string>
+    <string name="side_panel_row_one">Home</string>
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="manage_inventory">E-Commerce</string>
@@ -506,7 +506,7 @@
     <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>RedTim representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
     <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#1F80AD\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
     <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#1F80AD\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
-    <string name="onboarding_about_product_url">https://redtim.com/product</string>
+    <string name="onboarding_about_product_url">https://www.redtim.com/how-it-works</string>
     <string name="update_nowfloats_app">You are using an old version of RedTim. Update the app to get new features and enhancements</string>
 
     <string-array name="dictate_parent_0">
