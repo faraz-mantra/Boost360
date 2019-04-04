@@ -222,15 +222,15 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
                             businessAddressLayout = (TextView) businessProfileList.findViewById(R.id.businessAddress_Layout_ProfileV2);
                             //TextView businessAddressTextView = (TextView) businessAddressLayout.findViewById(R.id.firstrow_TextView_ProfileV2);
-                            businessAddressLayout.setTypeface(robotoMedium);
+                            //businessAddressLayout.setTypeface(robotoMedium);
 
                             contactInformationLayout = (TextView) businessProfileList.findViewById(R.id.contactInformation_Layout_ProfileV2);
                             //TextView contactInfoTextView = (TextView) contactInformationLayout.findViewById(R.id.secondrow_TextView_ProfileV2);
-                            contactInformationLayout.setTypeface(robotoMedium);
+                            //contactInformationLayout.setTypeface(robotoMedium);
 
                             businessHoursLayout = (TextView) businessProfileList.findViewById(R.id.businessHours_Layout_ProfileV2);
                             // TextView businessHoursText = (TextView) businessHoursLayout.findViewById(R.id.thirdrow_TextView_ProfileV2);
-                            businessHoursLayout.setTypeface(robotoMedium);
+                            //businessHoursLayout.setTypeface(robotoMedium);
 
 
                             ImageView businessHoursImageView = (ImageView) businessProfileList.findViewById(R.id.thirdrow_ImageView_ProfileV2);
@@ -248,11 +248,11 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             }
                             businessLogoLayout = (TextView) businessProfileList.findViewById(R.id.businessLogo_Layout_ProfileV2);
                             //TextView businessLogoText = (TextView) businessLogoLayout.findViewById(R.id.fourth_TextView_ProfileV2);
-                            businessLogoLayout.setTypeface(robotoMedium);
+                            //businessLogoLayout.setTypeface(robotoMedium);
 
                             socialSharingLayout = (TextView) businessProfileList.findViewById(R.id.socialSharing_Layout_ProfileV2);
                             //TextView socialSharingTextView = (TextView) socialSharingLayout.findViewById(R.id.fifth_TextView_ProfileV2);
-                            socialSharingLayout.setTypeface(robotoMedium);
+                            //socialSharingLayout.setTypeface(robotoMedium);
 
                             tvCustomPages = (TextView) businessProfileList.findViewById(R.id.tvCustomPages);
                             tvCustomPages.setTypeface(robotoMedium);

@@ -81,7 +81,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         setTitle(getResources().getString(R.string.logo));
 
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText(getResources().getString(R.string.logo));
+        titleTextView.setText(getResources().getString(R.string.business_logo));
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);

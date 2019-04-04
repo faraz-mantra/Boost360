@@ -164,7 +164,6 @@
                 android:id="@+id/contactInformation_Layout_ProfileV2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/cell_height"
-                android:layout_marginTop="1dp"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/contact__info"
