@@ -51,7 +51,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 public class ManageInventoryFragment extends Fragment {
     TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics, tvBusinessInquiries, tvBusinessCalls;
     ImageView ivLockWidget, ivPaymentIcon;
-    Typeface robotoLight;
+    //Typeface robotoLight;
     private SharedPreferences pref = null;
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
@@ -144,24 +144,24 @@ public class ManageInventoryFragment extends Fragment {
 
         try {
             ivLockWidget.setVisibility(View.GONE);
-            Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
-            robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
+            //Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
+            //robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
 
             tvPaymentSetting = (TextView) mainView.findViewById(R.id.tvPaymentSetting);
-            tvPaymentSetting.setTypeface(robotoMedium);
+            //tvPaymentSetting.setTypeface(robotoMedium);
 
             tvProductGallery = (TextView) mainView.findViewById(R.id.tvProductGallery);
             tvProductGallery.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
-            tvProductGallery.setTypeface(robotoMedium);
+            //tvProductGallery.setTypeface(robotoMedium);
 
             tvSellerAnalytics = (TextView) mainView.findViewById(R.id.tvSellerAnalytics);
-            tvSellerAnalytics.setTypeface(robotoMedium);
+            //tvSellerAnalytics.setTypeface(robotoMedium);
 
             tvBusinessCalls = (TextView) mainView.findViewById(R.id.tvBusinessCalls);
-            tvBusinessCalls.setTypeface(robotoMedium);
+            //tvBusinessCalls.setTypeface(robotoMedium);
 
             tvBusinessInquiries = (TextView) mainView.findViewById(R.id.tvBusinessInquiries);
-            tvBusinessInquiries.setTypeface(robotoMedium);
+            //tvBusinessInquiries.setTypeface(robotoMedium);
 
             tvBusinessInquiries.setOnClickListener(v -> {
 

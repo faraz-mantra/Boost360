@@ -168,6 +168,7 @@
             layout="@layout/single_row_card"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
             android:layout_below="@id/containerDrawerImage" />
 
 

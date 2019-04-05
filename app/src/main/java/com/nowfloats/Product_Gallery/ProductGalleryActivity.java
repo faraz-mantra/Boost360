@@ -118,9 +118,14 @@ public class ProductGalleryActivity extends AppCompatActivity {
     }
 
     public void hideActionDelete() {
+
         count = 0;
+//        headerText.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))?
+//                getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
+
         headerText.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))?
-                getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
+                getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+
         ivDelete.setVisibility(View.GONE);
     }
 }

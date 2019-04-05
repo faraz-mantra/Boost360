@@ -151,13 +151,14 @@
                             android:id="@+id/visitors_image_bg"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/unique_visitors" />
+                            android:src="@drawable/ic_visitors" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -241,13 +242,14 @@
                             android:id="@+id/pop_up_gallery_img"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/total_visits" />
+                            android:src="@drawable/ic_visits" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -331,14 +333,14 @@
                             android:id="@+id/map_visits_img"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:padding="8dp"
-                            app:srcCompat="@drawable/ic_map_visits" />
+                            android:src="@drawable/ic_address_views" />
                     </FrameLayout>
 
 
@@ -509,13 +511,14 @@
                             android:id="@+id/pop_up_search_img"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/analytics_search" />
+                            android:src="@drawable/ic_search_queries" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -593,14 +596,14 @@
                             android:id="@+id/pop_up_search_ranking_img"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
                         <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/analytics_search_ranking"
-                            android:tint="@color/white" />
+                            android:src="@drawable/ic_search_rankings" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -649,11 +652,11 @@
 
                     <ImageView
                         android:id="@+id/iv_fb_page_analytics"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="20dp"
-                        android:src="@drawable/analytics_facebook" />
+                        android:src="@drawable/ic_social_analytics" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
@@ -820,14 +823,14 @@
                             android:id="@+id/img_wildfire_back"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/wildfire_gray"
-                            android:tint="@color/white" />
+                            android:src="@drawable/ic_inorganic" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -882,13 +885,14 @@
                             android:id="@+id/pop_up_subscribers_img"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/analytics_subscriber" />
+                            android:src="@drawable/ic_subscribers" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -971,13 +975,15 @@
                             android:id="@+id/iv_order_analytics"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:src="@drawable/circle_bakground" />
 
-                        <android.support.v7.widget.AppCompatImageView
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_order_analytics" />
+                            android:src="@drawable/ic_sales" />
+
                     </FrameLayout>
 
 

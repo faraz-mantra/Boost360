@@ -46,7 +46,7 @@
     <string name="facebook_app_id">539836972828386</string>
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an update</string>
-    <string name="side_panel_row_one">Dashboard</string>
+    <string name="side_panel_row_one">Home</string>
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="manage_inventory">E-Commerce</string>
@@ -375,7 +375,7 @@
     <string name="Logo_percentage">5</string>
     <string name="business_hours">5</string>
     <string name="package_name">com.biz2.nowfloats</string>
-    <string name="onboarding_about_product_url">https://nowfloats.com/product</string>
+    <string name="onboarding_about_product_url">https://www.nowfloats.com/how-it-works</string>
     <string name="support_name">Ria</string>
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 

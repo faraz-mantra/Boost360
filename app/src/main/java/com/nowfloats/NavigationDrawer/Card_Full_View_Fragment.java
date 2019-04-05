@@ -256,7 +256,7 @@ public class Card_Full_View_Fragment extends Fragment {
 
 
                                             if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
                                             } else {
                                                 Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
                                             }
