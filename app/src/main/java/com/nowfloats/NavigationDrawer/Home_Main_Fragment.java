@@ -54,6 +54,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -636,5 +637,31 @@ public class Home_Main_Fragment extends Fragment implements
 
      interface OnRenewPlanClickListener {
          void onRenewPlanSelected();
+    }
+
+
+    /**
+     * Revamped Widget Logic
+     */
+    private void widget()
+    {
+        String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_LATEST_UPDATES, WidgetKey.WIDGET_PROPERTY_MAX);
+
+        if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+        {
+            Methods.showFeatureNotAvailDialog(getContext());
+        }
+
+        else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && cAdapter.getItemCount() >= Integer.parseInt(value))
+        {
+            Toast.makeText(getContext(), "You have exceeded limit", Toast.LENGTH_LONG).show();
+        }
+
+        else
+        {
+            Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
+            startActivity(webIntent);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
     }
 }

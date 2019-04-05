@@ -347,6 +347,7 @@
                             android:id="@+id/edit_base_price"
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XX,XXX"
+                            android:maxLength="8"
                             android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 
@@ -370,6 +371,8 @@
                             android:id="@+id/edit_discount"
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XXX"
+                            android:enabled="false"
+                            android:maxLength="6"
                             android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 

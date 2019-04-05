@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
@@ -35,6 +36,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.widget.Widget;
+import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -127,20 +129,21 @@ public class CustomPageFragment extends Fragment {
 
         LoadPageList(activity, bus);
 
-        final FloatingActionButton addProduct = (FloatingActionButton) view.findViewById(R.id.fab_custom_page);
-        addProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    Methods.showFeatureNotAvailDialog(getContext());
-                }else {
-                    MixPanelController.track("AddCustomPage", null);
-                    Intent intent = new Intent(activity, CreateCustomPageActivity.class);
-                    startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
+        final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
 
-                //ActivePackage activePackage = Widget.getInstance().getActivePackage();
+        addProduct.setOnClickListener(v -> {
+
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
+
+            else
+            {
+                MixPanelController.track("AddCustomPage", null);
+                Intent intent = new Intent(activity, CreateCustomPageActivity.class);
+                startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
@@ -386,6 +389,34 @@ public class CustomPageFragment extends Fragment {
                     recyclerView.invalidate();
             }
 
+        }
+    }
+
+
+    /**
+     * Revamped Widget Logic
+     */
+    private void widget()
+    {
+        String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
+
+        if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+        {
+            Methods.showFeatureNotAvailDialog(getContext());
+        }
+
+        else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value))
+        {
+            Toast.makeText(getContext(), "You have exceeded limit", Toast.LENGTH_LONG).show();
+        }
+
+        else
+        {
+            MixPanelController.track("AddCustomPage", null);
+            Intent intent = new Intent(activity, CreateCustomPageActivity.class);
+            startActivity(intent);
+
+            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 }

@@ -3,10 +3,6 @@ package com.nowfloats.widget;
 import android.content.Context;
 import android.util.Log;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.Model.WidgetPacks;
@@ -17,9 +13,7 @@ import com.nowfloats.util.Key_Preferences;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +34,7 @@ public class WidgetKey {
     private static final String WIDGET_IMAGE_GALLERY = "IMAGEGALLERY";
     private static final String WIDGET_SITESENSE = "SITESENSE";
     private static final String WIDGET_CONTACT_DETAILS = "CONTACTDETAILS";
-    private static final String WIDGET_CUSTOM_PAGES = "CUSTOMPAGES";
+    public static final String WIDGET_CUSTOM_PAGES = "CUSTOMPAGES";
     private static final String WIDGET_FB_LIKE_BOX = "FBLIKEBOX";
     private static final String WIDGET_SUBSCRIBER_COUNT = "SUBSCRIBERCOUNT";
     private static final String WIDGET_VISITOR_COUNT = "VISITORCOUNT";
@@ -53,13 +47,13 @@ public class WidgetKey {
     private static final String WIDGET_CALL_TRACKER = "CALLTRACKER";
     private static final String WIDGET_DOMAIN_PURCHASE = "DOMAINPURCHASE";
     private static final String WIDGET_PAYMENT_GATEWAY = "PAYMENTGATEWAY";
-    private static final String WIDGET_TRANSACTION_FEES = "TRANSACTIONFEES";
+    public static final String WIDGET_TRANSACTION_FEES = "TRANSACTIONFEES";
     private static final String WIDGET_SUBSCRIPTION = "SUBSCRIPTION";
     private static final String WIDGET_PRE_OWN_DOMAIN_MAPPING = "PREOWNDOMAINMAPPING";
     private static final String WIDGET_SHOPPING_CART = "SHOPPINGCART";
     private static final String WIDGET_EMAIL_ACCOUNTS = "EMAILACCOUNTS";
     private static final String WIDGET_WEBSITE_BANDWIDTH = "WEBSITEBANDWIDTH";
-    private static final String WIDGET_LATEST_UPDATES = "LATESTUPDATES";
+    public static final String WIDGET_LATEST_UPDATES = "LATESTUPDATES";
     private static final String WIDGET_ANALYTICS = "ANALYTICS";
     private static final String WIDGET_PREMIUM_ADDONS = "PREMIUMADDONS";
     private static final String WIDGET_CUSTOMER_SUPPORT = "CUSTOMERSUPPORT";
@@ -70,6 +64,11 @@ public class WidgetKey {
     private static final String WIDGET_RATES_AND_INVENTORY = "RATESANDINVENTORY";
     private static final String WIDGET_REPORT_AND_DASHBOARD = "REPORTANDDASHBOARD";
     private static final String WIDGET_TESTIMONIALS = "TESTIMONIALS";
+
+    public static final String WIDGET_PROPERTY_MAX = "MAX";
+    public static final String WIDGET_PROPERTY_WEBSITE = "Website";
+    public static final String WIDGET_PROPERTY_FB_PAGE = "FbPage";
+    public static final String WIDGET_PROPERTY_TRANSACTION_FEES = "TransactionFees";
 
 
     //private static final String WIDGET_IMAGE_GALLERY = "IMAGEGALLERY";
@@ -161,7 +160,7 @@ public class WidgetKey {
     }
 
 
-    private static String getPropertyValue(String widgetKey, String key)
+    public static String getPropertyValue(String widgetKey, String key)
     {
         String value = WidgetValue.FEATURE_NOT_AVAILABLE.getValue();
 

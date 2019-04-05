@@ -21,6 +21,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +51,8 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.widget.Widget;
+import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
 
@@ -187,6 +191,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         initPaymentAdapter();
         spinnerAddressListener();
         addBottomSheetListener();
+        addTextChangeListener();
 
         placeholder();
 
@@ -215,8 +220,82 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 addProduct();
             }
         });
+
+
+        String transactionFees = getTransactionFees();
+        binding.layoutBottomSheet.tvPaymentConfigurationAcceptanceMessage.setText(String.format(String.valueOf(getString(R.string.payment_config_acceptance_message)), transactionFees));
     }
 
+
+    private void addTextChangeListener()
+    {
+        binding.editBasePrice.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                setFinalPrice();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+        });
+
+        binding.editDiscount.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                setFinalPrice();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void setFinalPrice()
+    {
+        if(binding.editBasePrice.getText().toString().isEmpty())
+        {
+            binding.editDiscount.setEnabled(false);
+        }
+
+        else
+        {
+            binding.editDiscount.setEnabled(true);
+        }
+
+        String basePrice = binding.editBasePrice.getText().toString().isEmpty() ? "0" : binding.editBasePrice.getText().toString();
+        String discount = binding.editDiscount.getText().toString().isEmpty() ? "0" : binding.editDiscount.getText().toString();
+
+        double finalPrice = Double.valueOf(basePrice) - Double.valueOf(discount);
+        binding.labelFinalPrice.setText(Helper.getCurrencyFormatter().format(finalPrice));
+    }
+
+    /**
+     * Revamped Widget Logic
+     */
+    private String getTransactionFees()
+    {
+        String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_TRANSACTION_FEES, WidgetKey.WIDGET_PROPERTY_TRANSACTION_FEES);
+        return value.contains("%") ? value : value.concat("%");
+    }
 
     private void placeholder()
     {
