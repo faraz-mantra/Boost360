@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
@@ -19,6 +20,9 @@ import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
+import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
+import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 
 /**
@@ -95,5 +99,4 @@ public class ManageContentFragment extends Fragment{
             HomeActivity.headerText.setText(getString(R.string.manage_content));
         }
     }
-
 }

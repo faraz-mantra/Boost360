@@ -380,24 +380,8 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-        fabButton = (FloatingActionButton) mainView.findViewById(R.id.fab);
-
-
-
-
-        fabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                   Methods.showFeatureNotAvailDialog(getContext());
-                }
-                else {
-                    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
-                    startActivity(webIntent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            }
-        });
+        fabButton = mainView.findViewById(R.id.fab);
+        fabButton.setOnClickListener(v -> addUpdate());
 
         return mainView;
     }
@@ -640,28 +624,49 @@ public class Home_Main_Fragment extends Fragment implements
     }
 
 
-    /**
-     * Revamped Widget Logic
-     */
-    private void widget()
+    private void openAddUpdateActivity()
     {
-        String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_LATEST_UPDATES, WidgetKey.WIDGET_PROPERTY_MAX);
+        Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
+        startActivity(webIntent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
-        if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+    private void addUpdate()
+    {
+        /**
+         * If not new pricing plan
+         */
+        if(!WidgetKey.isNewPricingPlan)
         {
-            Methods.showFeatureNotAvailDialog(getContext());
-        }
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
 
-        else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && cAdapter.getItemCount() >= Integer.parseInt(value))
-        {
-            Toast.makeText(getContext(), "You have exceeded limit", Toast.LENGTH_LONG).show();
+            else
+            {
+                openAddUpdateActivity();
+            }
         }
 
         else
         {
-            Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
-            startActivity(webIntent);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_LATEST_UPDATES, WidgetKey.WIDGET_PROPERTY_MAX);
+
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
+
+            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && cAdapter.getItemCount() >= Integer.parseInt(value))
+            {
+                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_update_limit)), Toast.LENGTH_LONG).show();
+            }
+
+            else
+            {
+                openAddUpdateActivity();
+            }
         }
     }
 }

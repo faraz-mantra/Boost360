@@ -1768,4 +1768,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="label_product_description">%s Description<sup>*</sup></string>
     <string name="label_product_type">%s Type/Category</string>
 
+    <string name="message_custom_page_limit">You have exceeded limit</string>
+    <string name="message_add_update_limit">You have exceeded limit</string>
+    <string name="message_add_image_limit">You have exceeded limit</string>
+    <string name="message_feature_not_available">This feature is not available</string>
+
 </resources>

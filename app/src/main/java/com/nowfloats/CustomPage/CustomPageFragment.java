@@ -131,21 +131,7 @@ public class CustomPageFragment extends Fragment {
 
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
 
-        addProduct.setOnClickListener(v -> {
-
-            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
-            {
-                Methods.showFeatureNotAvailDialog(getContext());
-            }
-
-            else
-            {
-                MixPanelController.track("AddCustomPage", null);
-                Intent intent = new Intent(activity, CreateCustomPageActivity.class);
-                startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
+        addProduct.setOnClickListener(v -> addProduct());
     }
 
     @Override
@@ -392,31 +378,55 @@ public class CustomPageFragment extends Fragment {
         }
     }
 
+    private void openAddCustomPageActivity()
+    {
+        MixPanelController.track("AddCustomPage", null);
+        Intent intent = new Intent(activity, CreateCustomPageActivity.class);
+        startActivity(intent);
+
+        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
 
     /**
      * Revamped Widget Logic
      */
-    private void widget()
+    private void addProduct()
     {
-        String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
-
-        if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+        /**
+         * If not new pricing plan
+         */
+        if(!WidgetKey.isNewPricingPlan)
         {
-            Methods.showFeatureNotAvailDialog(getContext());
-        }
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
 
-        else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value))
-        {
-            Toast.makeText(getContext(), "You have exceeded limit", Toast.LENGTH_LONG).show();
+            else
+            {
+                openAddCustomPageActivity();
+            }
         }
 
         else
         {
-            MixPanelController.track("AddCustomPage", null);
-            Intent intent = new Intent(activity, CreateCustomPageActivity.class);
-            startActivity(intent);
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
 
-            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
+
+            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value))
+            {
+                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
+            }
+
+            else
+            {
+                openAddCustomPageActivity();
+            }
         }
     }
 }
