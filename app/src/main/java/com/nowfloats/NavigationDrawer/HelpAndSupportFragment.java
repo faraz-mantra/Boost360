@@ -313,8 +313,8 @@ public class HelpAndSupportFragment extends Fragment
 
         else
         {
-            String chat = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PROPERTY_CHAT, WidgetKey.WIDGET_CUSTOMER_SUPPORT);
-            String phone = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PROPERTY_PHONE, WidgetKey.WIDGET_CUSTOMER_SUPPORT);
+            String chat = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOMER_SUPPORT, WidgetKey.WIDGET_PROPERTY_CHAT);
+            String phone = WidgetKey.getPropertyValue( WidgetKey.WIDGET_CUSTOMER_SUPPORT, WidgetKey.WIDGET_PROPERTY_PHONE);
 
             if(chat.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
             {

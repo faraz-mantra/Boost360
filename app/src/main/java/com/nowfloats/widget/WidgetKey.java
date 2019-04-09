@@ -24,17 +24,15 @@ import retrofit.client.Response;
 
 public class WidgetKey {
 
+    /**
+     * Widget Key
+     */
     private static final String WIDGET_BOOKING_ENGINE = "BOOKING ENGINE";
     private static final String WIDGET_PACKAGE_PROPERTIES = "PACKAGE-PROPERTIES";
     private static final String WIDGET_TRIPADVISOR_REVIEWS = "TRIPADVISOR REVIEWS";
     private static final String WIDGET_PRICE_COMPARISON = "PRICE COMPARISON";
     private static final String WIDGET_FACILITIES = "FACILITIES";
     private static final String WIDGET_PLACES_TO_LOOK_AROUND = "PLACES TO LOOK AROUND";
-    private static final String WIDGET_TOB = "TOB";
-    public static final String WIDGET_IMAGE_GALLERY = "IMAGEGALLERY";
-    private static final String WIDGET_SITESENSE = "SITESENSE";
-    private static final String WIDGET_CONTACT_DETAILS = "CONTACTDETAILS";
-    public static final String WIDGET_CUSTOM_PAGES = "CUSTOMPAGES";
     private static final String WIDGET_FB_LIKE_BOX = "FBLIKEBOX";
     private static final String WIDGET_SUBSCRIBER_COUNT = "SUBSCRIBERCOUNT";
     private static final String WIDGET_VISITOR_COUNT = "VISITORCOUNT";
@@ -42,21 +40,19 @@ public class WidgetKey {
     private static final String WIDGET_GALLERY_VIDEO = "GALLERYVIDEO";
     private static final String WIDGET_AUTO_FB_MSG_UPDATE = "AUTOFBMSGUPDATE";
     private static final String WIDGET_RIA_SUPPORT_TEAM = "RIASUPPORTTEAM";
-    public static final String WIDGET_SOCIAL_MEDIA = "SOCIALMEDIA";
-    public static final String WIDGET_MEDIA_MANAGEMENT = "MEDIAMANAGEMENT";
+    private static final String WIDGET_SOCIAL_MEDIA = "SOCIALMEDIA";
+    private static final String WIDGET_MEDIA_MANAGEMENT = "MEDIAMANAGEMENT";
     private static final String WIDGET_CALL_TRACKER = "CALLTRACKER";
     private static final String WIDGET_DOMAIN_PURCHASE = "DOMAINPURCHASE";
     private static final String WIDGET_PAYMENT_GATEWAY = "PAYMENTGATEWAY";
-    public static final String WIDGET_TRANSACTION_FEES = "TRANSACTIONFEES";
-    private static final String WIDGET_SUBSCRIPTION = "SUBSCRIPTION";
+    private static final String WIDGET_TOB = "TOB";
+    private static final String WIDGET_SITESENSE = "SITESENSE";
+    private static final String WIDGET_CONTACT_DETAILS = "CONTACTDETAILS";
     private static final String WIDGET_PRE_OWN_DOMAIN_MAPPING = "PREOWNDOMAINMAPPING";
-    public static final String WIDGET_SHOPPING_CART = "SHOPPINGCART";
     private static final String WIDGET_EMAIL_ACCOUNTS = "EMAILACCOUNTS";
     private static final String WIDGET_WEBSITE_BANDWIDTH = "WEBSITEBANDWIDTH";
-    public static final String WIDGET_LATEST_UPDATES = "LATESTUPDATES";
     private static final String WIDGET_ANALYTICS = "ANALYTICS";
     private static final String WIDGET_PREMIUM_ADDONS = "PREMIUMADDONS";
-    public static final String WIDGET_CUSTOMER_SUPPORT = "CUSTOMERSUPPORT";
     private static final String WIDGET_CHATBOT = "CHATBOT";
     private static final String WIDGET_IVR = "IVR";
     private static final String WIDGET_DESIGN_TEMPLATES = "DESIGNTEMPLATES";
@@ -65,6 +61,18 @@ public class WidgetKey {
     private static final String WIDGET_REPORT_AND_DASHBOARD = "REPORTANDDASHBOARD";
     private static final String WIDGET_TESTIMONIALS = "TESTIMONIALS";
 
+    public static final String WIDGET_IMAGE_GALLERY = "IMAGEGALLERY";
+    public static final String WIDGET_CUSTOM_PAGES = "CUSTOMPAGES";
+    public static final String WIDGET_TRANSACTION_FEES = "TRANSACTIONFEES";
+    public static final String WIDGET_SUBSCRIPTION = "SUBSCRIPTION";
+    public static final String WIDGET_SHOPPING_CART = "SHOPPINGCART";
+    public static final String WIDGET_LATEST_UPDATES = "LATESTUPDATES";
+    public static final String WIDGET_CUSTOMER_SUPPORT = "CUSTOMERSUPPORT";
+    public static final String WIDGET_PRODUCT_CATALOG = "PRODUCTCATALOGUE";
+
+    /**
+     * Widget Property Key
+     */
     public static final String WIDGET_PROPERTY_MAX = "MAX";
     public static final String WIDGET_PROPERTY_WEBSITE = "Website";
     public static final String WIDGET_PROPERTY_FB_PAGE = "FbPage";
@@ -77,6 +85,8 @@ public class WidgetKey {
     public static final String WIDGET_PROPERTY_PHONE = "Phone";
     public static final String WIDGET_PROPERTY_CART = "Cart";
     public static final String WIDGET_PROPERTY_TRANSACTION_FEES = "TransactionFees";
+    public static final String WIDGET_PROPERTY_PAYMENT_GATEWAY = "PaymentGateway";
+    public static final String WIDGET_PROPERTY_SUBSCRIPTION = "Subscription";
 
 
     //private static final String WIDGET_IMAGE_GALLERY = "IMAGEGALLERY";
@@ -101,7 +111,8 @@ public class WidgetKey {
             this.value = value;
         }
 
-        public String getValue() {
+        public String getValue()
+        {
             return value;
         }
     }
@@ -145,9 +156,9 @@ public class WidgetKey {
                         Widget.getInstance().setActivePackage(getActivePackage(widget.getActivePackages()));
                         isNewPricingPlan = isPackageExists(context, activePackage.getId());
                     }
-                }
             }
 
+        }
             @Override
             public void failure(RetrofitError error)
             {
@@ -176,7 +187,17 @@ public class WidgetKey {
 
     public static String getPropertyValue(String widgetKey, String key)
     {
-        String value = WidgetValue.FEATURE_NOT_AVAILABLE.getValue();
+        String value = WidgetValue.UNLIMITED.getValue();
+
+        if(Widget.getInstance().getActivePackage() == null)
+        {
+            return value == null ? WidgetValue.UNLIMITED.getValue() : value;
+        }
+
+        if(Widget.getInstance().getActivePackage().getWidgetPacks() == null)
+        {
+            return value == null ? WidgetValue.UNLIMITED.getValue() : value;
+        }
 
         for(WidgetPacks packs: Widget.getInstance().getActivePackage().getWidgetPacks())
         {
@@ -193,7 +214,7 @@ public class WidgetKey {
             }
         }
 
-        return value == null ? WidgetValue.FEATURE_NOT_AVAILABLE.getValue() : value;
+        return value == null ? WidgetValue.UNLIMITED.getValue() : value;
     }
 
 

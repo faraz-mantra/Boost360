@@ -1705,4 +1705,41 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         return true;
     }
+
+
+    /*private void addImage()
+    {
+        if(!WidgetKey.isNewPricingPlan)
+        {
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
+
+            else
+            {
+                imageChooserDialog();
+            }
+        }
+
+        else
+        {
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PROPERTY_PAYMENT_GATEWAY, WidgetKey.WIDGET_PROPERTY_PAYMENT_GATEWAY);
+
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+            }
+
+            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && otherImagesAdapter.getCount() >= Integer.parseInt(value))
+            {
+                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_image_limit)), Toast.LENGTH_LONG).show();
+            }
+
+            else
+            {
+                imageChooserDialog();
+            }
+        }
+    }*/
 }

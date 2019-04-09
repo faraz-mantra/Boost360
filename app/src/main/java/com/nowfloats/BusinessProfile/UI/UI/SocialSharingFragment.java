@@ -1687,11 +1687,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
 
-    private boolean isNewPlanPricing()
+    /*private boolean isNewPlanPricing()
     {
-        /**
-         * If not new pricing plan
-         */
+
         if(!WidgetKey.isNewPricingPlan)
         {
             if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
@@ -1729,10 +1727,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 isOthersEnabled = false;
             }
 
-            //String fbPage = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SOCIAL_MEDIA, WidgetKey.WIDGET_PROPERTY_FB_PAGE);
-            //String website = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SOCIAL_MEDIA, WidgetKey.WIDGET_PROPERTY_WEBSITE);
+            String fbPage = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SOCIAL_MEDIA, WidgetKey.WIDGET_PROPERTY_FB_PAGE);
+            String website = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SOCIAL_MEDIA, WidgetKey.WIDGET_PROPERTY_WEBSITE);
 
             return true;
         }
-    }
+    }*/
 }

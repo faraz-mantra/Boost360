@@ -1771,6 +1771,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="message_custom_page_limit">You have exceeded limit</string>
     <string name="message_add_update_limit">You have exceeded limit</string>
     <string name="message_add_image_limit">You have exceeded limit</string>
+    <string name="message_add_product_limit">You have exceeded limit</string>
     <string name="message_feature_not_available">This feature is not available</string>
 
 </resources>

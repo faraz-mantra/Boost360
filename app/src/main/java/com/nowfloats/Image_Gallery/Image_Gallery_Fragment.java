@@ -688,7 +688,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
         else
         {
-            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PROPERTY_GALLERY, WidgetKey.WIDGET_IMAGE_GALLERY);
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_IMAGE_GALLERY, WidgetKey.WIDGET_PROPERTY_GALLERY);
 
             if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
             {

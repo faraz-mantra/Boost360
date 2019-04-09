@@ -6,26 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.ProductCatagoryRecyclerAdapter;
 import com.nowfloats.Product_Gallery.Model.Product;
-import com.nowfloats.Product_Gallery.Model.ProductListModel;
-import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
-import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.squareup.otto.Bus;
+import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,10 +35,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
     private ProductCatagoryRecyclerAdapter adapter;
     private LinearLayoutManager layoutManager;
 
-    public static Bus bus;
-
     private UserSessionManager session;
-    private ProductAPIService apiService;
 
     private boolean stop = false;
     private boolean isLoading = false;
@@ -69,10 +62,6 @@ public class ProductCatalogActivity extends AppCompatActivity {
         }
 
         this.initProductRecyclerView(binding.productList);
-
-        bus = BusProvider.getInstance().getBus();
-        apiService = new ProductAPIService();
-
         getProducts();
     }
 
@@ -81,8 +70,6 @@ public class ProductCatalogActivity extends AppCompatActivity {
         isLoading = true;
 
         final String skip = String.valueOf(adapter.getItemCount());
-
-        Log.d("PRODUCT_SKIP_VALUE", skip);
 
         HashMap<String, String> values = new HashMap<>();
         values.put("clientId", Constants.clientId);
@@ -199,7 +186,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
             case R.id.menu_add:
 
-                startActivity(new Intent(ProductCatalogActivity.this, ManageProductActivity.class));
+                addProduct();
                 break;
         }
 
@@ -207,65 +194,47 @@ public class ProductCatalogActivity extends AppCompatActivity {
     }
 
 
-    /*@Subscribe
-    public void getProductList(ArrayList<ProductListModel> data) {
+    private void openAddProductActivity()
+    {
+        startActivity(new Intent(ProductCatalogActivity.this, ManageProductActivity.class));
+    }
 
-        Log.d("PRODUCT_SIZE", "null");
-
-        if (data != null)
+    private void addProduct()
+    {
+        /**
+         * If not new pricing plan
+         */
+        if(!WidgetKey.isNewPricingPlan)
         {
-            Log.d("PRODUCT_SIZE", "" + data.size());*/
-
-            //Log.i("","PRoduct List Size--"+data.size());
-            //Log.d("Product Id", data.get(0)._id);
-            //checkIfAPEnabled();
-
-            //productItemModelList = data;
-            //productGalleryAdapter = new ProductGalleryAdapter(activity, currencyValue, from);
-            //gridView.setAdapter(productGalleryAdapter);
-            //gridView.invalidateViews();
-            //productGalleryAdapter.refreshDetails(productItemModelList);
-
-            /*if (productItemModelList.size() == 0)
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
             {
-                empty_layout.setVisibility(View.VISIBLE);
-                session.setBubbleShareProducts(false);
-
-                if (from == FROM.BUBBLE)
-                {
-                    getActivity().finish();
-                    startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
-                }
+                Methods.showFeatureNotAvailDialog(this);
             }
 
             else
             {
-                session.setBubbleShareProducts(true);
-                empty_layout.setVisibility(View.GONE);
-            }*/
-        //}
-
-        /*else
-        {
-            progressLayout.setVisibility(View.GONE);
-
-            if (productItemModelList == null || productItemModelList.size() == 0)
-            {
-                Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
+                openAddProductActivity();
             }
-
-            else
-            {
-                Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
-            }
-
-            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
 
-        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount())
+        else
         {
-            session.setProductsCount(productItemModelList.size());
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
-        }*/
-    //}
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PRODUCT_CATALOG, WidgetKey.WIDGET_PROPERTY_MAX);
+
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+            }
+
+            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value))
+            {
+                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_add_product_limit)), Toast.LENGTH_LONG).show();
+            }
+
+            else
+            {
+               openAddProductActivity();
+            }
+        }
+    }
 }
