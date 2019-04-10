@@ -352,6 +352,8 @@
                     android:visibility="gone"
                     android:textColor="@color/secondaryTextColor" />
 
+            <!--<include layout="@layout/layout_shipping_matrix_details" />-->
+
                 <LinearLayout
                     android:id="@+id/layout_payment_external_purchase_url"
                     android:layout_width="match_parent"
