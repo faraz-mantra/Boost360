@@ -1,317 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout>
 
     <LinearLayout
-        android:id="@+id/layout_product_image___"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal" >
-
-        <TextView
-            style="@style/ProductLabelTextStyle"
-            android:text="Delivery package dimensions"/>
-
-        <ImageButton
-            android:id="@+id/ib_info_product_image____"
-            style="@style/ProductHelpButtonStyle"/>
-
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/layout_shipping_matrix_details"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_shipping_matrix"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="vertical"
-        android:background="@drawable/white_rectangle_background"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/layout_product_image___"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="@dimen/margin_5"
-                android:orientation="vertical">
+            <TextView
+                style="@style/ProductLabelTextStyle"
+                android:text="Delivery package dimensions"/>
 
-                <LinearLayout
-                    android:id="@+id/layout_product_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Package Weight"/>
-
-                    <ImageButton
-                        android:id="@+id/ib_info_product_image"
-                        style="@style/ProductHelpButtonStyle"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:padding="1dp"
-                    android:background="@drawable/input_background"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/spinner_package_weight"
-                        style="@style/ProductEditTextStyle"
-                        android:layout_weight="1"
-                        android:text="kg"
-                        android:textColor="@color/secondaryTextColor"
-                        android:background="@color/spinner_grey_background" />
-
-                    <!--
-                    <Spinner
-                        android:id="@+id/spinner_cod_availability__"
-                        style="@style/ProductSpinnerStyle"
-                        android:layout_weight="1"
-                        android:background="@color/spinner_grey_background"
-                        android:entries="@array/stock_options" />
-                    -->
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/secondaryLightTextColor"/>
-
-                    <EditText
-                        android:id="@+id/edit_weight"
-                        style="@style/ProductEditTextStyle"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:digits="0123456789."
-                        android:inputType="numberDecimal"
-                        android:hint="XXXX"
-                        android:background="#FFF" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="@dimen/margin_5"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/layout_product_image____"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Package Length"/>
-
-                    <ImageButton
-                        android:id="@+id/ib_info_product_image___"
-                        style="@style/ProductHelpButtonStyle"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:padding="1dp"
-                    android:background="@drawable/input_background"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/spinner_package_length"
-                        style="@style/ProductEditTextStyle"
-                        android:layout_weight="1"
-                        android:text="inch"
-                        android:textColor="@color/secondaryTextColor"
-                        android:background="@color/spinner_grey_background" />
-
-                    <!--
-                    <Spinner
-                        android:id="@+id/spinner_cod_availability"
-                        style="@style/ProductSpinnerStyle"
-                        android:layout_weight="1"
-                        android:background="@color/spinner_grey_background"
-                        android:entries="@array/stock_options" />
-                    -->
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/secondaryLightTextColor"/>
-
-                    <EditText
-                        android:id="@+id/edit_length"
-                        style="@style/ProductEditTextStyle"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:digits="0123456789."
-                        android:inputType="numberDecimal"
-                        android:hint="XXXX"
-                        android:background="#FFF" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/ib_info_product_image____"
+                style="@style/ProductHelpButtonStyle"/>
 
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/layout_shipping_matrix_details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical"
             android:layout_marginTop="@dimen/margin_5"
-            android:orientation="horizontal" >
+            android:background="@drawable/white_rectangle_background"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="@dimen/margin_5"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/layout_product_image________"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Package Height"/>
-
-                    <ImageButton
-                        android:id="@+id/ib_info_product_image_______"
-                        style="@style/ProductHelpButtonStyle"/>
-
-                </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:padding="1dp"
-                    android:background="@drawable/input_background"
-                    android:orientation="horizontal" >
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/spinner_package_height"
-                        style="@style/ProductEditTextStyle"
+                    <LinearLayout
+                        android:id="@+id/layout_product_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="inch"
-                        android:textColor="@color/secondaryTextColor"
-                        android:background="@color/spinner_grey_background" />
+                        android:orientation="horizontal" >
 
-                    <!--
-                    <Spinner
-                        android:id="@+id/spinner_cod_availability______"
-                        style="@style/ProductSpinnerStyle"
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Package Weight"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="1dp"
+                        android:background="@drawable/input_background"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/spinner_package_weight"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:text="kg"
+                            android:textColor="@color/secondaryTextColor"
+                            android:background="@color/spinner_grey_background" />
+
+                        <!--
+                        <Spinner
+                            android:id="@+id/spinner_cod_availability__"
+                            style="@style/ProductSpinnerStyle"
+                            android:layout_weight="1"
+                            android:background="@color/spinner_grey_background"
+                            android:entries="@array/stock_options" />
+                        -->
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/secondaryLightTextColor"/>
+
+                        <EditText
+                            android:id="@+id/edit_weight"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:digits="0123456789."
+                            android:inputType="numberDecimal"
+                            android:hint="XXXX"
+                            android:background="#FFF" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_image____"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@color/spinner_grey_background"
-                        android:entries="@array/stock_options" />
-                    -->
+                        android:orientation="horizontal" >
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/secondaryLightTextColor"/>
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Package Length"/>
 
-                    <EditText
-                        android:id="@+id/edit_height"
-                        style="@style/ProductEditTextStyle"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:digits="0123456789."
-                        android:inputType="numberDecimal"
-                        android:hint="XXXX"
-                        android:background="#FFF" />
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image___"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="1dp"
+                        android:background="@drawable/input_background"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/spinner_package_length"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:text="inch"
+                            android:textColor="@color/secondaryTextColor"
+                            android:background="@color/spinner_grey_background" />
+
+                        <!--
+                        <Spinner
+                            android:id="@+id/spinner_cod_availability"
+                            style="@style/ProductSpinnerStyle"
+                            android:layout_weight="1"
+                            android:background="@color/spinner_grey_background"
+                            android:entries="@array/stock_options" />
+                        -->
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/secondaryLightTextColor"/>
+
+                        <EditText
+                            android:id="@+id/edit_length"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:digits="0123456789."
+                            android:inputType="numberDecimal"
+                            android:hint="XXXX"
+                            android:background="#FFF" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="@dimen/margin_5"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/layout_product_image_______"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Package Thickness"/>
-
-                    <ImageButton
-                        android:id="@+id/ib_info_product_image_____"
-                        style="@style/ProductHelpButtonStyle"/>
-
-                </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_5"
+                android:orientation="horizontal" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:padding="1dp"
-                    android:background="@drawable/input_background"
-                    android:orientation="horizontal" >
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/spinner_package_thickness"
-                        style="@style/ProductEditTextStyle"
+                    <LinearLayout
+                        android:id="@+id/layout_product_image________"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="inch"
-                        android:textColor="@color/secondaryTextColor"
-                        android:background="@color/spinner_grey_background" />
+                        android:orientation="horizontal" >
 
-                    <!--
-                    <Spinner
-                        android:id="@+id/spinner_cod_availability___"
-                        style="@style/ProductSpinnerStyle"
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Package Height"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image_______"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="1dp"
+                        android:background="@drawable/input_background"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/spinner_package_height"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:text="inch"
+                            android:textColor="@color/secondaryTextColor"
+                            android:background="@color/spinner_grey_background" />
+
+                        <!--
+                        <Spinner
+                            android:id="@+id/spinner_cod_availability______"
+                            style="@style/ProductSpinnerStyle"
+                            android:layout_weight="1"
+                            android:background="@color/spinner_grey_background"
+                            android:entries="@array/stock_options" />
+                        -->
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/secondaryLightTextColor"/>
+
+                        <EditText
+                            android:id="@+id/edit_height"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:digits="0123456789."
+                            android:inputType="numberDecimal"
+                            android:hint="XXXX"
+                            android:background="#FFF" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_product_image_______"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@color/spinner_grey_background"
-                        android:entries="@array/stock_options"/>
-                    -->
+                        android:orientation="horizontal" >
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/secondaryLightTextColor"/>
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Package Thickness"/>
 
-                    <EditText
-                        android:id="@+id/edit_thickness"
-                        style="@style/ProductEditTextStyle"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:digits="0123456789."
-                        android:inputType="numberDecimal"
-                        android:hint="XXXX"
-                        android:background="#FFF" />
+                        <ImageButton
+                            android:id="@+id/ib_info_product_image_____"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="1dp"
+                        android:background="@drawable/input_background"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/spinner_package_thickness"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:text="inch"
+                            android:textColor="@color/secondaryTextColor"
+                            android:background="@color/spinner_grey_background" />
+
+                        <!--
+                        <Spinner
+                            android:id="@+id/spinner_cod_availability___"
+                            style="@style/ProductSpinnerStyle"
+                            android:layout_weight="1"
+                            android:background="@color/spinner_grey_background"
+                            android:entries="@array/stock_options"/>
+                        -->
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/secondaryLightTextColor"/>
+
+                        <EditText
+                            android:id="@+id/edit_thickness"
+                            style="@style/ProductEditTextStyle"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:digits="0123456789."
+                            android:inputType="numberDecimal"
+                            android:hint="XXXX"
+                            android:background="#FFF" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -321,4 +327,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</layout>

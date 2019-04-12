@@ -258,12 +258,10 @@
                         android:layerType="software"
                         android:background="@drawable/dotted_line"/>
 
-                    <LinearLayout
-                        android:id="@+id/layout_product_description___"
+                    <RelativeLayout
+                        android:id="@+id/layout_payment_method_acceptance"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:orientation="horizontal" >
+                        android:layout_height="wrap_content" >
 
                         <CheckBox
                             android:id="@+id/check_payment_configuration"
@@ -275,23 +273,24 @@
                             android:id="@+id/tv_payment_configuration_acceptance_message"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:textSize="12sp"
+                            android:layout_toRightOf="@id/check_payment_configuration"
                             android:text="I agree that boost will keep 3% of the final cart value as convenience fee. (Towards payment and delivery enablement)"/>
 
-                    </LinearLayout>
+                        <View
+                            android:id="@+id/dotted_line_accept"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:layerType="software"
+                            android:layout_below="@id/check_payment_configuration"
+                            android:background="@drawable/dotted_line"/>
 
-                    <View
-                        android:id="@+id/dotted_line_"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:layerType="software"
-                        android:background="@drawable/dotted_line"/>
+                    </RelativeLayout>
 
                 </LinearLayout>
 
-
+                <!--
                 <LinearLayout
                     android:id="@+id/layout_my_payment_gateway"
                     android:layout_width="match_parent"
@@ -357,6 +356,7 @@
                         android:background="@drawable/dotted_line"/>
 
                 </LinearLayout>
+                -->
 
                 <RelativeLayout
                     android:layout_width="match_parent"

@@ -1748,12 +1748,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Bank Transfer</item>
     </string-array>
     <array name="stock_availability">
-        <item>In stock</item>
+        <item>Limited stock</item>
+        <item>Unlimited stock</item>
         <item>Out of stock</item>
     </array>
     <array name="stock_options">
-        <item>YES</item>
-        <item>NO</item>
+        <item>Yes</item>
+        <item>No</item>
     </array>
     <array name="payment_options_v1">
         <item>Paypal</item>
@@ -1773,5 +1774,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="message_add_image_limit">You have exceeded limit</string>
     <string name="message_add_product_limit">You have exceeded limit</string>
     <string name="message_feature_not_available">This feature is not available</string>
+
+    <string-array name="payment_method_titles">
+        <item name="title_assured_purchase" >Assured Purchase™</item>
+        <item name="title_external_url" >External URL</item>
+        <item name="title_dont_want_to_sell" >Don not want to sell online</item>
+    </string-array>
+
+    <string-array name="payment_method_messages">
+        <item name="message_assured_purchase">A service by boost which ensures payment protection and seamless delivery of products.</item>
+        <item name="message_external_url">If you already listed your product on some order platform simply enter the URL here and handle to purchase from there.</item>
+        <item name="message_dont_want_to_sell">Select this if you just wish to list the product on the site and wants to only receive enquiries from your customers.</item>
+    </string-array>
+
+    <string name="payment_method_dont_want_to_sell">Customers will not be able to buy this product. However, they can post an enquiry against this item</string>
+    <string name="payment_methud_message">Payment info updated</string>
 
 </resources>

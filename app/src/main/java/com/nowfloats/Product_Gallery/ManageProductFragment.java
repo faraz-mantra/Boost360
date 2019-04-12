@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,7 +40,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
@@ -51,7 +51,6 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.widget.Widget;
 import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
@@ -67,8 +66,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_LIMIT;
-import static com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE;
+
 
 public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener{
 
@@ -103,6 +101,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private BottomSheetBehavior sheetBehaviorAddress;
 
     private ProductPickupAddressFragment pickupAddressFragment;
+    private int quantity = 1, onlineQuantity, codQuantity;
+    private String[] paymentOptionTitles;
+
 
     public static ManageProductFragment newInstance(Constants.Type category, String type, com.nowfloats.Product_Gallery.Model.Product product)
     {
@@ -165,8 +166,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             if(CATEGORY.equals(Constants.Type.SERVICE.name()))
             {
-                binding.layoutInventory.layoutInventoryRoot.setVisibility(View.GONE);
-                binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                //binding.layoutInventory.layoutInventoryRoot.setVisibility(View.GONE);
+                //binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
 
                 binding.layoutBottomSheet.tvPickAddress.setVisibility(View.GONE);
                 binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
@@ -174,8 +175,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             else
             {
-                binding.layoutInventory.layoutInventoryRoot.setVisibility(View.VISIBLE);
-                binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
+                //binding.layoutInventory.layoutInventoryRoot.setVisibility(View.VISIBLE);
+                //binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
 
                 binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
                 binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
@@ -185,6 +186,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         initCurrencyList();
         addPropertyListener();
         addSpinnerListener();
+        addQuantityListener();
         addSwitchVariantListener();
         addImagePickerListener();
         addPaymentConfigListener();
@@ -205,13 +207,21 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             Log.d("PRODUCT_LOG", "PRODUCT IS NOT NULL");
         }
 
-        binding.layoutPaymentMethod.editWeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutPaymentMethod.editHeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutPaymentMethod.editLength.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutPaymentMethod.editThickness.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutInventory.editAvailableQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutInventory.editCodMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutInventory.editPrepaidOnlineMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutShippingMatrixDetails.editWeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutShippingMatrixDetails.editHeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutShippingMatrixDetails.editLength.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutShippingMatrixDetails.editThickness.setKeyListener(DigitsKeyListener.getInstance(true,true));
+
+        //binding.layoutInventory.editAvailableQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        //binding.layoutInventory.editCodMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        //binding.layoutInventory.editPrepaidOnlineMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
+
+        binding.layoutInventory.labelInventoryHint.setText(String.valueOf("Inventory availability"));
+        binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available quantity"));
+        binding.layoutInventoryOnline.labelInventoryHint.setText(String.valueOf("Accept online payment"));
+        binding.layoutInventoryOnline.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
+        binding.layoutInventoryCod.labelInventoryHint.setText(String.valueOf("Accept COD payment"));
+        binding.layoutInventoryCod.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
 
         binding.btnPublish.setOnClickListener(view -> {
 
@@ -338,10 +348,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void initPaymentAdapter()
     {
-        binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
-        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.GONE);
+        this.paymentOptionTitles = getResources().getStringArray(R.array.payment_method_titles);
 
-        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getContext());
+        binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
+
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity());
         binding.layoutBottomSheet.spinnerPaymentOption.setAdapter(spinnerAdapter);
 
         binding.layoutBottomSheet.spinnerPaymentOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -354,19 +365,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     case 0:
 
                         binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.VISIBLE);
-                        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.GONE);
-                        break;
-
-                    case 1:
-
-                        binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
-                        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.VISIBLE);
                         break;
 
                     default:
 
                         binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
-                        binding.layoutBottomSheet.layoutMyPaymentGateway.setVisibility(View.GONE);
                 }
             }
 
@@ -383,34 +386,31 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 case 0:
 
+                    paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
+                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+
+                    binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.VISIBLE);
+
                     if(isValidAssuredPurchase())
                     {
-                        if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
-                        {
-                            binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
-                        }
-
-                        else
-                        {
-                            binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
-                        }
-
-                        binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
+                        binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
                         binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
-                        binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
-                        binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Assured Purchase"));
 
-                        paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
+                        binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
+                        binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_methud_message));
+
                         toggleBottomSheet();
                     }
 
                     break;
 
-                case 1:
+                /*case 1:
 
                     if(isValidMyPayementGateway())
                     {
-                        binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
+                        //binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
                         binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.VISIBLE);
                         binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
                         binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
@@ -420,29 +420,40 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                         toggleBottomSheet();
                     }
 
+                    break;*/
+
+                case 1:
+
+                    paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
+                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
+                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+
+                    binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
+
+                    binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.GONE);
+                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.VISIBLE);
+
+                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[1]);
+
+                    toggleBottomSheet();
                     break;
 
                 case 2:
 
-                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.VISIBLE);
-                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Variant's unique payment URL"));
-
-                    paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
-                    toggleBottomSheet();
-                    break;
-
-                case 3:
-
-                    binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentMyPaymentGateway.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
-                    binding.layoutPaymentMethod.layoutPaymentDontWantToSell.setVisibility(View.VISIBLE);
-                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(String.valueOf("Don't want to sell online"));
-
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL;
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
+                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
+                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+
+                    binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
+
+                    binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
+                    binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
+
+                    binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[2]);
+                    binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_method_dont_want_to_sell));
+
                     toggleBottomSheet();
                     break;
             }
@@ -452,7 +463,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void addSwitchVariantListener()
     {
-        binding.switchVariants.setOnToggledListener((labeledSwitch, isOn) ->{
+        binding.switchVariants.setOnToggledListener((labeledSwitch, isOn) -> {
 
         });
     }
@@ -604,9 +615,204 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    private void addQuantityListener()
+    {
+        binding.layoutInventory.quantity.setText(String.valueOf(quantity));
+        binding.layoutInventoryOnline.quantity.setText(String.valueOf(onlineQuantity));
+        binding.layoutInventoryCod.quantity.setText(String.valueOf(codQuantity));
+
+        binding.layoutInventory.addQuantity.setOnClickListener(view -> {
+
+            try
+            {
+                quantity++;
+                binding.layoutInventory.quantity.setText(String.valueOf(quantity));
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        binding.layoutInventory.removeQuantity.setOnClickListener(view -> {
+
+            try
+            {
+                if(quantity > 0)
+                {
+                    quantity--;
+                }
+
+                binding.layoutInventory.quantity.setText(String.valueOf(quantity));
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        binding.layoutInventoryOnline.addQuantity.setOnClickListener(view -> {
+
+            try
+            {
+                onlineQuantity++;
+                binding.layoutInventoryOnline.quantity.setText(String.valueOf(onlineQuantity));
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        binding.layoutInventoryOnline.removeQuantity.setOnClickListener(view -> {
+
+            try
+            {
+                if(onlineQuantity > 0)
+                {
+                    onlineQuantity--;
+                }
+
+                binding.layoutInventoryOnline.quantity.setText(String.valueOf(onlineQuantity));
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        binding.layoutInventoryCod.addQuantity.setOnClickListener(view -> {
+
+            try
+            {
+                codQuantity++;
+                binding.layoutInventoryCod.quantity.setText(String.valueOf(codQuantity));
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        binding.layoutInventoryCod.removeQuantity.setOnClickListener(view -> {
+
+            try
+            {
+                if(codQuantity > 0)
+                {
+                    codQuantity--;
+                }
+
+                binding.layoutInventoryCod.quantity.setText(String.valueOf(codQuantity));
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+    }
+
+
     private void addSpinnerListener()
     {
-        binding.layoutInventory.spinnerStockAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+        String[] stockOptions = getResources().getStringArray(R.array.stock_options);
+        String[] stockAvailability = getResources().getStringArray(R.array.stock_availability);
+
+        ArrayAdapter<String> spinner1 = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, stockAvailability);
+        ArrayAdapter<String> spinner2 = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, stockOptions);
+
+        binding.layoutInventory.spinnerStockAvailability.setAdapter(spinner1);
+        binding.layoutInventoryOnline.spinnerStockAvailability.setAdapter(spinner2);
+        binding.layoutInventoryCod.spinnerStockAvailability.setAdapter(spinner2);
+
+        binding.layoutInventory.spinnerStockAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position)
+                {
+                    case 0:
+
+                        binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        break;
+
+                    case 1:
+
+                        binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        break;
+
+                    case 2:
+
+                        binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_unavailble_indicator));
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        binding.layoutInventoryOnline.spinnerStockAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position)
+                {
+                    case 0:
+
+                        binding.layoutInventoryOnline.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        break;
+
+                    case 1:
+
+                        binding.layoutInventoryOnline.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_unavailble_indicator));
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        binding.layoutInventoryCod.spinnerStockAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position)
+                {
+                    case 0:
+
+                        binding.layoutInventoryCod.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        break;
+
+                    case 1:
+
+                        binding.layoutInventoryCod.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_unavailble_indicator));
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        /*binding.layoutInventory.spinnerStockAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
 
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -624,23 +830,23 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 else
                 {
-                    binding.layoutInventory.spinnerStockAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
+                    //binding.layoutInventory.spinnerStockAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
 
-                    binding.layoutInventory.spinnerCodAvailability.setEnabled(false);
-                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setEnabled(false);
-                    binding.layoutInventory.editCodMaxQty.setEnabled(false);
-                    binding.layoutInventory.editPrepaidOnlineMaxQty.setEnabled(false);
+                    //binding.layoutInventory.spinnerCodAvailability.setEnabled(false);
+                    //binding.layoutInventory.spinnerPrepaidOnlineAvailability.setEnabled(false);
+                    //binding.layoutInventory.editCodMaxQty.setEnabled(false);
+                    //binding.layoutInventory.editPrepaidOnlineMaxQty.setEnabled(false);
 
-                    binding.layoutInventory.editAvailableQty.setEnabled(false);
+                    //binding.layoutInventory.editAvailableQty.setEnabled(false);
                 }
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
 
-        });
+        });*/
 
-        binding.layoutInventory.spinnerCodAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+        /*binding.layoutInventory.spinnerCodAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
 
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -679,7 +885,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             public void onNothingSelected(AdapterView<?> parent) {
             }
 
-        });
+        });*/
     }
 
     public String showCurrencyList(final String[] currencyList)
@@ -1319,30 +1525,30 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
             {
-                if(binding.layoutPaymentMethod.editWeight.getText().toString().trim().length() == 0)
+                if(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim().length() == 0)
                 {
-                    binding.layoutPaymentMethod.editWeight.requestFocus();
+                    binding.layoutShippingMatrixDetails.editWeight.requestFocus();
                     Toast.makeText(getContext(), "Enter product weight", Toast.LENGTH_LONG).show();
                     return false;
                 }
 
-                if(binding.layoutPaymentMethod.editLength.getText().toString().trim().length() == 0)
+                if(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim().length() == 0)
                 {
-                    binding.layoutPaymentMethod.editLength.requestFocus();
+                    binding.layoutShippingMatrixDetails.editLength.requestFocus();
                     Toast.makeText(getContext(), "Enter product length", Toast.LENGTH_LONG).show();
                     return false;
                 }
 
-                if(binding.layoutPaymentMethod.editHeight.getText().toString().trim().length() == 0)
+                if(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim().length() == 0)
                 {
-                    binding.layoutPaymentMethod.editHeight.requestFocus();
+                    binding.layoutShippingMatrixDetails.editHeight.requestFocus();
                     Toast.makeText(getContext(), "Enter product height", Toast.LENGTH_LONG).show();
                     return false;
                 }
 
-                if(binding.layoutPaymentMethod.editThickness.getText().toString().trim().length() == 0)
+                if(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim().length() == 0)
                 {
-                    binding.layoutPaymentMethod.editThickness.requestFocus();
+                    binding.layoutShippingMatrixDetails.editThickness.requestFocus();
                     Toast.makeText(getContext(), "Enter product thickness", Toast.LENGTH_LONG).show();
                     return false;
                 }
@@ -1391,10 +1597,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }*/
 
-        if(!isValidMyPayementGateway())
+        /*if(!isValidMyPayementGateway())
         {
             return false;
-        }
+        }*/
 
         if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
         {
@@ -1405,7 +1611,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 return false;
             }*/
 
-            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
+            /*if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
             {
                 if(binding.layoutInventory.editAvailableQty.getText().toString().trim().length() == 0)
                 {
@@ -1427,7 +1633,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     Toast.makeText(getContext(), "Enter max quantity", Toast.LENGTH_LONG).show();
                     return false;
                 }
-            }
+            }*/
         }
 
         /*if (productLink != null && productLink.getText().toString().trim().length() > 0)
@@ -1656,7 +1862,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    private boolean isValidMyPayementGateway()
+    /*private boolean isValidMyPayementGateway()
     {
         if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.MY_PAYMENT_GATEWAY))
         {
@@ -1669,7 +1875,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
 
         return true;
-    }
+    }*/
 
     private boolean isValidAssuredPurchase()
     {
@@ -1696,7 +1902,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 return false;
             }
 
-            if(!binding.layoutBottomSheet.checkPaymentConfiguration.isChecked())
+            if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() ==  View.VISIBLE && !binding.layoutBottomSheet.checkPaymentConfiguration.isChecked())
             {
                 Toast.makeText(getContext(), "Please allow payment and delivery agreement", Toast.LENGTH_LONG).show();
                 return false;

@@ -408,6 +408,13 @@
                     layout="@layout/layout_variants_info" />
 
                 <include
+                    android:id="@+id/layout_inventory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    layout="@layout/layout_inventory" />
+
+                <include
                     android:id="@+id/layout_payment_method"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -415,11 +422,34 @@
                     layout="@layout/layout_payment_methods" />
 
                 <include
+                    android:id="@+id/layout_shipping_matrix_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    layout="@layout/layout_shipping_matrix_details" />
+
+                <include
+                    android:id="@+id/layout_inventory_cod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    layout="@layout/layout_inventory" />
+
+                <include
+                    android:id="@+id/layout_inventory_online"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    layout="@layout/layout_inventory" />
+
+                <!--
+                <include
                     android:id="@+id/layout_inventory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_20"
                     layout="@layout/layout_product_inventory" />
+                -->
 
             </LinearLayout>
 

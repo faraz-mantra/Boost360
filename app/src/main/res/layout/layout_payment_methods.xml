@@ -42,7 +42,7 @@
                     android:background="@drawable/grey_rounded_spinner_background"
                     android:text="Assured Purchase™" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/layout_payment_assured_purchase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,14 +94,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability__"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -163,14 +163,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -239,14 +239,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability______"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -308,14 +308,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability___"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options"/>
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -338,21 +338,18 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
-                    android:id="@+id/layout_payment_my_payment_gateway"
+                    android:id="@+id/tv_payment_configuration_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Paypal account configured"
-                    android:drawableLeft="@drawable/ic_check_circle_green"
+                    android:text="Payment Configuration Message"
                     android:drawablePadding="5dp"
-                    android:textSize="16sp"
-                    android:padding="20dp"
+                    android:textSize="14sp"
+                    android:padding="16dp"
                     android:visibility="gone"
                     android:textColor="@color/secondaryTextColor" />
-
-            <!--<include layout="@layout/layout_shipping_matrix_details" />-->
 
                 <LinearLayout
                     android:id="@+id/layout_payment_external_purchase_url"
@@ -388,6 +385,7 @@
 
                 </LinearLayout>
 
+                <!--
                 <TextView
                     android:id="@+id/layout_payment_dont_want_to_sell"
                     android:layout_width="match_parent"
@@ -397,6 +395,7 @@
                     android:padding="20dp"
                     android:visibility="gone"
                     android:textColor="@color/secondaryTextColor" />
+                -->
 
         </LinearLayout>
 

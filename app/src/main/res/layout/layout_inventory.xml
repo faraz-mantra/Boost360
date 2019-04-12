@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        android:id="@+id/layout_inventory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/margin_10"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <LinearLayout
+                android:id="@+id/layout_product_inventory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/label_inventory_hint"
+                    style="@style/ProductLabelTextStyle"
+                    android:text="Inventory Availability"/>
+
+                <ImageButton
+                    android:id="@+id/ib_info_product_image"
+                    style="@style/ProductHelpButtonStyle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_spinner_stock_availability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_rectangle_background"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/margin_5"
+                android:padding="1dp">
+
+                <ImageView
+                    android:id="@+id/iv_stock_indicator"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_availble_indicator"/>
+
+                <Spinner
+                    android:id="@+id/spinner_stock_availability"
+                    style="@style/ProductSpinnerStyle"
+                    android:entries="@array/stock_availability" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/margin_10"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <TextView
+                android:id="@+id/label_inventory_quantity_hint"
+                style="@style/ProductLabelTextStyle"
+                android:paddingTop="3dp"
+                android:paddingBottom="5dp"
+                android:text="Available Quantity"/>
+
+            <LinearLayout
+                android:id="@+id/layout_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/margin_5"
+                android:background="@drawable/white_rectangle_background"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/remove_quantity"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/quantity_button_remove"
+                    android:contentDescription="@null"
+                    android:onClick="onClick"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_quantity_remove" />
+
+                <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="0"
+                    android:textColor="#4a4a4a"
+                    android:textSize="14sp" />
+
+
+                <!--
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"/>
+                -->
+
+                <ImageButton
+                    android:id="@+id/add_quantity"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/quantity_button_add"
+                    android:contentDescription="@null"
+                    android:onClick="onClick"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_quantity_add" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
