@@ -50,7 +50,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             viewHolder.tvName.setText(model.Name);
             viewHolder.tvDescription.setText(model.Description);
 
-            if (model.Price != null)
+            /*if (model.Price != null)
             {
                 try
                 {
@@ -67,6 +67,17 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             else
             {
                 viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " 0.00"));
+            }*/
+
+            try
+            {
+                String formattedPrice = Helper.getCurrencyFormatter().format(model.Price);
+                viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
             }
 
             viewHolder.tvDiscountedPrice.setPaintFlags(viewHolder.tvDiscountedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

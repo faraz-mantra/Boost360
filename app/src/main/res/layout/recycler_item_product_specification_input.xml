@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/margin_5"
-    android:layout_marginBottom="@dimen/margin_5"
-    android:orientation="horizontal">
+<layout>
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/white_rectangle_background"
-        android:orientation="horizontal" >
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editKey"
-            style="@style/ProductEditTextStyle"
-            android:background="@null"
-            android:layout_width="150dp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/white_rectangle_background"
+            android:orientation="horizontal" >
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/secondaryLightTextColor"/>
+            <EditText
+                android:id="@+id/editKey"
+                style="@style/ProductEditTextStyle"
+                android:background="@null"
+                android:layout_width="150dp" />
 
-        <EditText
-            android:id="@+id/editValue"
-            style="@style/ProductEditTextStyle"
-            android:background="@null" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/secondaryLightTextColor"/>
+
+            <EditText
+                android:id="@+id/editValue"
+                style="@style/ProductEditTextStyle"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ib_remove"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@android:color/transparent"
+            android:layout_gravity="end|center"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/margin_10"
+            app:srcCompat="@drawable/ic_cancel" />
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/ib_remove"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@android:color/transparent"
-        android:layout_gravity="end|center"
-        android:visibility="gone"
-        android:layout_marginLeft="@dimen/margin_10"
-        app:srcCompat="@drawable/ic_cancel" />
-
-</LinearLayout>
+</layout>

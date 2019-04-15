@@ -2,27 +2,42 @@ package com.nowfloats.Product_Gallery.Model;
 
 import android.net.Uri;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Product implements Serializable {
 
-    public String BuyOnlineLink;
+    //public String BuyOnlineLink;
+    @SerializedName(value="currencyCode", alternate={"CurrencyCode"})
     public String CurrencyCode;
+    @SerializedName(value="description", alternate={"Description"})
     public String Description;
-    public String DiscountAmount;
+    @SerializedName(value="discountAmount", alternate={"DiscountAmount"})
+    public double DiscountAmount;
     public String ExternalSourceId;
     public String IsArchived;
-    public String IsAvailable;
+    @SerializedName(value="isAvailable", alternate={"IsAvailable"})
+    public boolean IsAvailable;
+    @SerializedName(value="isFreeShipmentAvailable", alternate={"IsFreeShipmentAvailable"})
     public String IsFreeShipmentAvailable;
+    @SerializedName(value="name", alternate={"Name"})
     public String Name;
-    public String Price;
+    @SerializedName(value="price", alternate={"Price"})
+    public double Price;
+    @SerializedName(value="priority", alternate={"Priority"})
     public String Priority;
     public String ShipmentDuration;
     public int availableUnits;
     public ArrayList<String> _keywords;
     public String ApplicationId;
+    @SerializedName(value="fPTag", alternate={"TPTag"})
     public String FPTag;
+    @SerializedName(value="clientId", alternate={"ClientId"})
+    public String ClientId;
+
     public String ImageUri;
     public String ProductUrl;
     public ArrayList<ImageListModel> Images;
@@ -36,4 +51,25 @@ public class Product implements Serializable {
     public Uri picimageURI =null;
     public String UpdatedOn;
     public boolean isProductSelected;
+
+    public String productType;
+    public boolean variants;
+    public String brandName;
+
+    public BuyOnlineLink BuyOnlineLink;
+    public Specification keySpecification;
+    public List<Specification> otherSpecification;
+
+
+    public static class BuyOnlineLink implements Serializable
+    {
+        public String url;
+        public String description;
+    }
+
+    public static class Specification implements Serializable
+    {
+        public String key;
+        public String value;
+    }
 }

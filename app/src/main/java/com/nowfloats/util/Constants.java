@@ -433,10 +433,10 @@ public class Constants {
         }
     }
 
-    public enum Type
+    /*public enum Type
     {
         PRODUCT, SERVICE
-    }
+    }*/
 
     public enum PaymentAndDeliveryMode
     {
@@ -561,4 +561,11 @@ public class Constants {
             return this.value;
         }
     }
+
+
+    /**
+     * Dev Adapter
+     */
+    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint("http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/").setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+
 }

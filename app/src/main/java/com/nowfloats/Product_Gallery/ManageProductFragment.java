@@ -40,8 +40,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.UploadImage;
 import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
@@ -54,6 +56,9 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,6 +77,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private String currencyValue;
     private String currencyType = "";
+    private String productType = "";
 
     private List<Product.Property> propertyList = new ArrayList<>();
     private List<Product.Image> imageList = new ArrayList<>();
@@ -92,7 +98,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private MaterialDialog materialDialog;
 
 
-    private HashMap<String, String> values;
+    //private HashMap<String, String> values;
     private Constants.PaymentAndDeliveryMode paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
 
     private com.nowfloats.Product_Gallery.Model.Product product;
@@ -105,13 +111,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private String[] paymentOptionTitles;
 
 
-    public static ManageProductFragment newInstance(Constants.Type category, String type, com.nowfloats.Product_Gallery.Model.Product product)
+    public static ManageProductFragment newInstance(String productType, String category, com.nowfloats.Product_Gallery.Model.Product product)
     {
         ManageProductFragment fragment = new ManageProductFragment();
 
         Bundle args = new Bundle();
-        args.putString("CATEGORY", category.name());
-        args.putString("TYPE", type);
+        args.putString("CATEGORY", category);
+        args.putString("PRODUCT_TYPE", productType);
         args.putSerializable("PRODUCT", product);
         fragment.setArguments(args);
 
@@ -150,21 +156,35 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         session = new UserSessionManager(getContext(), getActivity());
 
-        initProductSpecificationRecyclerView(binding.layoutVariants.productSpecificationList);
+        initProductSpecificationRecyclerView(binding.layoutProductSpecification.productSpecificationList);
         initProductImageRecyclerView(binding.productImageList);
         initProductPickupAddressRecyclerView(binding.layoutBottomSheetAddress.pickupAddressList);
+
+
+        addSpinnerListener();
 
         Bundle bundle = getArguments();
 
         if(bundle != null)
         {
-            CATEGORY = bundle.getString("CATEGORY");
             this.product = (com.nowfloats.Product_Gallery.Model.Product) bundle.getSerializable("PRODUCT");
 
-            String type = bundle.getString("TYPE");
-            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + type));
+            if(product == null)
+            {
+                product = new com.nowfloats.Product_Gallery.Model.Product();
+            }
 
-            if(CATEGORY.equals(Constants.Type.SERVICE.name()))
+            else
+            {
+                setData();
+            }
+
+            CATEGORY = bundle.getString("CATEGORY");
+            productType = bundle.getString("PRODUCT_TYPE");
+
+            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + CATEGORY));
+
+            if(CATEGORY.equalsIgnoreCase("products"))
             {
                 //binding.layoutInventory.layoutInventoryRoot.setVisibility(View.GONE);
                 //binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
@@ -185,7 +205,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         initCurrencyList();
         addPropertyListener();
-        addSpinnerListener();
         addQuantityListener();
         addSwitchVariantListener();
         addImagePickerListener();
@@ -225,10 +244,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         binding.btnPublish.setOnClickListener(view -> {
 
-            if(product == null)
-            {
-                addProduct();
-            }
+            addProduct();
         });
 
 
@@ -236,6 +252,93 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutBottomSheet.tvPaymentConfigurationAcceptanceMessage.setText(String.format(String.valueOf(getString(R.string.payment_config_acceptance_message)), transactionFees));
     }
 
+
+    private void setData()
+    {
+        if(product == null)
+        {
+            return;
+        }
+
+        if(product.brandName != null)
+        {
+            binding.editBrand.setText(product.brandName);
+        }
+
+        if(product.Name != null)
+        {
+            binding.editProductName.setText(product.Name);
+        }
+
+        if(product.Description != null)
+        {
+            binding.editProductDescription.setText(product.Description);
+        }
+
+        if(product.Price != 0)
+        {
+            binding.editBasePrice.setText(String.valueOf(product.Price));
+        }
+
+        if(product.DiscountAmount != 0)
+        {
+            binding.editBasePrice.setText(String.valueOf(product.DiscountAmount));
+        }
+
+        if(!product.IsAvailable)
+        {
+            binding.layoutInventory.spinnerStockAvailability.setSelection(2);
+        }
+
+        else if(product.availableUnits > 0)
+        {
+            binding.layoutInventory.spinnerStockAvailability.setSelection(0);
+        }
+
+        else
+        {
+            binding.layoutInventory.spinnerStockAvailability.setSelection(1);
+        }
+
+        if(product.keySpecification != null)
+        {
+            if(product.keySpecification.key != null)
+            {
+                binding.layoutProductSpecification.layoutKeySpecification.editKey.setText(product.keySpecification.key);
+            }
+
+            if(product.keySpecification.value != null)
+            {
+                binding.layoutProductSpecification.layoutKeySpecification.editValue.setText(product.keySpecification.value);
+            }
+        }
+
+        if(product.otherSpecification != null)
+        {
+
+        }
+    }
+
+
+    /*private String replaceZero(double value)
+    {
+        if(value == 0)
+        {
+            return "";
+        }
+
+        return String.valueOf(value);
+    }
+
+    private String replaceNull(String value)
+    {
+        if(value == null)
+        {
+            return "";
+        }
+
+        return value;
+    }*/
 
     private void addTextChangeListener()
     {
@@ -311,7 +414,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         String category;
 
-        if(CATEGORY.equals(Constants.Type.SERVICE.name()))
+        if(CATEGORY.equalsIgnoreCase("services"))
         {
             category = "Service";
         }
@@ -339,7 +442,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         propertyList.add(new Product().new Property("Key 2", "Value 2"));
         propertyList.add(new Product().new Property("Key 3", "Value 3"));
 
-        binding.layoutVariants.buttonAddProperty.setOnClickListener(view -> {
+        binding.layoutProductSpecification.buttonAddProperty.setOnClickListener(view -> {
 
             propertyList.add(new Product().new Property());
             adapter.notifyItemInserted(propertyList.size());
@@ -962,7 +1065,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         @Override
         public int getItemCount()
         {
-            return propertyList.size();
+            return product.otherSpecification == null ? 0 : product.otherSpecification.size();
         }
 
 
@@ -1400,12 +1503,28 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-
     private boolean isValid(boolean keyCheck) {
 
-        String desc = "description", disc = "discountAmount", link = "buyOnlineLink", name = "name",
-                price = "price", currency = "currencyCode", avail = "isAvailable", ship = "shipmentDuration",
-                freeShipment = "isFreeShipmentAvailable", priority = "priority", availableUnits = "availableUnits";
+        /*String name = "name";
+        String desc = "description";
+        String currency = "currencyCode";
+        String price = "price";
+        String disc = "discountAmount";
+        String ship = "shipmentDuration";
+        String priority = "priority";
+        String availableUnits = "availableUnits";
+        String freeShipment = "isFreeShipmentAvailable";
+        String avail = "isAvailable";
+        String link = "buyOnlineLink";
+        String brand = "brandName";
+        String category = "category";
+        String variants = "variants";
+        String keySpecification = "keySpecification";
+        String otherSpecifications = "otherSpecifications";
+        String paymentType = "paymentType";
+        String productType = "productType";
+        String pickupAddressId = "pickupAddressReferenceId";
+
 
         if (keyCheck)
         {
@@ -1418,9 +1537,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             avail = "ISAVAIALABLE";
             ship = ship.toUpperCase();
             freeShipment = "FREESHIPMENT";
-        }
+        }*/
 
         double product_price = 0, product_discount = 0;
+
+        /*if(product == null)
+        {
+            product = new com.nowfloats.Product_Gallery.Model.Product();
+        }*/
 
         //values.put(avail, switchValue);
 
@@ -1436,7 +1560,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         try
         {
-            values.put(currency, binding.editCurrency.getText().toString());
+            //values.put(currency, binding.editCurrency.getText().toString());
+            product.CurrencyCode = binding.editCurrency.getText().toString();
         }
 
         catch (Exception e)
@@ -1446,7 +1571,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         if (binding.editProductName.getText().toString().trim().length() > 0)
         {
-            values.put(name, binding.editProductName.getText().toString().trim());
+            //values.put(name, binding.editProductName.getText().toString());
+            product.Name = binding.editProductName.getText().toString();
         }
 
         else
@@ -1460,7 +1586,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         if (binding.editProductDescription.getText().toString().trim().length() > 0)
         {
-            values.put(desc, binding.editProductDescription.getText().toString().trim());
+            //values.put(desc, binding.editProductDescription.getText().toString());
+            product.Description = binding.editProductDescription.getText().toString();
         }
 
         else
@@ -1499,7 +1626,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
-        values.put(price, String.valueOf(product_price));
+        //values.put(price, String.valueOf(product_price));
+        product.Price = product_price;
 
         if (binding.editDiscount.getText().toString().trim().length() > 0)
         {
@@ -1518,10 +1646,22 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
-        values.put(disc, String.valueOf(product_discount));
+        //values.put(disc, String.valueOf(product_discount));
+        product.DiscountAmount = product_discount;
+
+        if(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString().trim().length() != 0 && binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString().trim().length() != 0)
+        {
+            if(product.keySpecification == null)
+            {
+                product.keySpecification = new com.nowfloats.Product_Gallery.Model.Product.Specification();
+            }
+
+            product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
+            product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
+        }
 
 
-        if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE))
+        /*if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE))
         {
             if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
             {
@@ -1557,7 +1697,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             if(!isValidAssuredPurchase())
             {
                 return false;
-            }
+            }*/
 
             /*if(binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0)
             {
@@ -1585,7 +1725,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 Toast.makeText(getContext(), "Please allow payment and delivery agreement", Toast.LENGTH_LONG).show();
                 return false;
             }*/
-        }
+        //}
 
         /*if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.MY_PAYMENT_GATEWAY))
         {
@@ -1602,7 +1742,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             return false;
         }*/
 
-        if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
+        if(CATEGORY.equalsIgnoreCase("products"))
         {
             /*if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
             {
@@ -1731,7 +1871,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }*/
 
-        System.out.println(values);
+        //System.out.println(values);
         return true;
     }
 
@@ -1766,26 +1906,37 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void addProduct()
     {
-        ProductGalleryInterface productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
+        ProductGalleryInterface productInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
 
         try
         {
-            values = new HashMap<>();
+            //values = new HashMap<>();
+            //values.put("clientId", Constants.clientId);
+            //values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
 
-            values.put("clientId", Constants.clientId);
-            values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
+            Log.d("PRODUCT_JSON", "OUTSIDE");
 
             if (isValid(false))
             {
-                showDialog("Adding product ...");
+                product.ClientId = Constants.clientId;
+                product.FPTag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
+                product.productType = "products";
 
-                productInterface.addProduct(values, new Callback<String>() {
+                Log.d("PRODUCT_JSON", "INSIDE");
+
+                Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
+
+                //showDialog("Adding product ...");
+
+
+
+                productInterface.addProduct(product, new Callback<String>() {
 
                     @Override
                     public void success(String productId, Response response) {
 
-                        Log.d("PRODUCT_RESPONSE", "" + productId);
-                        uploadProductImage(productId);
+                        Log.d("PRODUCT_JSON", "" + productId);
+                        //uploadProductImage(productId);
                     }
 
                     @Override
@@ -1793,7 +1944,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         hideDialog();
                         Toast.makeText(getContext(), "Failed to add product", Toast.LENGTH_LONG).show();
-                        Log.d("PRODUCT_RESPONSE", "FAIL");
+                        Log.d("PRODUCT_JSON", "FAIL");
                     }
                 });
             }

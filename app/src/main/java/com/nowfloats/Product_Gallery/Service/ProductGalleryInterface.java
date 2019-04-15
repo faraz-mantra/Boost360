@@ -41,6 +41,9 @@ public interface ProductGalleryInterface {
     @POST("/Product/v1/Create")
     public void addProduct(@Body HashMap<String,String> map, Callback<String> callback);
 
+    @Headers({"Content-Type: application/json"})
+    @POST("/Product/v1/Create")
+    public void addProduct(@Body Product product, Callback<String> callback);
 
     @PUT("/Product/v1/Update")
     void put_UpdateGalleryUpdate(@Body Product_Gallery_Update_Model model,Callback<ArrayList<String>> callback);

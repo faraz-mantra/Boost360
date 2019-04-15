@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerItemCategoryAdapter;
 import com.nowfloats.Product_Gallery.Model.Product;
-import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
@@ -22,7 +21,9 @@ import com.thinksity.databinding.FragmentProductCategoryBinding;
 
 public class ProductCategoryFragment extends Fragment {
 
-    private Constants.Type type;
+    //private Constants.Type type;
+
+    private String productType;
     private UserSessionManager session;
     private Product product;
 
@@ -73,9 +74,9 @@ public class ProductCategoryFragment extends Fragment {
         ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing an item"));
 
         session = new UserSessionManager(getContext(), getActivity());
-        setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+        productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
 
-        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(type, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
+        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
 
         binding.editCategory.addTextChangedListener(new TextWatcher() {
 
@@ -107,25 +108,25 @@ public class ProductCategoryFragment extends Fragment {
         });
     }
 
-    private void setProductCategory(String category) {
+    private String setProductType(String productType) {
 
-        if(category.equalsIgnoreCase("products"))
+        if(productType.equalsIgnoreCase("products"))
         {
             binding.layoutPhysicalProduct.setVisibility(View.VISIBLE);
             binding.layoutServiceOffering.setVisibility(View.GONE);
             binding.layoutCustomProduct.setVisibility(View.GONE);
 
-            type = Constants.Type.PRODUCT;
+            //type = Constants.Type.PRODUCT;
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
         }
 
-        else if(category.equalsIgnoreCase("services"))
+        else if(productType.equalsIgnoreCase("services"))
         {
             binding.layoutPhysicalProduct.setVisibility(View.GONE);
             binding.layoutServiceOffering.setVisibility(View.VISIBLE);
             binding.layoutCustomProduct.setVisibility(View.GONE);
 
-            type = Constants.Type.SERVICE;
+            //type = Constants.Type.SERVICE;
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
         }
 
@@ -147,13 +148,13 @@ public class ProductCategoryFragment extends Fragment {
                     {
                         case 0:
 
-                            type = Constants.Type.PRODUCT;
+                            //type = Constants.Type.PRODUCT;
                             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
                             break;
 
                         case 1:
 
-                            type = Constants.Type.SERVICE;
+                            //type = Constants.Type.SERVICE;
                             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
                             break;
                     }
@@ -165,5 +166,7 @@ public class ProductCategoryFragment extends Fragment {
                 }
             });
         }
+
+        return productType;
     }
 }

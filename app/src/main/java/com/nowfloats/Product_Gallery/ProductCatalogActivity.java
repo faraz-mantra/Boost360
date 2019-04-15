@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,7 +77,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
         values.put("skipBy", skip);
         values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
 
-        ProductGalleryInterface galleryInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
+        ProductGalleryInterface galleryInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
 
         binding.pbLoading.setVisibility(View.VISIBLE);
 
@@ -110,6 +111,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
 
+                Log.d("PRODUCT_ERROR", "" + error.getBody());
                 isLoading = false;
 
                 binding.pbLoading.setVisibility(View.GONE);

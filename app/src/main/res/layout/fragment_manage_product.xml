@@ -404,7 +404,7 @@
                 </LinearLayout>
 
                 <include
-                    android:id="@+id/layout_variants"
+                    android:id="@+id/layout_product_specification"
                     layout="@layout/layout_variants_info" />
 
                 <include
