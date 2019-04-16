@@ -67,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:id="@+id/layout_quantity_main"
             android:layout_marginLeft="@dimen/margin_10"
             xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -96,7 +97,7 @@
                     app:srcCompat="@drawable/ic_quantity_remove" />
 
                 <TextView
-                    android:id="@+id/quantity"
+                    android:id="@+id/quantity_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

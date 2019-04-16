@@ -53,8 +53,19 @@ public class Product implements Serializable {
     public boolean isProductSelected;
 
     public String productType;
+    public String paymentType;
     public boolean variants;
     public String brandName;
+    public String category;
+
+    @SerializedName("isCodAvailable")
+    public boolean codAvailable;
+    @SerializedName("maxCodOrders")
+    public int maxCodOrders;
+    @SerializedName("isPrepaidOnlineAvailable")
+    public boolean prepaidOnlineAvailable;
+    @SerializedName("maxPrepaidOnlineOrders")
+    public int maxPrepaidOnlineAvailable;
 
     public BuyOnlineLink BuyOnlineLink;
     public Specification keySpecification;

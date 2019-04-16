@@ -1,5 +1,6 @@
 package com.nowfloats.Product_Gallery.Service;
 
+import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
 import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
@@ -76,6 +77,10 @@ public interface ProductGalleryInterface {
     @Headers({"Authorization: " + Constants.WA_KEY})
     void addProductMetrics(@Body WAAddDataModel<ShippingMetricsModel> updateDataModel, Callback<String> callback);
 
+    @POST("/product_details3/add-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void addAssuredPurchase(@Body WAAddDataModel<AssuredPurchase> updateDataModel, Callback<String> callback);
+
     @GET("/merchant_profile3/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getMerchantProfileData(@Query("query") String query, Callback<WebActionModel<MerchantProfileModel>> callback);
@@ -86,10 +91,23 @@ public interface ProductGalleryInterface {
 
 
     /**
+     * Dev Endpoint Need to be replace
+     */
+
+    /**
      * New
      * @param map
      * @param callback
      */
     @GET("/Product/v1/GetListings")
     void getAllProducts(@QueryMap Map<String, String> map, Callback<List<Product>> callback);
+
+
+    @POST("/product_details/add-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void addAssuredPurchaseDetails(@Body WAAddDataModel<AssuredPurchase> updateDataModel, Callback<String> callback);
+
+    @GET("/product_details/get-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getAssuredPurchaseDetails(@Query("query") String query, Callback<WebActionModel<AssuredPurchase>> callback);
 }

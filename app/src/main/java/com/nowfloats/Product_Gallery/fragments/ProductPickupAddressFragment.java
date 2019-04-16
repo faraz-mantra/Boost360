@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nowfloats.Product_Gallery.Model.AddressInformation;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -32,6 +33,9 @@ public class ProductPickupAddressFragment extends DialogFragment {
     private EditText editBuildingName;
     private EditText editCity;
     private EditText editState;
+
+    private OnSaveAddress listener;
+    private AddressInformation address;
 
     public static ProductPickupAddressFragment newInstance() {
 
@@ -98,6 +102,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
             if(isValid())
             {
+                listener.onSave(initAddressInformation());
                 dismiss();
             }
         });
@@ -106,12 +111,30 @@ public class ProductPickupAddressFragment extends DialogFragment {
     }
 
 
-    private boolean isValid()
+    private AddressInformation initAddressInformation()
+    {
+        if(address == null)
+        {
+            address = new AddressInformation();
+        }
+
+        address.areaName = editWarehouseName.getText().toString();
+        address.contactNumber = editContactNumber.getText().toString();
+        address.streetAddress = editBuildingName.getText().toString();
+        address.city = editCity.getText().toString();
+        address.state = editState.getText().toString();
+        address.country = editCountry.getText().toString();
+
+        return address;
+    }
+
+
+    public boolean isValid()
     {
         if(editWarehouseName.getText().toString().trim().length() == 0)
         {
             editWarehouseName.requestFocus();
-            Toast.makeText(getContext(), "Enter warehouse details", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Enter warehouse name", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -150,7 +173,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
             return false;
         }
 
-        return false;
+        return true;
     }
 
 
@@ -233,5 +256,15 @@ public class ProductPickupAddressFragment extends DialogFragment {
         });
 
         dialog.setCancelable(false);
+    }
+
+    public void setOnClickListener(OnSaveAddress listener)
+    {
+        this.listener = listener;
+    }
+
+    public interface OnSaveAddress
+    {
+        void onSave(AddressInformation addressInformation);
     }
 }

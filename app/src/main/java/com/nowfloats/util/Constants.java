@@ -440,8 +440,26 @@ public class Constants {
 
     public enum PaymentAndDeliveryMode
     {
-        ASSURED_PURCHASE, MY_PAYMENT_GATEWAY, UNIQUE_PAYMENT_URL, DONT_WANT_TO_SELL
+        ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
+
+        private String value;
+
+        PaymentAndDeliveryMode(String value)
+        {
+            this.value = value;
+        }
+
+        public String getValue()
+        {
+            return this.value;
+        }
+
+        public void setValue(String value)
+        {
+            this.value = value;
+        }
     }
+
 
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;

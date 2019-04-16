@@ -50,6 +50,35 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             viewHolder.tvName.setText(model.Name);
             viewHolder.tvDescription.setText(model.Description);
 
+            String category = model.category == null ? "" : model.category;
+            String brand = model.brandName == null ? "" : model.brandName;
+
+            viewHolder.tvBrand.setVisibility(View.VISIBLE);
+            viewHolder.tvMissiongInfo.setVisibility(View.GONE);
+
+            if(!category.isEmpty() && !brand.isEmpty())
+            {
+                String value = category.concat(" by ").concat(brand);
+                viewHolder.tvBrand.setText(value);
+            }
+
+            else if(!category.isEmpty())
+            {
+                viewHolder.tvBrand.setText(category);
+            }
+
+            else if(!brand.isEmpty())
+            {
+                viewHolder.tvBrand.setText(brand);
+            }
+
+            else
+            {
+                viewHolder.tvBrand.setVisibility(View.GONE);
+                viewHolder.tvMissiongInfo.setVisibility(View.VISIBLE);
+            }
+
+
             /*if (model.Price != null)
             {
                 try
@@ -117,6 +146,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         private TextView tvDescription;
         private TextView tvPrice;
         private TextView tvDiscountedPrice;
+        private TextView tvMissiongInfo;
 
         private ProductListViewHolder(View itemView)
         {
@@ -129,6 +159,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             tvDescription = itemView.findViewById(R.id.label_description);
             tvPrice = itemView.findViewById(R.id.label_price);
             tvDiscountedPrice = itemView.findViewById(R.id.label_discounted_price);
+            tvMissiongInfo = itemView.findViewById(R.id.label_missing_info);
         }
 
         @Override

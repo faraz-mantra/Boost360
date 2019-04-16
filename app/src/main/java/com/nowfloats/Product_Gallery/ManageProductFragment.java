@@ -43,12 +43,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
-import com.nowfloats.Product_Gallery.Model.Product;
+import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
+import com.nowfloats.Product_Gallery.Model.BankInformation;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.UploadImage;
 import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
 import com.nowfloats.helper.Helper;
 import com.nowfloats.helper.ui.ImageLoader;
+import com.nowfloats.manageinventory.models.WAAddDataModel;
+import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -57,13 +60,9 @@ import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Callback;
@@ -97,17 +96,17 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private UserSessionManager session;
     private MaterialDialog materialDialog;
 
-
-    //private HashMap<String, String> values;
     private Constants.PaymentAndDeliveryMode paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
 
     private com.nowfloats.Product_Gallery.Model.Product product;
+    private AssuredPurchase assuredPurchase;
+    private BankInformation bankInformation;
 
     private BottomSheetBehavior sheetBehavior;
     private BottomSheetBehavior sheetBehaviorAddress;
 
     private ProductPickupAddressFragment pickupAddressFragment;
-    private int quantity = 1, onlineQuantity, codQuantity;
+    //private int quantity = 1, onlineQuantity, codQuantity;
     private String[] paymentOptionTitles;
 
 
@@ -176,7 +175,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             else
             {
-                setData();
+                setProductData();
+                getAssuredPurchase(product._id);
             }
 
             CATEGORY = bundle.getString("CATEGORY");
@@ -242,49 +242,36 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutInventoryCod.labelInventoryHint.setText(String.valueOf("Accept COD payment"));
         binding.layoutInventoryCod.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
 
-        binding.btnPublish.setOnClickListener(view -> {
-
-            addProduct();
-        });
-
+        binding.btnPublish.setOnClickListener(view -> saveProduct());
 
         String transactionFees = getTransactionFees();
         binding.layoutBottomSheet.tvPaymentConfigurationAcceptanceMessage.setText(String.format(String.valueOf(getString(R.string.payment_config_acceptance_message)), transactionFees));
     }
 
 
-    private void setData()
+    private void setProductData()
     {
         if(product == null)
         {
             return;
         }
 
-        if(product.brandName != null)
-        {
-            binding.editBrand.setText(product.brandName);
-        }
+        binding.editBrand.setText(product.brandName != null ? product.brandName : "");
+        binding.editProductName.setText(product.Name != null ? product.Name : "");
+        binding.editProductDescription.setText(product.Description != null ? product.Description : "");
 
-        if(product.Name != null)
-        {
-            binding.editProductName.setText(product.Name);
-        }
+        binding.editBasePrice.setText(product.Price > 0 ? String.valueOf(product.Price) : "");
+        binding.editDiscount.setText(product.DiscountAmount > 0 ? String.valueOf(product.DiscountAmount) : "");
 
-        if(product.Description != null)
-        {
-            binding.editProductDescription.setText(product.Description);
-        }
+        this.setFinalPrice();
 
-        if(product.Price != 0)
-        {
-            binding.editBasePrice.setText(String.valueOf(product.Price));
-        }
+        //this.quantity = product.availableUnits;
+        //this.codQuantity = product.maxCodOrders;
+        //this.onlineQuantity = product.maxPrepaidOnlineAvailable;
 
-        if(product.DiscountAmount != 0)
-        {
-            binding.editBasePrice.setText(String.valueOf(product.DiscountAmount));
-        }
-
+        /**
+         * Product availability and quantity
+         */
         if(!product.IsAvailable)
         {
             binding.layoutInventory.spinnerStockAvailability.setSelection(2);
@@ -293,6 +280,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         else if(product.availableUnits > 0)
         {
             binding.layoutInventory.spinnerStockAvailability.setSelection(0);
+            binding.layoutInventory.quantityValue.setText(String.valueOf(product.availableUnits));
         }
 
         else
@@ -300,45 +288,65 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             binding.layoutInventory.spinnerStockAvailability.setSelection(1);
         }
 
+
+        /**
+         * COD product availability and quantity
+         */
+        if(product.codAvailable)
+        {
+            binding.layoutInventoryCod.spinnerStockAvailability.setSelection(0);
+        }
+
+        else
+        {
+            binding.layoutInventoryCod.spinnerStockAvailability.setSelection(1);
+            binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.codAvailable));
+        }
+
+        /**
+         * Prepaid product availability and quantity
+         */
+        if(product.prepaidOnlineAvailable)
+        {
+            binding.layoutInventoryOnline.spinnerStockAvailability.setSelection(0);
+        }
+
+        else
+        {
+            binding.layoutInventoryOnline.spinnerStockAvailability.setSelection(1);
+            binding.layoutInventoryOnline.quantityValue.setText(String.valueOf(product.maxPrepaidOnlineAvailable));
+        }
+
         if(product.keySpecification != null)
         {
-            if(product.keySpecification.key != null)
-            {
-                binding.layoutProductSpecification.layoutKeySpecification.editKey.setText(product.keySpecification.key);
-            }
-
-            if(product.keySpecification.value != null)
-            {
-                binding.layoutProductSpecification.layoutKeySpecification.editValue.setText(product.keySpecification.value);
-            }
+            binding.layoutProductSpecification.layoutKeySpecification.editKey.setText(product.keySpecification.key != null ? product.keySpecification.key : "");
+            binding.layoutProductSpecification.layoutKeySpecification.editValue.setText(product.keySpecification.value != null ? product.keySpecification.value : "");
         }
 
         if(product.otherSpecification != null)
         {
 
         }
+
+        if(product.paymentType != null)
+        {
+            paymentAndDeliveryMode.setValue(product.paymentType);
+        }
     }
 
-
-    /*private String replaceZero(double value)
+    private void setAssuredPurchaseData()
     {
-        if(value == 0)
+        if(assuredPurchase == null)
         {
-            return "";
+            return;
         }
 
-        return String.valueOf(value);
+        binding.layoutShippingMatrixDetails.editHeight.setText(assuredPurchase.height > 0 ? String.valueOf(assuredPurchase.height) : "");
+        binding.layoutShippingMatrixDetails.editWeight.setText(assuredPurchase.weight > 0 ? String.valueOf(assuredPurchase.weight) : "");
+        binding.layoutShippingMatrixDetails.editLength.setText(assuredPurchase.length > 0 ? String.valueOf(assuredPurchase.length) : "");
+        binding.layoutShippingMatrixDetails.editThickness.setText(assuredPurchase.width > 0 ? String.valueOf(assuredPurchase.width) : "");
     }
 
-    private String replaceNull(String value)
-    {
-        if(value == null)
-        {
-            return "";
-        }
-
-        return value;
-    }*/
 
     private void addTextChangeListener()
     {
@@ -645,6 +653,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
 
         pickupAddressFragment.show(getFragmentManager(), "Address");
+
+        pickupAddressFragment.setOnClickListener(addressInformation ->
+        {
+
+        });
     }
 
     public void addPaymentConfigListener()
@@ -720,16 +733,16 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void addQuantityListener()
     {
-        binding.layoutInventory.quantity.setText(String.valueOf(quantity));
-        binding.layoutInventoryOnline.quantity.setText(String.valueOf(onlineQuantity));
-        binding.layoutInventoryCod.quantity.setText(String.valueOf(codQuantity));
+        binding.layoutInventory.quantityValue.setText(String.valueOf(product.availableUnits));
+        binding.layoutInventoryOnline.quantityValue.setText(String.valueOf(product.maxPrepaidOnlineAvailable));
+        binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.maxCodOrders));
 
         binding.layoutInventory.addQuantity.setOnClickListener(view -> {
 
             try
             {
-                quantity++;
-                binding.layoutInventory.quantity.setText(String.valueOf(quantity));
+                product.availableUnits++;
+                binding.layoutInventory.quantityValue.setText(String.valueOf(product.availableUnits));
             }
 
             catch (Exception e)
@@ -742,12 +755,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
-                if(quantity > 0)
+                if(product.availableUnits > 0)
                 {
-                    quantity--;
+                    product.availableUnits--;
                 }
 
-                binding.layoutInventory.quantity.setText(String.valueOf(quantity));
+                binding.layoutInventory.quantityValue.setText(String.valueOf(product.availableUnits));
             }
 
             catch (Exception e)
@@ -760,8 +773,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
-                onlineQuantity++;
-                binding.layoutInventoryOnline.quantity.setText(String.valueOf(onlineQuantity));
+                product.maxPrepaidOnlineAvailable++;
+                binding.layoutInventoryOnline.quantityValue.setText(String.valueOf(product.maxPrepaidOnlineAvailable));
             }
 
             catch (Exception e)
@@ -774,12 +787,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
-                if(onlineQuantity > 0)
+                if(product.maxPrepaidOnlineAvailable > 0)
                 {
-                    onlineQuantity--;
+                    product.maxPrepaidOnlineAvailable--;
                 }
 
-                binding.layoutInventoryOnline.quantity.setText(String.valueOf(onlineQuantity));
+                binding.layoutInventoryOnline.quantityValue.setText(String.valueOf(product.maxPrepaidOnlineAvailable));
             }
 
             catch (Exception e)
@@ -792,8 +805,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
-                codQuantity++;
-                binding.layoutInventoryCod.quantity.setText(String.valueOf(codQuantity));
+                product.maxCodOrders++;
+                binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.maxCodOrders));
             }
 
             catch (Exception e)
@@ -806,12 +819,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
-                if(codQuantity > 0)
+                if(product.maxCodOrders > 0)
                 {
-                    codQuantity--;
+                    product.maxCodOrders--;
                 }
 
-                binding.layoutInventoryCod.quantity.setText(String.valueOf(codQuantity));
+                binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.maxCodOrders));
             }
 
             catch (Exception e)
@@ -844,16 +857,19 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     case 0:
 
                         binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        binding.layoutInventory.layoutQuantityMain.setVisibility(View.VISIBLE);
                         break;
 
                     case 1:
 
                         binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        binding.layoutInventory.layoutQuantityMain.setVisibility(View.INVISIBLE);
                         break;
 
                     case 2:
 
                         binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_unavailble_indicator));
+                        binding.layoutInventory.layoutQuantityMain.setVisibility(View.INVISIBLE);
                         break;
                 }
             }
@@ -874,11 +890,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     case 0:
 
                         binding.layoutInventoryOnline.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        binding.layoutInventoryOnline.layoutQuantityMain.setVisibility(View.VISIBLE);
                         break;
 
                     case 1:
 
                         binding.layoutInventoryOnline.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_unavailble_indicator));
+                        binding.layoutInventoryOnline.layoutQuantityMain.setVisibility(View.INVISIBLE);
                         break;
                 }
             }
@@ -899,11 +917,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     case 0:
 
                         binding.layoutInventoryCod.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        binding.layoutInventoryCod.layoutQuantityMain.setVisibility(View.VISIBLE);
                         break;
 
                     case 1:
 
                         binding.layoutInventoryCod.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_unavailble_indicator));
+                        binding.layoutInventoryCod.layoutQuantityMain.setVisibility(View.INVISIBLE);
                         break;
                 }
             }
@@ -1503,64 +1523,168 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    private boolean isValid(boolean keyCheck) {
-
-        /*String name = "name";
-        String desc = "description";
-        String currency = "currencyCode";
-        String price = "price";
-        String disc = "discountAmount";
-        String ship = "shipmentDuration";
-        String priority = "priority";
-        String availableUnits = "availableUnits";
-        String freeShipment = "isFreeShipmentAvailable";
-        String avail = "isAvailable";
-        String link = "buyOnlineLink";
-        String brand = "brandName";
-        String category = "category";
-        String variants = "variants";
-        String keySpecification = "keySpecification";
-        String otherSpecifications = "otherSpecifications";
-        String paymentType = "paymentType";
-        String productType = "productType";
-        String pickupAddressId = "pickupAddressReferenceId";
-
-
-        if (keyCheck)
+    /**
+     * Product Validation
+     * @return
+     */
+    private boolean isValidProduct()
+    {
+        if(product == null)
         {
-            desc = desc.toUpperCase();
-            disc = "DISCOUNTPRICE";
-            link = link.toUpperCase();
-            name = name.toUpperCase();
-            price = price.toUpperCase();
-            currency = currency.toUpperCase();
-            avail = "ISAVAIALABLE";
-            ship = ship.toUpperCase();
-            freeShipment = "FREESHIPMENT";
-        }*/
+            return false;
+        }
 
-        double product_price = 0, product_discount = 0;
-
-        /*if(product == null)
-        {
-            product = new com.nowfloats.Product_Gallery.Model.Product();
-        }*/
-
-        //values.put(avail, switchValue);
-
-        //values.put(freeShipment, String.valueOf(mIsFreeShipment));
-        //values.put(priority, String.valueOf(mPriorityVal));
-
-        if (product == null && picUri == null)
+        if (picUri == null)
         {
             Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
             return false;
-            //Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.upload_product_image)), productCategory.toLowerCase()));
+        }
+
+        if (binding.editProductName.getText().toString().trim().length() == 0)
+        {
+            Toast.makeText(getContext(), "Enter product name", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (binding.editProductDescription.getText().toString().trim().length() == 0)
+        {
+            Toast.makeText(getContext(), "Enter product description", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (binding.editBasePrice.getText().toString().trim().length() > 0) {
+
+            try
+            {
+                Double.valueOf(binding.editBasePrice.getText().toString().trim());
+            }
+
+            catch (Exception e)
+            {
+                Toast.makeText(getContext(), "Enter valid price", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        if (binding.editDiscount.getText().toString().trim().length() > 0)
+        {
+            try
+            {
+                Double.valueOf(binding.editDiscount.getText().toString().trim());
+            }
+
+            catch (Exception e)
+            {
+                Toast.makeText(getContext(), "Enter valid discount", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        if(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString().trim().length() == 0 ||
+                binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString().trim().length() == 0)
+        {
+            Toast.makeText(getContext(), "Enter product specification", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Assured Purchase Validation
+     * @return
+     */
+    private boolean isValidAssuredPurchase()
+    {
+        if(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim().length() == 0)
+        {
+            binding.layoutShippingMatrixDetails.editWeight.requestFocus();
+            Toast.makeText(getContext(), "Enter product weight", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim().length() == 0)
+        {
+            binding.layoutShippingMatrixDetails.editLength.requestFocus();
+            Toast.makeText(getContext(), "Enter product length", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim().length() == 0)
+        {
+            binding.layoutShippingMatrixDetails.editHeight.requestFocus();
+            Toast.makeText(getContext(), "Enter product height", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim().length() == 0)
+        {
+            binding.layoutShippingMatrixDetails.editThickness.requestFocus();
+            Toast.makeText(getContext(), "Enter product thickness", Toast.LENGTH_LONG).show();
+            return false;
         }
 
         try
         {
-            //values.put(currency, binding.editCurrency.getText().toString());
+            Double.valueOf(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim());
+            Double.valueOf(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim());
+            Double.valueOf(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim());
+            Double.valueOf(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim());
+        }
+
+        catch (Exception e)
+        {
+            Toast.makeText(getContext(), "Enter valid package dimensions", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private boolean isValidBankInformation()
+    {
+        if(binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0)
+        {
+            binding.layoutBottomSheet.editBankAccount.requestFocus();
+            Toast.makeText(getContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(binding.layoutBottomSheet.editIfscCode.getText().toString().trim().length() == 0)
+        {
+            binding.layoutBottomSheet.editIfscCode.requestFocus();
+            Toast.makeText(getContext(), "Enter IFSC", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(binding.layoutBottomSheet.editGst.toString().trim().length() == 0)
+        {
+            binding.layoutBottomSheet.editGst.requestFocus();
+            Toast.makeText(getContext(), "Enter GST/Tax ID", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private boolean isValidAddress()
+    {
+        return pickupAddressFragment.isValid();
+    }
+
+    /**
+     * Initialize Product Object
+     * @return
+     */
+    private void initProduct() {
+
+        Log.d("PRODUCT_JSON", "1");
+
+        try
+        {
             product.CurrencyCode = binding.editCurrency.getText().toString();
         }
 
@@ -1569,311 +1693,111 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             e.printStackTrace();
         }
 
-        if (binding.editProductName.getText().toString().trim().length() > 0)
+        Log.d("PRODUCT_JSON", "2");
+
+        product.Name = binding.editProductName.getText().toString();
+        product.Description = binding.editProductDescription.getText().toString();
+        product.brandName = binding.editBrand.getText().toString().trim().length() > 0 ? binding.editBrand.getText().toString() : null;
+        product.Price = binding.editBasePrice.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editBasePrice.getText().toString().trim()) : 0;
+        product.DiscountAmount = binding.editDiscount.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editDiscount.getText().toString().trim()) : 0;
+
+        product.category = CATEGORY;
+        product.paymentType = paymentAndDeliveryMode.getValue();
+
+        if(product.keySpecification == null)
         {
-            //values.put(name, binding.editProductName.getText().toString());
-            product.Name = binding.editProductName.getText().toString();
+            product.keySpecification = new com.nowfloats.Product_Gallery.Model.Product.Specification();
         }
 
-        else
-        {
-            //YoYo.with(Techniques.Shake).playOn(productName);
-            //Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.enter_product_name)), productCategory.toLowerCase()));
+        product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
+        product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
 
-            Toast.makeText(getContext(), "Enter product name", Toast.LENGTH_LONG).show();
-            return false;
+        Log.d("PRODUCT_JSON", "3");
+
+        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
+        {
+            product.IsAvailable = true;
+            product.availableUnits = Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
         }
 
-        if (binding.editProductDescription.getText().toString().trim().length() > 0)
+        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 1)
         {
-            //values.put(desc, binding.editProductDescription.getText().toString());
-            product.Description = binding.editProductDescription.getText().toString();
+            product.IsAvailable = true;
+            product.availableUnits = -1;
         }
 
-        else
+        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 2)
         {
-            //YoYo.with(Techniques.Shake).playOn(productDesc);
-            //Methods.showSnackBarNegative(activity, String.format(String.valueOf(getString(R.string.enter_product_desc)), productCategory.toLowerCase()));
-
-            Toast.makeText(getContext(), "Enter product description", Toast.LENGTH_LONG).show();
-            return false;
+            product.IsAvailable = false;
+            product.availableUnits = 0;
         }
 
-        /*if (etShipmentDuration != null && etShipmentDuration.getText().toString().trim().length() > 0)
-        {
-            values.put(ship, etShipmentDuration.getText().toString());
-        }
+        Log.d("PRODUCT_JSON", "4");
 
-        else
-        {
-            values.put(ship, null);
-        }*/
+        product.codAvailable = (binding.layoutInventoryCod.spinnerStockAvailability.getSelectedItemPosition() == 0);
+        product.prepaidOnlineAvailable = (binding.layoutInventoryOnline.spinnerStockAvailability.getSelectedItemPosition() == 0);
 
-        if (binding.editBasePrice.getText().toString().trim().length() > 0) {
+        product.maxCodOrders = Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString().trim());
+        product.maxPrepaidOnlineAvailable = Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim());
 
-            try
-            {
-                product_price = Double.valueOf(binding.editBasePrice.getText().toString().trim());
-            }
+        Log.d("PRODUCT_JSON", "5");
 
-            catch (Exception e)
-            {
-                //YoYo.with(Techniques.Shake).playOn(productPrice);
-                //Methods.showSnackBarNegative(activity, "Please enter valid price");
-
-                Toast.makeText(getContext(), "Enter valid price", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }
-
-        //values.put(price, String.valueOf(product_price));
-        product.Price = product_price;
-
-        if (binding.editDiscount.getText().toString().trim().length() > 0)
-        {
-            try
-            {
-                product_discount = Double.valueOf(binding.editDiscount.getText().toString().trim());
-            }
-
-            catch (Exception e)
-            {
-                //YoYo.with(Techniques.Shake).playOn(productDiscount);
-                //Methods.showSnackBarNegative(activity, "Please enter valid discount");
-
-                Toast.makeText(getContext(), "Enter valid discount", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }
-
-        //values.put(disc, String.valueOf(product_discount));
-        product.DiscountAmount = product_discount;
-
-        if(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString().trim().length() != 0 && binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString().trim().length() != 0)
-        {
-            if(product.keySpecification == null)
-            {
-                product.keySpecification = new com.nowfloats.Product_Gallery.Model.Product.Specification();
-            }
-
-            product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
-            product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
-        }
-
-
-        /*if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE))
-        {
-            if(CATEGORY.equals(Constants.Type.PRODUCT.name()))
-            {
-                if(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim().length() == 0)
-                {
-                    binding.layoutShippingMatrixDetails.editWeight.requestFocus();
-                    Toast.makeText(getContext(), "Enter product weight", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-
-                if(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim().length() == 0)
-                {
-                    binding.layoutShippingMatrixDetails.editLength.requestFocus();
-                    Toast.makeText(getContext(), "Enter product length", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-
-                if(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim().length() == 0)
-                {
-                    binding.layoutShippingMatrixDetails.editHeight.requestFocus();
-                    Toast.makeText(getContext(), "Enter product height", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-
-                if(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim().length() == 0)
-                {
-                    binding.layoutShippingMatrixDetails.editThickness.requestFocus();
-                    Toast.makeText(getContext(), "Enter product thickness", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-            }
-
-            if(!isValidAssuredPurchase())
-            {
-                return false;
-            }*/
-
-            /*if(binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editBankAccount.requestFocus();
-                Toast.makeText(getContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            if(binding.layoutBottomSheet.editIfscCode.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editIfscCode.requestFocus();
-                Toast.makeText(getContext(), "Enter IFSC code", Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            if(binding.layoutBottomSheet.editGst.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editGst.requestFocus();
-                Toast.makeText(getContext(), "Enter TAX/GST number", Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            if(!binding.layoutBottomSheet.checkPaymentConfiguration.isChecked())
-            {
-                Toast.makeText(getContext(), "Please allow payment and delivery agreement", Toast.LENGTH_LONG).show();
-                return false;
-            }*/
-        //}
-
-        /*if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.MY_PAYMENT_GATEWAY))
-        {
-            if(binding.layoutBottomSheet.editSaltAndKey.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editSaltAndKey.requestFocus();
-                Toast.makeText(getContext(), "Enter Salt and Key", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }*/
-
-        /*if(!isValidMyPayementGateway())
-        {
-            return false;
-        }*/
-
-        if(CATEGORY.equalsIgnoreCase("products"))
-        {
-            /*if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
-            {
-                binding.layoutInventory.editAvailableQty.requestFocus();
-                Toast.makeText(getContext(), "Enter available quantity", Toast.LENGTH_LONG).show();
-                return false;
-            }*/
-
-            /*if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
-            {
-                if(binding.layoutInventory.editAvailableQty.getText().toString().trim().length() == 0)
-                {
-                    binding.layoutInventory.editAvailableQty.requestFocus();
-                    Toast.makeText(getContext(), "Enter available quantity", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-
-                if(binding.layoutInventory.spinnerCodAvailability.getSelectedItemPosition() == 0)
-                {
-                    binding.layoutInventory.editCodMaxQty.requestFocus();
-                    Toast.makeText(getContext(), "Enter max quantity", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-
-                if(binding.layoutInventory.spinnerPrepaidOnlineAvailability.getSelectedItemPosition() == 0)
-                {
-                    binding.layoutInventory.editPrepaidOnlineMaxQty.requestFocus();
-                    Toast.makeText(getContext(), "Enter max quantity", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-            }*/
-        }
-
-        /*if (productLink != null && productLink.getText().toString().trim().length() > 0)
-        {
-            values.put(link, productLink.getText().toString().trim());
-        }
-
-        else
-        {
-            values.put(link, "");
-        }
-
-        if ((productPrice != null && productPrice.getText().toString().trim().length() > 0) &&
-                (productDiscount != null && productDiscount.getText().toString().trim().length() > 0)) {
-
-            if (!(Double.parseDouble(productPrice.getText().toString().trim()) >= Double.parseDouble(productDiscount.getText().toString().trim()))) {
-
-                YoYo.with(Techniques.Shake).playOn(productDiscount);
-                Methods.showSnackBarNegative(activity, getString(R.string.discount_amount_can_not_more_than_price));
-                return false;
-            }
-        }
-
-        if(mShippingMetrix == null)
-        {
-            Methods.showSnackBarNegative(activity, "Shipping Details Required");
-            return false;
-        }
-
-        if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
-                mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null)
-        {
-            Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
-            return false;
-        }*/
-
-        /*if (etAvailableUnits != null && etAvailableUnits.getText().toString().trim().length() > 0)
-        {
-            values.put(availableUnits, etAvailableUnits.getText().toString());
-        }
-
-        else
-        {
-            values.put(availableUnits, "-1");
-
-            if (!keyCheck && flag)
-            {
-                YoYo.with(Techniques.Shake).playOn(etAvailableUnits);
-                Methods.showSnackBarNegative(activity, "Please enter product available units");
-                flag = false;
-            }
-        }*/
-
-        /**
-         * If delivery method ASSUREDPURCHASE OR SELF then add shipping metrix
-         */
-        /*if((deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
-                || deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue())))
-        {
-            if(mShippingMetrix == null)
-            {
-                Methods.showSnackBarNegative(activity, "Shipping Details Required");
-                return false;
-            }
-
-            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
-                    && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
-            {
-                if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
-                        mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null || mShippingMetrix.getGstCharge() == null)
-                {
-                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
-                    return false;
-                }
-            }
-
-            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue())
-                    && !Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
-            {
-                if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
-                        mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null)
-                {
-                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
-                    return false;
-                }
-            }
-
-            else if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.SELF.getValue()))
-            {
-                if(mShippingMetrix.getShippingCharge() == null || mShippingMetrix.getGstCharge() == null)
-                {
-                    Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
-                    return false;
-                }
-            }
-        }*/
-
-        //System.out.println(values);
-        return true;
     }
+
+
+    /**
+     * Initialize Assured Purchase
+     * @param productId
+     * @param merchantId
+     * @return
+     */
+    private AssuredPurchase initAssuredPurchase(String productId, String merchantId)
+    {
+        if(assuredPurchase == null)
+        {
+            assuredPurchase = new AssuredPurchase();
+        }
+
+        try
+        {
+            assuredPurchase.productId = productId;
+            assuredPurchase.merchantId = merchantId;
+
+            assuredPurchase.height = Double.valueOf(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim());
+            assuredPurchase.weight = Double.valueOf(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim());
+            assuredPurchase.length = Double.valueOf(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim());
+            assuredPurchase.width = Double.valueOf(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim());
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return assuredPurchase;
+    }
+
+
+    private BankInformation initBankInformation()
+    {
+        if(bankInformation == null)
+        {
+            bankInformation = new BankInformation();
+        }
+
+        if(bankInformation.bankAccount == null)
+        {
+            bankInformation.bankAccount = new BankInformation.BankAccount();
+        }
+
+        bankInformation.bankAccount.number = binding.layoutBottomSheet.editBankAccount.getText().toString();
+        bankInformation.bankAccount.ifsc = binding.layoutBottomSheet.editIfscCode.getText().toString();
+
+        bankInformation.gstn = binding.layoutBottomSheet.editGst.getText().toString();
+
+        return bankInformation;
+    }
+
 
 
     private void uploadProductImage(String productId)
@@ -1904,31 +1828,64 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    private void addProduct()
+    private void saveAssuredPurchase(String productId)
+    {
+        AssuredPurchase assuredPurchase = initAssuredPurchase(productId, session.getFPID());
+
+        WAAddDataModel<AssuredPurchase> waModel = new WAAddDataModel<>();
+        waModel.setWebsiteId(session.getFPID());
+        waModel.setActionData(assuredPurchase);
+
+        Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(waModel));
+
+        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+                .addAssuredPurchaseDetails(waModel, new Callback<String>() {
+
+                    @Override
+                    public void success(String s, Response response) {
+
+                        Log.d("PRODUCT_JSON", "SUCCESS" + s);
+
+                        /*materialProgress.dismiss();
+
+                        if (!isFromcallBack)
+                        {
+                            uploadProductImage(mShippingMetrix.getProductId());
+                        }*/
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.d("PRODUCT_JSON", "FAIL");
+
+                        /*materialProgress.dismiss();
+
+                        if (!isFromcallBack)
+                        {
+                            uploadProductImage(mShippingMetrix.getProductId());
+                        }*/
+                    }
+                });
+    }
+
+    private void saveProduct()
     {
         ProductGalleryInterface productInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
 
         try
         {
-            //values = new HashMap<>();
-            //values.put("clientId", Constants.clientId);
-            //values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
-
-            Log.d("PRODUCT_JSON", "OUTSIDE");
-
-            if (isValid(false))
+            if (isValidProduct())
             {
+                initProduct();
+
                 product.ClientId = Constants.clientId;
                 product.FPTag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
                 product.productType = "products";
 
-                Log.d("PRODUCT_JSON", "INSIDE");
-
                 Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
 
                 //showDialog("Adding product ...");
-
-
 
                 productInterface.addProduct(product, new Callback<String>() {
 
@@ -1937,6 +1894,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         Log.d("PRODUCT_JSON", "" + productId);
                         //uploadProductImage(productId);
+
+                        saveAssuredPurchase(productId);
                     }
 
                     @Override
@@ -1956,6 +1915,29 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+
+    private void getAssuredPurchase(String productId)
+    {
+        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+                .getAssuredPurchaseDetails(String.format("{product_id:'%s'}", productId), new Callback<WebActionModel<AssuredPurchase>>() {
+
+                    @Override
+                    public void success(WebActionModel<AssuredPurchase> webActionModel, Response response) {
+
+                        if (webActionModel.getData().size() > 0)
+                        {
+                            assuredPurchase = webActionModel.getData().get(0);
+                            setAssuredPurchaseData();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+
+                    }
+                });
+    }
 
     private void initProgressDialog(String content)
     {
@@ -2027,41 +2009,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         return true;
     }*/
-
-    private boolean isValidAssuredPurchase()
-    {
-        if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE))
-        {
-            if(binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editBankAccount.requestFocus();
-                Toast.makeText(getContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            if(binding.layoutBottomSheet.editIfscCode.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editIfscCode.requestFocus();
-                Toast.makeText(getContext(), "Enter IFSC code", Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            if(binding.layoutBottomSheet.editGst.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editGst.requestFocus();
-                Toast.makeText(getContext(), "Enter TAX/GST number", Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() ==  View.VISIBLE && !binding.layoutBottomSheet.checkPaymentConfiguration.isChecked())
-            {
-                Toast.makeText(getContext(), "Please allow payment and delivery agreement", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }
-
-        return true;
-    }
 
 
     /*private void addImage()
