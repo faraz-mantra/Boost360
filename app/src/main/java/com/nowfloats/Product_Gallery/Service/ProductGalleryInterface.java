@@ -110,4 +110,8 @@ public interface ProductGalleryInterface {
     @GET("/product_details/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getAssuredPurchaseDetails(@Query("query") String query, Callback<WebActionModel<AssuredPurchase>> callback);
+
+    @POST("/product_details/update-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void updateAssuredPurchaseDetails(@Body WaUpdateDataModel updateDataModel, Callback<String> callback);
 }

@@ -376,12 +376,34 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edit_purchase_url_link"
-                        style="@style/ProductEditTextStyle"
+                    <LinearLayout
+                        android:id="@+id/layout_unique_payment_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:inputType="textUri"
-                        android:hint="XXXXXXXXXXXXXXXX"  />
+                        android:background="@drawable/white_rectangle_background"
+                        android:orientation="horizontal" >
+
+                        <EditText
+                            android:id="@+id/edit_description"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="Website name"
+                            android:background="@null"
+                            android:layout_width="120dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/secondaryLightTextColor"/>
+
+                        <EditText
+                            android:id="@+id/edit_purchase_url_link"
+                            style="@style/ProductEditTextStyle"
+                            android:inputType="textUri"
+                            android:background="@null"
+                            android:hint="Paste your URL here"  />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

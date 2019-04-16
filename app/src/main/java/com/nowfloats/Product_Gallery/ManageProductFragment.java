@@ -45,12 +45,14 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
 import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
 import com.nowfloats.Product_Gallery.Model.BankInformation;
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.UploadImage;
 import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
 import com.nowfloats.helper.Helper;
 import com.nowfloats.helper.ui.ImageLoader;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
+import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -78,7 +80,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private String currencyType = "";
     private String productType = "";
 
-    private List<Product.Property> propertyList = new ArrayList<>();
     private List<Product.Image> imageList = new ArrayList<>();
 
     private ProductSpecificationRecyclerAdapter adapter;
@@ -325,7 +326,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         if(product.otherSpecification != null)
         {
-
+            adapter.setData(product.otherSpecification);
         }
 
         if(product.paymentType != null)
@@ -442,18 +443,22 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void addPropertyListener()
     {
-        //imageList.add(new Product().new Image());
-        //imageList.add(new Product().new Image());
-        //imageList.add(new Product().new Image());
-
-        propertyList.add(new Product().new Property("Key 1", "Value 1"));
-        propertyList.add(new Product().new Property("Key 2", "Value 2"));
-        propertyList.add(new Product().new Property("Key 3", "Value 3"));
+        //propertyList.add(new Product().new Property("Key 1", "Value 1"));
+        //propertyList.add(new Product().new Property("Key 2", "Value 2"));
+        //propertyList.add(new Product().new Property("Key 3", "Value 3"));
 
         binding.layoutProductSpecification.buttonAddProperty.setOnClickListener(view -> {
 
-            propertyList.add(new Product().new Property());
-            adapter.notifyItemInserted(propertyList.size());
+            //propertyList.add(new Product().new Property());
+            //adapter.notifyItemInserted(propertyList.size());
+
+            if(product.otherSpecification == null)
+            {
+                product.otherSpecification = new ArrayList<>();
+            }
+
+            product.otherSpecification.add(new com.nowfloats.Product_Gallery.Model.Product.Specification());
+            adapter.notifyItemInserted(product.otherSpecification.size());
         });
     }
 
@@ -1071,14 +1076,52 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 viewHolder.ibRemove.setOnClickListener(view -> {
 
-                    propertyList.remove(viewHolder.getAdapterPosition());
+                    product.otherSpecification.remove(viewHolder.getAdapterPosition());
                     notifyItemRemoved(viewHolder.getAdapterPosition());
                 });
 
-                Product.Property property = propertyList.get(i);
+                com.nowfloats.Product_Gallery.Model.Product.Specification specification = product.otherSpecification.get(i);
 
-                viewHolder.editKey.setText(property.getKey());
-                viewHolder.editValue.setText(property.getValue());
+                viewHolder.editKey.setText(specification.key != null ? specification.key : "");
+                viewHolder.editValue.setText(specification.value != null ? specification.value : "");
+
+                viewHolder.editKey.addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        product.otherSpecification.get(viewHolder.getAdapterPosition()).key = s.toString();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                viewHolder.editValue.addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        product.otherSpecification.get(viewHolder.getAdapterPosition()).value = s.toString();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
             }
         }
 
@@ -1105,10 +1148,32 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
-        public void setData(List<String> productList)
+        public void setData(List<com.nowfloats.Product_Gallery.Model.Product.Specification> specificationList)
         {
-            //this.productList.addAll(productList);
-            //notifyDataSetChanged();
+            product.otherSpecification.addAll(specificationList);
+            notifyDataSetChanged();
+        }
+
+        public boolean isValid()
+        {
+            boolean isValid = true;
+
+            for(com.nowfloats.Product_Gallery.Model.Product.Specification specification: product.otherSpecification)
+            {
+                if(specification.key == null || specification.key.isEmpty())
+                {
+                    isValid = false;
+                    break;
+                }
+
+                if(specification.value == null || specification.value.isEmpty())
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            return isValid;
         }
     }
 
@@ -1218,7 +1283,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         @Override
         public int getItemCount()
         {
-            return propertyList.size();
+            return 3;
         }
 
 
@@ -1587,6 +1652,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             return false;
         }
 
+        if(!adapter.isValid())
+        {
+            Toast.makeText(getContext(), "Enter all specification values", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return true;
     }
 
@@ -1681,8 +1752,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
      */
     private void initProduct() {
 
-        Log.d("PRODUCT_JSON", "1");
-
         try
         {
             product.CurrencyCode = binding.editCurrency.getText().toString();
@@ -1692,8 +1761,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             e.printStackTrace();
         }
-
-        Log.d("PRODUCT_JSON", "2");
 
         product.Name = binding.editProductName.getText().toString();
         product.Description = binding.editProductDescription.getText().toString();
@@ -1711,8 +1778,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
         product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
-
-        Log.d("PRODUCT_JSON", "3");
 
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
         {
@@ -1732,26 +1797,20 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.availableUnits = 0;
         }
 
-        Log.d("PRODUCT_JSON", "4");
-
         product.codAvailable = (binding.layoutInventoryCod.spinnerStockAvailability.getSelectedItemPosition() == 0);
         product.prepaidOnlineAvailable = (binding.layoutInventoryOnline.spinnerStockAvailability.getSelectedItemPosition() == 0);
 
         product.maxCodOrders = Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString().trim());
         product.maxPrepaidOnlineAvailable = Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim());
-
-        Log.d("PRODUCT_JSON", "5");
-
     }
 
 
     /**
      * Initialize Assured Purchase
      * @param productId
-     * @param merchantId
      * @return
      */
-    private AssuredPurchase initAssuredPurchase(String productId, String merchantId)
+    private AssuredPurchase initAssuredPurchase(String productId)
     {
         if(assuredPurchase == null)
         {
@@ -1761,7 +1820,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         try
         {
             assuredPurchase.productId = productId;
-            assuredPurchase.merchantId = merchantId;
+            assuredPurchase.merchantId = session.getFPID();
 
             assuredPurchase.height = Double.valueOf(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim());
             assuredPurchase.weight = Double.valueOf(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim());
@@ -1828,9 +1887,56 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Update assured purchase
+     * @param productId
+     */
+    private void updateAdssuredPurchase(String productId)
+    {
+        WaUpdateDataModel update = new WaUpdateDataModel();
+        final AssuredPurchase assuredPurchase = initAssuredPurchase(productId);
+
+        update.setQuery(String.format("{product_id:'%s'}", assuredPurchase.productId));
+
+        update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s'}}",
+                assuredPurchase.length,
+                assuredPurchase.width,
+                assuredPurchase.weight,
+                assuredPurchase.height));
+
+        update.setMulti(true);
+
+
+        /**
+         * Update API call
+         */
+        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+                .updateAssuredPurchaseDetails(update, new Callback<String>() {
+
+                    @Override
+                    public void success(String s, Response response) {
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                        if(error.getResponse().getStatus() == 200)
+                        {
+
+                        }
+                    }
+                });
+    }
+
+
+    /**
+     * Save assured purchase
+     * @param productId
+     */
     private void saveAssuredPurchase(String productId)
     {
-        AssuredPurchase assuredPurchase = initAssuredPurchase(productId, session.getFPID());
+        AssuredPurchase assuredPurchase = initAssuredPurchase(productId);
 
         WAAddDataModel<AssuredPurchase> waModel = new WAAddDataModel<>();
         waModel.setWebsiteId(session.getFPID());
@@ -1844,31 +1950,20 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void success(String s, Response response) {
 
-                        Log.d("PRODUCT_JSON", "SUCCESS" + s);
-
-                        /*materialProgress.dismiss();
-
-                        if (!isFromcallBack)
-                        {
-                            uploadProductImage(mShippingMetrix.getProductId());
-                        }*/
+                        Log.d("PRODUCT_JSON", "SUCCESS: " + s);
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
                         Log.d("PRODUCT_JSON", "FAIL");
-
-                        /*materialProgress.dismiss();
-
-                        if (!isFromcallBack)
-                        {
-                            uploadProductImage(mShippingMetrix.getProductId());
-                        }*/
                     }
                 });
     }
 
+    /**
+     * Save product information
+     */
     private void saveProduct()
     {
         ProductGalleryInterface productInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
