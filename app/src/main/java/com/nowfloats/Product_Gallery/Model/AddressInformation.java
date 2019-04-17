@@ -2,8 +2,12 @@ package com.nowfloats.Product_Gallery.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AddressInformation {
+import java.io.Serializable;
 
+public class AddressInformation implements Serializable {
+
+    @SerializedName("_id")
+    public String id;
     @SerializedName("WebsiteId")
     public String websiteId;
     @SerializedName("AreaName")
@@ -22,4 +26,11 @@ public class AddressInformation {
     public String contactNumber;
     @SerializedName("AddressProof")
     public String addressProof;
+
+
+    @Override
+    public String toString()
+    {
+        return new StringBuilder().append(streetAddress).append(", ").append(city).append(", ").append(state).append(", ").append(country).toString();
+    }
 }

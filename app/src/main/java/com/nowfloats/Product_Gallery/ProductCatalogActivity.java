@@ -63,14 +63,14 @@ public class ProductCatalogActivity extends AppCompatActivity {
         }
 
         this.initProductRecyclerView(binding.productList);
-        getProducts();
+        getProducts(false);
     }
 
-    private void getProducts()
+    private void getProducts(boolean flag)
     {
         isLoading = true;
 
-        final String skip = String.valueOf(adapter.getItemCount());
+        final String skip = flag ? "0" : String.valueOf(adapter.getItemCount());
 
         HashMap<String, String> values = new HashMap<>();
         values.put("clientId", Constants.clientId);
@@ -95,7 +95,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
                     if(data.size() > 0)
                     {
                         binding.layoutEmpty.layoutEmptyView.setVisibility(View.GONE);
-                        adapter.setData(data);
+                        adapter.setData(data, flag);
                         return;
                     }
 
@@ -156,7 +156,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
                 if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
                 {
-                    getProducts();
+                    getProducts(false);
                 }
             }
         });
@@ -196,9 +196,27 @@ public class ProductCatalogActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        Log.d("onActivityResult", "1");
+
+        if (requestCode == 300 && resultCode == RESULT_OK)
+        {
+            boolean flag = data.getBooleanExtra("LOAD", true);
+            getProducts(flag);
+
+            Log.d("onActivityResult", "2");
+        }
+
+        Log.d("onActivityResult", "3");
+    }
+
     private void openAddProductActivity()
     {
-        startActivity(new Intent(ProductCatalogActivity.this, ManageProductActivity.class));
+        Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
+        intent.putExtra("PRODUCT", new Product());
+        startActivityForResult(intent, 300);
     }
 
     private void addProduct()

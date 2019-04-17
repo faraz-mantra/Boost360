@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,19 +44,28 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
         //Bundle args = new Bundle();
 
-        //args.putSerializable(ARG_MAP_TYPE, pick_type);
-        //fragment.setArguments(args);
-
-        //args.putSerializable(ARG_MAP_DATA, mDataMap);
+        //args.putSerializable("PICKUP_ADDRESS", address);
         //fragment.setArguments(args);
 
         return fragment;
     }
 
+    public void setAddress(AddressInformation address)
+    {
+        this.address = address;
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+
+        /*Bundle bundle = getArguments();
+
+        if (bundle != null)
+        {
+            this.address = (AddressInformation) bundle.getSerializable("PICKUP_ADDRESS");
+        }*/
     }
 
     @Override
@@ -65,12 +75,10 @@ public class ProductPickupAddressFragment extends DialogFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
-        super.onActivityCreated(savedInstanceState);
-       // getDialog().getWindow().getAttributes().windowAnimations = com.nowfloats.riachatsdk.R.style.DialogAnimation;
-    }
+    public void onActivityCreated(Bundle savedInstanceState) {
 
+        super.onActivityCreated(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -107,7 +115,27 @@ public class ProductPickupAddressFragment extends DialogFragment {
             }
         });
 
+        setAddressData(address);
         return view;
+    }
+
+    private void setAddressData(AddressInformation address)
+    {
+        if(address == null)
+        {
+            //editWarehouseName.setText("");
+            //editContactNumber.setText("");
+            //editBuildingName.setText("");
+            //editCity.setText("");
+            //editState.setText("");
+            return;
+        }
+
+        editWarehouseName.setText(address.areaName != null ? address.areaName : "");
+        editContactNumber.setText(address.contactNumber != null ? address.contactNumber : "");
+        editBuildingName.setText(address.streetAddress != null ? address.streetAddress : "");
+        editCity.setText(address.city != null ? address.city : "");
+        editState.setText(address.state != null ? address.state : "");
     }
 
 

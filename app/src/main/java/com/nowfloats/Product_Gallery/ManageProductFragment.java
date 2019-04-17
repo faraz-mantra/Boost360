@@ -26,6 +26,9 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,9 +46,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
+import com.nowfloats.Product_Gallery.Model.AddressInformation;
 import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
 import com.nowfloats.Product_Gallery.Model.BankInformation;
-import com.nowfloats.Product_Gallery.Model.Product;
+import com.nowfloats.Product_Gallery.Service.ProductDelete;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.UploadImage;
 import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
@@ -54,6 +58,7 @@ import com.nowfloats.helper.ui.ImageLoader;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
 import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.sellerprofile.model.WebResponseModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -62,10 +67,15 @@ import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -102,6 +112,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private com.nowfloats.Product_Gallery.Model.Product product;
     private AssuredPurchase assuredPurchase;
     private BankInformation bankInformation;
+    private AddressInformation addressInformation;
+    private List<AddressInformation> addressInformationList;
 
     private BottomSheetBehavior sheetBehavior;
     private BottomSheetBehavior sheetBehaviorAddress;
@@ -132,6 +144,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         super.onCreate(savedInstanceState);
 
+        Bundle bundle = getArguments();
+
+        if(bundle != null)
+        {
+            this.product = (com.nowfloats.Product_Gallery.Model.Product) bundle.getSerializable("PRODUCT");
+
+            if (product != null && product.productId != null)
+            {
+                setHasOptionsMenu(true);
+            }
+        }
+
         /*Bundle bundle = this.getArguments();
 
         if (bundle != null)
@@ -150,6 +174,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
@@ -160,24 +190,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         initProductImageRecyclerView(binding.productImageList);
         initProductPickupAddressRecyclerView(binding.layoutBottomSheetAddress.pickupAddressList);
 
-
         addSpinnerListener();
 
         Bundle bundle = getArguments();
 
         if(bundle != null)
         {
-            this.product = (com.nowfloats.Product_Gallery.Model.Product) bundle.getSerializable("PRODUCT");
+            //this.product = (com.nowfloats.Product_Gallery.Model.Product) bundle.getSerializable("PRODUCT");
 
-            if(product == null)
-            {
-                product = new com.nowfloats.Product_Gallery.Model.Product();
-            }
-
-            else
+            if(product != null && product.productId != null )
             {
                 setProductData();
-                getAssuredPurchase(product._id);
+                getAssuredPurchase(product.productId);
             }
 
             CATEGORY = bundle.getString("CATEGORY");
@@ -247,6 +271,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         String transactionFees = getTransactionFees();
         binding.layoutBottomSheet.tvPaymentConfigurationAcceptanceMessage.setText(String.format(String.valueOf(getString(R.string.payment_config_acceptance_message)), transactionFees));
+
+        this.getBankInformation();
+        this.getAddressInformation();
     }
 
 
@@ -346,6 +373,25 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutShippingMatrixDetails.editWeight.setText(assuredPurchase.weight > 0 ? String.valueOf(assuredPurchase.weight) : "");
         binding.layoutShippingMatrixDetails.editLength.setText(assuredPurchase.length > 0 ? String.valueOf(assuredPurchase.length) : "");
         binding.layoutShippingMatrixDetails.editThickness.setText(assuredPurchase.width > 0 ? String.valueOf(assuredPurchase.width) : "");
+    }
+
+
+    private void setBankInformationData()
+    {
+        if(bankInformation == null)
+        {
+            return;
+        }
+
+        binding.layoutBottomSheet.editGst.setText(bankInformation.gstn != null ? bankInformation.gstn : "");
+
+        if(bankInformation.bankAccount == null)
+        {
+            return;
+        }
+
+        binding.layoutBottomSheet.editIfscCode.setText(bankInformation.bankAccount.ifsc != null ? bankInformation.bankAccount.ifsc : "");
+        binding.layoutBottomSheet.editBankAccount.setText(bankInformation.bankAccount.number != null ? bankInformation.bankAccount.number : "");
     }
 
 
@@ -509,15 +555,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.VISIBLE);
 
-                    if(isValidAssuredPurchase())
+                    if(isValidBankInformation())
                     {
-                        binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
-                        binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
-
-                        binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
-                        binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_methud_message));
-
-                        toggleBottomSheet();
+                        saveBankInformation();
                     }
 
                     break;
@@ -590,7 +630,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
        binding.layoutBottomSheetAddress.buttonAddNew.setOnClickListener(v -> {
 
            sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
-           openAddressDialog();
+           openAddressDialog(null);
        });
 
        binding.layoutBottomSheet.tvPickAddress.setOnClickListener(view -> toggleAddressBottomSheet());
@@ -650,19 +690,22 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void openAddressDialog()
+    private void openAddressDialog(AddressInformation addressInformation)
     {
-        if(pickupAddressFragment == null)
+        if(addressInformation == null)
         {
             pickupAddressFragment = ProductPickupAddressFragment.newInstance();
         }
 
+        else if(pickupAddressFragment == null)
+        {
+            pickupAddressFragment = ProductPickupAddressFragment.newInstance();
+        }
+
+        pickupAddressFragment.setAddress(addressInformation);
         pickupAddressFragment.show(getFragmentManager(), "Address");
 
-        pickupAddressFragment.setOnClickListener(addressInformation ->
-        {
-
-        });
+        pickupAddressFragment.setOnClickListener(information -> saveAddressInformation(information));
     }
 
     public void addPaymentConfigListener()
@@ -1265,6 +1308,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 final ProductPickupAddressViewHolder viewHolder = (ProductPickupAddressViewHolder) holder;
 
+                AddressInformation addressInformation = addressInformationList.get(i);
+
+                viewHolder.tvType.setText(addressInformation.areaName != null ? addressInformation.areaName : "");
+                viewHolder.tvAddress.setText(addressInformation.toString());
+
                 /*viewHolder.ibRemove.setVisibility(View.VISIBLE);
 
                 viewHolder.ibRemove.setOnClickListener(view -> {
@@ -1283,9 +1331,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         @Override
         public int getItemCount()
         {
-            return 3;
+            return addressInformationList == null ? 0 : addressInformationList.size();
         }
-
 
         class ProductPickupAddressViewHolder extends RecyclerView.ViewHolder
         {
@@ -1304,13 +1351,25 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 tvType.setOnClickListener(v -> {
 
                     sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    openAddressDialog();
+                    openAddressDialog(addressInformationList.get(getAdapterPosition()));
                 });
 
                 itemView.setOnClickListener(v -> {
 
                 });
             }
+        }
+
+        public void setData(List<AddressInformation> informationList)
+        {
+            if(addressInformationList == null)
+            {
+                addressInformationList = new ArrayList<>();
+            }
+
+            addressInformationList.clear();
+            addressInformationList.addAll(informationList);
+            notifyDataSetChanged();
         }
     }
 
@@ -1746,6 +1805,60 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         return pickupAddressFragment.isValid();
     }
 
+
+    private void saveAddressInformation(AddressInformation addressInformation)
+    {
+        if(!isValidAddress())
+        {
+            return;
+        }
+
+        addressInformation.websiteId = session.getFPID();
+
+        Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(addressInformation));
+
+        Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
+                .savePickupAddress(addressInformation, new Callback<WebResponseModel<Object>>() {
+
+                    @Override
+                    public void success(WebResponseModel<Object> webResponseModel, Response response) {
+
+                        Log.d("PRODUCT_JSON", "SUCCESS: " + webResponseModel.getStatus());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
+                    }
+                });
+    }
+
+
+    private void getAddressInformation()
+    {
+        Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
+                .getPickupAddress(session.getFPID(), new Callback<WebResponseModel<List<AddressInformation>>>() {
+
+                    @Override
+                    public void success(WebResponseModel<List<AddressInformation>> webResponseModel, Response response) {
+
+                        if(webResponseModel != null)
+                        {
+                            adapterAddress.setData(webResponseModel.getData());
+                        }
+
+                        Log.d("PRODUCT_JSON", "SUCCESS: " + webResponseModel.getData().size());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
+                    }
+                });
+    }
+
     /**
      * Initialize Product Object
      * @return
@@ -1802,6 +1915,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         product.maxCodOrders = Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString().trim());
         product.maxPrepaidOnlineAvailable = Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim());
+
+        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
+                && CATEGORY.equalsIgnoreCase("products"))
+        {
+
+        }
     }
 
 
@@ -1910,7 +2029,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         /**
          * Update API call
          */
-        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+        Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
                 .updateAssuredPurchaseDetails(update, new Callback<String>() {
 
                     @Override
@@ -1931,6 +2050,77 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
+     * Save bank information
+     */
+    private void saveBankInformation()
+    {
+        showDialog("Updating Seller Profile ...");
+
+        BankInformation bankInformation = initBankInformation();
+        bankInformation.sellerId = session.getFpTag();
+
+        Log.d("PRODUCT_JSON", "BANK INFO JSON: " + new Gson().toJson(bankInformation));
+
+        Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
+                .saveBankInformation(bankInformation, new Callback<WebResponseModel<Object>>() {
+
+                    @Override
+                    public void success(WebResponseModel<Object> webResponseModel, Response response) {
+
+                        Log.d("PRODUCT_JSON", "Bank Information Saved");
+
+                        Toast.makeText(getContext(), "Seller Profile Updated", Toast.LENGTH_SHORT).show();
+                        hideDialog();
+
+                        binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
+                        binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
+
+                        binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
+                        binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_methud_message));
+
+                        toggleBottomSheet();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Toast.makeText(getContext(), "Failed to Update Seller Profile", Toast.LENGTH_SHORT).show();
+                        hideDialog();
+                        Log.d("PRODUCT_JSON", "Failed to Save Bank Information");
+                    }
+                });
+    }
+
+
+    /**
+     * Save bank information
+     */
+    private void getBankInformation()
+    {
+        Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
+                .getBankInformation(session.getFpTag(), new Callback<WebResponseModel<BankInformation>>() {
+
+                    @Override
+                    public void success(WebResponseModel<BankInformation> webResponseModel, Response response) {
+
+                        if(webResponseModel !=  null)
+                        {
+                            bankInformation = webResponseModel.getData();
+                            setBankInformationData();
+                        }
+
+                        Log.d("PRODUCT_JSON", "SUCCESS");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
+                    }
+                });
+    }
+
+    /**
      * Save assured purchase
      * @param productId
      */
@@ -1944,19 +2134,19 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(waModel));
 
-        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+        Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
                 .addAssuredPurchaseDetails(waModel, new Callback<String>() {
 
                     @Override
                     public void success(String s, Response response) {
 
-                        Log.d("PRODUCT_JSON", "SUCCESS: " + s);
+                        Log.d("PRODUCT_JSON", "Assured Purchase Saved : " + s);
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        Log.d("PRODUCT_JSON", "FAIL");
+                        Log.d("PRODUCT_JSON", "Failed to Save Assured Purchase");
                     }
                 });
     }
@@ -1976,29 +2166,51 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 product.ClientId = Constants.clientId;
                 product.FPTag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
-                product.productType = "products";
+                product.productType = productType;
 
                 Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
 
-                //showDialog("Adding product ...");
+                showDialog("Please Wait...");
 
                 productInterface.addProduct(product, new Callback<String>() {
 
                     @Override
                     public void success(String productId, Response response) {
 
-                        Log.d("PRODUCT_JSON", "" + productId);
-                        //uploadProductImage(productId);
+                        product.productId = productId;
 
-                        saveAssuredPurchase(productId);
+                        if(picUri != null)
+                        {
+                            uploadProductImage(productId);
+                        }
+
+                        else
+                        {
+                            Toast.makeText(getContext(), "Information saved successfully", Toast.LENGTH_SHORT).show();
+                            hideDialog();
+
+                            if(getActivity() != null)
+                            {
+                                Intent data = new Intent();
+                                data.putExtra("LOAD", true);
+                                getActivity().setResult(RESULT_OK, data);
+                                getActivity().finish();
+                            }
+                        }
+
+                        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
+                                && CATEGORY.equalsIgnoreCase("products"))
+                        {
+                            saveAssuredPurchase(productId);
+                        }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to add product", Toast.LENGTH_LONG).show();
-                        Log.d("PRODUCT_JSON", "FAIL");
+                        Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_LONG).show();
+                        Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
             }
@@ -2011,9 +2223,61 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    private void deleteProduct()
+    {
+        ProductGalleryInterface productInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
+
+        try
+        {
+            JSONObject map = new JSONObject();
+
+            map.put("clientId", Constants.clientId);
+            map.put("productId", product.productId);
+            map.put("identifierType", "SINGLE");
+
+            //product.ClientId = Constants.clientId;
+            //product.FPTag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
+
+            //Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
+
+            showDialog("Please Wait...");
+
+            productInterface.deleteProduct(map, new Callback<String>() {
+
+                @Override
+                public void success(String productId, Response response) {
+
+                    Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                    hideDialog();
+
+                    if(getActivity() != null)
+                    {
+                        Intent data = new Intent();
+                        data.putExtra("LOAD", true);
+                        getActivity().setResult(RESULT_OK, data);
+                        getActivity().finish();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                    hideDialog();
+                    Toast.makeText(getContext(), "Failed to delete", Toast.LENGTH_LONG).show();
+                    Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
+                }
+            });
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     private void getAssuredPurchase(String productId)
     {
-        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+        Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
                 .getAssuredPurchaseDetails(String.format("{product_id:'%s'}", productId), new Callback<WebActionModel<AssuredPurchase>>() {
 
                     @Override
@@ -2080,15 +2344,22 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         if(responseCode == 200 || responseCode == 202)
         {
-            Toast.makeText(getContext(), "Product added successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Information saved successfully", Toast.LENGTH_LONG).show();
         }
 
         else
         {
-            Toast.makeText(getContext(), "Failed to add product", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_LONG).show();
+        }
+
+        if(getActivity() != null)
+        {
+            Intent data = new Intent();
+            data.putExtra("LOAD", true);
+            getActivity().setResult(RESULT_OK, data);
+            getActivity().finish();
         }
     }
-
 
     /*private boolean isValidMyPayementGateway()
     {
@@ -2141,4 +2412,54 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
     }*/
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.menu_delete, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.menu_delete:
+
+                deleteConfirmation();
+                break;
+        }
+
+        return true;
+    }
+
+
+    private void deleteConfirmation()
+    {
+        new MaterialDialog.Builder(getActivity())
+                .title(getString(R.string.are_you_sure_want_to_delete))
+                .positiveText(getString(R.string.delete))
+                .positiveColorRes(R.color.primaryColor)
+                .negativeText(getString(R.string.cancel))
+                .negativeColorRes(R.color.light_gray)
+                .callback(new MaterialDialog.ButtonCallback() {
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+
+                        super.onPositive(dialog);
+                        deleteProduct();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+                }).show();
+
+    }
 }

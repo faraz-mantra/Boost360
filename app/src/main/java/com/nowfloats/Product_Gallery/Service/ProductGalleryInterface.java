@@ -1,6 +1,8 @@
 package com.nowfloats.Product_Gallery.Service;
 
+import com.nowfloats.Product_Gallery.Model.AddressInformation;
 import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
+import com.nowfloats.Product_Gallery.Model.BankInformation;
 import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
@@ -102,16 +104,36 @@ public interface ProductGalleryInterface {
     @GET("/Product/v1/GetListings")
     void getAllProducts(@QueryMap Map<String, String> map, Callback<List<Product>> callback);
 
+    @Headers({"Content-Type: application/json"})
+    @DELETE("/Product/v1/Delete")
+    void deleteProduct(@Body Object map, Callback<String> callback);
 
-    @POST("/product_details/add-data")
+
+    @POST("product_details/add-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void addAssuredPurchaseDetails(@Body WAAddDataModel<AssuredPurchase> updateDataModel, Callback<String> callback);
 
-    @GET("/product_details/get-data")
+    @GET("product_details/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getAssuredPurchaseDetails(@Query("query") String query, Callback<WebActionModel<AssuredPurchase>> callback);
 
-    @POST("/product_details/update-data")
+    @POST("product_details/update-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void updateAssuredPurchaseDetails(@Body WaUpdateDataModel updateDataModel, Callback<String> callback);
+
+    @POST("/api/Seller/InformationSave")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void saveBankInformation(@Body BankInformation bankInformation, Callback<WebResponseModel<Object>> callback);
+
+    @GET("/api/Seller/InformationFetch")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getBankInformation(@Query("sellerId") String sellerId, Callback<WebResponseModel<BankInformation>> callback);
+
+    @POST("/api/Seller/CreateOrUpdatePickupAddress")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void savePickupAddress(@Body AddressInformation addressInformation, Callback<WebResponseModel<Object>> callback);
+
+    @GET("/api/Seller/PickupAddressList")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getPickupAddress(@Query("websiteId") String websiteId, Callback<WebResponseModel<List<AddressInformation>>> callback);
 }

@@ -585,5 +585,8 @@ public class Constants {
      * Dev Adapter
      */
     public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint("http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/").setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    //public static final RestAdapter assuredPurchaseRestAdapterDev = new RestAdapter.Builder().setEndpoint("http://ec2-13-232-212-139.ap-south-1.compute.amazonaws.com/").setConverter(new GsonConverter(new GsonBuilder().setLenient().create())).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response")).build();
+
+    public static final RestAdapter assuredPurchaseRestAdapterDev = new RestAdapter.Builder().setEndpoint("http://ec2-13-232-212-139.ap-south-1.compute.amazonaws.com").setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
 
 }

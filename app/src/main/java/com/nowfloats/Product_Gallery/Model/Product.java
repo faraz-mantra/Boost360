@@ -43,7 +43,8 @@ public class Product implements Serializable {
     public ArrayList<ImageListModel> Images;
     public String MerchantName;
     public String TileImageUri;
-    public String _id;
+    @SerializedName("_id")
+    public String productId;
     public String GPId;
     public String TotalQueries;
     public String CreatedOn;

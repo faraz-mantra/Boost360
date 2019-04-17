@@ -169,8 +169,13 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         }
     }
 
-    public void setData(List<Product> productList)
+    public void setData(List<Product> productList, boolean flag)
     {
+        if(flag)
+        {
+            this.productList.clear();
+        }
+
         this.productList.addAll(productList);
         notifyDataSetChanged();
     }
