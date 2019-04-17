@@ -43,6 +43,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nguyenhoanglam.imagepicker.model.Config;
+import com.nguyenhoanglam.imagepicker.model.Image;
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
@@ -746,7 +749,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         takeGallery.setOnClickListener(v -> {
 
-            galleryIntent();
+            //galleryIntent();
+            openImagePicker();
             dialog.dismiss();
         });
     }
@@ -1428,6 +1432,27 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    private void openImagePicker()
+    {
+        boolean folderMode = true;
+        boolean multipleMode = true;
+        boolean cameraOnly = false;
+
+        ImagePicker.with(getActivity())
+                .setFolderMode(folderMode)
+                //.setCameraOnly(cameraOnly)
+                .setShowCamera(false)
+                .setFolderTitle("Album")
+                .setMultipleMode(multipleMode)
+                //.setSelectedImages(images)
+                //.setMaxSize(1)
+                .setBackgroundColor("#212121")
+                .setAlwaysShowDoneButton(true)
+                .setRequestCode(100)
+                .setKeepScreenOn(true)
+                .start();
+    }
+
     private void galleryIntent()
     {
         try
@@ -1584,7 +1609,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && (requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE || requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE)) {
+        if (resultCode == RESULT_OK && requestCode == Config.RC_PICK_IMAGES && data != null)
+        {
+            ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
+            Log.d("RESULT_IMAGE", "image " + images.get(0).getPath());
+            display_image(images.get(0).getPath(), requestCode);
+        }
+
+        else if(resultCode == RESULT_OK && (requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE || requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE)) {
 
             Log.d("onActivityResult", "" + picUri.getPath());
 

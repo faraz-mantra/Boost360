@@ -1,5 +1,6 @@
 package com.nowfloats.Product_Gallery;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -154,5 +155,11 @@ public class ManageProductActivity extends BaseActivity
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fm_site_appearance);
         return fragment instanceof ProductCategoryFragment;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fm_site_appearance);
+        fragment.onActivityResult(requestCode, resultCode, data);
     }
 }
