@@ -7,7 +7,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,11 +122,6 @@ public class ProductPickupAddressFragment extends DialogFragment {
     {
         if(address == null)
         {
-            //editWarehouseName.setText("");
-            //editContactNumber.setText("");
-            //editBuildingName.setText("");
-            //editCity.setText("");
-            //editState.setText("");
             return;
         }
 
@@ -136,6 +130,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
         editBuildingName.setText(address.streetAddress != null ? address.streetAddress : "");
         editCity.setText(address.city != null ? address.city : "");
         editState.setText(address.state != null ? address.state : "");
+        editCountry.setText(address.country != null ? address.country : "");
     }
 
 

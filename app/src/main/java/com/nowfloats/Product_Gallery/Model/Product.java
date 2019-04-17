@@ -30,7 +30,7 @@ public class Product implements Serializable {
     @SerializedName(value="priority", alternate={"Priority"})
     public String Priority;
     public String ShipmentDuration;
-    public int availableUnits;
+    public int availableUnits = 1;
     public ArrayList<String> _keywords;
     public String ApplicationId;
     @SerializedName(value="fPTag", alternate={"TPTag"})
@@ -70,6 +70,7 @@ public class Product implements Serializable {
 
     public BuyOnlineLink BuyOnlineLink;
     public Specification keySpecification;
+    @SerializedName("otherSpecifications")
     public List<Specification> otherSpecification;
 
 

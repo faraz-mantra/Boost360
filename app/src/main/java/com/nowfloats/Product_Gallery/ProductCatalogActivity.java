@@ -136,7 +136,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
                     intent.putExtra("PRODUCT", product);
-                    startActivity(intent);
+                    startActivityForResult(intent, 300);
                 }
         );
 

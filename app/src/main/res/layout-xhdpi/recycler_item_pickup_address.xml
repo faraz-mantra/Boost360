@@ -24,13 +24,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="130dp"
+            android:minWidth="130dp"
             android:maxLines="1"
             android:textColor="@color/primaryColor"
             android:textSize="14sp"
             android:paddingRight="12dp"
             android:textStyle="bold"
             android:clickable="true"
-            android:text="Banjara Godown"/>
+            android:ellipsize="end"
+            android:text="Warehouse"/>
 
         <TextView
             android:id="@+id/label_address"
@@ -42,7 +44,7 @@
             android:paddingLeft="12dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="Cool Breeze Apartment, 302, Barfighar Lane, Konadapur, Hyderabad"/>
+            android:text=""/>
 
         <!--
         <View

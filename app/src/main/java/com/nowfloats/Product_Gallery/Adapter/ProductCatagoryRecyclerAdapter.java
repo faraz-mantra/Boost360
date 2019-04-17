@@ -54,7 +54,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             String brand = model.brandName == null ? "" : model.brandName;
 
             viewHolder.tvBrand.setVisibility(View.VISIBLE);
-            viewHolder.tvMissiongInfo.setVisibility(View.GONE);
+            viewHolder.tvMissingInfo.setVisibility(View.GONE);
 
             if(!category.isEmpty() && !brand.isEmpty())
             {
@@ -75,7 +75,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             else
             {
                 viewHolder.tvBrand.setVisibility(View.GONE);
-                viewHolder.tvMissiongInfo.setVisibility(View.VISIBLE);
+                viewHolder.tvMissingInfo.setVisibility(View.VISIBLE);
             }
 
 
@@ -100,8 +100,22 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
             try
             {
-                String formattedPrice = Helper.getCurrencyFormatter().format(model.Price);
+                String formattedPrice = Helper.getCurrencyFormatter().format(model.Price - model.DiscountAmount);
                 viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
+
+                if(model.DiscountAmount != 0)
+                {
+                    viewHolder.tvBasePrice.setVisibility(View.VISIBLE);
+
+                    formattedPrice = Helper.getCurrencyFormatter().format(model.Price);
+                    viewHolder.tvBasePrice.setPaintFlags(viewHolder.tvBasePrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    viewHolder.tvBasePrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
+                }
+
+                else
+                {
+                    viewHolder.tvBasePrice.setVisibility(View.INVISIBLE);
+                }
             }
 
             catch (Exception e)
@@ -109,7 +123,6 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
                 e.printStackTrace();
             }
 
-            viewHolder.tvDiscountedPrice.setPaintFlags(viewHolder.tvDiscountedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
             Picasso picasso = Picasso.with(context);
             String image_url = model.TileImageUri;
@@ -145,8 +158,8 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         private TextView tvName;
         private TextView tvDescription;
         private TextView tvPrice;
-        private TextView tvDiscountedPrice;
-        private TextView tvMissiongInfo;
+        private TextView tvBasePrice;
+        private TextView tvMissingInfo;
 
         private ProductListViewHolder(View itemView)
         {
@@ -158,8 +171,8 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             tvName = itemView.findViewById(R.id.label_name);
             tvDescription = itemView.findViewById(R.id.label_description);
             tvPrice = itemView.findViewById(R.id.label_price);
-            tvDiscountedPrice = itemView.findViewById(R.id.label_discounted_price);
-            tvMissiongInfo = itemView.findViewById(R.id.label_missing_info);
+            tvBasePrice = itemView.findViewById(R.id.label_base_price);
+            tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
         }
 
         @Override

@@ -64,18 +64,15 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.widget.WidgetKey;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -119,7 +116,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private BottomSheetBehavior sheetBehaviorAddress;
 
     private ProductPickupAddressFragment pickupAddressFragment;
-    //private int quantity = 1, onlineQuantity, codQuantity;
     private String[] paymentOptionTitles;
 
 
@@ -196,33 +192,29 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         if(bundle != null)
         {
-            //this.product = (com.nowfloats.Product_Gallery.Model.Product) bundle.getSerializable("PRODUCT");
+            CATEGORY = bundle.getString("CATEGORY");
+            productType = bundle.getString("PRODUCT_TYPE");
 
             if(product != null && product.productId != null )
             {
                 setProductData();
                 getAssuredPurchase(product.productId);
+                ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Edit " + CATEGORY));
             }
 
-            CATEGORY = bundle.getString("CATEGORY");
-            productType = bundle.getString("PRODUCT_TYPE");
-
-            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + CATEGORY));
+            else
+            {
+                ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + CATEGORY));
+            }
 
             if(CATEGORY.equalsIgnoreCase("products"))
             {
-                //binding.layoutInventory.layoutInventoryRoot.setVisibility(View.GONE);
-                //binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.GONE);
-
                 binding.layoutBottomSheet.tvPickAddress.setVisibility(View.GONE);
                 binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
             }
 
             else
             {
-                //binding.layoutInventory.layoutInventoryRoot.setVisibility(View.VISIBLE);
-                //binding.layoutPaymentMethod.layoutPaymentAssuredPurchase.setVisibility(View.VISIBLE);
-
                 binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
                 binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
             }
@@ -241,24 +233,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         placeholder();
 
-        if(product == null)
-        {
-            Log.d("PRODUCT_LOG", "NULL");
-        }
-
-        else
-        {
-            Log.d("PRODUCT_LOG", "PRODUCT IS NOT NULL");
-        }
-
         binding.layoutShippingMatrixDetails.editWeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
         binding.layoutShippingMatrixDetails.editHeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
         binding.layoutShippingMatrixDetails.editLength.setKeyListener(DigitsKeyListener.getInstance(true,true));
         binding.layoutShippingMatrixDetails.editThickness.setKeyListener(DigitsKeyListener.getInstance(true,true));
-
-        //binding.layoutInventory.editAvailableQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        //binding.layoutInventory.editCodMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        //binding.layoutInventory.editPrepaidOnlineMaxQty.setKeyListener(DigitsKeyListener.getInstance(true,true));
 
         binding.layoutInventory.labelInventoryHint.setText(String.valueOf("Inventory availability"));
         binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available quantity"));
@@ -292,10 +270,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.editDiscount.setText(product.DiscountAmount > 0 ? String.valueOf(product.DiscountAmount) : "");
 
         this.setFinalPrice();
-
-        //this.quantity = product.availableUnits;
-        //this.codQuantity = product.maxCodOrders;
-        //this.onlineQuantity = product.maxPrepaidOnlineAvailable;
 
         /**
          * Product availability and quantity
@@ -351,14 +325,39 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             binding.layoutProductSpecification.layoutKeySpecification.editValue.setText(product.keySpecification.value != null ? product.keySpecification.value : "");
         }
 
-        if(product.otherSpecification != null)
+        /*if(product.otherSpecification != null)
         {
             adapter.setData(product.otherSpecification);
-        }
+        }*/
 
         if(product.paymentType != null)
         {
             paymentAndDeliveryMode.setValue(product.paymentType);
+        }
+
+        try
+        {
+            String image_url = product.TileImageUri;
+
+            if (image_url != null && image_url.length() > 0 && !image_url.equals("null"))
+            {
+                if (!image_url.contains("http"))
+                {
+                    image_url = Constants.BASE_IMAGE_URL + product.TileImageUri;
+                }
+
+                Picasso.with(getActivity()).load(image_url).placeholder(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+            }
+
+            else
+            {
+                Picasso.with(getActivity()).load(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -2229,7 +2228,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         try
         {
-            JSONObject map = new JSONObject();
+            HashMap<String, String> map = new HashMap<>();
 
             map.put("clientId", Constants.clientId);
             map.put("productId", product.productId);
@@ -2242,10 +2241,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             showDialog("Please Wait...");
 
-            productInterface.deleteProduct(map, new Callback<String>() {
+            productInterface.removeProduct(map, new Callback<String>() {
 
                 @Override
                 public void success(String productId, Response response) {
+
+                    Log.d("PRODUCT_JSON", "SUCCESS : Product Deleted Successfully");
 
                     Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
                     hideDialog();
@@ -2302,6 +2303,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         if(materialDialog != null)
         {
+            materialDialog.setContent(content);
             return;
         }
 

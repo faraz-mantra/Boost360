@@ -15,6 +15,7 @@ import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.sellerprofile.model.SellerProfile;
 import com.nowfloats.sellerprofile.model.WebResponseModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.webactions.webactioninterfaces.MOD_DELETE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,8 +106,8 @@ public interface ProductGalleryInterface {
     void getAllProducts(@QueryMap Map<String, String> map, Callback<List<Product>> callback);
 
     @Headers({"Content-Type: application/json"})
-    @DELETE("/Product/v1/Delete")
-    void deleteProduct(@Body Object map, Callback<String> callback);
+    @MOD_DELETE("/Product/v1/Delete")
+    void removeProduct(@Body HashMap<String,String> map, Callback<String> callback);
 
 
     @POST("product_details/add-data")

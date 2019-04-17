@@ -21,12 +21,13 @@
                 android:id="@+id/layout_product_inventory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:paddingBottom="3dp"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/label_inventory_hint"
                     style="@style/ProductLabelTextStyle"
+                    android:layout_gravity="center_vertical"
                     android:text="Inventory Availability"/>
 
                 <ImageButton
@@ -38,7 +39,7 @@
             <LinearLayout
                 android:id="@+id/layout_spinner_stock_availability"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="@drawable/white_rectangle_background"
                 android:orientation="horizontal"
                 android:layout_weight="1"
@@ -56,7 +57,14 @@
                 <Spinner
                     android:id="@+id/spinner_stock_availability"
                     style="@style/ProductSpinnerStyle"
+                    android:layout_weight="1"
                     android:entries="@array/stock_availability" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_spinner_down_arrow"/>
 
             </LinearLayout>
 
@@ -88,7 +96,7 @@
 
                 <ImageButton
                     android:id="@+id/remove_quantity"
-                    android:layout_width="50dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/quantity_button_remove"
                     android:contentDescription="@null"
@@ -116,7 +124,7 @@
 
                 <ImageButton
                     android:id="@+id/add_quantity"
-                    android:layout_width="50dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/quantity_button_add"
                     android:contentDescription="@null"
