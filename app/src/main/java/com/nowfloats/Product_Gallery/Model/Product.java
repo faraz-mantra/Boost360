@@ -72,7 +72,7 @@ public class Product implements Serializable {
     public Specification keySpecification;
     @SerializedName("otherSpecifications")
     public List<Specification> otherSpecification;
-
+    public String pickupAddressReferenceId;
 
     public static class BuyOnlineLink implements Serializable
     {

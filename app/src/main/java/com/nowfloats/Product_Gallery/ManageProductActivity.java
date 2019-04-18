@@ -158,7 +158,10 @@ public class ManageProductActivity extends BaseActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fm_site_appearance);
         fragment.onActivityResult(requestCode, resultCode, data);
     }

@@ -109,16 +109,19 @@ public interface ProductGalleryInterface {
     @MOD_DELETE("/Product/v1/Delete")
     void removeProduct(@Body HashMap<String,String> map, Callback<String> callback);
 
+    @PUT("/Product/v1/Update")
+    void updateProduct(@Body Product_Gallery_Update_Model model,Callback<ArrayList<String>> callback);
 
-    @POST("product_details/add-data")
+
+    @POST("/product_details/add-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void addAssuredPurchaseDetails(@Body WAAddDataModel<AssuredPurchase> updateDataModel, Callback<String> callback);
 
-    @GET("product_details/get-data")
+    @GET("/product_details/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getAssuredPurchaseDetails(@Query("query") String query, Callback<WebActionModel<AssuredPurchase>> callback);
 
-    @POST("product_details/update-data")
+    @POST("/product_details/update-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void updateAssuredPurchaseDetails(@Body WaUpdateDataModel updateDataModel, Callback<String> callback);
 
@@ -132,7 +135,7 @@ public interface ProductGalleryInterface {
 
     @POST("/api/Seller/CreateOrUpdatePickupAddress")
     @Headers({"Authorization: " + Constants.WA_KEY})
-    void savePickupAddress(@Body AddressInformation addressInformation, Callback<WebResponseModel<Object>> callback);
+    void savePickupAddress(@Body AddressInformation addressInformation, Callback<WebResponseModel<AddressInformation>> callback);
 
     @GET("/api/Seller/PickupAddressList")
     @Headers({"Authorization: " + Constants.WA_KEY})
