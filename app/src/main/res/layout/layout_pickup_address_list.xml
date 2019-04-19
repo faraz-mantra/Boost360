@@ -9,9 +9,23 @@
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         android:orientation="vertical"
-        android:background="@color/spinner_grey_background"
+        android:background="@color/white"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="PICKUP ADDRESS"
+            android:paddingStart="@dimen/margin_15"
+            android:paddingEnd="@dimen/margin_15"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#efefef"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryTextColor"
+            android:gravity="center_vertical" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/pickup_address_list"
@@ -27,7 +41,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primaryColor"
             android:textSize="12sp"
-            android:layout_margin="@dimen/margin_20"
+            android:layout_margin="@dimen/margin_15"
             android:gravity="center"
             android:textStyle="bold"
             android:background="@drawable/white_rectangle_background"

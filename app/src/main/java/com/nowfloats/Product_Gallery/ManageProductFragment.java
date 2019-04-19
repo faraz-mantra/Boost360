@@ -113,6 +113,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private String currencyValue;
     private String currencyType = "";
     private String productType = "";
+    private int MAX_IMAGE_ALLOWED = 8;
 
     private boolean isPrimaryImagePicker;
 
@@ -231,6 +232,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutShippingMatrixDetails.editHeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
         binding.layoutShippingMatrixDetails.editLength.setKeyListener(DigitsKeyListener.getInstance(true,true));
         binding.layoutShippingMatrixDetails.editThickness.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.editBasePrice.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.editDiscount.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.editGst.setKeyListener(DigitsKeyListener.getInstance(true,true));
 
         binding.layoutInventory.labelInventoryHint.setText(String.valueOf("Inventory availability"));
         binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available quantity"));
@@ -266,7 +270,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
 
             if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                    &&productType.equalsIgnoreCase("products"))
+                    && productType.equalsIgnoreCase("products"))
             {
                 binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
                 binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
@@ -366,7 +370,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             if(product.paymentType.equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
             {
-                paymentAndDeliveryMode.setValue(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue());
+                paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
                 binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
 
                 binding.layoutBottomSheet.spinnerPaymentOption.setSelection(0);
@@ -393,7 +397,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             else if(product.paymentType.equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue()))
             {
-                paymentAndDeliveryMode.setValue(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue());
+                paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
                 binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[1]);
 
                 binding.layoutBottomSheet.spinnerPaymentOption.setSelection(1);
@@ -414,7 +418,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             else if(product.paymentType.equalsIgnoreCase(Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL.getValue()))
             {
-                paymentAndDeliveryMode.setValue(Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL.getValue());
+                paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL;
                 binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[2]);
 
                 binding.layoutBottomSheet.spinnerPaymentOption.setSelection(2);
@@ -467,6 +471,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutShippingMatrixDetails.editWeight.setText(assuredPurchase.weight > 0 ? String.valueOf(assuredPurchase.weight) : "");
         binding.layoutShippingMatrixDetails.editLength.setText(assuredPurchase.length > 0 ? String.valueOf(assuredPurchase.length) : "");
         binding.layoutShippingMatrixDetails.editThickness.setText(assuredPurchase.width > 0 ? String.valueOf(assuredPurchase.width) : "");
+        binding.editGst.setText(assuredPurchase.gstCharge > 0 ? String.valueOf(assuredPurchase.gstCharge) : "");
     }
 
 
@@ -1292,6 +1297,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     imageList.remove(viewHolder.getAdapterPosition());
                     notifyItemRemoved(viewHolder.getAdapterPosition());
+                    displayImageAddButton();
                 });
 
                 ProductImageResponseModel image = imageList.get(i);
@@ -1433,12 +1439,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void openImagePicker(int requestCode)
     {
-        int max = 8;
-
-        if(requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE)
-        {
-            max = 1;
-        }
+        int max = MAX_IMAGE_ALLOWED - adapterImage.getItemCount();
+        max = max > 0 ? max : 1;
 
         boolean folderMode = true;
         boolean multipleMode = true;
@@ -1456,6 +1458,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 .start();
     }
 
+    private void displayImageAddButton()
+    {
+        if(MAX_IMAGE_ALLOWED > adapterImage.getItemCount())
+        {
+            binding.layoutAddImage.setVisibility(View.VISIBLE);
+        }
+
+        else
+        {
+            binding.layoutAddImage.setVisibility(View.GONE);
+        }
+    }
 
     private void cameraIntent(int requestCode)
     {
@@ -1617,6 +1631,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             try
             {
+
                 File file = new File(path);
 
                 // bitmap factory
@@ -1648,6 +1663,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 Toast.makeText(getContext(), "Failed to Set Image", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
+            }
+
+            finally
+            {
+                displayImageAddButton();
             }
         }
 
@@ -2020,6 +2040,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             assuredPurchase.weight = Double.valueOf(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim());
             assuredPurchase.length = Double.valueOf(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim());
             assuredPurchase.width = Double.valueOf(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim());
+            assuredPurchase.gstCharge = Double.valueOf(binding.editGst.getText().toString().trim());
         }
 
         catch (Exception e)
@@ -2089,11 +2110,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         update.setQuery(String.format("{product_id:'%s'}", assuredPurchase.productId));
 
-        update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s'}}",
+        update.setUpdateValue(String.format("{$set:{length:'%s', width:'%s', weight:'%s', height:'%s', gst_slab:'%s'}}",
                 assuredPurchase.length,
                 assuredPurchase.width,
                 assuredPurchase.weight,
-                assuredPurchase.height));
+                assuredPurchase.height,
+                assuredPurchase.gstCharge));
 
         update.setMulti(true);
 
@@ -2256,11 +2278,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         Log.d("PRODUCT_JSON", "Product Updated Successfully");
 
-                        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
+                        /*if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                                 && productType.equalsIgnoreCase("products"))
                         {
                             updateAssuredPurchase(product.productId);
-                        }
+                        }*/
+
+                        updateAssuredPurchase(product.productId);
 
                         for(ProductImageResponseModel image: imageList)
                         {
@@ -2348,11 +2372,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         product.productId = productId;
 
-                        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
+                        /*if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                                 && productType.equalsIgnoreCase("products"))
                         {
                             saveAssuredPurchase(productId);
-                        }
+                        }*/
+
+                        saveAssuredPurchase(productId);
 
                         for(ProductImageResponseModel image: imageList)
                         {
@@ -2621,6 +2647,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 if(result != null)
                 {
                     adapterImage.setData(result);
+                    displayImageAddButton();
                 }
             }
 
