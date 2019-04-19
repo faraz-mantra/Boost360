@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.Product_Gallery.Model.AddressInformation;
@@ -33,19 +35,21 @@ public class ProductPickupAddressFragment extends DialogFragment {
     private EditText editBuildingName;
     private EditText editCity;
     private EditText editState;
+    private TextView tvFileName;
+    private TextView tvTitle;
+    private TextView tvWarehouse;
+    private Button btnFileChooser;
+    private CheckBox checkAcceptance;
 
     private OnSaveAddress listener;
+    private OnFileChooser fileChooser;
+    private boolean isFileSelected;
+
     private AddressInformation address;
 
     public static ProductPickupAddressFragment newInstance() {
 
         ProductPickupAddressFragment fragment = new ProductPickupAddressFragment();
-
-        //Bundle args = new Bundle();
-
-        //args.putSerializable("PICKUP_ADDRESS", address);
-        //fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -58,13 +62,6 @@ public class ProductPickupAddressFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        /*Bundle bundle = getArguments();
-
-        if (bundle != null)
-        {
-            this.address = (AddressInformation) bundle.getSerializable("PICKUP_ADDRESS");
-        }*/
     }
 
     @Override
@@ -88,6 +85,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
         Button btnCancel = view.findViewById(R.id.btn_cancel);
         Button btnSave = view.findViewById(R.id.btn_save);
+        btnFileChooser = view.findViewById(R.id.btn_file_chooser);
 
         editWarehouseName = view.findViewById(R.id.edit_warehouse_name);
         editContactNumber = view.findViewById(R.id.edit_contact_number);
@@ -95,6 +93,11 @@ public class ProductPickupAddressFragment extends DialogFragment {
         editCity = view.findViewById(R.id.edit_city);
         editState = view.findViewById(R.id.edit_state);
         editCountry = view.findViewById(R.id.edit_country);
+        tvFileName = view.findViewById(R.id.label_file_name);
+        tvTitle = view.findViewById(R.id.label_title);
+        tvWarehouse = view.findViewById(R.id.label_warehouse);
+
+        checkAcceptance = view.findViewById(R.id.check_address_acceptance);
 
         editCountry.setFocusable(false);
         editCountry.setFocusableInTouchMode(false);
@@ -113,6 +116,13 @@ public class ProductPickupAddressFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        btnFileChooser.setOnClickListener(v -> fileChooser.openDialog());
+
+        String title = address ==  null ? "Add New Address" : (address.id != null ? address.areaName : "Edit Address");
+        tvTitle.setText(String.valueOf(title));
+        String subTitle = address ==  null ? "" : (address.areaName != null ? address.areaName : "");
+        tvWarehouse.setText(String.valueOf(subTitle));
 
         setAddressData(address);
         return view;
@@ -133,6 +143,19 @@ public class ProductPickupAddressFragment extends DialogFragment {
         editCountry.setText(address.country != null ? address.country : "");
     }
 
+
+    public void setFileName(String fileName)
+    {
+        tvFileName.setText(fileName);
+        tvFileName.setVisibility(View.VISIBLE);
+        btnFileChooser.setVisibility(View.GONE);
+
+    }
+
+    public void isFileSelected(boolean isFileSelected)
+    {
+        this.isFileSelected = isFileSelected;
+    }
 
     private AddressInformation initAddressInformation()
     {
@@ -168,6 +191,12 @@ public class ProductPickupAddressFragment extends DialogFragment {
             return false;
         }
 
+        if(!isFileSelected)
+        {
+            Toast.makeText(getContext(), "Address proof required", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         if(editBuildingName.getText().toString().trim().length() == 0)
         {
             editBuildingName.requestFocus();
@@ -193,6 +222,12 @@ public class ProductPickupAddressFragment extends DialogFragment {
         {
             editCountry.requestFocus();
             Toast.makeText(getContext(), "Select country", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(!checkAcceptance.isChecked())
+        {
+            Toast.makeText(getContext(), "Please confirm entered details", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -255,8 +290,6 @@ public class ProductPickupAddressFragment extends DialogFragment {
                 dialog.dismiss();
 
                 editCountry.setText(strVal);
-
-                //etPin.requestFocus();
         });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
@@ -289,5 +322,32 @@ public class ProductPickupAddressFragment extends DialogFragment {
     public interface OnSaveAddress
     {
         void onSave(AddressInformation addressInformation);
+    }
+
+    public void setFileChooserListener(OnFileChooser fileChooser)
+    {
+        this.fileChooser = fileChooser;
+    }
+
+    public interface OnFileChooser
+    {
+        void openDialog();
+    }
+
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        Dialog dialog = getDialog();
+
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 }

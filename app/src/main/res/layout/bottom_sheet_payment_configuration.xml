@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Payment Configuration"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -36,6 +36,7 @@
                 android:textSize="12sp"
                 android:paddingRight="5dp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:layout_below="@+id/label_payment_configuration"
                 android:textColor="@android:color/white" />
 
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="of Fastrack Bare Basic Watch"
                 android:textSize="12sp"
+                android:visibility="gone"
                 android:layout_below="@+id/label_payment_configuration"
                 android:layout_toRightOf="@+id/label_variants"
                 android:textColor="#c9c9c9" />
@@ -275,7 +277,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
                             android:layout_toRightOf="@id/check_payment_configuration"
-                            android:text="I agree that boost will keep 3% of the final cart value as convenience fee. (Towards payment and delivery enablement)"/>
+                            android:text="I agree that boost will keep 0% of the final cart value as convenience fee. (Towards payment and delivery enablement)"/>
 
                         <View
                             android:id="@+id/dotted_line_accept"
@@ -378,8 +380,8 @@
                         android:id="@+id/btn_save_info"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:minWidth="100dp"
-                        android:background="@color/primaryColor"
+                        android:minWidth="130dp"
+                        android:background="@drawable/rounded_button_enabled"
                         android:textColor="@android:color/white"
                         android:layout_alignParentRight="true"
                         android:textSize="14sp"

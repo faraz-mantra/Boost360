@@ -228,6 +228,7 @@ dependencies {
     implementation project(':imagepicker')
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.github.angads25:toggle:1.1.0'
+    implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.6'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
 }
 

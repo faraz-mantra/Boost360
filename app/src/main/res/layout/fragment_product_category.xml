@@ -2,154 +2,149 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-            <android.support.v4.widget.NestedScrollView
-                xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v4.widget.NestedScrollView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.nowfloats.Product_Gallery.ProductCategoryFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_20">
+
+            <LinearLayout
+                android:id="@+id/layout_custom_product"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:fillViewport="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context="com.nowfloats.Product_Gallery.ProductCategoryFragment">
+                android:layout_height="wrap_content"
+                android:background="@drawable/grey_rounded_spinner_background"
+                android:orientation="vertical">
 
-                <FrameLayout
+                <Spinner
+                    android:id="@+id/spinner_item_option"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="wrap_content"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/margin_20">
+            </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/layout_custom_product"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/grey_rounded_spinner_background"
-                            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/layout_physical_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/white_rectangle_background"
+                android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/spinner_item_option"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_15"
+                    app:srcCompat="@drawable/ic_product"/>
 
-                        </LinearLayout>
+                <TextView
+                    android:id="@+id/label_item_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Physical Product"
+                    android:layout_toRightOf="@+id/iv_icon"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                        <RelativeLayout
-                            android:id="@+id/layout_physical_product"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:background="@drawable/white_rectangle_background"
-                            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/label_item_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_icon"
+                    android:layout_below="@+id/label_item_type"
+                    android:text="Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc."
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="14sp" />
 
-                            <ImageView
-                                android:id="@+id/iv_icon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/margin_15"
-                                app:srcCompat="@drawable/ic_product"/>
+            </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/label_item_type"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Physical Product"
-                                android:layout_toRightOf="@+id/iv_icon"
-                                android:textColor="@color/primaryTextColor"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/layout_service_offering"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/white_rectangle_background"
+                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/label_item_description"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/iv_icon"
-                                android:layout_below="@+id/label_item_type"
-                                android:text="Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc."
-                                android:textColor="@color/secondaryTextColor"
-                                android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/iv_service_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_15"
+                    app:srcCompat="@drawable/ic_services"/>
 
-                        </RelativeLayout>
+                <TextView
+                    android:id="@+id/label_item_service_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Service Offering"
+                    android:layout_toRightOf="@+id/iv_service_icon"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                        <RelativeLayout
-                            android:id="@+id/layout_service_offering"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:background="@drawable/white_rectangle_background"
-                            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/label_item_service_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_service_icon"
+                    android:layout_below="@+id/label_item_service_type"
+                    android:text="Can be given in person and doesn't need delivery e.g: Therapy, course, financial consultation."
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="14sp" />
 
-                            <ImageView
-                                android:id="@+id/iv_service_icon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/margin_15"
-                                app:srcCompat="@drawable/ic_services"/>
+            </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/label_item_service_type"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Service Offering"
-                                android:layout_toRightOf="@+id/iv_service_icon"
-                                android:textColor="@color/primaryTextColor"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/layout_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/label_item_service_description"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/iv_service_icon"
-                                android:layout_below="@+id/label_item_service_type"
-                                android:text="Can be given in person and doesn't need delivery e.g: Therapy, course, financial consultation."
-                                android:textColor="@color/secondaryTextColor"
-                                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/label_product_type"
+                    style="@style/ProductLabelTextStyle"
+                    android:text="Product Type/Category" />
 
-                        </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/ib_info_product_type"
+                    style="@style/ProductHelpButtonStyle" />
 
-                        <LinearLayout
-                            android:id="@+id/layout_brand"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_20"
-                            android:orientation="horizontal">
+            </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/label_product_type"
-                                style="@style/ProductLabelTextStyle"
-                                android:text="Product Type/Category" />
+            <EditText
+                android:id="@+id/edit_category"
+                style="@style/ProductEditTextStyle"
+                android:layout_marginTop="@dimen/margin_5"
+                android:hint="Write the item type eg. Book, Smartphone etc." />
 
-                            <ImageButton
-                                android:id="@+id/ib_info_product_type"
-                                style="@style/ProductHelpButtonStyle" />
+            <Button
+                android:id="@+id/btn_start"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:minWidth="120dp"
+                android:background="@drawable/rounded_button_disabled"
+                android:enabled="false"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/margin_20"
+                android:textColor="@android:color/white"
+                android:text="START" />
 
-                        </LinearLayout>
+        </LinearLayout>
 
-                        <EditText
-                            android:id="@+id/edit_category"
-                            style="@style/ProductEditTextStyle"
-                            android:layout_marginTop="@dimen/margin_5"
-                            android:hint="Write the item type eg. Book, Smartphone etc." />
-
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btn_start"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/disableButtonColor"
-                        android:enabled="false"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="bottom"
-                        android:text="START" />
-
-                </FrameLayout>
-
-            </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </layout>

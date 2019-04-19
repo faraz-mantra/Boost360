@@ -1,6 +1,7 @@
 package com.nowfloats.Product_Gallery.Service;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nowfloats.Product_Gallery.ManageProductFragment;
 import com.nowfloats.util.Constants;
@@ -122,6 +123,7 @@ public class UploadImage extends AsyncTask<String,String,String>
     protected void onPostExecute(final String result){
 
         listener.onPostExecute(result, responseCode);
+       // Log.d("FILE_UPLOAD_RESPONSE", "RESPONSE: " + result);
     }
 
     public void setImageUploadListener(ImageUploadListener listener)

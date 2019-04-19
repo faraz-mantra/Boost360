@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +23,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
@@ -43,8 +45,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
@@ -54,10 +54,10 @@ import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
 import com.nowfloats.Product_Gallery.Model.AddressInformation;
 import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
 import com.nowfloats.Product_Gallery.Model.BankInformation;
-import com.nowfloats.Product_Gallery.Model.Product;
+import com.nowfloats.Product_Gallery.Model.ProductImageResponseModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
 import com.nowfloats.Product_Gallery.Model.UpdateValue;
-import com.nowfloats.Product_Gallery.Service.ProductDelete;
+import com.nowfloats.Product_Gallery.Service.MultipleFileUpload;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.UploadImage;
 import com.nowfloats.Product_Gallery.fragments.ProductPickupAddressFragment;
@@ -71,22 +71,34 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.webactions.WebAction;
+import com.nowfloats.webactions.WebActionsFilter;
+import com.nowfloats.webactions.models.ProductImage;
+import com.nowfloats.webactions.models.WebActionError;
+import com.nowfloats.webactions.webactioninterfaces.IFilter;
 import com.nowfloats.widget.WidgetKey;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
+import com.vincent.filepicker.Constant;
+import com.vincent.filepicker.activity.NormalFilePickActivity;
+import com.vincent.filepicker.filter.entity.NormalFile;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -96,13 +108,15 @@ import static android.app.Activity.RESULT_OK;
 
 public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener{
 
+    private String TAG = ManageProductFragment.class.getSimpleName();
+
     private String currencyValue;
     private String currencyType = "";
     private String productType = "";
 
     private boolean isPrimaryImagePicker;
 
-    private List<Product.Image> imageList = new ArrayList<>();
+    private List<ProductImageResponseModel> imageList = new ArrayList<>();
 
     private ProductSpecificationRecyclerAdapter adapter;
     private ProductImageRecyclerAdapter adapterImage;
@@ -112,6 +126,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private final int CAMERA_PRIMARY_IMAGE_REQUEST_CODE = 101;
     private final int CAMERA_SECONDARY_IMAGE_REQUEST_CODE = 102;
+    public static final String FILE_EXTENSIONS [] = new String[] { "doc", "docx", "xls", "xlsx", "pdf", "jpg", "jpeg" };
 
     private final int GALLERY_REQUEST_CODE = 2;
     private Uri picUri;
@@ -132,7 +147,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private ProductPickupAddressFragment pickupAddressFragment;
     private String[] paymentOptionTitles;
-
+    private WebAction mWebAction;
 
     public static ManageProductFragment newInstance(String productType, String category, com.nowfloats.Product_Gallery.Model.Product product)
     {
@@ -167,12 +182,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
-        /*Bundle bundle = this.getArguments();
-
-        if (bundle != null)
-        {
-            this.product = (Product) bundle.getSerializable("PRODUCT");
-        }*/
+        mWebAction = getWebAction();
     }
 
     @Override
@@ -185,7 +195,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -231,21 +241,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         binding.btnPublish.setOnClickListener(view -> saveProduct());
 
-        String transactionFees = getTransactionFees();
-        binding.layoutBottomSheet.tvPaymentConfigurationAcceptanceMessage.setText(String.format(String.valueOf(getString(R.string.payment_config_acceptance_message)), transactionFees));
-
-        /*if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                && productType.equalsIgnoreCase("products"))
-        {
-            binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
-            binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
-        }
-
-        else
-        {
-            binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
-            binding.layoutBottomSheet.tvPickAddress.setVisibility(View.GONE);
-        }*/
+        displayPaymentAcceptanceMessage();
 
         Bundle bundle = getArguments();
 
@@ -257,8 +253,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             if(product != null && product.productId != null )
             {
                 setProductData();
+
                 getAssuredPurchase(product.productId);
-                ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Edit " + CATEGORY));
+                displayImagesForProduct(product.productId);
+
+                ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Edit " + product.Name));
             }
 
             else
@@ -551,15 +550,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.labelFinalPrice.setText(Helper.getCurrencyFormatter().format(finalPrice));
     }
 
-    /**
-     * Revamped Widget Logic
-     */
-    private String getTransactionFees()
-    {
-        String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_TRANSACTION_FEES, WidgetKey.WIDGET_PROPERTY_TRANSACTION_FEES);
-        return value.contains("%") ? value : value.concat("%");
-    }
-
     private void placeholder()
     {
         String category;
@@ -584,14 +574,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void addPropertyListener()
     {
-        //propertyList.add(new Product().new Property("Key 1", "Value 1"));
-        //propertyList.add(new Product().new Property("Key 2", "Value 2"));
-        //propertyList.add(new Product().new Property("Key 3", "Value 3"));
-
         binding.layoutProductSpecification.buttonAddProperty.setOnClickListener(view -> {
-
-            //propertyList.add(new Product().new Property());
-            //adapter.notifyItemInserted(propertyList.size());
 
             if(product.otherSpecification == null)
             {
@@ -601,6 +584,34 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.otherSpecification.add(new com.nowfloats.Product_Gallery.Model.Product.Specification());
             adapter.notifyItemInserted(product.otherSpecification.size());
         });
+    }
+
+
+    private void displayPaymentAcceptanceMessage()
+    {
+        try
+        {
+            String transactionFees = WidgetKey.getPropertyValue(WidgetKey.WIDGET_TRANSACTION_FEES, WidgetKey.WIDGET_PROPERTY_TRANSACTION_FEES);
+
+            if(Double.valueOf(transactionFees) > 0)
+            {
+                transactionFees = transactionFees.contains("%") ? transactionFees : transactionFees.concat("%");
+                binding.layoutBottomSheet.tvPaymentConfigurationAcceptanceMessage.setText(String.format(String.valueOf(getString(R.string.payment_config_acceptance_message)), transactionFees));
+
+                binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.VISIBLE);
+            }
+
+            else
+            {
+                binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
+            }
+        }
+
+        catch (Exception e)
+        {
+            binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
+            e.printStackTrace();
+        }
     }
 
     private void initPaymentAdapter()
@@ -642,7 +653,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 case 0:
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
-                    binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.VISIBLE);
+                    displayPaymentAcceptanceMessage();
 
                     if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                             && productType.equalsIgnoreCase("products"))
@@ -657,6 +668,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                         binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
                         binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+                    }
+
+                    if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() == View.VISIBLE)
+                    {
+                        Toast.makeText(getContext(), "Please accept terms and condition", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
                     if(isValidBankInformation())
@@ -792,17 +809,19 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
 
         pickupAddressFragment.setAddress(addressInformation);
+        pickupAddressFragment.isFileSelected(false);
+
         pickupAddressFragment.show(getFragmentManager(), "Address");
 
         pickupAddressFragment.setOnClickListener(information -> saveAddressInformation(information));
+
+        pickupAddressFragment.setFileChooserListener(() -> openFileChooser());
     }
+
 
     public void addPaymentConfigListener()
     {
-        binding.layoutPaymentMethod.tvPaymentConfiguration.setOnClickListener(view -> {
-
-            toggleBottomSheet();
-        });
+        binding.layoutPaymentMethod.tvPaymentConfiguration.setOnClickListener(view -> toggleBottomSheet());
     }
 
     private void addImagePickerListener()
@@ -846,7 +865,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         takeGallery.setOnClickListener(v -> {
 
-            //galleryIntent();
             openImagePicker(requestCode);
             dialog.dismiss();
         });
@@ -1081,83 +1099,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             }
         });
-
-
-        /*binding.layoutInventory.spinnerStockAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
-
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-                if(pos == 0)
-                {
-                    binding.layoutInventory.spinnerStockAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_instock));
-
-                    binding.layoutInventory.spinnerCodAvailability.setEnabled(true);
-                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setEnabled(true);
-                    binding.layoutInventory.editCodMaxQty.setEnabled(true);
-                    binding.layoutInventory.editPrepaidOnlineMaxQty.setEnabled(true);
-
-                    binding.layoutInventory.editAvailableQty.setEnabled(true);
-                }
-
-                else
-                {
-                    //binding.layoutInventory.spinnerStockAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
-
-                    //binding.layoutInventory.spinnerCodAvailability.setEnabled(false);
-                    //binding.layoutInventory.spinnerPrepaidOnlineAvailability.setEnabled(false);
-                    //binding.layoutInventory.editCodMaxQty.setEnabled(false);
-                    //binding.layoutInventory.editPrepaidOnlineMaxQty.setEnabled(false);
-
-                    //binding.layoutInventory.editAvailableQty.setEnabled(false);
-                }
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-
-        });*/
-
-        /*binding.layoutInventory.spinnerCodAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
-
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-                if(pos == 0)
-                {
-                    binding.layoutInventory.spinnerCodAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_instock));
-                }
-
-                else
-                {
-                    binding.layoutInventory.spinnerCodAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
-                }
-
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-
-        });
-
-        binding.layoutInventory.spinnerPrepaidOnlineAvailability.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
-
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-                if(pos == 0)
-                {
-                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_instock));
-                }
-
-                else
-                {
-                    binding.layoutInventory.spinnerPrepaidOnlineAvailability.setBackgroundDrawable(getResources().getDrawable(R.drawable.spinner_background_out_of_stock));
-                }
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-
-        });*/
     }
+
 
     public String showCurrencyList(final String[] currencyList)
     {
@@ -1301,15 +1244,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             boolean isValid = true;
 
+            if(product.otherSpecification == null)
+            {
+                return isValid;
+            }
+
             for(com.nowfloats.Product_Gallery.Model.Product.Specification specification: product.otherSpecification)
             {
-                if(specification.key == null || specification.key.isEmpty())
-                {
-                    isValid = false;
-                    break;
-                }
-
-                if(specification.value == null || specification.value.isEmpty())
+                if(TextUtils.isEmpty(specification.key) || TextUtils.isEmpty(specification.value))
                 {
                     isValid = false;
                     break;
@@ -1319,7 +1261,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             return isValid;
         }
     }
-
 
 
     /**
@@ -1342,17 +1283,20 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 final ProductImageViewHolder viewHolder = (ProductImageViewHolder) holder;
 
-                //viewHolder.btn_change.setOnClickListener(view -> choosePicture());
-
                 viewHolder.ib_remove.setOnClickListener(view -> {
+
+                    if(!TextUtils.isEmpty(imageList.get(viewHolder.getAdapterPosition()).getId()))
+                    {
+                        deleteImage(imageList.get(viewHolder.getAdapterPosition()));
+                    }
 
                     imageList.remove(viewHolder.getAdapterPosition());
                     notifyItemRemoved(viewHolder.getAdapterPosition());
                 });
 
-                Product.Image image = imageList.get(i);
-
-                ImageLoader.load(getContext(), image.url, viewHolder.iv_image);
+                ProductImageResponseModel image = imageList.get(i);
+                ImageLoader.load(getContext(), image.getImage().url, viewHolder.iv_image);
+                viewHolder.tv_image_name.setText(image.getImage().description != null ? image.getImage().description : "");
             }
         }
 
@@ -1363,7 +1307,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
 
 
-        public void setData(List<Product.Image> images)
+        public void setData(List<ProductImageResponseModel> images)
         {
             imageList.addAll(images);
             notifyDataSetChanged();
@@ -1414,19 +1358,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 viewHolder.tvType.setText(addressInformation.areaName != null ? addressInformation.areaName : "");
                 viewHolder.tvAddress.setText(addressInformation.toString());
-
-                /*viewHolder.ibRemove.setVisibility(View.VISIBLE);
-
-                viewHolder.ibRemove.setOnClickListener(view -> {
-
-                    propertyList.remove(viewHolder.getAdapterPosition());
-                    notifyItemRemoved(viewHolder.getAdapterPosition());
-                });
-
-                Product.Property property = propertyList.get(i);
-
-                viewHolder.editKey.setText(property.getKey());
-                viewHolder.editValue.setText(property.getValue());*/
             }
         }
 
@@ -1475,61 +1406,28 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             addressInformationList.addAll(informationList);
             notifyDataSetChanged();
         }
+
+        public void addData(AddressInformation information)
+        {
+            if(addressInformationList == null)
+            {
+                addressInformationList = new ArrayList<>();
+            }
+
+            addressInformationList.add(information);
+            notifyItemInserted(addressInformationList.size());
+        }
     }
 
 
-    class Product
+    private void openFileChooser()
     {
-        class Property
-        {
-            private String key = "", value = "";
+        int limit = 1;
 
-            public Property()
-            {
-
-            }
-
-            public Property(String key, String value)
-            {
-                this.key = key;
-                this.value = value;
-            }
-
-            public String getKey() {
-                return key;
-            }
-
-            public void setKey(String key) {
-                this.key = key;
-            }
-
-            public String getValue() {
-                return value;
-            }
-
-            public void setValue(String value) {
-                this.value = value;
-            }
-        }
-
-        class Image
-        {
-            private String url;
-
-            Image(String url)
-            {
-                this.url = url;
-            }
-
-
-            public String getUrl() {
-                return url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-        }
+        Intent intent4 = new Intent(getActivity(), NormalFilePickActivity.class);
+        intent4.putExtra(Constant.MAX_NUMBER, limit);
+        intent4.putExtra(NormalFilePickActivity.SUFFIX, FILE_EXTENSIONS);
+        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);
     }
 
 
@@ -1544,15 +1442,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         boolean folderMode = true;
         boolean multipleMode = true;
-        boolean cameraOnly = false;
 
         ImagePicker.with(getActivity())
                 .setFolderMode(folderMode)
-                //.setCameraOnly(cameraOnly)
                 .setShowCamera(false)
                 .setFolderTitle("Album")
                 .setMultipleMode(multipleMode)
-                //.setSelectedImages(images)
                 .setMaxSize(max)
                 .setBackgroundColor("#212121")
                 .setAlwaysShowDoneButton(true)
@@ -1561,42 +1456,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 .start();
     }
 
-    private void galleryIntent()
-    {
-        try
-        {
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                {
-                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", getActivity());
-                }
-
-                else
-                {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
-                }
-            }
-
-            else
-            {
-                //mIsImagePicking = true;
-                //Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //startActivityForResult(i, Constants.GALLERY_PHOTO);
-
-                //Intent intent = new Intent(getActivity(), AlbumSelectActivity.class);
-                //set limit on number of images that can be selected, default is 10
-                //intent.putExtra(INTENT_EXTRA_LIMIT, 8);
-                //startActivityForResult(intent, REQUEST_CODE);
-            }
-        }
-
-        catch (ActivityNotFoundException e)
-        {
-            String message = getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(getActivity(), message);
-        }
-    }
 
     private void cameraIntent(int requestCode)
     {
@@ -1620,20 +1479,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             else
             {
-                //mIsImagePicking = true;
-
-                //ContentValues contentValues = new ContentValues();
-                //contentValues.put(MediaStore.Images.Media.TITLE, "New Picture");
-                //contentValues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-
-                //Intent captureIntent;
-
-                //picUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
-                //captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                //captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
-                //startActivityForResult(captureIntent, CAMERA_REQUEST_CODE);
-
                 startCamera(requestCode);
             }
         }
@@ -1720,13 +1565,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         if (resultCode == RESULT_OK && requestCode == Config.RC_PICK_IMAGES && data != null)
         {
             ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
-            Log.d("onActivityResult", "" + images.get(0).getPath());
 
             if(images.size() > 0 && isPrimaryImagePicker)
             {
                 picUri = Uri.fromFile(new File(images.get(0).getPath()));
                 display_image(picUri.getPath(), CAMERA_PRIMARY_IMAGE_REQUEST_CODE);
-                //ImageLoader.load(getContext(), new File(picUri.getPath()), binding.ivPrimaryImage);
             }
 
             else
@@ -1747,6 +1590,24 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             display_image(picUri.getPath(), requestCode);
         }
+
+        else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
+        {
+            ArrayList<NormalFile> files = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
+
+            if(files.size() > 0)
+            {
+                File tempFile = new File(files.get(0).getPath());
+                long length = tempFile.length() / 1024; // Size in KB
+
+                pickupAddressFragment.setFileName(tempFile.getName());
+                pickupAddressFragment.isFileSelected(true);
+
+                //uploadAddressProof(product.productId, tempFile);
+
+                Log.d("onActivityResult", "File Path" + tempFile.getPath());
+            }
+        }
     }
 
 
@@ -1754,12 +1615,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         if(Helper.fileExist(path))
         {
-            /*if(!new InternetConnectionDetector(ProfileActivity.this).isConnected())
-            {
-                new CustomAlertDialog(getApplicationContext(), this, layout_root_view).snackbarForInternetConnectivity();
-                return;
-            }*/
-
             try
             {
                 File file = new File(path);
@@ -1779,8 +1634,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 if(requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE)
                 {
-                    List<Product.Image> imageList = new ArrayList<>();
-                    imageList.add(new Product().new Image(path));
+                    List<ProductImageResponseModel> imageList = new ArrayList<>();
+
+                    ProductImageResponseModel responseModel = new ProductImageResponseModel();
+                    responseModel.setImage(new ProductImage(path, file.getName()));
+                    imageList.add(responseModel);
 
                     adapterImage.setData(imageList);
                 }
@@ -1857,12 +1715,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
-        if(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString().trim().length() == 0 ||
+        /*if(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString().trim().length() == 0 ||
                 binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString().trim().length() == 0)
         {
             Toast.makeText(getContext(), "Enter product specification", Toast.LENGTH_LONG).show();
             return false;
-        }
+        }*/
 
         if(!adapter.isValid())
         {
@@ -1971,16 +1829,15 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    private void saveAddressInformation(AddressInformation addressInformation)
+    private void saveAddressInformation(AddressInformation information)
     {
         if(!isValidAddress())
         {
             return;
         }
 
+        addressInformation = information;
         addressInformation.websiteId = session.getFPID();
-
-        Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(addressInformation));
 
         Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
                 .savePickupAddress(addressInformation, new Callback<WebResponseModel<AddressInformation>>() {
@@ -1988,12 +1845,35 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void success(WebResponseModel<AddressInformation> webResponseModel, Response response) {
 
-                        if(webResponseModel.getData() != null)
+                        if(webResponseModel != null && webResponseModel.getData() != null)
                         {
+                            AddressInformation addressResponse = webResponseModel.getData();
+
+                            if(TextUtils.isEmpty(addressInformation.id))
+                            {
+                                adapterAddress.addData(addressResponse);
+                            }
+
+                            else
+                            {
+                                for(int i=0; i<addressInformationList.size(); i++)
+                                {
+                                    if(addressInformation.id.equals(addressInformationList.get(i).id))
+                                    {
+                                        addressInformationList.add(i, addressResponse);
+                                        adapterAddress.notifyItemChanged(i);
+                                        break;
+                                    }
+                                }
+                            }
+
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
+                            addressInformation.id = webResponseModel.getData().id;
+
+                            //new MultipleFileUpload(productId, session, mWebAction, image.getImage()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
 
-                        Log.d("PRODUCT_JSON", "SUCCESS: " + webResponseModel.getStatus());
+                        Log.d("PRODUCT_JSON", "Address Successfully Added/Updated");
                     }
 
                     @Override
@@ -2013,18 +1893,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void success(WebResponseModel<List<AddressInformation>> webResponseModel, Response response) {
 
-                        if(webResponseModel != null)
+                        if(webResponseModel != null && webResponseModel.getData() != null)
                         {
                             adapterAddress.setData(webResponseModel.getData());
                         }
 
-                        Log.d("PRODUCT_JSON", "SUCCESS: " + webResponseModel.getData().size());
+                        Log.d("PRODUCT_JSON", "GET ADDRESS");
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
+                        Log.d("PRODUCT_JSON", "GET ADDRESS FAIL");
                     }
                 });
     }
@@ -2059,8 +1939,15 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.keySpecification = new com.nowfloats.Product_Gallery.Model.Product.Specification();
         }
 
-        product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
-        product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
+        if(!TextUtils.isEmpty(product.keySpecification.key))
+        {
+            product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
+        }
+
+        if(!TextUtils.isEmpty(product.keySpecification.value))
+        {
+            product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
+        }
 
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
         {
@@ -2178,9 +2065,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             byte[] imageBytes = Methods.compressToByte(picUri.getPath(), getActivity());
 
-            //new ProductImageUploadV45(url, imageBytes, getActivity(), productId).execute();
-            //new UploadImage(url, imageBytes, productId, this).execute();
-
             UploadImage upload = new UploadImage(url, imageBytes, productId);
             upload.setImageUploadListener(this);
             upload.execute();
@@ -2198,7 +2082,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
      * Update assured purchase
      * @param productId
      */
-    private void updateAdssuredPurchase(String productId)
+    private void updateAssuredPurchase(String productId)
     {
         WaUpdateDataModel update = new WaUpdateDataModel();
         final AssuredPurchase assuredPurchase = initAssuredPurchase(productId);
@@ -2375,7 +2259,15 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                         if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                                 && productType.equalsIgnoreCase("products"))
                         {
-                            updateAdssuredPurchase(product.productId);
+                            updateAssuredPurchase(product.productId);
+                        }
+
+                        for(ProductImageResponseModel image: imageList)
+                        {
+                            if(TextUtils.isEmpty(image.getId()))
+                            {
+                                new MultipleFileUpload(product.productId, session, mWebAction, image.getImage()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
                         }
 
                         if(picUri != null)
@@ -2462,6 +2354,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             saveAssuredPurchase(productId);
                         }
 
+                        for(ProductImageResponseModel image: imageList)
+                        {
+                            new MultipleFileUpload(productId, session, mWebAction, image.getImage()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+
                         if(picUri != null)
                         {
                             uploadProductImage(productId);
@@ -2513,11 +2410,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             map.put("clientId", Constants.clientId);
             map.put("productId", product.productId);
             map.put("identifierType", "SINGLE");
-
-            //product.ClientId = Constants.clientId;
-            //product.FPTag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
-
-            //Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
 
             showDialog("Please Wait...");
 
@@ -2643,57 +2535,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
-    /*private boolean isValidMyPayementGateway()
-    {
-        if(paymentAndDeliveryMode.equals(Constants.PaymentAndDeliveryMode.MY_PAYMENT_GATEWAY))
-        {
-            if(binding.layoutBottomSheet.editSaltAndKey.getText().toString().trim().length() == 0)
-            {
-                binding.layoutBottomSheet.editSaltAndKey.requestFocus();
-                Toast.makeText(getContext(), "Enter Salt and Key", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }
-
-        return true;
-    }*/
-
-
-    /*private void addImage()
-    {
-        if(!WidgetKey.isNewPricingPlan)
-        {
-            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
-            {
-                Methods.showFeatureNotAvailDialog(getContext());
-            }
-
-            else
-            {
-                imageChooserDialog();
-            }
-        }
-
-        else
-        {
-            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PROPERTY_PAYMENT_GATEWAY, WidgetKey.WIDGET_PROPERTY_PAYMENT_GATEWAY);
-
-            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
-            {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
-            }
-
-            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && otherImagesAdapter.getCount() >= Integer.parseInt(value))
-            {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_image_limit)), Toast.LENGTH_LONG).show();
-            }
-
-            else
-            {
-                imageChooserDialog();
-            }
-        }
-    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
@@ -2743,5 +2584,154 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     }
                 }).show();
 
+    }
+
+
+    private WebAction getWebAction()
+    {
+        if(mWebAction != null)
+        {
+            return mWebAction;
+        }
+
+        mWebAction = new WebAction.WebActionBuilder()
+                .setAuthHeader(Constants.WA_KEY)
+                .build();
+
+        mWebAction.setWebActionName("product_images");
+
+        return mWebAction;
+    }
+
+    private void displayImagesForProduct(String productId)
+    {
+        if (TextUtils.isEmpty(product.productId))
+        {
+            return;
+        }
+
+        IFilter filter = new WebActionsFilter();
+        filter = filter.eq("_pid", productId);
+
+        mWebAction.findProductImages(filter, new WebAction.WebActionCallback<List<ProductImageResponseModel>>() {
+
+            @Override
+            public void onSuccess(List<ProductImageResponseModel> result)
+            {
+                if(result != null)
+                {
+                    adapterImage.setData(result);
+                }
+            }
+
+            @Override
+            public void onFailure(WebActionError error)
+            {
+                Log.d("IMAGE_UPLOAD_RESPONSE", "GET IMAGE FAIL");
+            }
+        });
+    }
+
+
+    private void deleteImage(ProductImageResponseModel image)
+    {
+        IFilter filter = new WebActionsFilter();
+        filter = filter.eq("_id", image.getId());
+
+        mWebAction.delete(filter, false, new WebAction.WebActionCallback<Boolean>() {
+
+            @Override
+            public void onSuccess(Boolean result) {
+
+                Toast.makeText(getContext(), "Image Removed Successfully", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "" + true);
+            }
+
+            @Override
+            public void onFailure(WebActionError error)
+            {
+                Toast.makeText(getContext(), "Failed to Remove Image", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Fail");
+            }
+        });
+    }
+
+
+    private void uploadAddressProof(String productId, File file)
+    {
+        Log.d(TAG, "FILE_UPLOAD: 1");
+
+        try
+        {
+            String valuesStr = "clientId=" + Constants.clientId
+                    + "&requestType=sequential&requestId=" + Constants.deviceId
+                    + "&totalChunks=1&currentChunkNumber=1&fileName=" + file.getName();
+
+            String url = /*Constants.NOW_FLOATS_API_URL*/ "http://ec2-13-232-212-139.ap-south-1.compute.amazonaws.com" + "/api/seller/UploadOrReplaceFile?" + valuesStr;
+
+            /*byte[] imageBytes = Methods.compressToByte(picUri.getPath(), getActivity());
+
+            UploadImage upload = new UploadImage(url, imageBytes, productId);
+            upload.setImageUploadListener(this);
+            upload.execute();*/
+
+            //File file = new File(filePath);
+            OkHttpClient client = new OkHttpClient();
+            okhttp3.RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("fileName", file.getName(), okhttp3.RequestBody.create(MediaType.parse("*/*"), file))
+                    .build();
+            Request request = new Request.Builder().url(url)
+                    //.header("Authorization", mAuthHeader)
+                    .post(body).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                    /*handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            webActionCallback.onFailure(new WebActionError("Uploading Failed"));
+                        }
+                    });*/
+
+                    Log.d(TAG, "FILE_UPLOAD: FAIL" + e.getMessage());
+
+                }
+
+                @Override
+                public void onResponse(Call call, final okhttp3.Response response) throws IOException {
+
+                    try {
+
+                        Log.d(TAG, "FILE_UPLOAD: " + response.body().string());
+
+                        //webActionCallback.onSuccess(response.body().string());
+                    } catch (IOException ex) {
+                        //webActionCallback.onFailure(new WebActionError("Uploading Failed"));
+
+                        Log.d(TAG, "FAILED");
+                    }
+
+                    /*handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                webActionCallback.onSuccess(response.body().string());
+                            } catch (IOException ex) {
+                                webActionCallback.onFailure(new WebActionError("Uploading Failed"));
+                            }
+                        }
+                    });*/
+                }
+            });
+        }
+
+        catch (Exception e)
+        {
+            Log.d(TAG, "FILE_UPLOAD: EXCEPTION" + e.getMessage());
+
+            e.printStackTrace();
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+        }
     }
 }

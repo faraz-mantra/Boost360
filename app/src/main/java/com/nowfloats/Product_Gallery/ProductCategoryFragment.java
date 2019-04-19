@@ -21,8 +21,6 @@ import com.thinksity.databinding.FragmentProductCategoryBinding;
 
 public class ProductCategoryFragment extends Fragment {
 
-    //private Constants.Type type;
-
     private String productType;
     private UserSessionManager session;
     private Product product;
@@ -34,11 +32,6 @@ public class ProductCategoryFragment extends Fragment {
         Bundle args = new Bundle();
         args.putSerializable("PRODUCT", product);
         fragment.setArguments(args);
-
-        //Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        //fragment.setArguments(args);
 
         return fragment;
     }
@@ -74,9 +67,6 @@ public class ProductCategoryFragment extends Fragment {
         ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing an item"));
 
         session = new UserSessionManager(getContext(), getActivity());
-        productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
-
-        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
 
         binding.editCategory.addTextChangedListener(new TextWatcher() {
 
@@ -90,13 +80,13 @@ public class ProductCategoryFragment extends Fragment {
             {
                 if(s.toString().trim().length() > 0)
                 {
-                    binding.btnStart.setBackgroundColor(getResources().getColor(R.color.primaryColor));
+                    binding.btnStart.setBackgroundResource(R.drawable.rounded_button_enabled);
                     binding.btnStart.setEnabled(true);
                 }
 
                 else
                 {
-                    binding.btnStart.setBackgroundColor(getResources().getColor(R.color.disableButtonColor));
+                    binding.btnStart.setBackgroundResource(R.drawable.rounded_button_disabled);
                     binding.btnStart.setEnabled(false);
                 }
             }
@@ -106,6 +96,30 @@ public class ProductCategoryFragment extends Fragment {
 
             }
         });
+
+        if(product != null && product.productId != null)
+        {
+            binding.editCategory.setText(product.category != null ? product.category : "");
+
+            if(product.productType != null)
+            {
+                productType = product.productType;
+                setProductType(productType);
+            }
+
+            else
+            {
+                productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+            }
+        }
+
+        else
+        {
+            productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+        }
+
+
+        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
     }
 
     private String setProductType(String productType) {
@@ -116,7 +130,6 @@ public class ProductCategoryFragment extends Fragment {
             binding.layoutServiceOffering.setVisibility(View.GONE);
             binding.layoutCustomProduct.setVisibility(View.GONE);
 
-            //type = Constants.Type.PRODUCT;
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
         }
 
@@ -126,7 +139,6 @@ public class ProductCategoryFragment extends Fragment {
             binding.layoutServiceOffering.setVisibility(View.VISIBLE);
             binding.layoutCustomProduct.setVisibility(View.GONE);
 
-            //type = Constants.Type.SERVICE;
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
         }
 
@@ -148,14 +160,14 @@ public class ProductCategoryFragment extends Fragment {
                     {
                         case 0:
 
-                            //type = Constants.Type.PRODUCT;
                             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
+                            setType("products");
                             break;
 
                         case 1:
 
-                            //type = Constants.Type.SERVICE;
                             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
+                            setType("services");
                             break;
                     }
                 }
@@ -168,5 +180,10 @@ public class ProductCategoryFragment extends Fragment {
         }
 
         return productType;
+    }
+
+    final void setType(String productType)
+    {
+        this.productType = productType;
     }
 }
