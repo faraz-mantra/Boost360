@@ -57,6 +57,7 @@ import com.nowfloats.Product_Gallery.Model.BankInformation;
 import com.nowfloats.Product_Gallery.Model.ProductImageResponseModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
 import com.nowfloats.Product_Gallery.Model.UpdateValue;
+import com.nowfloats.Product_Gallery.Service.FileUpload;
 import com.nowfloats.Product_Gallery.Service.MultipleFileUpload;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.UploadImage;
@@ -87,26 +88,21 @@ import com.vincent.filepicker.filter.entity.NormalFile;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 
 
-public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener{
+public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener, FileUpload.OnFileUpload{
 
     private String TAG = ManageProductFragment.class.getSimpleName();
 
@@ -131,6 +127,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private final int GALLERY_REQUEST_CODE = 2;
     private Uri picUri;
+    private File file;
+
     private String CATEGORY;
     private UserSessionManager session;
     private MaterialDialog materialDialog;
@@ -1611,15 +1609,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             if(files.size() > 0)
             {
-                File tempFile = new File(files.get(0).getPath());
-                long length = tempFile.length() / 1024; // Size in KB
+                file = new File(files.get(0).getPath());
+                long length = file.length() / 1024; // Size in KB
 
-                pickupAddressFragment.setFileName(tempFile.getName());
+                pickupAddressFragment.setFileName(file.getName());
                 pickupAddressFragment.isFileSelected(true);
 
-                //uploadAddressProof(product.productId, tempFile);
-
-                Log.d("onActivityResult", "File Path" + tempFile.getPath());
+                Log.d("onActivityResult", "File Path" + file.getPath());
             }
         }
     }
@@ -1845,25 +1841,25 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private boolean isValidAddress()
     {
+        if(file == null)
+        {
+            Toast.makeText(getContext(), "Address proof required", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return pickupAddressFragment.isValid();
     }
 
 
-    private void saveAddressInformation(AddressInformation information)
+    private void saveAddress()
     {
-        if(!isValidAddress())
-        {
-            return;
-        }
-
-        addressInformation = information;
-        addressInformation.websiteId = session.getFPID();
-
         Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
                 .savePickupAddress(addressInformation, new Callback<WebResponseModel<AddressInformation>>() {
 
                     @Override
                     public void success(WebResponseModel<AddressInformation> webResponseModel, Response response) {
+
+                        hideDialog();
 
                         if(webResponseModel != null && webResponseModel.getData() != null)
                         {
@@ -1872,6 +1868,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             if(TextUtils.isEmpty(addressInformation.id))
                             {
                                 adapterAddress.addData(addressResponse);
+                                Toast.makeText(getContext(), "Address Added Successfully", Toast.LENGTH_LONG).show();
                             }
 
                             else
@@ -1885,12 +1882,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                                         break;
                                     }
                                 }
+
+                                Toast.makeText(getContext(), "Address Updated Successfully", Toast.LENGTH_LONG).show();
                             }
 
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
                             addressInformation.id = webResponseModel.getData().id;
-
-                            //new MultipleFileUpload(productId, session, mWebAction, image.getImage()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
 
                         Log.d("PRODUCT_JSON", "Address Successfully Added/Updated");
@@ -1899,9 +1896,25 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void failure(RetrofitError error)
                     {
+                        hideDialog();
+                        Toast.makeText(getContext(), "Failed to save address", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
                     }
                 });
+    }
+
+
+    private void saveAddressInformation(AddressInformation information)
+    {
+        if(!isValidAddress())
+        {
+            return;
+        }
+
+        addressInformation = information;
+        addressInformation.websiteId = session.getFPID();
+
+        this.uploadFile(file);
     }
 
 
@@ -2683,82 +2696,54 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         });
     }
 
-
-    private void uploadAddressProof(String productId, File file)
+    private void uploadFile(File file)
     {
-        Log.d(TAG, "FILE_UPLOAD: 1");
+        String valuesStr;
 
-        try
+        if(TextUtils.isEmpty(addressInformation.id))
         {
-            String valuesStr = "clientId=" + Constants.clientId
-                    + "&requestType=sequential&requestId=" + Constants.deviceId
+            valuesStr = "clientId=" + Constants.clientId
+                    + "&requestType=sequential"
                     + "&totalChunks=1&currentChunkNumber=1&fileName=" + file.getName();
-
-            String url = /*Constants.NOW_FLOATS_API_URL*/ "http://ec2-13-232-212-139.ap-south-1.compute.amazonaws.com" + "/api/seller/UploadOrReplaceFile?" + valuesStr;
-
-            /*byte[] imageBytes = Methods.compressToByte(picUri.getPath(), getActivity());
-
-            UploadImage upload = new UploadImage(url, imageBytes, productId);
-            upload.setImageUploadListener(this);
-            upload.execute();*/
-
-            //File file = new File(filePath);
-            OkHttpClient client = new OkHttpClient();
-            okhttp3.RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("fileName", file.getName(), okhttp3.RequestBody.create(MediaType.parse("*/*"), file))
-                    .build();
-            Request request = new Request.Builder().url(url)
-                    //.header("Authorization", mAuthHeader)
-                    .post(body).build();
-            client.newCall(request).enqueue(new okhttp3.Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                    /*handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            webActionCallback.onFailure(new WebActionError("Uploading Failed"));
-                        }
-                    });*/
-
-                    Log.d(TAG, "FILE_UPLOAD: FAIL" + e.getMessage());
-
-                }
-
-                @Override
-                public void onResponse(Call call, final okhttp3.Response response) throws IOException {
-
-                    try {
-
-                        Log.d(TAG, "FILE_UPLOAD: " + response.body().string());
-
-                        //webActionCallback.onSuccess(response.body().string());
-                    } catch (IOException ex) {
-                        //webActionCallback.onFailure(new WebActionError("Uploading Failed"));
-
-                        Log.d(TAG, "FAILED");
-                    }
-
-                    /*handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                webActionCallback.onSuccess(response.body().string());
-                            } catch (IOException ex) {
-                                webActionCallback.onFailure(new WebActionError("Uploading Failed"));
-                            }
-                        }
-                    });*/
-                }
-            });
         }
 
-        catch (Exception e)
+        else
         {
-            Log.d(TAG, "FILE_UPLOAD: EXCEPTION" + e.getMessage());
+            String url = addressInformation.addressProof;
+            String fileName = url.substring(url.lastIndexOf('/') + 1);
 
-            e.printStackTrace();
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+            valuesStr = "clientId=" + Constants.clientId
+                    + "&requestType=sequential"
+                    + "&totalChunks=1&currentChunkNumber=1&fileName=" + file.getName() + "&proofFileId=" + fileName;
         }
+
+        String url = DEV_ASSURED_PURCHASE_URL + "/api/seller/UploadOrReplaceFile?" + valuesStr;
+
+        FileUpload upload = new FileUpload(file);
+        upload.setFileUploadListener(this);
+        upload.execute(url);
+    }
+
+
+    @Override
+    public void onSuccess(String url) {
+
+        Log.d("PRODUCT_JSON", "URL - " + url);
+        addressInformation.addressProof = url;
+        saveAddress();
+    }
+
+    @Override
+    public void onFailure() {
+
+        Log.d("PRODUCT_JSON", "FAILURE");
+        hideDialog();
+    }
+
+    @Override
+    public void onPreUpload() {
+
+        Log.d("PRODUCT_JSON", "PREUPLOAD");
+        showDialog("Please Wait...");
     }
 }
