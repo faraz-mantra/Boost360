@@ -47,7 +47,7 @@ public class FileUpload extends AsyncTask<String, String, String>
 
             OkHttpClient client = new OkHttpClient();
             okhttp3.RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("fileName", file.getPath(), okhttp3.RequestBody.create(MediaType.parse("image/jpg"), file))
+                    .addFormDataPart("fileName", file.getPath(), okhttp3.RequestBody.create(MediaType.parse("multipart/form-data"), file))
                     .build();
 
             Request request = new Request.Builder().url(url)
@@ -98,23 +98,7 @@ public class FileUpload extends AsyncTask<String, String, String>
     {
         super.onPostExecute(result);
         Log.d(TAG, "onPostExecute " + result);
-
-        /*if(result != null)
-        {
-            listener.onSuccess(result);
-        }
-
-        else
-        {
-            listener.onFailure();
-        }*/
     }
-
-
-    /*private final void setFileURL(String fileURL)
-    {
-        this.fileURL = fileURL;
-    }*/
 
     public void setFileUploadListener(OnFileUpload listener)
     {

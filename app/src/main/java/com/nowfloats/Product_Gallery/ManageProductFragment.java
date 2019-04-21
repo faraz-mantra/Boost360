@@ -111,8 +111,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private String productType = "";
     private int MAX_IMAGE_ALLOWED = 8;
 
-    private boolean isPrimaryImagePicker;
-
     private List<ProductImageResponseModel> imageList = new ArrayList<>();
 
     private ProductSpecificationRecyclerAdapter adapter;
@@ -123,10 +121,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private final int CAMERA_PRIMARY_IMAGE_REQUEST_CODE = 101;
     private final int CAMERA_SECONDARY_IMAGE_REQUEST_CODE = 102;
-    public static final String FILE_EXTENSIONS [] = new String[] { "doc", "docx", "xls", "xlsx", "pdf", "jpg", "jpeg" };
+    private final int CAMERA_PROOF_IMAGE_REQUEST_CODE = 103;
 
-    private final int GALLERY_REQUEST_CODE = 2;
-    private Uri picUri;
+    private final int GALLERY_PRIMARY_IMAGE_REQUEST_CODE = 201;
+    private final int GALLERY_SECONDARY_IMAGE_REQUEST_CODE = 202;
+    private final int GALLERY_PROOF_IMAGE_REQUEST_CODE = 203;
+
+    private final int DIALOG_REQUEST_CODE_PRIMARY = 1;
+    private final int DIALOG_REQUEST_CODE_SECONDARY = 2;
+
+    public static final String FILE_EXTENSIONS [] = new String[] { "doc", "docx", "xls", "xlsx", "pdf" };
+
+    private Uri primaryUri, secondaryUri, proofUri;
     private File file;
 
     private String CATEGORY;
@@ -818,7 +824,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         pickupAddressFragment.setOnClickListener(information -> saveAddressInformation(information));
 
-        pickupAddressFragment.setFileChooserListener(() -> openFileChooser());
+        pickupAddressFragment.setFileChooserListener(() -> chooseFile(Constant.REQUEST_CODE_PICK_FILE));
     }
 
 
@@ -829,22 +835,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void addImagePickerListener()
     {
-        binding.cardPrimaryImage.setOnClickListener(v ->
-        {
-            isPrimaryImagePicker = true;
-            choosePicture(CAMERA_PRIMARY_IMAGE_REQUEST_CODE);
-        });
-
-        binding.btnSecondaryImage.setOnClickListener(v ->
-        {
-            isPrimaryImagePicker = false;
-            choosePicture(CAMERA_SECONDARY_IMAGE_REQUEST_CODE);
-        });
+        binding.cardPrimaryImage.setOnClickListener(v -> choosePicture(DIALOG_REQUEST_CODE_PRIMARY));
+        binding.btnSecondaryImage.setOnClickListener(v -> choosePicture(DIALOG_REQUEST_CODE_SECONDARY));
     }
+
 
     private void choosePicture(int requestCode)
     {
-
         final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.featuredimage_popup, true)
                 .show();
@@ -862,16 +859,85 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         takeCamera.setOnClickListener(v -> {
 
-            cameraIntent(requestCode);
+            switch (requestCode)
+            {
+                case DIALOG_REQUEST_CODE_PRIMARY:
+
+                    cameraIntent(CAMERA_PRIMARY_IMAGE_REQUEST_CODE);
+                    break;
+
+                case DIALOG_REQUEST_CODE_SECONDARY:
+
+                    cameraIntent(CAMERA_SECONDARY_IMAGE_REQUEST_CODE);
+                    break;
+            }
+
             dialog.dismiss();
         });
 
         takeGallery.setOnClickListener(v -> {
 
-            openImagePicker(requestCode);
+            switch (requestCode)
+            {
+                case DIALOG_REQUEST_CODE_PRIMARY:
+
+                    openImagePicker(GALLERY_PRIMARY_IMAGE_REQUEST_CODE, 1);
+                    break;
+
+                case DIALOG_REQUEST_CODE_SECONDARY:
+
+                    int max = MAX_IMAGE_ALLOWED - adapterImage.getItemCount();
+                    max = max > 0 ? max : 1;
+                    openImagePicker(GALLERY_SECONDARY_IMAGE_REQUEST_CODE, max);
+                    break;
+            }
+
             dialog.dismiss();
         });
     }
+
+
+    private void chooseFile(int requestCode)
+    {
+        final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.layout_file_upload_dialog, true)
+                .show();
+
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+
+        View view = dialog.getCustomView();
+
+        LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
+        LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
+        LinearLayout takeFile = view.findViewById(R.id.filepicker);
+
+        ImageView cameraImg = view.findViewById(R.id.pop_up_camera_imag);
+        ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
+        ImageView fileImg = view.findViewById(R.id.pop_up_file_img);
+
+        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+        fileImg.setColorFilter(whiteLabelFilter_pop_ip);
+
+        takeCamera.setOnClickListener(v -> {
+
+            cameraIntent(CAMERA_PROOF_IMAGE_REQUEST_CODE);
+            dialog.dismiss();
+        });
+
+        takeGallery.setOnClickListener(v -> {
+
+            openImagePicker(GALLERY_PROOF_IMAGE_REQUEST_CODE, 1);
+            dialog.dismiss();
+        });
+
+        takeFile.setOnClickListener(v -> {
+
+            openFileChooser();
+            dialog.dismiss();
+        });
+    }
+
 
     private void initCurrencyList()
     {
@@ -1435,11 +1501,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    private void openImagePicker(int requestCode)
+    private void openImagePicker(int requestCode, int max)
     {
-        int max = MAX_IMAGE_ALLOWED - adapterImage.getItemCount();
-        max = max > 0 ? max : 1;
-
         boolean folderMode = true;
         boolean multipleMode = true;
 
@@ -1451,7 +1514,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 .setMaxSize(max)
                 .setBackgroundColor("#212121")
                 .setAlwaysShowDoneButton(true)
-                .setRequestCode(100)
+                .setRequestCode(requestCode)
                 .setKeepScreenOn(true)
                 .start();
     }
@@ -1506,6 +1569,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private void startCamera(int requestCode)
     {
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "boost");
+        Uri tempUri;
 
         if(!mediaStorageDir.exists())
         {
@@ -1517,21 +1581,38 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
-            picUri = FileProvider.getUriForFile(getActivity(),
+            tempUri = FileProvider.getUriForFile(getActivity(),
                     Constants.PACKAGE_NAME + ".provider",
                     new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
         }
 
         else
         {
-            picUri = Uri.fromFile(new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
+            tempUri = Uri.fromFile(new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
         }
 
+        switch (requestCode)
+        {
+            case CAMERA_PRIMARY_IMAGE_REQUEST_CODE:
+
+                primaryUri = tempUri;
+                break;
+
+            case CAMERA_SECONDARY_IMAGE_REQUEST_CODE:
+
+                secondaryUri = tempUri;
+                break;
+
+            case CAMERA_PROOF_IMAGE_REQUEST_CODE:
+
+                proofUri = tempUri;
+                break;
+        }
 
         try
         {
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
             startActivityForResult(intent, requestCode);
         }
 
@@ -1572,35 +1653,57 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        //super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && requestCode == Config.RC_PICK_IMAGES && data != null)
+        if (resultCode == RESULT_OK && /*requestCode == Config.RC_PICK_IMAGES*/ (requestCode == GALLERY_PRIMARY_IMAGE_REQUEST_CODE ||
+                requestCode == GALLERY_SECONDARY_IMAGE_REQUEST_CODE || requestCode == GALLERY_PROOF_IMAGE_REQUEST_CODE) && data != null)
         {
             ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
 
-            if(images.size() > 0 && isPrimaryImagePicker)
+            if(images.size() > 0 && requestCode == GALLERY_PRIMARY_IMAGE_REQUEST_CODE)
             {
-                picUri = Uri.fromFile(new File(images.get(0).getPath()));
-                display_image(picUri.getPath(), CAMERA_PRIMARY_IMAGE_REQUEST_CODE);
+                primaryUri = Uri.fromFile(new File(images.get(0).getPath()));
+                display_image(primaryUri.getPath(), GALLERY_PRIMARY_IMAGE_REQUEST_CODE);
             }
 
-            else
+            if(images.size() > 0 && requestCode == GALLERY_PROOF_IMAGE_REQUEST_CODE)
+            {
+                file = new File(images.get(0).getPath());
+
+                pickupAddressFragment.setFileName(file.getName());
+                pickupAddressFragment.isFileSelected(true);
+            }
+
+            else if(requestCode == GALLERY_SECONDARY_IMAGE_REQUEST_CODE)
             {
                 for (Image image: images)
                 {
-                    display_image(image.getPath(), CAMERA_SECONDARY_IMAGE_REQUEST_CODE);
+                    display_image(image.getPath(), GALLERY_SECONDARY_IMAGE_REQUEST_CODE);
                 }
             }
         }
 
-        else if(resultCode == RESULT_OK && (requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE || requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE)) {
+        else if(resultCode == RESULT_OK && (requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE ||
+                requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE || requestCode == CAMERA_PROOF_IMAGE_REQUEST_CODE)) {
 
-            Log.d("onActivityResult", "" + picUri.getPath());
+            switch (requestCode)
+            {
+                case CAMERA_PRIMARY_IMAGE_REQUEST_CODE:
 
-            File file = new File(picUri.getPath());
-            long length = file.length() / 1024; // Size in KB
+                    display_image(primaryUri.getPath(), requestCode);
+                    break;
 
-            display_image(picUri.getPath(), requestCode);
+                case CAMERA_SECONDARY_IMAGE_REQUEST_CODE:
+
+                    display_image(secondaryUri.getPath(), requestCode);
+                    break;
+
+                case CAMERA_PROOF_IMAGE_REQUEST_CODE:
+
+                    file = new File(proofUri.getPath());
+
+                    pickupAddressFragment.setFileName(file.getName());
+                    pickupAddressFragment.isFileSelected(true);
+                    break;
+            }
         }
 
         else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
@@ -1610,12 +1713,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             if(files.size() > 0)
             {
                 file = new File(files.get(0).getPath());
-                long length = file.length() / 1024; // Size in KB
 
                 pickupAddressFragment.setFileName(file.getName());
                 pickupAddressFragment.isFileSelected(true);
-
-                Log.d("onActivityResult", "File Path" + file.getPath());
             }
         }
     }
@@ -1638,12 +1738,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 // final Bitmap bitmap = BitmapFactory.decodeFile(f.getPath(), options);
                 // binding.ivPrimaryImage.setImageBitmap(bitmap);
 
-                if(requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE)
+                if(requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE || requestCode == GALLERY_PRIMARY_IMAGE_REQUEST_CODE)
                 {
                     ImageLoader.load(getContext(), file, binding.ivPrimaryImage);
                 }
 
-                if(requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE)
+                if(requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE || requestCode == GALLERY_SECONDARY_IMAGE_REQUEST_CODE)
                 {
                     List<ProductImageResponseModel> imageList = new ArrayList<>();
 
@@ -1685,7 +1785,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             return false;
         }
 
-        if (product.productId == null && picUri == null)
+        if (product.productId == null && primaryUri == null)
         {
             Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
             return false;
@@ -2097,7 +2197,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" + valuesStr;
 
-            byte[] imageBytes = Methods.compressToByte(picUri.getPath(), getActivity());
+            byte[] imageBytes = Methods.compressToByte(primaryUri.getPath(), getActivity());
 
             UploadImage upload = new UploadImage(url, imageBytes, productId);
             upload.setImageUploadListener(this);
@@ -2307,7 +2407,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             }
                         }
 
-                        if(picUri != null)
+                        if(primaryUri != null)
                         {
                             uploadProductImage(product.productId);
                         }
@@ -2398,7 +2498,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             new MultipleFileUpload(productId, session, mWebAction, image.getImage()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
 
-                        if(picUri != null)
+                        if(primaryUri != null)
                         {
                             uploadProductImage(productId);
                         }
@@ -2737,6 +2837,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     public void onFailure() {
 
         Log.d("PRODUCT_JSON", "FAILURE");
+        Toast.makeText(getContext(), "Failed to upload address proof", Toast.LENGTH_LONG).show();
         hideDialog();
     }
 

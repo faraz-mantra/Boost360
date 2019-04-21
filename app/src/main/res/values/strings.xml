@@ -1213,9 +1213,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="confirmed_password">Confirm Password</string>
     <string name="search_here">Search Here</string>
     <string name="enter_your_user_name">Enter your username</string>
-    <string name="upload_featured_image">Upload Featured Image</string>
-    <string name="using_camera">Using camera</string>
-    <string name="from_gallery">From gallery</string>
+    <string name="upload_featured_image">Choose</string>
+    <string name="using_camera">Using Camera</string>
+    <string name="from_gallery">From Gallery</string>
+    <string name="from_file_picker">Pick a File</string>
     <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
     <string name="values">Values</string>
     <string name="date">date</string>
