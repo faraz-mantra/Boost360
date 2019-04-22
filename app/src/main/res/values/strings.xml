@@ -1779,7 +1779,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string-array name="payment_method_titles">
         <item name="title_assured_purchase" >Assured Purchase™</item>
         <item name="title_external_url" >External URL</item>
-        <item name="title_dont_want_to_sell" >Don not want to sell online</item>
+        <item name="title_dont_want_to_sell" >Do not want to sell online</item>
     </string-array>
 
     <string-array name="payment_method_messages">

@@ -4,8 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,11 +63,9 @@ public class ProductCategoryFragment extends Fragment {
     {
         super.onActivityCreated(savedInstanceState);
 
-        ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing an item"));
-
         session = new UserSessionManager(getContext(), getActivity());
 
-        binding.editCategory.addTextChangedListener(new TextWatcher() {
+        /*binding.editCategory.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,13 +92,15 @@ public class ProductCategoryFragment extends Fragment {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
 
         if(product != null && product.productId != null)
         {
+            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Edit item"));
+
             binding.editCategory.setText(product.category != null ? product.category : "");
 
-            if(product.productType != null)
+            if(!TextUtils.isEmpty(product.productType) && (product.productType.equalsIgnoreCase("services") || product.productType.equalsIgnoreCase("products")))
             {
                 productType = product.productType;
                 setProductType(productType);
@@ -109,17 +108,18 @@ public class ProductCategoryFragment extends Fragment {
 
             else
             {
-                productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+                productType = setProductType("");
             }
         }
 
         else
         {
+            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing an item"));
             productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
         }
 
 
-        binding.btnStart.setOnClickListener(v-> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
+        binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
     }
 
     private String setProductType(String productType) {

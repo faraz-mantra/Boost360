@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +41,9 @@ public class ProductPickupAddressFragment extends DialogFragment {
     private TextView tvTitle;
     private TextView tvWarehouse;
     private Button btnFileChooser;
+    private ImageButton ibRemove;
     private CheckBox checkAcceptance;
+    private LinearLayout layoutFileName;
 
     private OnSaveAddress listener;
     private OnFileChooser fileChooser;
@@ -86,6 +90,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
         Button btnCancel = view.findViewById(R.id.btn_cancel);
         Button btnSave = view.findViewById(R.id.btn_save);
         btnFileChooser = view.findViewById(R.id.btn_file_chooser);
+        ibRemove = view.findViewById(R.id.ib_remove);
 
         editWarehouseName = view.findViewById(R.id.edit_warehouse_name);
         editContactNumber = view.findViewById(R.id.edit_contact_number);
@@ -96,6 +101,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
         tvFileName = view.findViewById(R.id.label_file_name);
         tvTitle = view.findViewById(R.id.label_title);
         tvWarehouse = view.findViewById(R.id.label_warehouse);
+        layoutFileName = view.findViewById(R.id.layout_file_name);
 
         checkAcceptance = view.findViewById(R.id.check_address_acceptance);
 
@@ -119,9 +125,16 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
         btnFileChooser.setOnClickListener(v -> fileChooser.openDialog());
 
-        String title = address ==  null ? "Add New Address" : (address.id != null ? address.areaName : "Edit Address");
+        ibRemove.setOnClickListener(v -> {
+
+            removeFile();
+            fileChooser.onFileRemove();
+        });
+
+        String title = address ==  null ? "Add New Address" : "Edit Address";
         tvTitle.setText(String.valueOf(title));
-        String subTitle = address ==  null ? "" : (address.areaName != null ? address.areaName : "");
+
+        String subTitle = address ==  null ? "" : (address.areaName != null ? String.valueOf("#" + address.areaName) : "");
         tvWarehouse.setText(String.valueOf(subTitle));
 
         setAddressData(address);
@@ -147,9 +160,15 @@ public class ProductPickupAddressFragment extends DialogFragment {
     public void setFileName(String fileName)
     {
         tvFileName.setText(fileName);
-        tvFileName.setVisibility(View.VISIBLE);
         btnFileChooser.setVisibility(View.GONE);
+        layoutFileName.setVisibility(View.VISIBLE);
+    }
 
+    public void removeFile()
+    {
+        tvFileName.setText("");
+        btnFileChooser.setVisibility(View.VISIBLE);
+        layoutFileName.setVisibility(View.GONE);
     }
 
     public void isFileSelected(boolean isFileSelected)
@@ -332,6 +351,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
     public interface OnFileChooser
     {
         void openDialog();
+        void onFileRemove();
     }
 
 

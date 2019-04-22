@@ -52,6 +52,7 @@
             android:layout_height="2dp"
             android:layout_toRightOf="@+id/label_type"
             android:background="@drawable/dotted_line"
+            android:layerType="software"
             android:layout_alignParentBottom="true" />
 
     </RelativeLayout>

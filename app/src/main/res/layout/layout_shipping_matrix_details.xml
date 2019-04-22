@@ -75,7 +75,7 @@
                             android:id="@+id/spinner_package_weight"
                             style="@style/ProductEditTextStyle"
                             android:layout_weight="1"
-                            android:text="kg"
+                            android:text="gm"
                             android:textColor="@color/secondaryTextColor"
                             android:background="@color/spinner_grey_background" />
 
@@ -100,7 +100,8 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXXX"
+                            android:hint="XXX"
+                            android:maxLength="9"
                             android:background="#FFF" />
 
                     </LinearLayout>
@@ -169,7 +170,8 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXXX"
+                            android:hint="XXX"
+                            android:maxLength="9"
                             android:background="#FFF" />
 
                     </LinearLayout>
@@ -245,7 +247,8 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXXX"
+                            android:hint="XXX"
+                            android:maxLength="9"
                             android:background="#FFF" />
 
                     </LinearLayout>
@@ -314,7 +317,8 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXXX"
+                            android:hint="XXX"
+                            android:maxLength="9"
                             android:background="#FFF" />
 
                     </LinearLayout>

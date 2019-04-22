@@ -28,9 +28,6 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -54,6 +51,7 @@ import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
 import com.nowfloats.Product_Gallery.Model.AddressInformation;
 import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
 import com.nowfloats.Product_Gallery.Model.BankInformation;
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Model.ProductImageResponseModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
 import com.nowfloats.Product_Gallery.Model.UpdateValue;
@@ -181,10 +179,20 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             this.product = (com.nowfloats.Product_Gallery.Model.Product) bundle.getSerializable("PRODUCT");
 
-            if (product != null && product.productId != null)
+            if(product != null && product.otherSpecification == null)
+            {
+                product.otherSpecification = new ArrayList<>();
+            }
+
+            if(product != null && product.otherSpecification.size() == 0)
+            {
+                product.otherSpecification.add(new Product.Specification());
+            }
+
+            /*if (product != null && product.productId != null)
             {
                 setHasOptionsMenu(true);
-            }
+            }*/
         }
 
         mWebAction = getWebAction();
@@ -248,6 +256,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutInventoryCod.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
 
         binding.btnPublish.setOnClickListener(view -> saveProduct());
+        binding.btnDelete.setOnClickListener(view -> deleteConfirmation());
 
         displayPaymentAcceptanceMessage();
 
@@ -266,11 +275,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 displayImagesForProduct(product.productId);
 
                 ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Edit " + product.Name));
+                binding.btnDelete.setVisibility(View.VISIBLE);
             }
 
             else
             {
                 ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + CATEGORY));
+                binding.btnDelete.setVisibility(View.GONE);
             }
 
             if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
@@ -639,6 +650,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 {
                     case 0:
 
+                        if(productType.equalsIgnoreCase("products"))
+                        {
+                            binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
+                            binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
+                        }
+
+                        else
+                        {
+                            binding.layoutBottomSheet.tvPickAddress.setVisibility(View.GONE);
+                            binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
+                        }
+
                         binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.VISIBLE);
                         break;
 
@@ -824,7 +847,21 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         pickupAddressFragment.setOnClickListener(information -> saveAddressInformation(information));
 
-        pickupAddressFragment.setFileChooserListener(() -> chooseFile(Constant.REQUEST_CODE_PICK_FILE));
+        pickupAddressFragment.setFileChooserListener(new ProductPickupAddressFragment.OnFileChooser() {
+
+            @Override
+            public void openDialog() {
+
+                chooseFile(Constant.REQUEST_CODE_PICK_FILE);
+            }
+
+            @Override
+            public void onFileRemove() {
+
+                file = null;
+                pickupAddressFragment.isFileSelected(false);
+            }
+        });
     }
 
 
@@ -1217,6 +1254,17 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
         {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_product_specification_input, viewGroup, false);
+
+            if(getActivity() != null)
+            {
+                View currentFocus = getActivity().getCurrentFocus();
+
+                if (currentFocus != null)
+                {
+                    currentFocus.clearFocus();
+                }
+            }
+
             return new ProductSpecificationViewHolder(view);
         }
 
@@ -2064,7 +2112,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         product.Price = binding.editBasePrice.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editBasePrice.getText().toString().trim()) : 0;
         product.DiscountAmount = binding.editDiscount.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editDiscount.getText().toString().trim()) : 0;
 
-        product.category = CATEGORY;
+        product.category = TextUtils.isEmpty(CATEGORY) ? null : CATEGORY;
         product.paymentType = paymentAndDeliveryMode.getValue();
 
         if(product.keySpecification == null)
@@ -2247,10 +2295,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void failure(RetrofitError error) {
 
-                        if(error.getResponse().getStatus() == 200)
-                        {
-
-                        }
                     }
                 });
     }
@@ -2347,14 +2391,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void success(String s, Response response) {
 
-                        Log.d("PRODUCT_JSON", "Assured Purchase Saved : " + s);
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        Log.d("PRODUCT_JSON", "Failed to Save Assured Purchase " + error.getMessage());
-                        Log.d("PRODUCT_JSON", "Failed to Save Assured Purchase " + error.getBody());
+
                     }
                 });
     }
@@ -2397,7 +2439,15 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             updateAssuredPurchase(product.productId);
                         }*/
 
-                        updateAssuredPurchase(product.productId);
+                        if(assuredPurchase == null)
+                        {
+                            saveAssuredPurchase(product.productId);
+                        }
+
+                        else
+                        {
+                            updateAssuredPurchase(product.productId);
+                        }
 
                         for(ProductImageResponseModel image: imageList)
                         {
@@ -2595,8 +2645,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void success(WebActionModel<AssuredPurchase> webActionModel, Response response) {
 
+                        Log.d("ASSURED_PURCHASE", "SUCCESS");
+
                         if (webActionModel.getData().size() > 0)
                         {
+                            Log.d("ASSURED_PURCHASE", "SUCCESS " + webActionModel.getData().size());
                             assuredPurchase = webActionModel.getData().get(0);
                             setAssuredPurchaseData();
                         }
@@ -2605,7 +2658,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     @Override
                     public void failure(RetrofitError error)
                     {
-
+                        Log.d("ASSURED_PURCHASE", "FAIL");
                     }
                 });
     }
@@ -2675,7 +2728,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         inflater.inflate(R.menu.menu_delete, menu);
@@ -2694,7 +2747,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
 
         return true;
-    }
+    }*/
 
 
     private void deleteConfirmation()

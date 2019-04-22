@@ -20,7 +20,6 @@ public class ManageProductActivity extends BaseActivity
 {
     private ActivityManageProductBinding binding;
     private boolean doubleBackToExitPressedOnce = false;
-    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,7 +37,7 @@ public class ManageProductActivity extends BaseActivity
             getSupportActionBar().setTitle("");
         }
 
-        this.product = (Product) getIntent().getSerializableExtra("PRODUCT");
+        Product product = (Product) getIntent().getSerializableExtra("PRODUCT");
         loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
 
         /*if(this.product == null)
@@ -96,11 +95,11 @@ public class ManageProductActivity extends BaseActivity
     private void confirm()
     {
         new MaterialDialog.Builder(this)
-                .title("Are you sure ?")
-                .content("Information not saved. Do you want to close.")
-                .positiveText(getString(R.string.yes))
+                .title("Information not saved!")
+                .content("You have unsaved information. Do you still want to close?")
+                .positiveText(getString(R.string.no))
                 .positiveColorRes(R.color.primaryColor)
-                .negativeText(getString(R.string.no))
+                .negativeText(getString(R.string.yes))
                 .negativeColorRes(R.color.light_gray)
                 .callback(new MaterialDialog.ButtonCallback() {
 
@@ -109,7 +108,6 @@ public class ManageProductActivity extends BaseActivity
                     {
                         super.onPositive(dialog);
                         dialog.dismiss();
-                        finish();
                     }
 
                     @Override
@@ -117,6 +115,7 @@ public class ManageProductActivity extends BaseActivity
                     {
                         super.onNegative(dialog);
                         dialog.dismiss();
+                        finish();
                     }
                 }).show();
 
