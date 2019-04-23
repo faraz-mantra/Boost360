@@ -379,7 +379,7 @@
     <string name="support_name">Ria</string>
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 
-    <string name="payment_config_acceptance_message">I agree that boost will keep %s of the final cart value as convenience fee. (Towards payment and delivery enablement)</string>
+    <string name="payment_config_acceptance_message">I agree that boost will charge %s of the total cart value as convenience fee(as part of your current boost plan)</string>
 
     <string name="link_marketplace">boost.nowfloats.com/marketplace</string>
 

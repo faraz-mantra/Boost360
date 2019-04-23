@@ -182,7 +182,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Bank account number for payment receipt" />
+                            android:text="Bank account number to receipt payment" />
 
                         <ImageButton
                             android:id="@+id/ib_info_product_description"
@@ -251,11 +251,19 @@
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                         style="@style/ProductEditTextStyle" />
 
+                    <TextView
+                        android:id="@+id/tv_assured_purchase_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:text="*Assured Purchase can only have a single account number/branch code and tax number as part of periodic payment config. Make sure that above account details are correct."/>
+
                     <View
                         android:id="@+id/dotted_line"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:layout_marginTop="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_15"
                         android:layout_marginBottom="@dimen/margin_10"
                         android:layerType="software"
                         android:background="@drawable/dotted_line"/>
@@ -277,7 +285,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
                             android:layout_toRightOf="@id/check_payment_configuration"
-                            android:text="I agree that boost will keep 0% of the final cart value as convenience fee. (Towards payment and delivery enablement)"/>
+                            android:text="I agree that boost will charge %0 of the total cart value as convenience fee(as part of your current boost plan)"/>
 
                         <View
                             android:id="@+id/dotted_line_accept"

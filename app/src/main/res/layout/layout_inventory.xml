@@ -31,7 +31,7 @@
                     android:text="Inventory Availability"/>
 
                 <ImageButton
-                    android:id="@+id/ib_info_product_image"
+                    android:id="@+id/ib_info_product_inventory"
                     style="@style/ProductHelpButtonStyle"/>
 
             </LinearLayout>

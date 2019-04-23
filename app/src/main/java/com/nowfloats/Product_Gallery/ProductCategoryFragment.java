@@ -1,6 +1,7 @@
 package com.nowfloats.Product_Gallery;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.github.florent37.viewtooltip.ViewTooltip;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerItemCategoryAdapter;
 import com.nowfloats.Product_Gallery.Model.Product;
@@ -120,6 +122,7 @@ public class ProductCategoryFragment extends Fragment {
 
 
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
+        addInfoButtonListener();
     }
 
     private String setProductType(String productType) {
@@ -185,5 +188,24 @@ public class ProductCategoryFragment extends Fragment {
     final void setType(String productType)
     {
         this.productType = productType;
+    }
+
+    private void toolTip(ViewTooltip.Position position, String message, View view)
+    {
+        ViewTooltip
+                .on(getActivity(), view)
+                .autoHide(true, 3500)
+                .clickToHide(true)
+                .corner(30)
+                .textColor(Color.WHITE)
+                .color(R.color.accentColor)
+                .position(position)
+                .text(message)
+                .show();
+    }
+
+    private void addInfoButtonListener()
+    {
+        binding.ibInfoProductType.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Defining product type makes it easier to categorize the <variable product verb> and helps your customers easily find what they are looking for.", binding.ibInfoProductType));
     }
 }

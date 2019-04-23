@@ -2,6 +2,7 @@
 <layout>
 
     <FrameLayout
+        android:id="@+id/layout_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -157,79 +158,35 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_product_brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="horizontal" >
+                    android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/layout_brand"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.6"
                         android:layout_marginTop="@dimen/margin_10"
-                        android:orientation="vertical">
+                        android:orientation="horizontal" >
 
-                        <LinearLayout
-                            android:id="@+id/layout_tax"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Brand (If any)"/>
 
-                            <TextView
-                                style="@style/ProductLabelTextStyle"
-                                android:text="Tax Rate(%)"/>
-
-                            <ImageButton
-                                android:id="@+id/ib_info_gst"
-                                style="@style/ProductHelpButtonStyle"/>
-
-                        </LinearLayout>
-
-                        <EditText
-                            android:id="@+id/edit_gst"
-                            style="@style/ProductEditTextStyle"
-                            android:hint="XX"
-                            android:maxLength="5"
-                            android:digits="0123456789."
-                            android:layout_marginTop="@dimen/margin_5"/>
+                        <ImageButton
+                            android:id="@+id/ib_info_brand"
+                            style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:id="@+id/layout_brand"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                style="@style/ProductLabelTextStyle"
-                                android:text="Brand (If any)"/>
-
-                            <ImageButton
-                                android:id="@+id/ib_info_brand"
-                                style="@style/ProductHelpButtonStyle"/>
-
-                        </LinearLayout>
-
-                        <EditText
-                            android:id="@+id/edit_brand"
-                            style="@style/ProductEditTextStyle"
-                            android:hint="Write the name of the brand"
-                            android:layout_marginTop="@dimen/margin_5"/>
-
-                    </LinearLayout>
+                    <EditText
+                        android:id="@+id/edit_brand"
+                        style="@style/ProductEditTextStyle"
+                        android:hint="Write the name of the brand"
+                        android:layout_marginTop="@dimen/margin_5"/>
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/layout_product_name"
@@ -520,6 +477,39 @@
                     android:layout_marginTop="@dimen/margin_20"
                     layout="@layout/layout_shipping_matrix_details" />
 
+                <LinearLayout
+                    android:id="@+id/layout_assured_purchase_tax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_tax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Tax Rate(%)"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_gst"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_gst"
+                        style="@style/ProductEditTextStyle"
+                        android:hint="XX"
+                        android:maxLength="5"
+                        android:digits="0123456789."
+                        android:layout_marginTop="@dimen/margin_5"/>
+
+                </LinearLayout>
+
                 <include
                     android:id="@+id/layout_inventory_cod"
                     android:layout_width="match_parent"
@@ -548,6 +538,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_button_enabled"
+                    style="?android:attr/borderlessButtonStyle"
                     android:textColor="@android:color/white"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="@dimen/margin_20"

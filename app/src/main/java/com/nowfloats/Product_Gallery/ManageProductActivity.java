@@ -75,22 +75,25 @@ public class ManageProductActivity extends BaseActivity
         {
             case android.R.id.home:
 
-                if(isProductCategoryFragment())
-                {
-                    finish();
-                }
-
-                else
-                {
-                    confirm();
-                }
-
+                onHomePressed();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void onHomePressed()
+    {
+        if(isProductCategoryFragment())
+        {
+            finish();
+        }
+
+        else
+        {
+            confirm();
+        }
+    }
 
     private void confirm()
     {
@@ -128,9 +131,10 @@ public class ManageProductActivity extends BaseActivity
         if(isProductCategoryFragment())
         {
             super.onBackPressed();
+            return;
         }
 
-        else if (doubleBackToExitPressedOnce)
+        if (doubleBackToExitPressedOnce)
         {
             super.onBackPressed();
             return;
@@ -139,7 +143,7 @@ public class ManageProductActivity extends BaseActivity
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
 

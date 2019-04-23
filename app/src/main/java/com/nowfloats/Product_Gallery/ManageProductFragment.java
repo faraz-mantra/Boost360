@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -23,9 +24,12 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,11 +46,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.florent37.viewtooltip.ViewTooltip;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerAdapter;
 import com.nowfloats.Product_Gallery.Model.AddressInformation;
 import com.nowfloats.Product_Gallery.Model.AssuredPurchase;
@@ -104,7 +110,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private String TAG = ManageProductFragment.class.getSimpleName();
 
-    private String currencyValue;
     private String currencyType = "";
     private String productType = "";
     private int MAX_IMAGE_ALLOWED = 8;
@@ -165,7 +170,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         return fragment;
     }
 
-
     private FragmentManageProductBinding binding;
 
     @Override
@@ -188,11 +192,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 product.otherSpecification.add(new Product.Specification());
             }
-
-            /*if (product != null && product.productId != null)
-            {
-                setHasOptionsMenu(true);
-            }*/
         }
 
         mWebAction = getWebAction();
@@ -237,6 +236,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         spinnerAddressListener();
         addBottomSheetListener();
         addTextChangeListener();
+        addInfoButtonListener();
 
         placeholder();
 
@@ -284,15 +284,19 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 binding.btnDelete.setVisibility(View.GONE);
             }
 
-            if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                    && productType.equalsIgnoreCase("products"))
+            if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
             {
-                binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
-                binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
+                if(productType.equalsIgnoreCase("products"))
+                {
+                    binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
+                    binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
 
-                binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
+                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                }
+
+                binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
             }
 
             else
@@ -303,11 +307,37 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                 binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
                 binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+
+                binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
             }
         }
 
+        this.makeLinkClickable(binding.layoutBottomSheet.tvAssuredPurchaseMessage);
+
         this.getBankInformation();
         this.getAddressInformation();
+    }
+
+    protected void makeLinkClickable(TextView view)
+    {
+        SpannableStringBuilder spanTxt = new SpannableStringBuilder("*Assured Purchase can only have a single account number/branch code and tax number as part of periodic payment config. Make sure that above account details are correct. Read ");
+        spanTxt.append(Methods.fromHtml("<u><b>T&C HERE</b></u>"));
+
+        spanTxt.setSpan(new ClickableSpan() {
+
+            @Override
+            public void onClick(View widget)
+            {
+                Intent i = new Intent(getActivity(), Mobile_Site_Activity.class);
+                i.putExtra("WEBSITE_NAME", getString(R.string.assured_purchase_link));
+                startActivity(i);
+            }
+        }, spanTxt.length() - Methods.fromHtml("<u><b>T&C HERE</b></u>").length(), spanTxt.length(), 0);
+
+        spanTxt.append(Methods.fromHtml("<a href=\"" + getString(R.string.assured_purchase_link) + "\"></a>"));
+
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }
 
 
@@ -387,6 +417,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
                 binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
+                binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
 
                 binding.layoutBottomSheet.spinnerPaymentOption.setSelection(0);
 
@@ -424,6 +455,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
                 binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
+                binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+
                 if(product.BuyOnlineLink != null)
                 {
                     binding.layoutPaymentMethod.editDescription.setText(product.BuyOnlineLink.description != null ? product.BuyOnlineLink.description : "");
@@ -446,6 +479,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                 binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
                 binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+
+                binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
             }
         }
 
@@ -567,7 +602,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         String discount = binding.editDiscount.getText().toString().isEmpty() ? "0" : binding.editDiscount.getText().toString();
 
         double finalPrice = Double.valueOf(basePrice) - Double.valueOf(discount);
-        binding.labelFinalPrice.setText(Helper.getCurrencyFormatter().format(finalPrice));
+        binding.labelFinalPrice.setText(currencyType.concat(" ").concat(Helper.getCurrencyFormatter().format(finalPrice)));
     }
 
     private void placeholder()
@@ -685,6 +720,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 case 0:
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
+                    binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
+
                     displayPaymentAcceptanceMessage();
 
                     if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
@@ -718,6 +755,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 case 1:
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
+                    binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                     binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
@@ -736,6 +774,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 case 2:
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL;
+                    binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                     binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
                     binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
@@ -978,8 +1018,27 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void initCurrencyList()
     {
-        currencyValue = getString(R.string.currency_text);
-        binding.editCurrency.setText(currencyValue);
+        currencyType = getString(R.string.currency_text);
+
+        if(product != null && !TextUtils.isEmpty(product.CurrencyCode))
+        {
+            currencyType = product.CurrencyCode;
+        }
+
+        else
+        {
+            try
+            {
+                currencyType = Constants.Currency_Country_Map.get(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        binding.editCurrency.setText(currencyType);
 
         Helper.loadCurrency();
 
@@ -990,16 +1049,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             showCurrencyList(array);
         });
-
-        try
-        {
-            currencyValue = Constants.Currency_Country_Map.get(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
-        }
-
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 
 
@@ -1227,8 +1276,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                         try
                         {
                             currencyType = currencyList[position];
-                            String s = currencyType.split("-")[1];
-                            binding.editCurrency.setText(s);
+                            currencyType = currencyType.split("-")[1];
+                            binding.editCurrency.setText(currencyType);
+                            setFinalPrice();
                         }
 
                         catch (Exception e)
@@ -1507,7 +1557,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 itemView.setOnClickListener(v -> {
 
-                    product.pickupAddressReferenceId = addressInformationList.get(getAdapterPosition()).id;
+                    AddressInformation information = addressInformationList.get(getAdapterPosition());
+                    product.pickupAddressReferenceId = information.id;
+                    binding.layoutBottomSheet.tvPickAddress.setText(information.toString());
                     sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 });
             }
@@ -1879,6 +1931,24 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
+        try
+        {
+            double price = binding.editBasePrice.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editBasePrice.getText().toString().trim()) : 0;
+            double discount = binding.editDiscount.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editDiscount.getText().toString().trim()) : 0;
+
+            if(discount > price)
+            {
+                Toast.makeText(getContext(), "Discount amount can't be greater than price", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        catch (Exception e)
+        {
+            Toast.makeText(getContext(), "Invalid Input", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         /*if(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString().trim().length() == 0 ||
                 binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString().trim().length() == 0)
         {
@@ -2035,6 +2105,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             }
 
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
+                            binding.layoutBottomSheet.tvPickAddress.setText(addressResponse.toString());
                             addressInformation.id = webResponseModel.getData().id;
                         }
 
@@ -2416,6 +2487,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 JSONObject json = new JSONObject(new Gson().toJson(product));
                 Iterator<String> keys = json.keys();
 
+                Log.d("PRODUCT_JSON", "" + json.toString());
+
                 while(keys.hasNext())
                 {
                     String key = keys.next();
@@ -2423,6 +2496,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 }
 
                 Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId, product.productId, updates);
+
+                Log.d("PRODUCT_JSON", "" + new Gson().toJson(model));
 
                 showDialog("Please Wait...");
 
@@ -2433,20 +2508,17 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         Log.d("PRODUCT_JSON", "Product Updated Successfully");
 
-                        /*if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                                && productType.equalsIgnoreCase("products"))
+                        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
                         {
-                            updateAssuredPurchase(product.productId);
-                        }*/
+                            if(assuredPurchase == null)
+                            {
+                                saveAssuredPurchase(product.productId);
+                            }
 
-                        if(assuredPurchase == null)
-                        {
-                            saveAssuredPurchase(product.productId);
-                        }
-
-                        else
-                        {
-                            updateAssuredPurchase(product.productId);
+                            else
+                            {
+                                updateAssuredPurchase(product.productId);
+                            }
                         }
 
                         for(ProductImageResponseModel image: imageList)
@@ -2535,13 +2607,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         product.productId = productId;
 
-                        /*if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                                && productType.equalsIgnoreCase("products"))
+                        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
                         {
                             saveAssuredPurchase(productId);
-                        }*/
-
-                        saveAssuredPurchase(productId);
+                        }
 
                         for(ProductImageResponseModel image: imageList)
                         {
@@ -2728,28 +2797,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-    /*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        inflater.inflate(R.menu.menu_delete, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.menu_delete:
-
-                deleteConfirmation();
-                break;
-        }
-
-        return true;
-    }*/
-
-
     private void deleteConfirmation()
     {
         new MaterialDialog.Builder(getActivity())
@@ -2853,7 +2900,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         String valuesStr;
 
-        if(TextUtils.isEmpty(addressInformation.id))
+        if(TextUtils.isEmpty(addressInformation.addressProof))
         {
             valuesStr = "clientId=" + Constants.clientId
                     + "&requestType=sequential"
@@ -2899,5 +2946,46 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         Log.d("PRODUCT_JSON", "PREUPLOAD");
         showDialog("Please Wait...");
+    }
+
+
+    private void toolTip(ViewTooltip.Position position, String message, View view)
+    {
+        ViewTooltip
+                .on(getActivity(), view)
+                .autoHide(true, 3500)
+                .clickToHide(true)
+                .corner(30)
+                .textColor(Color.WHITE)
+                .color(R.color.accentColor)
+                .position(position)
+                .text(message)
+                .show();
+    }
+
+    private void addInfoButtonListener()
+    {
+        binding.ibInfoProductImage.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The primary image appears on your homepage, item list page, the cart page, and the checkout page.", binding.ibInfoProductImage));
+        binding.ibInfoGst.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the tax rate (%) for the product. This can be used to provide clear pricing breakdown during checkout and for generating invoices.", binding.ibInfoGst));
+        binding.ibInfoBrand.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the brand of your product if any. Customers find products with a familiar brand name more identifiable and favorable.", binding.ibInfoBrand));
+        binding.ibInfoProductName.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The name for your base product. Your customers will see it along with the product category and brand (if mentioned).", binding.ibInfoProductName));
+        binding.ibInfoProductDescription.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Describe your product in detail. This helps in the online discovery of your product. Your customers will make their buying decision based on the information you provide about the product.", binding.ibInfoProductDescription));
+        binding.ibInfoProductCurrency.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Select the currency you want to accept and show on your site.", binding.ibInfoProductCurrency));
+        binding.ibInfoProductBasePriceHelp.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum price for this item, including any applicable taxes.", binding.ibInfoProductBasePriceHelp));
+
+        binding.layoutProductSpecification.ibInfoProductProperty.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the key specification which helps in differentiating the product from other similar products. This will be visible along with product details and helps customers make better purchase decisions.\n" +
+                "E.g Size - Small or Color - Blue", binding.layoutProductSpecification.ibInfoProductProperty));
+        binding.layoutProductSpecification.ibInfoProductSpecification.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Mention other specifications of the product you are offering. To add more, click on add specifications.", binding.layoutProductSpecification.ibInfoProductSpecification));
+
+        binding.layoutInventory.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "You can use this to manage your product’s availability on your website.", binding.layoutInventory.ibInfoProductInventory));
+        binding.layoutInventoryCod.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Allows customers to pay by cash at the time of delivery of the product, without the need of an advance payment online.", binding.layoutInventoryCod.ibInfoProductInventory));
+
+        binding.layoutInventoryOnline.ibInfoProductInventory.setVisibility(View.INVISIBLE);
+
+        binding.layoutShippingMatrixDetails.ibInfoProductDimension.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Package dimensions need to be accurate because they are used to calculate shipping rates.", binding.layoutShippingMatrixDetails.ibInfoProductDimension));
+        binding.layoutShippingMatrixDetails.ibInfoProductWeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the weight of your package.", binding.layoutShippingMatrixDetails.ibInfoProductWeight));
+        binding.layoutShippingMatrixDetails.ibInfoProductLength.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the length of your package.", binding.layoutShippingMatrixDetails.ibInfoProductLength));
+        binding.layoutShippingMatrixDetails.ibInfoProductHeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the height of your package.", binding.layoutShippingMatrixDetails.ibInfoProductHeight));
+        binding.layoutShippingMatrixDetails.ibInfoProductThickness.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the thickness of your package.", binding.layoutShippingMatrixDetails.ibInfoProductThickness));
     }
 }

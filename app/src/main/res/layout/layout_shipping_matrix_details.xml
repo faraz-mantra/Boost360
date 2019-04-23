@@ -20,7 +20,7 @@
                 android:text="Delivery package dimensions"/>
 
             <ImageButton
-                android:id="@+id/ib_info_product_image____"
+                android:id="@+id/ib_info_product_dimension"
                 style="@style/ProductHelpButtonStyle"/>
 
         </LinearLayout>
@@ -58,7 +58,7 @@
                             android:text="Package Weight"/>
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image"
+                            android:id="@+id/ib_info_product_weight"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -128,7 +128,7 @@
                             android:text="Package Length"/>
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image___"
+                            android:id="@+id/ib_info_product_length"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -205,7 +205,7 @@
                             android:text="Package Height"/>
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image_______"
+                            android:id="@+id/ib_info_product_height"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -275,7 +275,7 @@
                             android:text="Package Thickness"/>
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image_____"
+                            android:id="@+id/ib_info_product_thickness"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
