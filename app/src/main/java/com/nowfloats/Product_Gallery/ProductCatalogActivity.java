@@ -30,7 +30,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ProductCatalogActivity extends AppCompatActivity {
+public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener{
 
     private ActivityProductCatalogBinding binding;
     private ProductCatagoryRecyclerAdapter adapter;
@@ -40,6 +40,7 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
     private boolean stop = false;
     private boolean isLoading = false;
+    private int limit = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,7 +65,16 @@ public class ProductCatalogActivity extends AppCompatActivity {
 
         this.initProductRecyclerView(binding.productList);
         getProducts(false);
+        //getWidgetLimit();
     }
+
+    private void getWidgetLimit()
+    {
+        WidgetKey widget = new WidgetKey();
+        widget.setWidgetListener(this);
+        widget.getWidgetLimit(session, WidgetKey.WIDGET_LATEST_UPDATES);
+    }
+
 
     private void getProducts(boolean flag)
     {
@@ -256,5 +266,12 @@ public class ProductCatalogActivity extends AppCompatActivity {
                openAddProductActivity();
             }
         }
+    }
+
+    @Override
+    public void onWidgetLimit(int limit) {
+
+        this.limit = limit;
+        Log.d("WIDGET_LIMIT_RESPONSE", "SUCCESS " + limit);
     }
 }

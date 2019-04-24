@@ -33,4 +33,9 @@ public class AddressInformation implements Serializable {
     {
         return new StringBuilder().append(streetAddress).append(", ").append(city).append(", ").append(state).append(", ").append(country).toString();
     }
+
+    public String getFullAddress()
+    {
+        return new StringBuilder().append(areaName).append(", ").append(this.toString()).toString();
+    }
 }

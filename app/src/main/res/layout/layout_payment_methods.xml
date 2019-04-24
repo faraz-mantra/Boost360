@@ -385,7 +385,7 @@
                         android:orientation="horizontal" >
 
                         <EditText
-                            android:id="@+id/edit_description"
+                            android:id="@+id/edit_website"
                             style="@style/ProductEditTextStyle"
                             android:hint="Website name"
                             android:background="@null"

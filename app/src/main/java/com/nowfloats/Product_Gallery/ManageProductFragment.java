@@ -459,7 +459,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 if(product.BuyOnlineLink != null)
                 {
-                    binding.layoutPaymentMethod.editDescription.setText(product.BuyOnlineLink.description != null ? product.BuyOnlineLink.description : "");
+                    binding.layoutPaymentMethod.editWebsite.setText(product.BuyOnlineLink.description != null ? product.BuyOnlineLink.description : "");
                     binding.layoutPaymentMethod.editPurchaseUrlLink.setText(product.BuyOnlineLink.url != null ? product.BuyOnlineLink.url : "");
                 }
             }
@@ -496,11 +496,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 }
 
                 Picasso.with(getActivity()).load(image_url).placeholder(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+                binding.ibRemoveProductImage.setVisibility(View.VISIBLE);
             }
 
             else
             {
                 Picasso.with(getActivity()).load(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+                binding.ibRemoveProductImage.setVisibility(View.GONE);
             }
         }
 
@@ -812,6 +814,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
        });
 
        binding.layoutBottomSheet.tvPickAddress.setOnClickListener(view -> toggleAddressBottomSheet());
+       binding.layoutBottomSheetAddress.ibClose.setOnClickListener(view -> toggleAddressBottomSheet());
     }
 
 
@@ -914,6 +917,17 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         binding.cardPrimaryImage.setOnClickListener(v -> choosePicture(DIALOG_REQUEST_CODE_PRIMARY));
         binding.btnSecondaryImage.setOnClickListener(v -> choosePicture(DIALOG_REQUEST_CODE_SECONDARY));
+        binding.ibRemoveProductImage.setOnClickListener(v -> {
+
+            binding.ivPrimaryImage.setImageDrawable(null);
+            binding.ibRemoveProductImage.setVisibility(View.GONE);
+            primaryUri = null;
+
+            if(product != null && product.TileImageUri != null)
+            {
+                product.TileImageUri = null;
+            }
+        });
     }
 
 
@@ -1062,6 +1076,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
+                if(product.availableUnits <= 0)
+                {
+                    product.availableUnits = 1;
+                }
+
                 product.availableUnits++;
                 binding.layoutInventory.quantityValue.setText(String.valueOf(product.availableUnits));
             }
@@ -1094,6 +1113,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
+                if(product.maxPrepaidOnlineAvailable < 0)
+                {
+                    product.maxPrepaidOnlineAvailable = 0;
+                }
+
                 product.maxPrepaidOnlineAvailable++;
                 binding.layoutInventoryOnline.quantityValue.setText(String.valueOf(product.maxPrepaidOnlineAvailable));
             }
@@ -1126,6 +1150,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             try
             {
+                if(product.maxCodOrders < 0)
+                {
+                    product.maxCodOrders = 0;
+                }
+
                 product.maxCodOrders++;
                 binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.maxCodOrders));
             }
@@ -1179,6 +1208,17 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
                         binding.layoutInventory.layoutQuantityMain.setVisibility(View.VISIBLE);
+
+                        if(product != null && product.availableUnits > 0)
+                        {
+                            binding.layoutInventory.quantityValue.setText(String.valueOf(product.availableUnits));
+                        }
+
+                        else
+                        {
+                            binding.layoutInventory.quantityValue.setText("1");
+                        }
+
                         break;
 
                     case 1:
@@ -1559,7 +1599,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     AddressInformation information = addressInformationList.get(getAdapterPosition());
                     product.pickupAddressReferenceId = information.id;
-                    binding.layoutBottomSheet.tvPickAddress.setText(information.toString());
+                    binding.layoutBottomSheet.tvPickAddress.setText(information.getFullAddress());
                     sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 });
             }
@@ -1841,6 +1881,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 if(requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE || requestCode == GALLERY_PRIMARY_IMAGE_REQUEST_CODE)
                 {
                     ImageLoader.load(getContext(), file, binding.ivPrimaryImage);
+                    binding.ibRemoveProductImage.setVisibility(View.VISIBLE);
                 }
 
                 if(requestCode == CAMERA_SECONDARY_IMAGE_REQUEST_CODE || requestCode == GALLERY_SECONDARY_IMAGE_REQUEST_CODE)
@@ -1886,6 +1927,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
 
         if (product.productId == null && primaryUri == null)
+        {
+            Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(product.TileImageUri == null && primaryUri == null)
         {
             Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
             return false;
@@ -1972,6 +2019,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
 
             return isValidAssuredPurchase();
+        }
+
+        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue())
+                && binding.layoutPaymentMethod.editPurchaseUrlLink.getText().toString().trim().length() == 0)
+        {
+            Toast.makeText(getContext(), "Purchase URL Required", Toast.LENGTH_LONG).show();
+            return false;
         }
 
         return true;
@@ -2105,7 +2159,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             }
 
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
-                            binding.layoutBottomSheet.tvPickAddress.setText(addressResponse.toString());
+                            binding.layoutBottomSheet.tvPickAddress.setText(addressResponse.getFullAddress());
                             addressInformation.id = webResponseModel.getData().id;
                         }
 
@@ -2137,6 +2191,25 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    private AddressInformation getAddress()
+    {
+        AddressInformation addressInformation = null;
+
+        if(product != null && product.pickupAddressReferenceId != null)
+        {
+            for(AddressInformation information: addressInformationList)
+            {
+                if( information.id != null && information.id.equals(product.pickupAddressReferenceId))
+                {
+                    addressInformation = information;
+                }
+            }
+        }
+
+        return addressInformation;
+    }
+
+
     private void getAddressInformation()
     {
         Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
@@ -2148,6 +2221,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                         if(webResponseModel != null && webResponseModel.getData() != null)
                         {
                             adapterAddress.setData(webResponseModel.getData());
+
+                            AddressInformation information = getAddress();
+                            binding.layoutBottomSheet.tvPickAddress.setText(information != null ? information.getFullAddress() : "");
                         }
 
                         Log.d("PRODUCT_JSON", "GET ADDRESS");
@@ -2245,7 +2321,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 product.BuyOnlineLink = new com.nowfloats.Product_Gallery.Model.Product.BuyOnlineLink();
             }
 
-            product.BuyOnlineLink.description = binding.layoutPaymentMethod.editDescription.getText().toString();
+            product.BuyOnlineLink.description = binding.layoutPaymentMethod.editWebsite.getText().toString();
             product.BuyOnlineLink.url = binding.layoutPaymentMethod.editPurchaseUrlLink.getText().toString();
         }
     }

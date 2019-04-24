@@ -95,7 +95,7 @@
                             android:scaleType="centerCrop"/>
 
                         <ImageButton
-                            android:id="@+id/ib_remove"
+                            android:id="@+id/ib_remove_product_image"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_margin="@dimen/margin_5"
@@ -151,6 +151,7 @@
                             android:drawablePadding="5dp"
                             android:drawableLeft="@drawable/ic_camera_outline_small"
                             android:textColor="@color/secondaryTextColor"
+                            style="?android:attr/borderlessButtonStyle"
                             android:background="@drawable/image_upload_title_background"/>
 
                     </LinearLayout>

@@ -61,7 +61,6 @@
                         android:maxLines="2"
                         android:textColor="#d0021b"
                         android:textSize="14sp"
-                        android:textStyle="bold"
                         android:paddingBottom="5dp"
                         android:drawablePadding="5dp"
                         android:drawableLeft="@drawable/ic_info_red"

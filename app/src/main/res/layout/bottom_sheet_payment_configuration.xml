@@ -166,9 +166,11 @@
                         android:id="@+id/tv_pick_address"
                         style="@style/ProductEditTextStyle"
                         android:drawableRight="@drawable/ic_pencil"
+                        android:drawablePadding="@dimen/margin_15"
                         android:layout_width="match_parent"
                         android:layout_marginTop="@dimen/margin_5"
                         android:padding="8dp"
+                        android:ellipsize="end"
                         android:onClick="onPickAddressClick"
                         android:clickable="true" />
 
@@ -392,6 +394,7 @@
                         android:background="@drawable/rounded_button_enabled"
                         android:textColor="@android:color/white"
                         android:layout_alignParentRight="true"
+                        style="?android:attr/borderlessButtonStyle"
                         android:textSize="14sp"
                         android:text="SAVE INFO" />
 

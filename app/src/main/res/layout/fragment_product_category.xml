@@ -146,6 +146,7 @@
                 android:enabled="true"
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/margin_20"
+                style="?android:attr/borderlessButtonStyle"
                 android:textColor="@android:color/white"
                 android:text="START" />
 

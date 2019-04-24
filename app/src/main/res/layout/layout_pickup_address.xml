@@ -345,6 +345,7 @@
                         android:layout_height="35dp"
                         android:minWidth="130dp"
                         android:background="@drawable/rounded_button_enabled"
+                        style="?android:attr/borderlessButtonStyle"
                         android:textColor="@android:color/white"
                         android:layout_alignParentRight="true"
                         android:textSize="14sp"

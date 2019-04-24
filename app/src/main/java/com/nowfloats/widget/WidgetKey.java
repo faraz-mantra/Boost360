@@ -3,6 +3,8 @@ package com.nowfloats.widget;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.Model.WidgetPacks;
@@ -11,6 +13,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -99,6 +102,7 @@ public class WidgetKey {
 
 
     public static boolean isNewPricingPlan = false;
+    private OnWidgetListener listener;
 
     public enum WidgetValue
     {
@@ -115,6 +119,48 @@ public class WidgetKey {
         {
             return value;
         }
+    }
+
+    public void  getWidgetLimit(UserSessionManager mSessionManager, String widgetKey)
+    {
+        Map<String, String> params = new HashMap<>();
+
+        params.put("clientId", Constants.clientId);
+        params.put("fpId", mSessionManager.getFPID());
+        params.put("widgets", widgetKey);
+
+        Constants.restAdapterDev1.create(StoreInterface.class).getWidgetLimit(params, new Callback<Object>() {
+
+            @Override
+            public void success(Object widget, Response response)
+            {
+                Log.d("WIDGET_LIMIT_RESPONSE", "SUCCESS");
+
+                String jsonString = new Gson().toJson(widget);
+
+                try
+                {
+                    JSONObject request = new JSONObject(jsonString);
+
+                    if(request.has(widgetKey))
+                    {
+                        int value = (int)((double) request.get(widgetKey));
+                        listener.onWidgetLimit(value);
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                Log.d("WIDGET_LIMIT_RESPONSE", "FAIL");
+            }
+        });
     }
 
     public static void getWidgets(UserSessionManager mSessionManager, Context context) {
@@ -254,5 +300,15 @@ public class WidgetKey {
         }
 
         return flag;
+    }
+
+    public void setWidgetListener(OnWidgetListener listener)
+    {
+        this.listener = listener;
+    }
+
+    public interface OnWidgetListener
+    {
+        void onWidgetLimit(int limit);
     }
 }
