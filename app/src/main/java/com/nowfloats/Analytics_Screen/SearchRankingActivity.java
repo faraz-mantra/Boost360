@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -166,6 +167,7 @@ public class SearchRankingActivity extends AppCompatActivity {
 
                 if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
                 {
+                    Log.d("PRODUCT_SCROLL", "CALLED");
                     getSearchRanking();
                 }
             }

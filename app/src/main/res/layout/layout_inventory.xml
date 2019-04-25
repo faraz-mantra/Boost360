@@ -51,6 +51,7 @@
                     android:layout_width="10dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginTop="2dp"
                     android:layout_gravity="center_vertical"
                     app:srcCompat="@drawable/ic_availble_indicator"/>
 
@@ -65,6 +66,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="2dp"
                     app:srcCompat="@drawable/ic_spinner_down_arrow"/>
 
             </LinearLayout>

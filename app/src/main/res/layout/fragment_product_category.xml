@@ -123,7 +123,7 @@
                 <TextView
                     android:id="@+id/label_product_type"
                     style="@style/ProductLabelTextStyle"
-                    android:text="Product Type/Category" />
+                    android:text="Product Type/Category(If any)" />
 
                 <ImageButton
                     android:id="@+id/ib_info_product_type"

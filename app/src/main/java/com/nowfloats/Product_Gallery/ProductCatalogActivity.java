@@ -34,7 +34,6 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     private ActivityProductCatalogBinding binding;
     private ProductCatagoryRecyclerAdapter adapter;
-    private LinearLayoutManager layoutManager;
 
     private UserSessionManager session;
 
@@ -136,12 +135,12 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
      */
     private void initProductRecyclerView(RecyclerView recyclerView)
     {
-        layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         adapter = new ProductCatagoryRecyclerAdapter(this);
-
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
         adapter.SetOnItemClickListener(product -> {
 
                     Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
@@ -150,12 +149,6 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 }
         );
 
-        addScrollListener(recyclerView);
-    }
-
-
-    private void addScrollListener(RecyclerView recyclerView)
-    {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -167,6 +160,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
                 {
                     getProducts(false);
+                    Log.d("PRODUCT_SCROLL", "CALLED");
                 }
             }
         });
@@ -265,6 +259,16 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             {
                openAddProductActivity();
             }
+
+            /*if(limit == WidgetKey.WidgetLimit.LIMIT_EXCEEDED.getValue())
+            {
+                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_add_product_limit)), Toast.LENGTH_LONG).show();
+            }
+
+            else
+            {
+                openAddProductActivity();
+            }*/
         }
     }
 

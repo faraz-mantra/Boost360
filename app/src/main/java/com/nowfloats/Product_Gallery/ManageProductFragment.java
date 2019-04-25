@@ -340,6 +340,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         view.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }
 
+    private void changePickupAddressText(AddressInformation information)
+    {
+        SpannableStringBuilder spanTxt = new SpannableStringBuilder();
+        spanTxt.append(Methods.fromHtml("<p style=\"color:#F9A825\">" + information.areaName + "</p> "));
+        spanTxt.append(information.toString());
+        binding.layoutBottomSheet.tvPickAddress.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.layoutBottomSheet.tvPickAddress.setText(spanTxt, TextView.BufferType.SPANNABLE);
+    }
 
     private void setProductData()
     {
@@ -813,7 +821,19 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
            openAddressDialog(null);
        });
 
-       binding.layoutBottomSheet.tvPickAddress.setOnClickListener(view -> toggleAddressBottomSheet());
+       binding.layoutBottomSheet.tvPickAddress.setOnClickListener(view -> {
+
+           if(addressInformationList != null && addressInformationList.size() > 0)
+           {
+               toggleAddressBottomSheet();
+           }
+
+           else
+           {
+               openAddressDialog(null);
+           }
+       });
+
        binding.layoutBottomSheetAddress.ibClose.setOnClickListener(view -> toggleAddressBottomSheet());
     }
 
@@ -1223,7 +1243,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     case 1:
 
-                        binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_availble_indicator));
+                        binding.layoutInventory.ivStockIndicator.setImageDrawable(getResources().getDrawable(R.drawable.ic_unlimited_indicator));
                         binding.layoutInventory.layoutQuantityMain.setVisibility(View.INVISIBLE);
                         break;
 
@@ -1599,7 +1619,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     AddressInformation information = addressInformationList.get(getAdapterPosition());
                     product.pickupAddressReferenceId = information.id;
-                    binding.layoutBottomSheet.tvPickAddress.setText(information.getFullAddress());
+                    //binding.layoutBottomSheet.tvPickAddress.setText(information.getFullAddress());
+                    changePickupAddressText(information);
                     sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 });
             }
@@ -2159,7 +2180,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             }
 
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
-                            binding.layoutBottomSheet.tvPickAddress.setText(addressResponse.getFullAddress());
+                            //binding.layoutBottomSheet.tvPickAddress.setText(addressResponse.getFullAddress());
+                            changePickupAddressText(addressResponse);
                             addressInformation.id = webResponseModel.getData().id;
                         }
 
@@ -2223,7 +2245,16 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             adapterAddress.setData(webResponseModel.getData());
 
                             AddressInformation information = getAddress();
-                            binding.layoutBottomSheet.tvPickAddress.setText(information != null ? information.getFullAddress() : "");
+
+                            if(information != null)
+                            {
+                                changePickupAddressText(information);
+                            }
+
+                            else
+                            {
+                                binding.layoutBottomSheet.tvPickAddress.setText("");
+                            }
                         }
 
                         Log.d("PRODUCT_JSON", "GET ADDRESS");

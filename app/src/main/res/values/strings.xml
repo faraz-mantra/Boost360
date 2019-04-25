@@ -1769,7 +1769,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="hint_product_description">Describe your %s within 2000 characters max ...</string>
     <string name="label_product_description">%s Description<sup>*</sup></string>
-    <string name="label_product_type">%s Type/Category</string>
+    <string name="label_product_type">%s Type/Category(If any)</string>
 
     <string name="message_custom_page_limit">You have exceeded limit</string>
     <string name="message_add_update_limit">You have exceeded limit</string>

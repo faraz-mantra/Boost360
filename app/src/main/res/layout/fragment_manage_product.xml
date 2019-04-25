@@ -296,6 +296,7 @@
                     android:layout_marginTop="@dimen/margin_5"
                     android:maxLength="2000"
                     android:singleLine="false"
+                    android:textColorHint="@color/hintTextColor"
                     android:hint="Describe your product within 2000 characters max ..." />
 
                 <LinearLayout

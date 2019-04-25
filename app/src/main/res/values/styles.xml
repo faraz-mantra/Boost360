@@ -215,6 +215,7 @@
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:inputType">textCapSentences</item>
+        <item name="android:textColorHint">@color/hintTextColor</item>
         <item name="android:background">@drawable/input_background</item>
     </style>
 

@@ -121,6 +121,23 @@ public class WidgetKey {
         }
     }
 
+    public enum WidgetLimit
+    {
+        UNLIMITED(-1), LIMIT_EXCEEDED(0);
+
+        int value;
+
+        WidgetLimit(int value)
+        {
+            this.value = value;
+        }
+
+        public int getValue()
+        {
+            return value;
+        }
+    }
+
     public void  getWidgetLimit(UserSessionManager mSessionManager, String widgetKey)
     {
         Map<String, String> params = new HashMap<>();
