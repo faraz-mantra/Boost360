@@ -92,6 +92,7 @@ import com.vincent.filepicker.filter.entity.NormalFile;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -240,13 +241,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         placeholder();
 
-        binding.layoutShippingMatrixDetails.editWeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutShippingMatrixDetails.editHeight.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutShippingMatrixDetails.editLength.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.layoutShippingMatrixDetails.editThickness.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.editBasePrice.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.editDiscount.setKeyListener(DigitsKeyListener.getInstance(true,true));
-        binding.editGst.setKeyListener(DigitsKeyListener.getInstance(true,true));
+        binding.layoutShippingMatrixDetails.editWeight.setKeyListener(DigitsKeyListener.getInstance(false,true));
+        binding.layoutShippingMatrixDetails.editHeight.setKeyListener(DigitsKeyListener.getInstance(false,true));
+        binding.layoutShippingMatrixDetails.editLength.setKeyListener(DigitsKeyListener.getInstance(false,true));
+        binding.layoutShippingMatrixDetails.editThickness.setKeyListener(DigitsKeyListener.getInstance(false,true));
+        binding.editBasePrice.setKeyListener(DigitsKeyListener.getInstance(false,true));
+        binding.editDiscount.setKeyListener(DigitsKeyListener.getInstance(false,true));
+        binding.editGst.setKeyListener(DigitsKeyListener.getInstance(false,true));
 
         binding.layoutInventory.labelInventoryHint.setText(String.valueOf("Inventory availability"));
         binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available quantity"));
@@ -360,8 +361,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.editProductName.setText(product.Name != null ? product.Name : "");
         binding.editProductDescription.setText(product.Description != null ? product.Description : "");
 
-        binding.editBasePrice.setText(product.Price > 0 ? String.valueOf(product.Price) : "");
-        binding.editDiscount.setText(product.DiscountAmount > 0 ? String.valueOf(product.DiscountAmount) : "");
+        binding.editBasePrice.setText(product.Price > 0 ? new DecimalFormat("#.##").format(product.Price) : "");
+        binding.editDiscount.setText(product.DiscountAmount > 0 ? new DecimalFormat("#.##").format(product.DiscountAmount) : "");
 
         this.setFinalPrice();
 
@@ -396,7 +397,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         else
         {
             binding.layoutInventoryCod.spinnerStockAvailability.setSelection(1);
-            binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.codAvailable));
+            binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.maxCodOrders));
         }
 
         /**
@@ -431,6 +432,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
                 binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_methud_message));
+                binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check, 0, 0, 0);
 
                 binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
 
@@ -481,6 +483,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
                 binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_method_dont_want_to_sell));
+                binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
                 binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
 
@@ -598,21 +601,29 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void setFinalPrice()
     {
-        if(binding.editBasePrice.getText().toString().isEmpty())
+        try
         {
-            binding.editDiscount.setEnabled(false);
+            if(binding.editBasePrice.getText().toString().isEmpty())
+            {
+                binding.editDiscount.setEnabled(false);
+            }
+
+            else
+            {
+                binding.editDiscount.setEnabled(true);
+            }
+
+            String basePrice = binding.editBasePrice.getText().toString().isEmpty() ? "0" : binding.editBasePrice.getText().toString();
+            String discount = binding.editDiscount.getText().toString().isEmpty() ? "0" : binding.editDiscount.getText().toString();
+
+            double finalPrice = Double.valueOf(basePrice) - Double.valueOf(discount);
+            binding.labelFinalPrice.setText(currencyType.concat(" ").concat(Helper.getCurrencyFormatter().format(finalPrice)));
         }
 
-        else
+        catch (Exception e)
         {
-            binding.editDiscount.setEnabled(true);
+            e.printStackTrace();
         }
-
-        String basePrice = binding.editBasePrice.getText().toString().isEmpty() ? "0" : binding.editBasePrice.getText().toString();
-        String discount = binding.editDiscount.getText().toString().isEmpty() ? "0" : binding.editDiscount.getText().toString();
-
-        double finalPrice = Double.valueOf(basePrice) - Double.valueOf(discount);
-        binding.labelFinalPrice.setText(currencyType.concat(" ").concat(Helper.getCurrencyFormatter().format(finalPrice)));
     }
 
     private void placeholder()
@@ -797,6 +808,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[2]);
                     binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_method_dont_want_to_sell));
+                    binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
                     toggleBottomSheet();
                     break;
@@ -1091,6 +1103,64 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutInventory.quantityValue.setText(String.valueOf(product.availableUnits));
         binding.layoutInventoryOnline.quantityValue.setText(String.valueOf(product.maxPrepaidOnlineAvailable));
         binding.layoutInventoryCod.quantityValue.setText(String.valueOf(product.maxCodOrders));
+
+        binding.layoutInventory.quantityValue.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                product.availableUnits = binding.layoutInventory.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        binding.layoutInventoryCod.quantityValue.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                product.maxCodOrders = binding.layoutInventoryCod.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        binding.layoutInventoryOnline.quantityValue.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                product.maxPrepaidOnlineAvailable = binding.layoutInventoryOnline.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+        });
 
         binding.layoutInventory.addQuantity.setOnClickListener(view -> {
 
@@ -1539,6 +1609,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             imageList.addAll(images);
             notifyDataSetChanged();
+            binding.btnSecondaryImage.setText("ADD MORE");
         }
 
         class ProductImageViewHolder extends RecyclerView.ViewHolder
@@ -1690,6 +1761,16 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         else
         {
             binding.layoutAddImage.setVisibility(View.GONE);
+        }
+
+        if(adapterImage.getItemCount() > 0)
+        {
+            binding.btnSecondaryImage.setText("ADD MORE");
+        }
+
+        else
+        {
+            binding.btnSecondaryImage.setText("BROWSE SECONDARY IMAGES");
         }
     }
 
@@ -1962,12 +2043,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         if (binding.editProductName.getText().toString().trim().length() == 0)
         {
             Toast.makeText(getContext(), "Enter product name", Toast.LENGTH_LONG).show();
+            binding.editProductName.requestFocus();
             return false;
         }
 
         if (binding.editProductDescription.getText().toString().trim().length() == 0)
         {
             Toast.makeText(getContext(), "Enter product description", Toast.LENGTH_LONG).show();
+            binding.editProductDescription.requestFocus();
             return false;
         }
 
@@ -1981,6 +2064,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             catch (Exception e)
             {
                 Toast.makeText(getContext(), "Enter valid price", Toast.LENGTH_LONG).show();
+                binding.editBasePrice.requestFocus();
                 return false;
             }
         }
@@ -1995,6 +2079,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             catch (Exception e)
             {
                 Toast.makeText(getContext(), "Enter valid discount", Toast.LENGTH_LONG).show();
+                binding.editDiscount.requestFocus();
                 return false;
             }
         }
@@ -2007,6 +2092,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             if(discount > price)
             {
                 Toast.makeText(getContext(), "Discount amount can't be greater than price", Toast.LENGTH_LONG).show();
+                binding.editDiscount.requestFocus();
                 return false;
             }
         }
@@ -2014,6 +2100,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         catch (Exception e)
         {
             Toast.makeText(getContext(), "Invalid Input", Toast.LENGTH_LONG).show();
+            binding.editDiscount.requestFocus();
             return false;
         }
 
@@ -2046,6 +2133,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 && binding.layoutPaymentMethod.editPurchaseUrlLink.getText().toString().trim().length() == 0)
         {
             Toast.makeText(getContext(), "Purchase URL Required", Toast.LENGTH_LONG).show();
+            binding.layoutPaymentMethod.editPurchaseUrlLink.requestFocus();
             return false;
         }
 
@@ -2311,7 +2399,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
         {
             product.IsAvailable = true;
-            product.availableUnits = Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
+            product.availableUnits = binding.layoutInventory.quantityValue.getText().toString().length() == 0 ? 1 : Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
         }
 
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 1)
@@ -2332,8 +2420,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.codAvailable = (binding.layoutInventoryCod.spinnerStockAvailability.getSelectedItemPosition() == 0);
             product.prepaidOnlineAvailable = (binding.layoutInventoryOnline.spinnerStockAvailability.getSelectedItemPosition() == 0);
 
-            product.maxCodOrders = Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString().trim());
-            product.maxPrepaidOnlineAvailable = Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim());
+            product.maxCodOrders = binding.layoutInventoryCod.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString().trim());
+            product.maxPrepaidOnlineAvailable = binding.layoutInventoryOnline.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim());
         }
 
         else
@@ -2506,6 +2594,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
                         binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setText(getString(R.string.payment_methud_message));
+                        binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check, 0, 0, 0);
 
                         toggleBottomSheet();
                     }

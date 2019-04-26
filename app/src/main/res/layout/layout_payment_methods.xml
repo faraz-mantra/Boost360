@@ -344,11 +344,12 @@
                     android:id="@+id/tv_payment_configuration_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Payment Configuration Message"
+                    android:text="Incomplete payment info"
                     android:drawablePadding="5dp"
-                    android:textSize="14sp"
+                    android:drawableLeft="@drawable/ic_info_red"
+                    android:textSize="13sp"
                     android:padding="16dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textColor="@color/secondaryTextColor" />
 
                 <LinearLayout

@@ -366,7 +366,8 @@
                             android:id="@+id/edit_base_price"
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XX,XXX"
-                            android:maxLength="11"
+                            android:maxLength="9"
+                            android:inputType="numberDecimal"
                             android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 
@@ -422,7 +423,8 @@
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XXX"
                             android:enabled="false"
-                            android:maxLength="9"
+                            android:maxLength="6"
+                            android:inputType="numberDecimal"
                             android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 
@@ -508,6 +510,7 @@
                         android:hint="XX"
                         android:maxLength="5"
                         android:digits="0123456789."
+                        android:inputType="numberDecimal"
                         android:layout_marginTop="@dimen/margin_5"/>
 
                 </LinearLayout>
