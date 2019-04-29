@@ -19,7 +19,8 @@ public class SpinnerAdapter extends BaseAdapter
     private String[] titles;
     private String[] messages;
 
-    List<PaymentOption> paymentOptionList;
+    private List<PaymentOption> paymentOptionList;
+    private int mSelectedIndex = -1;
 
     public SpinnerAdapter(Context context)
     {
@@ -28,6 +29,12 @@ public class SpinnerAdapter extends BaseAdapter
         this.messages = context.getResources().getStringArray(R.array.payment_method_messages);
 
         this.paymentOptionList = getPaymentOptionList();
+    }
+
+    public void setSelection(int position)
+    {
+        mSelectedIndex =  position;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -68,11 +75,23 @@ public class SpinnerAdapter extends BaseAdapter
         return itemView;
     }
 
-    /*@Override
-    public View getDropDownView(int position, View itemView, @NonNull ViewGroup parent)
+    @Override
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
     {
-        return getView(position, itemView, parent);
-    }*/
+        View itemView =  super.getDropDownView(position, convertView, parent);
+
+        if (position == mSelectedIndex)
+        {
+            itemView.findViewById(R.id.layout_child).setBackgroundResource(R.drawable.spinner_selected_highlight);
+        }
+
+        /*else
+        {
+            itemView.setBackgroundColor(Color.TRANSPARENT);
+        }*/
+
+        return itemView;
+    }
 
     @Override
     public int getCount() {

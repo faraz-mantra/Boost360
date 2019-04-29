@@ -702,6 +702,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                spinnerAdapter.setSelection(position);
+
                 switch (position)
                 {
                     case 0:

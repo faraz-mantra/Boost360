@@ -39,7 +39,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     private boolean stop = false;
     private boolean isLoading = false;
-    private int limit = -1;
+    private int limit = WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,14 +64,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
         this.initProductRecyclerView(binding.productList);
         getProducts(false);
-        //getWidgetLimit();
+        getWidgetLimit();
     }
 
     private void getWidgetLimit()
     {
         WidgetKey widget = new WidgetKey();
         widget.setWidgetListener(this);
-        widget.getWidgetLimit(session, WidgetKey.WIDGET_LATEST_UPDATES);
+        widget.getWidgetLimit(session, WidgetKey.WIDGET_PRODUCT_CATALOG);
     }
 
 
@@ -239,10 +239,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             {
                 openAddProductActivity();
             }
+
+            Log.d("WIDGET_LIMIT_RESPONSE", "EXISTING PRICING PLAN");
         }
 
         else
         {
+            Log.d("WIDGET_LIMIT_RESPONSE", "NEW PRICING PLAN");
+
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PRODUCT_CATALOG, WidgetKey.WIDGET_PROPERTY_MAX);
 
             if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
@@ -260,7 +264,12 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                openAddProductActivity();
             }
 
-            /*if(limit == WidgetKey.WidgetLimit.LIMIT_EXCEEDED.getValue())
+            /*if(limit == WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue())
+            {
+                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+            }
+
+            else if(limit == WidgetKey.WidgetLimit.LIMIT_EXCEEDED.getValue())
             {
                 Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_add_product_limit)), Toast.LENGTH_LONG).show();
             }

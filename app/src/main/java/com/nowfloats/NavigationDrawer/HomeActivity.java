@@ -244,7 +244,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             createView();
         }
 
-        WidgetKey.getWidgets(session, this);
+        //WidgetKey.getWidgets(session, this);
     }
 
     /*private void getPermissions() {

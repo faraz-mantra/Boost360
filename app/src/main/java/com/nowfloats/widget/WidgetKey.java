@@ -123,7 +123,7 @@ public class WidgetKey {
 
     public enum WidgetLimit
     {
-        UNLIMITED(-1), LIMIT_EXCEEDED(0);
+        UNLIMITED(-1), LIMIT_EXCEEDED(0), FEATURE_NOT_AVAILABLE(-2);
 
         int value;
 
@@ -202,8 +202,9 @@ public class WidgetKey {
         params.put("fpId", mSessionManager.getFPID());
         params.put("country", country.toLowerCase());
         params.put("fpCategory", mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
+        params.put("newPackages", "true");
 
-        Constants.restAdapter.create(StoreInterface.class).getActiveWidgetList(params, new Callback<WidgetResponse>() {
+        Constants.restAdapterDev1.create(StoreInterface.class).getActiveWidgetList(params, new Callback<WidgetResponse>() {
 
             @Override
             public void success(WidgetResponse widget, Response response)
@@ -216,11 +217,12 @@ public class WidgetKey {
 
                     if(activePackage != null)
                     {
+                        Log.d("WIDGET_RESPONSE", "" + activePackage.getId());
+
                         Widget.getInstance().setActivePackage(getActivePackage(widget.getActivePackages()));
                         isNewPricingPlan = isPackageExists(context, activePackage.getId());
                     }
             }
-
         }
             @Override
             public void failure(RetrofitError error)

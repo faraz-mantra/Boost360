@@ -1,8 +1,10 @@
 package com.nowfloats.Product_Gallery.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +21,19 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
 {
     private Context context;
 
-    List<ItemCategory> itemCategoryList;
+    private List<ItemCategory> itemCategoryList;
+    private int mSelectedIndex = -1;
 
     public SpinnerItemCategoryAdapter(Context context)
     {
         this.itemCategoryList = new ItemCategory().getList();
         this.context = context;
+    }
+
+    public void setSelection(int position)
+    {
+        mSelectedIndex =  position;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -63,73 +72,26 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
         tvItemDescription.setText(option.body);
         ivIcon.setImageDrawable(ContextCompat.getDrawable(context, option.icon));
 
+        return itemView;
+    }
 
+    @Override
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
+    {
+        View itemView =  super.getDropDownView(position, convertView, parent);
 
-        /*if (parent == null)
+        if (position == mSelectedIndex)
         {
-            itemView = LayoutInflater.from(painitViewrent.getContext()).inflate(R.layout.spinner_item_dynamic, null);
+            itemView.findViewById(R.id.layout_child).setBackgroundResource(R.drawable.spinner_selected_highlight);
         }
 
-        else
+        /*else
         {
-            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_dynamic, parent, false);
-        }*/
-
-        /*CircleImageView thumbnail = itemView.findViewById(R.id.patient_image);
-        TextView textView = itemView.findViewById(R.id.patient_name);
-
-        if(position == (mList.size() - 1) && mList.get(position) == null)
-        {
-            textView.setText(String.valueOf("Add New"));
-            thumbnail.setImageResource(R.drawable.ic_plus);
-            return itemView;
-        }
-
-        else
-        {
-            textView.setText(Helper.toCamelCase(patient.getFullName()));
-
-            try
-            {
-                if(!patient.getProfilePic().isEmpty())
-                {
-                    Glide.with(context)
-                            .load(patient.getProfilePic())
-                            .placeholder(R.drawable.anonymous)
-                            .dontAnimate()
-                            .override(50, 50)
-                            .centerCrop()
-                            .into(thumbnail);
-                }
-
-                else
-                {
-                    Glide.with(context)
-                            .load(R.drawable.anonymous)
-                            .placeholder(R.drawable.anonymous)
-                            .dontAnimate()
-                            .override(50, 50)
-                            .centerCrop()
-                            .into(thumbnail);
-                }
-            }
-
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+            itemView.setBackgroundColor(Color.TRANSPARENT);
         }*/
 
         return itemView;
-
-        //return LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_payment_configuration_option, null /*parent, false*/);
     }
-
-    /*@Override
-    public View getDropDownView(int position, View itemView, @NonNull ViewGroup parent)
-    {
-        return getView(position, itemView, parent);
-    }*/
 
     @Override
     public int getCount() {
