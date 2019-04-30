@@ -10,17 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Adapter.SpinnerItemCategoryAdapter;
 import com.nowfloats.Product_Gallery.Model.Product;
+import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
 
+import java.util.HashMap;
+import java.util.List;
 
-public class ProductCategoryFragment extends Fragment {
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+
+public class ProductCategoryFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private String productType;
     private UserSessionManager session;
@@ -123,6 +134,7 @@ public class ProductCategoryFragment extends Fragment {
 
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
+        getCategoryList();
     }
 
     private String setProductType(String productType) {
@@ -209,5 +221,58 @@ public class ProductCategoryFragment extends Fragment {
     private void addInfoButtonListener()
     {
         binding.ibInfoProductType.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Defining product type makes it easier to categorize the <variable product verb> and helps your customers easily find what they are looking for.", binding.ibInfoProductType));
+    }
+
+
+    private void addAutoCompleteListener(List<String> categories)
+    {
+        try
+        {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, categories);
+
+            binding.editCategory.setAdapter(adapter);
+            binding.editCategory.setOnItemClickListener(this);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    private void getCategoryList()
+    {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
+        HashMap<String, String> values = new HashMap<>();
+        values.put("clientId", Constants.clientId);
+        values.put("fpId", session.getFPID());
+
+        ProductGalleryInterface galleryInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
+
+        galleryInterface.getAllCategories(values, new Callback<List<String>>() {
+
+            @Override
+            public void success(List<String> data, Response response) {
+
+                if(data != null && response.getStatus() == 200)
+                {
+                    addAutoCompleteListener(data);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 }

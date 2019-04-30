@@ -19,13 +19,13 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private List<Product> productList;
     private OnItemClicked callback;
 
-    public ProductCatagoryRecyclerAdapter(Context context)
+    public ProductCategoryRecyclerAdapter(Context context)
     {
         this.context = context;
         this.productList = new ArrayList<>();
@@ -101,7 +101,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             try
             {
                 String formattedPrice = Helper.getCurrencyFormatter().format(model.Price - model.DiscountAmount);
-                viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
+                viewHolder.tvPrice.setText(String.valueOf(model.Currency + " " + formattedPrice));
 
                 if(model.DiscountAmount != 0)
                 {
@@ -109,7 +109,7 @@ public class ProductCatagoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
                     formattedPrice = Helper.getCurrencyFormatter().format(model.Price);
                     viewHolder.tvBasePrice.setPaintFlags(viewHolder.tvBasePrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    viewHolder.tvBasePrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
+                    viewHolder.tvBasePrice.setText(String.valueOf(model.Currency + " " + formattedPrice));
                 }
 
                 else

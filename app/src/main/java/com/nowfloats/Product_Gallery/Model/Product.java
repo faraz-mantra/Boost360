@@ -10,9 +10,7 @@ import java.util.List;
 
 public class Product implements Serializable {
 
-    //public String BuyOnlineLink;
-    //@SerializedName(value="CurrencyCode", alternate={"CurrencyCode"})
-    public String CurrencyCode;
+    public String Currency;
     @SerializedName(value="description", alternate={"Description"})
     public String Description;
     @SerializedName(value="discountAmount", alternate={"DiscountAmount"})

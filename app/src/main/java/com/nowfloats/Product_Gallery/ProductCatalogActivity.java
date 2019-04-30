@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Product_Gallery.Adapter.ProductCatagoryRecyclerAdapter;
+import com.nowfloats.Product_Gallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.util.Constants;
@@ -33,7 +33,7 @@ import retrofit.client.Response;
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener{
 
     private ActivityProductCatalogBinding binding;
-    private ProductCatagoryRecyclerAdapter adapter;
+    private ProductCategoryRecyclerAdapter adapter;
 
     private UserSessionManager session;
 
@@ -142,7 +142,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        adapter = new ProductCatagoryRecyclerAdapter(this);
+        adapter = new ProductCategoryRecyclerAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 

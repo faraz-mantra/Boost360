@@ -131,7 +131,7 @@
 
             </LinearLayout>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/edit_category"
                 style="@style/ProductEditTextStyle"
                 android:layout_marginTop="@dimen/margin_5"
@@ -148,7 +148,7 @@
                 android:layout_marginTop="@dimen/margin_20"
                 style="?android:attr/borderlessButtonStyle"
                 android:textColor="@android:color/white"
-                android:text="START" />
+                android:text="CONTINUE" />
 
         </LinearLayout>
 

@@ -168,7 +168,6 @@
                         android:id="@+id/layout_brand"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_10"
                         android:orientation="horizontal" >
 
                         <TextView
@@ -464,21 +463,21 @@
                     android:id="@+id/layout_inventory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_10"
                     layout="@layout/layout_inventory" />
 
                 <include
                     android:id="@+id/layout_payment_method"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_10"
                     layout="@layout/layout_payment_methods" />
 
                 <include
                     android:id="@+id/layout_shipping_matrix_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_10"
                     layout="@layout/layout_shipping_matrix_details" />
 
                 <LinearLayout
@@ -519,14 +518,14 @@
                     android:id="@+id/layout_inventory_cod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_10"
                     layout="@layout/layout_inventory" />
 
                 <include
                     android:id="@+id/layout_inventory_online"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_10"
                     layout="@layout/layout_inventory" />
 
                 <!--

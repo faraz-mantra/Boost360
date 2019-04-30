@@ -204,6 +204,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false);
         sheetBehavior = BottomSheetBehavior.from(binding.layoutBottomSheet.getRoot());
         sheetBehaviorAddress = BottomSheetBehavior.from(binding.layoutBottomSheetAddress.getRoot());
+
         return binding.getRoot();
     }
 
@@ -239,8 +240,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         addTextChangeListener();
         addInfoButtonListener();
 
-        placeholder();
-
         binding.layoutShippingMatrixDetails.editWeight.setKeyListener(DigitsKeyListener.getInstance(false,true));
         binding.layoutShippingMatrixDetails.editHeight.setKeyListener(DigitsKeyListener.getInstance(false,true));
         binding.layoutShippingMatrixDetails.editLength.setKeyListener(DigitsKeyListener.getInstance(false,true));
@@ -267,6 +266,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         {
             CATEGORY = bundle.getString("CATEGORY");
             productType = bundle.getString("PRODUCT_TYPE");
+
+            placeholder();
 
             if(product != null && product.productId != null )
             {
@@ -295,6 +296,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
                     binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
                     binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                }
+
+                else
+                {
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                 }
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
@@ -1073,9 +1079,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         currencyType = getString(R.string.currency_text);
 
-        if(product != null && !TextUtils.isEmpty(product.CurrencyCode))
+        if(product != null && !TextUtils.isEmpty(product.Currency))
         {
-            currencyType = product.CurrencyCode;
+            currencyType = product.Currency;
         }
 
         else
@@ -2376,7 +2382,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         try
         {
-            product.CurrencyCode = binding.editCurrency.getText().toString();
+            product.Currency = binding.editCurrency.getText().toString();
         }
 
         catch (Exception e)
@@ -2398,15 +2404,28 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.keySpecification = new com.nowfloats.Product_Gallery.Model.Product.Specification();
         }
 
-        if(!TextUtils.isEmpty(product.keySpecification.key))
+        product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
+        product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
+
+        /*if(!TextUtils.isEmpty(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString()))
         {
             product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
         }
 
-        if(!TextUtils.isEmpty(product.keySpecification.value))
+        else
+        {
+            product.keySpecification.key = null;
+        }
+
+        if(!TextUtils.isEmpty(binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString()))
         {
             product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
         }
+
+        else
+        {
+            product.keySpecification.value = null;
+        }*/
 
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
         {
@@ -2475,11 +2494,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             assuredPurchase.productId = productId;
             assuredPurchase.merchantId = session.getFPID();
 
-            assuredPurchase.height = Double.valueOf(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim());
-            assuredPurchase.weight = Double.valueOf(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim());
-            assuredPurchase.length = Double.valueOf(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim());
-            assuredPurchase.width = Double.valueOf(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim());
-            assuredPurchase.gstCharge = Double.valueOf(binding.editGst.getText().toString().trim());
+            assuredPurchase.height = binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim().length() > 0 ? Double.valueOf(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim()) : 0;
+            assuredPurchase.weight = binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim().length() > 0 ? Double.valueOf(binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim()) : 0;
+            assuredPurchase.length = binding.layoutShippingMatrixDetails.editLength.getText().toString().trim().length() > 0 ? Double.valueOf(binding.layoutShippingMatrixDetails.editLength.getText().toString().trim()) : 0;
+            assuredPurchase.width = binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim().length() > 0 ? Double.valueOf(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim()) : 0;
+            assuredPurchase.gstCharge = binding.editGst.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editGst.getText().toString().trim()) : 0;
         }
 
         catch (Exception e)
@@ -2562,7 +2581,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 assuredPurchase.gstCharge));
 
         update.setMulti(true);
-
 
         /**
          * Update API call
