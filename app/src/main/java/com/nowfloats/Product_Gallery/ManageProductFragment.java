@@ -315,6 +315,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         this.makeLinkClickable(binding.layoutBottomSheet.tvAssuredPurchaseMessage);
 
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         this.getBankInformation();
         this.getAddressInformation();
     }
@@ -2236,6 +2241,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void saveAddress()
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
                 .savePickupAddress(addressInformation, new Callback<WebResponseModel<AddressInformation>>() {
 
@@ -2534,6 +2544,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
      */
     private void updateAssuredPurchase(String productId)
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         WaUpdateDataModel update = new WaUpdateDataModel();
         final AssuredPurchase assuredPurchase = initAssuredPurchase(productId);
 
@@ -2573,6 +2588,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
      */
     private void saveBankInformation()
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         showDialog("Updating Seller Profile ...");
 
         BankInformation bankInformation = initBankInformation();
@@ -2646,6 +2666,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
      */
     private void saveAssuredPurchase(String productId)
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         AssuredPurchase assuredPurchase = initAssuredPurchase(productId);
 
         WAAddDataModel<AssuredPurchase> waModel = new WAAddDataModel<>();
@@ -2774,6 +2799,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
      */
     private void saveProduct()
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         if (product != null && product.productId != null)
         {
             updateProduct();
@@ -2857,6 +2887,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void deleteProduct()
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         ProductGalleryInterface productInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
 
         try
@@ -2906,6 +2941,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void getAssuredPurchase(String productId)
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .getAssuredPurchaseDetails(String.format("{product_id:'%s'}", productId), new Callback<WebActionModel<AssuredPurchase>>() {
 
@@ -3096,6 +3136,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void uploadFile(File file)
     {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
         String valuesStr;
 
         if(TextUtils.isEmpty(addressInformation.addressProof))

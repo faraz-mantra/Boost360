@@ -73,6 +73,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_image"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle"/>
 
                 </LinearLayout>
@@ -106,6 +107,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -133,6 +135,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description_______"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -199,6 +202,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description_"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -223,6 +227,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description__"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -247,6 +252,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description___"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -271,6 +277,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description_____"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>

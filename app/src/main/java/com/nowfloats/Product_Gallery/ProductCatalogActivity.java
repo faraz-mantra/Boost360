@@ -77,6 +77,11 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     private void getProducts(boolean flag)
     {
+        if(!Methods.isOnline(ProductCatalogActivity.this))
+        {
+            return;
+        }
+
         isLoading = true;
 
         final String skip = flag ? "0" : String.valueOf(adapter.getItemCount());
