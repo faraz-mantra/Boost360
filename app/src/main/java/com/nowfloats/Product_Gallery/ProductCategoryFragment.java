@@ -137,8 +137,14 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
         getCategoryList();
     }
 
+    /**
+     * Set type product/service
+     * @param productType
+     * @return
+     */
     private String setProductType(String productType) {
 
+        //If product
         if(productType.equalsIgnoreCase("products"))
         {
             binding.layoutPhysicalProduct.setVisibility(View.VISIBLE);
@@ -148,6 +154,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
         }
 
+        //If sercice
         else if(productType.equalsIgnoreCase("services"))
         {
             binding.layoutPhysicalProduct.setVisibility(View.GONE);
@@ -157,6 +164,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
         }
 
+        //If custom then display spinner for product/service selection
         else
         {
             binding.layoutPhysicalProduct.setVisibility(View.GONE);
@@ -204,6 +212,12 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
         this.productType = productType;
     }
 
+    /**
+     * Initialize tooltip object
+     * @param position
+     * @param message
+     * @param view
+     */
     private void toolTip(ViewTooltip.Position position, String message, View view)
     {
         ViewTooltip
@@ -224,6 +238,10 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     }
 
 
+    /**
+     * Add listener to autocomplete suggestion
+     * @param categories
+     */
     private void addAutoCompleteListener(List<String> categories)
     {
         try
@@ -245,6 +263,9 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
 
     }
 
+    /**
+     * Fetch suggested category list
+     */
     private void getCategoryList()
     {
         if(!Methods.isOnline(getActivity()))

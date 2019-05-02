@@ -240,6 +240,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         addTextChangeListener();
         addInfoButtonListener();
 
+        /**
+         * Add key listener for restrict only one dot to these fields
+         */
         binding.layoutShippingMatrixDetails.editWeight.setKeyListener(DigitsKeyListener.getInstance(false,true));
         binding.layoutShippingMatrixDetails.editHeight.setKeyListener(DigitsKeyListener.getInstance(false,true));
         binding.layoutShippingMatrixDetails.editLength.setKeyListener(DigitsKeyListener.getInstance(false,true));
@@ -301,6 +304,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 else
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
+                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
+                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                 }
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
@@ -361,6 +366,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutBottomSheet.tvPickAddress.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }
 
+    /**
+     * If edit product/service set data ro fields
+     */
     private void setProductData()
     {
         if(product == null)
@@ -433,6 +441,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         if(product.paymentType != null)
         {
+            //If payment type is assured purchase
             if(product.paymentType.equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
             {
                 paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
@@ -462,6 +471,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 }
             }
 
+            //If payment type is unique payment url
             else if(product.paymentType.equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue()))
             {
                 paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
@@ -485,6 +495,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 }
             }
 
+            //If payment type is dont want to sell
             else if(product.paymentType.equalsIgnoreCase(Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL.getValue()))
             {
                 paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL;
@@ -534,6 +545,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+    /**
+     * Set assured purchase filed data
+     */
     private void setAssuredPurchaseData()
     {
         if(assuredPurchase == null)
@@ -548,7 +562,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.editGst.setText(assuredPurchase.gstCharge > 0 ? String.valueOf(assuredPurchase.gstCharge) : "");
     }
 
-
+    /**
+     * Set seller information filed data
+     */
     private void setBankInformationData()
     {
         if(bankInformation == null)
@@ -610,6 +626,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         });
     }
 
+    /**
+     * Calculate final price by subtracting base price - discount
+     */
     private void setFinalPrice()
     {
         try
@@ -637,6 +656,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+    /**
+     * Set placeholders based on product/service selection
+     */
     private void placeholder()
     {
         String category;
@@ -658,7 +680,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.editProductDescription.setHint(String.format(getString(R.string.hint_product_description), category.toLowerCase()));
     }
 
-
+    /**
+     * Add listener based on add property button click
+     */
     private void addPropertyListener()
     {
         binding.layoutProductSpecification.buttonAddProperty.setOnClickListener(view -> {
@@ -674,6 +698,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Display payment acceptance message
+     */
     private void displayPaymentAcceptanceMessage()
     {
         try
@@ -701,6 +728,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+    /**
+     * Initialize payment option spinner adapter
+     */
     private void initPaymentAdapter()
     {
         binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.GONE);
@@ -837,7 +867,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         });
     }
 
-
+    /**
+     * Pickup address button listener
+     */
     private void spinnerAddressListener()
     {
        binding.layoutBottomSheetAddress.buttonAddNew.setOnClickListener(v -> {
@@ -882,7 +914,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Initialize service adapter
+     * Initialize product specification adapter
      * @param recyclerView
      */
     private void initProductSpecificationRecyclerView(RecyclerView recyclerView)
@@ -894,7 +926,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Initialize product image adapter
+     * Initialize product secondary image adapter
      * @param recyclerView
      */
     private void initProductImageRecyclerView(RecyclerView recyclerView)
@@ -906,7 +938,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Initialize service adapter
+     * Initialize pickup address list adapter
      * @param recyclerView
      */
     private void initProductPickupAddressRecyclerView(RecyclerView recyclerView)
@@ -916,6 +948,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    /**
+     * open add/edit address dialog
+     * @param addressInformation
+     */
     private void openAddressDialog(AddressInformation addressInformation)
     {
         if(addressInformation == null)
@@ -953,11 +989,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Add listener to payment configuration click
+     * start payment configuration bottom sheet
+     */
     public void addPaymentConfigListener()
     {
         binding.layoutPaymentMethod.tvPaymentConfiguration.setOnClickListener(view -> toggleBottomSheet());
     }
 
+    /**
+     * Add listener for primary and secondary image picker
+     */
     private void addImagePickerListener()
     {
         binding.cardPrimaryImage.setOnClickListener(v -> choosePicture(DIALOG_REQUEST_CODE_PRIMARY));
@@ -976,6 +1019,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Image picker dialog
+     * @param requestCode
+     */
     private void choosePicture(int requestCode)
     {
         final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
@@ -1033,6 +1080,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * File picker dialog
+     * @param requestCode
+     */
     private void chooseFile(int requestCode)
     {
         final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
@@ -1075,6 +1126,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Initialize currency list
+     */
     private void initCurrencyList()
     {
         currencyType = getString(R.string.currency_text);
@@ -1400,6 +1454,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Show currency dialog on click
+     * @param currencyList
+     * @return
+     */
     public String showCurrencyList(final String[] currencyList)
     {
         String currencyVal = binding.editCurrency.getText().toString().trim();
@@ -1438,7 +1497,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Product Specification Dynamic Input Filed
+     * Product Specification Dynamic Input Filed Adapter Class
      */
     class ProductSpecificationRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
@@ -1574,7 +1633,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Product Image Dynamic Input Filed
+     * Product Image Dynamic Input Filed Adapter Class
      */
     class ProductImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
@@ -1735,6 +1794,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Open file chooser activity
+     */
     private void openFileChooser()
     {
         int limit = 1;
@@ -1746,6 +1808,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Open image picker activity
+     * @param requestCode
+     * @param max
+     */
     private void openImagePicker(int requestCode, int max)
     {
         boolean folderMode = true;
@@ -1764,6 +1831,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 .start();
     }
 
+    /**
+     * display/hide secondary image add button based on max upload limit
+     */
     private void displayImageAddButton()
     {
         if(MAX_IMAGE_ALLOWED > adapterImage.getItemCount())
@@ -1787,6 +1857,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+
+    /**
+     * Check camera permission
+     * @param requestCode
+     */
     private void cameraIntent(int requestCode)
     {
         try
@@ -1821,6 +1896,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Start camera intent
+     * @param requestCode
+     */
     private void startCamera(int requestCode)
     {
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "boost");
@@ -1877,6 +1956,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+    /**
+     * Toggle payment bottom sheet
+     */
     private void toggleBottomSheet()
     {
         if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED)
@@ -1891,6 +1973,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Toggle pickup address list bottom sheet
+     */
     private void toggleAddressBottomSheet()
     {
         if (sheetBehaviorAddress.getState() != BottomSheetBehavior.STATE_EXPANDED)
@@ -1905,6 +1990,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Activity result for CAMERA, IMAGE GALLERY AND FILE PICKER
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -1976,6 +2067,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Display image when image is picked up/capture
+     * @param path
+     * @param requestCode
+     */
     private void display_image(String path, int requestCode)
     {
         if(Helper.fileExist(path))
@@ -2142,6 +2238,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             return isValidAssuredPurchase();
         }
 
+        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()) && bankInformation == null)
+        {
+            Toast.makeText(getContext(), "Please update payment information", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue())
                 && binding.layoutPaymentMethod.editPurchaseUrlLink.getText().toString().trim().length() == 0)
         {
@@ -2206,6 +2308,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Check for valid seller information
+     * @return
+     */
     private boolean isValidBankInformation()
     {
         if(binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0)
@@ -2233,6 +2339,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * check if pickup address form is valid or not
+     * @return
+     */
     private boolean isValidAddress()
     {
         if(file == null)
@@ -2245,6 +2355,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Save pickup adderess
+     */
     private void saveAddress()
     {
         if(!Methods.isOnline(getActivity()))
@@ -2266,12 +2379,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                             if(TextUtils.isEmpty(addressInformation.id))
                             {
+                                //If new address added then add it locally to address list
                                 adapterAddress.addData(addressResponse);
                                 Toast.makeText(getContext(), "Address Added Successfully", Toast.LENGTH_LONG).show();
                             }
 
                             else
                             {
+                                //If address updated the update it locally to address list
                                 for(int i=0; i<addressInformationList.size(); i++)
                                 {
                                     if(addressInformation.id.equals(addressInformationList.get(i).id))
@@ -2286,7 +2401,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             }
 
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
-                            //binding.layoutBottomSheet.tvPickAddress.setText(addressResponse.getFullAddress());
                             changePickupAddressText(addressResponse);
                             addressInformation.id = webResponseModel.getData().id;
                         }
@@ -2305,6 +2419,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Save pickup address information
+     * @param information
+     */
     private void saveAddressInformation(AddressInformation information)
     {
         if(!isValidAddress())
@@ -2319,6 +2437,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Get address object from address list based on product pickup address id
+     * @return
+     */
     private AddressInformation getAddress()
     {
         AddressInformation addressInformation = null;
@@ -2338,6 +2460,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Fetch pickup address information
+     */
     private void getAddressInformation()
     {
         Constants.assuredPurchaseRestAdapterDev.create(ProductGalleryInterface.class)
@@ -2427,24 +2552,28 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.keySpecification.value = null;
         }*/
 
+        //If limited stock selected
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
         {
             product.IsAvailable = true;
             product.availableUnits = binding.layoutInventory.quantityValue.getText().toString().length() == 0 ? 1 : Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
         }
 
+        //If unlimited stock selected
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 1)
         {
             product.IsAvailable = true;
             product.availableUnits = -1;
         }
 
+        //If out of stock selected
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 2)
         {
             product.IsAvailable = false;
             product.availableUnits = 0;
         }
 
+        //If assured purchase and product
         if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                 && productType.equalsIgnoreCase("products"))
         {
@@ -2464,6 +2593,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.maxPrepaidOnlineAvailable = 0;
         }
 
+        //If unique payment url
         if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue()))
         {
             if(product.BuyOnlineLink == null)
@@ -2510,6 +2640,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Initialize seller information object
+     * @return
+     */
     private BankInformation initBankInformation()
     {
         if(bankInformation == null)
@@ -2531,7 +2665,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
-
+    /**
+     * Call to upload product image
+     * @param productId
+     */
     private void uploadProductImage(String productId)
     {
         try
@@ -2602,7 +2739,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Save bank information
+     * Save seller information
      */
     private void saveBankInformation()
     {
@@ -2651,7 +2788,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Save bank information
+     * Fetch seller information
      */
     private void getBankInformation()
     {
@@ -2713,6 +2850,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 });
     }
 
+    /**
+     * Update product
+     */
     private void updateProduct()
     {
         ProductGalleryInterface productInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
@@ -2903,6 +3043,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Delete product
+     */
     private void deleteProduct()
     {
         if(!Methods.isOnline(getActivity()))
@@ -2957,6 +3100,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+
+    /**
+     * Fetch assured purchase details for a product
+     * @param productId
+     */
     private void getAssuredPurchase(String productId)
     {
         if(!Methods.isOnline(getActivity()))
@@ -2988,6 +3136,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 });
     }
 
+    /**
+     * Initialize progress bar
+     * @param content
+     */
     private void initProgressDialog(String content)
     {
         if(materialDialog != null)
@@ -3004,6 +3156,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         materialDialog.setCancelable(false);
     }
 
+    /**
+     * Hide progress bar
+     */
     private void hideDialog()
     {
         if(materialDialog != null && materialDialog.isShowing())
@@ -3012,6 +3167,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         }
     }
 
+    /**
+     * Show progress bar
+     * @param content
+     */
     private void showDialog(String content)
     {
         initProgressDialog(content);
@@ -3043,6 +3202,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_LONG).show();
         }
 
+        /**
+         * If information saved reload product/service list
+         */
         if(getActivity() != null)
         {
             Intent data = new Intent();
@@ -3053,6 +3215,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Delete product confirmation dialog
+     */
     private void deleteConfirmation()
     {
         new MaterialDialog.Builder(getActivity())
@@ -3081,7 +3246,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     }
 
-
+    /**
+     * Web action for upload product image
+     * @return
+     */
     private WebAction getWebAction()
     {
         if(mWebAction != null)
@@ -3098,6 +3266,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         return mWebAction;
     }
 
+    /**
+     * Display secondary images for product
+     * @param productId
+     */
     private void displayImagesForProduct(String productId)
     {
         if (TextUtils.isEmpty(product.productId))
@@ -3129,6 +3301,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     }
 
 
+    /**
+     * Delete secondary images for product
+     * @param image
+     */
     private void deleteImage(ProductImageResponseModel image)
     {
         IFilter filter = new WebActionsFilter();
@@ -3152,6 +3328,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         });
     }
 
+
+    /**
+     * Upload pickup  address proof
+     * @param file
+     */
     private void uploadFile(File file)
     {
         if(!Methods.isOnline(getActivity()))
@@ -3161,6 +3342,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         String valuesStr;
 
+        //If not proof not exists for address
         if(TextUtils.isEmpty(addressInformation.addressProof))
         {
             valuesStr = "clientId=" + Constants.clientId
@@ -3168,6 +3350,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     + "&totalChunks=1&currentChunkNumber=1&fileName=" + file.getName();
         }
 
+        //If proof already exists replace address proof
         else
         {
             String url = addressInformation.addressProof;
@@ -3180,6 +3363,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         String url = DEV_ASSURED_PURCHASE_URL + "/api/seller/UploadOrReplaceFile?" + valuesStr;
 
+        //Call file upload
         FileUpload upload = new FileUpload(file);
         upload.setFileUploadListener(this);
         upload.execute(url);
@@ -3190,6 +3374,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     public void onSuccess(String url) {
 
         Log.d("PRODUCT_JSON", "URL - " + url);
+
+        //save address once address proof uploaded
         addressInformation.addressProof = url;
         saveAddress();
     }
@@ -3209,7 +3395,12 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         showDialog("Please Wait...");
     }
 
-
+    /**
+     * Tool tip for information/hint
+     * @param position
+     * @param message
+     * @param view
+     */
     private void toolTip(ViewTooltip.Position position, String message, View view)
     {
         ViewTooltip
@@ -3224,6 +3415,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 .show();
     }
 
+
+    /**
+     * Add tooltip button listener
+     */
     private void addInfoButtonListener()
     {
         binding.ibInfoProductImage.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The primary image appears on your homepage, item list page, the cart page, and the checkout page.", binding.ibInfoProductImage));

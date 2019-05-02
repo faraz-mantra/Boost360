@@ -74,7 +74,10 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         widget.getWidgetLimit(session, WidgetKey.WIDGET_PRODUCT_CATALOG);
     }
 
-
+    /**
+     * API call to get the list of products
+     * @param flag
+     */
     private void getProducts(boolean flag)
     {
         if(!Methods.isOnline(ProductCatalogActivity.this))
@@ -135,7 +138,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     }
 
     /**
-     * Initialize service adapter
+     * Initialize service/product adapter
      * @param recyclerView
      */
     private void initProductRecyclerView(RecyclerView recyclerView)
