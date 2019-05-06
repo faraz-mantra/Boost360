@@ -1792,4 +1792,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="payment_method_dont_want_to_sell">Customers will not be able to buy this product. However, they can post an enquiry against this item</string>
     <string name="payment_methud_message">Payment info updated</string>
 
+    <string name="product_empty_view_message">You have no %s listed on your site as of yet.</string>
 </resources>

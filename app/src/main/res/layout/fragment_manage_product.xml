@@ -495,7 +495,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Tax Rate(%)"/>
+                            android:text="Tax Rate %(for invoice)"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_gst"

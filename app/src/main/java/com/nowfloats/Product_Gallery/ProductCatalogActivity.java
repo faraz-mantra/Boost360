@@ -60,6 +60,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
             String category = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
             binding.layoutToolbar.toolbarTitle.setText(category);
+            binding.layoutEmpty.tvMessage.setText(String.format(getString(R.string.product_empty_view_message), category.toLowerCase()));
         }
 
         this.initProductRecyclerView(binding.productList);

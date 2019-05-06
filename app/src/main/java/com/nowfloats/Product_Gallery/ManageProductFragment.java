@@ -272,6 +272,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             placeholder();
 
+            StringBuilder title = new StringBuilder();
+
             if(product != null && product.productId != null )
             {
                 setProductData();
@@ -279,15 +281,18 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 getAssuredPurchase(product.productId);
                 displayImagesForProduct(product.productId);
 
-                ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Edit " + product.Name));
+                title.append("Editing ");
                 binding.btnDelete.setVisibility(View.VISIBLE);
             }
 
             else
             {
-                ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing " + CATEGORY));
+                title.append("Adding ");
                 binding.btnDelete.setVisibility(View.GONE);
             }
+
+            title.append(TextUtils.isEmpty(CATEGORY) ? (productType.equalsIgnoreCase("products") ? "Product" : "Service") : CATEGORY);
+            ((ManageProductActivity) getActivity()).setTitle(title.toString());
 
             if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
             {
@@ -1133,9 +1138,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         currencyType = getString(R.string.currency_text);
 
-        if(product != null && !TextUtils.isEmpty(product.Currency))
+        if(product != null && !TextUtils.isEmpty(product.CurrencyCode))
         {
-            currencyType = product.Currency;
+            currencyType = product.CurrencyCode;
         }
 
         else
@@ -1762,7 +1767,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     AddressInformation information = addressInformationList.get(getAdapterPosition());
                     product.pickupAddressReferenceId = information.id;
-                    //binding.layoutBottomSheet.tvPickAddress.setText(information.getFullAddress());
                     changePickupAddressText(information);
                     sheetBehaviorAddress.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 });
@@ -2507,7 +2511,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         try
         {
-            product.Currency = binding.editCurrency.getText().toString();
+            product.CurrencyCode = binding.editCurrency.getText().toString();
         }
 
         catch (Exception e)

@@ -109,28 +109,24 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
 
         if(product != null && product.productId != null)
         {
-            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Edit item"));
-
             binding.editCategory.setText(product.category != null ? product.category : "");
 
             if(!TextUtils.isEmpty(product.productType) && (product.productType.equalsIgnoreCase("services") || product.productType.equalsIgnoreCase("products")))
             {
                 productType = product.productType;
-                setProductType(productType);
+                setProductType(productType, new StringBuilder("Editing "));
             }
 
             else
             {
-                productType = setProductType("");
+                productType = setProductType("", new StringBuilder("Editing "));
             }
         }
 
         else
         {
-            ((ManageProductActivity) getActivity()).setTitle(String.valueOf("Listing an item"));
-            productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+            productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY), new StringBuilder("Adding "));
         }
-
 
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
@@ -142,7 +138,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
      * @param productType
      * @return
      */
-    private String setProductType(String productType) {
+    private String setProductType(String productType, StringBuilder title) {
 
         //If product
         if(productType.equalsIgnoreCase("products"))
@@ -152,9 +148,11 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             binding.layoutCustomProduct.setVisibility(View.GONE);
 
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Product"));
+
+            title.append("Product");
         }
 
-        //If sercice
+        //If service
         else if(productType.equalsIgnoreCase("services"))
         {
             binding.layoutPhysicalProduct.setVisibility(View.GONE);
@@ -162,11 +160,15 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             binding.layoutCustomProduct.setVisibility(View.GONE);
 
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
+
+            title.append("Service");
         }
 
         //If custom then display spinner for product/service selection
         else
         {
+            title.append(productType);
+
             binding.layoutPhysicalProduct.setVisibility(View.GONE);
             binding.layoutServiceOffering.setVisibility(View.GONE);
             binding.layoutCustomProduct.setVisibility(View.VISIBLE);
@@ -204,6 +206,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             });
         }
 
+        ((ManageProductActivity) getActivity()).setTitle(title.toString());
         return productType;
     }
 
