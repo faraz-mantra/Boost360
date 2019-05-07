@@ -433,11 +433,6 @@ public class Constants {
         }
     }
 
-    /*public enum Type
-    {
-        PRODUCT, SERVICE
-    }*/
-
     public enum PaymentAndDeliveryMode
     {
         ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");

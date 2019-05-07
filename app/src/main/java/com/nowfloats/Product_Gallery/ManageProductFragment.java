@@ -1536,6 +1536,16 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 viewHolder.ibRemove.setOnClickListener(view -> {
 
+                    if(getActivity() != null)
+                    {
+                        View currentFocus = getActivity().getCurrentFocus();
+
+                        if (currentFocus != null)
+                        {
+                            currentFocus.clearFocus();
+                        }
+                    }
+
                     product.otherSpecification.remove(viewHolder.getAdapterPosition());
                     notifyItemRemoved(viewHolder.getAdapterPosition());
                 });

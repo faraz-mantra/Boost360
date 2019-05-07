@@ -417,7 +417,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 
             case UNIQUE:
                 visitsApi.getUniqueVisits(manager.getFpTag(), map, callback);
-                getVisitsData();
+                //getVisitsData();
                 break;
 
             case TOTAL:
@@ -433,6 +433,13 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         @Override
         public void success(VisitsModel visitsModel, Response response) {
 
+            int totalCount = 0;
+            if (visitsModel != null) {
+                for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
+                    totalCount += data.getDataCount();
+                }
+            }
+            visitsCount.setText(String.valueOf(totalCount));
             Log.v("visitsModelCallback", "Success 0");
             updateData(visitsModel);
         }
@@ -448,13 +455,13 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     private Callback<VisitsModel> totalVisitsCallback = new Callback<VisitsModel>() {
         @Override
         public void success(VisitsModel visitsModel, Response response) {
-            int totalCount = 0;
+            /*int totalCount = 0;
             if (visitsModel != null) {
                 for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
                     totalCount += data.getDataCount();
                 }
             }
-            visitsCount.setText(String.valueOf(totalCount));
+            visitsCount.setText(String.valueOf(totalCount));*/
         }
 
         @Override

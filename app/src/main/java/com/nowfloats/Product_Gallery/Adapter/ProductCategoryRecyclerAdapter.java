@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +48,8 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             Product model = productList.get(i);
             final ProductListViewHolder viewHolder = (ProductListViewHolder) holder;
 
+            viewHolder.btnEdit.setTag(i);
+
             viewHolder.tvName.setText(model.Name);
             viewHolder.tvDescription.setText(model.Description);
 
@@ -77,26 +80,6 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
                 viewHolder.tvBrand.setVisibility(View.GONE);
                 viewHolder.tvMissingInfo.setVisibility(View.VISIBLE);
             }
-
-
-            /*if (model.Price != null)
-            {
-                try
-                {
-                    String formattedPrice = Helper.getCurrencyFormatter().format(Float.parseFloat(model.Price));
-                    viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
-                }
-
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-
-            else
-            {
-                viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " 0.00"));
-            }*/
 
             try
             {
@@ -160,6 +143,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         private TextView tvPrice;
         private TextView tvBasePrice;
         private TextView tvMissingInfo;
+        private Button btnEdit;
 
         private ProductListViewHolder(View itemView)
         {
@@ -173,6 +157,9 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             tvPrice = itemView.findViewById(R.id.label_price);
             tvBasePrice = itemView.findViewById(R.id.label_base_price);
             tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
+            btnEdit = itemView.findViewById(R.id.button_edit);
+
+            btnEdit.setOnClickListener(v -> callback.onItemClick(productList.get(getAdapterPosition())));
         }
 
         @Override
