@@ -167,7 +167,6 @@ public class SearchRankingActivity extends AppCompatActivity {
 
                 if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
                 {
-                    Log.d("PRODUCT_SCROLL", "CALLED");
                     getSearchRanking();
                 }
             }

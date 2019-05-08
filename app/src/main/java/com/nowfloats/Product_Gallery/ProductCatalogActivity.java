@@ -2,6 +2,7 @@ package com.nowfloats.Product_Gallery;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,7 +64,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             binding.layoutEmpty.tvMessage.setText(String.format(getString(R.string.product_empty_view_message), category.toLowerCase()));
         }
 
-        this.initProductRecyclerView(binding.productList);
+        this.initProductRecyclerView();
         getProducts(false);
         getWidgetLimit();
     }
@@ -129,7 +130,6 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             @Override
             public void failure(RetrofitError error) {
 
-                Log.d("PRODUCT_ERROR", "" + error.getBody());
                 isLoading = false;
 
                 binding.pbLoading.setVisibility(View.GONE);
@@ -140,15 +140,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     /**
      * Initialize service/product adapter
-     * @param recyclerView
      */
-    private void initProductRecyclerView(RecyclerView recyclerView)
+    private void initProductRecyclerView()
     {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         adapter = new ProductCategoryRecyclerAdapter(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        binding.productList.setLayoutManager(layoutManager);
+        binding.productList.setAdapter(adapter);
 
         adapter.SetOnItemClickListener(product -> {
 
@@ -158,10 +157,10 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 }
         );
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.productList.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
 
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
@@ -169,7 +168,6 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
                 {
                     getProducts(false);
-                    Log.d("PRODUCT_SCROLL", "CALLED");
                 }
             }
         });
@@ -212,17 +210,11 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        Log.d("onActivityResult", "1");
-
         if (requestCode == 300 && resultCode == RESULT_OK)
         {
             boolean flag = data.getBooleanExtra("LOAD", true);
             getProducts(flag);
-
-            Log.d("onActivityResult", "2");
         }
-
-        Log.d("onActivityResult", "3");
     }
 
     private void openAddProductActivity()

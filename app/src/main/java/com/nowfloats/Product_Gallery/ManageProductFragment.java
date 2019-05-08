@@ -607,7 +607,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             @Override
             public void afterTextChanged(Editable s) {
 
-
             }
         });
 
