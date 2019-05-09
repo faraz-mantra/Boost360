@@ -3,12 +3,12 @@
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_payment_method"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_product_image___"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -19,7 +19,7 @@
                 android:text="Accept payment via"/>
 
             <ImageButton
-                android:id="@+id/ib_info_product_image____"
+                android:id="@+id/ib_info_payment_configuration"
                 style="@style/ProductHelpButtonStyle"/>
 
         </LinearLayout>

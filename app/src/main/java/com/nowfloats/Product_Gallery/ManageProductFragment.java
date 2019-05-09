@@ -3456,5 +3456,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutShippingMatrixDetails.ibInfoProductLength.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the length of your package.", binding.layoutShippingMatrixDetails.ibInfoProductLength));
         binding.layoutShippingMatrixDetails.ibInfoProductHeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the height of your package.", binding.layoutShippingMatrixDetails.ibInfoProductHeight));
         binding.layoutShippingMatrixDetails.ibInfoProductThickness.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the thickness of your package.", binding.layoutShippingMatrixDetails.ibInfoProductThickness));
+
+        binding.layoutPaymentMethod.ibInfoPaymentConfiguration.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Choose the best way for customers to pay you.", binding.layoutPaymentMethod.ibInfoPaymentConfiguration));
     }
 }
