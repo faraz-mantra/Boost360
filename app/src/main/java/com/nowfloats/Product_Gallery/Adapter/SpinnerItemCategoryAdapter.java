@@ -1,10 +1,8 @@
 package com.nowfloats.Product_Gallery.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +81,7 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
         if (position == mSelectedIndex)
         {
             itemView.findViewById(R.id.layout_child).setBackgroundResource(R.drawable.spinner_selected_highlight);
+            //((ImageView)(itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).selected_icon);
         }
 
         /*else
@@ -98,39 +97,30 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
         return itemCategoryList.size();
     }
 
-    /*public void setItems(int count)
-    {
-        if(count < 4)
-        {
-            this.mList.add(null);
-        }
-
-        notifyDataSetChanged();
-    }*/
-
     static class ItemCategory {
 
         String title, body;
-        int icon;
+        int icon, selected_icon;
 
         ItemCategory()
         {
 
         }
 
-        ItemCategory(String title, String body, int icon)
+        ItemCategory(String title, String body, int icon, int selected_icon)
         {
             this.title = title;
             this.body = body;
             this.icon = icon;
+            this.selected_icon = selected_icon;
         }
 
         public List<ItemCategory> getList()
         {
             List<ItemCategory> paymentOptions = new ArrayList<>();
 
-            paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc.", R.drawable.ic_product));
-            paymentOptions.add(new ItemCategory("Service Offering", "Can be given in person and doesn’t need delivery e.g: Therapy, course, financial consultation.", R.drawable.ic_services));
+            paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc.", R.drawable.ic_product, R.drawable.ic_product));
+            paymentOptions.add(new ItemCategory("Service Offering", "Can be given in person and doesn’t need delivery e.g: Therapy, course, financial consultation.", R.drawable.ic_services, R.drawable.ic_services));
 
             return paymentOptions;
         }
