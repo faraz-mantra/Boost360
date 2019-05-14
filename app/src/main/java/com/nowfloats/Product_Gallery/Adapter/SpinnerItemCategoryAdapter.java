@@ -119,8 +119,8 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
         {
             List<ItemCategory> paymentOptions = new ArrayList<>();
 
-            paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc.", R.drawable.ic_product, R.drawable.ic_product));
-            paymentOptions.add(new ItemCategory("Service Offering", "Can be given in person and doesn’t need delivery e.g: Therapy, course, financial consultation.", R.drawable.ic_services, R.drawable.ic_services));
+            paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and shipped to buyer. E.g. book, watch, toy, garment.", R.drawable.ic_product, R.drawable.ic_product));
+            paymentOptions.add(new ItemCategory("Service Offering", "Tasks that are performed by individuals for the benefit of others. E.g. therapy, training, financial consultation.", R.drawable.ic_services, R.drawable.ic_services));
 
             return paymentOptions;
         }

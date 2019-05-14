@@ -66,6 +66,7 @@ public class Product implements Serializable {
     @SerializedName("maxPrepaidOnlineOrders")
     public int maxPrepaidOnlineAvailable;
 
+    @SerializedName("uniquePaymentUrl")
     public BuyOnlineLink BuyOnlineLink;
     public Specification keySpecification;
     @SerializedName("otherSpecifications")
