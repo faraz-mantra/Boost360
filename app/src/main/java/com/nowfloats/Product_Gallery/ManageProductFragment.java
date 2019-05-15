@@ -2545,26 +2545,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
         product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
 
-        /*if(!TextUtils.isEmpty(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString()))
-        {
-            product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
-        }
-
-        else
-        {
-            product.keySpecification.key = null;
-        }
-
-        if(!TextUtils.isEmpty(binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString()))
-        {
-            product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
-        }
-
-        else
-        {
-            product.keySpecification.value = null;
-        }*/
-
         //If limited stock selected
         if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
         {

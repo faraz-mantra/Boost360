@@ -58,7 +58,8 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
 
         ItemCategory option = itemCategoryList.get(position);
 
-        if (itemView == null) {
+        if (itemView == null)
+        {
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_item_category_option, null /*parent, false*/);
         }
 
@@ -68,7 +69,7 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
 
         tvItemType.setText(option.title);
         tvItemDescription.setText(option.body);
-        ivIcon.setImageDrawable(ContextCompat.getDrawable(context, option.icon));
+        ivIcon.setImageDrawable(ContextCompat.getDrawable(context, option.selected_icon));
 
         return itemView;
     }
@@ -81,13 +82,13 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
         if (position == mSelectedIndex)
         {
             itemView.findViewById(R.id.layout_child).setBackgroundResource(R.drawable.spinner_selected_highlight);
-            //((ImageView)(itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).selected_icon);
+            ((ImageView)(itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).selected_icon);
         }
 
-        /*else
+        else
         {
-            itemView.setBackgroundColor(Color.TRANSPARENT);
-        }*/
+            ((ImageView)(itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).icon);
+        }
 
         return itemView;
     }
@@ -119,8 +120,8 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter
         {
             List<ItemCategory> paymentOptions = new ArrayList<>();
 
-            paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and shipped to buyer. E.g. book, watch, toy, garment.", R.drawable.ic_product, R.drawable.ic_product));
-            paymentOptions.add(new ItemCategory("Service Offering", "Tasks that are performed by individuals for the benefit of others. E.g. therapy, training, financial consultation.", R.drawable.ic_services, R.drawable.ic_services));
+            paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and shipped to buyer. E.g. book, watch, toy, garment.", R.drawable.ic_product, R.drawable.ic_product_filled));
+            paymentOptions.add(new ItemCategory("Service Offering", "Tasks that are performed by individuals for the benefit of others. E.g. therapy, training, financial consultation.", R.drawable.ic_services, R.drawable.ic_services_filled));
 
             return paymentOptions;
         }

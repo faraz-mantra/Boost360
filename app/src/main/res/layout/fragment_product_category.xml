@@ -47,11 +47,11 @@
 
                 <ImageView
                     android:id="@+id/iv_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/margin_15"
-                    app:srcCompat="@drawable/ic_product"/>
+                    app:srcCompat="@drawable/ic_product_filled"/>
 
                 <TextView
                     android:id="@+id/label_item_type"
@@ -85,11 +85,11 @@
 
                 <ImageView
                     android:id="@+id/iv_service_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/margin_15"
-                    app:srcCompat="@drawable/ic_services"/>
+                    app:srcCompat="@drawable/ic_services_filled"/>
 
                 <TextView
                     android:id="@+id/label_item_service_type"
