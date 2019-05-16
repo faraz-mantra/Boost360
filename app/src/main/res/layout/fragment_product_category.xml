@@ -27,7 +27,7 @@
                 android:id="@+id/layout_custom_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/grey_rounded_spinner_background"
+                android:background="@drawable/white_rounded_spinner_background"
                 android:orientation="vertical">
 
                 <Spinner
@@ -47,8 +47,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/margin_15"
                     app:srcCompat="@drawable/ic_product_filled"/>
@@ -85,8 +85,8 @@
 
                 <ImageView
                     android:id="@+id/iv_service_icon"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/margin_15"
                     app:srcCompat="@drawable/ic_services_filled"/>

@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:background = "@drawable/grey_rounded_spinner_background" >
+                    android:background = "@drawable/white_rounded_spinner_background" >
 
                     <Spinner
                         android:id="@+id/spinner_payment_option"

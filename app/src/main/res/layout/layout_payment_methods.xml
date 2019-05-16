@@ -39,7 +39,7 @@
                     android:padding="8dp"
                     android:onClick="onPaymentConfigurationClick"
                     android:clickable="true"
-                    android:background="@drawable/grey_rounded_spinner_background"
+                    android:background="@drawable/grey_rounded_background"
                     android:text="Assured Purchase™" />
 
                 <!--<LinearLayout

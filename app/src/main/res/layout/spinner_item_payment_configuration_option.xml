@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/margin_10"
     android:paddingTop="@dimen/margin_10"
     android:paddingBottom="@dimen/margin_10"
-    android:background="@color/spinner_grey_background"
+    android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout

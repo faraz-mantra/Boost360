@@ -302,18 +302,23 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+
+                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                 }
 
                 else
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+
+                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
+                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                 }
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
+
+                binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
             }
 
             else
@@ -322,6 +327,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
+
                 binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
                 binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
@@ -464,16 +470,21 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 if(productType.equalsIgnoreCase("products"))
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+
+                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                 }
 
                 else
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+
+                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
+                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                 }
+
+                binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
             }
 
             //If payment type is unique payment url
@@ -790,21 +801,26 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
                     binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
 
+                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+
                     displayPaymentAcceptanceMessage();
 
                     if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                             && productType.equalsIgnoreCase("products"))
                     {
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-                        binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                        binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+
+                        //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
+                        //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                     }
 
                     else
                     {
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                        binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                        binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
+
+                        //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
+                        //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                     }
 
                     if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() == View.VISIBLE)
@@ -2568,13 +2584,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         //If assured purchase and product
         if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                && productType.equalsIgnoreCase("products"))
+                /*&& productType.equalsIgnoreCase("products")*/)
         {
             product.codAvailable = (binding.layoutInventoryCod.spinnerStockAvailability.getSelectedItemPosition() == 0);
             product.prepaidOnlineAvailable = (binding.layoutInventoryOnline.spinnerStockAvailability.getSelectedItemPosition() == 0);
 
-            product.maxCodOrders = binding.layoutInventoryCod.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString().trim());
-            product.maxPrepaidOnlineAvailable = binding.layoutInventoryOnline.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim());
+            product.maxCodOrders = product.codAvailable ? (binding.layoutInventoryCod.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryCod.quantityValue.getText().toString().trim())) : 0;
+            product.maxPrepaidOnlineAvailable = product.prepaidOnlineAvailable ? (binding.layoutInventoryOnline.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim())) : 0;
         }
 
         else
