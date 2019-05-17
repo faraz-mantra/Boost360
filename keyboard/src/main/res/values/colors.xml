@@ -110,4 +110,8 @@
     <color name="gray">#AAAAAA</color>
     <color name="more_keys_background">#353535</color>
 
+    <color name="secondaryTextColor">#7f7f7f</color>
+    <color name="secondaryLightTextColor">#bbbbbb</color>
+    <color name="primaryTextColor">#4a4a4a</color>
+
 </resources>

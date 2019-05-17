@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cl_products_keyboard"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,9 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btn_one"
-        android:background="@drawable/rounded_border_edittext"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:background="@drawable/rounded_border_edittext">
 
         <TextView
             android:id="@+id/tv_keyboard_currency"
@@ -44,7 +43,6 @@
             android:id="@+id/ib_del"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginRight="8dp"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_backspace_arrow_light_gray"
             style="@style/Base.Widget.AppCompat.Button.Borderless" />
@@ -54,8 +52,8 @@
     <Button
         android:id="@+id/btn_one"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:text="@string/_1"
         android:textColor="@android:color/black"
         android:textSize="14sp"
@@ -65,8 +63,8 @@
     <Button
         android:id="@+id/btn_two"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:text="@string/_2"
         android:textColor="@android:color/black"
         android:textSize="14sp"
@@ -76,8 +74,8 @@
 
     <Button
         android:id="@+id/btn_three"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
@@ -103,8 +101,8 @@
     <Button
         android:id="@+id/btn_four"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:text="@string/_4"
         android:textColor="@android:color/black"
         android:textSize="14sp"
@@ -115,8 +113,8 @@
     <Button
         android:id="@+id/btn_five"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:text="@string/_5"
         android:textColor="@android:color/black"
         android:textSize="14sp"
@@ -126,8 +124,8 @@
 
     <Button
         android:id="@+id/btn_six"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:textSize="14sp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_6"
@@ -138,8 +136,8 @@
 
     <Button
         android:id="@+id/btn_seven"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:textSize="14sp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_7"
@@ -149,8 +147,8 @@
 
     <Button
         android:id="@+id/btn_eight"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:textSize="14sp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_8"
@@ -160,8 +158,8 @@
 
     <Button
         android:id="@+id/btn_nine"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:textSize="14sp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_9"
@@ -172,8 +170,8 @@
 
     <Button
         android:id="@+id/btn_zero"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:textSize="14sp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/_0"
@@ -183,8 +181,8 @@
 
     <Button
         android:id="@+id/btn_decimal"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:textSize="14sp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/decimal"
@@ -197,8 +195,8 @@
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:background="@android:color/darker_gray"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginLeft="22dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical_offer"
         app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_offer"
         app:layout_constraintTop_toBottomOf="@+id/btn_nine"/>
@@ -209,7 +207,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginRight="12dp"
-        android:padding="12dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:text="@string/tv_done"
@@ -222,7 +219,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:padding="12dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:textColor="@android:color/tab_indicator_text"
@@ -230,6 +226,5 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         app:layout_constraintTop_toBottomOf="@+id/btn_seven"
         app:layout_constraintEnd_toStartOf="@+id/button_done"/>
-
 
 </android.support.constraint.ConstraintLayout>
