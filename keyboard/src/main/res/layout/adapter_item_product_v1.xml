@@ -140,7 +140,7 @@
 
     <include layout="@layout/adapter_item_product_flipped" android:visibility="gone" />
 
-    <include layout="@layout/adapter_item_product_offer" android:visibility="gone" />
+    <include layout="@layout/adapter_item_product_offer_v1" android:visibility="gone" />
 
     <include layout="@layout/adapter_item_product_keyboard" android:visibility="gone" />
 

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cl_offer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="6dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/label_offer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="12sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_product_name"
+        android:text="Creating new offer for"/>
+
+    <TextView
+        android:id="@+id/tv_product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layout_product_price"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/primaryColor"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:paddingTop="2dp"
+        android:text="@string/product_name"/>
+
+    <LinearLayout
+        android:id="@+id/layout_product_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dotted_line"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/dotted_line" >
+
+        <TextView
+            android:id="@+id/label_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="13sp"
+            android:text="Price: "
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14sp"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_discounted_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="14sp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="0.0"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dotted_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layerType="software"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+        android:background="@drawable/dotted_line"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_offer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_offer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_new_offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/secondaryTextColor"
+                android:text="OFFER PRICE" />
+
+            <LinearLayout
+                android:id="@+id/ll_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/round_corner_grey_background"
+                android:padding="5dp"
+                android:layout_marginTop="3dp"
+                app:layout_constraintHorizontal_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_offer_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="13sp"
+                    android:visibility="visible"
+                    android:text="@string/currency"/>
+
+                <EditText
+                    android:id="@+id/et_offer_price"
+                    android:layout_width="match_parent"
+                    android:focusable="false"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:maxLines="1"
+                    android:textSize="13sp"
+                    android:background="@null"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_validity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/secondaryTextColor"
+                android:text="VALIDITY" />
+
+            <LinearLayout
+                android:id="@+id/ll_validity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/round_corner_grey_background"
+                android:padding="5dp"
+                android:layout_marginTop="3dp"
+                app:layout_constraintHorizontal_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_selected_validity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="bottom"
+                    android:textSize="13sp"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="24 Hrs"/>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_arrow_drop_down_grey_600_24dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/secondaryTextColor"
+                android:text="QTY." />
+
+            <LinearLayout
+                android:id="@+id/ll_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_corner_grey_background"
+                android:padding="5dp"
+                android:layout_marginTop="3dp" >
+
+                <TextView
+                    android:id="@+id/tv_selected_quantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:gravity="bottom"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="1"/>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_arrow_drop_down_grey_600_24dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/tab_indicator_text"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        app:layout_constraintEnd_toStartOf="@+id/button_create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/cancel" />
+
+    <Button
+        android:id="@+id/button_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        android:minWidth="0dp"
+        android:textSize="@dimen/adapter_item_product_flipped_text_size"
+        android:minHeight="0dp"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        app:layout_constraintRight_toRightOf="@+id/cl_offer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/share" />
+
+</android.support.constraint.ConstraintLayout>

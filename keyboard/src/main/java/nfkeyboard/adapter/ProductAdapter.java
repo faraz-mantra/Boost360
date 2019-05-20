@@ -98,10 +98,10 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
     class ImageHolder extends RecyclerView.ViewHolder {
 
-        private TextView nameTv, brandTv, priceTv, discountTv, descriptionTv, productNameTv, productPriceTv,
+        private TextView nameTv, brandTv, priceTv, discountTv, descriptionTv, productNameTv, productPriceTv, productDiscountTv,
                 keyboardCurrencyTv, offerCurrencyTv, selectedQuantityTv, selectedValidityTv, tvBack;
 
-        private ImageView productImage, productIv;
+        private ImageView productImage/*, productIv*/;
         private AllSuggestionModel dataModel;
 
         private ConstraintLayout constraintLayout, constraintLayoutFlipped, offerCl, productsKeyboardCl;
@@ -144,9 +144,11 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             productsKeyboardCl.setVisibility(View.GONE);
 
             offerCl = itemView.findViewById(R.id.cl_offer);
-            productIv = itemView.findViewById(R.id.iv_product);
+            //productIv = itemView.findViewById(R.id.iv_product);
             productNameTv = itemView.findViewById(R.id.tv_product_name);
             productPriceTv = itemView.findViewById(R.id.tv_product_price);
+            productDiscountTv = itemView.findViewById(R.id.tv_discounted_price);
+
             offerPriceEt = itemView.findViewById(R.id.et_offer_price);
             createButton = itemView.findViewById(R.id.button_create);
             cancelButton = itemView.findViewById(R.id.button_cancel);
@@ -438,16 +440,16 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             if (!TextUtils.isEmpty(model.getImageUrl()) && !model.getImageUrl().equalsIgnoreCase("null"))
             {
                 Glide.with(mContext).load(model.getImageUrl()).into(productImage);
-                Glide.with(mContext).load(model.getImageUrl()).into(productIv);
+                //Glide.with(mContext).load(model.getImageUrl()).into(productIv);
             }
 
             else
             {
                 Glide.with(mContext).load(R.drawable.default_product_image).into(productImage);
-                Glide.with(mContext).load(R.drawable.default_product_image).into(productIv);
+                //Glide.with(mContext).load(R.drawable.default_product_image).into(productIv);
             }
 
-            productPriceTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_price) + "<br> %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
+            //productPriceTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_price) + "<br> %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
 
             //priceTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_price) + "%s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
             //discountTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_discount) + "%s <b>%s</b>", model.getCurrencyCode(), model.getDiscount())));
@@ -465,25 +467,33 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
                 String formattedPrice = df.format(price - discount);
                 priceTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
+                productPriceTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
 
                 if(discount != 0)
                 {
                     discountTv.setVisibility(View.VISIBLE);
+                    productDiscountTv.setVisibility(View.VISIBLE);
 
                     formattedPrice = df.format(price);
+
                     discountTv.setPaintFlags(discountTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    productDiscountTv.setPaintFlags(discountTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                     discountTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
+                    productDiscountTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
                 }
 
                 else
                 {
                     discountTv.setVisibility(View.INVISIBLE);
+                    productDiscountTv.setVisibility(View.INVISIBLE);
                 }
             }
 
             catch (Exception e)
             {
                 discountTv.setVisibility(View.INVISIBLE);
+                productDiscountTv.setVisibility(View.INVISIBLE);
                 e.printStackTrace();
             }
 
@@ -753,9 +763,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
         void ListPopupWindowSetup(final String[] validity, final String[] quantity) {
 
             listPopupWindowValidity = new ListPopupWindow(mContext);
+            /*listPopupWindowValidity.setAdapter(new ArrayAdapter(
+                    mContext,
+                    android.R.layout.simple_spinner_dropdown_item, validity));*/
             listPopupWindowValidity.setAdapter(new ArrayAdapter(
                     mContext,
-                    android.R.layout.simple_spinner_dropdown_item, validity));
+                    R.layout.spinner_item, validity));
             listPopupWindowValidity.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.listpopup_background));
             listPopupWindowValidity.setListSelector(mContext.getResources().getDrawable(R.drawable.listpopup_selector_background));
             listPopupWindowValidity.setAnchorView(selectedValidityTv);
@@ -844,7 +857,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 mHolder.createButton.setText(R.string.share);
                 mHolder.tvBack.setText(R.string.back);
                 mHolder.offerCurrencyTv.setText(R.string.currency);
-                mHolder.productPriceTv.setText(R.string.price);
+                //mHolder.productPriceTv.setText(R.string.price);
                 mHolder.nameTv.setText(R.string.tv_name);
                 mHolder.priceTv.setText(R.string.tv_price);
                 mHolder.discountTv.setText(R.string.tv_discount);
