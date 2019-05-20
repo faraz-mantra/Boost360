@@ -773,7 +773,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             listPopupWindowValidity.setListSelector(mContext.getResources().getDrawable(R.drawable.listpopup_selector_background));
             listPopupWindowValidity.setAnchorView(selectedValidityTv);
             listPopupWindowValidity.setDropDownGravity(topSpace);
-            listPopupWindowValidity.setWidth(300);
+            listPopupWindowValidity.setWidth(250);
             listPopupWindowValidity.setHeight(400);
 
             listPopupWindowValidity.setModal(false);
@@ -796,14 +796,17 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             });
 
             listPopupWindowQuantity = new ListPopupWindow(mContext);
+            /*listPopupWindowQuantity.setAdapter(new ArrayAdapter(
+                    mContext,
+                    android.R.layout.simple_spinner_dropdown_item, quantity));*/
             listPopupWindowQuantity.setAdapter(new ArrayAdapter(
                     mContext,
-                    android.R.layout.simple_spinner_dropdown_item, quantity));
+                    R.layout.spinner_item, quantity));
             listPopupWindowQuantity.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.listpopup_background));
             listPopupWindowQuantity.setListSelector(mContext.getResources().getDrawable(R.drawable.listpopup_selector_background));
             listPopupWindowQuantity.setAnchorView(selectedQuantityTv);
             listPopupWindowQuantity.setDropDownGravity(topSpace);
-            listPopupWindowQuantity.setWidth(300);
+            listPopupWindowQuantity.setWidth(200);
             listPopupWindowQuantity.setHeight(400);
 
             listPopupWindowQuantity.setModal(false);
