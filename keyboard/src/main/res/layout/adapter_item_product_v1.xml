@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardElevation="2dp"
-    app:contentPadding="10dp"
+    app:contentPadding="0dp"
     app:cardBackgroundColor="@color/white">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_thumbnail"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_margin="12dp"
             app:cardBackgroundColor="@android:color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_product_image" />
 
@@ -35,13 +35,16 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="65dp"
             android:gravity="bottom"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/card_thumbnail"
             android:layout_marginLeft="12dp"
             app:layout_constraintTop_toTopOf="parent" >
 
+            <!--
             <TextView
                 android:id="@+id/tv_brand"
                 android:layout_width="wrap_content"
@@ -53,6 +56,7 @@
                 android:textStyle="bold"
                 android:paddingBottom="3dp"
                 android:text="Watch by Fastrack"/>
+            -->
 
             <TextView
                 android:id="@+id/tv_name"
@@ -60,11 +64,36 @@
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textColor="@color/primaryTextColor"
+                android:textColor="@color/primaryColor"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                android:layout_below="@+id/tv_brand"
-                android:text="Fastrack Bare Basic Watch"/>
+                android:layout_marginBottom="2dp"
+                android:text="Product Name"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="13sp"
+                android:layout_below="@+id/tv_name"
+                android:text="0.0"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/tv_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryLightTextColor"
+                android:layout_below="@+id/tv_name"
+                android:layout_toRightOf="@+id/tv_price"
+                android:textSize="13sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="0.0"
+                android:gravity="center_vertical" />
 
         </RelativeLayout>
 
@@ -72,28 +101,32 @@
             android:id="@+id/tv_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card_thumbnail"
             android:textColor="@color/secondaryTextColor"
             android:textSize="13sp"
-            android:maxLines="2"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:maxLines="3"
             android:ellipsize="end"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_thumbnail"
-            android:text="This is a wedding makeup description"/>
+            app:layout_constraintTop_toBottomOf="@+id/dotted_line"
+            android:text="This is product description"/>
 
         <View
             android:id="@+id/dotted_line"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layerType="software"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:layout_constraintTop_toBottomOf="@+id/card_thumbnail"
             android:background="@drawable/dotted_line"/>
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,13 +168,45 @@
                 android:gravity="center_vertical" />
 
         </LinearLayout>
+        -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <Button
+                android:id="@+id/buttonMakeOffer"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:textSize="@dimen/adapter_item_product_flipped_text_size"
+                android:text="CREATE OFFER"
+                android:background="#dddddd"
+                android:textColor="@android:color/tab_indicator_text" />
+
+            <Button
+                android:id="@+id/buttonCopy"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="SHARE NOW"
+                android:textColor="@color/white"
+                android:textSize="@dimen/adapter_item_product_flipped_text_size"
+                android:background="@color/primaryColor" />
+
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
 
+    <!--
     <include layout="@layout/adapter_item_product_flipped" android:visibility="gone" />
-
+    -->
     <include layout="@layout/adapter_item_product_offer_v1" android:visibility="gone" />
-
     <include layout="@layout/adapter_item_product_keyboard" android:visibility="gone" />
 
 </android.support.v7.widget.CardView>

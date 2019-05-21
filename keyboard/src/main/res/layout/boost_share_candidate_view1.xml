@@ -52,7 +52,7 @@
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
-                    android:text="@string/tv_updates"
+                    android:text="UPDATES"
                     android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 
@@ -65,7 +65,7 @@
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
-                    android:text="Products"
+                    android:text="INVENTORY"
                     android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 
@@ -78,7 +78,7 @@
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
-                    android:text="Photos"
+                    android:text="PHOTOS"
                     android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 
@@ -91,7 +91,7 @@
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="5dp"
-                    android:text="Details"
+                    android:text="DETAILS"
                     android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 

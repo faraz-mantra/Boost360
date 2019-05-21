@@ -1,9 +1,5 @@
 package nfkeyboard.adapter;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -13,7 +9,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +36,6 @@ import io.separ.neural.inputmethod.indic.R;
 import io.separ.neural.inputmethod.slash.EventBusExt;
 import nfkeyboard.interface_contracts.ItemClickListener;
 import nfkeyboard.models.AllSuggestionModel;
-import nfkeyboard.util.MethodUtils;
 import nfkeyboard.util.MixPanelUtils;
 
 /**
@@ -52,7 +46,6 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
     private final String LABEL = "copy";
     private final ItemClickListener listener;
-    private final int MIN_OFFER_PRICE = 10;
     private final EventBusHandler mEventHandler;
 
     ViewGroup parent;
@@ -84,7 +77,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             myHolder.cancelButton.setText(R.string.cancel);
             myHolder.cancelBtn.setText(R.string.cancel);
             myHolder.createButton.setText(R.string.share);
-            myHolder.tvBack.setText(R.string.back);
+            //myHolder.tvBack.setText(R.string.back);
             myHolder.offerCurrencyTv.setText(R.string.currency);
             myHolder.productPriceTv.setText(R.string.price);
             myHolder.doneButton.setText(R.string.tv_done);
@@ -98,13 +91,13 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
     class ImageHolder extends RecyclerView.ViewHolder {
 
-        private TextView nameTv, brandTv, priceTv, discountTv, descriptionTv, productNameTv, productPriceTv, productDiscountTv,
-                keyboardCurrencyTv, offerCurrencyTv, selectedQuantityTv, selectedValidityTv, tvBack;
+        private TextView nameTv, priceTv, discountTv, descriptionTv, productNameTv, productPriceTv, productDiscountTv,
+                keyboardCurrencyTv, offerCurrencyTv, selectedQuantityTv, selectedValidityTv/*, tvBack*/;
 
         private ImageView productImage/*, productIv*/;
         private AllSuggestionModel dataModel;
 
-        private ConstraintLayout constraintLayout, constraintLayoutFlipped, offerCl, productsKeyboardCl;
+        private ConstraintLayout constraintLayout, /*constraintLayoutFlipped,*/ offerCl, productsKeyboardCl;
         private Button copyButton, makeOfferButton, createButton, cancelButton, oneButton,
                 twoButton, threeButton, fourButton, fiveButton, sixButton, sevenButton, eightButton,
                 nineButton, zeroButton, decimalButton, doneButton, cancelBtn;
@@ -133,13 +126,12 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             flippable = true;
             productImage = itemView.findViewById(R.id.imageView);
             nameTv = itemView.findViewById(R.id.tv_name);
-            brandTv = itemView.findViewById(R.id.tv_brand);
             priceTv = itemView.findViewById(R.id.tv_price);
             discountTv = itemView.findViewById(R.id.tv_discount);
             descriptionTv = itemView.findViewById(R.id.tv_description);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
-            constraintLayoutFlipped = itemView.findViewById(R.id.constraintLayoutFlipped);
-            constraintLayoutFlipped.setVisibility(View.GONE);
+            //constraintLayoutFlipped = itemView.findViewById(R.id.constraintLayoutFlipped);
+            //constraintLayoutFlipped.setVisibility(View.GONE);
             productsKeyboardCl = itemView.findViewById(R.id.cl_products_keyboard);
             productsKeyboardCl.setVisibility(View.GONE);
 
@@ -152,7 +144,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             offerPriceEt = itemView.findViewById(R.id.et_offer_price);
             createButton = itemView.findViewById(R.id.button_create);
             cancelButton = itemView.findViewById(R.id.button_cancel);
-            tvBack = itemView.findViewById(R.id.back);
+            //tvBack = itemView.findViewById(R.id.back);
 
             oneButton = itemView.findViewById(R.id.btn_one);
             twoButton = itemView.findViewById(R.id.btn_two);
@@ -440,13 +432,11 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             if (!TextUtils.isEmpty(model.getImageUrl()) && !model.getImageUrl().equalsIgnoreCase("null"))
             {
                 Glide.with(mContext).load(model.getImageUrl()).into(productImage);
-                //Glide.with(mContext).load(model.getImageUrl()).into(productIv);
             }
 
             else
             {
                 Glide.with(mContext).load(R.drawable.default_product_image).into(productImage);
-                //Glide.with(mContext).load(R.drawable.default_product_image).into(productIv);
             }
 
             //productPriceTv.setText(MethodUtils.fromHtml(String.format(mContext.getResources().getString(R.string.tv_price) + "<br> %s <b>%s</b>", model.getCurrencyCode(), model.getPrice())));
@@ -497,34 +487,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 e.printStackTrace();
             }
 
-            String category = model.category == null ? "" : model.category;
-            String brand = model.brandName == null ? "" : model.brandName;
-
-            brandTv.setVisibility(View.VISIBLE);
-
-            if(!category.isEmpty() && !brand.isEmpty())
-            {
-                String value = category.concat(" by ").concat(brand);
-                brandTv.setText(value);
-            }
-
-            else if(!category.isEmpty())
-            {
-                brandTv.setText(category);
-            }
-
-            else if(!brand.isEmpty())
-            {
-                brandTv.setText(brand);
-            }
-
-            else
-            {
-                brandTv.setVisibility(View.GONE);
-            }
-
-
-            productNameTv.setText(MethodUtils.fromHtml(String.format("<b>%s</b>", model.getText())));
+            productNameTv.setText(model.getText());
 
             keyboardCurrencyTv.setText(model.getCurrencyCode());
             offerCurrencyTv.setText(model.getCurrencyCode());
@@ -542,14 +505,22 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
             String[] items;
 
-            if (availableUnits > 0) {
+            if (availableUnits > 0)
+            {
                 items = new String[availableUnits];
-                for (int i = 1; i <= availableUnits; i++) {
+
+                for (int i = 1; i <= availableUnits; i++)
+                {
                     items[i - 1] = Integer.toString(i);
                 }
-            } else {
+            }
+
+            else
+            {
                 items = new String[10];
-                for (int i = 1; i <= 10; i++) {
+
+                for (int i = 1; i <= 10; i++)
+                {
                     items[i - 1] = Integer.toString(i);
                 }
             }
@@ -557,26 +528,37 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             ListPopupWindowSetup(validity, items);
         }
 
-        void OnButtonClick(String number) {
+        void OnButtonClick(String number)
+        {
             int cursorStart = editText.getSelectionStart();
-            if (editText.getText().length() == 1 && editText.getText().toString().charAt(0) == '0') {
-                if (!number.equals("0")) {
+
+            if (editText.getText().length() == 1 && editText.getText().toString().charAt(0) == '0')
+            {
+                if (!number.equals("0"))
+                {
                     editText.setText(number);
                     editText.setSelection(cursorStart);
                 }
-            } else if (cursorStart == editText.getText().toString().length()) {
-                DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+            }
+
+            else if (cursorStart == editText.getText().toString().length())
+            {
                 temp = editText.getText().toString().replaceAll(",", "") + number;
-                String yourFormattedString = formatter.format(Double.valueOf(temp));
+                String yourFormattedString = df.format(Double.valueOf(temp));
                 editText.setText(yourFormattedString);
                 editText.setSelection(yourFormattedString.length());
-            } else if (editText.length() == 0) {
+            }
+
+            else if (editText.length() == 0)
+            {
                 editText.append(number);
-            } else {
+            }
+
+            else
+            {
                 temp = editText.getText().insert(cursorStart, number).toString();
-                DecimalFormat formatter = new DecimalFormat("#,###,###.##");
                 temp = editText.getText().toString().replaceAll(",", "");
-                String yourFormattedString = formatter.format(Double.valueOf(temp));
+                String yourFormattedString = df.format(Double.valueOf(temp));
                 editText.setText(yourFormattedString);
                 editText.setSelection(cursorStart + 1);
             }
@@ -584,19 +566,25 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
         void AnimationFlip(final boolean endShare) {
 
-            if (constraintLayout.getVisibility() == View.VISIBLE && !endShare) {
-                constraintLayout.setVisibility(View.GONE);
-                constraintLayoutFlipped.setVisibility(View.VISIBLE);
-                constraintLayoutFlipped.setAlpha(1);
-                offerCl.setVisibility(View.GONE);
-            } else {
-                constraintLayout.setVisibility(View.VISIBLE);
-                constraintLayoutFlipped.setVisibility(View.GONE);
-                constraintLayoutFlipped.setAlpha(1);
-                offerCl.setVisibility(View.GONE);
-                if (endShare) {
+            if (constraintLayout.getVisibility() == View.VISIBLE && !endShare)
+            {
+                //constraintLayout.setVisibility(View.GONE);
+                //constraintLayoutFlipped.setVisibility(View.VISIBLE);
+                //constraintLayoutFlipped.setAlpha(1);
+                //offerCl.setVisibility(View.GONE);
+            }
+
+            else
+            {
+                //constraintLayout.setVisibility(View.VISIBLE);
+                //constraintLayoutFlipped.setVisibility(View.GONE);
+                //constraintLayoutFlipped.setAlpha(1);
+                //offerCl.setVisibility(View.GONE);
+
+                /*if (endShare)
+                {
                     flippable = true;
-                }
+                }*/
             }
 
 //            try {
@@ -657,22 +645,22 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             flippable = false;
 
             if (reversed) {
-                constraintLayoutFlipped.setVisibility(View.GONE);
+                //constraintLayoutFlipped.setVisibility(View.GONE);
                 offerCl.setVisibility(View.VISIBLE);
 
             } else {
                 offerCl.setVisibility(View.GONE);
 
-                constraintLayoutFlipped.setVisibility(View.VISIBLE);
+                //constraintLayoutFlipped.setVisibility(View.VISIBLE);
                 flippable = true;
             }
 
-            ObjectAnimator objectAnimatorFadeOut = ObjectAnimator.ofFloat(
+            /*ObjectAnimator objectAnimatorFadeOut = ObjectAnimator.ofFloat(
                     (reversed) ? constraintLayoutFlipped : offerCl,
                     "alpha",
                     1f,
                     0f
-            );
+            );*/
 //            objectAnimatorFadeOut.setDuration(200);
 //
 //            final ObjectAnimator objectAnimatorFadeIn = ObjectAnimator.ofFloat(
@@ -725,10 +713,10 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 if (editText.length() != 0 && editText.getText().toString().charAt(cursorStart - 1) == '.') {
                     hasDecimal = false;
                 }
-                DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+                //DecimalFormat formatter = new DecimalFormat("#,###,###.##");
                 if (editText.getText().length() > 1) {
                     temp = editText.getText().toString().replaceAll(",", "");
-                    String yourFormattedString = formatter.format(Double.valueOf(temp.substring(0, temp.length() - 1)));
+                    String yourFormattedString = df.format(Double.valueOf(temp.substring(0, temp.length() - 1)));
                     editText.setText(yourFormattedString);
                     editText.setSelection(yourFormattedString.length());
                 } else {
@@ -858,7 +846,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 mHolder.cancelButton.setText(R.string.cancel);
                 mHolder.cancelBtn.setText(R.string.cancel);
                 mHolder.createButton.setText(R.string.share);
-                mHolder.tvBack.setText(R.string.back);
+                //mHolder.tvBack.setText(R.string.back);
                 mHolder.offerCurrencyTv.setText(R.string.currency);
                 //mHolder.productPriceTv.setText(R.string.price);
                 mHolder.nameTv.setText(R.string.tv_name);

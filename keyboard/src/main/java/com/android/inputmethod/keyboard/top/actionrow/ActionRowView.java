@@ -419,16 +419,16 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             }
         });
         tvUpdates = layout.findViewById(R.id.tv_updates);
-        tvUpdates.setText(R.string.tv_updates);
+        tvUpdates.setText("UPDATES");
         tvUpdates.setOnClickListener(new serviceClickListener(0));
         tvProducts = layout.findViewById(R.id.tv_products);
-        tvProducts.setText(R.string.tv_products);
+        tvProducts.setText("INVENTORY");
         tvProducts.setOnClickListener(new serviceClickListener(1));
         tvPhotos = layout.findViewById(R.id.tv_photos);
-        tvPhotos.setText(R.string.tv_photos);
+        tvPhotos.setText("PHOTOS");
         tvPhotos.setOnClickListener(new serviceClickListener(2));
         tvDetails = layout.findViewById(R.id.tv_details);
-        tvDetails.setText(R.string.tv_details);
+        tvDetails.setText("DETAILS");
         tvDetails.setOnClickListener(new serviceClickListener(3));
         return layout;
     }
