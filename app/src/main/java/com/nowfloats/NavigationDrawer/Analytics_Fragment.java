@@ -463,7 +463,7 @@ public class Analytics_Fragment extends Fragment {
         subscriber_progress.setVisibility(View.VISIBLE);
         vmnProgressBar = (ProgressBar) rootView.findViewById(R.id.vmn_progressbar);
         search_query_progress = (ProgressBar) rootView.findViewById(R.id.search_query_progressBar);
-        search_query_progress.setVisibility(View.VISIBLE);
+        search_query_progress.setVisibility(View.GONE);
         businessEnqProgress = (ProgressBar) rootView.findViewById(R.id.business_enq_progressBar);
         businessEnqProgress.setVisibility(View.VISIBLE);
         pbOrders = (ProgressBar) rootView.findViewById(R.id.order_progressBar);
@@ -529,7 +529,7 @@ public class Analytics_Fragment extends Fragment {
             searchQueriesCount.setVisibility(View.VISIBLE);
             searchQueriesCount.setText(searchQueryCount);
         } else {
-            search_query_progress.setVisibility(View.VISIBLE);
+            search_query_progress.setVisibility(View.GONE);
             searchQueriesCount.setVisibility(View.GONE);
         }
         if (enquiryCount != null && enquiryCount.trim().length() > 0) {

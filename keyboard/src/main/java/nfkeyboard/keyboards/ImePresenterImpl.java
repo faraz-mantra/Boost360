@@ -281,16 +281,10 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
-    public String onCopyClick(AllSuggestionModel model) {
+    public String onCopyClick(AllSuggestionModel model)
+    {
 
         permissions();
-
-        /*
-
-            send broadcast
-
-         */
-
         return onClickRegister(model);
     }
 
@@ -300,20 +294,28 @@ public class ImePresenterImpl implements ItemClickListener,
 
     @Override
     public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        mKeyboardSwitcher.hideProgressbar();
+
+        /*if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
+
             Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
-            //MethodUtils.getPermissions(mContext);
             return null;
-        }
-        if (Url == null) {
+        }*/
+
+        if (Url == null)
+        {
             Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
             return null;
         }
-        long diffHours = 24;
 
-        try {
+        long diffHours = 24;
+        DecimalFormat df = new DecimalFormat("#,##,##,##,##,##,##,###.##");
+
+        try
+        {
             createdOn = createdOn.replace("T", " ");
             expiresOn = expiresOn.replace("T", " ");
             Date createdDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createdOn);
@@ -321,16 +323,20 @@ public class ImePresenterImpl implements ItemClickListener,
 
             long diff = expireDate.getTime() - createdDate.getTime();
             diffHours = (diff / (60 * 60 * 1000));
-
-        } catch (Exception e) {
-            Log.e("here", e.getMessage());
         }
-        
 
-        doCommitContent("Offer on: " + name + "\nPrice: " + currency + " " + Double.toString(oldPrice) + "\n\nOffer Price: "
-                + currency + " " + Double.toString(newPrice) + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" +
-                "Click to Buy: " + appendedUrl(Url), "text/plain", null);
-        mKeyboardSwitcher.hideProgressbar();
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        finally
+        {
+            doCommitContent("Offer on: " + name /*+ "\nPrice: " + currency + " " + df.format(oldPrice)*/ + "\n\nOffer Price: "
+                    + currency + " " + df.format(newPrice) + "\nExpires in \"" + diffHours + "\" Hours!\n\n" +
+                    "Click to Buy: " + appendedUrl(Url), "text/plain", null);
+        }
+
         return Url;
     }
 
@@ -343,7 +349,6 @@ public class ImePresenterImpl implements ItemClickListener,
     public void onDetailsClick(AllSuggestionModel model) {
 
         permissions();
-
         onClickRegister(model);
     }
 
