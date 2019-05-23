@@ -50,7 +50,17 @@ public class ApiCallPresenter {
         public void onSuccess(CustomerDetails data) {
             Details details = new Details();
             details.setAddress(data.getAddress());
-            details.setName(data.getContactName());
+
+            if(SharedPrefUtil.fromBoostPref().getFpTag().equals(data.getTag()))
+            {
+                details.setName(SharedPrefUtil.fromBoostPref().getName() == null ? "" : (SharedPrefUtil.fromBoostPref().getName().equals("null") ? "" : SharedPrefUtil.fromBoostPref().getName()));
+            }
+
+            else
+            {
+                details.setName(data.getContactName() == null ? "" : (data.getContactName().toLowerCase().equals("null") ? "" : data.getContactName()));
+            }
+
             details.setEmail(data.getEmail());
             details.setPhoneNumber(data.getPrimaryNumber());
             details.setWebsite(SharedPrefUtil.fromBoostPref().getWebsite());

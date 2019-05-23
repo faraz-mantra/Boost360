@@ -292,7 +292,7 @@ public interface EventKeys
 	String socialSharing_home_facebook_page = "Social_Sharing_Home_FacebookPage";
 	String socialSharing_home_twitter = "Social_Sharing_Home_Twitter";
 	
-	//Widget buy flow
+	//WidgetResponse buy flow
 	
 	String buy_gallery_clicked = "buy_gallery_clicked";
 	String buy_businessEnquiries_clicked = "buy_businessEnquiries_clicked";

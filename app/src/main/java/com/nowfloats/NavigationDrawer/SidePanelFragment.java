@@ -354,7 +354,7 @@ public class SidePanelFragment extends Fragment {
             addOnLayout.setVisibility(View.GONE);
         } else {
             keyboardTextView.setText("Boost Keyboard");
-            addOnLayout.setVisibility(View.VISIBLE);
+            addOnLayout.setVisibility(View.GONE);
         }
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
 

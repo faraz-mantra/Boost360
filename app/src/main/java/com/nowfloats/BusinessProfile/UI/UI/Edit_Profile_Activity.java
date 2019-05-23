@@ -188,6 +188,15 @@ public class Edit_Profile_Activity extends BaseActivity {
 
             }
         });
+
+        category.setOnClickListener(v -> {
+
+            displayAlert(this);
+
+        });
+
+
+
 //        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
 //        businessName_textlineTextView = (TextView) findViewById(R.id.businessName_textline);
 //        businessDesciption_textlineTextView = (TextView) findViewById(R.id.businessDesciption_textline);
@@ -958,6 +967,27 @@ public class Edit_Profile_Activity extends BaseActivity {
                     public void onNegative(MaterialDialog dialog)
                     {
                         super.onNegative(dialog);
+                    }
+
+                }).show();
+    }
+
+
+    public void displayAlert(final Activity mContext)
+    {
+        new MaterialDialog.Builder(mContext)
+                .title("Wrong business category?")
+                .content(R.string.business_category_change_level)
+                .positiveText("Ok")
+                .positiveColorRes(R.color.primaryColor)
+                .cancelable(false)
+                .callback(new MaterialDialog.ButtonCallback() {
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog)
+                    {
+                        super.onPositive(dialog);
+
                     }
 
                 }).show();

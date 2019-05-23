@@ -74,7 +74,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        getSupportActionBar().setTitle("Seller Analytics");
+        getSupportActionBar().setTitle("Orders");
 
         mSession = new UserSessionManager(this, this);
 

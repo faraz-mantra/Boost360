@@ -37,10 +37,9 @@
 
                     <ImageView
                         android:id="@+id/logoimageView"
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:scaleType="centerCrop"
                         android:src="@drawable/logo_default_image"
                         android:layout_gravity="top|center_horizontal"/>
 

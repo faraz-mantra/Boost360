@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
@@ -58,11 +59,11 @@ public class ManageContentFragment extends Fragment{
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch(adapterTexts[pos]){
-                    case "My Business Profile":
+                    case "Business Profile":
                         intent = new Intent(mContext,FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName","Business_Profile_Fragment_V2");
                         break;
-                    case "Updates":
+                    case "All Updates":
                         ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.update));
                         return;
                     case "Image Gallery":
@@ -70,6 +71,9 @@ public class ManageContentFragment extends Fragment{
                         break;
                     case "Custom Pages":
                        intent = new Intent(mContext, CustomPageActivity.class);
+                        break;
+                    case "Content Sharing Settings":
+                        intent = new Intent(mContext, SocialSharingActivity.class);
                         break;
                     default:
                         return;

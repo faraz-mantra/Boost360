@@ -47,7 +47,7 @@ public class MixPanelUtils {
     public static final String KEYBOARD_THEME_NAVIGATION_THROUGH_KEYBOARD = "KeyboardThemeNavigationThroughKeyboard";
     private static MixPanelUtils mixPanelUtils = new MixPanelUtils();
     //private static MixpanelAPI mixPanel;
-    public static MixpanelAPI.People people = null;
+    //public static MixpanelAPI.People people = null;
 
     private MixPanelUtils() {
     }
@@ -58,9 +58,9 @@ public class MixPanelUtils {
 
     public static void setMixPanel(Context app) {
         /*if (mixPanel != null)
-            mixPanel.flush();
-        *//** Boost App **//*
-        mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");*/
+            mixPanel.flush();*/
+        /** Boost App **/
+        //mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");
 
         /**New Test Id**/
 //        mixPanel = MixpanelAPI.getInstance(app,"21d1bf26130e59cc8a0189372c010c25");
@@ -154,17 +154,17 @@ public class MixPanelUtils {
     public static void identify(String id, JSONObject param, String fpid) {
         Log.v("mixpanel", id);
         try {
-            /*if (mixPanel == null) return;
-            mixPanel.identify(id);
-            people = mixPanel.getPeople();*/
-            people.identify(id);
-            people.set(param);
+//            if (mixPanel == null) return;
+//            mixPanel.identify(id);
+//            people = mixPanel.getPeople();
+//            people.identify(id);
+//            people.set(param);
             //	people.set("$email", Constants.StoreEmail);
             //  669302602295 - Boost Project ID
             // 150516431070 - Test Project ID
-            people.initPushHandling("669302602295");
+            //people.initPushHandling("669302602295");
             // people.initPushHandling("276987746927");
-            people.set("Notification", fpid);
+            //people.set("Notification", fpid);
 
             ApxorSDK.setUserIdentifier(id);
             ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
@@ -195,28 +195,28 @@ public class MixPanelUtils {
 
 
     public static void setProperties(String plan, String status) {
-        try {
-            /*if (mixPanel != null)
-                mixPanel.getPeople().set(plan, status);*/
+        /*try {
+            if (mixPanel != null)
+                mixPanel.getPeople().set(plan, status);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void createUser(String id, JSONObject store) {
 //		Log.v("mixpanel", id);
         try {
 
-            /*if (mixPanel == null)
-                return;
-            mixPanel.identify(id);
-            people = mixPanel.getPeople();*/
-            people.identify(id);
-            people.set(store);
+//            if (mixPanel == null)
+//                return;
+//            mixPanel.identify(id);
+//            people = mixPanel.getPeople();
+//            people.identify(id);
+//            people.set(store);
             //people.set("$email", Constants.StoreEmail);
             //  669302602295 - Boost Project ID
             // 150516431070 - Test Project ID
-            people.initPushHandling("669302602295");
+            //people.initPushHandling("669302602295");
 //            ApxorSDK.setUserIdentifier(id);
 //            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(store));
             //people.initPushHandling("276987746927");

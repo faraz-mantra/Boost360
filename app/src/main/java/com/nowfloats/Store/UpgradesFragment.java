@@ -50,7 +50,7 @@ public class UpgradesFragment extends Fragment {
 
         MixPanelController.track(MixPanelController.SUBSCRIPTIONS, null);
         final String[] adapterTexts = getResources().getStringArray(R.array.upgrade_tab_items);
-        final int[] adapterImages = {R.drawable.sidepanel_store, R.drawable.ic_your_plan};
+        final int[] adapterImages = {R.drawable.ic_plan_details, R.drawable.ic_subscription_history};
 
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
@@ -60,7 +60,7 @@ public class UpgradesFragment extends Fragment {
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
-                    case "Buy and Renew":
+                    case "Plan Details":
                         MixPanelController.track(MixPanelController.BUY_AND_RENEW, null);
                         intent = new Intent(mContext, NewPricingPlansActivity.class);
                         break;

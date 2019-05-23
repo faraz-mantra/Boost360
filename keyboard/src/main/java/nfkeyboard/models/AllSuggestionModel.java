@@ -260,6 +260,8 @@ public class AllSuggestionModel {
     public String price;
     public String description;
     public String discount;
+    public String brandName;
+    public String category;
 
     public void setText(String text) {
         this.text = text;

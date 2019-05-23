@@ -87,10 +87,10 @@
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an update</string>
-    <string name="side_panel_row_one">Dashboard</string>
+    <string name="side_panel_row_one">Home</string>
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
-    <string name="manage_inventory">Manage Catalog</string>
+    <string name="manage_inventory">E-Commerce</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Business Enquiries</string>
@@ -443,7 +443,10 @@
     <string name="upgrade_base_plan_content"><Data><![CDATA[Your RedTim website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.]]></Data></string>
     <string name="upgrade_base_plan_description"><Data><![CDATA[RedTim for web]]></Data></string>
 
-    <string name="keyboard_message">The RedTim Keyboard allows you to share your products and updates without leaving a chat.</string>
+    <!--<string name="keyboard_message">The RedTim Keyboard allows you to share your products and updates without leaving a chat.</string>
+    -->
+    <string name="keyboard_message">The RedTim Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
+(We do not store or share any data that you type on the RedTim Keyboard.)</string>
     <string name="boost_keyboard">RedTim Keyboard</string>
     <!--FAQ hardcoded string end-->
     <string name="Logo_percentage">5</string>
@@ -479,22 +482,31 @@
         <item>Let\'s get some of your friends to see your site!</item>
     </string-array>
     <string-array name="manage_content_tab_items">
-        <item>My Business Profile</item>
-        <item>Updates</item>
+        <item>All Updates</item>
         <item>Image Gallery</item>
         <item>Custom Pages</item>
+        <item>Business Profile</item>
+        <item>Content Sharing Settings</item>
     </string-array>
-    <string-array name="account_setting_tab_items">
+    <!--<string-array name="account_setting_tab_items">
         <item>Site Appearance</item>
         <item>Your Plans</item>
         <item>Change Password</item>
         <item>Log out</item>
+    </string-array>-->
+    <string-array name="account_setting_tab_items">
+        <!--<item>Seller Profile</item>-->
+        <!--<item>Site Appearance</item>-->
+        <item>Account Info</item>
+        <item>Domain and Email</item>
+        <!--  <item>Your Plans</item>-->
+        <item>Change Password</item>
+        <item>Log out</item>
     </string-array>
-
     <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>RedTim representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
     <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#1F80AD\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
     <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#1F80AD\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
-    <string name="onboarding_about_product_url">https://redtim.com/product</string>
+    <string name="onboarding_about_product_url">https://www.redtim.com/how-it-works</string>
     <string name="update_nowfloats_app">You are using an old version of RedTim. Update the app to get new features and enhancements</string>
 
     <string-array name="dictate_parent_0">

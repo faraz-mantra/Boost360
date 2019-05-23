@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/llarge_text_size" />
+            android:textSize="@dimen/large_text_size" />
 
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/llarge_text_size" />
+            android:textSize="@dimen/large_text_size" />
 
         <TextView
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/llarge_text_size" />
+            android:textSize="@dimen/large_text_size" />
 
         <TextView
             android:layout_width="match_parent"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/llarge_text_size" />
+            android:textSize="@dimen/large_text_size" />
 
         <TextView
             android:layout_width="match_parent"
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/llarge_text_size" />
+            android:textSize="@dimen/large_text_size" />
 
 
         <View
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/llarge_text_size" />
+            android:textSize="@dimen/large_text_size" />
 
         <TextView
             android:id="@+id/tvtermAndPolicy"
@@ -155,6 +155,6 @@
         android:fontFamily="sans-serif"
         android:text="@string/create_my_website"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="@dimen/medium_text_size" />
 
 </LinearLayout>

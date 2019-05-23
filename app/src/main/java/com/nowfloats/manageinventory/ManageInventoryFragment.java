@@ -22,7 +22,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Product_Gallery.ProductCatalogActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
@@ -46,9 +49,9 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInventoryFragment extends Fragment {
-    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics;
+    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics, tvBusinessInquiries, tvBusinessCalls;
     ImageView ivLockWidget, ivPaymentIcon;
-    Typeface robotoLight;
+    //Typeface robotoLight;
     private SharedPreferences pref = null;
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
@@ -141,18 +144,38 @@ public class ManageInventoryFragment extends Fragment {
 
         try {
             ivLockWidget.setVisibility(View.GONE);
-            Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
-            robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
+            //Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
+            //robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
 
             tvPaymentSetting = (TextView) mainView.findViewById(R.id.tvPaymentSetting);
-            tvPaymentSetting.setTypeface(robotoMedium);
+            //tvPaymentSetting.setTypeface(robotoMedium);
 
             tvProductGallery = (TextView) mainView.findViewById(R.id.tvProductGallery);
             tvProductGallery.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
-            tvProductGallery.setTypeface(robotoMedium);
+            //tvProductGallery.setTypeface(robotoMedium);
 
             tvSellerAnalytics = (TextView) mainView.findViewById(R.id.tvSellerAnalytics);
-            tvSellerAnalytics.setTypeface(robotoMedium);
+            //tvSellerAnalytics.setTypeface(robotoMedium);
+
+            tvBusinessCalls = (TextView) mainView.findViewById(R.id.tvBusinessCalls);
+            //tvBusinessCalls.setTypeface(robotoMedium);
+
+            tvBusinessInquiries = (TextView) mainView.findViewById(R.id.tvBusinessInquiries);
+            //tvBusinessInquiries.setTypeface(robotoMedium);
+
+            tvBusinessInquiries.setOnClickListener(v -> {
+
+                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            });
+
+            tvBusinessCalls.setOnClickListener(v -> {
+
+                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            });
 
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -168,6 +191,7 @@ public class ManageInventoryFragment extends Fragment {
                 public void onClick(View v) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
                     Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
+                    //Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -204,11 +228,15 @@ public class ManageInventoryFragment extends Fragment {
 //                    }
                 }
             });
+
+            String category = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
+            tvProductGallery.setText(category);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        /*if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
         {
             tvPaymentSetting.setVisibility(View.VISIBLE);
             ivPaymentIcon.setVisibility(View.VISIBLE);
@@ -218,7 +246,7 @@ public class ManageInventoryFragment extends Fragment {
         {
             tvPaymentSetting.setVisibility(View.GONE);
             ivPaymentIcon.setVisibility(View.GONE);
-        }
+        }*/
     }
 
 
