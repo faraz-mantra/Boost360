@@ -11,7 +11,7 @@
     <color name="primaryColorDark">#F9A825</color>
     <color name="tabOnclickColor">#FFE5A0</color>
 
-    <color name="screen_bg">#E3E3E3</color>
+    <color name="screen_bg">#f6f6f6</color>
     <color name="card_gray">#808080</color>
     <color name="greenDark">#458b00</color>
     <color name="product_delete_btn">#ff3f3f</color>
@@ -109,5 +109,12 @@
     <color name="transparent_th">#80000000</color>
 
     <color name="f3f3f3">#F3F3F3</color>
+    <color name="spinner_grey_background">#e9e9e9</color>
+    <color name="edittext_grey_background">#e9e9e9</color>
+    <color name="primaryTextColor">#4a4a4a</color>
+    <color name="secondaryTextColor">#7f7f7f</color>
+    <color name="secondaryLightTextColor">#bbbbbb</color>
+
+    <color name="disableButtonColor">#ffd566</color>
 
 </resources>

@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/page_stencil" />
+                        android:src="@drawable/ic_custom_page_list" />
 
                     <LinearLayout
                         android:id="@+id/selection_layout"

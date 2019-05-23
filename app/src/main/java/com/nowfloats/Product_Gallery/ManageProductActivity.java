@@ -1,0 +1,158 @@
+package com.nowfloats.Product_Gallery;
+
+import android.databinding.DataBindingUtil;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.Product_Gallery.Model.Product;
+import com.nowfloats.helper.ui.BaseActivity;
+import com.thinksity.R;
+import com.thinksity.databinding.ActivityManageProductBinding;
+
+
+public class ManageProductActivity extends BaseActivity
+{
+    private ActivityManageProductBinding binding;
+    private boolean doubleBackToExitPressedOnce = false;
+    private Product product;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_product);
+
+        setSupportActionBar(binding.layoutToolbar.toolbar);
+
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+            getSupportActionBar().setTitle("");
+        }
+
+        this.product = (Product) getIntent().getSerializableExtra("PRODUCT");
+        loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
+
+        /*if(this.product == null)
+        {
+            loadFragment(ProductCategoryFragment.newInstance(), "PRODUCT_CATEGORY");
+        }
+
+        else
+        {
+            loadFragment(ManageProductFragment.newInstance("", "", this.product), "PRODUCT_CATEGORY");
+        }*/
+    }
+
+
+    public void setTitle(String title)
+    {
+        binding.layoutToolbar.toolbarTitle.setText(String.valueOf(title));
+    }
+
+    public void loadFragment(Fragment fragment, String tag)
+    {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction
+                //.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                .replace(R.id.fm_site_appearance, fragment, tag)
+                .commit();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+
+                if(isProductCategoryFragment())
+                {
+                    finish();
+                }
+
+                else
+                {
+                    confirm();
+                }
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void confirm()
+    {
+        new MaterialDialog.Builder(this)
+                .title("Are you sure ?")
+                .content("Information not saved. Do you want to close.")
+                .positiveText(getString(R.string.yes))
+                .positiveColorRes(R.color.primaryColor)
+                .negativeText(getString(R.string.no))
+                .negativeColorRes(R.color.light_gray)
+                .callback(new MaterialDialog.ButtonCallback() {
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog)
+                    {
+                        super.onPositive(dialog);
+                        dialog.dismiss();
+                        finish();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog)
+                    {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+                }).show();
+
+    }
+
+
+    @Override
+    public void onBackPressed()
+    {
+        if(isProductCategoryFragment())
+        {
+            super.onBackPressed();
+        }
+
+        else if (doubleBackToExitPressedOnce)
+        {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
+    }
+
+
+    private boolean isProductCategoryFragment()
+    {
+        /*ProductCategoryFragment fragment = (ProductCategoryFragment)getSupportFragmentManager().findFragmentByTag("PRODUCT_CATEGORY");
+
+        if (fragment != null && fragment.isVisible())
+        {
+            return true;
+        }*/
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fm_site_appearance);
+        return fragment instanceof ProductCategoryFragment;
+    }
+}

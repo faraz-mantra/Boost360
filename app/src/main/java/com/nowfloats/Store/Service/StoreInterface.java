@@ -17,10 +17,10 @@ import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreMainModel;
 import com.nowfloats.Store.Model.SupportedPaymentMethods;
 import com.nowfloats.Store.RedeemDiscountRequestModel;
+import com.nowfloats.widget.WidgetResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -100,4 +100,8 @@ public interface StoreInterface {
 
     @POST("/payment/v1/floatingpoints/initiate/{clientId}")
     void initiate(@Path("clientId") String clientId, @Body InitiateModel model, Callback<String> res);
+
+
+    @GET("/Support/v5/floatingpoint/getpackages")
+    void getActiveWidgetList(@QueryMap Map<String, String> map, Callback<WidgetResponse> callback);
 }

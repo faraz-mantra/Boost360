@@ -217,7 +217,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                         shareIntent.setType("image/*");
 
                                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
                                         } else {
                                             Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
                                         }
@@ -259,7 +259,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
                                 HomeActivity.StorebizFloats.get(position).url);
                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
                         } else {
                             Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
                         }
@@ -294,7 +294,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = Constants.BASE_IMAGE_URL + imageUri;
-                        Picasso.with(appContext).load(baseName).resize(450, 450).placeholder(R.drawable.default_product_image).into(imageView);
+                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     } else if (imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard")) {
                         imagePresent = true;
@@ -306,7 +306,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = imageUri;
-                        Picasso.with(appContext).load(baseName).resize(450, 450).placeholder(R.drawable.default_product_image).into(imageView);
+                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }
                 }

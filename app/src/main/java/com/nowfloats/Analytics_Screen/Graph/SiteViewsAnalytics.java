@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -260,6 +261,8 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
                 .replace(R.id.fl_analytics_fragment,UniqueVisitorsFragment.getInstance(b) , map.get("batchType"))
                 .addToBackStack(map.get("batchType"))
                 .commit();
+
+        Log.d("onChartBarClicked", "" + views);
     }
 
 

@@ -11,6 +11,8 @@ import com.nowfloats.util.MixPanelController;
 
 import java.util.ArrayList;
 
+import nfkeyboard.util.SharedPrefUtil;
+
 /**
  * Created by NowFloatsDev on 25/05/2015.
  */
@@ -31,6 +33,13 @@ public class ProcessFPDetails {
             session = new UserSessionManager(activity.getApplicationContext(), activity);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, get_fp_details_model.City);
             MixPanelController.setProperties("FPCity", get_fp_details_model.City);
+
+            if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).equals(get_fp_details_model.getTag()))
+            {
+                String name = get_fp_details_model.getContactName() == null ? "" : (get_fp_details_model.getContactName().toLowerCase().equals("null") ? "" : get_fp_details_model.getContactName());
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME, name);
+            }
+
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TAG, get_fp_details_model.Tag);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, get_fp_details_model.Address);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TILE_IMAGE_URI, get_fp_details_model.TileImageUri);
@@ -68,7 +77,9 @@ public class ProcessFPDetails {
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY, "GENERAL");
                 MixPanelController.setProperties("Category","GENERAL");
             }
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME, get_fp_details_model.ContactName);
+
+            //session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME, get_fp_details_model.ContactName);
+
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL, get_fp_details_model.Email);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, get_fp_details_model.CountryPhoneCode);
             MixPanelController.setProperties("CountryPhoneCode",get_fp_details_model.CountryPhoneCode);

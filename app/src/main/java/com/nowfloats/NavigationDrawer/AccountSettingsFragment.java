@@ -109,6 +109,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     /*case "Seller Profile":
                         intent = new Intent(mContext, SellerProfileActivity.class);
                         break;*/
+                    case "Account Info":
+                        intent = new Intent(mContext, AccountInfoActivity.class);
+                        break;
                     case "Site Appearance":
                         intent = new Intent(mContext, SiteAppearanceActivity.class);
                         break;
@@ -131,12 +134,16 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             if (!getActivity().isFinishing()) {
                                 builder.show();
                             }
-                        } else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
-                            showExpiryDialog(DEMO);
-                        } else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
-                                sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
-                            showExpiryDialog(DEMO_EXPIRED);
-                        } else if (Methods.isOnline(getActivity())) {
+                        }
+
+//                        else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
+//                            showExpiryDialog(DEMO);
+//                        } else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
+//                                sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
+//                            showExpiryDialog(DEMO_EXPIRED);
+//                        }
+
+                        else if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
                         } else {

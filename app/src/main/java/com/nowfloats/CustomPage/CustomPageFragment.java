@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,17 +26,21 @@ import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.Store.Model.ActivePackage;
+import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.widget.Widget;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
@@ -134,6 +139,8 @@ public class CustomPageFragment extends Fragment {
                     startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
+
+                //ActivePackage activePackage = Widget.getInstance().getActivePackage();
             }
         });
     }

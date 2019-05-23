@@ -12,7 +12,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     Home_Main_Fragment homeFragment;
     Analytics_Fragment analyticsFragment ;
     Context appContext;
-    int currentItem ;
+    private int currentItem ;
     private FragmentManager mFragmentManager;
 
     private CharSequence mTitles[];
@@ -74,6 +74,12 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         // Log.d("TabPagerAdapter","getCount ");
         return 3;
+    }
+
+
+    public int getCurrentItem()
+    {
+        return this.currentItem;
     }
 
 }

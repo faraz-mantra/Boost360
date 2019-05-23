@@ -158,16 +158,16 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv.setVisibility(View.GONE);
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    checkOverlay(DrawOverLay.FromTab);
-                }
-            }, 8000);
-
-        }
+//        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
+//
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    checkOverlay(DrawOverLay.FromTab);
+//                }
+//            }, 8000);
+//
+//        }
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -485,4 +485,9 @@ public class Home_Fragment_Tab extends Fragment {
 //
 //    };
 
+
+    public int getCurrentItem()
+    {
+        return viewPager.getCurrentItem();
+    }
 }

@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -554,7 +555,7 @@ public class Home_Main_Fragment extends Fragment implements
 
         @Override
         public void onClick(View v) {
-            BoostLog.d("Click Listener", " Listener : "+v.getId());
+            Log.d("Click Listener", " Listener : "+v.getId());
             int selectedItemPosition = recyclerView.getChildPosition(v);
             Intent webIntent = new Intent(context, Card_Full_View_MainActivity.class);
             webIntent.putExtra("POSITION",selectedItemPosition);
@@ -636,43 +637,4 @@ public class Home_Main_Fragment extends Fragment implements
      interface OnRenewPlanClickListener {
          void onRenewPlanSelected();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

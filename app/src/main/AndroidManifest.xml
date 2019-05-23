@@ -14,13 +14,10 @@
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -32,15 +29,11 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <!--
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.vending.BILLING" />
-    <!--
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    -->
+
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission
@@ -60,7 +53,21 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name,android:theme">
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <activity android:name="com.nowfloats.Product_Gallery.PickupAddressActivity"></activity>
+        <activity
+            android:name="com.nowfloats.Product_Gallery.ManageProductActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name="com.nowfloats.Product_Gallery.ProductCatalogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeActionBar" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
             android:screenOrientation="portrait" />
@@ -76,15 +83,12 @@
         <meta-data
             android:name="com.webengage.sdk.android.debug"
             android:value="false" /> <!-- only for debugging -->
-
         <meta-data
             android:name="com.webengage.sdk.android.key"
             android:value="@string/webengage_license_code" /> <!-- Replace with your WebEngage's license code -->
-
         <meta-data
             android:name="com.webengage.sdk.android.location_tracking"
             android:value="true" /> <!-- Set false if location tracking is not required -->
-
         <service android:name="com.webengage.sdk.android.ExecutorService" />
         <service android:name="com.webengage.sdk.android.EventLogService" />
 
@@ -114,7 +118,8 @@
         <receiver
             android:name="com.webengage.sdk.android.InstallTracker"
             android:exported="true">
-            <intent-filter>Contact_Info_Activity
+            <intent-filter>
+                Contact_Info_Activity
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
@@ -177,7 +182,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Analytics_Screen.SocialAnalytics" />
         </activity>
-
         <activity
             android:name="com.nowfloats.Analytics_Screen.OrderSummaryActivity"
             android:label="Order Analytics"
@@ -220,11 +224,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.Analytics_Screen.SearchQueriesActivityNew"
-            android:label=""
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.nowfloats.Analytics_Screen.SubscriberDetailsActivity"
             android:label=""
             android:screenOrientation="portrait" />
@@ -242,9 +241,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
-        </activity>
-
-        <!-- <service android:name="com.nowfloats.bubble.BubblesService" />-->
+        </activity> <!-- <service android:name="com.nowfloats.bubble.BubblesService" /> -->
         <service
             android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
@@ -416,7 +413,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
             android:launchMode="singleTop"
@@ -429,18 +425,15 @@
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
-            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_edit__profile_"
-            android:screenOrientation="portrait" />
-        <!-- <activity -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" /> <!-- <activity -->
         <!-- android:name="com.facebook.LoginActivity" -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <!--
         <receiver
             android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
@@ -453,7 +446,6 @@
             </intent-filter>
         </receiver>
         -->
-
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
             android:value="@string/package_name" />
@@ -491,6 +483,12 @@
         <activity
             android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.SocialSharingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.AccountInfoActivity"
+            android:screenOrientation="portrait" />
         <!--
             <activity android:name="com.nowfloats.CustomPage.CustomPageFragment"
             android:screenOrientation="portrait" ></activity>
@@ -504,7 +502,13 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name="com.darsh.multipleimageselect.activities.AlbumSelectActivity"
+            android:theme="@style/MultipleImageSelectTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <!--
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -596,7 +600,6 @@
             android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <!--
         <service
             android:name="com.nowfloats.accessbility.DataAccessibilityServiceV8"
@@ -610,8 +613,6 @@
                 android:resource="@xml/accessibility_service" />
         </service>
         -->
-
-
         <!-- <activity -->
         <!-- android:name="com.nowfloats.accessbility.BubbleDialog" -->
         <!-- android:autoRemoveFromRecents="true" -->
@@ -680,7 +681,6 @@
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@style/Theme.custom" -->
         <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-
         <activity
             android:name="com.nowfloats.managenotification.CallerInfoDialog"
             android:autoRemoveFromRecents="true"
@@ -692,8 +692,6 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"
             tools:replace="android:screenOrientation" />
-
-
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
@@ -760,9 +758,19 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Product_Gallery.MultipleProductImageActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog">
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
 
-        </activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+
     </application>
 
 </manifest>

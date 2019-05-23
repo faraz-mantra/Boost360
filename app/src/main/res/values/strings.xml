@@ -36,7 +36,7 @@
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
-    <string name="manage_inventory">Manage Catalog</string>
+    <string name="manage_inventory">E-Commerce</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
@@ -426,7 +426,7 @@
 
     <string name="home">Home</string>
     <string name="title_activity_create__message_">Post an Update</string>
-    <string name="side_panel_row_one">Dashboard</string>
+    <string name="side_panel_row_one">Home</string>
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
@@ -434,7 +434,7 @@
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
     <string name="side_panel_row_six">Write to Ria</string>
-    <string name="side_panel_row_eight">Share My Website</string>
+    <string name="side_panel_row_eight">Share My Site</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
 
@@ -464,7 +464,7 @@
     <string name="deeplink_gplaces">gplaces</string>
     <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
     <string name="deeplink_ProductGallery">productGallery</string>
-    <string name="setting_faq_url">https://hello.nowfloats.com/faqs</string>
+    <string name="setting_faq_url">https://www.nowfloats.com/faqs/</string>
 
     <!-- Deep Linking URLs  -->
 
@@ -699,7 +699,7 @@
     </string-array>
     <string-array name="dashboard_tabs">
         <item>UPDATES</item>
-        <item>ANALYTICS</item>
+        <item>REPORTS</item>
         <item>ALERTS</item>
     </string-array>
     <string-array name="order_analytics_tabs">
@@ -828,15 +828,15 @@
     <string name="presignup_login_text">Already have a NowFloats site?</string>
     <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
-    <string name="settings_about_us_link">https://hello.nowfloats.com/about-us</string>
+    <string name="settings_about_us_link">https://www.nowfloats.com/about-us/</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>
     <string name="contact_us_number">18601231233</string>
     <string name="message_soon">Start updating, now!</string>
     <string name="store">Pricing Plans</string>
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
-    <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
-    <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
+    <string name="settings_tou_url">https://www.nowfloats.com/tnc/</string>
+    <string name="settings_privacy_url">https://wwww.nowfloats.com/privacy/</string>
     <string-array name="domain_array">
         <item>.com</item>
         <item>.net</item>
@@ -875,6 +875,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="search_queries">Search Queries</string>
     <string name="subscribers">Subscribers</string>
     <string name="product_gallery">Product Gallery</string>
+    <string name="business_inquiries">Business Enquiries</string>
+    <string name="business_calls">Business Calls</string>
     <string name="check_internet_connection">Check your Network Connection</string>
     <string name="email">EMAIL</string>
     <string name="call">CALL</string>
@@ -884,6 +886,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="answer">Answer</string>
     <string name="ok">OK</string>
     <string name="logo">Logo</string>
+    <string name="business_logo">Business Logo</string>
     <string name="upload_logo_image">Upload Logo Image</string>
     <string name="device_does_not_support_capturing_image">Whoops - your device doesn\'t support capturing images!</string>
     <string name="select_image_upload">Please select an image to upload</string>
@@ -902,7 +905,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_password_6to12_char">Phone number should be between 6 &#8211; 12 characters</string>
     <string name="basic_info">Basic Information</string>
     <string name="business_name_more_than_3char">Business Name should be more than 3 letters</string>
-    <string name = "invalid_custom_product_category">Enter only english characters in product category</string>
+    <string name="invalid_custom_product_category">Enter only english characters in product category</string>
     <string name="try_again">Try again&#8230;</string>
     <string name="wait_while_loading_category">Loading Categories&#8230;</string>
     <string name="wait_while_loading_salesman">Loading Salesman&#8230;</string>
@@ -962,6 +965,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="percent_site_completed">site completed</string>
     <string name="choose_app_to_share">Choose app to share</string>
     <string name="share_message">Share your message</string>
+    <string name="share_updates">Share your update</string>
     <string name="no_app_available_for_action">No apps available for the action</string>
     <string name="failed_to_download_image">Failed to download Image</string>
     <string name="can_not_share_image_offline_mode">Can\'t Share image content in Offline Mode</string>
@@ -1146,7 +1150,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_reason">Enter other reason</string>
     <string name="submit">SUBMIT</string>
     <string name="no_alerts">No alerts!</string>
-    <string name="overall_visits">Overall Visits</string>
+    <string name="overall_visits">Total Visits</string>
     <string name="address_line">Address Line</string>
     <string name="town_city">Town / City</string>
     <string name="pin_area_code">Pin/Area Code</string>
@@ -1160,6 +1164,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="use_custom_pages_to_describe_business">Use custom pages to describe your business offerings in detail. You can add and format paragraphs of text, links and images!</string>
     <string name="retry">Retry</string>
     <string name="new_in_capital">NEW</string>
+    <string name="get_in_capital">GET</string>
     <string name="powered_by">Powered By&#160; </string>
     <string name="nowfloats"> NowFloats</string>
     <string name="powered_by_company"> NowFloats</string>
@@ -1564,6 +1569,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="email_address_ria">EMAIL ADDRESS</string>
     <string name="city_ria">CITY</string>
     <string name="country_ria">COUNTRY</string>
+    <string name="state_ria">STATE</string>
     <string name="pin_code_ria">PIN/ZIP CODE</string>
     <string name="number_already_exists">This number already exists.Please enter another number</string>
 
@@ -1576,10 +1582,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="action_sort_date">Recent</string>
     <string name="action_sort_expiry">Expiring</string>
     <string name="action_sort_source">Channel</string>
-    <string name="seller_analytics">Seller Analytics</string>
+    <string name="seller_analytics">Orders</string>
     <string name="total_orders">Total Orders</string>
     <string name="orders">Orders</string>
-    <string name="order_analytics">Order Analytics</string>
+    <string name="order_analytics">Sales</string>
     <string name="seller_profile">Seller Profile</string>
     <string name="order_summary">Order Summary</string>
     <string name="revenue_summary">Revenue Summary</string>
@@ -1662,7 +1668,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="pp_business_category">Business Category:</string>
     <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
-    <string name="contact_us_message">If your query is still unanswered, please check <b>FAQs</b> or contact us at <b>ria@nowfloats.com</b> or call our toll-free number <a href="tel:18601231233"><b>1860&#8211;123&#8211;1233</b></a>.</string>
+    <string name="contact_us_message">If your query is still unanswered, please check <b>FAQs</b> or contact us at <b>ria@nowfloats.com</b> or call our toll number <a href="tel:18601231233"><b>1860&#8211;123&#8211;1233</b></a>.</string>
     <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
     <string name="wildfire_ad_cost_text"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
     <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
@@ -1672,9 +1678,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="upgrade_base_plan_description"><Data><![CDATA[BOOST Lite, BOOST Pro, BOOST Custom]]></Data></string>
     <string name="Year">Year</string>
     <string name="support_name">Support</string>
-    <string name="wildfire_analytics">WildFire Analytics</string>
+    <string name="wildfire_analytics">Inorganic</string>
     <string name="manage_content">Manage Content</string>
-    <string name="account_settings">Account Settings</string>
+    <string name="account_settings">Settings</string>
     <string name="about">About</string>
     <string name="upgrades">Upgrades</string>
     <string name="add_ons">Add-ons</string>
@@ -1693,7 +1699,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Privacy Policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
-    <string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
+    <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
+    -->
+    <string name="keyboard_message">The Boost Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
+(We do not store or share any data that you type on the Boost Keyboard.)</string>
     <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
     <string name="domain_linking_success">Domain Linking Successful</string>
     <string name="map_visits">Address Views</string>
@@ -1707,10 +1716,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="upload_image_err">Failed to upload image</string>
 
     <string-array name="manage_content_tab_items">
-        <item>My Business Profile</item>
-        <item>Updates</item>
+        <item>All Updates</item>
         <item>Image Gallery</item>
         <item>Custom Pages</item>
+        <item>Business Profile</item>
+        <item>Content Sharing Settings</item>
     </string-array>
 
     <string-array name="order_analytics_tab_items">
@@ -1720,15 +1730,16 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string-array name="account_setting_tab_items">
         <!--<item>Seller Profile</item>-->
-        <item>Site Appearance</item>
+        <!--<item>Site Appearance</item>-->
+        <item>Account Info</item>
         <item>Domain and Email</item>
-      <!--  <item>Your Plans</item>-->
+        <!--  <item>Your Plans</item>-->
         <item>Change Password</item>
         <item>Log out</item>
     </string-array>
 
     <string-array name="upgrade_tab_items">
-        <item>Buy and Renew</item>
+        <item>Plan Details</item>
         <item>Subscription History</item>
     </string-array>
     <string-array name="payment_options">
@@ -1736,4 +1747,25 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Pay By Cheque</item>
         <item>Bank Transfer</item>
     </string-array>
+    <array name="stock_availability">
+        <item>In stock</item>
+        <item>Out of stock</item>
+    </array>
+    <array name="stock_options">
+        <item>YES</item>
+        <item>NO</item>
+    </array>
+    <array name="payment_options_v1">
+        <item>Paypal</item>
+        <item>Pay By Cheque</item>
+        <item>Bank Transfer</item>
+    </array>
+
+    <string name="hint_product_name">Write the name of your base %s</string>
+    <string name="label_product_name">%s Name<sup>*</sup></string>
+
+    <string name="hint_product_description">Describe your %s within 2000 characters max ...</string>
+    <string name="label_product_description">%s Description<sup>*</sup></string>
+    <string name="label_product_type">%s Type/Category</string>
+
 </resources>

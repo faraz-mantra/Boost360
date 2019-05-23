@@ -32,6 +32,12 @@
     <dimen name="padding_medium">10dp</dimen>
     <dimen name="icon_size">38dp</dimen>
 
+    <dimen name="nav_icon_size">24dp</dimen>
+
+    <dimen name="icon_size_47">47dp</dimen>
+
+    <dimen name="icon_size_55">55dp</dimen>
+
     <dimen name="ps_lbl1_size">22sp</dimen>
     <dimen name="ps_lbl2_size">40sp</dimen>
     <dimen name="ps_lbl3_size">12sp</dimen>
@@ -73,6 +79,8 @@
 
     <dimen name="textview_height_business_profile">47dp</dimen>
 
+    <dimen name="cell_height">55dp</dimen>
+
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="medium_text_size">15sp</dimen>
     <dimen name="large_text_size">18sp</dimen>
@@ -84,6 +92,7 @@
     <dimen name="margin_25">25dp</dimen>
     <dimen name="margin_40">40dp</dimen>
     <dimen name="margin_50">50dp</dimen>
+    <dimen name="margin_60">60dp</dimen>
     <dimen name="margin_70">70dp</dimen>
     <dimen name="margin_30">30dp</dimen>
     <dimen name="margin_100">100dp</dimen>

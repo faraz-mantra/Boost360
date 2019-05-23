@@ -141,7 +141,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     Bus bus;
     public static ProgressBar cityProgress;
     private static EditText businessNameEditText, businessCategoryEditText, countryEditText, emailEditText,
-            phoneEditText, etStreetAddress, edtLocality, etWebsiteAddress, etPinCode, etOTP;
+            phoneEditText, etStreetAddress, edtLocality, etWebsiteAddress, etPinCode, etOTP, editState;
 
     public static AutoCompleteTextView cityEditText;
     private static TextView countryPhoneCode, tvtermAndPolicy;
@@ -175,6 +175,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     public static final String Save_Pin_Code = "pincodeKey";
     public static final String Save_Country = "countryKey";
     public static final String Save_City = "cityKey";
+    public static final String Save_State = "stateKey";
     public static final String Save_Lat = "ria_latKey";
     public static final String Save_Lng = "ria_lngKey";
     public static final String Save_IS_FP_AVAILABLE = "isFPAvailable";
@@ -203,7 +204,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pre_sign_up_trial_4);
+        //setContentView(R.layout.pre_sign_up_trial_4);
+        setContentView(R.layout.activity_pre_sign_up);
         if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             findViewById(R.id.layout_ria).setVisibility(View.GONE);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -244,6 +246,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         etPinCode = (EditText) findViewById(R.id.editText_pinCode);
         etWebsiteAddress = (EditText) findViewById(R.id.etWebsiteAddress);
         etOTP = (EditText) findViewById(R.id.etOTP);
+        editState = findViewById(R.id.editText_state);
 
         verify_button = (LinearLayout) findViewById(R.id.verify_button);
         countryPhoneCode = (TextView) findViewById(R.id.countrycode_signupscreen);
@@ -293,12 +296,12 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         verify_button.setOnClickListener(this);
         setEnableCreateWebsiteButton(true);
 
-        cityEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*cityEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 cityEditText.setText(citytext);
             }
-        });
+        });*/
         cityEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -350,13 +353,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                                             //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
 //                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
                                             String city = a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString();
-                                            if (city.contains(",")) {
+                                            /*if (city.contains(",")) {
                                                 String country[] = city.split(",");
                                                 city = country[0];
                                                 if (country.length > 1) {
                                                     city += ", " + (country[country.length - 1].trim());
                                                 }
-                                            }
+                                            }*/
                                             citys.add(city);
                                         }
 
@@ -382,7 +385,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String city = ((TextView) view).getText().toString();
+                /*String city = ((TextView) view).getText().toString();
                 if (city.contains(", ")) {
                     String country[] = city.split(", ");
                     city = country[0];
@@ -390,10 +393,35 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                         countryEditText.setText(country[country.length - 1].trim());
                     }
 //                  countryEditText.setFocusable(true);
+                }*/
+
+                String city = ((TextView) view).getText().toString();
+                String state = "";
+                String country = "";
+
+                try
+                {
+                    if (city.contains(","))
+                    {
+                        String result[] = city.split(",");
+                        city = result[0];
+                        state = result.length > 1 ? result[result.length-2].replaceFirst("^ *", "") : "";
+                        country = result[result.length-1].replaceFirst("^ *", "");
+                    }
                 }
+
+                catch (ArrayIndexOutOfBoundsException e)
+                {
+                    e.printStackTrace();
+                }
+
                 cityEditText.setTag(false);
                 cityEditText.setText(city);
                 cityEditText.setTag(true);
+                editState.setText(state);
+                etPinCode.requestFocus();
+                countryEditText.setText(country);
+                countryEditText.setFocusable(true);
                 citytext = city;
                 updateCountry();
 
@@ -568,7 +596,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         }
 
         if (phoneEditText.getText().toString().trim().length() != 0) {
-            phoneEditText.setText("");
+            //phoneEditText.setText("");
             ivPhoneStatus.setImageResource(R.drawable.icon_info);
         }
     }
@@ -661,51 +689,51 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         });
     }
 
-    private void verifyPhoneNumberAndSendOTP(String phoneNumber) {
-        //data_country_code
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
-            startProgressDialog();
-        }
-        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("PHONE", phoneNumber);
-        hashMap.put("COUNTRYCODE", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
-        smsApi.verifyPhoneNumberAndSendOTP(hashMap, new Callback<VerifyPhoneNumberAndSendOTP>() {
-            @Override
-            public void success(VerifyPhoneNumberAndSendOTP model, Response response) {
-                if (model == null) {
-                    stopProgressDialog();
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!model.isPhoneNumberInUse() && model.isOTPSent()) {
-                    stopProgressDialog();
-                    if (numberDialog != null) {
-                        numberDialog.dismiss();
-                    }
-                    otpVerifyDialog(model.getPHONE());
-
-                } else {
-                    stopProgressDialog();
-                    if (model.isPhoneNumberInUse()) {
-                        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else if (!model.isOTPSent()) {
-                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                stopProgressDialog();
-                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-    }
+//    private void verifyPhoneNumberAndSendOTP(String phoneNumber) {
+//        //data_country_code
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+//            startProgressDialog();
+//        }
+//        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("PHONE", phoneNumber);
+//        hashMap.put("COUNTRYCODE", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+//        smsApi.verifyPhoneNumberAndSendOTP(hashMap, new Callback<VerifyPhoneNumberAndSendOTP>() {
+//            @Override
+//            public void success(VerifyPhoneNumberAndSendOTP model, Response response) {
+//                if (model == null) {
+//                    stopProgressDialog();
+//                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (!model.isPhoneNumberInUse() && model.isOTPSent()) {
+//                    stopProgressDialog();
+//                    if (numberDialog != null) {
+//                        numberDialog.dismiss();
+//                    }
+//                    otpVerifyDialog(model.getPHONE());
+//
+//                } else {
+//                    stopProgressDialog();
+//                    if (model.isPhoneNumberInUse()) {
+//                        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
+//                        //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+//                    } else if (!model.isOTPSent()) {
+//                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                stopProgressDialog();
+//                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//
+//    }
 
     private void showCategoryDialog(ArrayList<String> categories) {
         new MaterialDialog.Builder(activity)
@@ -886,6 +914,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             if (!TextUtils.isEmpty(mBundle.getString(Save_City))) {
                 cityEditText.setText(mBundle.getString(Save_City, ""));
                 citytext = cityEditText.getText().toString().trim();
+            }
+
+            if (!TextUtils.isEmpty(mBundle.getString(Save_State))) {
+                editState.setText(mBundle.getString(Save_State, ""));
             }
             if (!TextUtils.isEmpty(mBundle.getString(Save_Email))) {
                 emailEditText.setText(mBundle.getString(Save_Email, ""));
@@ -1553,7 +1585,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 //((TextView) v).setTextColor(ContextCompat.getColor(PreSignUpActivityRia.this, R.color.gray_transparent));
-                sendSms(number);
+                //sendSms(number);
             }
         });
         otpDialog = new MaterialDialog.Builder(this)
@@ -1660,39 +1692,39 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         });
     }
 
-    private void sendSms(String number) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
-            startProgressDialog();
-        }
-        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("PHONE", number);
-        hashMap.put("COUNTRY", countryEditText.getText().toString().trim());
-        smsApi.reSendOTP(hashMap, new Callback<SmsVerifyModel>() {
-            @Override
-            public void success(SmsVerifyModel model, Response response) {
-                if (model == null) {
-                    stopProgressDialog();
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (model.isOTPSent()) {
-                    stopProgressDialog();
-
-                } else {
-                    stopProgressDialog();
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                stopProgressDialog();
-                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void sendSms(String number) {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+//            startProgressDialog();
+//        }
+//        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("PHONE", number);
+//        hashMap.put("COUNTRY", countryEditText.getText().toString().trim());
+//        smsApi.reSendOTP(hashMap, new Callback<SmsVerifyModel>() {
+//            @Override
+//            public void success(SmsVerifyModel model, Response response) {
+//                if (model == null) {
+//                    stopProgressDialog();
+//                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (model.isOTPSent()) {
+//                    stopProgressDialog();
+//
+//                } else {
+//                    stopProgressDialog();
+//                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                stopProgressDialog();
+//                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void verifySms(final String number, String otpCode) {
         showProgressbar();

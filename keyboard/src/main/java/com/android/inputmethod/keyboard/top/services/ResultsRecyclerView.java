@@ -156,25 +156,25 @@ public class ResultsRecyclerView extends RecyclerView {
         this.mAdapter.add(item);
     }
 
-    public boolean trySetUnauthPreviewItems(String authorizedStatus, boolean categoryRequiresAuth) {
-        if (requiresPermissionAccess()) {
-            setPermissionItem();
-            return true;
-        } else
-            return false;
-        /*else if (!requiresUnauthPreview(authorizedStatus, categoryRequiresAuth)) {
-            return false;
-        } else {
-            setUnauthPreviewItems();
-            return true;
-        }*/
-    }
+//    public boolean trySetUnauthPreviewItems(String authorizedStatus, boolean categoryRequiresAuth) {
+//        if (requiresPermissionAccess()) {
+//            setPermissionItem();
+//            return true;
+//        } else
+//            return false;
+//        /*else if (!requiresUnauthPreview(authorizedStatus, categoryRequiresAuth)) {
+//            return false;
+//        } else {
+//            setUnauthPreviewItems();
+//            return true;
+//        }*/
+//    }
 
-    public boolean requiresPermissionAccess() {
+    /*public boolean requiresPermissionAccess() {
         if (RServiceItem.CONTACTS.equals(mCurrentService.getSlash()) && ContextCompat.checkSelfPermission(getContext(), "android.permission.READ_CONTACTS") != 0)
             return true;
         return false;
-    }
+    }*/
 
     private boolean requiresUnauthPreview(String authorizedStatus, boolean categoryRequiresAuth) {
         if (this.mCurrentService == null) {

@@ -1,5 +1,6 @@
 package com.nowfloats.Product_Gallery.Service;
 
+import com.nowfloats.Product_Gallery.Model.Product;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
 import com.nowfloats.Product_Gallery.Model.ShippingMetricsModel;
@@ -14,6 +15,7 @@ import com.nowfloats.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -78,4 +80,13 @@ public interface ProductGalleryInterface {
     @GET("/SellerInformationFetch")
     //@Headers({"Authorization: " + Constants.WA_KEY})
     void getSellerProfileData(@Query("sellerId") String sellerId, Callback<WebResponseModel<SellerProfile>> callback);
+
+
+    /**
+     * New
+     * @param map
+     * @param callback
+     */
+    @GET("/Product/v1/GetListings")
+    void getAllProducts(@QueryMap Map<String, String> map, Callback<List<Product>> callback);
 }

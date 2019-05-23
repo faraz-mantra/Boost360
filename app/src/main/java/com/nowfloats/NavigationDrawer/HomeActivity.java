@@ -43,6 +43,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -53,7 +54,7 @@ import com.android.inputmethod.latin.utils.JniUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.nfx.leadmessages.ReadMessages;
+//import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
@@ -114,6 +115,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -193,12 +195,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private RiaNodeDataModel mRiaNodeDataModel;
     private String mDeepLinkUrl, mPayload;
     private String TAG = HomeActivity.class.getSimpleName();
-    private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE};
+    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
+            , Manifest.permission.READ_PHONE_STATE};*/
     private final static int READ_MESSAGES_ID = 221;
     //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
 
     private ProgressDialog progressDialog;
+
+    private boolean doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -240,9 +244,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             createView();
         }
 
+        ////WidgetKey.getWidgets(session);
     }
 
-    private void getPermissions() {
+    /*private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
@@ -256,21 +261,21 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
 
         }
-    }
+    }*/
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_MESSAGES_ID) {
 
-            List<Integer> intList = new ArrayList<Integer>();
+            /*List<Integer> intList = new ArrayList<Integer>();
             for (int i : grantResults) {
                 intList.add(i);
             }
             if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
                 Intent intent = new Intent(this, ReadMessages.class);
                 startService(intent);
-            }
+            }*/
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -564,35 +569,69 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        // super.onBackPressed();
+////        Methods.isOnline(HomeActivity.this);
+//        BoostLog.i("back---", "" + backChk);
+//        if (backChk) {
+//            finish();
+//        }
+//        if (!backChk) {
+//            start_backclick();
+//            backChk = true;
+//            Methods.showSnackBar(HomeActivity.this, getString(R.string.click_again_to_exit));
+//        }
+//    }
+
+
     @Override
-    public void onBackPressed() {
-        // super.onBackPressed();
-//        Methods.isOnline(HomeActivity.this);
-        BoostLog.i("back---", "" + backChk);
-        if (backChk) {
-            finish();
+    public void onBackPressed()
+    {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.mainFrame);
+
+        if(!(fragment instanceof Home_Fragment_Tab))
+        {
+            loadFragment(homeFragment, "homeFragment");
+            return;
         }
-        if (!backChk) {
-            start_backclick();
-            backChk = true;
-            Methods.showSnackBar(HomeActivity.this, getString(R.string.click_again_to_exit));
+
+        //Log.d("homeFragment", "" + ((Home_Fragment_Tab)fragment).getCurrentItem());
+        //homeFragment.setFragmentTab(0);
+
+        if(((Home_Fragment_Tab)fragment).getCurrentItem() != 0)
+        {
+            homeFragment.setFragmentTab(0);
+            return;
         }
+
+        if (doubleBackToExitPressedOnce)
+        {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
     }
 
-    private void start_backclick() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(4000);
-                    backChk = false;
-                    BoostLog.i("INSIDE---", "" + backChk);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
+
+//    private void start_backclick() {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(4000);
+//                    backChk = false;
+//                    BoostLog.i("INSIDE---", "" + backChk);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+//    }
 
     public void appUpdateAlertDialog(final Activity mContext) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
@@ -1601,9 +1640,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //        ChatFragment.chatModels.add(new ChatModel("New Message",true,Methods.getCurrentTime()));
 //        ChatFragment.chatModels.add(new ChatModel("Next Message",false,Methods.getCurrentTime()));
         setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
-        ft.commit();
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
+//        ft.commit();
+
+        loadFragment(homeFragment, "homeFragment");
         deepLink(mDeepLinkUrl);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -1655,6 +1696,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
+    }
+
+
+    private void loadFragment(Fragment fragment, String title)
+    {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, fragment, title);
+        ft.commit();
     }
 
     @Subscribe

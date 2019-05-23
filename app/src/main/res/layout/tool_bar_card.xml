@@ -28,17 +28,18 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:background="@drawable/button_click_effect"
-            android:padding="15dp"
-            android:src="@drawable/delete_dustbin_button" />
+            android:padding="12dp"
+            android:src="@drawable/ic_menu_delete" />
 
         <ImageView
             android:id="@+id/delete_page"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:background="@drawable/button_click_effect"
-            android:padding="15dp"
-            android:src="@drawable/delete_dustbin_button"
+            android:padding="12dp"
+            android:src="@drawable/ic_menu_delete"
             android:visibility="gone" />
+
     </LinearLayout>
 
 </android.support.v7.widget.Toolbar>
