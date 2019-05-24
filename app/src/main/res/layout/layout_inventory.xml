@@ -130,6 +130,7 @@
                     android:text="0"
                     android:maxLength="5"
                     android:digits="0123456789"
+                    android:inputType="number"
                     android:background="@null"
                     android:textColor="#4a4a4a"
                     android:textSize="14sp" />

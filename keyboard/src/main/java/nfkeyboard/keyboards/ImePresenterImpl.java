@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.inputmethodservice.Keyboard;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -45,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -279,16 +281,10 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
-    public String onCopyClick(AllSuggestionModel model) {
+    public String onCopyClick(AllSuggestionModel model)
+    {
 
         permissions();
-
-        /*
-
-            send broadcast
-
-         */
-
         return onClickRegister(model);
     }
 
@@ -298,20 +294,28 @@ public class ImePresenterImpl implements ItemClickListener,
 
     @Override
     public String onCreateProductOfferResponse(String name, double oldPrice, double newPrice, String createdOn, String expiresOn, String Url, String currency) {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        mKeyboardSwitcher.hideProgressbar();
+
+        /*if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
+
             Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
-            //MethodUtils.getPermissions(mContext);
             return null;
-        }
-        if (Url == null) {
+        }*/
+
+        if (Url == null)
+        {
             Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
             return null;
         }
-        long diffHours = 24;
 
-        try {
+        long diffHours = 24;
+        DecimalFormat df = new DecimalFormat("#,##,##,##,##,##,##,###.##");
+
+        try
+        {
             createdOn = createdOn.replace("T", " ");
             expiresOn = expiresOn.replace("T", " ");
             Date createdDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createdOn);
@@ -319,16 +323,20 @@ public class ImePresenterImpl implements ItemClickListener,
 
             long diff = expireDate.getTime() - createdDate.getTime();
             diffHours = (diff / (60 * 60 * 1000));
-
-        } catch (Exception e) {
-            Log.e("here", e.getMessage());
         }
-        
 
-        doCommitContent("Offer on: " + name + "\nPrice: " + currency + " " + Double.toString(oldPrice) + "\n\nOffer Price: "
-                + currency + " " + Double.toString(newPrice) + "\nExpires in \"" + Long.toString(diffHours) + "\" Hours!\n\n" +
-                "Click to Buy: " + appendedUrl(Url), "text/plain", null);
-        mKeyboardSwitcher.hideProgressbar();
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        finally
+        {
+            doCommitContent("Offer on: " + name /*+ "\nPrice: " + currency + " " + df.format(oldPrice)*/ + "\n\nOffer Price: "
+                    + currency + " " + df.format(newPrice) + "\nExpires in \"" + diffHours + "\" Hours!\n\n" +
+                    "Click to Buy: " + appendedUrl(Url), "text/plain", null);
+        }
+
         return Url;
     }
 
@@ -341,7 +349,6 @@ public class ImePresenterImpl implements ItemClickListener,
     public void onDetailsClick(AllSuggestionModel model) {
 
         permissions();
-
         onClickRegister(model);
     }
 
@@ -1042,6 +1049,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
         @Override
         protected void onPostExecute(ArrayList<KeywordModel> strings) {
+
             super.onPostExecute(strings);
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", (Serializable) mSuggestions);
@@ -1049,79 +1057,146 @@ public class ImePresenterImpl implements ItemClickListener,
         }
     }
 
-    public void permissions() {
+    public void permissions()
+    {
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
+
             Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
             //MethodUtils.getPermissions(mContext);
             return;
         }
     }
 
-    public String onClickRegister(AllSuggestionModel model) {
-
-        if (model == null) {
+    private String onClickRegister(AllSuggestionModel model)
+    {
+        if (model == null)
+        {
             Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
             return null;
         }
 
         JSONObject object = new JSONObject();
-        try {
+
+        try
+        {
             object.put("id", model.getId());
-        } catch (JSONException e) {
+        }
+
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
+
         String shareUrl = appendedUrl(model.getUrl());
 
-        switch (model.getTypeEnum()) {
-
+        switch (model.getTypeEnum())
+        {
             case ImageAndText:
+
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
                 MethodUtils.onGlideBitmapReady(this, model.getText() + "\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
                 break;
+
             case Product:
+
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
-                MethodUtils.onGlideBitmapReady(this, "Product: " + model.getText() +
-                        "\nPrice: " + model.getCurrencyCode() + " " + model.getPrice() + "\n\nClick to Buy: " + shareUrl, model.getImageUrl(), model.getId());
+                StringBuilder builder = new StringBuilder("Product: " + model.getText());
+
+                try
+                {
+                    DecimalFormat df = new DecimalFormat("#,##,##,##,##,##,##,###.##");
+
+                    double price = TextUtils.isEmpty(model.getPrice()) ? 0 : Double.valueOf(model.getPrice());
+                    double discount = TextUtils.isEmpty(model.getDiscount()) ? 0 : Double.valueOf(model.getDiscount());
+
+                    String formatted = df.format(price);
+
+                    if(discount > 0)
+                    {
+                        String _mrp = (price == 0) ? "" : "\nMRP: " + (model.getCurrencyCode() + " " + formatted);
+                        builder.append(_mrp);
+                    }
+
+                    formatted = df.format(price - discount);
+                    String _price = (price - discount <= 0) ? "" : "\nPrice: " + (model.getCurrencyCode() + " " + formatted);
+                    builder.append(_price);
+
+                    formatted = df.format(discount);
+                    String _discount = (discount == 0) ? "" : "\nYou Save: " + (model.getCurrencyCode() + " " + formatted);
+                    builder.append(_discount);
+                }
+
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                finally
+                {
+                    builder.append("\n\nClick to Buy: ");
+                    builder.append(shareUrl);
+                }
+
+                /*MethodUtils.onGlideBitmapReady(this, "Product: " + model.getText() +
+                        "\nPrice: " + model.getCurrencyCode() + " " + model.getPrice() + "\n\nClick to Buy: " + shareUrl, model.getImageUrl(), model.getId());*/
+
+                MethodUtils.onGlideBitmapReady(this, builder.toString(), model.getImageUrl(), model.getId());
                 break;
+
             case DetailsShare:
+
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
                 String description = model.getName() + "\n" + model.getBusinessName() + "\n"
                         + model.getPhoneNumber() + "\n\nWebsite: " + model.getWebsite() + "\nEmail: " + model.getEmail() +
                         "\n\nAddress: " + model.getAddress() + "\nLocation: " + model.getLocation();
                 doCommitContent(description, "text/plain", null);
                 break;
+
             case Text:
+
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
                 doCommitContent(model.getText() + "\nUrl: " + shareUrl, "text/plain", null);
                 break;
+
             case ImageShare:
+
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
                 MethodUtils.onGlideBitmapReady(this, "", model.getImageUri(), model.getId());
+
             default:
+
                 break;
         }
 
         return shareUrl;
     }
 
-    String appendedUrl(String url) {
+    String appendedUrl(String url)
+    {
         Uri uri = null;
         String shareUrl = null;
-        try {
-            if (!TextUtils.isEmpty(url)) {
+
+        try
+        {
+            if (!TextUtils.isEmpty(url))
+            {
                 uri = Uri.parse(url).buildUpon().appendQueryParameter(UTM_SOURCE, "bk_android")
                         .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
             }
-        } catch (Exception e) {
-
         }
-        if (uri != null) {
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        if (uri != null)
+        {
             shareUrl = uri.toString();
         }
 
         return shareUrl;
     }
-
 }

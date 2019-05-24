@@ -1,17 +1,13 @@
 package com.nowfloats.NavigationDrawer.API;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 
-import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Analytics_Fragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,43 +23,56 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, String, String>{
-	Activity mContext;
-	ProgressDialog pd;
-	String response = "";
-	//public IOnObserverListener onObserverListener;
-//	int count;
-	UserSessionManager sessionManager;
-    private String numberOfViews,numberOfSubscribers,numberOfVisitors,numberOfEnquries;
 
-    public GetVisitorsAndSubscribersCountAsyncTask(Activity context, UserSessionManager session) {
-       super();
+    private Activity mContext;
+    private int responseCode;
+	private UserSessionManager sessionManager;
+    private String numberOfViews, numberOfSubscribers, numberOfVisitors, numberOfEnquries;
+
+    public GetVisitorsAndSubscribersCountAsyncTask(Activity context, UserSessionManager session)
+    {
        mContext = context;
        sessionManager= session;
     }
 	
     @Override
-    protected void onPreExecute() {
-        //super.onPreExecute();
+    protected void onPreExecute()
+    {
 
-        new GetSearchQueryCountAsyncTask(mContext, sessionManager).execute();
     }
     
     @Override
-    protected void onPostExecute(String string) {
-        try{
-            if(response.equals("Ok")){
-                try {
+    protected void onPostExecute(String string)
+    {
+        try
+        {
+            if(responseCode == 200)
+            {
+                try
+                {
                     if (!numberOfViews.contains(","))
+                    {
                         numberOfViews = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfViews));
+                    }
+
                     if (!numberOfVisitors.contains(","))
+                    {
                         numberOfVisitors = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfVisitors));
-                    if (!numberOfSubscribers.contains(",")){
+                    }
+
+                    if (!numberOfSubscribers.contains(","))
+                    {
                         numberOfSubscribers = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfSubscribers));
                     }
-                    if (!numberOfEnquries.contains(",")){
+
+                    if (!numberOfEnquries.contains(","))
+                    {
                         numberOfEnquries = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfEnquries));
                     }
-                }catch(Exception e){
+                }
+
+                catch(Exception e)
+                {
                     e.printStackTrace();
                 }
 
@@ -72,96 +81,102 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                 sessionManager.setSubcribersCount(numberOfSubscribers);
                 sessionManager.setEnquiryCount(numberOfEnquries);
 
-                mContext.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(Analytics_Fragment.subscriberCount != null && Analytics_Fragment.subscriber_progress!=null)
+                mContext.runOnUiThread(() -> {
+
+                        if(Analytics_Fragment.subscriberCount != null && Analytics_Fragment.subscriber_progress != null)
                         {
                             Analytics_Fragment.subscriberCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.subscriber_progress.setVisibility(View.GONE);
                             Analytics_Fragment.subscriberCount.setText(numberOfSubscribers);
-                            //Log.i("Subscribers",""+numberOfSubscribers);
                         }
-                        if(Analytics_Fragment.visitCount != null && Analytics_Fragment.visits_progressBar!=null)
+
+                        if(Analytics_Fragment.visitCount != null && Analytics_Fragment.visits_progressBar != null)
                         {
                             Analytics_Fragment.visitCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.visits_progressBar.setVisibility(View.GONE);
                             Analytics_Fragment.visitCount.setText(numberOfViews);
                         }
-                        if(Analytics_Fragment.visitorsCount != null && Analytics_Fragment.visitors_progressBar!=null)
+
+                        if(Analytics_Fragment.visitorsCount != null && Analytics_Fragment.visitors_progressBar != null)
                         {
                             Analytics_Fragment.visitorsCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.visitors_progressBar.setVisibility(View.GONE);
                             Analytics_Fragment.visitorsCount.setText(numberOfVisitors);
                         }
-                        if(Analytics_Fragment.businessEnqCount != null && Analytics_Fragment.businessEnqProgress!=null)
+
+                        if(Analytics_Fragment.businessEnqCount != null && Analytics_Fragment.businessEnqProgress != null)
                         {
                             Analytics_Fragment.businessEnqCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.businessEnqProgress.setVisibility(View.GONE);
                             Analytics_Fragment.businessEnqCount.setText(numberOfEnquries);
                         }
-                    }
                 });
-            } else{ Methods.showSnackBarNegative(mContext, "Something went wrong! in Visitor and Subscriber count...");}
-        }catch(Exception e){e.printStackTrace();}
+            }
+        }
+
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        finally
+        {
+            new GetSearchQueryCountAsyncTask(mContext, sessionManager).execute();
+        }
     }
     
 	@Override
-	protected String doInBackground(Void... params) {
-        URI website = null;
-        response = "";
-		try{
+	protected String doInBackground(Void... params)
+    {
+        URI website;
+
+        try
+        {
 			HttpClient client = new DefaultHttpClient();
+
             if(sessionManager.getISEnterprise().equals("true"))
             {
                 String queryURL = Constants.NOW_FLOATS_API_URL+"/Dashboard/v1/"+
                         sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"/summary?clientId="+Constants.clientId+
                         "&fpId="+sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID)+"&scope=1";
                 website = new URI(queryURL);
-            } else {
+            }
+
+            else
+            {
                website = new URI(Constants.NOW_FLOATS_API_URL+"/Dashboard/v1/"+sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"/summary?clientId="
                         + Constants.clientId+"&fpId="+sessionManager.getFPID()+"&scope=0");
             }
-//            normal
-//            https://api.withfloats.com/Dashboard/v1/TECHNEWS/summary?clientId=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70&fpId=TECHNEWS&scope=0
-
-//            enterprise
-//            https://api.withfloats.com/Dashboard/v1/30/summary?clientId=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70&fpId=30&scope=1
 
 			HttpGet httpRequest = new HttpGet();
 			httpRequest.setURI(website);
 			HttpResponse responseOfSite = client.execute(httpRequest);
 			HttpEntity entity = responseOfSite.getEntity();
-            int code = responseOfSite.getStatusLine().getStatusCode();
 
-			if(entity!=null){
-                //Log.i("Count--",""+entity);
-				String responseString = EntityUtils.toString(entity);
-                //Log.i("responseString--",""+responseString);
+			responseCode = responseOfSite.getStatusLine().getStatusCode();
+
+			if(entity != null)
+			{
+                String responseString = EntityUtils.toString(entity);
                 JSONObject responseJson = new JSONObject(responseString);
                 JSONArray entityArray = responseJson.getJSONArray("Entity");
 
-                for(int i = 0 ; i < entityArray.length() ;i++) {
+                for(int i = 0 ; i < entityArray.length() ;i++)
+                {
                     JSONObject data = (JSONObject) entityArray.get(i);
+
                     numberOfViews = data.getString("NoOfViews");
                     numberOfVisitors = data.getString("NoOfUniqueViews");
                     numberOfEnquries = data.getString("NoOfMessages");
                     numberOfSubscribers = data.getString("NoOfSubscribers");
                 }
-                    if(code == 200)
-                    {
-                        response = "Ok";
-                    }
-                    else{
-                        response = "Failed";
-                    }
-				}
+			}
 		}
 		catch(Exception ex)
 		{
             ex.printStackTrace();
-            response = "Failed";
 		}
-		return response;
+
+		return null;
     }
 }

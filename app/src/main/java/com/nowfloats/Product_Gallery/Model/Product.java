@@ -60,11 +60,11 @@ public class Product implements Serializable {
     @SerializedName("isCodAvailable")
     public boolean codAvailable;
     @SerializedName("maxCodOrders")
-    public int maxCodOrders;
+    public int maxCodOrders = 10;
     @SerializedName("isPrepaidOnlineAvailable")
     public boolean prepaidOnlineAvailable;
     @SerializedName("maxPrepaidOnlineOrders")
-    public int maxPrepaidOnlineAvailable;
+    public int maxPrepaidOnlineAvailable = 10;
 
     @SerializedName("uniquePaymentUrl")
     public BuyOnlineLink BuyOnlineLink;

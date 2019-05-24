@@ -156,11 +156,12 @@ public class HelpAndSupportFragment extends Fragment
         }, spanTxt.length() - Methods.fromHtml("<u><b>FAQs</b></u>").length(), spanTxt.length(), 0);
 
         spanTxt.append(" ");
+
         spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>" + getString(R.string.settings_feedback_link) + "</b></a> "));
 
         if(!isNewPricingPlan())
         {
-            spanTxt.append(Methods.fromHtml(" or call our toll-free number <a href=\"tel:" + getString(R.string.contact_us_number) + "\"><b>" + getString(R.string.contact_us_number) + "</b></a>."));
+            spanTxt.append(Methods.fromHtml(" or call our toll number <a href=\"tel:" + getString(R.string.contact_us_number) + "\"><b>" + getString(R.string.contact_us_number) + "</b></a>."));
         }
 
         view.setMovementMethod(LinkMovementMethod.getInstance());

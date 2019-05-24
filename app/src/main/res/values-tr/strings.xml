@@ -910,6 +910,6 @@
     <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
     <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
     <string name="deeplink_manage_customer">managecustomer</string>
-    <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860-123-1233.</string>
+    <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll number 1860-123-1233.</string>
 
 </resources>

@@ -720,7 +720,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         try
         {
-            String transactionFees = WidgetKey.getPropertyValue(WidgetKey.WIDGET_TRANSACTION_FEES, WidgetKey.WIDGET_PROPERTY_TRANSACTION_FEES);
+            //String transactionFees = WidgetKey.getPropertyValue(WidgetKey.WIDGET_TRANSACTION_FEES, WidgetKey.WIDGET_PROPERTY_TRANSACTION_FEES);
+
+            String transactionFees = "3";
 
             if(Double.valueOf(transactionFees) > 0)
             {
@@ -823,7 +825,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                         //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                     }
 
-                    if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() == View.VISIBLE)
+                    if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() == View.VISIBLE
+                            && !binding.layoutBottomSheet.checkPaymentConfiguration.isChecked())
                     {
                         Toast.makeText(getContext(), "Please accept terms and condition", Toast.LENGTH_SHORT).show();
                         return;
