@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="@dimen/margin_50">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+            <ImageView
+                android:id="@+id/iv_empty"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/no_pickup_address"
+                android:layout_marginBottom="30dp"/>
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/secondaryTextColor"
+                android:gravity="center"
+                android:layout_below="@+id/iv_empty"
+                android:text="You have not configured any warehouse as package pickup addresses."/>
+
+            <Button
+                android:id="@+id/btn_add_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button_enabled"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="@android:color/white"
+                android:layout_below="@+id/tv_message"
+                android:layout_marginTop="@dimen/margin_30"
+                android:layout_marginRight="@dimen/margin_30"
+                android:layout_marginLeft="@dimen/margin_30"
+                android:onClick="onAddAddress"
+                android:text="ADD ADDRESS" />
+
+            </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

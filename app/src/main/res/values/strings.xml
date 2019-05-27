@@ -1778,9 +1778,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="message_feature_not_available">This feature is not available</string>
 
     <string-array name="payment_method_titles">
-        <item name="title_assured_purchase" >Assured Purchase™</item>
-        <item name="title_external_url" >External URL</item>
-        <item name="title_dont_want_to_sell" >Do not want to sell online</item>
+        <item name="title_assured_purchase">Assured Purchase™</item>
+        <item name="title_external_url">External URL</item>
+        <item name="title_dont_want_to_sell">Do not want to sell online</item>
     </string-array>
 
     <string-array name="payment_method_messages">
@@ -1793,4 +1793,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="payment_methud_message">Payment info updated</string>
 
     <string name="product_empty_view_message">You have no %s listed on your site as of yet.</string>
+    <string name="button_change"><u>Change</u></string>
+    <string name="button_edit"><u>Edit</u></string>
 </resources>

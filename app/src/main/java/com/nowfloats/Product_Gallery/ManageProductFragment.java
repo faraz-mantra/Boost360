@@ -298,7 +298,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 if(productType.equalsIgnoreCase("products"))
                 {
-                    binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
+                    binding.layoutBottomSheet.layoutAddress.setVisibility(View.VISIBLE);
                     binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
@@ -323,7 +323,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             else
             {
-                binding.layoutBottomSheet.tvPickAddress.setVisibility(View.GONE);
+                binding.layoutBottomSheet.layoutAddress.setVisibility(View.GONE);
                 binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
@@ -370,11 +370,15 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void changePickupAddressText(AddressInformation information)
     {
-        SpannableStringBuilder spanTxt = new SpannableStringBuilder();
-        spanTxt.append(Methods.fromHtml("<p style=\"color:#F9A825\">" + information.areaName + "</p> "));
-        spanTxt.append(information.toString());
-        binding.layoutBottomSheet.tvPickAddress.setMovementMethod(LinkMovementMethod.getInstance());
-        binding.layoutBottomSheet.tvPickAddress.setText(spanTxt, TextView.BufferType.SPANNABLE);
+        //SpannableStringBuilder spanTxt = new SpannableStringBuilder();
+        //spanTxt.append(Methods.fromHtml("<p style=\"color:#F9A825\">" + information.areaName + "</p> "));
+        //spanTxt.append(information.toString());
+        //binding.layoutBottomSheet.tvPickAddress.setMovementMethod(LinkMovementMethod.getInstance());
+        //binding.layoutBottomSheet.tvPickAddress.setText(spanTxt, TextView.BufferType.SPANNABLE);
+
+        binding.layoutBottomSheet.tvAddressType.setText(information.areaName != null ? information.areaName : "");
+        binding.layoutBottomSheet.tvPickAddress.setText(information.toString());
+        binding.layoutBottomSheet.tvMobileNumber.setText(information.contactNumber != null ? information.contactNumber : "");
     }
 
     /**
@@ -768,13 +772,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                         if(productType.equalsIgnoreCase("products"))
                         {
-                            binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
+                            binding.layoutBottomSheet.layoutAddress.setVisibility(View.VISIBLE);
                             binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
                         }
 
                         else
                         {
-                            binding.layoutBottomSheet.tvPickAddress.setVisibility(View.GONE);
+                            binding.layoutBottomSheet.layoutAddress.setVisibility(View.GONE);
                             binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
                         }
 
@@ -901,9 +905,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
            openAddressDialog(null);
        });
 
-       binding.layoutBottomSheet.tvPickAddress.setOnClickListener(view -> {
+       binding.layoutBottomSheet.btnChange.setOnClickListener(view -> {
 
-           if(addressInformationList != null && addressInformationList.size() > 0)
+           Intent intent = new Intent(getActivity(), PickupAddressActivity.class);
+           intent.putExtra("ADDRESS_ID", product.pickupAddressReferenceId);
+           startActivityForResult(intent, 10);
+
+           /*if(addressInformationList != null && addressInformationList.size() > 0)
            {
                toggleAddressBottomSheet();
            }
@@ -911,7 +919,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
            else
            {
                openAddressDialog(null);
-           }
+           }*/
        });
 
        binding.layoutBottomSheetAddress.ibClose.setOnClickListener(view -> toggleAddressBottomSheet());
@@ -2095,6 +2103,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 pickupAddressFragment.setFileName(file.getName());
                 pickupAddressFragment.isFileSelected(true);
             }
+        }
+
+        else if(resultCode == RESULT_OK && data != null)
+        {
+            AddressInformation information = (AddressInformation) data.getSerializableExtra("ADDRESS");
+            product.pickupAddressReferenceId = information.id;
+            changePickupAddressText(information);
         }
     }
 
