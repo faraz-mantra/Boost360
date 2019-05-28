@@ -37,6 +37,7 @@
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
     <string name="manage_inventory">E-Commerce</string>
+    <string name="manage_inbox">Inbox</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
@@ -1795,4 +1796,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_empty_view_message">You have no %s listed on your site as of yet.</string>
     <string name="button_change"><u>Change</u></string>
     <string name="button_edit"><u>Edit</u></string>
+    <string name="button_add"><u>Add</u></string>
 </resources>

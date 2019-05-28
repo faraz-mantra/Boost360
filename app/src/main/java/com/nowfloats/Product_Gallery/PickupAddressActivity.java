@@ -103,6 +103,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
         }
 
         binding.layoutToolbar.toolbarTitle.setText("Select Pickup Address");
+        binding.layoutEmpty.btnAddNewAddress.setOnClickListener(v -> openAddressDialog(null));
         session = new UserSessionManager(getApplicationContext(), this);
 
         this.initProductPickupAddressRecyclerView(binding.pickupAddressList);
@@ -199,7 +200,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAddAddress(View view)
+    public void onAddAddress()
     {
         openAddressDialog(null);
     }
@@ -278,7 +279,11 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
                 radioChoose = itemView.findViewById(R.id.radio_choose);
                 layoutAddressTitle = itemView.findViewById(R.id.layout_address_title);
 
-                btnEdit.setOnClickListener(v -> openAddressDialog(addressInformationList.get(getAdapterPosition())));
+                btnEdit.setOnClickListener(v -> {
+
+                    addressInformation = addressInformationList.get(getAdapterPosition());
+                    openAddressDialog(addressInformation);
+                });
 
                 itemView.setOnClickListener(v -> {
 
@@ -667,6 +672,12 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
                                 //If new address added then add it locally to address list
                                 adapterAddress.addData(addressResponse);
                                 Toast.makeText(getApplicationContext(), "Address Added Successfully", Toast.LENGTH_LONG).show();
+
+                                Intent intent = new Intent();
+                                intent.putExtra("ADDRESS", addressResponse);
+                                setResult(RESULT_OK, intent);
+
+                                finish();
                             }
 
                             else

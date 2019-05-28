@@ -50,6 +50,7 @@
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="manage_inventory">E-Commerce</string>
+    <string name="manage_inbox">Inbox</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_four">Photo Gallery</string>

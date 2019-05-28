@@ -24,6 +24,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -81,7 +82,6 @@ import com.nowfloats.webactions.WebActionsFilter;
 import com.nowfloats.webactions.models.ProductImage;
 import com.nowfloats.webactions.models.WebActionError;
 import com.nowfloats.webactions.webactioninterfaces.IFilter;
-import com.nowfloats.widget.WidgetKey;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
@@ -283,12 +283,14 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 title.append("Editing ");
                 binding.btnDelete.setVisibility(View.VISIBLE);
+                binding.layoutBottomSheet.btnChange.setText(R.string.button_change);
             }
 
             else
             {
                 title.append("Adding ");
                 binding.btnDelete.setVisibility(View.GONE);
+                binding.layoutBottomSheet.btnChange.setText(R.string.button_add);
             }
 
             title.append(TextUtils.isEmpty(CATEGORY) ? (productType.equalsIgnoreCase("products") ? "Product" : "Service") : CATEGORY);
@@ -379,6 +381,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutBottomSheet.tvAddressType.setText(information.areaName != null ? information.areaName : "");
         binding.layoutBottomSheet.tvPickAddress.setText(information.toString());
         binding.layoutBottomSheet.tvMobileNumber.setText(information.contactNumber != null ? information.contactNumber : "");
+
+        binding.layoutBottomSheet.tvPickAddress.setVisibility(View.VISIBLE);
+        binding.layoutBottomSheet.tvMobileNumber.setVisibility(View.VISIBLE);
     }
 
     /**

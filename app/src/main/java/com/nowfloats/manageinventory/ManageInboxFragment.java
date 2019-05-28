@@ -1,17 +1,14 @@
 package com.nowfloats.manageinventory;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +23,11 @@ import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.ProductCatalogActivity;
-import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
@@ -50,7 +45,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ManageInventoryFragment extends Fragment {
+public class ManageInboxFragment extends Fragment {
     TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics, tvBusinessInquiries, tvBusinessCalls;
     ImageView ivLockWidget, ivPaymentIcon;
     //Typeface robotoLight;
@@ -72,7 +67,7 @@ public class ManageInventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mainView = inflater.inflate(R.layout.fragment_manage_inventory, container, false);
+        View mainView = inflater.inflate(R.layout.fragment_manage_inbox, container, false);
         ivLockWidget = (ImageView) mainView.findViewById(R.id.lock_widget);
         ivPaymentIcon = mainView.findViewById(R.id.secondrow_ImageView_ProfileV2);
 

@@ -21,7 +21,7 @@
                 android:layout_height="@dimen/icon_size_55"
                 android:padding="15dp"
                 android:scaleType="fitCenter"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@drawable/ic_business_enquiry" />
 
             <View
@@ -34,7 +34,7 @@
                 android:layout_height="@dimen/icon_size_55"
                 android:padding="15dp"
                 android:scaleType="fitCenter"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@drawable/ic_business_calls" />
 
             <View
@@ -48,6 +48,7 @@
                 android:layout_height="@dimen/icon_size_55"
                 android:padding="15dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/ic_all_orders" />
 
 
@@ -57,6 +58,7 @@
                 android:layout_height="@dimen/icon_size_55"
                 android:padding="15dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/ic_product_gallery" />
 
             <View
@@ -92,14 +94,12 @@
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/business_inquiries"
-                android:visibility="gone"
                 android:textColor="@color/cell_text_color"
                 android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
                 android:background="#d3d3d3" />
 
             <TextView
@@ -109,19 +109,18 @@
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/business_calls"
-                android:visibility="gone"
                 android:textColor="@color/cell_text_color"
                 android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
                 android:background="#d3d3d3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tvSellerAnalytics"
@@ -151,6 +150,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="#d3d3d3" />
 
             <TextView
@@ -160,13 +160,14 @@
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:text="@string/product_gallery"
+                android:visibility="gone"
                 android:textColor="@color/cell_text_color"
                 android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:background="#d3d3d3" />
 
             <TextView

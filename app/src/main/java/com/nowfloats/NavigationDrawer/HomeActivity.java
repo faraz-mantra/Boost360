@@ -100,6 +100,7 @@ import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
+import com.nowfloats.manageinventory.ManageInboxFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.manageinventory.OrderDetailsActivity;
 import com.nowfloats.manageinventory.SellerAnalyticsActivity;
@@ -163,6 +164,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragment manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
+    ManageInboxFragment manageInboxFragment;
     UpgradesFragment upgradesFragment;
     AddOnFragment addOnFragment;
     AboutFragment aboutFragment;
@@ -1258,7 +1260,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
-                } else if (nextScreen.equals(getString(R.string.upgrades))) {
+                }
+                else if (nextScreen.equals(getString(R.string.manage_inbox))) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInboxFragment, "ManageInbox")
+                            .commit();
+//                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
+//                    startActivity(socialSharingIntent);
+                }
+                else if (nextScreen.equals(getString(R.string.upgrades))) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, upgradesFragment, "upgradesFragment")
                             .commit();
@@ -1531,6 +1540,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         manageCustomerFragment = new ManageCustomerFragment();
         keyboardFragment = new KeyboardFragment();
         manageInventoryFragment = new ManageInventoryFragment();
+        manageInboxFragment = new ManageInboxFragment();
         upgradesFragment = new UpgradesFragment();
         addOnFragment = new AddOnFragment();
         aboutFragment = new AboutFragment();

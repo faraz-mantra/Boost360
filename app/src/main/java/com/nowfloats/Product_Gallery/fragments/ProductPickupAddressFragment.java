@@ -134,7 +134,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
         String title = address ==  null ? "Add New Address" : "Edit Address";
         tvTitle.setText(String.valueOf(title));
 
-        String subTitle = address ==  null ? "" : (address.areaName != null ? String.valueOf("#" + address.areaName) : "");
+        String subTitle = address ==  null ? "" : (address.areaName != null ? address.areaName : "");
         tvWarehouse.setText(String.valueOf(subTitle));
 
         setAddressData(address);

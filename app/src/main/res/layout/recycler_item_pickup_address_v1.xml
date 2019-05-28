@@ -31,10 +31,11 @@
             <TextView
                 android:id="@+id/tv_address_type"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="12dp"
                 android:gravity="center_vertical"
-                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
                 android:textColor="@color/primaryTextColor"
                 android:layout_toRightOf="@+id/radio_choose"
                 android:layout_toLeftOf="@+id/btn_change" />
@@ -69,7 +70,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingRight="20dp"
             android:paddingLeft="22dp"
