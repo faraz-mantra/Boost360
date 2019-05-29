@@ -48,16 +48,17 @@
                 android:text="You have not configured any warehouse as package pickup addresses."/>
 
             <Button
-                android:id="@+id/btn_add_new_address"
+                android:id="@+id/btn_add_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button_enabled"
-                style="?android:attr/borderlessButtonStyle"
                 android:textColor="@android:color/white"
                 android:layout_below="@+id/tv_message"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_marginTop="@dimen/margin_30"
                 android:layout_marginRight="@dimen/margin_30"
                 android:layout_marginLeft="@dimen/margin_30"
+                android:onClick="onAddAddress"
                 android:text="ADD ADDRESS" />
 
             </RelativeLayout>

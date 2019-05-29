@@ -107,7 +107,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 
 
-public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener, FileUpload.OnFileUpload{
+public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener, FileUpload.OnFileUpload {
 
     private String TAG = ManageProductFragment.class.getSimpleName();
 

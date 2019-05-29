@@ -254,7 +254,7 @@ public class ManageInboxFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (headerText != null)
-            headerText.setText(getResources().getString(R.string.manage_inventory));
+            headerText.setText(getResources().getString(R.string.manage_inbox));
     }
 
 

@@ -63,7 +63,7 @@ import retrofit.client.Response;
 
 import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 
-public class PickupAddressActivity extends AppCompatActivity implements FileUpload.OnFileUpload{
+public class PickupAddressActivity extends AppCompatActivity implements FileUpload.OnFileUpload {
 
     private ActivityPickupAddressBinding binding;
     private ProductPickupAddressRecyclerAdapter adapterAddress;
@@ -103,7 +103,8 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
         }
 
         binding.layoutToolbar.toolbarTitle.setText("Select Pickup Address");
-        binding.layoutEmpty.btnAddNewAddress.setOnClickListener(v -> openAddressDialog(null));
+        binding.layoutEmpty.btnAddAddress.setOnClickListener(view -> openAddressDialog(null));
+
         session = new UserSessionManager(getApplicationContext(), this);
 
         this.initProductPickupAddressRecyclerView(binding.pickupAddressList);
@@ -200,10 +201,6 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAddAddress()
-    {
-        openAddressDialog(null);
-    }
 
     /**
      * Product Pickup Address Dynamic Input Filed
@@ -759,6 +756,11 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
         materialDialog.setCancelable(false);
     }
 
+
+    public void onAddAddress(View view)
+    {
+        openAddressDialog(null);
+    }
 
     public void onSaveAddress(View view)
     {
