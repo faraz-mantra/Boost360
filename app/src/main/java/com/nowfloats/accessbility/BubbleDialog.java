@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.ProductGallery.Product_Gallery_Fragment;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;

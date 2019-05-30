@@ -15,7 +15,7 @@ import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
-import com.nowfloats.Product_Gallery.ProductGalleryActivity;
+import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.on_boarding.models.OnBoardingModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;

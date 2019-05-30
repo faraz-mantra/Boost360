@@ -9,7 +9,7 @@
         android:background="@android:color/white"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.nowfloats.Product_Gallery.ProductCategoryFragment">
+        tools:context="com.nowfloats.ProductGallery.ProductCategoryFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

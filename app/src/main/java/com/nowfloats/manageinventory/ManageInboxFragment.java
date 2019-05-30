@@ -22,7 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Product_Gallery.ProductCatalogActivity;
+import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;

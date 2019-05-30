@@ -3,14 +3,8 @@ package com.nowfloats.webactions;
 import android.os.Handler;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.reflect.TypeToken;
-import com.j256.ormlite.misc.IOUtils;
-import com.nowfloats.Product_Gallery.Model.ProductImageResponseModel;
-import com.nowfloats.Product_Gallery.Model.ProductKeywordResponseModel;
-import com.nowfloats.util.BoostLog;
+import com.nowfloats.ProductGallery.Model.ProductImageResponseModel;
+import com.nowfloats.ProductGallery.Model.ProductKeywordResponseModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.webactions.models.WebActionAddDataModel;
 import com.nowfloats.webactions.models.WebActionDataResponse;
@@ -20,20 +14,10 @@ import com.nowfloats.webactions.models.WebActionUpdateRequestModel;
 import com.nowfloats.webactions.models.WebActionVisibility;
 import com.nowfloats.webactions.webactioninterfaces.IFilter;
 import com.nowfloats.webactions.webactioninterfaces.IUpdate;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.ResponseBody;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +30,6 @@ import okhttp3.Request;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.Multipart;
-import retrofit.mime.TypedByteArray;
-import retrofit.mime.TypedFile;
 
 /**
  * Created by NowFloats on 09-04-2018.

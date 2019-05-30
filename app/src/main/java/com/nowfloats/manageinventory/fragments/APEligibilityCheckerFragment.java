@@ -26,7 +26,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.Product_Gallery.ProductGalleryActivity;
+import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.manageinventory.models.APIResponseModel;

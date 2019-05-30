@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.ProductGallery.Product_Gallery_Fragment;
 import com.nowfloats.customerassistant.SuggestionSelectionListner;
 import com.nowfloats.customerassistant.models.SugProducts;
 import com.squareup.picasso.Picasso;
