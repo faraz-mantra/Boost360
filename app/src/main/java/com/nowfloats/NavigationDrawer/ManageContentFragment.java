@@ -76,7 +76,7 @@ public class ManageContentFragment extends Fragment{
                     case "Custom Pages":
                        intent = new Intent(mContext, CustomPageActivity.class);
                         break;
-                    case "Content Sharing Settings":
+                    case "Content Sharing":
                         intent = new Intent(mContext, SocialSharingActivity.class);
                         break;
                     default:
