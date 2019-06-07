@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
+import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -43,13 +44,15 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityBusinessLogoBinding;
+import com.thinksity.databinding.ActivityFeaturedImageBinding;
 
 import java.io.File;
 import java.io.InputStream;
 
-public class Business_Logo_Activity extends AppCompatActivity {
+public class FeaturedImageActivity extends AppCompatActivity {
     Button uploadButton ;
     private Toolbar toolbar;
     private static final int PICK_FROM_CAMERA = 1;
@@ -70,16 +73,16 @@ public class Business_Logo_Activity extends AppCompatActivity {
     private final int gallery_req_id = 0;
     private final int media_req_id = 1;
 
-    ActivityBusinessLogoBinding binding;
+    ActivityFeaturedImageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_business__logo);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_featured_image);
         //setContentView(R.layout.activity_business__logo);
 
         setSupportActionBar(binding.appBar.toolbar);
-        Methods.isOnline(Business_Logo_Activity.this);
+        Methods.isOnline(FeaturedImageActivity.this);
 
         if (getSupportActionBar() != null)
         {
@@ -89,7 +92,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             getSupportActionBar().setTitle("");
         }
 
-        binding.appBar.toolbarTitle.setText(getResources().getString(R.string.business_logo));
+        binding.appBar.toolbarTitle.setText(getResources().getString(R.string.featured_image));
 
         /*toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -100,12 +103,25 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.business_logo));*/
-        session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
+        session = new UserSessionManager(getApplicationContext(), FeaturedImageActivity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 
         try {
-                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+
+            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+            if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
+                String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
+                Picasso.with(FeaturedImageActivity.this).load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(logoimageView);
+            } else {
+                if (iconUrl != null && iconUrl.length() > 0) {
+                    Picasso.with(FeaturedImageActivity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(logoimageView);
+                } else {
+                    Picasso.with(FeaturedImageActivity.this).load(R.drawable.featured_photo_default).into(logoimageView);
+                }
+            }
+
+               /* String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
 
             if(iconUrl!=null && iconUrl.length()>0 && !iconUrl.contains("http")) {
                 //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
@@ -118,14 +134,14 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 }else{
                     Glide.with(this).asGif().load(R.drawable.logo_default_image).into(logoimageView);
                 }
-            }
+            }*/
         }catch(Exception e){e.printStackTrace();System.gc();}
-        logoimageView.setOnClickListener(new View.OnClickListener() {
+        /*logoimageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ActivityCompat.checkSelfPermission(Business_Logo_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                if (ActivityCompat.checkSelfPermission(FeaturedImageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
                         PackageManager.PERMISSION_GRANTED ) {
-                    ActivityCompat.requestPermissions(Business_Logo_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    ActivityCompat.requestPermissions(FeaturedImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             gallery_req_id);
                     return;
                 }
@@ -135,15 +151,15 @@ public class Business_Logo_Activity extends AppCompatActivity {
                    editImage();
                }
             }
-        });
+        });*/
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    Methods.showFeatureNotAvailDialog(Business_Logo_Activity.this);
+                    Methods.showFeatureNotAvailDialog(FeaturedImageActivity.this);
                     return;
                 }
-                final MaterialDialog dialog = new MaterialDialog.Builder(Business_Logo_Activity.this)
+                final MaterialDialog dialog = new MaterialDialog.Builder(FeaturedImageActivity.this)
                         .customView(R.layout.featuredimage_popup,true)
                         .show();
 
@@ -198,7 +214,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Create a progressdialog
-            mProgressDialog = new ProgressDialog(Business_Logo_Activity.this);
+            mProgressDialog = new ProgressDialog(FeaturedImageActivity.this);
             // Set progressdialog title
             // Set progressdialog message
             mProgressDialog.setMessage(getString(R.string.please_wait));
@@ -221,7 +237,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            path = Util.saveCameraBitmap(bitmap,Business_Logo_Activity.this,"ImageFloat" + System.currentTimeMillis());
+            path = Util.saveCameraBitmap(bitmap, FeaturedImageActivity.this,"ImageFloat" + System.currentTimeMillis());
             return path;
         }
 
@@ -238,7 +254,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         final CharSequence[] items = { "Take Photo", "Choose from Library",
                 "Cancel" };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Business_Logo_Activity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(FeaturedImageActivity.this);
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
@@ -336,7 +352,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
+            Methods.showSnackBarNegative(FeaturedImageActivity.this,errorMessage);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -359,7 +375,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
+            Methods.showSnackBarNegative(FeaturedImageActivity.this,errorMessage);
         }
     }
 
@@ -375,7 +391,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);
                     path = imageUrl;
-                    path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
+                    path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
                 } catch (Exception e) {
                     e.printStackTrace();
                     //  Util.toast("Uh oh. Something went wrong. Please try again", this);
@@ -385,21 +401,30 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     System.gc();
                     // Util.toast("Uh oh. Something went wrong. Please try again", this);
                 }
-                if (!Util.isNullOrEmpty(path)) {
+
+                if (!TextUtils.isEmpty(path)) {
+                    uploadPrimaryPicture(path);
+                }
+
+                /*if (!Util.isNullOrEmpty(path)) {
                     editImage();
                 }  else
-                    Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
+                    Methods.showSnackBarNegative(FeaturedImageActivity.this,getResources().getString(R.string.select_image_upload));*/
             }
             else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
-                        path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
-                        if (!Util.isNullOrEmpty(path)) {
+                        path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
+                        /*if (!Util.isNullOrEmpty(path)) {
                             editImage();
                         } else
-                            Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
+                            Methods.showSnackBarNegative(FeaturedImageActivity.this,getResources().getString(R.string.select_image_upload));*/
+
+                        if (!TextUtils.isEmpty(path)) {
+                            uploadPrimaryPicture(path);
+                        }
                     }
                 }
             }else if(resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT){
@@ -415,7 +440,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     private void editImage(){
-        Intent in =new Intent(Business_Logo_Activity.this,EditImageActivity.class);
+        Intent in =new Intent(FeaturedImageActivity.this,EditImageActivity.class);
         in.putExtra("image",path);
         in.putExtra("isFixedAspectRatio",true);
         startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
@@ -424,10 +449,13 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     public void uploadPrimaryPicture(String path) {
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this,path,session.getFPID(), session);
-        upload_logo.execute();
+       // Upload_Logo upload_logo = new Upload_Logo(FeaturedImageActivity.this,path,session.getFPID(), session);
+       // upload_logo.execute();
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();
+
+        uploadIMAGEURI uploadAsyncTask = new uploadIMAGEURI(FeaturedImageActivity.this, path, session.getFPID());
+        uploadAsyncTask.execute();
     }
 }

@@ -67,7 +67,8 @@ public class ManageContentFragment extends Fragment{
                         ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.update));
                         return;
                     case "Image Gallery":
-                        intent = new Intent(mContext, ImageGalleryActivity.class);
+                        //intent = new Intent(mContext, ImageGalleryActivity.class);
+                        intent = new Intent(mContext, ImageMenuActivity.class);
                         break;
                     case "Custom Pages":
                        intent = new Intent(mContext, CustomPageActivity.class);

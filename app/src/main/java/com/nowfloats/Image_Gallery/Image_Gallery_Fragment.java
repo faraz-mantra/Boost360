@@ -625,4 +625,9 @@ public class Image_Gallery_Fragment extends Fragment implements
         gvImages.invalidate();
         otherImagesAdapter.resetCheckers();
     }
+
+    public void addImage()
+    {
+        selectImage();
+    }
 }

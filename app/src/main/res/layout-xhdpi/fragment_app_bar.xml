@@ -43,7 +43,7 @@
                 android:layout_gravity="right"
                 android:background="@drawable/button_click_effect"
                 android:padding="10dp"
-                android:src="@drawable/ic_action_new"
+                android:src="@drawable/fab_add"
                 android:visibility="gone" />
 
             <ImageView
@@ -63,7 +63,7 @@
                 android:layout_gravity="right"
                 android:background="@drawable/button_click_effect"
                 android:padding="10dp"
-                android:src="@drawable/delete_dustbin_small"
+                android:src="@drawable/ic_menu_delete"
                 android:visibility="gone" />
         </LinearLayout>
 

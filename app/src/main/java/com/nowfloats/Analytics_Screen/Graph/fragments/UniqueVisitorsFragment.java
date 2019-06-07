@@ -440,7 +440,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 }
             }
             visitsCount.setText(String.valueOf(totalCount));
-            Log.v("visitsModelCallback", "Success 0");
+            Log.v("visitsModelCallback", "Success: " + totalCount);
             updateData(visitsModel);
         }
 

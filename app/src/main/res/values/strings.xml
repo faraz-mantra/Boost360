@@ -887,6 +887,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="ok">OK</string>
     <string name="logo">Logo</string>
     <string name="business_logo">Business Logo</string>
+    <string name="featured_image">Featured Image</string>
     <string name="upload_logo_image">Upload Logo Image</string>
     <string name="device_does_not_support_capturing_image">Whoops - your device doesn\'t support capturing images!</string>
     <string name="select_image_upload">Please select an image to upload</string>
@@ -1258,7 +1259,18 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="tool_bar_save_text">SAVE</string>
     <string name="single_row_card_upgrade_text">UPGRADE</string>
     <string name="Setting_terms_of_use">Terms of Use</string>
+    <!--
     <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
+    -->
+    <string name="business_logo_info_text">A logo is an identity of your business that appears on top of your business website.</string>
+    <string name="business_logo_instructions_1">Supported format: .jpeg, .png or .gif\nRecommended dimension: Square (400x400 px)\nMax file size: 500 kb</string>
+    <string name="business_logo_instructions_2">Keep the background white or transparant (in png). For bigger display, remove all padding from the main object in your logo.</string>
+    <string name="image_gallery_info_text">Flaunt your business with beautiful images. Number of images you can upload depends upon the plan you’ve picked.</string>
+    <string name="image_gallery_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nNumber of images you can upload depends upon the Boost plan you’ve picked.</string>
+    <string name="image_gallery_instructions_2">Number of images you can upload depends upon the Boost plan you’ve picked.</string>
+    <string name="featured_image_info_text">It is a key visual to define your business, that appears along with the business description or in about section.</string>
+    <string name="featured_image_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 800 px (width) x 600 px (height)\nMax file size: 800 kb</string>
+    <string name="featured_image_instructions_2">You can upload a key picture which defines your business. (e.g. a detailed logo, picture of front desk of your business. key product or proprieter’s portrait).</string>
     <string name="offer_title">Title:</string>
     <string name="offer_desc">Description:</string>
     <string name="offer_start_date">Start Date:</string>
@@ -1767,5 +1779,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="hint_product_description">Describe your %s within 2000 characters max ...</string>
     <string name="label_product_description">%s Description<sup>*</sup></string>
     <string name="label_product_type">%s Type/Category</string>
+
+    <string-array name="images_content_list_items">
+        <item>Business Logo</item>
+        <item>Featured Image</item>
+        <item>Image Gallery</item>
+        <item>Background Images</item>
+        <item>Favicon</item>
+    </string-array>
 
 </resources>
