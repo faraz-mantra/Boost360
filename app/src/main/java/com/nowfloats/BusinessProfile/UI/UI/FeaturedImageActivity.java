@@ -21,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -106,6 +107,8 @@ public class FeaturedImageActivity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(), FeaturedImageActivity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
+
+        Log.d("FP_ID", session.getFPID());
 
         try {
 

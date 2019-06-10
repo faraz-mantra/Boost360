@@ -49,7 +49,12 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name,android:theme">
-        <activity android:name="com.nowfloats.NavigationDrawer.ImageMenuActivity"></activity>
+        <activity
+            android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
+            android:label="@string/title_activity_background_image_gallery"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name="com.nowfloats.NavigationDrawer.ImageMenuActivity" />
         <activity android:name="com.nowfloats.Product_Gallery.PickupAddressActivity" />
         <activity
             android:name="com.nowfloats.Product_Gallery.ManageProductActivity"
@@ -285,6 +290,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"

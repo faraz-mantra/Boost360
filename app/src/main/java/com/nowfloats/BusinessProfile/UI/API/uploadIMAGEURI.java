@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
@@ -193,6 +194,8 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
 
     public void sendDataToServer(String url, byte[] BytesToBeSent){
+
+        Log.d("IMAGE_URI", "" + url);
         DataOutputStream outputStream = null;
 
         try {

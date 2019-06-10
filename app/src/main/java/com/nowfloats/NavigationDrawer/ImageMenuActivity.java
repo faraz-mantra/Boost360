@@ -11,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
+import com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
@@ -90,10 +92,12 @@ public class ImageMenuActivity extends AppCompatActivity
 
                     case "Background Images":
 
+                        intent = new Intent(ImageMenuActivity.this, BackgroundImageGalleryActivity.class);
                         break;
 
                     case "Favicon":
 
+                        intent = new Intent(ImageMenuActivity.this, FaviconImageActivity.class);
                         break;
                 }
 

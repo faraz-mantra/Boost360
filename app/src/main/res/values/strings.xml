@@ -888,6 +888,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logo">Logo</string>
     <string name="business_logo">Business Logo</string>
     <string name="featured_image">Featured Image</string>
+    <string name="favicon_image">Favicon Image</string>
+    <string name="background_image">Background Images</string>
     <string name="upload_logo_image">Upload Logo Image</string>
     <string name="device_does_not_support_capturing_image">Whoops - your device doesn\'t support capturing images!</string>
     <string name="select_image_upload">Please select an image to upload</string>
@@ -1271,6 +1273,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="featured_image_info_text">It is a key visual to define your business, that appears along with the business description or in about section.</string>
     <string name="featured_image_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 800 px (width) x 600 px (height)\nMax file size: 800 kb</string>
     <string name="featured_image_instructions_2">You can upload a key picture which defines your business. (e.g. a detailed logo, picture of front desk of your business. key product or proprieter’s portrait).</string>
+    <string name="favicon_image_info_text">Your site visitor sees it on the edge of their browser tab. Your minimal logo will look good here.</string>
+    <string name="favicon_image_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Square,  Max 100 px x 100 px\nMax file size: 100 kb</string>
+    <string name="favicon_image_instructions_2">Your business logo with transparent background (png format) is recommended. Keep it as minimal as possible.</string>
+    <string name="background_image_info_text">These are to set the mood of your website. Background images stay behind the key content and are usually visible in home page slider or behind footer areas.</string>
+    <string name="background_image_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nMax file size: 800 kb</string>
+    <string name="background_image_instructions_2">Keep these subtle. Don’t treat these as banners (avoid using any text or human faces or very constrasting objects in this image)</string>
+
     <string name="offer_title">Title:</string>
     <string name="offer_desc">Description:</string>
     <string name="offer_start_date">Start Date:</string>
@@ -1787,5 +1796,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Background Images</item>
         <item>Favicon</item>
     </string-array>
+    <string name="title_activity_background_image_gallery">BackgroundImageGalleryActivity</string>
 
 </resources>
