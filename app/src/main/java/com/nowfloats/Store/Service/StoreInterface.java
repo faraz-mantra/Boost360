@@ -104,4 +104,7 @@ public interface StoreInterface {
 
     @GET("/Support/v5/floatingpoint/getpackages")
     void getActiveWidgetList(@QueryMap Map<String, String> map, Callback<WidgetResponse> callback);
+
+    @GET("/support/v1/floatingpoint/widgetLimit")
+    void getWidgetLimit(@QueryMap Map<String, String> map, Callback<Object> callback);
 }

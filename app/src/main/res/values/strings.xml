@@ -37,6 +37,7 @@
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
     <string name="manage_inventory">E-Commerce</string>
+    <string name="manage_inbox">Inbox</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
@@ -829,6 +830,7 @@
     <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
     <string name="settings_about_us_link">https://www.nowfloats.com/about-us/</string>
+    <string name="assured_purchase_link">http://www.assuredpurchase.com/</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>
     <string name="contact_us_number">18601231233</string>
@@ -891,6 +893,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="favicon_image">Favicon Image</string>
     <string name="background_image">Background Images</string>
     <string name="upload_logo_image">Upload Logo Image</string>
+    <string name="upload_image">Upload Image</string>
     <string name="device_does_not_support_capturing_image">Whoops - your device doesn\'t support capturing images!</string>
     <string name="select_image_upload">Please select an image to upload</string>
     <string name="select_update_or_product">Please select at least one update or product </string>
@@ -1216,9 +1219,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="confirmed_password">Confirm Password</string>
     <string name="search_here">Search Here</string>
     <string name="enter_your_user_name">Enter your username</string>
-    <string name="upload_featured_image">Upload Featured Image</string>
-    <string name="using_camera">Using camera</string>
-    <string name="from_gallery">From gallery</string>
+    <string name="upload_featured_image">Choose</string>
+    <string name="using_camera">Using Camera</string>
+    <string name="from_gallery">From Gallery</string>
+    <string name="from_file_picker">Pick a File</string>
     <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
     <string name="values">Values</string>
     <string name="date">date</string>
@@ -1270,7 +1274,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="image_gallery_info_text">Flaunt your business with beautiful images. Number of images you can upload depends upon the plan you’ve picked.</string>
     <string name="image_gallery_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nNumber of images you can upload depends upon the Boost plan you’ve picked.</string>
     <string name="image_gallery_instructions_2">Number of images you can upload depends upon the Boost plan you’ve picked.</string>
-    <string name="featured_image_info_text">It is a key visual to define your business, that appears along with the business description or in about section.</string>
+    <string name="featured_image_info_text">It is a key visual to define your business that appears along with the business description or in about section.</string>
     <string name="featured_image_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 800 px (width) x 600 px (height)\nMax file size: 800 kb</string>
     <string name="featured_image_instructions_2">You can upload a key picture which defines your business. (e.g. a detailed logo, picture of front desk of your business. key product or proprieter’s portrait).</string>
     <string name="favicon_image_info_text">Your site visitor sees it on the edge of their browser tab. Your minimal logo will look good here.</string>
@@ -1700,7 +1704,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="Year">Year</string>
     <string name="support_name">Support</string>
     <string name="wildfire_analytics">Inorganic</string>
-    <string name="manage_content">Manage Content</string>
+    <string name="manage_content">Content</string>
     <string name="account_settings">Settings</string>
     <string name="about">About</string>
     <string name="upgrades">Upgrades</string>
@@ -1738,10 +1742,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string-array name="manage_content_tab_items">
         <item>All Updates</item>
-        <item>Image Gallery</item>
+        <item>All Images</item>
         <item>Custom Pages</item>
         <item>Business Profile</item>
-        <item>Content Sharing Settings</item>
+        <item>Content Sharing</item>
     </string-array>
 
     <string-array name="order_analytics_tab_items">
@@ -1769,12 +1773,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Bank Transfer</item>
     </string-array>
     <array name="stock_availability">
-        <item>In stock</item>
+        <item>Limited stock</item>
+        <item>Unlimited stock</item>
         <item>Out of stock</item>
     </array>
     <array name="stock_options">
-        <item>YES</item>
-        <item>NO</item>
+        <item>Yes</item>
+        <item>No</item>
     </array>
     <array name="payment_options_v1">
         <item>Paypal</item>
@@ -1787,7 +1792,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="hint_product_description">Describe your %s within 2000 characters max ...</string>
     <string name="label_product_description">%s Description<sup>*</sup></string>
-    <string name="label_product_type">%s Type/Category</string>
+    <string name="label_product_type">%s Type/Category (If any)</string>
 
     <string-array name="images_content_list_items">
         <item>Business Logo</item>
@@ -1798,4 +1803,29 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
     <string name="title_activity_background_image_gallery">BackgroundImageGalleryActivity</string>
 
+    <string name="message_custom_page_limit">You have exceeded limit</string>
+    <string name="message_add_update_limit">You have exceeded limit</string>
+    <string name="message_add_image_limit">You have exceeded limit</string>
+    <string name="message_add_product_limit">You have exceeded limit</string>
+    <string name="message_feature_not_available">This feature is not available</string>
+
+    <string-array name="payment_method_titles">
+        <item name="title_assured_purchase">Assured Purchase™</item>
+        <item name="title_external_url">External URL</item>
+        <item name="title_dont_want_to_sell">Do not want to sell online</item>
+    </string-array>
+
+    <string-array name="payment_method_messages">
+        <item name="message_assured_purchase">A service by boost which ensures payment protection and seamless delivery of products.</item>
+        <item name="message_external_url">If you already listed your product on some order platform simply enter the URL here and handle to purchase from there.</item>
+        <item name="message_dont_want_to_sell">Select this if you just wish to list the product on the site and wants to only receive enquiries from your customers.</item>
+    </string-array>
+
+    <string name="payment_method_dont_want_to_sell">Customers will not be able to buy this product. However, they can post an enquiry against this item</string>
+    <string name="payment_methud_message">Payment info updated</string>
+
+    <string name="product_empty_view_message">You have no %s listed on your site as of yet.</string>
+    <string name="button_change"><u>Change</u></string>
+    <string name="button_edit"><u>Edit</u></string>
+    <string name="button_add"><u>Add</u></string>
 </resources>

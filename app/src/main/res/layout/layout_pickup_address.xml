@@ -21,7 +21,7 @@
             android:paddingBottom="@dimen/margin_10" >
 
             <TextView
-                android:id="@+id/label_payment_configuration"
+                android:id="@+id/label_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add new Address"
@@ -29,7 +29,7 @@
                 android:textColor="@android:color/white" />
 
             <TextView
-                android:id="@+id/label_variants"
+                android:id="@+id/label_warehouse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#1 Banjara Warehouse"
@@ -37,7 +37,7 @@
                 android:paddingRight="10dp"
                 android:textStyle="bold"
                 android:visibility="visible"
-                android:layout_below="@+id/label_payment_configuration"
+                android:layout_below="@+id/label_title"
                 android:textColor="@android:color/white" />
 
         </RelativeLayout>
@@ -73,6 +73,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_image"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle"/>
 
                 </LinearLayout>
@@ -106,6 +107,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -117,6 +119,7 @@
                     android:hint="XXXXXXXXXX"
                     android:digits="0123456789"
                     android:inputType="number"
+                    android:maxLength="13"
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
@@ -132,6 +135,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description_______"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -146,7 +150,7 @@
                     android:orientation="horizontal" >
 
                     <Button
-                        android:id="@+id/btn_secondary_image"
+                        android:id="@+id/btn_file_chooser"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:text="Select address proof"
@@ -154,9 +158,34 @@
                         android:textAllCaps="false"
                         android:padding="5dp"
                         android:drawablePadding="5dp"
-                        android:drawableLeft="@drawable/ic_camera_outline_small"
+                        android:drawableLeft="@drawable/ic_file_address_proof"
                         android:textColor="@color/secondaryTextColor"
                         android:background="@drawable/button_pick_image"/>
+
+                    <LinearLayout
+                        android:id="@+id/layout_file_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/label_file_name"
+                            style="@style/ProductLabelTextStyle"
+                            android:layout_weight="1"
+                            android:paddingRight="5dp"
+                            android:paddingLeft="5dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text=""/>
+
+                        <ImageButton
+                            android:id="@+id/ib_remove"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="end|center_vertical"
+                            app:srcCompat="@drawable/ic_remove"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -173,6 +202,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description_"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -197,6 +227,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description__"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -221,6 +252,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description___"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -245,6 +277,7 @@
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description_____"
+                        android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
                 </LinearLayout>
@@ -270,7 +303,6 @@
                     android:id="@+id/layout_product_description___"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="horizontal" >
 
                     <CheckBox
@@ -285,7 +317,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="12sp"
-                        android:text="I agree that boost will keep 3% of the final cart value as convenience fee. (Towards payment and delivery enablement)"/>
+                        android:layout_gravity="center_vertical"
+                        android:text="I confirm the details entered above are correct"/>
 
                 </LinearLayout>
 
@@ -318,7 +351,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:minWidth="130dp"
-                        android:background="@color/primaryColor"
+                        android:background="@drawable/rounded_button_enabled"
+                        style="?android:attr/borderlessButtonStyle"
                         android:textColor="@android:color/white"
                         android:layout_alignParentRight="true"
                         android:textSize="14sp"

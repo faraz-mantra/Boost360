@@ -4,8 +4,8 @@
 
     <stroke
         android:color="@color/secondaryLightTextColor"
-        android:dashWidth="10px"
-        android:dashGap="10px"
+        android:dashWidth="5px"
+        android:dashGap="5px"
         android:width="1dp"/>
 
 </shape>

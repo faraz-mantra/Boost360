@@ -33,6 +33,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nguyenhoanglam.imagepicker.model.Config;
+import com.nguyenhoanglam.imagepicker.model.Image;
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -65,6 +68,8 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
     private final int CAMERA_PERMISSION_REQUEST_CODE = 1;
     private final int CAMERA_IMAGE_REQUEST_CODE = 101;
+    private final int GALLERY_IMAGE_REQUEST_CODE = 102;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -88,10 +93,16 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         session = new UserSessionManager(getApplicationContext(), BackgroundImageGalleryActivity.this);
 
         initImageRecyclerView(binding.imageList);
-        getBackgroundImages();
+        //getBackgroundImages();
     }
 
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        getBackgroundImages();
+    }
     /**
      * Initialize pickup address list adapter
      * @param recyclerView
@@ -105,12 +116,16 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
     private void getBackgroundImages()
     {
+        binding.pbLoading.setVisibility(View.VISIBLE);
+
         ImageApi imageApi = Constants.restAdapter.create(ImageApi.class);
 
         imageApi.getBackgroundImages(session.getFPID(), Constants.clientId, new Callback<List<String>>() {
 
             @Override
             public void success(List<String> strings, Response response) {
+
+                binding.pbLoading.setVisibility(View.GONE);
 
                 if(strings != null && strings.size() >0)
                 {
@@ -121,7 +136,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
             @Override
             public void failure(RetrofitError error) {
 
-
+                binding.pbLoading.setVisibility(View.GONE);
             }
         });
     }
@@ -184,6 +199,13 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
                 itemView.setOnClickListener(v -> {
 
+                    String[] array = new String[images.size()];
+                    images.toArray(array);
+
+                    Intent intent = new Intent(BackgroundImageGalleryActivity.this, ImageViewerActivity.class);
+                    intent.putExtra("POSITION", getAdapterPosition());
+                    intent.putExtra("IMAGES", array);
+                    startActivity(intent);
                 });
             }
         }
@@ -243,7 +265,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         View view = dialog.getCustomView();
         TextView title = view.findViewById(R.id.textview_heading);
-        title.setText(getResources().getString(R.string.upload_logo_image));
+        title.setText(getResources().getString(R.string.upload_image));
         LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = view.findViewById(R.id.pop_up_camera_imag);
@@ -258,6 +280,8 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         });
 
         takeGallery.setOnClickListener(v -> {
+
+            openImagePicker(GALLERY_IMAGE_REQUEST_CODE, 1);
             dialog.dismiss();
         });
     }
@@ -351,6 +375,17 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
             Log.d("CAMERA_IMAGEPATH", "" + primaryUri.getPath());
             uploadPrimaryPicture(primaryUri.getPath());
         }
+
+        if (resultCode == RESULT_OK && requestCode == GALLERY_IMAGE_REQUEST_CODE && data != null)
+        {
+            ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
+
+            if(images.size() > 0)
+            {
+                File file = new File(images.get(0).getPath());
+                uploadPrimaryPicture(file.getPath());
+            }
+        }
     }
 
 
@@ -406,5 +441,29 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         Log.d("onPostUpload", "" + isSuccess);
         Log.d("onPostUpload", "" + response);
+    }
+
+
+    /**
+     * Open image picker activity
+     * @param requestCode
+     * @param max
+     */
+    private void openImagePicker(int requestCode, int max)
+    {
+        boolean folderMode = true;
+        boolean multipleMode = true;
+
+        ImagePicker.with(this)
+                .setFolderMode(folderMode)
+                .setShowCamera(false)
+                .setFolderTitle("Album")
+                .setMultipleMode(multipleMode)
+                .setMaxSize(max)
+                .setBackgroundColor("#212121")
+                .setAlwaysShowDoneButton(true)
+                .setRequestCode(requestCode)
+                .setKeepScreenOn(true)
+                .start();
     }
 }

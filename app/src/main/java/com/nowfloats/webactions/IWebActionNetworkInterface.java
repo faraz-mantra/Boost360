@@ -1,16 +1,14 @@
 package com.nowfloats.webactions;
 
-import com.nowfloats.Product_Gallery.Model.ProductImageResponseModel;
-import com.nowfloats.Product_Gallery.Model.ProductKeywordResponseModel;
+import com.nowfloats.ProductGallery.Model.ProductImageResponseModel;
+import com.nowfloats.ProductGallery.Model.ProductKeywordResponseModel;
 import com.nowfloats.webactions.models.*;
 import com.nowfloats.webactions.webactioninterfaces.MOD_DELETE;
-import com.squareup.okhttp.ResponseBody;
 
 import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
-import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.Multipart;

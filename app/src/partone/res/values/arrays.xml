@@ -31,7 +31,7 @@
 
     <array name="manage_content_sidepanel">
         <item>@drawable/ic_updates</item>
-        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_all_images</item>
         <item>@drawable/ic_custom_page</item>
         <item>@drawable/ic_business_profile</item>
         <item>@drawable/ic_content_sharing</item>

@@ -50,6 +50,7 @@
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="manage_inventory">E-Commerce</string>
+    <string name="manage_inbox">Inbox</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_four">Photo Gallery</string>
@@ -378,5 +379,9 @@
     <string name="onboarding_about_product_url">https://www.nowfloats.com/how-it-works</string>
     <string name="support_name">Ria</string>
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+
+    <string name="payment_config_acceptance_message">I agree that Boost will charge %s of the total cart value as convenience fee(as part of your current boost plan)</string>
+
+    <string name="link_marketplace">boost.nowfloats.com/marketplace</string>
 
 </resources>

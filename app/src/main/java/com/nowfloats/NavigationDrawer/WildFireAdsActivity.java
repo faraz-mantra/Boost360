@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,27 +64,60 @@ public class WildFireAdsActivity extends AppCompatActivity{
         }
     }
 
-    private void showDefaultPage() {
+    private void showDefaultPage()
+    {
         findViewById(R.id.empty_screen).setVisibility(View.VISIBLE);
-        ImageView image = findViewById(R.id.image1);
-        image.setImageResource(R.drawable.wildfire_gray);
-        TextView mainText = findViewById(R.id.main_text1);
-        mainText.setText("No analytics!");
-        TextView messageText = findViewById(R.id.message_text2);
-        messageText.setText("Your wildfire is not enabled.");
-        TextView actionButton = findViewById(R.id.btn_action);
-        actionButton.setText("Start Wildfire");
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(WildFireAdsActivity.this,FragmentsFactoryActivity.class);
-                intent.putExtra("fragmentName","WildFireFragment");
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-
+        makeLinkClickable(findViewById(R.id.message_text3));
     }
+
+    protected void makeLinkClickable(TextView view)
+    {
+        SpannableStringBuilder spanTxt = new SpannableStringBuilder("Visit ");
+        spanTxt.append(Methods.fromHtml("<u>" + getString(R.string.link_marketplace)+"</u>"));
+
+        /*spanTxt.setSpan(new ClickableSpan() {
+
+            @Override
+            public void onClick(View widget)
+            {
+                //Intent i = new Intent(WildFireAdsActivity.this, Mobile_Site_Activity.class);
+                //i.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url));
+                //startActivity(i);
+            }
+        }, spanTxt.length() - Methods.fromHtml("<b>" + getString(R.string.link_marketplace)+"</b>").length(), spanTxt.length(), 0);*/
+
+        spanTxt.append(" from a desktop to explore and install related add-ons to see inorganic traffic/leads");
+
+        //spanTxt.append(" from a desktop to explore and install related add-ons to see inorganic traffic/leads");
+        //spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>" + getString(R.string.settings_feedback_link) + "</b></a> "));
+        //spanTxt.append(Methods.fromHtml(" or call our toll-free number <a href=\"tel:" + getString(R.string.contact_us_number) + "\"><b>" + getString(R.string.contact_us_number) + "</b></a>."));
+
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
+    }
+
+
+//    private void showDefaultPage() {
+//        findViewById(R.id.empty_screen).setVisibility(View.VISIBLE);
+//        ImageView image = findViewById(R.id.image1);
+//        image.setImageResource(R.drawable.wildfire_gray);
+//        TextView mainText = findViewById(R.id.main_text1);
+//        mainText.setText("No analytics!");
+//        TextView messageText = findViewById(R.id.message_text2);
+//        messageText.setText("Your wildfire is not enabled.");
+//        TextView actionButton = findViewById(R.id.btn_action);
+//        actionButton.setText("Start Wildfire");
+//        actionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(WildFireAdsActivity.this,FragmentsFactoryActivity.class);
+//                intent.putExtra("fragmentName","WildFireFragment");
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            }
+//        });
+//
+//    }
 
     private void getWildFireData(String sourceId){
         showProgress();

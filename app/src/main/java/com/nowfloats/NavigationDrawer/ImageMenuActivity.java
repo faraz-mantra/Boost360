@@ -42,7 +42,7 @@ public class ImageMenuActivity extends AppCompatActivity
             getSupportActionBar().setTitle("");
         }
 
-        binding.layoutToolbar.toolbarTitle.setText("Images");
+        binding.layoutToolbar.toolbarTitle.setText("All Images");
         initMenuRecyclerView(binding.menuList);
     }
 

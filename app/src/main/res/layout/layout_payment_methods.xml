@@ -3,12 +3,12 @@
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_payment_method"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_product_image___"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -19,7 +19,7 @@
                 android:text="Accept payment via"/>
 
             <ImageButton
-                android:id="@+id/ib_info_product_image____"
+                android:id="@+id/ib_info_payment_configuration"
                 style="@style/ProductHelpButtonStyle"/>
 
         </LinearLayout>
@@ -39,10 +39,10 @@
                     android:padding="8dp"
                     android:onClick="onPaymentConfigurationClick"
                     android:clickable="true"
-                    android:background="@drawable/grey_rounded_spinner_background"
+                    android:background="@drawable/grey_rounded_background"
                     android:text="Assured Purchase™" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/layout_payment_assured_purchase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,14 +94,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability__"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -163,14 +163,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -239,14 +239,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability______"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options" />
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -308,14 +308,14 @@
                                     android:textColor="@color/secondaryTextColor"
                                     android:background="@color/spinner_grey_background" />
 
-                                <!--
+                                &lt;!&ndash;
                                 <Spinner
                                     android:id="@+id/spinner_cod_availability___"
                                     style="@style/ProductSpinnerStyle"
                                     android:layout_weight="1"
                                     android:background="@color/spinner_grey_background"
                                     android:entries="@array/stock_options"/>
-                                -->
+                                &ndash;&gt;
 
                                 <View
                                     android:layout_width="1dp"
@@ -338,18 +338,18 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
-                    android:id="@+id/layout_payment_my_payment_gateway"
+                    android:id="@+id/tv_payment_configuration_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Paypal account configured"
-                    android:drawableLeft="@drawable/ic_check_circle_green"
+                    android:text="Incomplete payment info"
                     android:drawablePadding="5dp"
-                    android:textSize="16sp"
-                    android:padding="20dp"
-                    android:visibility="gone"
+                    android:drawableLeft="@drawable/ic_info_red"
+                    android:textSize="13sp"
+                    android:padding="16dp"
+                    android:visibility="visible"
                     android:textColor="@color/secondaryTextColor" />
 
                 <LinearLayout
@@ -377,15 +377,38 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edit_purchase_url_link"
-                        style="@style/ProductEditTextStyle"
+                    <LinearLayout
+                        android:id="@+id/layout_unique_payment_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:inputType="textUri"
-                        android:hint="XXXXXXXXXXXXXXXX"  />
+                        android:background="@drawable/white_rectangle_background"
+                        android:orientation="horizontal" >
+
+                        <EditText
+                            android:id="@+id/edit_website"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="Website name"
+                            android:background="@null"
+                            android:layout_width="120dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/secondaryLightTextColor"/>
+
+                        <EditText
+                            android:id="@+id/edit_purchase_url_link"
+                            style="@style/ProductEditTextStyle"
+                            android:inputType="textUri"
+                            android:background="@null"
+                            android:hint="Paste your URL here"  />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <!--
                 <TextView
                     android:id="@+id/layout_payment_dont_want_to_sell"
                     android:layout_width="match_parent"
@@ -395,6 +418,7 @@
                     android:padding="20dp"
                     android:visibility="gone"
                     android:textColor="@color/secondaryTextColor" />
+                -->
 
         </LinearLayout>
 

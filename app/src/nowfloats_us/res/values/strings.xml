@@ -519,4 +519,8 @@
         <item><![CDATA[<b>For which plans can the RedTim Dictate be used?</b><br />RedTim Dictate can be used for Boost Lite customers.]]></item>
     </string-array>
 
+    <string name="payment_config_acceptance_message">I agree that RedTim will charge %s of the total cart value as convenience fee(as part of your current boost plan)</string>
+
+    <string name="link_marketplace">boost.nowfloats.com/marketplace</string>
+
 </resources>

@@ -78,6 +78,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -353,9 +354,12 @@ public class Analytics_Fragment extends Fragment {
         subscribeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), SubscribersActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                addSubscription();
+
+//                Intent i = new Intent(getActivity(), SubscribersActivity.class);
+//                startActivity(i);
+//                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         LinearLayout facebookLayout = (LinearLayout) rootView.findViewById(R.id.facebook_analytics_layout);
@@ -1041,5 +1045,39 @@ public class Analytics_Fragment extends Fragment {
                 vmnTotalCallCount.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+
+    private void openSubscriberActivity()
+    {
+        Intent i = new Intent(getActivity(), SubscribersActivity.class);
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private void addSubscription()
+    {
+        /**
+         * If not new pricing plan
+         */
+        if(!WidgetKey.isNewPricingPlan)
+        {
+            openSubscriberActivity();
+        }
+
+        else
+        {
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SUBSCRIPTION, WidgetKey.WIDGET_PROPERTY_SUBSCRIPTION);
+
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+            }
+
+            else
+            {
+                openSubscriberActivity();
+            }
+        }
     }
 }

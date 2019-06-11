@@ -2,14 +2,11 @@
 <layout>
 
     <FrameLayout
+        android:id="@+id/layout_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
         <android.support.v4.widget.NestedScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,13 +15,12 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingBottom="@dimen/margin_50"
-            tools:context="com.nowfloats.Product_Gallery.ManageProductFragment">
+            tools:context="com.nowfloats.ProductGallery.ManageProductFragment">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/margin_20"
+                android:padding="@dimen/margin_15"
                 android:orientation="vertical" >
 
                 <LinearLayout
@@ -36,7 +32,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Product Primary Image"/>
+                        android:text="Primary Image"/>
 
                     <ImageButton
                         android:id="@+id/ib_info_product_image"
@@ -98,6 +94,15 @@
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"/>
 
+                        <ImageButton
+                            android:id="@+id/ib_remove_product_image"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="@dimen/margin_5"
+                            android:layout_gravity="top|end"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_remove"/>
+
                     </FrameLayout>
 
                 </android.support.v7.widget.CardView>
@@ -114,7 +119,7 @@
                         android:layout_gravity="start"
                         android:text="Secondary Images (8 max, jpeg, 800x800px)"/>
 
-                    <android.support.v7.widget.RecyclerView
+                   <android.support.v7.widget.RecyclerView
                         android:id="@+id/product_image_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -136,40 +141,52 @@
                             android:id="@+id/btn_secondary_image"
                             android:layout_width="wrap_content"
                             android:layout_height="35dp"
-                            android:text="Add More"
+                            android:text="BROWSE SECONDARY IMAGES"
                             android:textSize="12sp"
                             android:textAllCaps="false"
-                            android:padding="5dp"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:drawablePadding="5dp"
                             android:drawableLeft="@drawable/ic_camera_outline_small"
                             android:textColor="@color/secondaryTextColor"
-                            android:background="@drawable/button_pick_image"/>
+                            style="?android:attr/borderlessButtonStyle"
+                            android:background="@drawable/image_upload_title_background"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="horizontal" >
+                    android:orientation="vertical">
 
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:text="Brand"/>
+                    <LinearLayout
+                        android:id="@+id/layout_brand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
 
-                    <ImageButton
-                        android:id="@+id/ib_info_brand"
-                        style="@style/ProductHelpButtonStyle"/>
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Brand (If any)"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_brand"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_brand"
+                        style="@style/ProductEditTextStyle"
+                        android:hint="Write the name of the brand"
+                        android:layout_marginTop="@dimen/margin_5"/>
 
                 </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edit_brand"
-                    style="@style/ProductEditTextStyle"
-                    android:hint="Write the name of the brand"
-                    android:layout_marginTop="@dimen/margin_5"/>
 
                 <LinearLayout
                     android:id="@+id/layout_product_name"
@@ -272,12 +289,13 @@
                     android:textColor="@color/primaryTextColor"
                     android:padding="10dp"
                     android:background="@drawable/input_background"
-                    android:minHeight="100dp"
+                    android:minHeight="150dp"
                     android:maxLines="10"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
                     android:maxLength="2000"
                     android:singleLine="false"
+                    android:textColorHint="@color/hintTextColor"
                     android:hint="Describe your product within 2000 characters max ..." />
 
                 <LinearLayout
@@ -290,7 +308,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1.3"
                         android:orientation="vertical" >
 
                         <LinearLayout
@@ -325,7 +343,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".9"
+                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/margin_10"
                         android:orientation="vertical" >
 
@@ -335,7 +353,7 @@
 
                             <TextView
                                 style="@style/ProductLabelTextStyle"
-                                android:text="Base Price (Incl. Tax)" />
+                                android:text="Price (Incl. tax)" />
 
                             <ImageButton
                                 android:id="@+id/ib_info_product_base_price_help"
@@ -347,15 +365,17 @@
                             android:id="@+id/edit_base_price"
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XX,XXX"
+                            android:maxLength="9"
+                            android:inputType="numberDecimal"
                             android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1.1"
                         android:layout_marginTop="3dp"
                         android:layout_marginLeft="@dimen/margin_10"
                         android:orientation="vertical" >
@@ -364,16 +384,18 @@
                             style="@style/ProductLabelTextStyle"
                             android:layout_gravity="start"
                             android:paddingBottom="3dp"
-                            android:text="Discount" />
+                            android:text="Discount Amount" />
 
                         <EditText
                             android:id="@+id/edit_discount"
                             style="@style/ProductEditTextStyle"
                             android:hint="XX,XXX"
+                            android:enabled="false"
+                            android:maxLength="9"
                             android:digits="0123456789."
                             android:layout_marginTop="@dimen/margin_5"/>
 
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                 </LinearLayout>
 
@@ -381,58 +403,165 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="vertical" >
+                    android:orientation="horizontal" >
 
-                    <TextView
-                        style="@style/ProductLabelTextStyle"
-                        android:layout_height="24dp"
-                        android:layout_gravity="start"
-                        android:text="Final Price" />
-
-                    <TextView
-                        android:id="@+id/label_final_price"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="XX,XXX"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="14sp"
-                        android:gravity="center_vertical"/>
+                        android:layout_weight="1.3"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:layout_gravity="start"
+                            android:paddingBottom="3dp"
+                            android:text="Discount Amount" />
+
+                        <EditText
+                            android:id="@+id/edit_discount"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="XX,XXX"
+                            android:enabled="false"
+                            android:maxLength="6"
+                            android:inputType="numberDecimal"
+                            android:digits="0123456789."
+                            android:layout_marginTop="@dimen/margin_5"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:layout_height="24dp"
+                            android:layout_gravity="start"
+                            android:text="Final Price" />
+
+                        <TextView
+                            android:id="@+id/label_final_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:hint="XX,XXX"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="14sp"
+                            android:gravity="center_vertical"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <include
-                    android:id="@+id/layout_variants"
+                    android:id="@+id/layout_product_specification"
                     layout="@layout/layout_variants_info" />
+
+                <include
+                    android:id="@+id/layout_inventory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    layout="@layout/layout_inventory" />
 
                 <include
                     android:id="@+id/layout_payment_method"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_10"
                     layout="@layout/layout_payment_methods" />
 
+                <include
+                    android:id="@+id/layout_shipping_matrix_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    layout="@layout/layout_shipping_matrix_details" />
+
+                <LinearLayout
+                    android:id="@+id/layout_assured_purchase_tax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_tax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Tax Rate % (for invoice)"/>
+
+                        <ImageButton
+                            android:id="@+id/ib_info_gst"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_gst"
+                        style="@style/ProductEditTextStyle"
+                        android:hint="XX"
+                        android:maxLength="5"
+                        android:digits="0123456789."
+                        android:inputType="numberDecimal"
+                        android:layout_marginTop="@dimen/margin_5"/>
+
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/layout_inventory_cod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    layout="@layout/layout_inventory" />
+
+                <include
+                    android:id="@+id/layout_inventory_online"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    layout="@layout/layout_inventory" />
+
+                <!--
                 <include
                     android:id="@+id/layout_inventory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_20"
                     layout="@layout/layout_product_inventory" />
+                -->
+
+                <Button
+                    android:id="@+id/btn_publish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_button_enabled"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:text="SAVE AND PUBLISH" />
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textColor="@color/product_delete_btn"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:text="DELETE ITEM" />
 
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
-
-
-        <Button
-            android:id="@+id/btn_publish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primaryColor"
-            android:textColor="@android:color/white"
-            android:layout_gravity="bottom"
-            android:text="PUBLISH PRODUCT" />
-
-        </FrameLayout>
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"

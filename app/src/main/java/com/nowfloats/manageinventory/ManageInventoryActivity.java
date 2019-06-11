@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.nowfloats.Product_Gallery.ProductGalleryActivity;
+import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 

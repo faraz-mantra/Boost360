@@ -106,7 +106,7 @@
 
             </LinearLayout>
 
-            <com.nowfloats.Product_Gallery.widgets.NonScrollListView
+            <com.nowfloats.ProductGallery.widgets.NonScrollListView
                 android:id="@+id/lv_inventory_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                 android:layout_marginBottom="@dimen/margin_10"
                 android:divider="@null">
 
-            </com.nowfloats.Product_Gallery.widgets.NonScrollListView>
+            </com.nowfloats.ProductGallery.widgets.NonScrollListView>
 
             <LinearLayout
                 android:layout_width="match_parent"

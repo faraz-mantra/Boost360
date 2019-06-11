@@ -507,7 +507,7 @@ public class Create_Message_Activity extends AppCompatActivity {
 //                }
 //            }
 //        }
-        showUpdateKeywords();
+        //showUpdateKeywords();
         ivSpeakUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -76,7 +76,7 @@ public class SidePanelFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
-    TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvSocialSharing, tvManageInventory, tvManageContent,
+    TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvSocialSharing, tvManageInventory, tvInbox, tvManageContent,
             accountSettingsText, upgradeText, addOnText, keyboardTextView, helpAndSupportText, shareText, aboutText;
     public static TextView fpNameTextView;
     UserSessionManager session;
@@ -95,7 +95,7 @@ public class SidePanelFragment extends Fragment {
     private static final int CAMERA_PHOTO = 1;
 
     LinearLayout homeLayout, analyticsLayout, upgradeLayout, addOnLayout, accountSettingsLayout, keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
-            manageContentLayout, manageCustomersLayout, socialLayout, manageInventoryLayout;
+            manageContentLayout, manageCustomersLayout, socialLayout, manageInventoryLayout, inboxLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -109,7 +109,7 @@ public class SidePanelFragment extends Fragment {
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, keyboardImageView, upgradeImageView, addOnImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView,
-            socialImageView, manageInventoryImageView;
+            socialImageView, manageInventoryImageView, inboxImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
 
@@ -319,6 +319,7 @@ public class SidePanelFragment extends Fragment {
         manageCustomersLayout = card.findViewById(R.id.tenth_Layout);
         manageContentLayout = card.findViewById(R.id.layout_manage_content);
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
+        inboxLayout = card.findViewById(R.id.thirteen_Layout);
         socialLayout = card.findViewById(R.id.eleventh_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
         accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
@@ -342,6 +343,7 @@ public class SidePanelFragment extends Fragment {
         tvManageCustomers = (TextView) manageCustomersLayout.findViewById(R.id.tvManageCustomers);
         tvManageContent = (TextView) manageContentLayout.findViewById(R.id.tvManageContent);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
+        tvInbox = inboxLayout.findViewById(R.id.tvInbox);
         tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
         accountSettingsText = (TextView) accountSettingsLayout.findViewById(R.id.fifthRow_TextView);
         upgradeText = (TextView) upgradeLayout.findViewById(R.id.secondRow_TextView);
@@ -363,6 +365,7 @@ public class SidePanelFragment extends Fragment {
         manageCustomerImageView = manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
         manageContentImageView = manageContentLayout.findViewById(R.id.img_manage_content);
         manageInventoryImageView = manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
+        inboxImageView = inboxLayout.findViewById(R.id.thirteen_ImageView);
         socialImageView = socialLayout.findViewById(R.id.eleventh_ImageView);
         accountSettingsImageView = accountSettingsLayout.findViewById(R.id.fifthRow_ImageView);
         upgradeImageView = upgradeLayout.findViewById(R.id.secondRow_ImageView);
@@ -409,6 +412,7 @@ public class SidePanelFragment extends Fragment {
         manageCustomerImageView = (ImageView) manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
         socialImageView = (ImageView) socialLayout.findViewById(R.id.eleventh_ImageView);
         manageInventoryImageView = (ImageView) manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
+        inboxImageView = (ImageView) inboxLayout.findViewById(R.id.thirteen_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
         //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
@@ -417,6 +421,7 @@ public class SidePanelFragment extends Fragment {
         tvManageCustomers.setTypeface(robotoMedium);
         tvManageContent.setTypeface(robotoMedium);
         tvManageInventory.setTypeface(robotoMedium);
+        tvInbox.setTypeface(robotoMedium);
         tvSocialSharing.setTypeface(robotoMedium);
         accountSettingsText.setTypeface(robotoMedium);
         upgradeText.setTypeface(robotoMedium);
@@ -505,6 +510,14 @@ public class SidePanelFragment extends Fragment {
             }
         });
 
+
+        inboxLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onclickColorChange(inboxImageView, tvInbox, inboxLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inbox));
+            }
+        });
 
         accountSettingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -885,6 +898,7 @@ public class SidePanelFragment extends Fragment {
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageContent.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvInbox.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
         accountSettingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
         upgradeText.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -900,6 +914,7 @@ public class SidePanelFragment extends Fragment {
         keyboardImageView.setColorFilter(defaultLabelFilter);
         manageContentImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
+        inboxImageView.setColorFilter(defaultLabelFilter);
         socialImageView.setColorFilter(defaultLabelFilter);
         accountSettingsImageView.setColorFilter(defaultLabelFilter);
         upgradeImageView.setColorFilter(defaultLabelFilter);
@@ -915,6 +930,7 @@ public class SidePanelFragment extends Fragment {
         keyboardLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageContentLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageInventoryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        inboxLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         socialLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         accountSettingsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         upgradeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));

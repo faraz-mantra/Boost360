@@ -8,8 +8,8 @@ import com.nowfloats.CustomPage.CustomPageInterface;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.MessageModel;
-import com.nowfloats.Product_Gallery.Model.ProductListModel;
-import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
+import com.nowfloats.ProductGallery.Model.ProductListModel;
+import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
 import com.nowfloats.util.Constants;
 
 import java.lang.ref.WeakReference;

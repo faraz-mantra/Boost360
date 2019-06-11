@@ -1,17 +1,14 @@
 package com.nowfloats.manageinventory;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +22,14 @@ import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Product_Gallery.ProductCatalogActivity;
-import com.nowfloats.Product_Gallery.ProductGalleryActivity;
+import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 
 import java.io.IOException;
@@ -190,8 +187,8 @@ public class ManageInventoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                    Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
-                    //Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
+                    //Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
+                    Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -199,11 +196,14 @@ public class ManageInventoryFragment extends Fragment {
             tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    startOrdersActivity();
+
 //                    if(mIsAPEnabled) {
-                        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-                        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
-                        startActivity(i);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
+//                        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
+//                        startActivity(i);
+//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                    }else {
 //                        new AlertDialog.Builder(getActivity())
 //                                .setMessage("Enable Assured Purchase to view Seller Analytics")
@@ -230,7 +230,7 @@ public class ManageInventoryFragment extends Fragment {
             });
 
             String category = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
-            tvProductGallery.setText(category);
+            tvProductGallery.setText("Catalogue");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -257,4 +257,37 @@ public class ManageInventoryFragment extends Fragment {
             headerText.setText(getResources().getString(R.string.manage_inventory));
     }
 
+
+    private void openSellerAnalyticsActivity()
+    {
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
+        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private void startOrdersActivity()
+    {
+        /**
+         * If not new pricing plan
+         */
+        if(!WidgetKey.isNewPricingPlan)
+        {
+            openSellerAnalyticsActivity();
+        }
+
+        else
+        {
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SHOPPING_CART, WidgetKey.WIDGET_PROPERTY_CART);
+
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                openSellerAnalyticsActivity();
+            }
+        }
+    }
 }
