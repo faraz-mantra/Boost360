@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2018080041,"versionName":"4.9.50","enabled":true,"outputFile":"NF-Boost-partoneRelease-4.9.50.apk","fullName":"partoneRelease","baseName":"partone-release"},"path":"NF-Boost-partoneRelease-4.9.50.apk","properties":{}}]
-=======
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2018080050,"versionName":"4.9.59","enabled":true,"outputFile":"NF-Boost-partoneRelease-4.9.59.apk","fullName":"partoneRelease","baseName":"partone-release"},"path":"NF-Boost-partoneRelease-4.9.59.apk","properties":{}}]
->>>>>>> b3e66f3c6c05019aa953b89dfd90a28264e09982
+[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2018080051,"versionName":"4.9.60","enabled":true,"outputFile":"NF-Boost-partoneRelease-4.9.60.apk","fullName":"partoneRelease","baseName":"partone-release"},"path":"NF-Boost-partoneRelease-4.9.60.apk","properties":{}}]

@@ -70,7 +70,6 @@
                 android:background="@android:color/white" >
 
                 <LinearLayout
-                    android:id="@+id/layout_product_image__"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -81,7 +80,6 @@
                         android:text="Payment and delivery mode"/>
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_image___"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle"/>
 
@@ -149,7 +147,6 @@
                             android:text="Package pickup address"/>
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image"
                             android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle"/>
 
@@ -249,7 +246,6 @@
 
 
                     <LinearLayout
-                        android:id="@+id/layout_product_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_10"
@@ -260,7 +256,6 @@
                             android:text="Bank account number to receipt payment" />
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_description"
                             android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle" />
 
@@ -276,7 +271,6 @@
                         style="@style/ProductEditTextStyle" />
 
                     <LinearLayout
-                        android:id="@+id/layout_product_description__"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_10"
@@ -287,7 +281,6 @@
                             android:text="Branch Code (IFSC)" />
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_description_"
                             android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle" />
 
@@ -303,7 +296,6 @@
                         style="@style/ProductEditTextStyle" />
 
                     <LinearLayout
-                        android:id="@+id/layout_product_description_"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_10"
@@ -314,7 +306,6 @@
                             android:text="Your tax ID/Number (GST)" />
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_description__"
                             android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle" />
 
@@ -338,7 +329,6 @@
                         android:text="*Assured Purchase can only have a single account number/branch code and tax number as part of periodic payment config. Make sure that above account details are correct."/>
 
                     <View
-                        android:id="@+id/dotted_line"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginTop="@dimen/margin_15"
@@ -387,7 +377,6 @@
                     android:orientation="vertical" >
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image________"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -399,7 +388,6 @@
                             android:text="Your payment gateway name"/>
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image_______"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -412,7 +400,6 @@
                         android:entries="@array/payment_options_v1" />
 
                     <LinearLayout
-                        android:id="@+id/layout_product_description_________________"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_10"
@@ -436,7 +423,6 @@
                         style="@style/ProductEditTextStyle" />
 
                     <View
-                        android:id="@+id/dotted_line____"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginTop="@dimen/margin_20"

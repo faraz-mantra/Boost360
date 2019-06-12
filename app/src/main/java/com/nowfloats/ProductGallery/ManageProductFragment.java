@@ -84,9 +84,9 @@ import com.nowfloats.webactions.webactioninterfaces.IFilter;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
-import com.vincent.filepicker.Constant;
+/*import com.vincent.filepicker.Constant;
 import com.vincent.filepicker.activity.NormalFilePickActivity;
-import com.vincent.filepicker.filter.entity.NormalFile;
+import com.vincent.filepicker.filter.entity.NormalFile;*/
 
 import org.json.JSONObject;
 
@@ -1009,7 +1009,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             @Override
             public void openDialog() {
 
-                chooseFile(Constant.REQUEST_CODE_PICK_FILE);
+                //chooseFile(Constant.REQUEST_CODE_PICK_FILE);
             }
 
             @Override
@@ -1843,10 +1843,10 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     {
         int limit = 1;
 
-        Intent intent4 = new Intent(getActivity(), NormalFilePickActivity.class);
+        /*Intent intent4 = new Intent(getActivity(), NormalFilePickActivity.class);
         intent4.putExtra(Constant.MAX_NUMBER, limit);
         intent4.putExtra(NormalFilePickActivity.SUFFIX, FILE_EXTENSIONS);
-        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);
+        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);*/
     }
 
 
@@ -2094,7 +2094,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
-        else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
+        /*else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
         {
             ArrayList<NormalFile> files = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
 
@@ -2105,7 +2105,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 pickupAddressFragment.setFileName(file.getName());
                 pickupAddressFragment.isFileSelected(true);
             }
-        }
+        }*/
 
         else if(resultCode == RESULT_OK && data != null)
         {
@@ -3450,7 +3450,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
      */
     private void addInfoButtonListener()
     {
-        binding.ibInfoProductImage.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The primary image appears on your homepage, item list page, the cart page, and the checkout page.", binding.ibInfoProductImage));
+        binding.ibInfoProductImageIcon.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The primary image appears on your homepage, item list page, the cart page, and the checkout page.", binding.ibInfoProductImageIcon));
         binding.ibInfoGst.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the tax rate (%) for the product. This can be used to provide clear pricing breakdown during checkout and for generating invoices.", binding.ibInfoGst));
         binding.ibInfoBrand.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the brand of your product if any. Customers find products with a familiar brand name more identifiable and favorable.", binding.ibInfoBrand));
         binding.ibInfoProductName.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The name for your base product. Your customers will see it along with the product category and brand (if mentioned).", binding.ibInfoProductName));

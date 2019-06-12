@@ -60,7 +60,6 @@
                 android:background="@android:color/white" >
 
                 <LinearLayout
-                    android:id="@+id/layout_product_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -72,7 +71,6 @@
                         android:text="Warehouse/Shop area name"/>
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_image"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle"/>
 
@@ -95,7 +93,6 @@
                  -->
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
@@ -106,7 +103,6 @@
                         android:text="Warehouse contact number" />
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_description"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
@@ -123,7 +119,6 @@
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description_______"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
@@ -134,7 +129,6 @@
                         android:text="Pickup address proof (jpeg/png/pdf 1mb)" />
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_description_______"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
@@ -190,7 +184,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description__"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
@@ -201,7 +194,6 @@
                         android:text="Building/Plot No. and street address" />
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_description_"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
@@ -215,7 +207,6 @@
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description_"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
@@ -226,7 +217,6 @@
                         android:text="City" />
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_description__"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
@@ -240,7 +230,6 @@
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description____"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
@@ -251,7 +240,6 @@
                         android:text="State/Province" />
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_description___"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
@@ -265,7 +253,6 @@
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description_____"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
@@ -276,7 +263,6 @@
                         android:text="Country" />
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_description_____"
                         android:visibility="invisible"
                         style="@style/ProductHelpButtonStyle" />
 
@@ -291,7 +277,6 @@
                     android:background="@drawable/white_rectangle_background"/>
 
                 <View
-                    android:id="@+id/dotted_line"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginTop="@dimen/margin_20"
@@ -300,7 +285,6 @@
                     android:background="@drawable/dotted_line"/>
 
                 <LinearLayout
-                    android:id="@+id/layout_product_description___"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
@@ -323,7 +307,6 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/dotted_line_"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginTop="@dimen/margin_10"
