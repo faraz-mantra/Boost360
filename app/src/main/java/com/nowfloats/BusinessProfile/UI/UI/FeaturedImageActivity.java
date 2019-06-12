@@ -168,7 +168,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
                 View view = dialog.getCustomView();
                 TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText(getResources().getString(R.string.upload_logo_image));
+                title.setText(getResources().getString(R.string.upload_features_image));
                 LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
                 LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
                 ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);

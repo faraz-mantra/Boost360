@@ -31,7 +31,7 @@
 
     <array name="manage_content_sidepanel">
         <item>@drawable/ic_updates</item>
-        <item>@drawable/ic_all_images</item>
+        <item>@drawable/ic_image_gallery</item>
         <item>@drawable/ic_custom_page</item>
         <item>@drawable/ic_business_profile</item>
         <item>@drawable/ic_content_sharing</item>
@@ -45,7 +45,7 @@
     <array name="image_list_icons">
         <item>@drawable/ic_business_logo</item>
         <item>@drawable/ic_featured_image</item>
-        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_all_images</item>
         <item>@drawable/ic_background_images</item>
         <item>@drawable/ic_favicon</item>
     </array>

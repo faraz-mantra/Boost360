@@ -1737,7 +1737,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="sam">Sam</string>
     <string name="enquired_by">enquired by</string>
     <string name="sam_chatbot_description">Sam is the chatbot you enabled on your website</string>
-    <string name="upload_image">Upload image</string>
+    <string name="upload_features_image">Upload Featured Image</string>
+    <string name="upload_favicon_image">Upload Favicon Image</string>
     <string name="upload_image_err">Failed to upload image</string>
 
     <string-array name="manage_content_tab_items">

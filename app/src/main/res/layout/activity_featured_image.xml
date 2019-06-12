@@ -75,7 +75,7 @@
                         android:id="@+id/addLogoButton"
                         android:layout_width="150dp"
                         android:layout_height="35dp"
-                        android:text="UPLOAD"
+                        android:text="CHANGE"
                         android:layout_margin="10dp"
                         fontPath="Roboto-Medium.ttf"
                         android:layout_centerHorizontal="true"

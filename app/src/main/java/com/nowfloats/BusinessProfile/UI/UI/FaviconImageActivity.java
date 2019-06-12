@@ -96,12 +96,12 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
             if (!TextUtils.isEmpty(iconUrl))
             {
-                Picasso.with(FaviconImageActivity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(logoimageView);
+                Picasso.with(FaviconImageActivity.this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
             }
 
             else
             {
-                Picasso.with(FaviconImageActivity.this).load(R.drawable.featured_photo_default).into(logoimageView);
+                Picasso.with(FaviconImageActivity.this).load(R.drawable.logo_default_image).into(logoimageView);
             }
         }
 
@@ -125,7 +125,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
                 View view = dialog.getCustomView();
                 TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText(getResources().getString(R.string.upload_logo_image));
+                title.setText(getResources().getString(R.string.upload_favicon_image));
                 LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
                 LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
                 ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);

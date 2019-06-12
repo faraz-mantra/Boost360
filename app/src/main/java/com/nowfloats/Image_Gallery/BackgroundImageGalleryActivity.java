@@ -265,7 +265,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         View view = dialog.getCustomView();
         TextView title = view.findViewById(R.id.textview_heading);
-        title.setText(getResources().getString(R.string.upload_image));
+        title.setText(getResources().getString(R.string.upload_background_image));
         LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = view.findViewById(R.id.pop_up_camera_imag);

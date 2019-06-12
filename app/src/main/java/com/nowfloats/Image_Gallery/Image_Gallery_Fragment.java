@@ -126,7 +126,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             HomeActivity.plusAddButton.setVisibility(View.GONE);
         activity = getActivity();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-        gvImages = (GridView) view.findViewById(R.id.grid);
+        gvImages =  view.findViewById(R.id.grid);
         fabGallery_Button = (FloatingActionButton) view.findViewById(R.id.fab_gallery);
         emptyGalleryLayout = (LinearLayout) view.findViewById(R.id.emptygallerylayout);
         progressLayout = (LinearLayout) view.findViewById(R.id.progress_gallerylayout);
@@ -137,6 +137,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         } else {
             emptyGalleryLayout.setVisibility(View.GONE);
         }
+
         gvImages.setAdapter(otherImagesAdapter);
 
         GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);

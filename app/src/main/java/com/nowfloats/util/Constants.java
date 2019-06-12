@@ -580,7 +580,7 @@ public class Constants {
      * Dev URL
      */
     //public static String DEV_ASSURED_PURCHASE_URL = "http://ec2-13-232-212-139.ap-south-1.compute.amazonaws.com";
-    public static String DEV_ASSURED_PURCHASE_URL = "https://assuredpurchase.withfloats.com/api/AssuredPurchase";
+    public static String DEV_ASSURED_PURCHASE_URL = "https://assuredpurchase.withfloats.com";
 
     /**
      * Dev Adapter
