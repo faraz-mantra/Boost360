@@ -9,6 +9,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,8 +42,14 @@ public class Mobile_Site_Activity extends AppCompatActivity {
         Methods.isOnline(Mobile_Site_Activity.this);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null)
+        {
             url = extras.getString("WEBSITE_NAME");
+
+            if (!TextUtils.isEmpty(url) && !url.startsWith("http://") && !url.startsWith("https://"))
+            {
+                url = "http://".concat(url);
+            }
         }
 
         TextView close = (TextView) findViewById(R.id.close_web);
@@ -51,9 +59,9 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
                 Uri webpage = Uri.parse(url);
 
-                if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                /*if (!url.startsWith("http://") && !url.startsWith("https://")) {
                     webpage = Uri.parse("http://" + url);
-                }
+                }*/
 
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, webpage);
                 if (browserIntent.resolveActivity(getPackageManager()) != null) {
@@ -71,7 +79,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
             }
         });
         webView = (WebView) findViewById(R.id.webView1);
-//        startWebView(url);
+
         startWebView(url);
     }
 
@@ -79,7 +87,6 @@ public class Mobile_Site_Activity extends AppCompatActivity {
     private void startWebView(String url) {
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
-
         webView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 
