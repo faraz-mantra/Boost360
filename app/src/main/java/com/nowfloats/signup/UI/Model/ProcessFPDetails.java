@@ -44,6 +44,7 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, get_fp_details_model.Address);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TILE_IMAGE_URI, get_fp_details_model.TileImageUri);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI, get_fp_details_model.ImageUri);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FAVICON_IMAGE_URI, get_fp_details_model.FaviconUrl);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON,get_fp_details_model.CreatedOn);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE, get_fp_details_model.ExpiryDate);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE, get_fp_details_model.PaymentState);

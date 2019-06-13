@@ -18,7 +18,6 @@ import com.nowfloats.ProductGallery.Adapter.SpinnerItemCategoryAdapter;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
@@ -90,13 +89,13 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
 
             else
             {
-                productType = setProductType("", "Editing ".concat(productType.equalsIgnoreCase("products") ? "Product" : "Service"));
+                productType = setProductType("products", "Editing ".concat(productType.equalsIgnoreCase("products") ? "Product" : "Service"));
             }
         }
 
         else
         {
-            productType = setProductType(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY), "Adding to Catalogue");
+            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ "products", "Adding to Catalogue");
         }
 
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));

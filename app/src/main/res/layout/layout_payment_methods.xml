@@ -62,7 +62,6 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:id="@+id/layout_product_image"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
@@ -73,7 +72,6 @@
                                     android:text="Package Weight"/>
 
                                 <ImageButton
-                                    android:id="@+id/ib_info_product_image"
                                     style="@style/ProductHelpButtonStyle"/>
 
                             </LinearLayout>
@@ -131,7 +129,6 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:id="@+id/layout_product_image____"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
@@ -142,7 +139,6 @@
                                     android:text="Package Length"/>
 
                                 <ImageButton
-                                    android:id="@+id/ib_info_product_image___"
                                     style="@style/ProductHelpButtonStyle"/>
 
                             </LinearLayout>
@@ -207,7 +203,6 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:id="@+id/layout_product_image________"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
@@ -218,7 +213,6 @@
                                     android:text="Package Height"/>
 
                                 <ImageButton
-                                    android:id="@+id/ib_info_product_image_______"
                                     style="@style/ProductHelpButtonStyle"/>
 
                             </LinearLayout>
@@ -276,7 +270,6 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:id="@+id/layout_product_image_______"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
@@ -287,7 +280,6 @@
                                     android:text="Package Thickness"/>
 
                                 <ImageButton
-                                    android:id="@+id/ib_info_product_image_____"
                                     style="@style/ProductHelpButtonStyle"/>
 
                             </LinearLayout>
@@ -361,7 +353,6 @@
                     android:orientation="vertical" >
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image__________"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -372,7 +363,6 @@
                             android:text="External Info / Purchase URL"/>
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image______"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>

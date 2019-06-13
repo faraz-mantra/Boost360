@@ -53,7 +53,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2018080050
+        versionCode 2018080051
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         ndk {
@@ -127,7 +127,7 @@ android {
         }
         partone {
 
-            versionName "4.9.59"
+            versionName "4.9.60"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -229,7 +229,8 @@ dependencies {
     implementation project(':imagepicker')
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.github.angads25:toggle:1.1.0'
-    implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.6'
+    //implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.6'
+    implementation 'com.nbsp:library:1.8'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.github.florent37:viewtooltip:1.1.5'
 }

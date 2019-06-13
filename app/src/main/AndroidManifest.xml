@@ -50,6 +50,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
+        <activity android:name="com.nowfloats.Image_Gallery.ImageViewerActivity"></activity>
         <activity
             android:name="com.nowfloats.ProductGallery.PickupAddressActivity"
             android:screenOrientation="portrait"
@@ -286,6 +287,19 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
             android:label="@string/title_activity_business__logo_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
+            android:label="@string/title_activity_background_image_gallery"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.ImageMenuActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"

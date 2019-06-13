@@ -36,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
@@ -49,13 +51,14 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityPickupAddressBinding;
-import com.vincent.filepicker.Constant;
+/*import com.vincent.filepicker.Constant;
 import com.vincent.filepicker.activity.NormalFilePickActivity;
-import com.vincent.filepicker.filter.entity.NormalFile;
+import com.vincent.filepicker.filter.entity.NormalFile;*/
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -79,9 +82,11 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
     private Uri proofUri;
 
     private final int CAMERA_PERMISSION_REQUEST_CODE = 1;
+    private final int FILE_PICKER_PERMISSION_REQUEST_CODE = 1;
 
     private final int CAMERA_PROOF_IMAGE_REQUEST_CODE = 101;
     private final int GALLERY_PROOF_IMAGE_REQUEST_CODE = 102;
+    private final int FILE_PROOF_REQUEST_CODE = 103;
 
     public static final String FILE_EXTENSIONS [] = new String[] { "doc", "docx", "xls", "xlsx", "pdf" };
     private MaterialDialog materialDialog;
@@ -363,7 +368,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
             @Override
             public void openDialog() {
 
-                chooseFile(Constant.REQUEST_CODE_PICK_FILE);
+                chooseFile();
             }
 
             @Override
@@ -410,9 +415,8 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
 
     /**
      * File picker dialog
-     * @param requestCode
      */
-    private void chooseFile(int requestCode)
+    private void chooseFile()
     {
         final MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(R.layout.layout_file_upload_dialog, true)
@@ -542,12 +546,38 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
      */
     private void openFileChooser()
     {
-        int limit = 1;
+        /*int limit = 1;
 
         Intent intent4 = new Intent(this, NormalFilePickActivity.class);
         intent4.putExtra(Constant.MAX_NUMBER, limit);
         intent4.putExtra(NormalFilePickActivity.SUFFIX, FILE_EXTENSIONS);
-        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);
+        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);*/
+
+        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+        {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission))
+            {
+                Toast.makeText(this, "Allow external storage reading", Toast.LENGTH_SHORT).show();
+            }
+
+            else
+            {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, FILE_PICKER_PERMISSION_REQUEST_CODE);
+            }
+        }
+
+        else
+        {
+            new MaterialFilePicker()
+                    .withActivity(this)
+                    .withRequestCode(FILE_PROOF_REQUEST_CODE)
+                    .withFilter(Pattern.compile(".*\\.pdf$")) // Filtering files and directories by file name using regexp
+                    .withFilterDirectories(false) // Set directories filterable (false by default)
+                    .withHiddenFiles(true) // Show hidden files and folders
+                    .start();
+        }
     }
 
 
@@ -808,7 +838,20 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
 
         }
 
-        else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
+        if (requestCode == FILE_PROOF_REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+
+            if(!TextUtils.isEmpty(filePath))
+            {
+                file = new File(filePath);
+
+                pickupAddressFragment.setFileName(file.getName());
+                pickupAddressFragment.isFileSelected(true);
+            }
+        }
+
+        /*else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
         {
             ArrayList<NormalFile> files = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
 
@@ -819,6 +862,6 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
                 pickupAddressFragment.setFileName(file.getName());
                 pickupAddressFragment.isFileSelected(true);
             }
-        }
+        }*/
     }
 }

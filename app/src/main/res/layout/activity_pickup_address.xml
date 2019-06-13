@@ -75,6 +75,7 @@
                         android:layout_marginTop="@dimen/margin_30"
                         android:layout_marginRight="@dimen/margin_30"
                         android:layout_marginLeft="@dimen/margin_30"
+                        android:visibility="gone"
                         android:onClick="onAddNewAddress"
                         android:text="ADD ADDRESS" />
 

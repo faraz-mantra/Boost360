@@ -35,7 +35,7 @@
                         android:text="Primary Image"/>
 
                     <ImageButton
-                        android:id="@+id/ib_info_product_image"
+                        android:id="@+id/ib_info_product_image_icon"
                         style="@style/ProductHelpButtonStyle"/>
 
                 </LinearLayout>

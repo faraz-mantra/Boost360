@@ -47,7 +47,6 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -119,9 +118,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeControls(view);
-        //bindControls();
-
-        fabGallery_Button.setOnClickListener(v -> addImage());
+        bindControls();
     }
 
     private void initializeControls(View view) {
@@ -129,7 +126,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             HomeActivity.plusAddButton.setVisibility(View.GONE);
         activity = getActivity();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-        gvImages = (GridView) view.findViewById(R.id.grid);
+        gvImages =  view.findViewById(R.id.grid);
         fabGallery_Button = (FloatingActionButton) view.findViewById(R.id.fab_gallery);
         emptyGalleryLayout = (LinearLayout) view.findViewById(R.id.emptygallerylayout);
         progressLayout = (LinearLayout) view.findViewById(R.id.progress_gallerylayout);
@@ -140,6 +137,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         } else {
             emptyGalleryLayout.setVisibility(View.GONE);
         }
+
         gvImages.setAdapter(otherImagesAdapter);
 
         GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
@@ -149,7 +147,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
 
-    /*private void bindControls() {
+    private void bindControls() {
 
         fabGallery_Button.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -169,7 +167,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 return true;
             }
         });
-    }*/
+    }
 
     @Override
     public void imagesReceived() {
@@ -236,46 +234,46 @@ public class Image_Gallery_Fragment extends Fragment implements
         }
     }
 
-//    private void selectImage() {
-//        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-//            Methods.showFeatureNotAvailDialog(getContext());
-//            return;
-//        }
-//        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
-//                .customView(R.layout.featuredimage_popup, true)
-//                .show();
-//        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-//        MixPanelController.track("AddImage", null);
-//        View view = dialog.getCustomView();
-//        if (view != null) {
-//            TextView header = (TextView) view.findViewById(R.id.textview_heading);
-//            header.setText(getString(R.string.add_photo));
-//            LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-//            LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-//            ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-//            final ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-//            cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-//            galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
-//
-//            takeCamera.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_CAMERA, null);
-//                    cameraIntent();
-//                    dialog.hide();
-//                }
-//            });
-//
-//            takeGallery.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_GALLERY, null);
-//                    galleryIntent();
-//                    dialog.hide();
-//                }
-//            });
-//        }
-//    }
+    private void selectImage() {
+        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+            Methods.showFeatureNotAvailDialog(getContext());
+            return;
+        }
+        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                .customView(R.layout.featuredimage_popup, true)
+                .show();
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        MixPanelController.track("AddImage", null);
+        View view = dialog.getCustomView();
+        if (view != null) {
+            TextView header = (TextView) view.findViewById(R.id.textview_heading);
+            header.setText(getString(R.string.add_photo));
+            LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+            LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+            ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+            final ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+            cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+            galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+
+            takeCamera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_CAMERA, null);
+                    cameraIntent();
+                    dialog.hide();
+                }
+            });
+
+            takeGallery.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_GALLERY, null);
+                    galleryIntent();
+                    dialog.hide();
+                }
+            });
+        }
+    }
 
     private void galleryIntent() {
         try {
@@ -629,81 +627,8 @@ public class Image_Gallery_Fragment extends Fragment implements
         otherImagesAdapter.resetCheckers();
     }
 
-
-    private void imageChooserDialog()
+    public void addImage()
     {
-        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                .customView(R.layout.featuredimage_popup, true)
-                .show();
-
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-        MixPanelController.track("AddImage", null);
-        View view = dialog.getCustomView();
-
-        if (view != null)
-        {
-            TextView header = view.findViewById(R.id.textview_heading);
-            header.setText(getString(R.string.add_photo));
-            LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
-            LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
-            ImageView cameraImg = view.findViewById(R.id.pop_up_camera_imag);
-            final ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
-            cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-            galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
-
-            takeCamera.setOnClickListener(v -> {
-
-                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_CAMERA, null);
-                cameraIntent();
-                dialog.hide();
-            });
-
-            takeGallery.setOnClickListener(v -> {
-
-                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_GALLERY, null);
-                galleryIntent();
-                dialog.hide();
-            });
-        }
-    }
-
-
-    private void addImage()
-    {
-        /**
-         * If not new pricing plan
-         */
-        if(!WidgetKey.isNewPricingPlan)
-        {
-            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
-            {
-                Methods.showFeatureNotAvailDialog(getContext());
-            }
-
-            else
-            {
-                imageChooserDialog();
-            }
-        }
-
-        else
-        {
-            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_IMAGE_GALLERY, WidgetKey.WIDGET_PROPERTY_GALLERY);
-
-            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
-            {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
-            }
-
-            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && otherImagesAdapter.getCount() >= Integer.parseInt(value))
-            {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_image_limit)), Toast.LENGTH_LONG).show();
-            }
-
-            else
-            {
-                imageChooserDialog();
-            }
-        }
+        selectImage();
     }
 }

@@ -9,7 +9,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_product_image___"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -47,7 +46,6 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -117,7 +115,6 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image____"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -194,7 +191,6 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image________"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -263,7 +259,6 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image_______"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
