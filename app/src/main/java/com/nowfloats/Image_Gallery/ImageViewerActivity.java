@@ -1,6 +1,8 @@
 package com.nowfloats.Image_Gallery;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityImageViewerBinding;
@@ -87,7 +90,7 @@ public class ImageViewerActivity extends AppCompatActivity
         private LayoutInflater layoutInflater;
 
 
-        public MyPagerAdapter(Context context, List<String> images)
+        private MyPagerAdapter(Context context, List<String> images)
         {
             this.context = context;
             this.images = images;
@@ -188,9 +191,18 @@ public class ImageViewerActivity extends AppCompatActivity
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
-
     private void deleteApiCall(String url)
     {
+        if(!Methods.isOnline(ImageViewerActivity.this))
+        {
+            return;
+        }
+
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Please Wait...");
+        dialog.setCancelable(false);
+        dialog.show();
+
         UserSessionManager session = new UserSessionManager(getApplicationContext(), ImageViewerActivity.this);
 
         ImageApi imageApi = Constants.restAdapter.create(ImageApi.class);
@@ -206,29 +218,29 @@ public class ImageViewerActivity extends AppCompatActivity
             @Override
             public void success(Object strings, Response response) {
 
+                if(dialog.isShowing())
+                {
+                    dialog.dismiss();
+                }
+
                 if(response.getStatus() == 200)
                 {
                     Toast.makeText(getApplicationContext(), "Image Deleted Successfully", Toast.LENGTH_SHORT).show();
 
-                    runOnUiThread(()-> {
-
-                        adapter.images.remove(position);
-                        adapter.notifyDataSetChanged();
-
-                        if (position > 0)
-                        {
-                            position--;
-                            binding.pager.setCurrentItem(position);
-                            binding.current.setText(String.valueOf(position + 1));
-                        }
-
-                        binding.maxCount.setText(String.valueOf(adapter.getCount()));
-                    });
+                    Intent intent = new Intent();
+                    intent.putExtra("POSITION", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
+
+                if(dialog.isShowing())
+                {
+                    dialog.dismiss();
+                }
 
                 Toast.makeText(getApplicationContext(), "Fail to Delete Image", Toast.LENGTH_SHORT).show();
             }

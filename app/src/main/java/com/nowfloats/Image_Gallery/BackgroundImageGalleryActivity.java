@@ -21,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,6 +66,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     private ProgressDialog dialog;
 
     private final int CAMERA_PERMISSION_REQUEST_CODE = 1;
+    private final int IMAGE_DELETE_REQUEST_CODE = 2;
     private final int CAMERA_IMAGE_REQUEST_CODE = 101;
     private final int GALLERY_IMAGE_REQUEST_CODE = 102;
 
@@ -93,7 +93,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         session = new UserSessionManager(getApplicationContext(), BackgroundImageGalleryActivity.this);
 
         initImageRecyclerView(binding.imageList);
-        //getBackgroundImages();
+        getBackgroundImages();
     }
 
 
@@ -101,7 +101,6 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     protected void onResume()
     {
         super.onResume();
-        getBackgroundImages();
     }
     /**
      * Initialize pickup address list adapter
@@ -205,7 +204,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                     Intent intent = new Intent(BackgroundImageGalleryActivity.this, ImageViewerActivity.class);
                     intent.putExtra("POSITION", getAdapterPosition());
                     intent.putExtra("IMAGES", array);
-                    startActivity(intent);
+                    startActivityForResult(intent, IMAGE_DELETE_REQUEST_CODE);
                 });
             }
         }
@@ -217,9 +216,15 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
             notifyDataSetChanged();
         }
 
-        public void addImage(String url)
+        private void addImage(String url)
         {
             this.images.add(0, url);
+            notifyDataSetChanged();
+        }
+
+        private void removeImage(int position)
+        {
+            this.images.remove(position);
             notifyDataSetChanged();
         }
     }
@@ -372,7 +377,6 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE)
         {
-            Log.d("CAMERA_IMAGEPATH", "" + primaryUri.getPath());
             uploadPrimaryPicture(primaryUri.getPath());
         }
 
@@ -386,11 +390,22 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 uploadPrimaryPicture(file.getPath());
             }
         }
+
+        if(resultCode == RESULT_OK && requestCode == IMAGE_DELETE_REQUEST_CODE && data != null)
+        {
+            int position = data.getIntExtra("POSITION", 0);
+            adapter.removeImage(position);
+        }
     }
 
 
     public void uploadPrimaryPicture(String path)
     {
+        if(!Methods.isOnline(BackgroundImageGalleryActivity.this))
+        {
+            return;
+        }
+
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
 
         String s_uuid = UUID.randomUUID().toString();
@@ -427,6 +442,8 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
             String url = response.replace("\\", "").replace("\"", "");
             adapter.addImage(url);
+
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, response.replace("\\", "").replace("\"", ""));
         }
 
         else
@@ -438,9 +455,6 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         {
             dialog.dismiss();
         }
-
-        Log.d("onPostUpload", "" + isSuccess);
-        Log.d("onPostUpload", "" + response);
     }
 
 

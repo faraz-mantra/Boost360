@@ -21,13 +21,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import com.melnykov.fab.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -39,7 +37,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.GetGalleryImagesAsyncTask_Interface;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -50,8 +47,6 @@ import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-
-import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -78,8 +73,6 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     private static final int PICK_FROM_GALLERY = 2;
 
-    private FloatingActionButton fabGallery_Button;
-
     private UserSessionManager session;
 
     private Activity activity;
@@ -93,10 +86,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.plusAddButton != null)
-            HomeActivity.plusAddButton.setVisibility(View.GONE);
-        if (headerText != null)
-            headerText.setText("Photo Gallery");
+
         if (gvImages != null)
             gvImages.invalidate();
         if (otherImagesAdapter != null)
@@ -118,18 +108,15 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeControls(view);
-        bindControls();
     }
 
     private void initializeControls(View view) {
-        if (HomeActivity.plusAddButton != null)
-            HomeActivity.plusAddButton.setVisibility(View.GONE);
+
         activity = getActivity();
-        session = new UserSessionManager(activity.getApplicationContext(), activity);
+        session = new UserSessionManager(getContext(), activity);
         gvImages =  view.findViewById(R.id.grid);
-        fabGallery_Button = (FloatingActionButton) view.findViewById(R.id.fab_gallery);
-        emptyGalleryLayout = (LinearLayout) view.findViewById(R.id.emptygallerylayout);
-        progressLayout = (LinearLayout) view.findViewById(R.id.progress_gallerylayout);
+        emptyGalleryLayout = (LinearLayout) view.findViewById(R.id.layout_empty);
+        progressLayout = (LinearLayout) view.findViewById(R.id.layout_progress);
         progressLayout.setVisibility(View.VISIBLE);
         otherImagesAdapter = new OtherImagesAdapter(activity);
         if (otherImagesAdapter.getCount() == 0) {
@@ -144,29 +131,6 @@ public class Image_Gallery_Fragment extends Fragment implements
         gallery.setGalleryInterfaceListener(this);
         gallery.execute();
 
-    }
-
-
-    private void bindControls() {
-
-        fabGallery_Button.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (!isAdded()) {
-                    return true;
-                }
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        selectImage();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        break;
-                    }
-                }
-                return true;
-            }
-        });
     }
 
     @Override
@@ -610,21 +574,10 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     }
 
-    public void deleteSelectedImages() {
-        DeleteGalleryImages task = new DeleteGalleryImages(getActivity(),
-                otherImagesAdapter.getSelectedImages(), otherImagesAdapter);
-        task.setOnDeleteListener(Image_Gallery_Fragment.this);
-        task.execute();
-    }
-
-    public void clearSelectedImages() {
-        otherImagesAdapter.resetCheckers();
-    }
-
     @Override
-    public void galleryImageDeleted() {
+    public void galleryImageDeleted()
+    {
         gvImages.invalidate();
-        otherImagesAdapter.resetCheckers();
     }
 
     public void addImage()

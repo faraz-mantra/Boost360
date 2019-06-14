@@ -77,7 +77,6 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
             temp = "error";
         }
         if (adapter != null) {
-            adapter.setList(Constants.storeSecondaryImages);
             adapter.notifyDataSetChanged();
         }
         if (deleteInterface != null)

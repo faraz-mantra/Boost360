@@ -146,21 +146,27 @@ public class SidePanelFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
 
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
-        progressbar = (ProgressBar) view.findViewById(R.id.ProgressBar);
-        meterValue = (TextView) view.findViewById(R.id.fragment_side_panel_progress_meter_value);
-        containerImage = (ImageView) view.findViewById(R.id.backgroundImage);
+        progressbar = view.findViewById(R.id.ProgressBar);
+        meterValue = view.findViewById(R.id.fragment_side_panel_progress_meter_value);
+        containerImage = view.findViewById(R.id.backgroundImage);
         siteMeterCalculation();
-        try {
+
+        try
+        {
             String versionName = mainActivity.getPackageManager().getPackageInfo(mainActivity.getPackageName(), 0).versionName;
-            TextView versionCode = (TextView) view.findViewById(R.id.version_name_text);
+            TextView versionCode = view.findViewById(R.id.version_name_text);
             versionCode.setText(versionName);
-        } catch (PackageManager.NameNotFoundException e) {
+        }
+
+        catch (PackageManager.NameNotFoundException e)
+        {
             e.printStackTrace();
         }
         Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
@@ -168,55 +174,31 @@ public class SidePanelFragment extends Fragment {
         whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
         defaultLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.dark_grey), PorterDuff.Mode.SRC_IN);
 
-        //containerImage.setIm
-        String category = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY);
-        int Imagedrawable = getCategoryBackgroundImage(category);
+        setBackgroundImage();
 
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
-            String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
-            if (!baseNameProfileImage.contains("http")) {
-                baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
-            }
-            if (baseNameProfileImage.length() > 0) {
-                Picasso.with(getActivity())
-                        .load(baseNameProfileImage)
-                        .resize(540, 0)
-                        .placeholder(R.drawable.general_services_background_img)
-                        .into(containerImage);
-                //Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.general_services_background_img).resize(0, 400).into(containerImage);
-            } else {
-                Picasso.with(getActivity()).load(R.drawable.general_services_background_img).into(containerImage);
-            }
-//            imageLoader.displayImage(baseNameProfileImage, containerImage);//
-        } else {
-            containerImage.setImageDrawable(getResources().getDrawable(Imagedrawable));
-        }
+        iconImage = view.findViewById(R.id.iconImage);
 
-        iconImage = (ImageView) view.findViewById(R.id.iconImage);
+        iconImage.setOnClickListener(v -> {
 
-        iconImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("ILUD", "Clicked Hello");
-                Intent businessAddress = new Intent(getActivity(), Edit_Profile_Activity.class);
-                startActivity(businessAddress);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
+            Intent businessAddress = new Intent(getActivity(), Edit_Profile_Activity.class);
+            startActivity(businessAddress);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
 
-        if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
+        if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL()))
+        {
             Picasso.with(getActivity())
                     .load(session.getFacebookPageURL())
-                    .rotate(90)                             // optional
+                    .rotate(90)
                     .into(iconImage);
         }
 
-        storeName = (TextView) view.findViewById(R.id.fpNameTextView);
+        storeName = view.findViewById(R.id.fpNameTextView);
         storeName.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         storeName.setTypeface(robotoMedium);
 
-        siteMeter = (RelativeLayout) view.findViewById(R.id.fragment_side_panel_site_meter);
+        siteMeter = view.findViewById(R.id.fragment_side_panel_site_meter);
         siteMeter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -765,28 +747,38 @@ public class SidePanelFragment extends Fragment {
         }
     }
 
-    public String getRealPathFromURI(Uri contentUri) {
+    public String getRealPathFromURI(Uri contentUri)
+    {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
+
         return cursor.getString(column_index);
     }
 
-    public String getPath(Uri uri) {
-        try {
+    public String getPath(Uri uri)
+    {
+        try
+        {
             String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        } catch (Exception e) {
         }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
-    public void uploadPrimaryPicture(String path) {
+    public void uploadPrimaryPicture(String path)
+    {
         mDrawerLayout.openDrawer(Gravity.LEFT);
         Constants.isImgUploaded = false;
         UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
@@ -795,46 +787,32 @@ public class SidePanelFragment extends Fragment {
 
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
-        if (Constants.IMAGEURIUPLOADED == false) {
-            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-            //int size = (int) Math.ceil(Math.sqrt(100 * 100));
-            if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != Constants.NOW_FLOATS_API_URL + "/FP/Actual/default.png")) {
-                String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
-                Picasso.with(getActivity())
-                        .load(baseNameProfileImage)
-                        .resize(200, 0)
-                        .placeholder(R.drawable.business_edit_profile_icon)
-                        .into(iconImage);
-                //Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
-            } else {
-                if (iconUrl != null && iconUrl.length() > 0) {
-                    Picasso.with(getActivity())
-                            .load(iconUrl)
-                            .resize(200, 0)
-                            .placeholder(R.drawable.business_edit_profile_icon)
-                            .into(iconImage);
-                } else {
-                    Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
-                }
-            }
-        }
-        if (session.getISEnterprise().equals("true")) {
+
+        if (session.getISEnterprise().equals("true"))
+        {
             upgradeLayout.setVisibility(View.GONE);
             addOnLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
         }
+
+        setThumbnail();
+        setBackgroundImage();
     }
 
-    public void siteMeterCalculation() {
+    public void siteMeterCalculation()
+    {
         Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
         Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
         siteMeterTotalWeight = 0;
+
         if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
             siteMeterTotalWeight += 10;
         }
+
         if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) && !getResources().getString(R.string.phoneNumber_percentage).equals("0")) {
             siteMeterTotalWeight += phoneWeight;
         }
@@ -858,40 +836,54 @@ public class SidePanelFragment extends Fragment {
         if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false)) {
             siteMeterTotalWeight += twitterWeight;
         }
+
         if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
                 !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE)) &&
                 !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE)) &&
-                !getResources().getString(R.string.address_percentage).equals("0")) {
+                !getResources().getString(R.string.address_percentage).equals("0"))
+        {
+
             siteMeterTotalWeight += businessAddressWeight;
         }
 
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0"))
+        {
             siteMeterTotalWeight += emailWeight;
         }
-        if (HomeActivity.StorebizFloats.size() < 5) {
+
+        if (HomeActivity.StorebizFloats.size() < 5)
+        {
             siteMeterTotalWeight += (HomeActivity.StorebizFloats.size() * onUpdate);
 
-        } else {
+        }
+
+        else
+        {
             siteMeterTotalWeight += 20;
         }
-        if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0")) {
+
+        if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0"))
+        {
             siteMeterTotalWeight += logoWeight;
         }
 
-        if (session.getBusinessHours()) {
+        if (session.getBusinessHours())
+        {
             siteMeterTotalWeight += businessTimingWeight;
         }
 
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight + "%");
 
-        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight) {
+        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight)
+        {
             session.setSiteHealth(siteMeterTotalWeight);
             OnBoardingApiCalls.updateData(session.getFpTag(), String.format("site_health:%s", siteMeterTotalWeight));
         }
     }
 
-    private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
+    private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes)
+    {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         analyticsTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         keyboardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -907,7 +899,6 @@ public class SidePanelFragment extends Fragment {
         aboutText.setTextColor(getResources().getColor(R.color.cell_text_color));
         shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
 
-
         dasbBoardImageView.setColorFilter(defaultLabelFilter);
         analyticsImageView.setColorFilter(defaultLabelFilter);
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
@@ -922,7 +913,6 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportImageView.setColorFilter(defaultLabelFilter);
         aboutImageView.setColorFilter(defaultLabelFilter);
         shareImageView.setColorFilter(defaultLabelFilter);
-
 
         homeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
@@ -940,15 +930,106 @@ public class SidePanelFragment extends Fragment {
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
-        if (tv != null) {
+        if (tv != null)
+        {
             tv.setTextColor(getResources().getColor(R.color.black));
         }
-        if (img != null) {
+
+        if (img != null)
+        {
             img.setColorFilter(whiteLabelFilter);
         }
-        if (llPaletes != null) {
+
+        if (llPaletes != null)
+        {
             llPaletes.setBackgroundColor(getResources().getColor(R.color.very_light_gray));
         }
     }
 
+    private void setBackgroundImage()
+    {
+        try
+        {
+            String category = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY);
+            int Imagedrawable = getCategoryBackgroundImage(category);
+
+            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0)
+            {
+                String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+
+                if (!baseNameProfileImage.contains("http"))
+                {
+                    baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+                }
+
+                if (baseNameProfileImage.length() > 0)
+                {
+                    Picasso.with(getActivity())
+                            .load(baseNameProfileImage)
+                            .resize(540, 0)
+                            .placeholder(R.drawable.general_services_background_img)
+                            .into(containerImage);
+                }
+
+                else
+                {
+                    Picasso.with(getActivity()).load(R.drawable.general_services_background_img).into(containerImage);
+                }
+            }
+
+            else
+            {
+                containerImage.setImageDrawable(getResources().getDrawable(Imagedrawable));
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void setThumbnail()
+    {
+        try
+        {
+            if (!Constants.IMAGEURIUPLOADED)
+            {
+                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+
+                if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != Constants.NOW_FLOATS_API_URL + "/FP/Actual/default.png")) {
+
+                    String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
+
+                    Picasso.with(getActivity())
+                            .load(baseNameProfileImage)
+                            .resize(200, 0)
+                            .placeholder(R.drawable.business_edit_profile_icon)
+                            .into(iconImage);
+                }
+
+                else
+                {
+                    if (iconUrl.length() > 0)
+                    {
+                        Picasso.with(getActivity())
+                                .load(iconUrl)
+                                .resize(200, 0)
+                                .placeholder(R.drawable.business_edit_profile_icon)
+                                .into(iconImage);
+                    }
+
+                    else
+                    {
+                        Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
+                    }
+                }
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
