@@ -185,6 +185,8 @@
                                 android:id="@+id/visitors_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -276,6 +278,8 @@
                                 android:id="@+id/visits_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -368,6 +372,8 @@
                                 android:id="@+id/map_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -459,6 +465,8 @@
                                 android:id="@+id/business_enq_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -544,6 +552,8 @@
                                 android:id="@+id/search_query_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -682,6 +692,8 @@
                                 android:id="@+id/facebook_updates_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -773,6 +785,8 @@
                                 android:id="@+id/vmn_progressbar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -918,6 +932,8 @@
                                 android:id="@+id/subscriber_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView
@@ -1011,6 +1027,8 @@
                                 android:id="@+id/order_progressBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
 
                             <TextView

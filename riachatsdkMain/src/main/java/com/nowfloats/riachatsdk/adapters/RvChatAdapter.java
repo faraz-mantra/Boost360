@@ -493,12 +493,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
             cardViewHolder.tvAddressText.setText(Html.fromHtml(getParsedPrefixPostfixText(section.getCardModel().getSections().get(1).getText())));
             cardViewHolder.tvAddrFooter.setText(Html.fromHtml(getParsedPrefixPostfixText(section.getCardModel().getCardFooter())));
-            Glide.with(mContext)
+
+            /*Glide.with(mContext)
                     .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
                     .apply(new RequestOptions()
                     .placeholder(R.drawable.default_product_image)
                     .error(R.drawable.default_product_image))
-                    .into(cardViewHolder.ivMap);
+                    .into(cardViewHolder.ivMap);*/
+
+            Picasso.with(mContext)
+                    .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
+                    .placeholder(R.drawable.default_product_image).into(cardViewHolder.ivMap);
+
             if (section.isShowDate()) {
                 cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 cardViewHolder.tvDateTime.setText(section.getDateTime());
@@ -523,12 +529,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardViewHolder.tvEdit.setEnabled(true);
 
 
-            Glide.with(mContext)
+            /*Glide.with(mContext)
                     .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.default_product_image)
                             .error(R.drawable.default_product_image))
-                    .into(cardViewHolder.ivMap);
+                    .into(cardViewHolder.ivMap);*/
+
+
+            Picasso.with(mContext)
+                    .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
+                    .placeholder(R.drawable.default_product_image).into(cardViewHolder.ivMap);
+
             /*if (section.isShowDate()) {
                 cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 cardViewHolder.tvDateTime.setText(section.getDateTime());
@@ -651,12 +663,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 layoutParams.width = (int) TARGET_WIDTH;
                 imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                Glide.with(mContext)
+                /*Glide.with(mContext)
                         .load(getParsedPrefixPostfixText(imageURL))
                         .apply(new RequestOptions()
                                 .centerCrop()
                                 .placeholder(R.drawable.site_sc_default))
-                        .into(imageViewHolder.ivMainImage);
+                        .into(imageViewHolder.ivMainImage);*/
+
+                Picasso.with(mContext)
+                        .load(getParsedPrefixPostfixText(imageURL))
+                        .centerCrop()
+                        .placeholder(R.drawable.site_sc_default).into(imageViewHolder.ivMainImage);
+
 
             } else {
 
@@ -756,13 +774,19 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
-            Glide.with(mContext)
+            /*Glide.with(mContext)
                     .asGif()
                     .load(section.getUrl())
                     .apply(new RequestOptions()
                             .centerCrop()
                             .placeholder(R.drawable.default_product_image))
-                    .into(imageViewHolder.ivMainImage);
+                    .into(imageViewHolder.ivMainImage);*/
+
+            Picasso.with(mContext)
+                    .load(section.getUrl())
+                    .centerCrop()
+                    .placeholder(R.drawable.default_product_image).into(imageViewHolder.ivMainImage);
+
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());
             } else {

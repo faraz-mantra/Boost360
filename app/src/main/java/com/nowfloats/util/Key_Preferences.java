@@ -72,6 +72,8 @@ public class Key_Preferences {
 
     public static String GET_FP_DETAILS_IMAGE_URI = "GET_FP_DETAILS_IMAGE_URI";
 
+    public static String GET_FP_DETAILS_FAVICON_IMAGE_URI = "GET_FP_DETAILS_FAVICON_IMAGE_URI";
+
     public static String GET_FP_DETAILS_TILE_IMAGE_URI = "GET_FP_DETAILS_TILE_IMAGE_URI";
 
     public static String GET_FP_DETAILS_SUNDAY_START_TIME = "GET_FP_DETAILS_SUNDAY_START_TIME";

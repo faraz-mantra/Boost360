@@ -74,6 +74,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     public static String pattern = "yyyy/MM/dd";
     private VisitsModel currVisitsModel;
     int totalVisits = -1;
+    int year;
     public BatchType batchType;
     public SiteViewsAnalytics.VisitsType mVisitType;
     private MaterialDialog.Builder materialDialog;
@@ -90,6 +91,8 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 
     private void showInfoDialog() {
         String visitsName = "";
+        String title;
+
         switch (mVisitType) {
             case TOTAL:
                 visitsName = getString(R.string.overall_visits);
@@ -101,7 +104,18 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 visitsName = getString(R.string.unique_visitors);
                 break;
         }
-        String title = String.format("%s in a %s", visitsName, tabType.toLowerCase());
+
+        if(tabType.equals(getString(R.string.Year).toLowerCase()))
+        {
+            title = String.format("%s in %s %s", visitsName, tabType.toLowerCase(), year);
+        }
+
+        else
+        {
+            title = String.format("%s in a %s", visitsName, tabType.toLowerCase());
+        }
+
+        //String title = String.format("%s in a %s", visitsName, tabType.toLowerCase());
 
         String content = String.format(getString(mVisitType == SiteViewsAnalytics.VisitsType.UNIQUE ?
                 R.string.unique_visitors_message : R.string.total_visits_message), tabType.toLowerCase());
@@ -148,6 +162,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         if (getArguments() == null) return;
         int pos = getArguments().getInt("pos");
+        year = getArguments().getInt("year");
         totalVisits = getArguments().getInt("totalViews");
         mVisitType = (SiteViewsAnalytics.VisitsType) getArguments().getSerializable(VISITS_TYPE);
         switch (pos) {
@@ -195,7 +210,17 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 visitsName = getString(R.string.unique_visitors);
                 break;
         }
-        visitsTitle.setText(String.format("%s in a %s", visitsName, tabType.toLowerCase()));
+
+        if(tabType.equals(getString(R.string.Year).toLowerCase()))
+        {
+            visitsTitle.setText(String.format("%s in %s %s", visitsName, tabType.toLowerCase(), year));
+        }
+
+        else
+        {
+            visitsTitle.setText(String.format("%s in a %s", visitsName, tabType.toLowerCase()));
+        }
+
         if (totalVisits != 0) {
             visitsCount.setText(String.valueOf(totalVisits));
         } else if (getArguments().containsKey("hashmap")) {
@@ -440,7 +465,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 }
             }
             visitsCount.setText(String.valueOf(totalCount));
-            Log.v("visitsModelCallback", "Success 0");
+            Log.v("visitsModelCallback", "Success: " + totalCount);
             updateData(visitsModel);
         }
 

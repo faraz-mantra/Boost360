@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/galleryCancel"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/gallery_cancel"
             android:layout_marginLeft="10dp"
             android:padding="7dp"
@@ -24,7 +24,7 @@
             android:id="@+id/deleteGalleryImage"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/delete_dustbin_button"
+            android:src="@drawable/ic_menu_delete"
             android:layout_gravity="right"
             android:padding="6dp"
             android:layout_marginRight="10dp"

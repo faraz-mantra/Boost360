@@ -21,6 +21,9 @@ allprojects {
             url "http://repo.apxor.com/artifactory/list/libs-release-android"
         }
         maven { url "https://jitpack.io" }
+        maven {
+            url  "http://dl.bintray.com/lukaville/maven"
+        }
     }
 }
 subprojects {

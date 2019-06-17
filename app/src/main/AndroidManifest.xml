@@ -26,14 +26,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.vending.BILLING" />
-
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission
@@ -47,20 +42,27 @@
     <application
         android:name="com.nowfloats.Volley.AppController"
         android:allowBackup="true"
+        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
         android:hardwareAccelerated="true"
         android:icon="@drawable/app_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:name,android:theme">
-        <activity android:name="com.nowfloats.Product_Gallery.PickupAddressActivity"></activity>
+        android:usesCleartextTraffic="true"
+        tools:replace="android:name,android:theme,android:appComponentFactory">
+        <activity android:name="com.nowfloats.Image_Gallery.ImageViewerActivity"></activity>
         <activity
-            android:name="com.nowfloats.Product_Gallery.ManageProductActivity"
-            android:windowSoftInputMode="adjustPan"
+            android:name="com.nowfloats.ProductGallery.PickupAddressActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyTheme" />
+            android:theme="@style/MyTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.nowfloats.Product_Gallery.ProductCatalogActivity"
+            android:name="com.nowfloats.ProductGallery.ManageProductActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.nowfloats.ProductGallery.ProductCatalogActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeActionBar" />
 
@@ -287,6 +289,19 @@
             android:label="@string/title_activity_business__logo_"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
+            android:label="@string/title_activity_background_image_gallery"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.ImageMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"
             android:label="@string/title_activity_social__sharing_"
             android:screenOrientation="portrait">
@@ -467,11 +482,11 @@
             android:name="com.nowfloats.Store.DomainLookup"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.Product_Gallery.Product_Detail_Activity"
+            android:name="com.nowfloats.ProductGallery.Product_Detail_Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.nowfloats.Product_Gallery.Product_Detail_Activity_V45"
+            android:name="com.nowfloats.ProductGallery.Product_Detail_Activity_V45"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -558,7 +573,7 @@
             android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
             android:authorities="${applicationId}.riachatsdk.provider" />
 
-        <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
+        <service android:name="com.nowfloats.ProductGallery.Service.MultipleImageUploadService" />
 
         <activity
             android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"
@@ -567,7 +582,7 @@
             android:name="com.nowfloats.domain.DomainDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.Product_Gallery.ProductGalleryActivity"
+            android:name="com.nowfloats.ProductGallery.ProductGalleryActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.CustomPage.CustomPageActivity"
@@ -687,11 +702,9 @@
             android:configChanges="mcc|mnc|locale|keyboard|keyboardHidden|screenLayout|fontScale|uiMode|orientation|screenSize|layoutDirection"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:noHistory="true"
             android:screenOrientation="unspecified"
             android:theme="@style/Theme.AppCompat.Light.Dialog"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"
-            tools:replace="android:screenOrientation" />
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
@@ -757,7 +770,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.Product_Gallery.MultipleProductImageActivity"
+            android:name="com.nowfloats.ProductGallery.MultipleProductImageActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
 
         <provider
@@ -769,8 +782,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-
     </application>
 
 </manifest>

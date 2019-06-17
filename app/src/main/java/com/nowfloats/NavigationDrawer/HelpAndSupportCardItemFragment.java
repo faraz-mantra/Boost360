@@ -73,22 +73,30 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
             case CHC:
                 emailTv.setVisibility(View.GONE);
                 view.findViewById(R.id.tv_email).setVisibility(View.GONE);
-                callActionBtn.setText("CALL NOW");
-                requestActionBtn.setVisibility(View.GONE);
+                //callActionBtn.setText("CALL NOW");
+                requestActionBtn.setVisibility(View.VISIBLE);
+                callActionBtn.setVisibility(View.GONE);
                 descriptionTv.setText("Your Local City Consultant");
                 personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_consultant_female:R.drawable.ic_consultant_male);
                 break;
-            case WEB:
-                callActionBtn.setText("CHAT NOW");
-                personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_support_female:R.drawable.ic_support_male);
-                descriptionTv.setText("Your Web Consultant");
-                break;
-            case DEFAULT:
-                callActionBtn.setText("CALL NOW");
-                requestActionBtn.setVisibility(View.GONE);
-                personImage.setImageResource(R.drawable.ria_circle_image);
-                descriptionTv.setText("Customer Support");
+//            case WEB:
+//                //callActionBtn.setText("CHAT NOW");
+//                //personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_support_female:R.drawable.ic_support_male);
+//                //descriptionTv.setText("Your Web Consultant");
+//                descriptionTv.setText("Customer Support");
+//                personImage.setImageResource(R.drawable.ria_circle_image);
+//                break;
+//            case DEFAULT:
+//                //callActionBtn.setText("CALL NOW");
+//                //requestActionBtn.setVisibility(View.GONE);
+//                requestActionBtn.setVisibility(View.VISIBLE);
+//                callActionBtn.setVisibility(View.GONE);
+//                personImage.setImageResource(R.drawable.ria_circle_image);
+//                descriptionTv.setText("Customer Support");
             default:
+
+                descriptionTv.setText("Customer Support");
+                personImage.setImageResource(R.drawable.ria_circle_image);
                 break;
         }
         nameTv.setText(riaSupportModel.getName());
@@ -101,12 +109,13 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_call_action:
-                if (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == HelpAndSupportFragment.MemberType.WEB){
+                /*if (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == HelpAndSupportFragment.MemberType.WEB){
                     ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 }else{
                     Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                     MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
-                }
+                }*/
+                ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 break;
             case R.id.tv_person_email:
                 MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_EMAIL,null);

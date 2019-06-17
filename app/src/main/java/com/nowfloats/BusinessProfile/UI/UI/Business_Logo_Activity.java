@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuffColorFilter;
@@ -43,6 +44,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivityBusinessLogoBinding;
 
 import java.io.File;
 import java.io.InputStream;
@@ -68,12 +70,28 @@ public class Business_Logo_Activity extends AppCompatActivity {
     private final int gallery_req_id = 0;
     private final int media_req_id = 1;
 
+    ActivityBusinessLogoBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business__logo);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_business__logo);
+        //setContentView(R.layout.activity_business__logo);
+
+        setSupportActionBar(binding.appBar.toolbar);
         Methods.isOnline(Business_Logo_Activity.this);
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+            getSupportActionBar().setTitle("");
+        }
+
+        binding.appBar.toolbarTitle.setText(getResources().getString(R.string.business_logo));
+
+        /*toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +99,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         setTitle(getResources().getString(R.string.logo));
 
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText(getResources().getString(R.string.business_logo));
+        titleTextView.setText(getResources().getString(R.string.business_logo));*/
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);

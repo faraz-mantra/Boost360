@@ -16,10 +16,10 @@
             android:layout_height="match_parent"
             android:fillViewport="true">
 
-            <com.nowfloats.Product_Gallery.widgets.TagView
+            <com.nowfloats.ProductGallery.widgets.TagView
                 android:id="@+id/tv_product_keyword"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"></com.nowfloats.Product_Gallery.widgets.TagView>
+                android:layout_height="250dp"></com.nowfloats.ProductGallery.widgets.TagView>
 
 
         </ScrollView>

@@ -433,15 +433,28 @@ public class Constants {
         }
     }
 
-    public enum Type
-    {
-        PRODUCT, SERVICE
-    }
-
     public enum PaymentAndDeliveryMode
     {
-        ASSURED_PURCHASE, MY_PAYMENT_GATEWAY, UNIQUE_PAYMENT_URL, DONT_WANT_TO_SELL
+        ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
+
+        private String value;
+
+        PaymentAndDeliveryMode(String value)
+        {
+            this.value = value;
+        }
+
+        public String getValue()
+        {
+            return this.value;
+        }
+
+        public void setValue(String value)
+        {
+            this.value = value;
+        }
     }
+
 
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;
@@ -561,4 +574,19 @@ public class Constants {
             return this.value;
         }
     }
+
+
+    /**
+     * Dev URL
+     */
+    //public static String DEV_ASSURED_PURCHASE_URL = "http://ec2-13-232-212-139.ap-south-1.compute.amazonaws.com";
+    public static String DEV_ASSURED_PURCHASE_URL = "https://assuredpurchase.withfloats.com";
+
+    /**
+     * Dev Adapter
+     */
+    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/").setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter assuredPurchaseRestAdapterDev = new RestAdapter.Builder().setEndpoint(DEV_ASSURED_PURCHASE_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com").setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+
 }

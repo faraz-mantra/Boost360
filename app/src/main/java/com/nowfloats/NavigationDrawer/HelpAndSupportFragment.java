@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
+import com.nowfloats.network.MyOkHttpClient;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -31,10 +34,13 @@ import com.rd.PageIndicatorView;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -51,7 +57,7 @@ public class HelpAndSupportFragment extends Fragment {
     private ProgressDialog dialog;
 
     enum MemberType {
-        CHC, WEB,TA, DEFAULT;
+        CHC, WEB, TA, DEFAULT, WC
     }
 
     @Override
@@ -96,10 +102,11 @@ public class HelpAndSupportFragment extends Fragment {
         mRiaSupportModelList = new ArrayList<>(2);
         UserSessionManager manager = new UserSessionManager(mContext, getActivity());
         if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
-            HashMap<String, String> param = new HashMap<>();
-            param.put("clientId", Constants.clientId);
-            param.put("fpTag", manager.getFpTag());
-            getRiaMembers(param, view);
+            //HashMap<String, String> param = new HashMap<>();
+            //param.put("clientId", Constants.clientId);
+            //param.put("fpTag", manager.getFpTag());
+            //getRiaMembers(param, view);
+            new GetMembers(Constants.clientId, manager.getFpTag(), view).execute();
         } else {
             addDefaultRiaData();
             setAdapterWithPager(view);
@@ -134,6 +141,112 @@ public class HelpAndSupportFragment extends Fragment {
         view.setMovementMethod(LinkMovementMethod.getInstance());
         view.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }
+
+
+    class GetMembers extends AsyncTask<String, String, List<RiaSupportModel>>
+    {
+        private int responseCode;
+        private View view;
+        private String url = "https://ria.withfloats.com/api/RIASupportTeam/GetAllMembersForFP?fpTag=";
+
+        private OkHttpClient client = MyOkHttpClient.getOkHttpClient();
+
+        private GetMembers(String clientId, String fpTag, final View view)
+        {
+            this.view = view;
+            this.url = this.url.concat(fpTag).concat("&clientId=").concat(clientId);
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            showProgress();
+        }
+
+
+        @Override
+        protected List<RiaSupportModel> doInBackground(String... strings)
+        {
+            List<RiaSupportModel> models = new ArrayList<>();
+
+            okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
+            builder.url(url);
+            builder.get();
+
+            okhttp3.Request request = builder.build();
+
+            try
+            {
+                okhttp3.Response response = client.newCall(request).execute();
+                responseCode = response.code();
+
+                JSONArray array = new JSONArray(response.body().string());
+
+                for(int i=0; i<array.length(); i++)
+                {
+                    RiaSupportModel model = new Gson().fromJson(array.get(i).toString(), RiaSupportModel.class);
+                    models.add(model);
+                }
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            return models;
+        }
+
+        @Override
+        protected void onPostExecute(List<RiaSupportModel> response)
+        {
+            super.onPostExecute(response);
+
+            if (responseCode >= 200 && responseCode <= 300)
+            {
+                for (RiaSupportModel model : response)
+                {
+                    if (TextUtils.isEmpty(model.getType()))
+                    {
+                        model.setType(MemberType.WEB.toString());
+                        mRiaSupportModelList.add(model);
+                    }
+
+                    else if (MemberType.CHC.name().equals(model.getType()))
+                    {
+                        mRiaSupportModelList.add(0, model);
+                    }
+
+                    else if (MemberType.TA.name().equals(model.getType()))
+                    {
+                        model.setType(MemberType.TA.toString());
+                        mRiaSupportModelList.add(model);
+                    }
+
+                    else if (MemberType.WC.name().equals(model.getType()))
+                    {
+                        model.setType(MemberType.WC.toString());
+                        mRiaSupportModelList.add(model);
+                    }
+                }
+
+                if(mRiaSupportModelList.size() == 0)
+                {
+                    addDefaultRiaData();
+                }
+            }
+
+            else
+            {
+                addDefaultRiaData();
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
+            }
+
+            setAdapterWithPager(view);
+        }
+    }
+
 
     private void getRiaMembers(HashMap<String, String> map, final View view) {
         showProgress();

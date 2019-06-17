@@ -12,7 +12,6 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/layout_product_image___"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -23,7 +22,6 @@
                     android:text="Inventory Availability" />
 
                 <ImageButton
-                    android:id="@+id/ib_info_product_image____"
                     style="@style/ProductHelpButtonStyle" />
 
             </LinearLayout>
@@ -86,7 +84,6 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -97,7 +94,6 @@
                             android:text="Allow COD Orders" />
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image"
                             style="@style/ProductHelpButtonStyle" />
 
                     </LinearLayout>
@@ -148,7 +144,6 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:id="@+id/layout_product_image__"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -159,7 +154,6 @@
                             android:text="Allow prepaid online orders" />
 
                         <ImageButton
-                            android:id="@+id/ib_info_product_image_"
                             style="@style/ProductHelpButtonStyle" />
 
                     </LinearLayout>

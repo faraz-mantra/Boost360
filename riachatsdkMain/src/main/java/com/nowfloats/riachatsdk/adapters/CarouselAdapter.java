@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.models.Items;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Map;
@@ -71,11 +72,16 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
 
         String imageURL = getParsedPrefixPostfixText(items.getImageUrl());
         carouselItemHolder.ivLogo.setImageResource(R.drawable.site_sc_default);
-        Glide.with(mContext)
+        /*Glide.with(mContext)
                 .load(getParsedPrefixPostfixText(imageURL))
                 .apply(new RequestOptions()
                         .centerCrop()
                         .placeholder(R.drawable.site_sc_default))
+                .into(carouselItemHolder.ivLogo);*/
+
+        Picasso.with(mContext).load(getParsedPrefixPostfixText(getParsedPrefixPostfixText(imageURL)))
+                .placeholder(R.drawable.site_sc_default)
+                .centerCrop()
                 .into(carouselItemHolder.ivLogo);
 
         carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position ? R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);

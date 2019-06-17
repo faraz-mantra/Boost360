@@ -1040,11 +1040,16 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         if (!url.contains("http")) {
 
-            Glide.with(ChatViewActivity.this)
+            /*Glide.with(ChatViewActivity.this)
                     .load(getParsedPrefixPostfixText(url))
                     .apply(new RequestOptions()
                             .fitCenter()
                             .placeholder(R.drawable.site_sc_default))
+                    .into(ivContent);*/
+
+            Picasso.with(ChatViewActivity.this).load(getParsedPrefixPostfixText(url))
+                    .placeholder(R.drawable.site_sc_default)
+                    .centerCrop()
                     .into(ivContent);
         } else {
 

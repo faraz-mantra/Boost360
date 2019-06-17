@@ -187,6 +187,7 @@
                 android:textSize="@dimen/adapter_item_product_flipped_text_size"
                 android:text="CREATE OFFER"
                 android:background="#dddddd"
+                android:visibility="gone"
                 android:textColor="@android:color/tab_indicator_text" />
 
             <Button

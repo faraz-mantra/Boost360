@@ -1,6 +1,5 @@
 package com.nowfloats.NavigationDrawer;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
@@ -25,7 +24,6 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -88,8 +86,8 @@ import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
-import com.nowfloats.Product_Gallery.ProductGalleryActivity;
-import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
+import com.nowfloats.ProductGallery.ProductGalleryActivity;
+import com.nowfloats.ProductGallery.Product_Detail_Activity_V45;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.AddOnFragment;
 import com.nowfloats.Store.DomainLookup;
@@ -100,6 +98,7 @@ import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
+import com.nowfloats.manageinventory.ManageInboxFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.manageinventory.OrderDetailsActivity;
 import com.nowfloats.manageinventory.SellerAnalyticsActivity;
@@ -115,7 +114,6 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -136,7 +134,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -163,6 +160,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragment manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
+    ManageInboxFragment manageInboxFragment;
     UpgradesFragment upgradesFragment;
     AddOnFragment addOnFragment;
     AboutFragment aboutFragment;
@@ -244,7 +242,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             createView();
         }
 
-        ////WidgetKey.getWidgets(session);
+        //WidgetKey.getWidgets(session, this);
     }
 
     /*private void getPermissions() {
@@ -1258,7 +1256,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
-                } else if (nextScreen.equals(getString(R.string.upgrades))) {
+                }
+                else if (nextScreen.equals(getString(R.string.manage_inbox))) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInboxFragment, "ManageInbox")
+                            .commit();
+//                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
+//                    startActivity(socialSharingIntent);
+                }
+                else if (nextScreen.equals(getString(R.string.upgrades))) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, upgradesFragment, "upgradesFragment")
                             .commit();
@@ -1531,6 +1536,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         manageCustomerFragment = new ManageCustomerFragment();
         keyboardFragment = new KeyboardFragment();
         manageInventoryFragment = new ManageInventoryFragment();
+        manageInboxFragment = new ManageInboxFragment();
         upgradesFragment = new UpgradesFragment();
         addOnFragment = new AddOnFragment();
         aboutFragment = new AboutFragment();

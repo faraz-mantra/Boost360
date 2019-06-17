@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/quantity_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/white_rectangle_background">
+
+    <!--
+    <TextView
+        android:id="@+id/tv_stock_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:layout_gravity="center"
+        android:text="Out of Stock"
+        android:visibility="gone"
+        android:textColor="@color/myPrimaryColor"
+        android:textSize="13sp" />
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/remove_quantity"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:onClick="onClick"
+            android:padding="5dp"
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_quantity_add"
+            android:background="@drawable/quantity_button_remove" />
+
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:textColor="#4a4a4a" />
+
+
+        <!--
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+        -->
+
+        <ImageButton
+            android:id="@+id/add_quantity"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:onClick="onClick"
+            android:padding="5dp"
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_quantity_add"
+            android:background="@drawable/quantity_button_add" />
+
+    </LinearLayout>
+
+</LinearLayout>

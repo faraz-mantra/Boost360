@@ -177,6 +177,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
                 break;
             case mm:
                 map.put("startDate",String.format(Locale.ENGLISH,"%s/%s/%s",c.get(Calendar.YEAR),"01","01"));
+                b.putInt("year", c.get(Calendar.YEAR));
                 break;
         }
         b.putInt("pos",viewType.val);
@@ -227,6 +228,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         b.putInt("pos", UniqueVisitorsFragment.BatchType.mm.val);
         b.putSerializable("hashmap",map);
         b.putSerializable(VISITS_TYPE,mVisitsType);
+        b.putInt("year", yearSelected);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_analytics_fragment, UniqueVisitorsFragment.getInstance(b))
                 .commit();

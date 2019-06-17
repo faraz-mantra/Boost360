@@ -73,6 +73,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.widget.WidgetKey;
 import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
@@ -154,6 +155,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     Handler handler = new Handler();
 
 //    private int lastGoogleAccounts = 0;
+
+    private boolean isWebsiteEnabled = true;
+    private boolean isFacebookEnabled = true;
+    private boolean isTwitterEnabled = true;
+    private boolean isOthersEnabled = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -1679,5 +1685,52 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         mGoogleApiClient.unregisterConnectionCallbacks(this);
         mGoogleApiClient.unregisterConnectionFailedListener(this);
     }
-}
 
+
+    /*private boolean isNewPlanPricing()
+    {
+
+        if(!WidgetKey.isNewPricingPlan)
+        {
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
+
+            return false;
+        }
+
+        else
+        {
+            String website = WidgetKey.getPropertyValue(WidgetKey.WIDGET_MEDIA_MANAGEMENT, WidgetKey.WIDGET_PROPERTY_WEBSITE);
+            String facebook = WidgetKey.getPropertyValue(WidgetKey.WIDGET_MEDIA_MANAGEMENT, WidgetKey.WIDGET_PROPERTY_FACEBOOK);
+            String twitter = WidgetKey.getPropertyValue(WidgetKey.WIDGET_MEDIA_MANAGEMENT, WidgetKey.WIDGET_PROPERTY_TWITTER);
+            String others = WidgetKey.getPropertyValue(WidgetKey.WIDGET_MEDIA_MANAGEMENT, WidgetKey.WIDGET_PROPERTY_OTHERS);
+
+            if(website.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                isWebsiteEnabled = false;
+            }
+
+            if(facebook.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                isFacebookEnabled = false;
+            }
+
+            if(twitter.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                isTwitterEnabled = false;
+            }
+
+            if(others.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                isOthersEnabled = false;
+            }
+
+            String fbPage = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SOCIAL_MEDIA, WidgetKey.WIDGET_PROPERTY_FB_PAGE);
+            String website = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SOCIAL_MEDIA, WidgetKey.WIDGET_PROPERTY_WEBSITE);
+
+            return true;
+        }
+    }*/
+}

@@ -16,7 +16,7 @@ import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
-import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
+import com.nowfloats.ProductGallery.Product_Detail_Activity_V45;
 import com.thinksity.R;
 
 /**
