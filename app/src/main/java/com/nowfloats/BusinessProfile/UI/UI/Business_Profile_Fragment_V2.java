@@ -361,7 +361,8 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                 @Override
                                 public void onClick(View v) {
                                     MixPanelController.track(EventKeysWL.CONTACT_INFO, null);
-                                    Intent contactInfo = new Intent(activity, Contact_Info_Activity.class);
+                                    //Intent contactInfo = new Intent(activity, Contact_Info_Activity.class);
+                                    Intent contactInfo = new Intent(activity, ContactInformationActivity.class);
                                     startActivity(contactInfo);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
