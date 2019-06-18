@@ -886,6 +886,16 @@ public class Methods {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
     }
 
+    public interface SmsInterface
+    {
+        @GET("/discover/v1/floatingpoint/SendOTPIndia")
+        void sendSms(@QueryMap Map hashMap, Callback<Boolean> response);
+
+        @GET("/discover/v1/floatingpoint/VerifyOTP")
+        void verifySms(@QueryMap Map hashMap, Callback<Boolean> response);
+    }
+
+
     public interface SmsApi {
 
         @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})

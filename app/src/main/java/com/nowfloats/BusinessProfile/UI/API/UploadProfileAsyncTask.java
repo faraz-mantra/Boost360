@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.Login.UserSessionManager;
@@ -142,7 +143,10 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
 
 		response  = getDataFromServer(content,Constants.HTTP_POST,
                 Constants.FpsUpdate,Constants.BG_SERVICE_CONTENT_TYPE_JSON);
-		
+
+		Log.d("CONTACT_INFORMATION", "URL: " + Constants.FpsUpdate);
+		Log.d("CONTACT_INFORMATION", "DATA: " + content);
+
 		// TODO Auto-generated method stub
 		return response;
 	}

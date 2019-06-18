@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/margin_20"
     android:orientation="vertical">
 
     <TextView
@@ -10,14 +11,15 @@
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
+        android:gravity="center"
         android:text="To change your primary number, you would need to verify using a one time password (OTP)." />
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Enter new number"
+        style="@style/ProductEditTextStyle"
+        android:layout_marginTop="20dp"
+        android:hint="Enter New Number"
+        android:gravity="center"
         android:inputType="phone"
         android:paddingLeft="24dp"
         android:paddingRight="24dp" />

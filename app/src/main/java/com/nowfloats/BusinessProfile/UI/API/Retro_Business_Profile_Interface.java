@@ -1,5 +1,7 @@
 package com.nowfloats.BusinessProfile.UI.API;
 
+import com.nowfloats.BusinessProfile.UI.Model.ContactInformationUpdateModel;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -20,6 +22,12 @@ public interface Retro_Business_Profile_Interface {
     @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST("/Discover/v1/floatingpoint/update/")
     void post_updateBusinessDetails(@Body JSONObject jsonObject,Callback<ArrayList<String>> callback);
+
+
+    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @POST("/Discover/v1/floatingpoint/update/")
+    void updateContactInformation(@Body ContactInformationUpdateModel body, Callback<ArrayList<String>> callback);
+
 
 //    @Multipart
 //    @Headers({"Content-Type: application/json","Accept: application/json"})

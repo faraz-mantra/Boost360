@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:layout_marginTop="@dimen/margin_15"
             android:hint="Enter 4 digit OTP"
             android:textColorHint="@color/gray_transparent" />
@@ -101,6 +102,7 @@
         android:text="@string/otp_over_call"
         android:textColor="@color/primary_color"
         android:textSize="15sp"
+        android:visibility="gone"
         android:textStyle="bold" />
 
 </LinearLayout>

@@ -401,6 +401,7 @@
                         android:layout_gravity="bottom"
                         android:layout_marginTop="@dimen/margin_40"
                         android:layout_marginBottom="@dimen/margin_10"
+                        android:onClick="onSaveClick"
                         android:text="SAVE CONTACT INO" />
 
                 </LinearLayout>
