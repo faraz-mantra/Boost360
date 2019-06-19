@@ -15,12 +15,14 @@
 
         <EditText
             android:id="@+id/editText"
+            style="@style/ProductEditTextStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:layout_marginTop="@dimen/margin_15"
             android:hint="Enter 4 digit OTP"
+            android:maxLength="4"
+            android:digits="0123456789"
             android:textColorHint="@color/gray_transparent" />
 
         <TextView
@@ -37,18 +39,17 @@
 
         <TextView
             android:id="@+id/tv_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="28dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_20"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:gravity="center_vertical"
-            android:padding="@dimen/margin_10"
+            android:gravity="center"
             android:text="Verify"
             android:textAllCaps="true"
             android:textColor="@color/primary_color"
-            android:textSize="@dimen/margin_20"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -84,7 +85,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:text="Resend OTP"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/primary_color"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 

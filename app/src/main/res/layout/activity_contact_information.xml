@@ -54,13 +54,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_call_tracker_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_call_tracker_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >
@@ -87,6 +87,7 @@
                             style="@style/ProductEditTextStyle"
                             android:layout_weight="1"
                             android:hint="XXXXXXXXXX"
+                            android:enabled="false"
                             android:inputType="number"/>
 
                         <TextView
@@ -106,13 +107,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_display_contact_number_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_display_contact_number_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >
@@ -137,13 +138,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_display_contact_number_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_display_contact_number_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >
@@ -168,13 +169,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_display_contact_number_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layout_display_contact_number_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >

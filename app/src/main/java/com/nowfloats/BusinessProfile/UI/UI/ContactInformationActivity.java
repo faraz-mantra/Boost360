@@ -18,12 +18,16 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
 import com.nowfloats.BusinessProfile.UI.API.Retro_Business_Profile_Interface;
 import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.Model.ContactInformationUpdateModel;
+import com.nowfloats.BusinessProfile.UI.Model.WhatsAppBusinessNumberModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.helper.ui.BaseActivity;
+import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
+import com.nowfloats.manageinventory.models.WAAddDataModel;
+import com.nowfloats.manageinventory.models.WaUpdateDataModel;
+import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -46,6 +50,8 @@ public class ContactInformationActivity extends BaseActivity
     ActivityContactInformationBinding binding;
     private UserSessionManager session;
     private MaterialDialog dialog, otpDialog, progressbar;
+    private boolean VMN_Dialog;
+    private WhatsAppBusinessNumberModel numberModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,15 +82,10 @@ public class ContactInformationActivity extends BaseActivity
                         showOtpDialog();
                     }
 
-                    /*else
+                    else
                     {
-                        MaterialDialog dialog = dialog();
-
-                        if (!isFinishing())
-                        {
-                            dialog.show();
-                        }
-                    }*/
+                        dialog().show();
+                    }
                 }
 
                 return true;
@@ -92,6 +93,7 @@ public class ContactInformationActivity extends BaseActivity
 
         this.initProgressBar();
         this.setData();
+        this.getWhatsAppNumber(session.getFpTag());
     }
 
 
@@ -114,7 +116,6 @@ public class ContactInformationActivity extends BaseActivity
 
         dialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
-                .title("Change Primary Number")
                 .negativeText("Cancel")
                 .positiveText("Send OTP")
                 .autoDismiss(false)
@@ -125,14 +126,14 @@ public class ContactInformationActivity extends BaseActivity
 
                     String numText = number.getText().toString().trim();
 
-                    if (numText.length() > 0)
+                    if (numText.length() >= 6)
                     {
                         sendSms(numText);
                     }
 
                     else
                     {
-                        Toast.makeText(ContactInformationActivity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ContactInformationActivity.this, getResources().getString(R.string.enter_password_6to12_char), Toast.LENGTH_SHORT).show();
                     }
                 })
                 .onNegative((dialog, which)-> dialog.dismiss()).show();
@@ -170,13 +171,10 @@ public class ContactInformationActivity extends BaseActivity
 
     private void otpVerifyDialog(final String number)
     {
-        //call send otp api
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify, null);
         final EditText otp = view.findViewById(R.id.editText);
-        //otpEditText = otp;
         final TextView tvNumber = view.findViewById(R.id.tv_number);
         tvNumber.setText("(" + number + ")");
-        TextView tvOTPOverCall = view.findViewById(R.id.tv_get_otp_over_call);
         TextView resend = view.findViewById(R.id.resend_tv);
 
         resend.setOnClickListener(v-> sendSms(number));
@@ -188,14 +186,12 @@ public class ContactInformationActivity extends BaseActivity
                 .canceledOnTouchOutside(false).show();
 
         TextView tvSubmit = view.findViewById(R.id.tv_submit);
-        tvOTPOverCall.setOnClickListener(v-> /*reSendOTPOverCall(number)*/ {});
         tvSubmit.setOnClickListener(v-> {
 
             String numText = otp.getText().toString().trim();
 
             if (numText.length() > 0)
             {
-                //new VerifySMS(number, numText).execute();
                 verifySms(number, numText);
             }
 
@@ -236,6 +232,39 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
+    private MaterialDialog dialog()
+    {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_link_layout, null, false);
+        TextView message = dialogView.findViewById(R.id.toast_message_to_contact);
+
+        if (VMN_Dialog)
+        {
+            message.setText("Call tracker is enabled. You will receive the call on your primary number." + getString(R.string.primary_contact_number_message));
+        }
+
+        else
+        {
+            message.setText(getString(R.string.primary_contact_number_message));
+        }
+
+        return new MaterialDialog.Builder(ContactInformationActivity.this)
+                .title("Change Number")
+                .customView(dialogView, false)
+                .positiveText(getString(R.string.ok))
+                .positiveColorRes(R.color.primaryColor)
+                .callback(new MaterialDialog.ButtonCallback() {
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog)
+                    {
+                        super.onPositive(dialog);
+                    }
+
+                })
+                .build();
+    }
+
+
     private void hideOtpDialog()
     {
         if (dialog != null && dialog.isShowing())
@@ -271,10 +300,46 @@ public class ContactInformationActivity extends BaseActivity
 
     private void setData()
     {
+        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
+
+            VMN_Dialog = true;
+
+            binding.layoutDisplayContactNumber1.setVisibility(View.GONE);
+            binding.layoutDisplayContactNumber2.setVisibility(View.GONE);
+            binding.layoutDisplayContactNumber3.setVisibility(View.GONE);
+            binding.layoutCallTrackerNumber.setVisibility(View.VISIBLE);
+
+            if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME)))
+            {
+                binding.editCallTrackerNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+            }
+
+            else if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)))
+            {
+                binding.editCallTrackerNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
+            }
+
+            else if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)))
+            {
+                binding.editCallTrackerNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
+            }
+        }
+
+        else
+        {
+            binding.layoutDisplayContactNumber1.setVisibility(View.VISIBLE);
+            binding.layoutDisplayContactNumber2.setVisibility(View.VISIBLE);
+            binding.layoutDisplayContactNumber3.setVisibility(View.VISIBLE);
+            binding.layoutCallTrackerNumber.setVisibility(View.GONE);
+
+            binding.editDisplayContactNumber1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+            binding.editDisplayContactNumber2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
+            binding.editDisplayContactNumber3.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
+        }
+
         binding.editPrimaryContactNumber.setText(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        binding.editDisplayContactNumber1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-        binding.editDisplayContactNumber2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
-        binding.editDisplayContactNumber3.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
         binding.editBusinessEmailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
 
         String website = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
@@ -306,6 +371,8 @@ public class ContactInformationActivity extends BaseActivity
 
     private void saveInformation()
     {
+        showProgressbar("Updating Information...");
+
         ContactInformationUpdateModel model = new ContactInformationUpdateModel();
 
         ArrayList<ContactInformationUpdateModel.Update> updates = new ArrayList<>();
@@ -337,16 +404,13 @@ public class ContactInformationActivity extends BaseActivity
         model.setFpTag(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
         model.setUpdates(updates);
 
-        Log.d("JSON_VALUE", new Gson().toJson(model));
-
         Retro_Business_Profile_Interface profile_interface = Constants.restAdapter.create(Retro_Business_Profile_Interface.class);
         profile_interface.updateContactInformation(model, new Callback<ArrayList<String>>() {
 
             @Override
             public void success(ArrayList<String> strings, Response response) {
 
-                Log.d("JSON_VALUE", "" + response.getBody());
-                Log.d("JSON_VALUE", "" + response.getStatus());
+                hideProgressbar();
 
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE, url);
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME, binding.editFbPageWidget.getText().toString());
@@ -355,15 +419,43 @@ public class ContactInformationActivity extends BaseActivity
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, binding.editDisplayContactNumber1.getText().toString());
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, binding.editDisplayContactNumber2.getText().toString());
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, binding.editDisplayContactNumber3.getText().toString());
+
+                Methods.showSnackBarPositive(ContactInformationActivity.this, "Information Updated Successfully");
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                Log.d("JSON_VALUE", "" + error.getResponse().getBody());
-                Log.d("JSON_VALUE", "" + error.getResponse().getStatus());
+                hideProgressbar();
+                Methods.showSnackBarNegative(ContactInformationActivity.this, "Failed to Update Information");
             }
         });
+
+
+        if(numberModel == null && binding.editWhatsappNumber.getText().toString().trim().length() > 0)
+        {
+            WhatsAppBusinessNumberModel whatsAppBusinessNumberModel = new WhatsAppBusinessNumberModel();
+            whatsAppBusinessNumberModel.setWhatsAppNumber(binding.editWhatsappNumber.getText().toString());
+
+            WAAddDataModel<WhatsAppBusinessNumberModel> dataModel = new WAAddDataModel<>();
+            dataModel.setWebsiteId(session.getFpTag());
+            dataModel.setActionData(whatsAppBusinessNumberModel);
+
+            addWhatsAppNumber(dataModel);
+        }
+
+        else if(numberModel != null && !binding.editWhatsappNumber.getText().toString().equals(numberModel.getWhatsAppNumber()))
+        {
+            WaUpdateDataModel update = new WaUpdateDataModel();
+            update.setQuery(String.format("{_id:'%s'}", numberModel.getId()));
+
+            update.setUpdateValue(String.format("{$set:{active_whatsapp_number:'%s', IsArchived:'%s'}}",
+                    binding.editWhatsappNumber.getText().toString(),
+                    false));
+
+            update.setMulti(true);
+            updateWhatsAppNumber(update);
+        }
     }
 
 
@@ -483,11 +575,7 @@ public class ContactInformationActivity extends BaseActivity
 
                 if(response.getStatus() == 200 && model)
                 {
-                    if(dialog != null && dialog.isShowing())
-                    {
-                        dialog.dismiss();
-                    }
-
+                    hideOtpDialog();
                     otpVerifyDialog(number);
                     Toast.makeText(ContactInformationActivity.this, "OTP Sent to " + number, Toast.LENGTH_LONG).show();
                     return;
@@ -531,8 +619,7 @@ public class ContactInformationActivity extends BaseActivity
 
                 if(response.getStatus() == 200 && model)
                 {
-                    //Toast.makeText(ContactInformationActivity.this, "Verification Successful", Toast.LENGTH_SHORT).show();
-                    //changePrimary(number);
+                    changePrimary(number);
                     return;
                 }
 
@@ -551,7 +638,7 @@ public class ContactInformationActivity extends BaseActivity
     private void changePrimary(final String number)
     {
         UpdatePrimaryNumApi updateApi = Constants.restAdapter.create(UpdatePrimaryNumApi.class);
-        updateApi.changeNumber(Constants.PrimaryNumberClientId, session.getFPID(), number, new Callback<String>() {
+        updateApi.changeNumber(session.getFPID(), Constants.clientId, number, new Callback<String>() {
 
             @Override
             public void success(String s, Response response)
@@ -576,8 +663,90 @@ public class ContactInformationActivity extends BaseActivity
             {
                 hideProgressbar();
                 otpDialogDismiss();
+
+                if(error.getResponse().getStatus() == 400)
+                {
+                    showOtpDialog();
+                    Methods.showSnackBarNegative(ContactInformationActivity.this, "This primary number is already used");
+                    return;
+                }
+
                 Methods.showSnackBarNegative(ContactInformationActivity.this, getString(R.string.something_went_wrong_try_again));
             }
         });
+    }
+
+
+    private void getWhatsAppNumber(String websiteId) {
+
+        Constants.webActionAdapter.create(WebActionCallInterface.class)
+                .getWhatsAppNumber(String.format("{WebsiteId:'%s'}", websiteId), new Callback<WebActionModel<WhatsAppBusinessNumberModel>>() {
+
+                    @Override
+                    public void success(WebActionModel<WhatsAppBusinessNumberModel> model, Response response) {
+
+                        if (model != null && model.getData() != null && model.getData().size() > 0)
+                        {
+                            numberModel = model.getData().get(0);
+                            String whatsAppNumber = numberModel.getWhatsAppNumber() == null ? "" : numberModel.getWhatsAppNumber();
+                            binding.editWhatsappNumber.setText(whatsAppNumber);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+
+                    }
+                });
+    }
+
+
+    private void addWhatsAppNumber(WAAddDataModel<WhatsAppBusinessNumberModel> addDataModel) {
+
+        Constants.webActionAdapter.create(WebActionCallInterface.class)
+                .addWhatsAppNumber(addDataModel, new Callback<String>() {
+
+                    @Override
+                    public void success(String id, Response response) {
+
+                        numberModel = new WhatsAppBusinessNumberModel();
+                        numberModel.setId(id);
+                        numberModel.setWhatsAppNumber(binding.editWhatsappNumber.getText().toString());
+
+                        Log.d("updateWhatsAppNumber", "SUCCESS");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.d("updateWhatsAppNumber", "FAIL");
+                    }
+                });
+    }
+
+
+    private void updateWhatsAppNumber(WaUpdateDataModel updateDataModel) {
+
+        Constants.webActionAdapter.create(WebActionCallInterface.class)
+                .updateWhatsAppNumber(updateDataModel, new Callback<String>() {
+
+                    @Override
+                    public void success(String model, Response response) {
+
+                        Log.d("updateWhatsAppNumber", "SUCCESS");
+
+                        if(numberModel != null)
+                        {
+                            numberModel.setWhatsAppNumber(binding.editWhatsappNumber.getText().toString());
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.d("updateWhatsAppNumber", "FAIL");
+                    }
+                });
     }
 }

@@ -21,6 +21,8 @@
         android:hint="Enter New Number"
         android:gravity="center"
         android:inputType="phone"
+        android:digits="0123456789"
+        android:maxLength="12"
         android:paddingLeft="24dp"
         android:paddingRight="24dp" />
 
