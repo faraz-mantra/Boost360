@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
+import com.nowfloats.BusinessProfile.UI.Model.WhatsAppBusinessNumberModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.GMB.Adapter.BuilderAdapter;
@@ -64,6 +66,10 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
+import com.nowfloats.manageinventory.models.WAAddDataModel;
+import com.nowfloats.manageinventory.models.WaUpdateDataModel;
+import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BoostLog;
@@ -73,10 +79,10 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.widget.WidgetKey;
 import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
+import com.thinksity.databinding.FragmentSocialSharingBinding;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -89,6 +95,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -154,12 +164,17 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     private String fpPageName;
     Handler handler = new Handler();
 
+    private WhatsAppBusinessNumberModel numberModel;
+
 //    private int lastGoogleAccounts = 0;
 
     private boolean isWebsiteEnabled = true;
     private boolean isFacebookEnabled = true;
     private boolean isTwitterEnabled = true;
     private boolean isOthersEnabled = true;
+
+    FragmentSocialSharingBinding binding;
+    private MaterialDialog dialog, progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -169,8 +184,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
-        // Inflate the layout for this fragment
-        View mainView = inflater.inflate(R.layout.activity_social_sharing, container, false);
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_social_sharing, container, false);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -195,7 +210,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             gmbHandler.isSynced(this);
         }
 
-        return mainView;
+        return binding.getRoot();
     }
 
     @Override
@@ -444,6 +459,60 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 showDialog("Tip!", message, "Done");
             }
         });
+
+        binding.whatsappCheckbox.setOnClickListener(v->
+        {
+            if(binding.whatsappCheckbox.isChecked())
+            {
+                binding.whatsappCheckbox.setChecked(false);
+                showWhatsAppNumberDialog();
+            }
+
+            else
+            {
+                WaUpdateDataModel update = new WaUpdateDataModel();
+                update.setQuery(String.format("{_id:'%s'}", numberModel.getId()));
+
+                update.setUpdateValue(String.format("{$set:{active_whatsapp_number:'%s', IsArchived:'%s'}}",
+                        binding.tvWhatsappNumber.getText().toString(),
+                        true));
+
+                update.setMulti(true);
+                updateWhatsAppNumber(update, binding.tvWhatsappNumber.getText().toString());
+            }
+        });
+
+        this.initProgressBar();
+        getWhatsAppNumber(session.getFpTag());
+    }
+
+
+    private void initProgressBar()
+    {
+        if(progressbar == null)
+        {
+            progressbar = new MaterialDialog.Builder(getActivity())
+                    .autoDismiss(false)
+                    .progress(true, 0)
+                    .build();
+        }
+    }
+
+    private void showProgressbar(String content)
+    {
+        if (progressbar != null && !progressbar.isShowing())
+        {
+            progressbar.setContent(content);
+            progressbar.show();
+        }
+    }
+
+    private void hideProgressbar()
+    {
+        if (progressbar != null && progressbar.isShowing())
+        {
+            progressbar.dismiss();
+        }
     }
 
     public void gmbSignOutUserfromGoogle(final boolean print) {
@@ -1684,6 +1753,156 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         mGoogleApiClient.disconnect();
         mGoogleApiClient.unregisterConnectionCallbacks(this);
         mGoogleApiClient.unregisterConnectionFailedListener(this);
+    }
+
+
+    private void getWhatsAppNumber(String websiteId) {
+
+        Constants.webActionAdapter.create(WebActionCallInterface.class)
+                .getWhatsAppNumber(String.format("{WebsiteId:'%s'}", websiteId), new Callback<WebActionModel<WhatsAppBusinessNumberModel>>() {
+
+                    @Override
+                    public void success(WebActionModel<WhatsAppBusinessNumberModel> model, Response response) {
+
+                        if (model != null && model.getData() != null && model.getData().size() > 0)
+                        {
+                            numberModel = model.getData().get(0);
+                            String whatsAppNumber = numberModel.getWhatsAppNumber() == null ? "" : numberModel.getWhatsAppNumber();
+                            binding.tvWhatsappNumber.setText(whatsAppNumber);
+                            binding.whatsappCheckbox.setChecked(true);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+
+                    }
+                });
+    }
+
+
+    private void addWhatsAppNumber(WAAddDataModel<WhatsAppBusinessNumberModel> addDataModel) {
+
+        showProgressbar("Please Wait...");
+
+        Constants.webActionAdapter.create(WebActionCallInterface.class)
+                .addWhatsAppNumber(addDataModel, new Callback<String>() {
+
+                    @Override
+                    public void success(String id, Response response) {
+
+                        numberModel = new WhatsAppBusinessNumberModel();
+                        numberModel.setId(id);
+                        numberModel.setWhatsAppNumber(addDataModel.getActionData().getWhatsAppNumber());
+
+                        binding.tvWhatsappNumber.setText(addDataModel.getActionData().getWhatsAppNumber());
+                        binding.whatsappCheckbox.setChecked(true);
+
+                        if(dialog != null && dialog.isShowing())
+                        {
+                            dialog.dismiss();
+                        }
+
+                        hideProgressbar();
+                        Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Added Successfully");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Methods.showSnackBarNegative(getActivity(), "Failed to Add WhatsApp Number");
+                    }
+                });
+    }
+
+
+    private void updateWhatsAppNumber(WaUpdateDataModel updateDataModel, String number) {
+
+        showProgressbar("Please Wait...");
+
+        Constants.webActionAdapter.create(WebActionCallInterface.class)
+                .updateWhatsAppNumber(updateDataModel, new Callback<String>() {
+
+                    @Override
+                    public void success(String model, Response response) {
+
+                        if(numberModel != null)
+                        {
+                            numberModel.setWhatsAppNumber(number);
+                        }
+
+                        binding.tvWhatsappNumber.setText(R.string.inactive);
+                        binding.whatsappCheckbox.setChecked(false);
+
+                        hideProgressbar();
+                        Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Deactivated Successfully");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        if(error.getResponse().getStatus() == 200)
+                        {
+                            if(numberModel != null)
+                            {
+                                numberModel.setWhatsAppNumber(number);
+                            }
+
+                            binding.tvWhatsappNumber.setText(R.string.inactive);
+                            binding.whatsappCheckbox.setChecked(false);
+
+                            Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Deactivated Successfully");
+                        }
+
+                        else
+                        {
+                            Methods.showSnackBarNegative(getActivity(), "Failed to Deactivate WhatsApp Number");
+                        }
+
+                        hideProgressbar();
+                    }
+                });
+    }
+
+    private void showWhatsAppNumberDialog()
+    {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_whatsapp_number, null);
+        final EditText number = view.findViewById(R.id.editText);
+
+        dialog = new MaterialDialog.Builder(getActivity())
+                .customView(view, false)
+                .negativeText("Cancel")
+                .positiveText("Save")
+                .autoDismiss(false)
+                .canceledOnTouchOutside(false)
+                .negativeColorRes(R.color.gray_transparent)
+                .positiveColorRes(R.color.primary_color)
+                .onPositive((dialog, which)-> {
+
+                    String numText = number.getText().toString().trim();
+
+                    if (numText.length() >= 6)
+                    {
+                        WhatsAppBusinessNumberModel whatsAppBusinessNumberModel = new WhatsAppBusinessNumberModel();
+                        whatsAppBusinessNumberModel.setWhatsAppNumber(numText);
+
+                        WAAddDataModel<WhatsAppBusinessNumberModel> dataModel = new WAAddDataModel<>();
+                        dataModel.setWebsiteId(session.getFpTag());
+                        dataModel.setActionData(whatsAppBusinessNumberModel);
+
+                        addWhatsAppNumber(dataModel);
+                    }
+
+                    else
+                    {
+                        Toast.makeText(getActivity(), getResources().getString(R.string.enter_password_6to12_char), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onNegative((dialog, which)-> dialog.dismiss()).show();
+
+        //final TextView positive = materialDialog.getActionButton(DialogAction.POSITIVE);
+        //positive.setTextColor(ContextCompat.getColor(getActivity(), R.color.gray_transparent));
     }
 
 

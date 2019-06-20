@@ -2,11 +2,8 @@ package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.Retro_Business_Profile_Interface;
 import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
@@ -116,8 +112,8 @@ public class ContactInformationActivity extends BaseActivity
 
         dialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
-                .negativeText("Cancel")
-                .positiveText("Send OTP")
+                .negativeText("CANCEL")
+                .positiveText("SEND OTP")
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
@@ -137,40 +133,16 @@ public class ContactInformationActivity extends BaseActivity
                     }
                 })
                 .onNegative((dialog, which)-> dialog.dismiss()).show();
-
-        final TextView positive = dialog.getActionButton(DialogAction.POSITIVE);
-        positive.setTextColor(ContextCompat.getColor(ContactInformationActivity.this, R.color.gray_transparent));
-        number.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if (number.getText().toString().trim().length() > 0)
-                {
-                    positive.setTextColor(ContextCompat.getColor(ContactInformationActivity.this, R.color.primary));
-                }
-
-                else
-                {
-                    positive.setTextColor(ContextCompat.getColor(ContactInformationActivity.this, R.color.gray_transparent));
-                }
-            }
-        });
     }
 
 
     private void otpVerifyDialog(final String number)
     {
+        if(otpDialog != null && otpDialog.isShowing())
+        {
+            return;
+        }
+
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify, null);
         final EditText otp = view.findViewById(R.id.editText);
         final TextView tvNumber = view.findViewById(R.id.tv_number);
@@ -182,53 +154,26 @@ public class ContactInformationActivity extends BaseActivity
         otpDialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
                 .autoDismiss(false)
-                .title("One Time Password")
-                .canceledOnTouchOutside(false).show();
+                .negativeText("CANCEL")
+                .positiveText("VERIFY")
+                .canceledOnTouchOutside(false)
+                .negativeColorRes(R.color.gray_transparent)
+                .positiveColorRes(R.color.primary_color)
+                .onPositive((dialog, which)-> {
 
-        TextView tvSubmit = view.findViewById(R.id.tv_submit);
-        tvSubmit.setOnClickListener(v-> {
+                    String numText = otp.getText().toString().trim();
 
-            String numText = otp.getText().toString().trim();
+                    if (numText.length() > 0)
+                    {
+                        verifySms(number, numText);
+                    }
 
-            if (numText.length() > 0)
-            {
-                verifySms(number, numText);
-            }
-
-            else
-            {
-                Toast.makeText(ContactInformationActivity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        final TextView positive = otpDialog.getActionButton(DialogAction.POSITIVE);
-        positive.setTextColor(ContextCompat.getColor(ContactInformationActivity.this, R.color.gray_transparent));
-        otp.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if (otp.getText().toString().trim().length() > 0)
-                {
-                    positive.setTextColor(ContextCompat.getColor(ContactInformationActivity.this, R.color.primary));
-                }
-
-                else
-                {
-                    positive.setTextColor(ContextCompat.getColor(ContactInformationActivity.this, R.color.gray_transparent));
-                }
-            }
-        });
+                    else
+                    {
+                        Toast.makeText(ContactInformationActivity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onNegative((dialog, which)-> dialog.dismiss()).show();
     }
 
 
@@ -371,7 +316,7 @@ public class ContactInformationActivity extends BaseActivity
 
     private void saveInformation()
     {
-        showProgressbar("Updating Information...");
+        //showProgressbar("Updating Information...");
 
         ContactInformationUpdateModel model = new ContactInformationUpdateModel();
 
@@ -382,11 +327,15 @@ public class ContactInformationActivity extends BaseActivity
         updates.add(new ContactInformationUpdateModel.Update("URL", url));
         updates.add(new ContactInformationUpdateModel.Update("EMAIL", binding.editBusinessEmailAddress.getText().toString()));
 
-        String number1 = binding.editDisplayContactNumber1.getText().toString().trim();
-        String number2 = binding.editDisplayContactNumber2.getText().toString().trim();
-        String number3 = binding.editDisplayContactNumber3.getText().toString().trim();
+        if(!VMN_Dialog)
+        {
+            //String number1 = binding.editDisplayContactNumber1.getText().toString().trim();
+            //String number2 = binding.editDisplayContactNumber2.getText().toString().trim();
+            //String number3 = binding.editDisplayContactNumber3.getText().toString().trim();
 
-        //updates.add(new ContactInformationUpdateModel.Update("CONTACTS", number1.concat("#").concat(number2).concat("#").concat(number3)));
+            //updates.add(new ContactInformationUpdateModel.Update("CONTACTS", number1.concat("#").concat(number2).concat("#").concat(number3)));
+        }
+
         updates.add(new ContactInformationUpdateModel.Update("FB", binding.editFbPageWidget.getText().toString()));
 
         StringBuilder webWidgets = new StringBuilder();
@@ -403,6 +352,19 @@ public class ContactInformationActivity extends BaseActivity
         model.setClientId(Constants.clientId);
         model.setFpTag(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
         model.setUpdates(updates);
+
+        /*try
+        {
+            JSONObject json = new JSONObject(new Gson().toJson(model, ContactInformationUpdateModel.class));
+            UploadProfileAsyncTask upa = new UploadProfileAsyncTask(ContactInformationActivity.this, json, new String[20]);
+            upa.execute();
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }*/
+
 
         Retro_Business_Profile_Interface profile_interface = Constants.restAdapter.create(Retro_Business_Profile_Interface.class);
         profile_interface.updateContactInformation(model, new Callback<ArrayList<String>>() {
@@ -476,30 +438,42 @@ public class ContactInformationActivity extends BaseActivity
         if (binding.editDisplayContactNumber1.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber1.getText().toString().trim().length() < 6)
         {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+            binding.editDisplayContactNumber1.requestFocus();
             return false;
         }
 
         if (binding.editDisplayContactNumber2.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber2.getText().toString().trim().length() < 6)
         {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+            binding.editDisplayContactNumber2.requestFocus();
             return false;
         }
 
-        if (binding.editDisplayContactNumber2.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber2.getText().toString().trim().length() < 6)
+        if (binding.editDisplayContactNumber3.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber3.getText().toString().trim().length() < 6)
         {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+            binding.editDisplayContactNumber3.requestFocus();
+            return false;
+        }
+
+        if (binding.editWhatsappNumber.getText().toString().trim().length() > 0 && binding.editWhatsappNumber.getText().toString().trim().length() < 6)
+        {
+            Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+            binding.editWhatsappNumber.requestFocus();
             return false;
         }
 
         if(binding.editWebsiteAddress.getText().toString().trim().length() > 0 && !isValidWebsite(binding.editWebsiteAddress.getText().toString()))
         {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_website));
+            binding.editWebsiteAddress.requestFocus();
             return false;
         }
 
         if(binding.editBusinessEmailAddress.getText().toString().trim().length() > 0 && !isValidEmail(binding.editBusinessEmailAddress.getText().toString()))
         {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_email));
+            binding.editBusinessEmailAddress.requestFocus();
             return false;
         }
 
@@ -577,6 +551,7 @@ public class ContactInformationActivity extends BaseActivity
                 {
                     hideOtpDialog();
                     otpVerifyDialog(number);
+
                     Toast.makeText(ContactInformationActivity.this, "OTP Sent to " + number, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -734,8 +709,6 @@ public class ContactInformationActivity extends BaseActivity
                     @Override
                     public void success(String model, Response response) {
 
-                        Log.d("updateWhatsAppNumber", "SUCCESS");
-
                         if(numberModel != null)
                         {
                             numberModel.setWhatsAppNumber(binding.editWhatsappNumber.getText().toString());
@@ -745,7 +718,7 @@ public class ContactInformationActivity extends BaseActivity
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        Log.d("updateWhatsAppNumber", "FAIL");
+
                     }
                 });
     }

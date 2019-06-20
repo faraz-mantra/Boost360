@@ -927,6 +927,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="facebook_page"> Facebook Page</string>
     <string name="disconnected">Disconnected</string>
     <string name="success">Success</string>
+    <string name="inactive">Inactive</string>
     <string name="failed">Failed</string>
     <string name="alert">Alert</string>
     <string name="no_network">No Network</string>
