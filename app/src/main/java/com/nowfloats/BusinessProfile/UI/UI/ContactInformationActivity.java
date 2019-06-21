@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.nowfloats.BusinessProfile.UI.API.Retro_Business_Profile_Interface;
 import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.Model.ContactInformationUpdateModel;
@@ -24,6 +25,7 @@ import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
 import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.signup.UI.Model.ContactDetailsModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -33,6 +35,7 @@ import com.thinksity.databinding.ActivityContactInformationBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -316,7 +319,7 @@ public class ContactInformationActivity extends BaseActivity
 
     private void saveInformation()
     {
-        //showProgressbar("Updating Information...");
+        showProgressbar("Updating Information...");
 
         ContactInformationUpdateModel model = new ContactInformationUpdateModel();
 
@@ -329,11 +332,17 @@ public class ContactInformationActivity extends BaseActivity
 
         if(!VMN_Dialog)
         {
-            //String number1 = binding.editDisplayContactNumber1.getText().toString().trim();
-            //String number2 = binding.editDisplayContactNumber2.getText().toString().trim();
-            //String number3 = binding.editDisplayContactNumber3.getText().toString().trim();
+            List<ContactDetailsModel> contacts = new ArrayList<>();
 
-            //updates.add(new ContactInformationUpdateModel.Update("CONTACTS", number1.concat("#").concat(number2).concat("#").concat(number3)));
+            String number1 = binding.editDisplayContactNumber1.getText().toString().trim();
+            String number2 = binding.editDisplayContactNumber2.getText().toString().trim();
+            String number3 = binding.editDisplayContactNumber3.getText().toString().trim();
+
+            contacts.add(new ContactDetailsModel(number1, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME)));
+            contacts.add(new ContactDetailsModel(number2, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)));
+            contacts.add(new ContactDetailsModel(number3, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)));
+
+            updates.add(new ContactInformationUpdateModel.Update("CONTACTS", new Gson().toJson(contacts) /*number1.concat("#").concat(number2).concat("#").concat(number3)*/));
         }
 
         updates.add(new ContactInformationUpdateModel.Update("FB", binding.editFbPageWidget.getText().toString()));

@@ -280,10 +280,10 @@
                             android:background="@drawable/white_rectangle_background">
 
                             <LinearLayout
-                                android:id="@+id/layout_spinner_stock_availability"
+                                android:id="@+id/layout_spinner_http_protocol"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:minWidth="200dp"
+                                android:minWidth="230dp"
                                 android:orientation="horizontal"
                                 android:layout_weight="1"
                                 android:padding="1dp">

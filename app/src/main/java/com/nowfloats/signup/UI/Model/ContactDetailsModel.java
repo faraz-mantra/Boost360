@@ -7,6 +7,12 @@ import java.io.Serializable;
  */
 public class ContactDetailsModel implements Serializable{
 
-    public String ContactName = "";
-    public String ContactNumber = "" ;
+    public String ContactName;
+    public String ContactNumber;
+
+    public ContactDetailsModel(String ContactNumber, String ContactName)
+    {
+        this.ContactNumber = ContactNumber;
+        this.ContactName = ContactName;
+    }
 }
