@@ -299,6 +299,61 @@
                     android:hint="Describe your product within 2000 characters max ..." />
 
                 <LinearLayout
+                    android:id="@+id/layout_product_tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/label_product_tags"
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Product Tags" />
+
+                    <ImageButton
+                        android:id="@+id/ib_info_product_tags"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <com.nowfloats.helper.ui.TagView
+                    android:id="@+id/tv_product_keyword"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:orientation="horizontal"
+                    android:background="@drawable/white_rectangle_background">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/edit_product_tags"
+                        style="@style/ProductEditTextStyle"
+                        android:layout_weight="1"
+                        android:hint="Type a product tag" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <Button
+                            android:id="@+id/btn_add_tag"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="1dp"
+                            android:background="@android:color/white"
+                            android:text="ADD"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/layout_product_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
