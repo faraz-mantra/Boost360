@@ -57,7 +57,7 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         }
     }
     aaptOptions {
@@ -166,12 +166,12 @@ dependencies {
     implementation project(':messagelibrary')
     implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
-        transitive = true;
+        transitive = true
     }
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
-    implementation 'com.google.firebase:firebase-core:11.8.0'
+
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.android.volley:volley:1.0.0'
@@ -181,7 +181,19 @@ dependencies {
     implementation 'com.android.support:support-v13:27.1.0'
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.google.android.gms:play-services:11.8.0'
+
+    //implementation 'com.google.android.gms:play-services:12.0.1'
+
+    //Google Library
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-places:16.1.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    //Firebase Library
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
+
     implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
     implementation 'com.kitsune:anachatsdk:1.18.11@aar'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
@@ -194,7 +206,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.16.1'
     implementation 'com.twitter.sdk.android:twitter-core:3.0.0'
     implementation 'com.wdullaer:materialdatetimepicker:1.0.1'
-    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
     implementation 'com.squareup:otto:1.3.7'
@@ -207,29 +219,18 @@ dependencies {
     implementation 'jp.wasabeef:richeditor-android:1.2.0'
     implementation 'com.github.darsh2:MultipleImageSelect:v0.0.4'
     implementation 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
-    implementation 'com.google.firebase:firebase-messaging:11.8.0'
-    implementation 'com.google.firebase:firebase-database:11.8.0'
     implementation 'me.biubiubiu.justifytext:library:1.1'
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'com.squareup.okhttp3:okhttp:3.7.0'
     implementation 'com.android.support:gridlayout-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.webengage:android-sdk:2.+'
-    /*implementation('com.apxor.android:apxor-android-sdk-rta-fcm:1.8.2@aar') {
-        exclude group: 'com.google.firebase'
-    }
-    implementation('com.apxor.android:apxor-android-sdk-push:1.0.9@aar') {
-        exclude group: 'com.google.firebase'
-    }
-    implementation 'com.apxor.android:apxor-android-sdk-qe:1.0.4@aar'
-    implementation 'com.apxor.android:apxor-android-sdk-rtm:1.0.4@aar'
-    implementation 'com.apxor.android:apxor-android-crash-reporter:1.0.0@aar'*/
+
     implementation 'com.apxor.android:apxor-android-sdk-core:2.3.7@aar'
     implementation project(':keyboard')
     implementation project(':imagepicker')
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.github.angads25:toggle:1.1.0'
-    //implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.6'
     implementation 'com.nbsp:library:1.8'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.github.florent37:viewtooltip:1.1.5'

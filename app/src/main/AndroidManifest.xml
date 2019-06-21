@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
     android:sharedUserId="com.nowfloats.kb.boostapp.sharedkey"
-    android:sharedUserLabel="@string/shared_user_label"
-    android:versionCode="2017090018"
-    android:versionName="4.8.1">
+    android:sharedUserLabel="@string/shared_user_label">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -26,7 +24,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -549,11 +547,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
+        <!--<service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
-        </service>
+        </service>-->
 
         <activity
             android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"

@@ -26,7 +26,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.google.android.gms:play-services:11.8.0'
+
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:recyclerview-v7:27.1.0'
@@ -39,8 +39,18 @@ dependencies {
     implementation 'gun0912.ted:tedpermission:1.0.3'
     implementation 'com.jayway.jsonpath:json-path:2.4.0'
     implementation 'net.alhazmy13.MediaPicker:libary:2.3.1'
-    implementation 'com.google.firebase:firebase-database:11.8.0'
-    implementation 'com.google.android.gms:play-services-maps:11.8.0'
+
+    //implementation 'com.google.firebase:firebase-database:11.8.0'
+    //implementation 'com.google.android.gms:play-services-maps:11.8.0'
+    //implementation 'com.google.android.gms:play-services:11.8.0'
+
+    //Google Library
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-places:16.1.0'
+    //Firebase Library
+    implementation 'com.google.firebase:firebase-database:17.0.0'
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
     implementation 'com.squareup.okhttp3:okhttp:3.0.0'
