@@ -30,6 +30,7 @@ public class Product implements Serializable {
     public String ShipmentDuration;
     public int availableUnits = 1;
     public ArrayList<String> _keywords;
+    public List<String> tags;
     public String ApplicationId;
     @SerializedName(value="fPTag", alternate={"TPTag"})
     public String FPTag;

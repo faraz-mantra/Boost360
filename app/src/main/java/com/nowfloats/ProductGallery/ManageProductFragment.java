@@ -539,6 +539,16 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
+        if(product.tags != null)
+        {
+            for(int i=0; i<product.tags.size(); i++)
+            {
+                tags.add(new Tag(product.tags.get(i), String.valueOf(i)));
+            }
+
+            binding.tvProductKeyword.addTags(tags);
+        }
+
         try
         {
             String image_url = product.TileImageUri;
@@ -612,6 +622,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             tags.remove(position);
             binding.tvProductKeyword.remove(position);
+
+            product.tags.remove(position);
         });
 
         binding.btnAddTag.setOnClickListener(v -> {
@@ -620,9 +632,16 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             if(tag.trim().length() > 0)
             {
-                Tag obj = new Tag(tag, tag);
+                if(product.tags == null)
+                {
+                    product.tags = new ArrayList<>();
+                }
+
+                Tag obj = new Tag(tag, String.valueOf(product.tags.size()));
                 binding.tvProductKeyword.addTag(obj);
                 tags.add(obj);
+
+                product.tags.add(tag);
 
                 binding.editProductTags.setText("");
             }
