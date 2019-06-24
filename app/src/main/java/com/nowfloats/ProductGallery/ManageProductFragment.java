@@ -2905,7 +2905,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     updates.add(new UpdateValue(key, json.get(key).toString()));
                 }
 
-                Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId, product.productId, updates);
+                Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId, product.productId, product.productType, updates);
 
                 Log.d("PRODUCT_JSON", "" + new Gson().toJson(model));
 
@@ -3090,6 +3090,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
             map.put("clientId", Constants.clientId);
             map.put("productId", product.productId);
+            map.put("productType", product.productType);
             map.put("identifierType", "SINGLE");
 
             showDialog("Please Wait...");
@@ -3118,7 +3119,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     hideDialog();
                     Toast.makeText(getContext(), "Failed to delete", Toast.LENGTH_LONG).show();
-                    Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                 }
             });
         }

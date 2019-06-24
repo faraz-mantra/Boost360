@@ -196,7 +196,8 @@ public class ContactInformationActivity extends BaseActivity
 
         if (VMN_Dialog)
         {
-            message.setText("Call tracker is enabled. You will receive the call on your primary number." + getString(R.string.primary_contact_number_message));
+            //message.setText("Call tracker is enabled. You will receive the call on your primary number." + getString(R.string.primary_contact_number_message));
+            message.setText("This is your Virtual Mobile Number which is displayed on your website. All activity on this number is tracked and you will receive calls made to this number on your primary number.");
         }
 
         else
@@ -205,7 +206,7 @@ public class ContactInformationActivity extends BaseActivity
         }
 
         return new MaterialDialog.Builder(ContactInformationActivity.this)
-                .title("Change Number")
+                .title("Call Tracker is enabled")
                 .customView(dialogView, false)
                 .positiveText(getString(R.string.ok))
                 .positiveColorRes(R.color.primaryColor)
