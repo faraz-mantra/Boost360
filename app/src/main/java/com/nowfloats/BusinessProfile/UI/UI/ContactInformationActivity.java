@@ -1,5 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.BusinessProfile.UI.API.Retro_Business_Profile_Interface;
 import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.Model.ContactInformationUpdateModel;
@@ -89,6 +91,13 @@ public class ContactInformationActivity extends BaseActivity
 
                 return true;
             });
+
+        binding.tvVmnReport.setOnClickListener(v -> {
+
+            Intent i = new Intent(ContactInformationActivity.this, VmnCallCardsActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
 
         this.initProgressBar();
         this.setData();
@@ -361,19 +370,6 @@ public class ContactInformationActivity extends BaseActivity
         model.setClientId(Constants.clientId);
         model.setFpTag(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
         model.setUpdates(updates);
-
-        /*try
-        {
-            JSONObject json = new JSONObject(new Gson().toJson(model, ContactInformationUpdateModel.class));
-            UploadProfileAsyncTask upa = new UploadProfileAsyncTask(ContactInformationActivity.this, json, new String[20]);
-            upa.execute();
-        }
-
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }*/
-
 
         Retro_Business_Profile_Interface profile_interface = Constants.restAdapter.create(Retro_Business_Profile_Interface.class);
         profile_interface.updateContactInformation(model, new Callback<ArrayList<String>>() {

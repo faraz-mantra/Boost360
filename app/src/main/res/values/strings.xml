@@ -1273,7 +1273,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="business_logo_instructions_1">Supported format: .jpeg, .png or .gif\nRecommended dimension: Square (400x400 px)\nMax file size: 500 kb</string>
     <string name="business_logo_instructions_2">Keep the background white or transparant (in png). For bigger display, remove all padding from the main object in your logo.</string>
     <string name="image_gallery_info_text">Flaunt your business with beautiful images. Number of images you can upload depends upon the plan you’ve picked.</string>
-    <string name="image_gallery_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nNumber of images you can upload depends upon the Boost plan you’ve picked.</string>
+    <string name="image_gallery_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nMax file size: 800 kb</string>
     <string name="image_gallery_instructions_2">Number of images you can upload depends upon the Boost plan you’ve picked.</string>
     <string name="featured_image_info_text">It is a key visual to define your business that appears along with the business description or in about section.</string>
     <string name="featured_image_instructions_1">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 800 px (width) x 600 px (height)\nMax file size: 800 kb</string>
