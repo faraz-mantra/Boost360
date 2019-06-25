@@ -46,6 +46,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+
 public class ContactInformationActivity extends BaseActivity
 {
     ActivityContactInformationBinding binding;
@@ -53,6 +54,7 @@ public class ContactInformationActivity extends BaseActivity
     private MaterialDialog dialog, otpDialog, progressbar;
     private boolean VMN_Dialog;
     private WhatsAppBusinessNumberModel numberModel;
+    private String phoneCountryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -73,6 +75,8 @@ public class ContactInformationActivity extends BaseActivity
         binding.editPrimaryContactNumber.setInputType(InputType.TYPE_NULL);
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.contact__info));
         session = new UserSessionManager(getApplicationContext(), ContactInformationActivity.this);
+
+        this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
 
         binding.editPrimaryContactNumber.setOnTouchListener((v, event)-> {
 
@@ -271,18 +275,26 @@ public class ContactInformationActivity extends BaseActivity
 
             if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME)))
             {
-                binding.editCallTrackerNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+                String number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
+                number = number.startsWith("0") ? number.substring(1) : number;
+                binding.editCallTrackerNumber.setText(number);
             }
 
             else if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)))
             {
-                binding.editCallTrackerNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
+                String number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1);
+                number = number.startsWith("0") ? number.substring(1) : number;
+                binding.editCallTrackerNumber.setText(number);
             }
 
             else if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)))
             {
-                binding.editCallTrackerNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
+                String number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3);
+                number = number.startsWith("0") ? number.substring(1) : number;
+                binding.editCallTrackerNumber.setText(number);
             }
+
+            binding.editCallTrackerNumberCode.setText(phoneCountryCode);
         }
 
         else
@@ -295,9 +307,16 @@ public class ContactInformationActivity extends BaseActivity
             binding.editDisplayContactNumber1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
             binding.editDisplayContactNumber2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
             binding.editDisplayContactNumber3.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
+
+            binding.editDisplayContactNumberCode1.setText(phoneCountryCode);
+            binding.editDisplayContactNumberCode2.setText(phoneCountryCode);
+            binding.editDisplayContactNumberCode3.setText(phoneCountryCode);
         }
 
         binding.editPrimaryContactNumber.setText(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+        binding.editPrimaryCode.setText(phoneCountryCode);
+        binding.editWhatsappCode.setText(phoneCountryCode);
+
         binding.editBusinessEmailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
 
         String website = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
@@ -316,11 +335,11 @@ public class ContactInformationActivity extends BaseActivity
                 binding.editWebsiteAddress.setText(website.split("://")[1]);
             }
 
-            else
+            /*else
             {
                 binding.spinnerHttpProtocol.setSelection(0);
                 binding.editWebsiteAddress.setText(website);
-            }
+            }*/
         }
 
         binding.editFbPageWidget.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
@@ -429,18 +448,6 @@ public class ContactInformationActivity extends BaseActivity
 
     private boolean isValid()
     {
-        /*if(TextUtils.isEmpty(binding.editPrimaryContactNumber.getText().toString()))
-        {
-            Methods.showSnackBarNegative(this, getResources().getString(R.string.primary_num_can_not_empty));
-            return false;
-        }
-
-        if (binding.editPrimaryContactNumber.getText().toString().trim().length() > 0 && binding.editPrimaryContactNumber.getText().toString().trim().length() <= 6)
-        {
-            Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
-            return false;
-        }*/
-
         if (binding.editDisplayContactNumber1.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber1.getText().toString().trim().length() < 6)
         {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));

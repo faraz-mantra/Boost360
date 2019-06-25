@@ -44,12 +44,30 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edit_primary_contact_number"
-                        style="@style/ProductEditTextStyle"
-                        android:hint="XXXXXXXXXX"
-                        android:inputType="number"
-                        android:layout_marginTop="@dimen/margin_5"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:orientation="horizontal"
+                        android:background="@drawable/grey_rectangle_background">
+
+                        <EditText
+                            android:id="@+id/edit_primary_code"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/primaryTextColor"
+                            android:padding="10dp"
+                            android:textSize="14sp"
+                            android:enabled="false" />
+
+                        <EditText
+                            android:id="@+id/edit_primary_contact_number"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="XXXXXXXXXX"
+                            android:layout_weight="1"
+                            android:inputType="number"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -81,6 +99,15 @@
                         android:layout_marginTop="@dimen/margin_5"
                         android:orientation="horizontal"
                         android:background="@drawable/grey_rectangle_background">
+
+                        <EditText
+                            android:id="@+id/edit_call_tracker_number_code"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/primaryTextColor"
+                            android:padding="10dp"
+                            android:textSize="14sp"
+                            android:enabled="false" />
 
                         <EditText
                             android:id="@+id/edit_call_tracker_number"
@@ -129,12 +156,29 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edit_display_contact_number_1"
-                        style="@style/ProductEditTextStyle"
-                        android:hint="XXXXXXXXXX"
-                        android:inputType="number"
-                        android:layout_marginTop="@dimen/margin_5"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:orientation="horizontal"
+                        android:background="@drawable/grey_rectangle_background">
+
+                        <EditText
+                            android:id="@+id/edit_display_contact_number_code_1"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/primaryTextColor"
+                            android:padding="10dp"
+                            android:textSize="14sp"
+                            android:enabled="false" />
+
+                        <EditText
+                            android:id="@+id/edit_display_contact_number_1"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="XXXXXXXXXX"
+                            android:inputType="number"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -160,12 +204,29 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edit_display_contact_number_2"
-                        style="@style/ProductEditTextStyle"
-                        android:hint="XXXXXXXXXX"
-                        android:inputType="number"
-                        android:layout_marginTop="@dimen/margin_5" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:orientation="horizontal"
+                        android:background="@drawable/grey_rectangle_background">
+
+                        <EditText
+                            android:id="@+id/edit_display_contact_number_code_2"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/primaryTextColor"
+                            android:padding="10dp"
+                            android:textSize="14sp"
+                            android:enabled="false" />
+
+                        <EditText
+                            android:id="@+id/edit_display_contact_number_2"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="XXXXXXXXXX"
+                            android:inputType="number" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -191,12 +252,29 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edit_display_contact_number_3"
-                        style="@style/ProductEditTextStyle"
-                        android:hint="XXXXXXXXXX"
-                        android:inputType="number"
-                        android:layout_marginTop="@dimen/margin_5"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:orientation="horizontal"
+                        android:background="@drawable/grey_rectangle_background">
+
+                        <EditText
+                            android:id="@+id/edit_display_contact_number_code_3"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/primaryTextColor"
+                            android:padding="10dp"
+                            android:textSize="14sp"
+                            android:enabled="false" />
+
+                        <EditText
+                            android:id="@+id/edit_display_contact_number_3"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="XXXXXXXXXX"
+                            android:inputType="number"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -227,7 +305,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
                         android:orientation="horizontal"
-                        android:background="@drawable/white_rectangle_background">
+                        android:background="@drawable/grey_rectangle_background">
+
+                        <EditText
+                            android:id="@+id/edit_whatsapp_code"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/primaryTextColor"
+                            android:padding="10dp"
+                            android:textSize="14sp"
+                            android:enabled="false" />
 
                         <EditText
                             android:id="@+id/edit_whatsapp_number"
@@ -237,9 +324,12 @@
                             android:inputType="number"/>
 
                         <FrameLayout
-                            android:layout_width="100dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_width="50dp"
+                            android:background="@android:color/white"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_height="match_parent">
 
                             <ImageView
                                 android:layout_width="25dp"

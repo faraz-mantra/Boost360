@@ -176,6 +176,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     FragmentSocialSharingBinding binding;
     private MaterialDialog dialog, progressbar;
 
+    private String phoneCountryCode;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -199,6 +201,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
         callbackManager = CallbackManager.Factory.create();
         session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
+
+        this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_getActivity().this,session.getFPID());
         Methods.isOnline(getActivity());
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
@@ -1768,7 +1773,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         {
                             numberModel = model.getData().get(0);
                             String whatsAppNumber = numberModel.getWhatsAppNumber() == null ? "" : numberModel.getWhatsAppNumber();
-                            binding.tvWhatsappNumber.setText(whatsAppNumber);
+                            binding.tvWhatsappNumber.setText(phoneCountryCode.concat(" ").concat(whatsAppNumber));
                             binding.whatsappCheckbox.setChecked(true);
                         }
                     }
@@ -1794,7 +1799,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                         numberModel = new WhatsAppBusinessNumberModel();
                         numberModel.setId(id);
-                        numberModel.setWhatsAppNumber(addDataModel.getActionData().getWhatsAppNumber());
+                        numberModel.setWhatsAppNumber(phoneCountryCode.concat(" ").concat(addDataModel.getActionData().getWhatsAppNumber()));
 
                         binding.tvWhatsappNumber.setText(addDataModel.getActionData().getWhatsAppNumber());
                         binding.whatsappCheckbox.setChecked(true);
@@ -1829,7 +1834,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                         if(numberModel != null)
                         {
-                            numberModel.setWhatsAppNumber(number);
+                            numberModel.setWhatsAppNumber(phoneCountryCode.concat(" ").concat(number));
                         }
 
                         binding.tvWhatsappNumber.setText(R.string.inactive);
@@ -1846,7 +1851,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         {
                             if(numberModel != null)
                             {
-                                numberModel.setWhatsAppNumber(number);
+                                numberModel.setWhatsAppNumber(phoneCountryCode.concat(" ").concat(number));
                             }
 
                             binding.tvWhatsappNumber.setText(R.string.inactive);
