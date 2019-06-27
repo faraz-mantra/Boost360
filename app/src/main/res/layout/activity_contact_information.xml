@@ -114,7 +114,6 @@
                             style="@style/ProductEditTextStyle"
                             android:layout_weight="1"
                             android:hint="XXXXXXXXXX"
-                            android:enabled="false"
                             android:inputType="number"/>
 
                         <TextView

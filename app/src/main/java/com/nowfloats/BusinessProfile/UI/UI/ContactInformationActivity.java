@@ -96,6 +96,16 @@ public class ContactInformationActivity extends BaseActivity
                 return true;
             });
 
+        binding.editCallTrackerNumber.setOnTouchListener((v, event)-> {
+
+            if (event.getAction() == MotionEvent.ACTION_UP)
+            {
+                dialog().show();
+            }
+
+            return true;
+        });
+
         binding.tvVmnReport.setOnClickListener(v -> {
 
             Intent i = new Intent(ContactInformationActivity.this, VmnCallCardsActivity.class);
@@ -201,7 +211,7 @@ public class ContactInformationActivity extends BaseActivity
         if (VMN_Dialog)
         {
             //message.setText("Call tracker is enabled. You will receive the call on your primary number." + getString(R.string.primary_contact_number_message));
-            message.setText("This is your Virtual Mobile Number which is displayed on your website. All activity on this number is tracked and you will receive calls made to this number on your primary number.");
+            message.setText("This is your virtual mobile number through which customers can contact you. All activity on this number is logged and can be viewed or played back with the Call Tracker.");
         }
 
         else
