@@ -40,6 +40,7 @@
 
                         <ImageButton
                             android:id="@+id/ib_info_primary"
+                            android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -89,6 +90,7 @@
 
                         <ImageButton
                             android:id="@+id/ib_info_call_tracker_number"
+                            android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -151,6 +153,7 @@
 
                         <ImageButton
                             android:id="@+id/ib_info_display_1"
+                            android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -199,6 +202,7 @@
 
                         <ImageButton
                             android:id="@+id/ib_info_display_2"
+                            android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -247,6 +251,7 @@
 
                         <ImageButton
                             android:id="@+id/ib_info_display_3"
+                            android:visibility="invisible"
                             style="@style/ProductHelpButtonStyle"/>
 
                     </LinearLayout>
@@ -358,6 +363,7 @@
 
                             <ImageButton
                                 android:id="@+id/ib_info_website"
+                                android:visibility="invisible"
                                 style="@style/ProductHelpButtonStyle"/>
 
                         </LinearLayout>
@@ -423,6 +429,7 @@
 
                             <ImageButton
                                 android:id="@+id/ib_info_email_address"
+                                android:visibility="invisible"
                                 style="@style/ProductHelpButtonStyle"/>
 
                         </LinearLayout>
@@ -455,6 +462,7 @@
 
                             <ImageButton
                                 android:id="@+id/ib_info_fb_page_widget"
+                                android:visibility="invisible"
                                 style="@style/ProductHelpButtonStyle"/>
 
                         </LinearLayout>

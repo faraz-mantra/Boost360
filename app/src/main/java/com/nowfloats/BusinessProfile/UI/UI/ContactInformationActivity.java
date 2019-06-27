@@ -2,6 +2,7 @@ package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.florent37.viewtooltip.ViewTooltip;
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.BusinessProfile.UI.API.Retro_Business_Profile_Interface;
@@ -47,8 +49,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class ContactInformationActivity extends BaseActivity
-{
+public class ContactInformationActivity extends BaseActivity {
     ActivityContactInformationBinding binding;
     private UserSessionManager session;
     private MaterialDialog dialog, otpDialog, progressbar;
@@ -57,15 +58,13 @@ public class ContactInformationActivity extends BaseActivity
     private String phoneCountryCode;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_information);
 
         setSupportActionBar(binding.appBar.toolbar);
 
-        if (getSupportActionBar() != null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -78,28 +77,22 @@ public class ContactInformationActivity extends BaseActivity
 
         this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
 
-        binding.editPrimaryContactNumber.setOnTouchListener((v, event)-> {
+        binding.editPrimaryContactNumber.setOnTouchListener((v, event) -> {
 
-            if (event.getAction() == MotionEvent.ACTION_UP)
-            {
-                    if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz"))
-                    {
-                        showOtpDialog();
-                    }
-
-                    else
-                    {
-                        dialog().show();
-                    }
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                    showOtpDialog();
+                } else {
+                    dialog().show();
                 }
+            }
 
-                return true;
-            });
+            return true;
+        });
 
-        binding.editCallTrackerNumber.setOnTouchListener((v, event)-> {
+        binding.editCallTrackerNumber.setOnTouchListener((v, event) -> {
 
-            if (event.getAction() == MotionEvent.ACTION_UP)
-            {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
                 dialog().show();
             }
 
@@ -113,16 +106,15 @@ public class ContactInformationActivity extends BaseActivity
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
+        this.addInfoButtonListener();
         this.initProgressBar();
         this.setData();
         this.getWhatsAppNumber(session.getFpTag());
     }
 
 
-    private void initProgressBar()
-    {
-        if(progressbar == null)
-        {
+    private void initProgressBar() {
+        if (progressbar == null) {
             progressbar = new MaterialDialog.Builder(this)
                     .autoDismiss(false)
                     .progress(true, 0)
@@ -131,8 +123,7 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    private void showOtpDialog()
-    {
+    private void showOtpDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp, null);
         final EditText number = view.findViewById(R.id.editText);
 
@@ -144,28 +135,22 @@ public class ContactInformationActivity extends BaseActivity
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
                 .positiveColorRes(R.color.primary_color)
-                .onPositive((dialog, which)-> {
+                .onPositive((dialog, which) -> {
 
                     String numText = number.getText().toString().trim();
 
-                    if (numText.length() >= 6)
-                    {
+                    if (numText.length() >= 6) {
                         sendSms(numText);
-                    }
-
-                    else
-                    {
+                    } else {
                         Toast.makeText(ContactInformationActivity.this, getResources().getString(R.string.enter_password_6to12_char), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .onNegative((dialog, which)-> dialog.dismiss()).show();
+                .onNegative((dialog, which) -> dialog.dismiss()).show();
     }
 
 
-    private void otpVerifyDialog(final String number)
-    {
-        if(otpDialog != null && otpDialog.isShowing())
-        {
+    private void otpVerifyDialog(final String number) {
+        if (otpDialog != null && otpDialog.isShowing()) {
             return;
         }
 
@@ -175,7 +160,7 @@ public class ContactInformationActivity extends BaseActivity
         tvNumber.setText("(" + number + ")");
         TextView resend = view.findViewById(R.id.resend_tv);
 
-        resend.setOnClickListener(v-> sendSms(number));
+        resend.setOnClickListener(v -> sendSms(number));
 
         otpDialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
@@ -185,37 +170,28 @@ public class ContactInformationActivity extends BaseActivity
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
                 .positiveColorRes(R.color.primary_color)
-                .onPositive((dialog, which)-> {
+                .onPositive((dialog, which) -> {
 
                     String numText = otp.getText().toString().trim();
 
-                    if (numText.length() > 0)
-                    {
+                    if (numText.length() > 0) {
                         verifySms(number, numText);
-                    }
-
-                    else
-                    {
+                    } else {
                         Toast.makeText(ContactInformationActivity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .onNegative((dialog, which)-> dialog.dismiss()).show();
+                .onNegative((dialog, which) -> dialog.dismiss()).show();
     }
 
 
-    private MaterialDialog dialog()
-    {
+    private MaterialDialog dialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_link_layout, null, false);
         TextView message = dialogView.findViewById(R.id.toast_message_to_contact);
 
-        if (VMN_Dialog)
-        {
+        if (VMN_Dialog) {
             //message.setText("Call tracker is enabled. You will receive the call on your primary number." + getString(R.string.primary_contact_number_message));
             message.setText("This is your virtual mobile number through which customers can contact you. All activity on this number is logged and can be viewed or played back with the Call Tracker.");
-        }
-
-        else
-        {
+        } else {
             message.setText(getString(R.string.primary_contact_number_message));
         }
 
@@ -227,8 +203,7 @@ public class ContactInformationActivity extends BaseActivity
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
-                    public void onPositive(MaterialDialog dialog)
-                    {
+                    public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
                     }
 
@@ -237,41 +212,32 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    private void hideOtpDialog()
-    {
-        if (dialog != null && dialog.isShowing())
-        {
+    private void hideOtpDialog() {
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
 
-    private void otpDialogDismiss()
-    {
-        if (otpDialog != null && otpDialog.isShowing())
-        {
+    private void otpDialogDismiss() {
+        if (otpDialog != null && otpDialog.isShowing()) {
             otpDialog.dismiss();
         }
     }
 
-    private void showProgressbar(String content)
-    {
-        if (progressbar != null && !progressbar.isShowing())
-        {
+    private void showProgressbar(String content) {
+        if (progressbar != null && !progressbar.isShowing()) {
             progressbar.setContent(content);
             progressbar.show();
         }
     }
 
-    private void hideProgressbar()
-    {
-        if (progressbar != null && progressbar.isShowing())
-        {
+    private void hideProgressbar() {
+        if (progressbar != null && progressbar.isShowing()) {
             progressbar.dismiss();
         }
     }
 
-    private void setData()
-    {
+    private void setData() {
         if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
@@ -283,32 +249,22 @@ public class ContactInformationActivity extends BaseActivity
             binding.layoutDisplayContactNumber3.setVisibility(View.GONE);
             binding.layoutCallTrackerNumber.setVisibility(View.VISIBLE);
 
-            if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME)))
-            {
+            if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
                 String number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
                 number = number.startsWith("0") ? number.substring(1) : number;
                 binding.editCallTrackerNumber.setText(number);
-            }
-
-            else if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)))
-            {
+            } else if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1))) {
                 String number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1);
                 number = number.startsWith("0") ? number.substring(1) : number;
                 binding.editCallTrackerNumber.setText(number);
-            }
-
-            else if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)))
-            {
+            } else if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3))) {
                 String number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3);
                 number = number.startsWith("0") ? number.substring(1) : number;
                 binding.editCallTrackerNumber.setText(number);
             }
 
             binding.editCallTrackerNumberCode.setText(phoneCountryCode);
-        }
-
-        else
-        {
+        } else {
             binding.layoutDisplayContactNumber1.setVisibility(View.VISIBLE);
             binding.layoutDisplayContactNumber2.setVisibility(View.VISIBLE);
             binding.layoutDisplayContactNumber3.setVisibility(View.VISIBLE);
@@ -331,16 +287,11 @@ public class ContactInformationActivity extends BaseActivity
 
         String website = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
 
-        if (!TextUtils.isEmpty(website))
-        {
-            if (website.split("://").length == 2 && website.split("://")[0].equals("http"))
-            {
+        if (!TextUtils.isEmpty(website)) {
+            if (website.split("://").length == 2 && website.split("://")[0].equals("http")) {
                 binding.spinnerHttpProtocol.setSelection(0);
                 binding.editWebsiteAddress.setText(website.split("://")[1]);
-            }
-
-            else if (website.split("://").length == 2 && website.split("://")[0].equals("https"))
-            {
+            } else if (website.split("://").length == 2 && website.split("://")[0].equals("https")) {
                 binding.spinnerHttpProtocol.setSelection(1);
                 binding.editWebsiteAddress.setText(website.split("://")[1]);
             }
@@ -356,8 +307,7 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    private void saveInformation()
-    {
+    private void saveInformation() {
         showProgressbar("Updating Information...");
 
         ContactInformationUpdateModel model = new ContactInformationUpdateModel();
@@ -369,8 +319,7 @@ public class ContactInformationActivity extends BaseActivity
         updates.add(new ContactInformationUpdateModel.Update("URL", url));
         updates.add(new ContactInformationUpdateModel.Update("EMAIL", binding.editBusinessEmailAddress.getText().toString()));
 
-        if(!VMN_Dialog)
-        {
+        if (!VMN_Dialog) {
             List<ContactDetailsModel> contacts = new ArrayList<>();
 
             String number1 = binding.editDisplayContactNumber1.getText().toString().trim();
@@ -388,8 +337,7 @@ public class ContactInformationActivity extends BaseActivity
 
         StringBuilder webWidgets = new StringBuilder();
 
-        for (String widget: Constants.StoreWidgets)
-        {
+        for (String widget : Constants.StoreWidgets) {
             webWidgets.append(widget).append("#");
         }
 
@@ -429,8 +377,7 @@ public class ContactInformationActivity extends BaseActivity
         });
 
 
-        if(numberModel == null && binding.editWhatsappNumber.getText().toString().trim().length() > 0)
-        {
+        if (numberModel == null && binding.editWhatsappNumber.getText().toString().trim().length() > 0) {
             WhatsAppBusinessNumberModel whatsAppBusinessNumberModel = new WhatsAppBusinessNumberModel();
             whatsAppBusinessNumberModel.setWhatsAppNumber(binding.editWhatsappNumber.getText().toString());
 
@@ -439,10 +386,7 @@ public class ContactInformationActivity extends BaseActivity
             dataModel.setActionData(whatsAppBusinessNumberModel);
 
             addWhatsAppNumber(dataModel);
-        }
-
-        else if(numberModel != null && !binding.editWhatsappNumber.getText().toString().equals(numberModel.getWhatsAppNumber()))
-        {
+        } else if (numberModel != null && !binding.editWhatsappNumber.getText().toString().equals(numberModel.getWhatsAppNumber())) {
             WaUpdateDataModel update = new WaUpdateDataModel();
             update.setQuery(String.format("{_id:'%s'}", numberModel.getId()));
 
@@ -456,45 +400,38 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    private boolean isValid()
-    {
-        if (binding.editDisplayContactNumber1.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber1.getText().toString().trim().length() < 6)
-        {
+    private boolean isValid() {
+        if (binding.editDisplayContactNumber1.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber1.getText().toString().trim().length() < 6) {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
             binding.editDisplayContactNumber1.requestFocus();
             return false;
         }
 
-        if (binding.editDisplayContactNumber2.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber2.getText().toString().trim().length() < 6)
-        {
+        if (binding.editDisplayContactNumber2.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber2.getText().toString().trim().length() < 6) {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
             binding.editDisplayContactNumber2.requestFocus();
             return false;
         }
 
-        if (binding.editDisplayContactNumber3.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber3.getText().toString().trim().length() < 6)
-        {
+        if (binding.editDisplayContactNumber3.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber3.getText().toString().trim().length() < 6) {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
             binding.editDisplayContactNumber3.requestFocus();
             return false;
         }
 
-        if (binding.editWhatsappNumber.getText().toString().trim().length() > 0 && binding.editWhatsappNumber.getText().toString().trim().length() < 6)
-        {
+        if (binding.editWhatsappNumber.getText().toString().trim().length() > 0 && binding.editWhatsappNumber.getText().toString().trim().length() < 6) {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
             binding.editWhatsappNumber.requestFocus();
             return false;
         }
 
-        if(binding.editWebsiteAddress.getText().toString().trim().length() > 0 && !isValidWebsite(binding.editWebsiteAddress.getText().toString()))
-        {
+        if (binding.editWebsiteAddress.getText().toString().trim().length() > 0 && !isValidWebsite(binding.editWebsiteAddress.getText().toString())) {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_website));
             binding.editWebsiteAddress.requestFocus();
             return false;
         }
 
-        if(binding.editBusinessEmailAddress.getText().toString().trim().length() > 0 && !isValidEmail(binding.editBusinessEmailAddress.getText().toString()))
-        {
+        if (binding.editBusinessEmailAddress.getText().toString().trim().length() > 0 && !isValidEmail(binding.editBusinessEmailAddress.getText().toString())) {
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_email));
             binding.editBusinessEmailAddress.requestFocus();
             return false;
@@ -504,8 +441,7 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    private boolean isValidEmail(String email)
-    {
+    private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -514,8 +450,7 @@ public class ContactInformationActivity extends BaseActivity
         return matcher.matches();
     }
 
-    private boolean isValidWebsite(String website)
-    {
+    private boolean isValidWebsite(String website) {
         Pattern pattern = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(http://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
         //Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(website);
@@ -523,15 +458,12 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    public void onSaveClick(View view)
-    {
-        if(!Methods.isOnline(this))
-        {
+    public void onSaveClick(View view) {
+        if (!Methods.isOnline(this)) {
             return;
         }
 
-        if(!isValid())
-        {
+        if (!isValid()) {
             return;
         }
 
@@ -539,10 +471,8 @@ public class ContactInformationActivity extends BaseActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
 
                 finish();
@@ -553,8 +483,7 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    private void sendSms(String number)
-    {
+    private void sendSms(String number) {
         showProgressbar("Please Wait...");
 
         Methods.SmsInterface smsApi = Constants.restAdapterDev1.create(Methods.SmsInterface.class);
@@ -566,12 +495,10 @@ public class ContactInformationActivity extends BaseActivity
         smsApi.sendSms(hashMap, new Callback<Boolean>() {
 
             @Override
-            public void success(Boolean model, Response response)
-            {
+            public void success(Boolean model, Response response) {
                 hideProgressbar();
 
-                if(response.getStatus() == 200 && model)
-                {
+                if (response.getStatus() == 200 && model) {
                     hideOtpDialog();
                     otpVerifyDialog(number);
 
@@ -583,8 +510,7 @@ public class ContactInformationActivity extends BaseActivity
             }
 
             @Override
-            public void failure(RetrofitError error)
-            {
+            public void failure(RetrofitError error) {
                 hideProgressbar();
                 Toast.makeText(ContactInformationActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_LONG).show();
             }
@@ -592,8 +518,7 @@ public class ContactInformationActivity extends BaseActivity
     }
 
 
-    private void verifySms(String number, String otp)
-    {
+    private void verifySms(String number, String otp) {
         showProgressbar("Verifying OTP...");
         Methods.SmsInterface smsApi = Constants.restAdapterDev1.create(Methods.SmsInterface.class);
 
@@ -605,18 +530,15 @@ public class ContactInformationActivity extends BaseActivity
         smsApi.verifySms(hashMap, new Callback<Boolean>() {
 
             @Override
-            public void success(Boolean model, Response response)
-            {
+            public void success(Boolean model, Response response) {
                 hideProgressbar();
 
-                if (model == null)
-                {
+                if (model == null) {
                     Toast.makeText(ContactInformationActivity.this, "Failed to Verify OTP", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(response.getStatus() == 200 && model)
-                {
+                if (response.getStatus() == 200 && model) {
                     changePrimary(number);
                     return;
                 }
@@ -625,27 +547,23 @@ public class ContactInformationActivity extends BaseActivity
             }
 
             @Override
-            public void failure(RetrofitError error)
-            {
+            public void failure(RetrofitError error) {
                 hideProgressbar();
                 Toast.makeText(ContactInformationActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void changePrimary(final String number)
-    {
+    private void changePrimary(final String number) {
         UpdatePrimaryNumApi updateApi = Constants.restAdapter.create(UpdatePrimaryNumApi.class);
         updateApi.changeNumber(session.getFPID(), Constants.clientId, number, new Callback<String>() {
 
             @Override
-            public void success(String s, Response response)
-            {
+            public void success(String s, Response response) {
                 hideProgressbar();
                 otpDialogDismiss();
 
-                if (s == null || response.getStatus() != 200)
-                {
+                if (s == null || response.getStatus() != 200) {
                     Methods.showSnackBarNegative(ContactInformationActivity.this, getString(R.string.something_went_wrong_try_again));
                     return;
                 }
@@ -657,13 +575,11 @@ public class ContactInformationActivity extends BaseActivity
             }
 
             @Override
-            public void failure(RetrofitError error)
-            {
+            public void failure(RetrofitError error) {
                 hideProgressbar();
                 otpDialogDismiss();
 
-                if(error.getResponse().getStatus() == 400)
-                {
+                if (error.getResponse().getStatus() == 400) {
                     showOtpDialog();
                     Methods.showSnackBarNegative(ContactInformationActivity.this, "This primary number is already used");
                     return;
@@ -683,8 +599,7 @@ public class ContactInformationActivity extends BaseActivity
                     @Override
                     public void success(WebActionModel<WhatsAppBusinessNumberModel> model, Response response) {
 
-                        if (model != null && model.getData() != null && model.getData().size() > 0)
-                        {
+                        if (model != null && model.getData() != null && model.getData().size() > 0) {
                             numberModel = model.getData().get(0);
                             String whatsAppNumber = numberModel.getWhatsAppNumber() == null ? "" : numberModel.getWhatsAppNumber();
                             binding.editWhatsappNumber.setText(whatsAppNumber);
@@ -692,8 +607,7 @@ public class ContactInformationActivity extends BaseActivity
                     }
 
                     @Override
-                    public void failure(RetrofitError error)
-                    {
+                    public void failure(RetrofitError error) {
 
                     }
                 });
@@ -716,8 +630,7 @@ public class ContactInformationActivity extends BaseActivity
                     }
 
                     @Override
-                    public void failure(RetrofitError error)
-                    {
+                    public void failure(RetrofitError error) {
                         Log.d("updateWhatsAppNumber", "FAIL");
                     }
                 });
@@ -732,17 +645,44 @@ public class ContactInformationActivity extends BaseActivity
                     @Override
                     public void success(String model, Response response) {
 
-                        if(numberModel != null)
-                        {
+                        if (numberModel != null) {
                             numberModel.setWhatsAppNumber(binding.editWhatsappNumber.getText().toString());
                         }
                     }
 
                     @Override
-                    public void failure(RetrofitError error)
-                    {
+                    public void failure(RetrofitError error) {
 
                     }
                 });
+    }
+
+
+    /**
+     * Tool tip for information/hint
+     *
+     * @param position
+     * @param message
+     * @param view
+     */
+    private void toolTip(ViewTooltip.Position position, String message, View view) {
+        ViewTooltip
+                .on(this, view)
+                .autoHide(true, 3500)
+                .clickToHide(true)
+                .corner(30)
+                .textColor(Color.WHITE)
+                .color(R.color.accentColor)
+                .position(position)
+                .text(message)
+                .show();
+    }
+
+    /**
+     * Add tooltip button listener
+     */
+    private void addInfoButtonListener()
+    {
+        binding.ibInfoWhatsapp.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "This is your WhatsApp for business number.", binding.ibInfoWhatsapp));
     }
 }
