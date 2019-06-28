@@ -1,5 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -58,6 +59,7 @@ public class ContactInformationActivity extends BaseActivity {
     private String phoneCountryCode;
 
     @Override
+    @SuppressLint("ClickableViewAccessibility")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_information);
@@ -79,10 +81,15 @@ public class ContactInformationActivity extends BaseActivity {
 
         binding.editPrimaryContactNumber.setOnTouchListener((v, event) -> {
 
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+            if (event.getAction() == MotionEvent.ACTION_UP)
+            {
+                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz"))
+                {
                     showOtpDialog();
-                } else {
+                }
+
+                else
+                {
                     dialog().show();
                 }
             }
@@ -92,7 +99,8 @@ public class ContactInformationActivity extends BaseActivity {
 
         binding.editCallTrackerNumber.setOnTouchListener((v, event) -> {
 
-            if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (event.getAction() == MotionEvent.ACTION_UP)
+            {
                 dialog().show();
             }
 
