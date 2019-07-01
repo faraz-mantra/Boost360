@@ -60,6 +60,7 @@ import com.nowfloats.ProductGallery.Model.BankInformation;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Model.ProductImageResponseModel;
 import com.nowfloats.ProductGallery.Model.Product_Gallery_Update_Model;
+import com.nowfloats.ProductGallery.Model.Tag;
 import com.nowfloats.ProductGallery.Model.UpdateValue;
 import com.nowfloats.ProductGallery.Service.FileUpload;
 import com.nowfloats.ProductGallery.Service.MultipleFileUpload;
@@ -84,9 +85,6 @@ import com.nowfloats.webactions.webactioninterfaces.IFilter;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
-/*import com.vincent.filepicker.Constant;
-import com.vincent.filepicker.activity.NormalFilePickActivity;
-import com.vincent.filepicker.filter.entity.NormalFile;*/
 
 import org.json.JSONObject;
 
@@ -156,6 +154,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private ProductPickupAddressFragment pickupAddressFragment;
     private String[] paymentOptionTitles;
     private WebAction mWebAction;
+    private List<Tag> tags = new ArrayList<>();
 
     public static ManageProductFragment newInstance(String productType, String category, com.nowfloats.ProductGallery.Model.Product product)
     {
@@ -238,6 +237,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         addBottomSheetListener();
         addTextChangeListener();
         addInfoButtonListener();
+        addTagViewListener();
 
         /**
          * Add key listener for restrict only one dot to these fields
@@ -539,6 +539,16 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
+        if(product.tags != null)
+        {
+            for(int i=0; i<product.tags.size(); i++)
+            {
+                tags.add(new Tag(product.tags.get(i), String.valueOf(i)));
+            }
+
+            binding.tvProductKeyword.addTags(tags);
+        }
+
         try
         {
             String image_url = product.TileImageUri;
@@ -603,6 +613,39 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         binding.layoutBottomSheet.editIfscCode.setText(bankInformation.bankAccount.ifsc != null ? bankInformation.bankAccount.ifsc : "");
         binding.layoutBottomSheet.editBankAccount.setText(bankInformation.bankAccount.number != null ? bankInformation.bankAccount.number : "");
+    }
+
+
+    private void addTagViewListener()
+    {
+        binding.tvProductKeyword.setOnTagDeleteListener((view, tag, position)-> {
+
+            tags.remove(position);
+            binding.tvProductKeyword.remove(position);
+
+            product.tags.remove(position);
+        });
+
+        binding.btnAddTag.setOnClickListener(v -> {
+
+            String tag = binding.editProductTags.getText().toString();
+
+            if(tag.trim().length() > 0)
+            {
+                if(product.tags == null)
+                {
+                    product.tags = new ArrayList<>();
+                }
+
+                Tag obj = new Tag(tag, String.valueOf(product.tags.size()));
+                binding.tvProductKeyword.addTag(obj);
+                tags.add(obj);
+
+                product.tags.add(tag);
+
+                binding.editProductTags.setText("");
+            }
+        });
     }
 
 
