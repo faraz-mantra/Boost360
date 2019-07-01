@@ -123,17 +123,18 @@
             android:visibility="invisible">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:tint="@color/light_gray"
-                android:src="@drawable/analytics_search_ranking"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:tint="@color/zeroth_grey_icon"
+                android:src="@drawable/ic_search_rankings"/>
 
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textColor="@color/light_gray"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/zeroth_grey_title"
                 android:text="Keep Moving" />
 
             <TextView
@@ -141,7 +142,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center"
-                android:textColor="@color/light_gray"
+                android:textSize="14sp"
+                android:textColor="@color/zeroth_grey_title"
                 android:text="Update fresh and industry-relevant content" />
 
         </LinearLayout>

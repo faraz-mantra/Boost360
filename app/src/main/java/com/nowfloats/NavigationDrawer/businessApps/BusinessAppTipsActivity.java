@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
+import com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
@@ -90,7 +91,7 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
                 intent = new Intent(BusinessAppTipsActivity.this, ImageGalleryActivity.class);
                 break;
             case 3:
-                intent = new Intent(BusinessAppTipsActivity.this, Contact_Info_Activity.class);
+                intent = new Intent(BusinessAppTipsActivity.this, ContactInformationActivity.class);
                 break;
             case 4:
                 intent = new Intent(BusinessAppTipsActivity.this, BusinessHoursActivity.class);

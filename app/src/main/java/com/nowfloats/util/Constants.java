@@ -116,7 +116,8 @@ public class Constants {
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     public final static String SUGGESTIONS_API_URL = "http://boostapi.withfloats.com";
     public final static String SUGGESTIONS_TEXT_API_URL = "http://boosttest.nowfloatsdev.com";
-    public final static String WA_BASE_URL = "https://webactions.kitsune.tools/api/v1/";
+    //public final static String WA_BASE_URL = "https://webactions.kitsune.tools/api/v1/";
+    public final static String WA_BASE_URL = "https://kit-webaction-api.withfloats.com/api/v1/";
     public final static String AP_BASE_URL = "https://assuredpurchase.withfloats.com/api/AssuredPurchase/";
     public final static String AP_BOOST_BASE_URL = "https://boost.nowfloats.com/AssuredPurchase";
     public final static String ANA_CHAT_API_URL = /*"http://chat-dev.nowfloatsdev.com";//*/"https://gateway.api.ana.chat";
@@ -139,7 +140,7 @@ public class Constants {
     public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
     public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();
     //public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
-    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://onboarding-boost.withfloats.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://onboarding-boost.withfloats.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;

@@ -137,10 +137,10 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void searchSubcribers(final String key) {
-        mProgressBar.setVisibility(View.VISIBLE);
+        //mProgressBar.setVisibility(View.VISIBLE);
 
         SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
-        mSubscriberApis.search(key, Constants.clientId, mSessionManager.getFpTag(), new Callback<ArrayList<SubscriberModel>>() {
+        mSubscriberApis.search(key, key, Constants.clientId, mSessionManager.getFpTag(), new Callback<ArrayList<SubscriberModel>>() {
             @Override
             public void success(ArrayList<SubscriberModel> subscriberModels, Response response) {
 

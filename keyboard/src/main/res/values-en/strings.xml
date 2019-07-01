@@ -23,7 +23,9 @@
     <string name="tv_photos">Photos</string>
     <string name="tv_details">Details</string>
     <string name="tv_share_link">Share Link</string>
+    <!--
     <string name="tv_create_offer">Create Offer</string>
+    -->
     <string name="tv_share">Share</string>
     <string name="tv_name">Name:</string>
     <string name="tv_price">Price:</string>

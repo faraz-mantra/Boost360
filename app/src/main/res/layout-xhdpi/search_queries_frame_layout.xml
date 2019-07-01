@@ -23,20 +23,21 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/searchquery_icon" />
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:tint="@color/zeroth_grey_icon"
+                android:src="@drawable/ic_search_queries" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dgts__title_text_size"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/dgts__padding_title"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="@dimen/dgts__padding_title"
                 android:textColor="@color/zeroth_grey_title"
                 android:text="@string/keep_move"/>
@@ -44,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textColor="@color/zeroth_grey"
                 android:gravity="center"
                 android:text="@string/searchquery_empty"/>

@@ -26,7 +26,7 @@ public interface SubscriberApis {
         void addSubscriber(@Body AddSubscriberModel model, Callback<String> response);
 
         @POST("/Search/v1/floatingPoint/Subscribers/Search")
-        void search(@Body String key, @Query("clientId") String clientId, @Query("fpTag") String fpTag,Callback<ArrayList<SubscriberModel>> response);
+        void search(@Body String dummy, @Query("email") String key, @Query("clientId") String clientId, @Query("fpTag") String fpTag,Callback<ArrayList<SubscriberModel>> response);
 
         @POST("/Discover/v1/FloatingPoint/unsubscribe")
         void unsubscriber(@Body UnsubscriberModel model, Callback<Object> response);

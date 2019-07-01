@@ -63,6 +63,7 @@ import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
+import com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
@@ -460,7 +461,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, businessFragment, "Profile").commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_contact))) {
-                Intent queries = new Intent(HomeActivity.this, Contact_Info_Activity.class);
+                Intent queries = new Intent(HomeActivity.this, ContactInformationActivity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizaddress)) || url.contains("address")) {
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
@@ -1235,7 +1236,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //            Intent in = new Intent(HomeActivity.this, CustomPageFragment.class);
 //            startActivity(in);
                 } else if (nextScreen.equals(getString(R.string.contact__info))) {
-                    Intent contactIntent = new Intent(HomeActivity.this, Contact_Info_Activity.class);
+                    Intent contactIntent = new Intent(HomeActivity.this, ContactInformationActivity.class);
                     startActivity(contactIntent);
                 } else if (nextScreen.equals(getString(R.string.basic_info))) {
                     Intent basicInfoIntent = new Intent(HomeActivity.this, Edit_Profile_Activity.class);

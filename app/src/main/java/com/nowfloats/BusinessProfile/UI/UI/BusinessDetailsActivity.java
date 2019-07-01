@@ -206,7 +206,7 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
                 intent = new Intent(BusinessDetailsActivity.this,BusinessHoursActivity.class);
                 break;
             case R.id.tv_contact_edit:
-                intent = new Intent(BusinessDetailsActivity.this,Contact_Info_Activity.class);
+                intent = new Intent(BusinessDetailsActivity.this,ContactInformationActivity.class);
                 break;
         }
         if(intent != null){

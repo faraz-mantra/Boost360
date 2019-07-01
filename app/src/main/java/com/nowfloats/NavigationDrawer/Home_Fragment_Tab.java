@@ -80,11 +80,11 @@ public class Home_Fragment_Tab extends Fragment {
             if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
                 if (Home_Main_Fragment.progressBar != null)
-                    Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
+                    //Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
             } else {
-                if (Home_Main_Fragment.progressBar != null)
-                    Home_Main_Fragment.progressBar.setVisibility(View.GONE);
+                if (Home_Main_Fragment.progressBar != null){}
+                    //Home_Main_Fragment.progressBar.setVisibility(View.GONE);
             }
         }
     }
@@ -192,7 +192,7 @@ public class Home_Fragment_Tab extends Fragment {
                                         try {
                                             Home_Main_Fragment.facebookPostCount = 0;
                                             Home_Main_Fragment.recentPostEvent = null;
-                                            Home_Main_Fragment.progressBar.setVisibility(View.GONE);
+                                            //Home_Main_Fragment.progressBar.setVisibility(View.GONE);
                                             Home_Main_Fragment.retryLayout.setVisibility(View.GONE);
                                             Home_Main_Fragment.progressCrd.setVisibility(View.GONE);
                                             Constants.createMsg = false;
@@ -252,7 +252,7 @@ public class Home_Fragment_Tab extends Fragment {
             if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
                 if (Home_Main_Fragment.progressBar != null)
-                    Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
+                   // Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
             } else if (Constants.deepLinkAnalytics) {
                 viewPager.setCurrentItem(1);

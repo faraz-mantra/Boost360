@@ -77,7 +77,7 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
             try{
                 Log.i("IMAGE---","VISIBLE RETRY LayOut");
                 if (Home_Main_Fragment.progressBar!=null && Home_Main_Fragment.retryLayout!=null && retryKey!=0){
-                    Home_Main_Fragment.progressBar.setVisibility(View.GONE);
+                    //Home_Main_Fragment.progressBar.setVisibility(View.GONE);
                     Home_Main_Fragment.progressCrd.setVisibility(View.VISIBLE);
                     Home_Main_Fragment.retryLayout.setVisibility(View.VISIBLE);
                 }

@@ -44,8 +44,9 @@
     <color name="green">#23cf34</color>
     <color name="blue">#0000FF</color>
     <color name="grey">#a4a4a4</color>
-    <color name="zeroth_grey">#9a9a9a</color>
-    <color name="zeroth_grey_title">#505050</color>
+    <color name="zeroth_grey">#828282</color>
+    <color name="zeroth_grey_title">#828282</color>
+    <color name="zeroth_grey_icon">#828282</color>
     <color name="transparent">#00ffffff</color>
     <color name="light_black">#505050</color>
     <color name="home_yellow">#FFB900</color>

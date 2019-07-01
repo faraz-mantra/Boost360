@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
@@ -471,7 +472,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             case email:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_ADD_EMAIL, null);
                 if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL))) {
-                    Intent in = new Intent(activity, Contact_Info_Activity.class);
+                    Intent in = new Intent(activity, ContactInformationActivity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -519,7 +520,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             case phone:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_PHONE_NUMBER, null);
                 if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))) {
-                    Intent act = new Intent(activity, Contact_Info_Activity.class);
+                    Intent act = new Intent(activity, ContactInformationActivity.class);
                     startActivity(act);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

@@ -2,6 +2,7 @@ package com.nowfloats.manageinventory.interfaces;
 
 import com.nowfloats.Analytics_Screen.model.OrderStatusSummary;
 import com.nowfloats.Analytics_Screen.model.RevenueSummary;
+import com.nowfloats.BusinessProfile.UI.Model.WhatsAppBusinessNumberModel;
 import com.nowfloats.manageinventory.models.CommonStatus;
 import com.nowfloats.manageinventory.models.MarkOrderAsShipped;
 import com.nowfloats.manageinventory.models.OrderDataModel;
@@ -11,6 +12,8 @@ import com.nowfloats.manageinventory.models.OrdersCountModel;
 import com.nowfloats.manageinventory.models.ProductModel;
 import com.nowfloats.manageinventory.models.SellerSummary;
 import com.nowfloats.manageinventory.models.UserModel;
+import com.nowfloats.manageinventory.models.WAAddDataModel;
+import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 
@@ -89,4 +92,15 @@ public interface WebActionCallInterface {
                                @Query("deliveredEndDate") String deliveredEndDate,
                                Callback<RevenueSummary>callback);
 
+    @GET("/whatsapp_number/get-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getWhatsAppNumber(@Query("query") String query, Callback<WebActionModel<WhatsAppBusinessNumberModel>> callback);
+
+    @POST("/whatsapp_number/add-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void addWhatsAppNumber(@Body WAAddDataModel<WhatsAppBusinessNumberModel> query, Callback<String> callback);
+
+    @POST("/whatsapp_number/update-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void updateWhatsAppNumber(@Body WaUpdateDataModel query, Callback<String> callback);
 }
