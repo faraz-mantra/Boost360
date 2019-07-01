@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -252,8 +251,6 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             @Override
             public void success(List<String> data, Response response) {
 
-                Log.d("PRODUCT_TAG", "SUCCESS: " + data.size());
-
                 if(data != null && response.getStatus() == 200)
                 {
                     addAutoCompleteListener(data);
@@ -263,7 +260,6 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             @Override
             public void failure(RetrofitError error) {
 
-                Log.d("PRODUCT_TAG", "FAIL: ");
             }
         });
     }

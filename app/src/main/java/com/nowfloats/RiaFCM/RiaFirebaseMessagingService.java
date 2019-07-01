@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.apxor.androidsdk.core.ApxorSDK;
@@ -73,7 +74,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         }
 
-        BoostLog.d(TAG, "Token: " + token);
+        Log.d(TAG, "Token: " + token);
     }
 
     @Override

@@ -104,7 +104,8 @@ import static android.app.Activity.RESULT_OK;
 import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 
 
-public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener, FileUpload.OnFileUpload {
+public class ManageProductFragment extends Fragment implements AdapterView.OnItemClickListener,
+        UploadImage.ImageUploadListener, FileUpload.OnFileUpload {
 
     private String TAG = ManageProductFragment.class.getSimpleName();
 
@@ -343,6 +344,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         this.getBankInformation();
         this.getAddressInformation();
+        this.getTagList();
     }
 
     protected void makeLinkClickable(TextView view)
@@ -3174,6 +3176,41 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
+     * Fetch suggested tag list
+     */
+    private void getTagList()
+    {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
+        HashMap<String, String> values = new HashMap<>();
+        values.put("clientId", Constants.clientId);
+        values.put("fpId", session.getFPID());
+
+        ProductGalleryInterface galleryInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
+
+        galleryInterface.getAllTags(values, new Callback<List<String>>() {
+
+            @Override
+            public void success(List<String> data, Response response) {
+
+                if(data != null && response.getStatus() == 200)
+                {
+                    addAutoCompleteListener(data);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+
+    /**
      * Fetch assured purchase details for a product
      * @param productId
      */
@@ -3517,5 +3554,31 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutShippingMatrixDetails.ibInfoProductThickness.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the thickness of your package.", binding.layoutShippingMatrixDetails.ibInfoProductThickness));
 
         binding.layoutPaymentMethod.ibInfoPaymentConfiguration.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Choose the best way for customers to pay you.", binding.layoutPaymentMethod.ibInfoPaymentConfiguration));
+    }
+
+
+    /**
+     * Add listener to autocomplete suggestion
+     * @param categories
+     */
+    private void addAutoCompleteListener(List<String> categories)
+    {
+        try
+        {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, categories);
+
+            binding.editProductTags.setAdapter(adapter);
+            binding.editProductTags.setOnItemClickListener(this);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
