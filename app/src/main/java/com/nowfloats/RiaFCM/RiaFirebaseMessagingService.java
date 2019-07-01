@@ -16,7 +16,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.apxor.androidsdk.core.ApxorSDK;
@@ -60,7 +59,7 @@ import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
  */
 
 public class RiaFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "MyFirebaseMsgService";
+    private static final String TAG = RiaFirebaseMessagingService.class.getSimpleName();
     public static String deepLinkUrl;
     private SharedPreferences pref;
 
@@ -73,6 +72,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             AnaCore.saveFcmToken(this, token);
             WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         }
+
+        BoostLog.d(TAG, "Token: " + token);
     }
 
     @Override
@@ -80,7 +81,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
         Map<String, String> mapResult = remoteMessage.getData();
-        BoostLog.d("onMessageReceived", "onMessageReceived");
+        BoostLog.d(TAG, "onMessageReceived");
         if (mapResult.containsKey("payload")) {
             AnaCore.handlePush(this, mapResult.get("payload"));
         } else {

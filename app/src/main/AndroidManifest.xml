@@ -166,7 +166,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
                     android:host="${applicationId}.riasdk.skip"
                     android:pathPrefix="/"
@@ -245,7 +244,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
-        </activity> <!-- <service android:name="com.nowfloats.bubble.BubblesService" /> -->
+        </activity>
         <service
             android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
@@ -262,7 +261,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
                     android:host="${applicationId}.keyboard.home"
                     android:pathPrefix="/"
@@ -422,8 +420,6 @@
             android:label="@string/title_activity_splash_screen_"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
-
-            <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -444,25 +440,11 @@
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
             android:label="@string/title_activity_edit__profile_"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" /> <!-- <activity -->
-        <!-- android:name="com.facebook.LoginActivity" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
+            android:windowSoftInputMode="stateHidden" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <!--
-        <receiver
-            android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.biz2.nowfloats" />
-            </intent-filter>
-        </receiver>
-        -->
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
             android:value="@string/package_name" />
@@ -526,18 +508,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.thinksity" />
-            </intent-filter>
-        </receiver>
-        -->
+
         <service
             android:name="com.nowfloats.RiaFCM.RiaFirebaseMessagingService"
             android:enabled="true"
@@ -546,11 +517,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!--<service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>-->
 
         <activity
             android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
@@ -617,87 +583,7 @@
             android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--
-        <service
-            android:name="com.nowfloats.accessbility.DataAccessibilityServiceV8"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter android:priority="2147483647">
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
 
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service" />
-        </service>
-        -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.accessbility.BubbleDialog" -->
-        <!-- android:autoRemoveFromRecents="true" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:launchMode="singleInstance" -->
-        <!-- android:noHistory="true" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Theme.custom" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.accessbility.BubbleInAppDialog" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Theme.bubbleInApp" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.accessbility.WhatsAppBubbleCloseDialog" -->
-        <!-- android:autoRemoveFromRecents="true" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:launchMode="singleInstance" -->
-        <!-- android:noHistory="true" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Theme.bubbleInApp" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.accessbility.WhatsAppDialog" -->
-        <!-- android:autoRemoveFromRecents="true" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:launchMode="singleInstance" -->
-        <!-- android:noHistory="true" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Theme.custom" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.customerassistant.CustomerAssistantActivity" -->
-        <!-- android:autoRemoveFromRecents="true" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:launchMode="singleInstance" -->
-        <!-- android:noHistory="true" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Transparent" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.accessbility.OverlayDialog" -->
-        <!-- android:autoRemoveFromRecents="true" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:launchMode="singleInstance" -->
-        <!-- android:noHistory="true" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Theme.custom" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.accessbility.TempDisplayDialog" -->
-        <!-- android:autoRemoveFromRecents="true" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:launchMode="singleInstance" -->
-        <!-- android:noHistory="true" -->
-        <!-- android:theme="@style/Theme.custom" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.nowfloats.customerassistant.SuggestionsActivity" -->
-        <!-- android:autoRemoveFromRecents="true" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:launchMode="singleInstance" -->
-        <!-- android:noHistory="true" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Theme.custom" -->
-        <!-- android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" /> -->
         <activity
             android:name="com.nowfloats.managenotification.CallerInfoDialog"
             android:autoRemoveFromRecents="true"
