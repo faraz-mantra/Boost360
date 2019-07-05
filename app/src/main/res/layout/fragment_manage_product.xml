@@ -308,7 +308,7 @@
                     <TextView
                         android:id="@+id/label_product_tags"
                         style="@style/ProductLabelTextStyle"
-                        android:text="Product Tags" />
+                        android:text="Filter Tags" />
 
                     <ImageButton
                         android:id="@+id/ib_info_product_tags"
@@ -333,7 +333,7 @@
                         android:id="@+id/edit_product_tags"
                         style="@style/ProductEditTextStyle"
                         android:layout_weight="1"
-                        android:hint="Type a product tag" />
+                        android:hint="Type a filter tag" />
 
                     <FrameLayout
                         android:layout_width="wrap_content"
@@ -345,7 +345,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="1dp"
-                            android:background="@android:color/white"
+                            android:background="#e9e9e9"
+                            android:textColor="@color/secondaryTextColor"
                             android:text="ADD"/>
 
                     </FrameLayout>

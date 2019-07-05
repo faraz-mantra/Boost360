@@ -628,28 +628,28 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             product.tags.remove(position);
         });
 
-        binding.btnAddTag.setOnClickListener(v -> {
-
-            String tag = binding.editProductTags.getText().toString();
-
-            if(tag.trim().length() > 0)
-            {
-                if(product.tags == null)
-                {
-                    product.tags = new ArrayList<>();
-                }
-
-                Tag obj = new Tag(tag, String.valueOf(product.tags.size()));
-                binding.tvProductKeyword.addTag(obj);
-                tags.add(obj);
-
-                product.tags.add(tag);
-
-                binding.editProductTags.setText("");
-            }
-        });
+        binding.btnAddTag.setOnClickListener(v -> addTag(binding.editProductTags.getText().toString()));
     }
 
+
+    private void addTag(String tag)
+    {
+        if(tag.trim().length() > 0)
+        {
+            if(product.tags == null)
+            {
+                product.tags = new ArrayList<>();
+            }
+
+            Tag obj = new Tag(tag, String.valueOf(product.tags.size()));
+            binding.tvProductKeyword.addTag(obj);
+            tags.add(obj);
+
+            product.tags.add(tag);
+
+            binding.editProductTags.setText("");
+        }
+    }
 
     private void addTextChangeListener()
     {
@@ -3482,8 +3482,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onSuccess(String url) {
 
-        Log.d("PRODUCT_JSON", "URL - " + url);
-
         //save address once address proof uploaded
         addressInformation.addressProof = url;
         saveAddress();
@@ -3554,6 +3552,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         binding.layoutShippingMatrixDetails.ibInfoProductThickness.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the thickness of your package.", binding.layoutShippingMatrixDetails.ibInfoProductThickness));
 
         binding.layoutPaymentMethod.ibInfoPaymentConfiguration.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Choose the best way for customers to pay you.", binding.layoutPaymentMethod.ibInfoPaymentConfiguration));
+        binding.ibInfoProductTags.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Tags help site visitors find a desired item on your Boost website. You can add related tags here and reuse them across other related products. Selecting a tag filters all relevant inventory in your product catalog.", binding.ibInfoProductTags));
     }
 
 
@@ -3580,5 +3579,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        addTag(parent.getItemAtPosition(position).toString());
     }
 }

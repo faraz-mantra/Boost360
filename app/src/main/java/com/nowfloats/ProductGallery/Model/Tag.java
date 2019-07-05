@@ -24,8 +24,8 @@ public class Tag {
 
 
     public Tag(String text, String tagId) {
-        init(0, tagId, text, Color.parseColor("#ffffff"), 14f, Color.parseColor("#ffb900"), Color.parseColor("#88363636"),
-                true, Color.parseColor("#ffffff"), 14f, 100, "×", 0f, Color.parseColor("#ffffff"));
+        init(0, tagId, text, Color.parseColor("#7f7f7f"), 14f, Color.parseColor("#e9e9e9"), Color.parseColor("#88363636"),
+                true, Color.parseColor("#7f7f7f"), 14f, 100, "×", 0f, Color.parseColor("#ffffff"));
     }
 
     private void init(int id, String tagId, String text, int tagTextColor, float tagTextSize,
