@@ -53,11 +53,12 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2018080055
+        versionCode 2018080056
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         ndk {
-            abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+            //abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+            abiFilters "armeabi-v7a", "x86"
         }
     }
     aaptOptions {
@@ -127,7 +128,7 @@ android {
         }
         partone {
 
-            versionName "4.9.64"
+            versionName "4.9.65"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
