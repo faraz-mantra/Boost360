@@ -252,11 +252,11 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         binding.editGst.setKeyListener(DigitsKeyListener.getInstance(false,true));
 
         binding.layoutInventory.labelInventoryHint.setText(String.valueOf("Inventory availability"));
-        binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available quantity"));
+        binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available qty."));
         binding.layoutInventoryOnline.labelInventoryHint.setText(String.valueOf("Accept online payment"));
-        binding.layoutInventoryOnline.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
+        binding.layoutInventoryOnline.labelInventoryQuantityHint.setText(String.valueOf("Max qty. per order"));
         binding.layoutInventoryCod.labelInventoryHint.setText(String.valueOf("Accept COD payment"));
-        binding.layoutInventoryCod.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
+        binding.layoutInventoryCod.labelInventoryQuantityHint.setText(String.valueOf("Max qty. per order"));
 
         binding.btnPublish.setOnClickListener(view -> saveProduct());
         binding.btnDelete.setOnClickListener(view -> deleteConfirmation());
@@ -3541,9 +3541,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         binding.layoutProductSpecification.ibInfoProductSpecification.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Mention other specifications of the product you are offering. To add more, click on add specifications.", binding.layoutProductSpecification.ibInfoProductSpecification));
 
         binding.layoutInventory.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "You can use this to manage your product’s availability on your website.", binding.layoutInventory.ibInfoProductInventory));
+        binding.layoutInventory.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The total number of units you are willing to sell through your Boost website. Quantity decreases with orders that include this product.", binding.layoutInventory.ibInfoProductQuantity));
+
         binding.layoutInventoryCod.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Allows customers to pay by cash at the time of delivery of the product, without the need of an advance payment online.", binding.layoutInventoryCod.ibInfoProductInventory));
+        binding.layoutInventoryCod.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum number of units that a buyer can purchase in a single order.", binding.layoutInventoryCod.ibInfoProductQuantity));
 
         binding.layoutInventoryOnline.ibInfoProductInventory.setVisibility(View.INVISIBLE);
+        binding.layoutInventoryOnline.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum number of units that a buyer can purchase in a single order.", binding.layoutInventoryOnline.ibInfoProductQuantity));
 
         binding.layoutShippingMatrixDetails.ibInfoProductDimension.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Package dimensions need to be accurate because they are used to calculate shipping rates.", binding.layoutShippingMatrixDetails.ibInfoProductDimension));
         binding.layoutShippingMatrixDetails.ibInfoProductWeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the weight of your package.", binding.layoutShippingMatrixDetails.ibInfoProductWeight));
