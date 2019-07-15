@@ -72,7 +72,7 @@ public class Home_Main_Fragment extends Fragment implements
         Fetch_Home_Data.Fetch_Home_Data_Interface {
 
     public static LinearLayout retryLayout,emptyMsgLayout;
-    public static ButteryProgressBar progressBar;
+    public ButteryProgressBar progressBar;
     public static CardView progressCrd;
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -88,8 +88,6 @@ public class Home_Main_Fragment extends Fragment implements
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
     JSONObject data;
-    String msg = "", date = "";
-    String imageUri = "";
 
     public static Bus bus;
     OnRenewPlanClickListener mCallback = null;
@@ -399,6 +397,7 @@ public class Home_Main_Fragment extends Fragment implements
 
     private void startSync() {
 
+        progressBar.setVisibility(View.VISIBLE);
         fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
         fetch_home_data.getMessages(session.getFPID(), "0");
     }
@@ -488,6 +487,8 @@ public class Home_Main_Fragment extends Fragment implements
         Constants.createMsg = false;
         loadDataFromDb(skip, isNewMessage);
         bus.post(new UpdateFetchAfterPost());
+
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

@@ -221,7 +221,7 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:1.1.3@aar'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'org.jsoup:jsoup:1.7.2'
-    implementation 'jp.wasabeef:richeditor-android:1.2.0'
+    implementation 'jp.wasabeef:richeditor-android:1.2.2'
     implementation 'com.github.darsh2:MultipleImageSelect:v0.0.4'
     implementation 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
     implementation 'me.biubiubiu.justifytext:library:1.1'

@@ -79,7 +79,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
     private HorizontalScrollView editor;
     private boolean editCheck = false;
     String curName,curHtml,curPageid;
-    int curPos;
+    private int curPos;
     private ImageView deletePage;
 
     String imageTagName = "CustomePage";
@@ -99,6 +99,8 @@ public class CreateCustomPageActivity extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_custom_page);
+
+        curPos = getIntent().getIntExtra("position", -1);
 
         mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
@@ -236,6 +238,9 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 anInterface.createPage(pageModel, new Callback<String>() {
                                     @Override
                                     public void success(String s, Response response) {
+
+                                        Log.d("CUSTOM_PAGE_CHECK", "" + s);
+
                                         materialProgress.dismiss();
                                         if (s != null && s.toString().trim().length() > 0) {
                                             //Log.d("Create page success", "");
