@@ -123,6 +123,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         titleTxt = (EditText)findViewById(R.id.titleEdit);
         richText = (RichEditor)findViewById(R.id.subtextEdit);
         richText.setPlaceholder(getString(R.string.custom_page_details));
+        richText.setFontSize(13);
 
         if(getIntent().hasExtra("pageid")){
             final MaterialDialog materialProgress = new MaterialDialog.Builder(this)

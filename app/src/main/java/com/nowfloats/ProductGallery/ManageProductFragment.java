@@ -302,23 +302,15 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                 }
 
                 else
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                 }
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
-
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                binding.layoutInventoryRoot.setVisibility(View.VISIBLE);
             }
 
             else
@@ -328,10 +320,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
 
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
-
                 binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                binding.layoutInventoryRoot.setVisibility(View.GONE);
             }
         }
 
@@ -371,12 +361,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
     private void changePickupAddressText(AddressInformation information)
     {
-        //SpannableStringBuilder spanTxt = new SpannableStringBuilder();
-        //spanTxt.append(Methods.fromHtml("<p style=\"color:#F9A825\">" + information.areaName + "</p> "));
-        //spanTxt.append(information.toString());
-        //binding.layoutBottomSheet.tvPickAddress.setMovementMethod(LinkMovementMethod.getInstance());
-        //binding.layoutBottomSheet.tvPickAddress.setText(spanTxt, TextView.BufferType.SPANNABLE);
-
         binding.layoutBottomSheet.tvAddressType.setText(information.areaName != null ? information.areaName : "");
         binding.layoutBottomSheet.tvPickAddress.setText(information.toString());
         binding.layoutBottomSheet.tvMobileNumber.setText(information.contactNumber != null ? information.contactNumber : "");
@@ -465,7 +449,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             {
                 paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
                 binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
-                binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
 
                 binding.layoutBottomSheet.spinnerPaymentOption.setSelection(0);
 
@@ -478,21 +461,15 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 if(productType.equalsIgnoreCase("products"))
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                 }
 
                 else
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                 }
 
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
+                binding.layoutInventoryRoot.setVisibility(View.VISIBLE);
             }
 
             //If payment type is unique payment url
@@ -507,10 +484,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.VISIBLE);
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                binding.layoutInventoryRoot.setVisibility(View.GONE);
 
                 if(product.BuyOnlineLink != null)
                 {
@@ -534,10 +510,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                binding.layoutInventoryRoot.setVisibility(View.GONE);
             }
         }
 
@@ -853,9 +828,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
                     binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
-
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                    binding.layoutInventoryRoot.setVisibility(View.VISIBLE);
 
                     displayPaymentAcceptanceMessage();
 
@@ -863,17 +836,11 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                             && productType.equalsIgnoreCase("products"))
                     {
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-
-                        //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                        //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                     }
 
                     else
                     {
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-
-                        //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                        //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                     }
 
                     if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() == View.VISIBLE
@@ -893,11 +860,11 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 case 1:
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
+
                     binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                    binding.layoutInventoryRoot.setVisibility(View.GONE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                     binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
 
@@ -913,10 +880,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL;
                     binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                    binding.layoutInventoryRoot.setVisibility(View.GONE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                     binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
 
@@ -957,16 +923,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
            Intent intent = new Intent(getActivity(), PickupAddressActivity.class);
            intent.putExtra("ADDRESS_ID", product.pickupAddressReferenceId);
            startActivityForResult(intent, 10);
-
-           /*if(addressInformationList != null && addressInformationList.size() > 0)
-           {
-               toggleAddressBottomSheet();
-           }
-
-           else
-           {
-               openAddressDialog(null);
-           }*/
        });
 
        binding.layoutBottomSheetAddress.ibClose.setOnClickListener(view -> toggleAddressBottomSheet());
@@ -1054,7 +1010,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             @Override
             public void openDialog() {
 
-                //chooseFile(Constant.REQUEST_CODE_PICK_FILE);
             }
 
             @Override
@@ -1153,52 +1108,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     break;
             }
 
-            dialog.dismiss();
-        });
-    }
-
-
-    /**
-     * File picker dialog
-     * @param requestCode
-     */
-    private void chooseFile(int requestCode)
-    {
-        final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .customView(R.layout.layout_file_upload_dialog, true)
-                .show();
-
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-
-        View view = dialog.getCustomView();
-
-        LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
-        LinearLayout takeFile = view.findViewById(R.id.filepicker);
-
-        ImageView cameraImg = view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
-        ImageView fileImg = view.findViewById(R.id.pop_up_file_img);
-
-        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
-        fileImg.setColorFilter(whiteLabelFilter_pop_ip);
-
-        takeCamera.setOnClickListener(v -> {
-
-            cameraIntent(CAMERA_PROOF_IMAGE_REQUEST_CODE);
-            dialog.dismiss();
-        });
-
-        takeGallery.setOnClickListener(v -> {
-
-            openImagePicker(GALLERY_PROOF_IMAGE_REQUEST_CODE, 1);
-            dialog.dismiss();
-        });
-
-        takeFile.setOnClickListener(v -> {
-
-            openFileChooser();
             dialog.dismiss();
         });
     }
@@ -1882,20 +1791,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
 
     /**
-     * Open file chooser activity
-     */
-    private void openFileChooser()
-    {
-        int limit = 1;
-
-        /*Intent intent4 = new Intent(getActivity(), NormalFilePickActivity.class);
-        intent4.putExtra(Constant.MAX_NUMBER, limit);
-        intent4.putExtra(NormalFilePickActivity.SUFFIX, FILE_EXTENSIONS);
-        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);*/
-    }
-
-
-    /**
      * Open image picker activity
      * @param requestCode
      * @param max
@@ -2139,18 +2034,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             }
         }
 
-        /*else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
-        {
-            ArrayList<NormalFile> files = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
-
-            if(files.size() > 0)
-            {
-                file = new File(files.get(0).getPath());
-
-                pickupAddressFragment.setFileName(file.getName());
-                pickupAddressFragment.isFileSelected(true);
-            }
-        }*/
 
         else if(resultCode == RESULT_OK && data != null)
         {
@@ -2626,31 +2509,30 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
         product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
 
-        //If limited stock selected
-        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
-        {
-            product.IsAvailable = true;
-            product.availableUnits = binding.layoutInventory.quantityValue.getText().toString().length() == 0 ? 1 : Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
-        }
-
-        //If unlimited stock selected
-        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 1)
-        {
-            product.IsAvailable = true;
-            product.availableUnits = -1;
-        }
-
-        //If out of stock selected
-        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 2)
-        {
-            product.IsAvailable = false;
-            product.availableUnits = 0;
-        }
-
         //If assured purchase and product
-        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                /*&& productType.equalsIgnoreCase("products")*/)
+        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
         {
+            //If limited stock selected
+            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
+            {
+                product.IsAvailable = true;
+                product.availableUnits = binding.layoutInventory.quantityValue.getText().toString().length() == 0 ? 1 : Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
+            }
+
+            //If unlimited stock selected
+            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 1)
+            {
+                product.IsAvailable = true;
+                product.availableUnits = -1;
+            }
+
+            //If out of stock selected
+            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 2)
+            {
+                product.IsAvailable = false;
+                product.availableUnits = 0;
+            }
+
             product.codAvailable = (binding.layoutInventoryCod.spinnerStockAvailability.getSelectedItemPosition() == 0);
             product.prepaidOnlineAvailable = (binding.layoutInventoryOnline.spinnerStockAvailability.getSelectedItemPosition() == 0);
 
@@ -2658,11 +2540,24 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             product.maxPrepaidOnlineAvailable = product.prepaidOnlineAvailable ? (binding.layoutInventoryOnline.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim())) : 0;
         }
 
-        else
+        else if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL.getValue()))
         {
+            product.IsAvailable = false;
             product.codAvailable = false;
             product.prepaidOnlineAvailable = false;
 
+            product.availableUnits = 0;
+            product.maxCodOrders = 0;
+            product.maxPrepaidOnlineAvailable = 0;
+        }
+
+        else if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue()))
+        {
+            product.IsAvailable = true;
+            product.codAvailable = false;
+            product.prepaidOnlineAvailable = false;
+
+            product.availableUnits = -1;
             product.maxCodOrders = 0;
             product.maxPrepaidOnlineAvailable = 0;
         }
