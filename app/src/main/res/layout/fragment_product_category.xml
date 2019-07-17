@@ -135,6 +135,7 @@
                 android:id="@+id/edit_category"
                 style="@style/ProductEditTextStyle"
                 android:layout_marginTop="@dimen/margin_5"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "
                 android:hint="Write the item type eg. Book, Smartphone etc." />
 
             <Button

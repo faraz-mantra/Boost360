@@ -340,14 +340,23 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             copyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String url = onCopyClick(dataModel);
-                    if (!url.equalsIgnoreCase("")) {
-                        ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText(LABEL, url);
-                        clipboard.setPrimaryClip(clip);
-                        Toast.makeText(mContext, mContext.getResources().getString(R.string.link_copied), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(mContext, mContext.getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show();
+
+                    if(TextUtils.isEmpty(dataModel.getUrl()))
+                    {
+                        Toast.makeText(mContext, "Invalid Link", Toast.LENGTH_SHORT).show();
+                    }
+
+                    else
+                    {
+                        String url = onCopyClick(dataModel);
+                        if (!url.equalsIgnoreCase("")) {
+                            ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText(LABEL, url);
+                            clipboard.setPrimaryClip(clip);
+                            Toast.makeText(mContext, mContext.getResources().getString(R.string.link_copied), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(mContext, mContext.getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });

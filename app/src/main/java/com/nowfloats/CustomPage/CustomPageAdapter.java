@@ -254,10 +254,11 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //        });
 //    }
 
-    private void editPage(String pageId, final int pOs) {
+    private void editPage(String pageId, final int position) {
 
         Intent intent = new Intent(appContext, CreateCustomPageActivity.class);
         intent.putExtra("pageid", "" + pageId);
+        intent.putExtra("position", position);
         appContext.startActivity(intent);
 
 

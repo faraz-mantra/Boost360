@@ -20,12 +20,14 @@ import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.apxor.androidsdk.core.ApxorSDK;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
+import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
@@ -38,6 +40,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+import com.webengage.sdk.android.WebEngage;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -57,16 +60,29 @@ import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
  */
 
 public class RiaFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "MyFirebaseMsgService";
+    private static final String TAG = RiaFirebaseMessagingService.class.getSimpleName();
     public static String deepLinkUrl;
     private SharedPreferences pref;
+
+    @Override
+    public void onNewToken(String token) {
+        super.onNewToken(token);
+
+        saveTokenToPreferenceAndUpload(token);
+        if (token != null) {
+            AnaCore.saveFcmToken(this, token);
+            WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
+        }
+
+        Log.d(TAG, "Token: " + token);
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
         Map<String, String> mapResult = remoteMessage.getData();
-        BoostLog.d("onMessageReceived", "onMessageReceived");
+        BoostLog.d(TAG, "onMessageReceived");
         if (mapResult.containsKey("payload")) {
             AnaCore.handlePush(this, mapResult.get("payload"));
         } else {
@@ -312,4 +328,12 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         return id;
     }
 
+
+    private void saveTokenToPreferenceAndUpload(String refreshedToken) {
+        SharedPreferences pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
+        if (pref.getString("fpid", null) != null) {
+            HomeActivity.registerChat(pref.getString("fpid", null));
+
+        }
+    }
 }

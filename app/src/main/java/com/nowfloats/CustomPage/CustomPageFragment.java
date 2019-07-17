@@ -75,6 +75,16 @@ public class CustomPageFragment extends Fragment {
         if (custompageAdapter != null) {
             custompageAdapter.updateSelection(0);
             custompageAdapter.notifyDataSetChanged();
+
+            if (dataModel.size()==0)
+            {
+                emptylayout.setVisibility(View.VISIBLE);
+            }
+
+            else
+            {
+                emptylayout.setVisibility(View.GONE);
+            }
         }
         if (recyclerView != null)
             recyclerView.invalidate();

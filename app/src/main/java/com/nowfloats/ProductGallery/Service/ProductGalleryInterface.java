@@ -104,8 +104,11 @@ public interface ProductGalleryInterface {
     @GET("/Product/v1/GetListings")
     void getAllProducts(@QueryMap Map<String, String> map, Callback<List<Product>> callback);
 
-    @GET("/Product/v1/CategoryList")
+    @GET("/Product/v1/categories")
     void getAllCategories(@QueryMap Map<String, String> map, Callback<List<String>> callback);
+
+    @GET("/Product/v1/tags")
+    void getAllTags(@QueryMap Map<String, String> map, Callback<List<String>> callback);
 
     @Headers({"Content-Type: application/json"})
     @MOD_DELETE("/Product/v1/Delete")

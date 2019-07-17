@@ -79,11 +79,11 @@ public class Home_Fragment_Tab extends Fragment {
         if (viewPager != null) {
             if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
-                if (Home_Main_Fragment.progressBar != null)
+                //if (Home_Main_Fragment.progressBar != null)
                     //Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
             } else {
-                if (Home_Main_Fragment.progressBar != null){}
+                //if (Home_Main_Fragment.progressBar != null){}
                     //Home_Main_Fragment.progressBar.setVisibility(View.GONE);
             }
         }
@@ -251,7 +251,7 @@ public class Home_Fragment_Tab extends Fragment {
         if (viewPager != null) {
             if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
-                if (Home_Main_Fragment.progressBar != null)
+                //if (Home_Main_Fragment.progressBar != null)
                    // Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
             } else if (Constants.deepLinkAnalytics) {
