@@ -1096,4 +1096,24 @@ public class Methods {
 
         return "";
     }
+
+
+    public static String getUTC_To_Local(long timestamp)
+    {
+        try
+        {
+            Date date = new Date(timestamp);
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd, yyyy hh:mm a"); //this format changeable
+            dateFormatter.setTimeZone(/*TimeZone.getDefault()*/TimeZone.getTimeZone("UTC"));
+            return dateFormatter.format(date);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

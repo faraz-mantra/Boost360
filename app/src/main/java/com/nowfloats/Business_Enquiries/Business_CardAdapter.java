@@ -12,6 +12,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +137,9 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                 fromTextView.setText(data.contact);
             }
             dateTextView.setText(data.createdOn);
+
+            Log.d("DATE_FORMAT_CHECK", data.createdOn);
+
             queryTextView.setText("\""+data.message+"\"");
             if (data.entityType.equalsIgnoreCase("CHATBOTENQUIRY")) {
                 sentByLinear.setVisibility(View.VISIBLE);
