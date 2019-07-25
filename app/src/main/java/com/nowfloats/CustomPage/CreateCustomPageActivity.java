@@ -752,7 +752,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.UPLOAD_TO_S3_ENDPOINT)
-                .setClient(Methods.getHttpclient(60))
+                //.setClient(Methods.getHttpclient(60))
                 .setLog(new AndroidLog(CreateCustomPageActivity.class.getName()))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
