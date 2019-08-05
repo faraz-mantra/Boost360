@@ -14,7 +14,7 @@ import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
 import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
-import com.squareup.okhttp.OkHttpClient;
+//import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.Specific;
 
 import org.json.JSONArray;
@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
 import retrofit.client.OkClient;
@@ -129,11 +130,12 @@ public class Constants {
     public final static String HTTP_DEL = "DELETE";
 
 
-    public static OkClient getClient() {
-        OkHttpClient client = new OkHttpClient();
-        client.setReadTimeout(1, TimeUnit.MINUTES);
-        client.setConnectTimeout(1, TimeUnit.MINUTES);
-        return new OkClient(client);
+    public static OkHttpClient getClient() {
+        //OkHttpClient client = new OkHttpClient();
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        client.readTimeout(1, TimeUnit.MINUTES);
+        client.readTimeout(1, TimeUnit.MINUTES);
+        return client.build();
     }
 
     //Retrofit Single Instance
@@ -144,21 +146,21 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter restAdapterV2 = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_V2).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
-    public static final RestAdapter restAdapterSalesman = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_SALESMAN).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterV2 = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_V2)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
+    public static final RestAdapter restAdapterSalesman = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_SALESMAN)/*.setClient(getClient())*//*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter movingFloatsDev2Adapter = new RestAdapter.Builder().setEndpoint("http://withfloatsapi2-dev.ap-south-1.elasticbeanstalk.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
     public static final RestAdapter createMessageAdapter = new RestAdapter.Builder().setEndpoint(Constants.CREATE_MESSAGE_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
-    public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL).setClient(getClient())/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)/*.setClient(getClient())*//*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter riaMemoryRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL).setConverter(new GsonConverter(new GsonBuilder().setLenient().create())).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response")).build();
     public static final RestAdapter apAdapter = new RestAdapter.Builder().setEndpoint(AP_BASE_URL).setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Order Response"))*/.build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter restAdapterAnalytics = new RestAdapter.Builder().setEndpoint(Constants.ANALYTICS_BASE_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterAnalytics = new RestAdapter.Builder().setEndpoint(Constants.ANALYTICS_BASE_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
 
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
@@ -586,8 +588,8 @@ public class Constants {
     /**
      * Dev Adapter
      */
-    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/").setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter assuredPurchaseRestAdapterDev = new RestAdapter.Builder().setEndpoint(DEV_ASSURED_PURCHASE_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com").setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/")/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter assuredPurchaseRestAdapterDev = new RestAdapter.Builder().setEndpoint(DEV_ASSURED_PURCHASE_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com")/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
 
 }
