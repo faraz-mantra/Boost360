@@ -406,5 +406,5 @@
 -keep class com.android.inputmethod.latin.makedict.ProbabilityInfo
 -keep class com.android.inputmethod.latin.utils.LanguageModelParam
 
--dontwarn com.google.android.libraries.places.internal.iz
--dontwarn com.google.android.libraries.places.internal.jb
+#-dontwarn com.google.android.libraries.places.internal.iz
+#-dontwarn com.google.android.libraries.places.internal.jb
