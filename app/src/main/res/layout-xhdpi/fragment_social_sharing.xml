@@ -743,9 +743,10 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/whatsapp_icon"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                app:srcCompat="@drawable/ic_whatsapp_for_business"
+                                app:srcCompat="@drawable/whats_app_for_business_inactive"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="15dp" />
 
@@ -762,7 +763,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="5dp"
-                                    android:text="WhatsApp for Business"
+                                    android:text="WhatsApp Business"
                                     android:textSize="13sp" />
 
                                 <TextView
@@ -773,7 +774,7 @@
                                     android:maxLines="2"
                                     android:text="@string/inactive"
                                     android:textSize="10sp"
-                                    android:visibility="visible" />
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 

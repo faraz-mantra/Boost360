@@ -1775,6 +1775,18 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             String whatsAppNumber = numberModel.getWhatsAppNumber() == null ? "" : numberModel.getWhatsAppNumber();
                             binding.tvWhatsappNumber.setText(phoneCountryCode.concat(" ").concat(whatsAppNumber));
                             binding.whatsappCheckbox.setChecked(true);
+
+                            if(binding.whatsappCheckbox.isChecked())
+                            {
+                                binding.whatsappIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_whatsapp_for_business));
+                                binding.tvWhatsappNumber.setVisibility(View.VISIBLE);
+                            }
+
+                            else
+                            {
+                                binding.whatsappIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.whats_app_for_business_inactive));
+                                binding.tvWhatsappNumber.setVisibility(View.GONE);
+                            }
                         }
                     }
 
@@ -1803,6 +1815,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                         binding.tvWhatsappNumber.setText(addDataModel.getActionData().getWhatsAppNumber());
                         binding.whatsappCheckbox.setChecked(true);
+
+                        binding.whatsappIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_whatsapp_for_business));
+                        binding.tvWhatsappNumber.setVisibility(View.VISIBLE);
 
                         if(dialog != null && dialog.isShowing())
                         {
@@ -1840,6 +1855,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         binding.tvWhatsappNumber.setText(R.string.inactive);
                         binding.whatsappCheckbox.setChecked(false);
 
+                        binding.whatsappIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.whats_app_for_business_inactive));
+                        binding.tvWhatsappNumber.setVisibility(View.GONE);
+
                         hideProgressbar();
                         Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Deactivated Successfully");
                     }
@@ -1856,6 +1874,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                             binding.tvWhatsappNumber.setText(R.string.inactive);
                             binding.whatsappCheckbox.setChecked(false);
+
+                            binding.whatsappIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.whats_app_for_business_inactive));
+                            binding.tvWhatsappNumber.setVisibility(View.GONE);
 
                             Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Deactivated Successfully");
                         }
