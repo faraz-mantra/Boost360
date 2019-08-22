@@ -17,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -29,6 +31,7 @@ import com.nowfloats.util.GetStoreFrontImageAsyncTask;
 import com.thinksity.R;
 
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,11 +42,12 @@ www.101apps.co.za*/
 
 public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdapter.MyViewHolder> {
 
-    Business_Enquiry_Model data;
+    //Business_Enquiry_Model data;
     private Context appContext ;
     final HashMap<String, SoftReference<Bitmap>> _cache = null;
     PorterDuffColorFilter whiteLabelFilter;
-    String headerValue;
+    private ArrayList<Business_Enquiry_Model> list = new ArrayList<>();
+    //String headerValue;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView fromTextView;
@@ -54,6 +58,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView entityTexView, samTextView;
         LinearLayout entityLayout, sentByLinearLayout;
         FrameLayout contactButton;
+        ImageView whatsappIcon;
 
         public MyViewHolder(View itemView, final Context appContext) {
             super(itemView);
@@ -66,6 +71,8 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
             this.contactButton = (FrameLayout) itemView.findViewById(R.id.contactButton);
             this.entityLayout = (LinearLayout) itemView.findViewById(R.id.entity_layout);
             this.samTextView = itemView.findViewById(R.id.samTextView);
+            this.whatsappIcon = itemView.findViewById(R.id.whatsapp_icon);
+
             sentByLinearLayout = itemView.findViewById(R.id.sent_byLinearLayout);
             samTextView.setText(Html.fromHtml("<u>Sam</u>"));
             samTextView.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +110,8 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView queryTextView = holder.queryTextView;
         TextView contactText = holder.contactText;
         TextView entityText = holder.entityTexView;
+        ImageView whatsAppIcon = holder.whatsappIcon;
+
         LinearLayout sentByLinear = holder.sentByLinearLayout;
         holder.entityLayout.setVisibility(View.GONE);
         holder.entityLayout.setTag(listPosition+"");
@@ -115,8 +124,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
 //        contactText.setTypeface(myCustomFont);
 //        entityText.setTypeface(myCustomFontLight);
 
-        BoostLog.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizQueries.size());
-        data = Constants.StorebizQueries.get(listPosition);
+        Business_Enquiry_Model data = list.get(listPosition);
 
         try {
             String email =data.contact;
@@ -131,11 +139,25 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                 contactText.setText(appContext.getResources().getString(R.string.email));
                 fromTextView.setText(data.contact);
 //                holder.setIsRecyclable(false);
-            }else {
+                whatsAppIcon.setVisibility(View.GONE);
+            }
+
+            else if(data.entityType.equalsIgnoreCase("WHATSAPPQUERY"))
+
+            {
 //                holder.contactIcon.setImageResource(R.drawable.ic_call_white_48dp);
-                contactText.setText(appContext.getResources().getString(R.string.call));
+                contactText.setText("CHAT");
+                whatsAppIcon.setVisibility(View.VISIBLE);
                 fromTextView.setText(data.contact);
             }
+
+            else
+            {
+                contactText.setText(appContext.getResources().getString(R.string.call));
+                whatsAppIcon.setVisibility(View.GONE);
+                fromTextView.setText(data.contact);
+            }
+
             dateTextView.setText(data.createdOn);
 
             Log.d("DATE_FORMAT_CHECK", data.createdOn);
@@ -183,19 +205,36 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                 @Override
                 public void onClick(View v) {
                     v.getId();
-                    headerValue = (String) holder.fromTextView.getText();
+                    //headerValue = (String) holder.fromTextView.getText();
                     Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
-                    Matcher m = p.matcher(headerValue);
+                    Matcher m = p.matcher(data.contact);
                     boolean matchFound = m.matches();
 
                     if(matchFound){
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                                "mailto", headerValue, null));
+                                "mailto", data.contact, null));
                         appContext.startActivity(Intent.createChooser(emailIntent, appContext.getResources().getString(R.string.send_email)));
-                    }else{
+                    }
+
+                    else if(data.entityType.equalsIgnoreCase("WHATSAPPQUERY"))
+                    {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setPackage("com.whatsapp");
+                        intent.setData(Uri.parse(String.format("https://api.whatsapp.com/send?phone=%s", "91" + data.contact)));
+
+                        if (appContext.getPackageManager().resolveActivity(intent, 0) != null)
+                        {
+                            appContext.startActivity(intent);
+                        } else {
+                            Toast.makeText(appContext, "Please install whatsApp", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    else
+                    {
                         Intent call = new Intent(Intent.ACTION_DIAL);
-                    call.setData(Uri.parse("tel:"+headerValue));
-                      appContext.startActivity(call);
+                        call.setData(Uri.parse("tel:"+data.contact));
+                        appContext.startActivity(call);
                     }
                 }
             });
@@ -230,7 +269,16 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
     }
 
     @Override
-    public int getItemCount() {
-        return Constants.StorebizQueries.size();
+    public int getItemCount()
+    {
+        return list.size();
+    }
+
+
+    public void setData(ArrayList<Business_Enquiry_Model> list)
+    {
+        this.list.clear();
+        this.list.addAll(list);
+        notifyDataSetChanged();
     }
 }

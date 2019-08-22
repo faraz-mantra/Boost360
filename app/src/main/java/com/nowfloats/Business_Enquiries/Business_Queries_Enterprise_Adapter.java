@@ -30,12 +30,12 @@ import java.util.regex.Pattern;
 
 public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Business_Queries_Enterprise_Adapter.MyViewHolder> {
 
-    private ArrayList<CardData> peopleDataSet;
-    Entity_model data;
+
     private Context appContext ;
     final HashMap<String, SoftReference<Bitmap>> _cache = null;
     PorterDuffColorFilter whiteLabelFilter;
     String headerValue;
+    private ArrayList<Entity_model> list = new ArrayList<>();
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView fromTextView;
@@ -85,8 +85,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
 //        queryTextView.setTypeface(myCustomFontLight);
 //        contactText.setTypeface(myCustomFont);
 
-        BoostLog.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizEnterpriseQueries.size());
-        data = Constants.StorebizEnterpriseQueries.get(listPosition);
+        Entity_model data = list.get(listPosition);
 
         try {
             String email =data.Phone;
@@ -143,6 +142,13 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
     @Override
     public int getItemCount() {
 
-        return Constants.StorebizEnterpriseQueries.size();
+        return list.size();
+    }
+
+    public void setData(ArrayList<Entity_model> list)
+    {
+        this.list.clear();
+        this.list.addAll(list);
+        notifyDataSetChanged();
     }
 }

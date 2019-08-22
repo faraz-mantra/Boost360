@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--
+    <item
+        android:id="@+id/spinner"
+        android:title="@string/spinner_title"
+        app:actionViewClass="android.widget.Spinner"
+        android:background="@color/white"
+        app:showAsAction="always" />
+     -->
+
+    <item
+        android:id="@+id/spinner"
+        android:title="@string/spinner_title"
+        android:icon="@drawable/ic_filter_button"
+        app:showAsAction="always" >
+
+        <menu>
+
+            <item android:id="@+id/menu_all"
+                android:title="All"/>
+            <item android:id="@+id/menu_email"
+                android:title="Email"/>
+            <item android:id="@+id/menu_phone"
+                android:title="Phone"/>
+            <item android:id="@+id/menu_chat"
+                android:title="Chat"/>
+
+        </menu>
+
+    </item>
+</menu>

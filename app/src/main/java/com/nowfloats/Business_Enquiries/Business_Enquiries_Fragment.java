@@ -7,31 +7,42 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.nowfloats.Analytics_Screen.SearchRankingActivity;
+import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.BzQueryEvent;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Business_Enquiries_Fragment extends Fragment {
-    private static RecyclerView recyclerView;
-    private static RecyclerView.Adapter adapter;
-    private static RecyclerView.Adapter enterpriseAdapter;
+    private RecyclerView recyclerView;
+    private Business_CardAdapter adapter;
+    private Business_Queries_Enterprise_Adapter enterpriseAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private LinearLayout emptyDataLayout, progressLayout;
     UserSessionManager session;
     Activity activity;
     Bus bus;
+    private Filter filterType = Filter.FILTER_ALL;
 
     @Override
     public void onResume() {
@@ -51,6 +62,7 @@ public class Business_Enquiries_Fragment extends Fragment {
         activity = getActivity();
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -97,28 +109,162 @@ public class Business_Enquiries_Fragment extends Fragment {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (session.getISEnterprise().equals("true") && event.StorebizEnterpriseQueries != null) {
+                if (session.getISEnterprise().equals("true") && event.StorebizEnterpriseQueries != null)
+                {
                     enterpriseAdapter = new Business_Queries_Enterprise_Adapter(activity);
-                    if (enterpriseAdapter.getItemCount() == 0) {
+                    recyclerView.setAdapter(enterpriseAdapter);
+                    enterpriseAdapter.setData(Constants.StorebizEnterpriseQueries);
+
+                    if (enterpriseAdapter.getItemCount() == 0)
+                    {
                         emptyDataLayout.setVisibility(View.VISIBLE);
-                    } else {
-                        recyclerView.setAdapter(enterpriseAdapter);
-                        enterpriseAdapter.notifyDataSetChanged();
+                    }
+
+                    else
+                    {
                         emptyDataLayout.setVisibility(View.GONE);
                     }
+
                     progressLayout.setVisibility(View.GONE);
-                } else if (event.StorebizQueries != null) {
+                }
+
+                else if (event.StorebizQueries != null)
+                {
                     adapter = new Business_CardAdapter(activity);
-                    if (adapter.getItemCount() == 0) {
+                    recyclerView.setAdapter(adapter);
+                    adapter.setData(Constants.StorebizQueries);
+
+                    if (adapter.getItemCount() == 0)
+                    {
                         emptyDataLayout.setVisibility(View.VISIBLE);
-                    } else {
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                    }
+
+                    else
+                    {
                         emptyDataLayout.setVisibility(View.GONE);
                     }
+
                     progressLayout.setVisibility(View.GONE);
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.business_enquery_menu, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.menu_all:
+
+                filterType = Filter.FILTER_ALL;
+                break;
+
+            case R.id.menu_email:
+
+                filterType = Filter.FILTER_EMAIL;
+                break;
+
+            case R.id.menu_phone:
+
+                filterType = Filter.FILTER_PHONE;
+                break;
+
+            case R.id.menu_chat:
+
+                filterType = Filter.FILTER_CHAT;
+                break;
+        }
+
+        if (session.getISEnterprise().equals("true"))
+        {
+            //do nothing
+        }
+
+        else
+        {
+            filterBusinessEnquery();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    enum Filter
+    {
+        FILTER_ALL, FILTER_EMAIL, FILTER_PHONE, FILTER_CHAT
+    }
+
+
+    private void filterBusinessEnquery()
+    {
+        if(Constants.StorebizQueries == null)
+        {
+            return;
+        }
+
+        ArrayList<Business_Enquiry_Model> list = new ArrayList<>();
+        Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+
+        try
+        {
+            for(Business_Enquiry_Model model: Constants.StorebizQueries)
+            {
+                switch (filterType)
+                {
+                    case FILTER_ALL:
+
+                        list.addAll(Constants.StorebizQueries);
+                        break;
+
+                    case FILTER_EMAIL:
+
+                        if(p.matcher(model.contact).matches())
+                        {
+                            list.add(model);
+                        }
+
+                        break;
+
+                    case FILTER_PHONE:
+
+                        if(!model.entityType.equalsIgnoreCase("WHATSAPPQUERY") && !p.matcher(model.contact).matches())
+                        {
+                            list.add(model);
+                        }
+
+                        break;
+
+                    case FILTER_CHAT:
+
+                        if(model.entityType.equalsIgnoreCase("WHATSAPPQUERY") && !p.matcher(model.contact).matches())
+                        {
+                            list.add(model);
+                        }
+
+                        break;
+                }
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        finally
+        {
+            if (adapter != null)
+            {
+                adapter.setData(list);
+            }
+        }
     }
 }
