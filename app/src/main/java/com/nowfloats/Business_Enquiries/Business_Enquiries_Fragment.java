@@ -42,7 +42,7 @@ public class Business_Enquiries_Fragment extends Fragment {
     UserSessionManager session;
     Activity activity;
     Bus bus;
-    private Filter filterType = Filter.FILTER_ALL;
+    //private Filter filterType = Filter.FILTER_ALL;
 
     @Override
     public void onResume() {
@@ -62,7 +62,7 @@ public class Business_Enquiries_Fragment extends Fragment {
         activity = getActivity();
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class Business_Enquiries_Fragment extends Fragment {
         });
     }
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
@@ -266,5 +266,5 @@ public class Business_Enquiries_Fragment extends Fragment {
                 adapter.setData(list);
             }
         }
-    }
+    }*/
 }
