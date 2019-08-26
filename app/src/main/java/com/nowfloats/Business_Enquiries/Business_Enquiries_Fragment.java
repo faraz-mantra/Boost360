@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.BzQueryEvent;
 import com.nowfloats.Login.UserSessionManager;
@@ -27,7 +27,6 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -42,7 +41,7 @@ public class Business_Enquiries_Fragment extends Fragment {
     UserSessionManager session;
     Activity activity;
     Bus bus;
-    //private Filter filterType = Filter.FILTER_ALL;
+    private Filter filterType = Filter.FILTER_ALL;
 
     @Override
     public void onResume() {
@@ -62,7 +61,7 @@ public class Business_Enquiries_Fragment extends Fragment {
         activity = getActivity();
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -115,16 +114,7 @@ public class Business_Enquiries_Fragment extends Fragment {
                     recyclerView.setAdapter(enterpriseAdapter);
                     enterpriseAdapter.setData(Constants.StorebizEnterpriseQueries);
 
-                    if (enterpriseAdapter.getItemCount() == 0)
-                    {
-                        emptyDataLayout.setVisibility(View.VISIBLE);
-                    }
-
-                    else
-                    {
-                        emptyDataLayout.setVisibility(View.GONE);
-                    }
-
+                    emptyView (enterpriseAdapter.getItemCount());
                     progressLayout.setVisibility(View.GONE);
                 }
 
@@ -134,23 +124,14 @@ public class Business_Enquiries_Fragment extends Fragment {
                     recyclerView.setAdapter(adapter);
                     adapter.setData(Constants.StorebizQueries);
 
-                    if (adapter.getItemCount() == 0)
-                    {
-                        emptyDataLayout.setVisibility(View.VISIBLE);
-                    }
-
-                    else
-                    {
-                        emptyDataLayout.setVisibility(View.GONE);
-                    }
-
+                    emptyView (adapter.getItemCount());
                     progressLayout.setVisibility(View.GONE);
                 }
             }
         });
     }
 
-    /*@Override
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
@@ -166,32 +147,26 @@ public class Business_Enquiries_Fragment extends Fragment {
             case R.id.menu_all:
 
                 filterType = Filter.FILTER_ALL;
+                filterBusinessEnquiry();
                 break;
 
             case R.id.menu_email:
 
                 filterType = Filter.FILTER_EMAIL;
+                filterBusinessEnquiry();
                 break;
 
             case R.id.menu_phone:
 
                 filterType = Filter.FILTER_PHONE;
+                filterBusinessEnquiry();
                 break;
 
             case R.id.menu_chat:
 
                 filterType = Filter.FILTER_CHAT;
+                filterBusinessEnquiry();
                 break;
-        }
-
-        if (session.getISEnterprise().equals("true"))
-        {
-            //do nothing
-        }
-
-        else
-        {
-            filterBusinessEnquery();
         }
 
         return super.onOptionsItemSelected(item);
@@ -203,8 +178,14 @@ public class Business_Enquiries_Fragment extends Fragment {
     }
 
 
-    private void filterBusinessEnquery()
+    private void filterBusinessEnquiry()
     {
+        if (session.getISEnterprise().equals("true"))
+        {
+            Toast.makeText(getContext(), "Filter Not Available", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if(Constants.StorebizQueries == null)
         {
             return;
@@ -221,7 +202,7 @@ public class Business_Enquiries_Fragment extends Fragment {
                 {
                     case FILTER_ALL:
 
-                        list.addAll(Constants.StorebizQueries);
+                        list.add(model);
                         break;
 
                     case FILTER_EMAIL:
@@ -264,7 +245,21 @@ public class Business_Enquiries_Fragment extends Fragment {
             if (adapter != null)
             {
                 adapter.setData(list);
+                emptyView(adapter.getItemCount());
             }
         }
-    }*/
+    }
+
+    private void emptyView(int size)
+    {
+        if (size == 0)
+        {
+            emptyDataLayout.setVisibility(View.VISIBLE);
+        }
+
+        else
+        {
+            emptyDataLayout.setVisibility(View.GONE);
+        }
+    }
 }

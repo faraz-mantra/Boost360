@@ -19,7 +19,7 @@
         <menu>
 
             <item android:id="@+id/menu_all"
-                android:title="All"/>
+                android:title="None"/>
             <item android:id="@+id/menu_email"
                 android:title="Email"/>
             <item android:id="@+id/menu_phone"
