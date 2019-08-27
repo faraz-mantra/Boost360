@@ -467,6 +467,14 @@
     <string name="deeplink_ProductGallery">productGallery</string>
     <string name="setting_faq_url">https://www.nowfloats.com/faqs/</string>
 
+    <string name="deeplink_account_manager">accountmanager</string>
+    <string name="deeplink_plan_expiry_7">plan_expiry_7</string>
+    <string name="deeplink_plan_expiry_30">plan_expiry_30</string>
+    <string name="deeplink_plan_expiry_60">plan_expiry_60</string>
+    <string name="deeplink_new_subscriber">newsubscriber</string>
+    <string name="deeplink_unsubscribe">unsubscribe</string>
+    <string name="deeplink_missed_calls">missedcalls</string>
+
     <!-- Deep Linking URLs  -->
 
     <!-- SITE-Meter Percentage  -->

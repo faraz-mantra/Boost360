@@ -58,6 +58,7 @@ import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.ShowVmnCallActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
@@ -95,6 +96,7 @@ import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.UpgradesFragment;
+import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
@@ -492,9 +494,47 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains("assuredPurchase")) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                         .commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
             }
 
+            else if (url.contains(getResources().getString(R.string.deeplink_gplaces)))
+            {
+                //TODO
+            }
+
+            /**
+             * Newly added deeplink
+             */
+            else if (url.contains(getResources().getString(R.string.deeplink_account_manager)))
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+            }
+
+            else if (url.contains(getResources().getString(R.string.deeplink_plan_expiry_7)) ||
+                    url.contains(getResources().getString(R.string.deeplink_plan_expiry_30)) ||
+                    url.contains(getResources().getString(R.string.deeplink_plan_expiry_60)))
+            {
+                MixPanelController.track(MixPanelController.SUBSCRIPTION_HISTORY, null);
+                Intent intent = new Intent(HomeActivity.this, YourPurchasedPlansActivity.class);
+                startActivity(intent);
+            }
+
+            else if (url.contains(getResources().getString(R.string.deeplink_new_subscriber)))
+            {
+                Intent i = new Intent(HomeActivity.this, SubscribersActivity.class);
+                startActivity(i);
+            }
+
+            else if (url.contains(getResources().getString(R.string.deeplink_unsubscribe)))
+            {
+                Intent createUpdate = new Intent(HomeActivity.this, Create_Message_Activity.class);
+                startActivity(createUpdate);
+            }
+
+            else if (url.contains(getResources().getString(R.string.deeplink_missed_calls)))
+            {
+                Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+                startActivity(i);
+            }
         }
         mDeepLinkUrl = null;
     }
