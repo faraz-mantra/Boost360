@@ -118,15 +118,15 @@ public interface ProductGalleryInterface {
     void updateProduct(@Body Product_Gallery_Update_Model model,Callback<ArrayList<String>> callback);
 
 
-    @POST("/product_details/add-data")
+    @POST("/product_details3/add-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void addAssuredPurchaseDetails(@Body WAAddDataModel<AssuredPurchase> updateDataModel, Callback<String> callback);
 
-    @GET("/product_details/get-data")
+    @GET("/product_details3/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void getAssuredPurchaseDetails(@Query("query") String query, Callback<WebActionModel<AssuredPurchase>> callback);
 
-    @POST("/product_details/update-data")
+    @POST("/product_details3/update-data")
     @Headers({"Authorization: " + Constants.WA_KEY})
     void updateAssuredPurchaseDetails(@Body WaUpdateDataModel updateDataModel, Callback<String> callback);
 

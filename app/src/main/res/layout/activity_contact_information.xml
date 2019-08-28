@@ -503,7 +503,7 @@
                         android:layout_marginTop="@dimen/margin_40"
                         android:layout_marginBottom="@dimen/margin_10"
                         android:onClick="onSaveClick"
-                        android:text="SAVE CONTACT INO" />
+                        android:text="SAVE CONTACT INFO" />
 
                 </LinearLayout>
 
