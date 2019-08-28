@@ -19,13 +19,13 @@
         <menu>
 
             <item android:id="@+id/menu_all"
-                android:title="None"/>
+                android:title="All Enquiries"/>
             <item android:id="@+id/menu_email"
-                android:title="Email"/>
+                android:title="Sort by Email"/>
             <item android:id="@+id/menu_phone"
-                android:title="Phone"/>
+                android:title="Sort by Phone"/>
             <item android:id="@+id/menu_chat"
-                android:title="Chat"/>
+                android:title="Sort by WhatsApp"/>
 
         </menu>
 

@@ -48,7 +48,7 @@
                             android:id="@+id/whatsapp_icon"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            app:srcCompat="@drawable/ic_whatsapp_for_business"
+                            app:srcCompat="@drawable/ic_whatsapp_icon_default"
                             android:layout_gravity="center_vertical"
                             android:visibility="gone"
                             android:layout_marginLeft="10dp" />
