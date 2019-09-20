@@ -231,7 +231,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.webengage:android-sdk:2.+'
 
-    implementation 'com.apxor.android:apxor-android-sdk-core:2.3.7@aar'
+    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
     implementation project(':keyboard')
     implementation project(':imagepicker')
     implementation 'com.android.support:support-v4:28.0.0'
@@ -240,5 +240,4 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.github.florent37:viewtooltip:1.1.5'
 }
-
 apply plugin: 'com.google.gms.google-services'

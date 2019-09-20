@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.squareup.okhttp:okhttp:2.7.5'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'io.nlopez.smartlocation:library:3.3.1'
-    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'com.hannesdorfmann.smoothprogressbar:library:1.0.0'
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
 //    implementation 'com.rarepebble:colorpicker:2.1.0'
@@ -83,5 +83,5 @@ dependencies {
         exclude group: 'com.google.firebase'
     }*/
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.apxor.android:apxor-android-sdk-core:2.3.7@aar'
+    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
 }
