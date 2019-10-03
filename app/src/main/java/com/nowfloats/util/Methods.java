@@ -53,7 +53,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.squareup.okhttp.OkHttpClient;
+//import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
 
 import java.io.ByteArrayOutputStream;
@@ -82,6 +82,7 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
+import okhttp3.OkHttpClient;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -832,7 +833,7 @@ public class Methods {
         return false;
     }
 
-    public static RestAdapter createAdapter(Context context, String url) throws IOException {
+    /*public static RestAdapter createAdapter(Context context, String url) throws IOException {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
 
@@ -879,7 +880,7 @@ public class Methods {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     public static int dpToPx(int dp, Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -1067,15 +1068,22 @@ public class Methods {
         return Bitmap.createScaledBitmap(oldBitmap , (int)(oldBitmap.getWidth() * ratio) , (int)(oldBitmap.getHeight()*ratio) , false);
     }
 
-    public static OkClient getHttpclient(int timeout) {
+    /*public static OkClient getHttpclient(int timeout) {
 
         final OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.setReadTimeout(timeout, TimeUnit.MINUTES);
         okHttpClient.setConnectTimeout(20, TimeUnit.MINUTES);
 
         return new OkClient(okHttpClient);
-    }
+    }*/
 
+    public static OkHttpClient getClient() {
+        //OkHttpClient client = new OkHttpClient();
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        client.readTimeout(1, TimeUnit.MINUTES);
+        client.readTimeout(1, TimeUnit.MINUTES);
+        return client.build();
+    }
 
     public static String getISO8601FormattedDate(String datetime)
     {
@@ -1095,5 +1103,25 @@ public class Methods {
         }
 
         return "";
+    }
+
+
+    public static String getUTC_To_Local(long timestamp)
+    {
+        try
+        {
+            Date date = new Date(timestamp);
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd, yyyy hh:mm a"); //this format changeable
+            dateFormatter.setTimeZone(/*TimeZone.getDefault()*/TimeZone.getTimeZone("UTC"));
+            return dateFormatter.format(date);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

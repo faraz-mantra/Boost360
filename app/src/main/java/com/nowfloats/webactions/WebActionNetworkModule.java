@@ -30,7 +30,7 @@ public class WebActionNetworkModule {
     private WebActionNetworkModule(String apiBaseUrl) {
         mWebActionNetworkInterface = new RestAdapter.Builder()
                 .setEndpoint(apiBaseUrl)
-                .setClient(Constants.getClient())
+                //.setClient(Constants.getClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("ggg"))
                 .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))

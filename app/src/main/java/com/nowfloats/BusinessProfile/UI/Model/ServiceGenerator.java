@@ -2,7 +2,7 @@ package com.nowfloats.BusinessProfile.UI.Model;
 
 import android.util.Log;
 
-import com.squareup.okhttp.OkHttpClient;
+//import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -16,7 +16,7 @@ public class ServiceGenerator {
     private ServiceGenerator() {
     }
 
-    public static <S> S createService(Class<S> serviceClass, String baseUrl) {
+    /*public static <S> S createService(Class<S> serviceClass, String baseUrl) {
 
 
 
@@ -40,5 +40,5 @@ public class ServiceGenerator {
         RestAdapter adapter = builder.build();
 
         return adapter.create(serviceClass);
-    }
+    }*/
 }

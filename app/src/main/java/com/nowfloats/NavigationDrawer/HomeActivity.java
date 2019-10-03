@@ -246,6 +246,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //WidgetKey.getWidgets(session, this);
     }
 
+
     /*private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED

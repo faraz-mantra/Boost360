@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
     android:sharedUserId="com.nowfloats.kb.boostapp.sharedkey"
-    android:sharedUserLabel="@string/shared_user_label"
-    android:versionCode="2017090018"
-    android:versionName="4.8.1">
+    android:sharedUserLabel="@string/shared_user_label">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -27,7 +25,6 @@
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -216,7 +213,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
                     android:host="${applicationId}.UI.PreSignUpActivityRia"
                     android:pathPrefix="/"
@@ -355,7 +351,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
         </activity>
-        <!-- <service android:name="com.nowfloats.bubble.BubblesService" /> -->
+
         <service
             android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
@@ -372,7 +368,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
                     android:host="${applicationId}.keyboard.home"
                     android:pathPrefix="/"
@@ -660,7 +655,7 @@
             android:label="@string/title_activity_splash_screen_"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
-            <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -705,7 +700,9 @@
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"
+            android:windowSoftInputMode="stateHidden" />
+
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
             android:value="@string/package_name" />
@@ -843,11 +840,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -1043,6 +1035,7 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.nowfloats.managenotification.CallerInfoDialog"
             android:autoRemoveFromRecents="true"

@@ -1,6 +1,7 @@
 package com.nowfloats.Business_Enquiries;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Enterprise_Model;
@@ -20,8 +21,10 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -178,11 +181,24 @@ public class API_Business_enquiries {
             for (int i = 0; i < response.size(); i++) {
                 Business_Enquiry_Model data = response.get(i);
                 dateString = data.createdOn.replace("/Date(", "").replace("+0000)/", "").replace("+0530)/", "");
-                data.createdOn = Methods.getFormattedDate(dateString);
+
+                //data.createdOn = Methods.getFormattedDate(dateString);
+                //long timestamp = Long.valueOf(dateString);
+
+                String formattedDate = Methods.getUTC_To_Local(Long.valueOf(dateString));
+
+                if(formattedDate != null)
+                {
+                    data.createdOn = formattedDate;
+                }
+
                 Constants.StorebizQueries.add(data);
             }
         }
         if (bus != null)
             bus.post(new BzQueryEvent(Constants.StorebizQueries, null));
     }
+
+
+
 }

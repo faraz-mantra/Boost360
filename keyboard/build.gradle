@@ -83,5 +83,5 @@ dependencies {
         exclude group: 'com.google.firebase'
     }*/
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.apxor.android:apxor-android-sdk-core:2.3.7@aar'
+    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
 }

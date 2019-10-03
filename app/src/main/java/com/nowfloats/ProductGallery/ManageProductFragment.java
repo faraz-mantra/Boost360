@@ -60,6 +60,7 @@ import com.nowfloats.ProductGallery.Model.BankInformation;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Model.ProductImageResponseModel;
 import com.nowfloats.ProductGallery.Model.Product_Gallery_Update_Model;
+import com.nowfloats.ProductGallery.Model.Tag;
 import com.nowfloats.ProductGallery.Model.UpdateValue;
 import com.nowfloats.ProductGallery.Service.FileUpload;
 import com.nowfloats.ProductGallery.Service.MultipleFileUpload;
@@ -84,9 +85,6 @@ import com.nowfloats.webactions.webactioninterfaces.IFilter;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentManageProductBinding;
-/*import com.vincent.filepicker.Constant;
-import com.vincent.filepicker.activity.NormalFilePickActivity;
-import com.vincent.filepicker.filter.entity.NormalFile;*/
 
 import org.json.JSONObject;
 
@@ -106,7 +104,8 @@ import static android.app.Activity.RESULT_OK;
 import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 
 
-public class ManageProductFragment extends Fragment implements UploadImage.ImageUploadListener, FileUpload.OnFileUpload {
+public class ManageProductFragment extends Fragment implements AdapterView.OnItemClickListener,
+        UploadImage.ImageUploadListener, FileUpload.OnFileUpload {
 
     private String TAG = ManageProductFragment.class.getSimpleName();
 
@@ -156,6 +155,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     private ProductPickupAddressFragment pickupAddressFragment;
     private String[] paymentOptionTitles;
     private WebAction mWebAction;
+    private List<Tag> tags = new ArrayList<>();
 
     public static ManageProductFragment newInstance(String productType, String category, com.nowfloats.ProductGallery.Model.Product product)
     {
@@ -238,6 +238,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         addBottomSheetListener();
         addTextChangeListener();
         addInfoButtonListener();
+        addTagViewListener();
 
         /**
          * Add key listener for restrict only one dot to these fields
@@ -251,11 +252,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.editGst.setKeyListener(DigitsKeyListener.getInstance(false,true));
 
         binding.layoutInventory.labelInventoryHint.setText(String.valueOf("Inventory availability"));
-        binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available quantity"));
+        binding.layoutInventory.labelInventoryQuantityHint.setText(String.valueOf("Available qty."));
         binding.layoutInventoryOnline.labelInventoryHint.setText(String.valueOf("Accept online payment"));
-        binding.layoutInventoryOnline.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
+        binding.layoutInventoryOnline.labelInventoryQuantityHint.setText(String.valueOf("Max qty. per order"));
         binding.layoutInventoryCod.labelInventoryHint.setText(String.valueOf("Accept COD payment"));
-        binding.layoutInventoryCod.labelInventoryQuantityHint.setText(String.valueOf("Max quantity per order"));
+        binding.layoutInventoryCod.labelInventoryQuantityHint.setText(String.valueOf("Max qty. per order"));
 
         binding.btnPublish.setOnClickListener(view -> saveProduct());
         binding.btnDelete.setOnClickListener(view -> deleteConfirmation());
@@ -301,23 +302,15 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                 }
 
                 else
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                 }
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
-
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                binding.layoutInventoryRoot.setVisibility(View.VISIBLE);
             }
 
             else
@@ -327,10 +320,8 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
 
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
-
                 binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                binding.layoutInventoryRoot.setVisibility(View.GONE);
             }
         }
 
@@ -343,6 +334,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
         this.getBankInformation();
         this.getAddressInformation();
+        this.getTagList();
     }
 
     protected void makeLinkClickable(TextView view)
@@ -369,12 +361,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
     private void changePickupAddressText(AddressInformation information)
     {
-        //SpannableStringBuilder spanTxt = new SpannableStringBuilder();
-        //spanTxt.append(Methods.fromHtml("<p style=\"color:#F9A825\">" + information.areaName + "</p> "));
-        //spanTxt.append(information.toString());
-        //binding.layoutBottomSheet.tvPickAddress.setMovementMethod(LinkMovementMethod.getInstance());
-        //binding.layoutBottomSheet.tvPickAddress.setText(spanTxt, TextView.BufferType.SPANNABLE);
-
         binding.layoutBottomSheet.tvAddressType.setText(information.areaName != null ? information.areaName : "");
         binding.layoutBottomSheet.tvPickAddress.setText(information.toString());
         binding.layoutBottomSheet.tvMobileNumber.setText(information.contactNumber != null ? information.contactNumber : "");
@@ -463,7 +449,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             {
                 paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
                 binding.layoutPaymentMethod.tvPaymentConfiguration.setText(paymentOptionTitles[0]);
-                binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
 
                 binding.layoutBottomSheet.spinnerPaymentOption.setSelection(0);
 
@@ -476,21 +461,15 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 if(productType.equalsIgnoreCase("products"))
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                 }
 
                 else
                 {
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-
-                    //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                 }
 
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
+                binding.layoutInventoryRoot.setVisibility(View.VISIBLE);
             }
 
             //If payment type is unique payment url
@@ -505,10 +484,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.VISIBLE);
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                binding.layoutInventoryRoot.setVisibility(View.GONE);
 
                 if(product.BuyOnlineLink != null)
                 {
@@ -532,11 +510,20 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
 
                 binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                binding.layoutInventoryRoot.setVisibility(View.GONE);
             }
+        }
+
+        if(product.tags != null)
+        {
+            for(int i=0; i<product.tags.size(); i++)
+            {
+                tags.add(new Tag(product.tags.get(i), String.valueOf(i)));
+            }
+
+            binding.tvProductKeyword.addTags(tags);
         }
 
         try
@@ -605,6 +592,39 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutBottomSheet.editBankAccount.setText(bankInformation.bankAccount.number != null ? bankInformation.bankAccount.number : "");
     }
 
+
+    private void addTagViewListener()
+    {
+        binding.tvProductKeyword.setOnTagDeleteListener((view, tag, position)-> {
+
+            tags.remove(position);
+            binding.tvProductKeyword.remove(position);
+
+            product.tags.remove(position);
+        });
+
+        binding.btnAddTag.setOnClickListener(v -> addTag(binding.editProductTags.getText().toString()));
+    }
+
+
+    private void addTag(String tag)
+    {
+        if(tag.trim().length() > 0)
+        {
+            if(product.tags == null)
+            {
+                product.tags = new ArrayList<>();
+            }
+
+            Tag obj = new Tag(tag, String.valueOf(product.tags.size()));
+            binding.tvProductKeyword.addTag(obj);
+            tags.add(obj);
+
+            product.tags.add(tag);
+
+            binding.editProductTags.setText("");
+        }
+    }
 
     private void addTextChangeListener()
     {
@@ -808,9 +828,7 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
                     binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
-
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
+                    binding.layoutInventoryRoot.setVisibility(View.VISIBLE);
 
                     displayPaymentAcceptanceMessage();
 
@@ -818,17 +836,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                             && productType.equalsIgnoreCase("products"))
                     {
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-
-                        //binding.layoutInventoryCod.layoutInventory.setVisibility(View.VISIBLE);
-                        //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.VISIBLE);
                     }
 
                     else
                     {
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-
-                        //binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                        //binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
                     }
 
                     if(binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() == View.VISIBLE
@@ -848,11 +860,11 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                 case 1:
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL;
+
                     binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                    binding.layoutInventoryRoot.setVisibility(View.GONE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                     binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
 
@@ -868,10 +880,9 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
                     paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL;
                     binding.layoutAssuredPurchaseTax.setVisibility(View.GONE);
+                    binding.layoutInventoryRoot.setVisibility(View.GONE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
-                    binding.layoutInventoryCod.layoutInventory.setVisibility(View.GONE);
-                    binding.layoutInventoryOnline.layoutInventory.setVisibility(View.GONE);
 
                     binding.layoutBottomSheet.layoutPaymentMethodAcceptance.setVisibility(View.GONE);
 
@@ -912,16 +923,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
            Intent intent = new Intent(getActivity(), PickupAddressActivity.class);
            intent.putExtra("ADDRESS_ID", product.pickupAddressReferenceId);
            startActivityForResult(intent, 10);
-
-           /*if(addressInformationList != null && addressInformationList.size() > 0)
-           {
-               toggleAddressBottomSheet();
-           }
-
-           else
-           {
-               openAddressDialog(null);
-           }*/
        });
 
        binding.layoutBottomSheetAddress.ibClose.setOnClickListener(view -> toggleAddressBottomSheet());
@@ -1009,7 +1010,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             @Override
             public void openDialog() {
 
-                //chooseFile(Constant.REQUEST_CODE_PICK_FILE);
             }
 
             @Override
@@ -1108,52 +1108,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
                     break;
             }
 
-            dialog.dismiss();
-        });
-    }
-
-
-    /**
-     * File picker dialog
-     * @param requestCode
-     */
-    private void chooseFile(int requestCode)
-    {
-        final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .customView(R.layout.layout_file_upload_dialog, true)
-                .show();
-
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-
-        View view = dialog.getCustomView();
-
-        LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
-        LinearLayout takeFile = view.findViewById(R.id.filepicker);
-
-        ImageView cameraImg = view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
-        ImageView fileImg = view.findViewById(R.id.pop_up_file_img);
-
-        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
-        fileImg.setColorFilter(whiteLabelFilter_pop_ip);
-
-        takeCamera.setOnClickListener(v -> {
-
-            cameraIntent(CAMERA_PROOF_IMAGE_REQUEST_CODE);
-            dialog.dismiss();
-        });
-
-        takeGallery.setOnClickListener(v -> {
-
-            openImagePicker(GALLERY_PROOF_IMAGE_REQUEST_CODE, 1);
-            dialog.dismiss();
-        });
-
-        takeFile.setOnClickListener(v -> {
-
-            openFileChooser();
             dialog.dismiss();
         });
     }
@@ -1837,20 +1791,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
-     * Open file chooser activity
-     */
-    private void openFileChooser()
-    {
-        int limit = 1;
-
-        /*Intent intent4 = new Intent(getActivity(), NormalFilePickActivity.class);
-        intent4.putExtra(Constant.MAX_NUMBER, limit);
-        intent4.putExtra(NormalFilePickActivity.SUFFIX, FILE_EXTENSIONS);
-        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);*/
-    }
-
-
-    /**
      * Open image picker activity
      * @param requestCode
      * @param max
@@ -2094,18 +2034,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             }
         }
 
-        /*else if(requestCode == Constant.REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null)
-        {
-            ArrayList<NormalFile> files = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
-
-            if(files.size() > 0)
-            {
-                file = new File(files.get(0).getPath());
-
-                pickupAddressFragment.setFileName(file.getName());
-                pickupAddressFragment.isFileSelected(true);
-            }
-        }*/
 
         else if(resultCode == RESULT_OK && data != null)
         {
@@ -2581,31 +2509,30 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         product.keySpecification.key = binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString();
         product.keySpecification.value = binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString();
 
-        //If limited stock selected
-        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
-        {
-            product.IsAvailable = true;
-            product.availableUnits = binding.layoutInventory.quantityValue.getText().toString().length() == 0 ? 1 : Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
-        }
-
-        //If unlimited stock selected
-        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 1)
-        {
-            product.IsAvailable = true;
-            product.availableUnits = -1;
-        }
-
-        //If out of stock selected
-        if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 2)
-        {
-            product.IsAvailable = false;
-            product.availableUnits = 0;
-        }
-
         //If assured purchase and product
-        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                /*&& productType.equalsIgnoreCase("products")*/)
+        if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
         {
+            //If limited stock selected
+            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 0)
+            {
+                product.IsAvailable = true;
+                product.availableUnits = binding.layoutInventory.quantityValue.getText().toString().length() == 0 ? 1 : Integer.valueOf(binding.layoutInventory.quantityValue.getText().toString().trim());
+            }
+
+            //If unlimited stock selected
+            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 1)
+            {
+                product.IsAvailable = true;
+                product.availableUnits = -1;
+            }
+
+            //If out of stock selected
+            if(binding.layoutInventory.spinnerStockAvailability.getSelectedItemPosition() == 2)
+            {
+                product.IsAvailable = false;
+                product.availableUnits = 0;
+            }
+
             product.codAvailable = (binding.layoutInventoryCod.spinnerStockAvailability.getSelectedItemPosition() == 0);
             product.prepaidOnlineAvailable = (binding.layoutInventoryOnline.spinnerStockAvailability.getSelectedItemPosition() == 0);
 
@@ -2613,11 +2540,24 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
             product.maxPrepaidOnlineAvailable = product.prepaidOnlineAvailable ? (binding.layoutInventoryOnline.quantityValue.getText().toString().length() == 0 ? 0 : Integer.valueOf(binding.layoutInventoryOnline.quantityValue.getText().toString().trim())) : 0;
         }
 
-        else
+        else if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.DONT_WANT_TO_SELL.getValue()))
         {
+            product.IsAvailable = false;
             product.codAvailable = false;
             product.prepaidOnlineAvailable = false;
 
+            product.availableUnits = 0;
+            product.maxCodOrders = 0;
+            product.maxPrepaidOnlineAvailable = 0;
+        }
+
+        else if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue()))
+        {
+            product.IsAvailable = true;
+            product.codAvailable = false;
+            product.prepaidOnlineAvailable = false;
+
+            product.availableUnits = -1;
             product.maxCodOrders = 0;
             product.maxPrepaidOnlineAvailable = 0;
         }
@@ -3131,6 +3071,41 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
 
 
     /**
+     * Fetch suggested tag list
+     */
+    private void getTagList()
+    {
+        if(!Methods.isOnline(getActivity()))
+        {
+            return;
+        }
+
+        HashMap<String, String> values = new HashMap<>();
+        values.put("clientId", Constants.clientId);
+        values.put("fpId", session.getFPID());
+
+        ProductGalleryInterface galleryInterface = Constants.restAdapterDev.create(ProductGalleryInterface.class);
+
+        galleryInterface.getAllTags(values, new Callback<List<String>>() {
+
+            @Override
+            public void success(List<String> data, Response response) {
+
+                if(data != null && response.getStatus() == 200)
+                {
+                    addAutoCompleteListener(data);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+
+    /**
      * Fetch assured purchase details for a product
      * @param productId
      */
@@ -3402,8 +3377,6 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
     @Override
     public void onSuccess(String url) {
 
-        Log.d("PRODUCT_JSON", "URL - " + url);
-
         //save address once address proof uploaded
         addressInformation.addressProof = url;
         saveAddress();
@@ -3463,9 +3436,13 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutProductSpecification.ibInfoProductSpecification.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Mention other specifications of the product you are offering. To add more, click on add specifications.", binding.layoutProductSpecification.ibInfoProductSpecification));
 
         binding.layoutInventory.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "You can use this to manage your product’s availability on your website.", binding.layoutInventory.ibInfoProductInventory));
+        binding.layoutInventory.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The total number of units you are willing to sell through your Boost website. Quantity decreases with orders that include this product.", binding.layoutInventory.ibInfoProductQuantity));
+
         binding.layoutInventoryCod.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Allows customers to pay by cash at the time of delivery of the product, without the need of an advance payment online.", binding.layoutInventoryCod.ibInfoProductInventory));
+        binding.layoutInventoryCod.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum number of units that a buyer can purchase in a single order.", binding.layoutInventoryCod.ibInfoProductQuantity));
 
         binding.layoutInventoryOnline.ibInfoProductInventory.setVisibility(View.INVISIBLE);
+        binding.layoutInventoryOnline.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum number of units that a buyer can purchase in a single order.", binding.layoutInventoryOnline.ibInfoProductQuantity));
 
         binding.layoutShippingMatrixDetails.ibInfoProductDimension.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Package dimensions need to be accurate because they are used to calculate shipping rates.", binding.layoutShippingMatrixDetails.ibInfoProductDimension));
         binding.layoutShippingMatrixDetails.ibInfoProductWeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the weight of your package.", binding.layoutShippingMatrixDetails.ibInfoProductWeight));
@@ -3474,5 +3451,33 @@ public class ManageProductFragment extends Fragment implements UploadImage.Image
         binding.layoutShippingMatrixDetails.ibInfoProductThickness.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the thickness of your package.", binding.layoutShippingMatrixDetails.ibInfoProductThickness));
 
         binding.layoutPaymentMethod.ibInfoPaymentConfiguration.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Choose the best way for customers to pay you.", binding.layoutPaymentMethod.ibInfoPaymentConfiguration));
+        binding.ibInfoProductTags.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Tags help site visitors find a desired item on your Boost website. You can add related tags here and reuse them across other related products. Selecting a tag filters all relevant inventory in your product catalog.", binding.ibInfoProductTags));
+    }
+
+
+    /**
+     * Add listener to autocomplete suggestion
+     * @param categories
+     */
+    private void addAutoCompleteListener(List<String> categories)
+    {
+        try
+        {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, categories);
+
+            binding.editProductTags.setAdapter(adapter);
+            binding.editProductTags.setOnItemClickListener(this);
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        addTag(parent.getItemAtPosition(position).toString());
     }
 }
