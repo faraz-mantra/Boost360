@@ -78,6 +78,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
@@ -96,6 +98,8 @@ import retrofit.http.QueryMap;
  */
 public class Methods {
     public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+    private static final String HTML_PATTERN = "<(\"[^\"]*\"|'[^']*'|[^'\">])*>";
+    private static Pattern pattern = Pattern.compile(HTML_PATTERN);
 
     public static boolean isOnline(Activity context) {
         boolean status = false;
@@ -121,6 +125,11 @@ public class Methods {
             return false;
         }
         return status;
+    }
+
+    public static boolean hasHTMLTags(String text){
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find();
     }
 
     @SuppressWarnings("deprecation")

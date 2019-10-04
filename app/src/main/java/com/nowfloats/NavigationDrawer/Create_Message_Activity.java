@@ -28,6 +28,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -175,6 +176,19 @@ public class Create_Message_Activity extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String businessMessage = msg.getText().toString();
+
+                if(TextUtils.isEmpty((businessMessage))){
+                    Toast.makeText(Create_Message_Activity.this, getString(R.string.null_string_exception), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(session.getISEnterprise().equals("false") && Methods.hasHTMLTags(msg.getText().toString())){
+                    Toast.makeText(Create_Message_Activity.this, getString(R.string.html_tags_exception), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(!Methods.isOnline(Create_Message_Activity.this)){
 
                     return;
