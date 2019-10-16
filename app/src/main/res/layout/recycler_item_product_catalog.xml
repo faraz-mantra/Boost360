@@ -1,5 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
 
    <!--
    <LinearLayout
@@ -111,58 +112,134 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layerType="software"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_below="@+id/label_description"
                 android:background="@drawable/dotted_line"/>
 
-           <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dotted_line"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/label_currency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Price: "
                     android:textColor="@color/secondaryLightTextColor"
                     android:textSize="13sp"
-                    android:text="Price: "
-                    android:layout_gravity="center_vertical"/>
+                    android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/label_price"
+                <LinearLayout
+                    android:id="@+id/linear_layout"
+                    android:layout_width="wrap_content"
+                    android:padding="6dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/label_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="INR 0"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/label_base_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="INR 0"
+                        android:textColor="@color/secondaryLightTextColor"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/share_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="14sp"
-                    android:text="INR 0"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="0dp"
+                    android:padding="5dp">
+                    <ImageView
+                        android:id="@+id/shareData"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/share_icon_normal"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        card_view:layout_constraintEnd_toStartOf="@+id/share_facebook"
+                        card_view:layout_constraintHorizontal_bias="0.5"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/label_base_price"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/secondaryLightTextColor"
-                    android:textSize="14sp"
-                    android:text="INR 0"
-                    android:layout_weight="1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="10dp"
-                    android:gravity="center_vertical" />
+                    <ImageView
+                        android:id="@+id/share_facebook"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/facebook_icon_share"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
+                        app:layout_constraintStart_toEndOf="@+id/shareData"
+                        app:layout_constraintTop_toTopOf="parent"
+                        card_view:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
+                        card_view:layout_constraintHorizontal_bias="0.5"
+                        card_view:layout_constraintStart_toEndOf="@+id/shareData"
+                        card_view:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/share_whatsapp"
+                        android:layout_width="75dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/share_whatsapp"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintHorizontal_bias="0.5"
+                        card_view:layout_constraintStart_toEndOf="@+id/share_facebook"
+                        card_view:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
 
                 <Button
                     android:id="@+id/button_edit"
                     android:layout_width="40dp"
                     android:layout_height="25dp"
-                    android:textColor="@color/secondaryLightTextColor"
-                    android:background="@android:color/transparent"
-                    android:textSize="12sp"
                     android:layout_gravity="end"
+                    android:background="@android:color/transparent"
                     android:gravity="center_vertical|end"
-                    android:text="Edit"/>
+                    android:text="Edit"
+                    android:textColor="@color/secondaryLightTextColor"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
 

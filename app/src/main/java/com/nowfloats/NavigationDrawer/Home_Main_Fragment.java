@@ -101,6 +101,8 @@ public class Home_Main_Fragment extends Fragment implements
     private SharedPreferences mPref;
     private boolean mIsNewMsg = false;
 
+    boolean poppShown=false;
+
     private DbController mDbController;
 
     public Home_Main_Fragment() {}
@@ -551,7 +553,7 @@ public class Home_Main_Fragment extends Fragment implements
         }
 
 
-        private void removeItem(View v) {
+       /* private void removeItem(View v) {
             int selectedItemPosition = recyclerView.getChildPosition(v);
             RecyclerView.ViewHolder viewHolder
                     = recyclerView.findViewHolderForPosition(selectedItemPosition);
@@ -567,7 +569,7 @@ public class Home_Main_Fragment extends Fragment implements
             removedItems.add(selectedItemId);
             card.remove(selectedItemPosition);
             adapter.notifyItemRemoved(selectedItemPosition);
-        }
+        }*/
     }
 
 

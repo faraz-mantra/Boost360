@@ -45,6 +45,7 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by NowFloatsDev on 09/03/2015.
@@ -169,8 +170,234 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             TextView dateText = holder.dateText;
             ImageView imageView = holder.imageView;
             ImageView shareImageView = holder.shareImageView;
+            ImageView shareFacebook = holder.share_facebook;
+            ImageView shareWhatsapp = holder.share_whatsapp;
 
             final String imageShare = HomeActivity.StorebizFloats.get(position).imageUri;
+
+            shareFacebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MixPanelController.track("SharePost", null);
+                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
+                        } else {
+                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
+                        }
+                        return;
+                    }
+                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
+
+                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setPackage("com.facebook.katana"); //Facebook App package
+                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
+                        if (Methods.isOnline(appContext)) {
+                            String url;
+                            if (imageShare.contains("BizImages")) {
+                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+                            } else {
+                                url = imageShare;
+                            }
+                            Target target = new Target() {
+
+
+                                @Override
+                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    pd.dismiss();
+                                    targetMap = null;
+                                    try {
+                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                        View view = new View(appContext);
+                                        view.draw(new Canvas(mutableBitmap));
+                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                                        BoostLog.d("Path is:", path);
+                                        Uri uri = Uri.parse(path);
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                                HomeActivity.StorebizFloats.get(position).url);
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                        shareIntent.setType("image/*");
+
+
+                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+                                        } else {
+                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                                        }
+                                    } catch (OutOfMemoryError e) {
+                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+                                    pd.dismiss();
+                                    targetMap = null;
+                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            };
+                            targetMap = target;
+                            Picasso.with(appContext)
+                                    .load(url)
+                                    .into(target);
+
+
+                        } else {
+                            pd.dismiss();
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+                        }
+
+
+                    } else {
+                        pd.dismiss();
+                        shareIntent.setType("text/plain");
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                HomeActivity.StorebizFloats.get(position).url);
+                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+                        } else {
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                        }
+
+                    }
+
+                }
+
+
+                   /* Intent share=new Intent(Intent.ACTION_SEND);
+                    share.setType("text/plain");
+                    share.putExtra(Intent.EXTRA_TEXT, "Some text you would like to share...");
+                    share.setPackage("com.facebook.katana"); //Facebook App package
+                    appContext.startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));*/
+
+            });
+
+            shareWhatsapp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    MixPanelController.track("SharePost", null);
+                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
+                        } else {
+                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
+                        }
+                        return;
+                    }
+                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
+
+                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setPackage("com.whatsapp");
+                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
+                        if (Methods.isOnline(appContext)) {
+                            String url;
+                            if (imageShare.contains("BizImages")) {
+                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+                            } else {
+                                url = imageShare;
+                            }
+                            Target target = new Target() {
+
+
+                                @Override
+                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    pd.dismiss();
+                                    targetMap = null;
+                                    try {
+                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                        View view = new View(appContext);
+                                        view.draw(new Canvas(mutableBitmap));
+                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                                        BoostLog.d("Path is:", path);
+                                        Uri uri = Uri.parse(path);
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                                HomeActivity.StorebizFloats.get(position).url);
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                        shareIntent.setType("image/*");
+
+
+                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+                                        } else {
+                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                                        }
+                                    } catch (OutOfMemoryError e) {
+                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+                                    pd.dismiss();
+                                    targetMap = null;
+                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            };
+                            targetMap = target;
+                            Picasso.with(appContext)
+                                    .load(url)
+                                    .into(target);
+
+
+                        } else {
+                            pd.dismiss();
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+                        }
+
+
+                    } else {
+                        pd.dismiss();
+                        shareIntent.setType("text/plain");
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                HomeActivity.StorebizFloats.get(position).url);
+                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+                        } else {
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                        }
+
+                    }
+
+                }
+
+                    /*try {
+
+
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                        sendIntent.setType("text/plain");
+                        sendIntent.setPackage("com.whatsapp");
+                        appContext.startActivity(sendIntent);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }*/
+
+
+            });
 
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
