@@ -178,368 +178,41 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             shareFacebook.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MixPanelController.track("SharePost", null);
-                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
-                        } else {
-                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
-                        }
-                        return;
-                    }
-                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
+                    shareContent("facebook", imageShare, position);
 
-                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setPackage("com.facebook.katana"); //Facebook App package
-                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
-                        if (Methods.isOnline(appContext)) {
-                            String url;
-                            if (imageShare.contains("BizImages")) {
-                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
-                            } else {
-                                url = imageShare;
-                            }
-                            Target target = new Target() {
-
-
-                                @Override
-                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                                    pd.dismiss();
-                                    targetMap = null;
-                                    try {
-                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                        View view = new View(appContext);
-                                        view.draw(new Canvas(mutableBitmap));
-                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-                                        BoostLog.d("Path is:", path);
-                                        Uri uri = Uri.parse(path);
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                                HomeActivity.StorebizFloats.get(position).url);
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                        shareIntent.setType("image/*");
-
-
-                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                                        } else {
-                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                                        }
-                                    } catch (OutOfMemoryError e) {
-                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-                                    } catch (Exception e) {
-
-                                    }
-                                }
-
-                                @Override
-                                public void onBitmapFailed(Drawable errorDrawable) {
-                                    pd.dismiss();
-                                    targetMap = null;
-                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-
-                                }
-
-                                @Override
-                                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                }
-                            };
-                            targetMap = target;
-                            Picasso.with(appContext)
-                                    .load(url)
-                                    .into(target);
-
-
-                        } else {
-                            pd.dismiss();
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
-                        }
-
-
-                    } else {
-                        pd.dismiss();
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                HomeActivity.StorebizFloats.get(position).url);
-                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                        } else {
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                        }
-
-                    }
 
                 }
-
-
-                   /* Intent share=new Intent(Intent.ACTION_SEND);
-                    share.setType("text/plain");
-                    share.putExtra(Intent.EXTRA_TEXT, "Some text you would like to share...");
-                    share.setPackage("com.facebook.katana"); //Facebook App package
-                    appContext.startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));*/
-
             });
 
-            shareWhatsapp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    MixPanelController.track("SharePost", null);
-                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
-                        } else {
-                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
-                        }
-                        return;
-                    }
-                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
-
-                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setPackage("com.whatsapp");
-                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
-                        if (Methods.isOnline(appContext)) {
-                            String url;
-                            if (imageShare.contains("BizImages")) {
-                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
-                            } else {
-                                url = imageShare;
-                            }
-                            Target target = new Target() {
+            /*try {
 
 
-                                @Override
-                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                                    pd.dismiss();
-                                    targetMap = null;
-                                    try {
-                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                        View view = new View(appContext);
-                                        view.draw(new Canvas(mutableBitmap));
-                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-                                        BoostLog.d("Path is:", path);
-                                        Uri uri = Uri.parse(path);
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                                HomeActivity.StorebizFloats.get(position).url);
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                        shareIntent.setType("image/*");
-
-
-                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                                        } else {
-                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                                        }
-                                    } catch (OutOfMemoryError e) {
-                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-                                    } catch (Exception e) {
-
-                                    }
-                                }
-
-                                @Override
-                                public void onBitmapFailed(Drawable errorDrawable) {
-                                    pd.dismiss();
-                                    targetMap = null;
-                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-
-                                }
-
-                                @Override
-                                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                }
-                            };
-                            targetMap = target;
-                            Picasso.with(appContext)
-                                    .load(url)
-                                    .into(target);
-
-
-                        } else {
-                            pd.dismiss();
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
-                        }
-
-
-                    } else {
-                        pd.dismiss();
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                HomeActivity.StorebizFloats.get(position).url);
-                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                        } else {
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                        }
-
-                    }
-
-                }
-
-                    /*try {
-
-
-                        Intent sendIntent = new Intent();
-                        sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                        sendIntent.setType("text/plain");
-                        sendIntent.setPackage("com.whatsapp");
-                        appContext.startActivity(sendIntent);
-                    }
-                    catch (Exception e)
-                    {
-
-                    }*/
-
-
-            });
-
-            shareImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MixPanelController.track("SharePost", null);
-                    if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
-                        } else {
-                            ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
-                        }
-                        return;
-                    }
-                    pd = ProgressDialog.show(appContext, "", "Sharing . . .");
-
-                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
-                        if (Methods.isOnline(appContext)) {
-                            String url;
-                            if (imageShare.contains("BizImages")) {
-                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
-                            } else {
-                                url = imageShare;
-                            }
-                            Target target = new Target() {
-
-
-                                @Override
-                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                                    pd.dismiss();
-                                    targetMap = null;
-                                    try {
-                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                        View view = new View(appContext);
-                                        view.draw(new Canvas(mutableBitmap));
-                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-                                        BoostLog.d("Path is:", path);
-                                        Uri uri = Uri.parse(path);
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                                HomeActivity.StorebizFloats.get(position).url);
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                        shareIntent.setType("image/*");
-
-                                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                                        } else {
-                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                                        }
-                                    } catch (OutOfMemoryError e) {
-                                        Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-                                    } catch (Exception e) {
-
-                                    }
-                                }
-
-                                @Override
-                                public void onBitmapFailed(Drawable errorDrawable) {
-                                    pd.dismiss();
-                                    targetMap = null;
-                                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-
-                                }
-
-                                @Override
-                                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                }
-                            };
-                            targetMap = target;
-                            Picasso.with(appContext)
-                                    .load(url)
-                                    .into(target);
-
-
-                        } else {
-                            pd.dismiss();
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
-                        }
-
-
-                    } else {
-                        pd.dismiss();
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                HomeActivity.StorebizFloats.get(position).url);
-                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                        } else {
-                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                        }
-
-                    }
-
-                }
-
-            });
-
-            if (Constants.isWelcomScreenToBeShown) {
-                Constants.isWelcomScreenToBeShown = false;
-                data = HomeActivity.StorebizFloats.get(position - 1);
-            } else {
-                data = HomeActivity.StorebizFloats.get(position);
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                sendIntent.setPackage("com.whatsapp");
+                appContext.startActivity(sendIntent);
             }
+            catch (Exception e)
+            {
 
-            try {
-                if (data != null) {
-                    msg = data.message;
-                    date = Methods.getFormattedDate(data.createdOn);
-                    imageUri = data.tileImageUri;
+            }*/
+            shareWhatsapp.setOnClickListener(v -> {
 
-                    String baseName = "";
-                    textView1.setText(msg);
-                    dateText.setText(date);
+                shareContent("whatsapp", imageShare, position);
 
-                    if (Util.isNullOrEmpty(imageUri) || imageUri.contains("deal.png")) {
-                        imagePresent = false;
-                        imageView.setVisibility(View.GONE);
-                    } else if (imageUri.contains("BizImages")) {
-                        imagePresent = true;
-                        imageView.setVisibility(View.VISIBLE);
-                        baseName = Constants.BASE_IMAGE_URL + imageUri;
-                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
-//                        imageLoader.displayImage(baseName,imageView,options);
-                    } else if (imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard")) {
-                        imagePresent = true;
 
-                        imageView.setVisibility(View.VISIBLE);
-                        Bitmap bmp = Util.getBitmap(imageUri, appContext);
-                        imageView.setImageBitmap(bmp);
-                    } else {
-                        imagePresent = true;
-                        imageView.setVisibility(View.VISIBLE);
-                        baseName = imageUri;
-                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
-//                        imageLoader.displayImage(baseName,imageView,options);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            });
+
+            shareImageView.setOnClickListener(v -> {
+
+
+                shareContent("default",imageShare,position);
+
+
+            });
         }
 
     }
@@ -645,5 +318,124 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             return HomeActivity.StorebizFloats.size();
         }
     }
+
+
+    void shareContent(String type,String imageShare,int position)
+    {
+        MixPanelController.track("SharePost", null);
+        if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
+            } else {
+                ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
+            }
+            return;
+        }
+        pd = ProgressDialog.show(appContext, "", "Sharing . . .");
+
+
+
+
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+
+
+        switch (type)
+        {
+            case "whatsapp":
+
+                shareIntent.setPackage("com.whatsapp");
+                break;
+
+            case "facebook":
+
+                shareIntent.setPackage("com.facebook.katana");
+
+                break;
+
+
+        }
+
+
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
+            if (Methods.isOnline(appContext)) {
+                String url;
+                if (imageShare.contains("BizImages")) {
+                    url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+                } else {
+                    url = imageShare;
+                }
+                Target target = new Target() {
+
+
+                    @Override
+                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                        pd.dismiss();
+                        targetMap = null;
+                        try {
+                            Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                            View view = new View(appContext);
+                            view.draw(new Canvas(mutableBitmap));
+                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                            BoostLog.d("Path is:", path);
+                            Uri uri = Uri.parse(path);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                    HomeActivity.StorebizFloats.get(position).url);
+                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                            shareIntent.setType("image/*");
+
+
+                            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+                            } else {
+                                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                            }
+                        } catch (OutOfMemoryError e) {
+                            Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        pd.dismiss();
+                        targetMap = null;
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                };
+                targetMap = target;
+                Picasso.with(appContext)
+                        .load(url)
+                        .into(target);
+
+
+            } else {
+                pd.dismiss();
+                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+            }
+
+
+        } else {
+            pd.dismiss();
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                    HomeActivity.StorebizFloats.get(position).url);
+            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+            } else {
+                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+            }
+
+        }
+    }
+
 
 }

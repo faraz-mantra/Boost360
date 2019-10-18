@@ -113,7 +113,6 @@
                 android:layout_height="2dp"
                 android:layerType="software"
                 android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_below="@+id/label_description"
                 android:background="@drawable/dotted_line"/>
 

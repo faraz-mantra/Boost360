@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.NavigationDrawer.API.MessageTag_Async_Task;
@@ -53,6 +54,7 @@ public class Card_Full_View_Fragment extends Fragment {
     private static final int STORAGE_CODE = 120;
     static View.OnClickListener mylongOnClickListener;
     private Activity appContext;
+    String mainText;
 
     public Card_Full_View_Fragment() {
         // Required empty public constructor
@@ -72,6 +74,72 @@ public class Card_Full_View_Fragment extends Fragment {
         ((Card_Full_View_MainActivity) getActivity()).setActionBarTitle(getString(R.string.home));
 
         CardView cardView = (CardView) mainView.findViewById(R.id.card_view);
+
+        ImageView share = (ImageView) mainView.findViewById(R.id.shareData);
+        ImageView shareFacebook = (ImageView) mainView.findViewById(R.id.share_facebook);
+        ImageView shareWhatsapp = (ImageView) mainView.findViewById(R.id.share_whatsapp);
+
+
+        if (bundle != null) {
+            String imagePath = bundle.getString(ImageKey);
+            mainText = bundle.getString(MainTextKey);
+            String dateText = bundle.getString(DateTextKey);
+            String messageid = bundle.getString(MessageIdKey);
+            String urlKey = bundle.getString(UrlKey);
+
+            //Log.d("Card Frag", "Card Fragment : "+imagePath+" , "+mainText+ " , "+dateText);
+            //Log.d("Card Frag","Main View : "+mainView);
+            setValues(mainView, imagePath, mainText, dateText,messageid,urlKey);
+
+        }
+
+
+        shareFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, mainText);
+                share.setPackage("com.facebook.katana"); //Facebook App package
+                appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
+
+
+            } });
+
+        shareWhatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, mainText);
+                share.setPackage("com.whatsapp");
+                appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
+            }
+
+        });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, mainText);
+                appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
+
+
+            }
+
+
+        });
+
+
+
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,18 +185,7 @@ public class Card_Full_View_Fragment extends Fragment {
        // mylongOnClickListener = new MyLongClickListener(getActivity());
 
 
-        if (bundle != null) {
-            String imagePath = bundle.getString(ImageKey);
-            String mainText = bundle.getString(MainTextKey);
-            String dateText = bundle.getString(DateTextKey);
-            String messageid = bundle.getString(MessageIdKey);
-            String urlKey = bundle.getString(UrlKey);
 
-            //Log.d("Card Frag", "Card Fragment : "+imagePath+" , "+mainText+ " , "+dateText);
-            //Log.d("Card Frag","Main View : "+mainView);
-            setValues(mainView, imagePath, mainText, dateText,messageid,urlKey);
-
-        }
 
         return mainView;
     }
