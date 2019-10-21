@@ -115,6 +115,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -1168,6 +1169,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
+                    WebEngageController.trackEvent("SITE HEALTH","Site health",session.getFpTag());
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home)) || nextScreen.equals(getString(R.string.update))) {
@@ -1200,6 +1202,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.chat))) {
                     if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT, null);
+                        WebEngageController.trackEvent("CONTACT NF","null",session.getFpTag());
 
                         PreferencesManager.getsInstance(HomeActivity.this).setUserName(session.getFpTag());
 

@@ -58,6 +58,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
@@ -864,6 +865,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onError(FacebookException error) {
                 onFBPageError(from);
+                WebEngageController.trackEvent("FB PAGE SHARING FAILED","FB Page Sharing Failed",session.getFpTag());
                 //Log.v("ggg",error.toString()+"fberror");
             }
         });

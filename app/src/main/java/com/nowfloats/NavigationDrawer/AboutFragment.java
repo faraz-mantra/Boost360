@@ -23,6 +23,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 /**
@@ -109,11 +110,13 @@ public class AboutFragment extends Fragment {
                         }
                         break;
                     case "Terms of Use":
+                        WebEngageController.trackEvent("TNC LINK","null",null);
                         MixPanelController.track(EventKeysWL.EVENT_TERM_OF_USE, null);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_tou_url));
                         break;
                     case "Privacy Policy":
+                        WebEngageController.trackEvent("POLICY LINK","null",null);
                         MixPanelController.track(EventKeysWL.EVENT_PRIVACY_POLICY, null);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_privacy_url));

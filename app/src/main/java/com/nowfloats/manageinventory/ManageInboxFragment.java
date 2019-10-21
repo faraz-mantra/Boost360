@@ -29,6 +29,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 
@@ -165,6 +166,7 @@ public class ManageInboxFragment extends Fragment {
                 Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                WebEngageController.trackEvent("ROI SUMMARY - ENQUIRY","null",session.getFpTag());
             });
 
             tvBusinessCalls.setOnClickListener(v -> {
