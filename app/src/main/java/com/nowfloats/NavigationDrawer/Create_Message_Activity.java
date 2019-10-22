@@ -341,7 +341,6 @@ public class Create_Message_Activity extends AppCompatActivity {
         create_message_subscribe_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SUBSCRIBER SHARING ACTIVATED","Has/Clicked Subscriber sharing on",session.getFpTag());
 
                 if (!Constants.isFirstTimeSendToSubscriber) {
                     Constants.isFirstTimeSendToSubscriber = true;
@@ -364,6 +363,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                                 public void onPositive(MaterialDialog dialog) {
                                     super.onPositive(dialog);
                                     if (tosubscribers) {
+                                        WebEngageController.trackEvent("SUBSCRIBER SHARING ACTIVATED","Has/Clicked Subscriber sharing on",session.getFpTag());
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
                                         create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.subscribe_icon));
                                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));

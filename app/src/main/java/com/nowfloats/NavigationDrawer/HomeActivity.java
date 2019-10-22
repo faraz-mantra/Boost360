@@ -64,7 +64,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity;
-import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
@@ -120,7 +119,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.webengage.sdk.android.User;
 import com.webengage.sdk.android.WebEngage;
 
 import org.json.JSONException;
@@ -243,6 +241,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         } else {
             createView();
         }
+
 
         //WidgetKey.getWidgets(session, this);
     }
@@ -1433,18 +1432,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private void setWebEngageProperties() {
-
-        User weUser = WebEngage.get().user();
-        weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        weUser.setAttribute("SALES_EXECUTIVE_EMAIL", "reach@nowfloats.com");
-        weUser.setAttribute("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        weUser.setAttribute("Status", "");
-        weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
-        weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-    }
 
     @Override
     public void authenticationStatus(String value) {
@@ -1603,16 +1590,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 }
             }
         }).start();
-
         if (Constants.fromLogin) {
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-                setWebEngageProperties();
+                WebEngageController.setWebEngageProperties(session);
             }
-//            if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-//                showOnBoardingScreens();
-//            }
-            // Constants.fromLogin = false ;
         }
+
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);

@@ -9,6 +9,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -72,6 +73,7 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
         String temp = null;
         if (status) {
             MixPanelController.track("ImageDeleted", null);
+            WebEngageController.trackEvent("DELETE GALLERY IMAGE","Delete Gallery Image",session.getFpTag());
             temp = "Deleted";
         } else {
             temp = "error";

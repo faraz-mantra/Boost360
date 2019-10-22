@@ -50,6 +50,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.File;
@@ -264,10 +265,12 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                             MixPanelController.track("CreateCustomPage", null);
                                             long time = System.currentTimeMillis();
                                             CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                                            WebEngageController.trackEvent("POST A CUSTOMPAGE","Successfully added custompage",session.getFpTag());
                                             Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                                             finish();
                                         } else {
                                             Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
+                                            WebEngageController.trackEvent("POST A CUSTOMPAGE",getString(R.string.enter_different_title_try_again),session.getFpTag());
                                             //Log.d("Create page Fail", "");
                                         }
                                     }
@@ -276,6 +279,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        WebEngageController.trackEvent("POST A CUSTOMPAGE",getString(R.string.something_went_wrong_try_again),session.getFpTag());
                                         //Log.d("Create page Fail", "" + error.getMessage());
                                     }
                                 });
@@ -291,6 +295,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     public void success(String s, Response response) {
                                         materialProgress.dismiss();
                                         MixPanelController.track("UpdateCustomPage", null);
+                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE","Update a Custompage",session.getFpTag());
                                         //Log.d("Update page success", "");
                                         CustomPageFragment.dataModel.get(curPos).DisplayName = name;
                                         Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
@@ -301,6 +306,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE","Failed to update custompage",session.getFpTag());
                                         //Log.d("Update page Fail", "" + error.getMessage());
                                     }
                                 });

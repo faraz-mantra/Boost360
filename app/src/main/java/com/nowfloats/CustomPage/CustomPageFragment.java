@@ -36,6 +36,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.Widget;
 import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
@@ -424,6 +425,7 @@ public class CustomPageFragment extends Fragment {
     private void openAddCustomPageActivity()
     {
         MixPanelController.track("AddCustomPage", null);
+        WebEngageController.trackEvent("CREATE A CUSTOMPAGE","Clicked: Post a Custompage",session.getFpTag());
         Intent intent = new Intent(activity, CreateCustomPageActivity.class);
         startActivity(intent);
 

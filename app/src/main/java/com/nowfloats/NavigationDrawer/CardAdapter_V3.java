@@ -213,6 +213,50 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
 
             });
+
+            if (Constants.isWelcomScreenToBeShown) {
+                Constants.isWelcomScreenToBeShown = false;
+                data = HomeActivity.StorebizFloats.get(position - 1);
+            } else {
+                data = HomeActivity.StorebizFloats.get(position);
+            }
+
+            try {
+                if (data != null) {
+                    msg = data.message;
+                    date = Methods.getFormattedDate(data.createdOn);
+                    imageUri = data.tileImageUri;
+
+                    String baseName = "";
+                    textView1.setText(msg);
+                    dateText.setText(date);
+
+                    if (Util.isNullOrEmpty(imageUri) || imageUri.contains("deal.png")) {
+                        imagePresent = false;
+                        imageView.setVisibility(View.GONE);
+                    } else if (imageUri.contains("BizImages")) {
+                        imagePresent = true;
+                        imageView.setVisibility(View.VISIBLE);
+                        baseName = Constants.BASE_IMAGE_URL + imageUri;
+                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
+//                        imageLoader.displayImage(baseName,imageView,options);
+                    } else if (imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard")) {
+                        imagePresent = true;
+
+                        imageView.setVisibility(View.VISIBLE);
+                        Bitmap bmp = Util.getBitmap(imageUri, appContext);
+                        imageView.setImageBitmap(bmp);
+                    } else {
+                        imagePresent = true;
+                        imageView.setVisibility(View.VISIBLE);
+                        baseName = imageUri;
+                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
+//                        imageLoader.displayImage(baseName,imageView,options);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }

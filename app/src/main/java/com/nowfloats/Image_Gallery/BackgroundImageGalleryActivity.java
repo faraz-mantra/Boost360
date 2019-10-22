@@ -41,6 +41,7 @@ import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityBackgroundImageGalleryBinding;
@@ -378,6 +379,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE)
         {
             uploadPrimaryPicture(primaryUri.getPath());
+            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE","Update Background Image",session.getFpTag());
         }
 
         if (resultCode == RESULT_OK && requestCode == GALLERY_IMAGE_REQUEST_CODE && data != null)
@@ -389,12 +391,14 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 File file = new File(images.get(0).getPath());
                 uploadPrimaryPicture(file.getPath());
             }
+            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE","Update Background Image",session.getFpTag());
         }
 
         if(resultCode == RESULT_OK && requestCode == IMAGE_DELETE_REQUEST_CODE && data != null)
         {
             int position = data.getIntExtra("POSITION", 0);
             adapter.removeImage(position);
+            WebEngageController.trackEvent("DELETE BACKGROUND IMAGE","DELETE BACKGROUND IMAGE",session.getFpTag());
         }
     }
 

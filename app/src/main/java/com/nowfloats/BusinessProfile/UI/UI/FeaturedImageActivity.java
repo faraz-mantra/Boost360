@@ -45,6 +45,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityBusinessLogoBinding;
@@ -395,6 +396,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);
                     path = imageUrl;
                     path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
+                    WebEngageController.trackEvent("UPLOAD FEATURED IMAGE","Updated Featured Image",session.getFpTag());
                 } catch (Exception e) {
                     e.printStackTrace();
                     //  Util.toast("Uh oh. Something went wrong. Please try again", this);
@@ -420,6 +422,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
                         path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
+                        WebEngageController.trackEvent("UPLOAD FEATURED IMAGE","Updated Featured Image",session.getFpTag());
                         /*if (!Util.isNullOrEmpty(path)) {
                             editImage();
                         } else

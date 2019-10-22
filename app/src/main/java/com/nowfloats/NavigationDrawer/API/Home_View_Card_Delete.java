@@ -16,6 +16,7 @@ import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -90,6 +91,7 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
                 DbController.getDbController(activity).deleteUpdate(new String[]{HomeActivity.StorebizFloats.get(position)._id});
                 HomeActivity.StorebizFloats.remove(position);
                 temp	=	"Its Gone!";
+                WebEngageController.trackEvent("DELETE AN UPDATE","Deleted update",session.getFpTag());
                 refresh = new CardAdapter_v2(null,activity);
                 refresh.notifyItemRemoved(position);
                 refresh.notifyDataSetChanged();
@@ -105,6 +107,7 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
         {
             temp	=	"error";
             Log.i("Delete POST---",""+temp);
+            WebEngageController.trackEvent("DELETE AN UPDATE","Unable to delete Update",session.getFpTag());
 
             try {
                 Home_View_Card_Delete cardDelete = new Home_View_Card_Delete(activity, url, values, position, v,retryKey);

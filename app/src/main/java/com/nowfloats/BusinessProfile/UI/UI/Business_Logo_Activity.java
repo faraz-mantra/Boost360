@@ -43,6 +43,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityBusinessLogoBinding;
 
@@ -162,6 +163,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+                        WebEngageController.trackEvent("UPLOAD LOGO","Updated Buinsess Logo",session.getFpTag());
                         cameraIntent();
                         dialog.dismiss();
                     }

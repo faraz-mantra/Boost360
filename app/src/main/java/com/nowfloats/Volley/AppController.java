@@ -20,6 +20,7 @@ import com.nowfloats.helper.ui.TypefaceUtil;
 import com.nowfloats.util.Constants;
 import com.thinksity.BuildConfig;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
+import com.webengage.sdk.android.WebEngageConfig;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -30,11 +31,13 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static AppController mInstance;
+    String webEngageKey="~10a5cad2d";
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        initWebEngage();
 //        ContextApplication.initSdk(this, this);
 
         //AppIce SDk
@@ -77,6 +80,16 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
 
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
+    }
+
+    void initWebEngage(){
+        WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
+                .setWebEngageKey(webEngageKey)
+                .setDebugMode(true)
+                .build();
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
+
+
     }
 
 

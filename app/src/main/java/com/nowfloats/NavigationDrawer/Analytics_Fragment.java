@@ -389,7 +389,7 @@ public class Analytics_Fragment extends Fragment {
         orderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                WebEngageController.trackEvent("SALES ANALYTICS","null",session.getFpTag());
                 Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
                 startActivity(i);
 
@@ -401,6 +401,7 @@ public class Analytics_Fragment extends Fragment {
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                WebEngageController.trackEvent("SEARCH ANALYTICS","Login error",session.getFpTag());
                 Intent i = new Intent(getActivity(), SearchRankingActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -411,6 +412,7 @@ public class Analytics_Fragment extends Fragment {
         wildfireAnalytics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                WebEngageController.trackEvent("WILDFIRE ANALYTICS","null",session.getFpTag());
                 Intent i = new Intent(getActivity(), WildFireAdsActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -1066,6 +1068,7 @@ public class Analytics_Fragment extends Fragment {
          */
         if(!WidgetKey.isNewPricingPlan)
         {
+            WebEngageController.trackEvent("SUBSCRIBERS","null",session.getFpTag());
             openSubscriberActivity();
         }
 
@@ -1080,6 +1083,7 @@ public class Analytics_Fragment extends Fragment {
 
             else
             {
+                WebEngageController.trackEvent("SUBSCRIBERS","null",session.getFpTag());
                 openSubscriberActivity();
             }
         }

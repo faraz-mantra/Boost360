@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 /**
@@ -115,6 +116,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                     MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 }*/
+                WebEngageController.trackEvent("ACCOUNT MANAGER","Chat option in Account",null);
                 ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 break;
             case R.id.tv_person_email:
@@ -126,6 +128,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;
             case R.id.btn_request_callback:
+                WebEngageController.trackEvent("ACCOUNT MANAGER","Call option in Account",null);
                 MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;

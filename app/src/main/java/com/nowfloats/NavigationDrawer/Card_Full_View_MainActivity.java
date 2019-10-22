@@ -19,6 +19,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -72,6 +73,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                             MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
+                                WebEngageController.trackEvent("DELETE AN UPDATE","null",null);
 
                                 try {
                                     cardId = HomeActivity.StorebizFloats.get(viewPager.getCurrentItem())._id;

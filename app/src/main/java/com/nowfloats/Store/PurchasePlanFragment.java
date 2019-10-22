@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.nowfloats.Store.Adapters.PurchasedPlanAdapter;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 /**
@@ -63,6 +64,7 @@ public class PurchasePlanFragment extends Fragment {
 
         switch (planType) {
             case ACTIVE_PLANS:
+                WebEngageController.trackEvent("YOUR PLANS - CURRENT","Login error",null);
                 aboutPlan.setText("The following plan(s) is/are currently in use");
                 break;
             case YOUR_ORDERS:
@@ -72,9 +74,11 @@ public class PurchasePlanFragment extends Fragment {
                 mRecyclerView.setPadding(pixels, 0, pixels, pixels);
                 break;
             case TO_BE_ACTIVATED_PLANS:
+                WebEngageController.trackEvent("YOUR PLANS - TO BE ACTIVATED","null",null);
                 aboutPlan.setText("The following plan(s) is/are not in use");
                 break;
             case EXPIRED_PLANS:
+                WebEngageController.trackEvent("YOUR PLANS - EXPIRED","null",null);
                 aboutPlan.setText("The following plan(s) is/are expired");
                 break;
         }

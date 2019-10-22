@@ -26,6 +26,7 @@ import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.GetStoreFrontImageAsyncTask;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.lang.ref.SoftReference;
@@ -192,10 +193,12 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                 "mailto", headerValue, null));
                         appContext.startActivity(Intent.createChooser(emailIntent, appContext.getResources().getString(R.string.send_email)));
+                        WebEngageController.trackEvent("BUSINESS ENQUIRIES - EMAIL","Clicked: reply as email",null);
                     }else{
                         Intent call = new Intent(Intent.ACTION_DIAL);
                     call.setData(Uri.parse("tel:"+headerValue));
                       appContext.startActivity(call);
+                        WebEngageController.trackEvent("BUSINESS ENQUIRIES - CALL","Clicked: reply as Call",null);
                     }
                 }
             });

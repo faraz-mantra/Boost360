@@ -35,6 +35,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityFaviconImageBinding;
@@ -138,6 +139,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                     public void onClick(View v) {
 
                         MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+                        WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
                         cameraIntent();
                         dialog.dismiss();
                     }
@@ -147,6 +149,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                     @Override
                     public void onClick(View v) {
                         MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+                        WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
                         galleryIntent();
                         dialog.dismiss();
 

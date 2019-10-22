@@ -8,7 +8,7 @@
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />

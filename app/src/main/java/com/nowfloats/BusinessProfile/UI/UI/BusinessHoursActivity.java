@@ -28,6 +28,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -75,6 +76,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
+                WebEngageController.trackEvent("BUSINESS PROFILE", "Updated Business Profile", null);
                 if (Methods.isOnline(BusinessHoursActivity.this)) {
                     uploadbusinessTimingsInfo();
                 }else{
@@ -512,35 +514,78 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.switch_sun:
-                if(!switchSun.isChecked())
-                setTextTimeOnSwitch(R.id.et_sun_open,R.id.et_sun_close,0,0,0,0);
+                if(!switchSun.isChecked()) {
+                    WebEngageController.trackEvent("SUNDAY MARKED OFF", "Toggle: Sunday", null);
+                    setTextTimeOnSwitch(R.id.et_sun_open, R.id.et_sun_close, 0, 0, 0, 0);
+                }
+                else
+                {
+                    WebEngageController.trackEvent("SUNDAY MARKED ON", "Toggle: Sunday", null);
+                }
                 break;
             case R.id.switch_mon:
-                if(!switchMon.isChecked())
-                setTextTimeOnSwitch(R.id.et_mon_open,R.id.et_mon_close,0,0,0,0);
+                if(!switchMon.isChecked()) {
+                    WebEngageController.trackEvent("MONDAY MARKED OFF", "Toggle: MONDAY", null);
+                    setTextTimeOnSwitch(R.id.et_mon_open, R.id.et_mon_close, 0, 0, 0, 0);
+                }
+                else
+                {
+                    WebEngageController.trackEvent("MONDAY MARKED ON", "Toggle: MONDAY", null);
+                }
                 break;
             case R.id.switch_tue:
-                if(!switchTue.isChecked())
-                setTextTimeOnSwitch(R.id.et_tue_open,R.id.et_tue_close,0,0,0,0);
+                if(!switchTue.isChecked()) {
+                    setTextTimeOnSwitch(R.id.et_tue_open, R.id.et_tue_close, 0, 0, 0, 0);
+                    WebEngageController.trackEvent("TUESDAY MARKED OFF", "Toggle: TUESDAY", null);
+                }
+                else
+                {
+                    WebEngageController.trackEvent("TUESDAY MARKED ON", "Toggle: TUESDAY", null);
+                }
                 break;
             case R.id.switch_wed:
-                if(!switchWed.isChecked())
-                setTextTimeOnSwitch(R.id.et_wed_open,R.id.et_wed_close,0,0,0,0);
+                if(!switchWed.isChecked()) {
+                    setTextTimeOnSwitch(R.id.et_wed_open, R.id.et_wed_close, 0, 0, 0, 0);
+                    WebEngageController.trackEvent("WEDNESDAY MARKED OFF", "Toggle: WEDNESDAY", null);
+                }
+                else
+                {
+                    WebEngageController.trackEvent("WEDNESDAY MARKED ON", "Toggle: WEDNESDAY", null);
+                }
                 break;
             case R.id.switch_thu:
-                if(!switchThu.isChecked())
-                setTextTimeOnSwitch(R.id.et_thu_open,R.id.et_thu_close,0,0,0,0);
+                if(!switchThu.isChecked()) {
+                    setTextTimeOnSwitch(R.id.et_thu_open, R.id.et_thu_close, 0, 0, 0, 0);
+                    WebEngageController.trackEvent("THURSDAY MARKED OFF", "Toggle: THURSDAY", null);
+                }
+                else
+                {
+                    WebEngageController.trackEvent("THURSDAY MARKED ON", "Toggle: THURSDAY", null);
+                }
                 break;
             case R.id.switch_fri:
-                if(!switchFri.isChecked())
-                setTextTimeOnSwitch(R.id.et_fri_open,R.id.et_fri_close,0,0,0,0);
+                if(!switchFri.isChecked()) {
+                    setTextTimeOnSwitch(R.id.et_fri_open, R.id.et_fri_close, 0, 0, 0, 0);
+                    WebEngageController.trackEvent("FRIDAY MARKED OFF", "Toggle: FRIDAY", null);
+                }
+                else
+                {
+                    WebEngageController.trackEvent("FRIDAY MARKED ON", "Toggle: FRIDAY", null);
+                }
                 break;
             case R.id.switch_sat:
-                if(!switchSat.isChecked())
-                setTextTimeOnSwitch(R.id.et_sat_open,R.id.et_sat_close,0,0,0,0);
+                if(!switchSat.isChecked()) {
+                    setTextTimeOnSwitch(R.id.et_sat_open, R.id.et_sat_close, 0, 0, 0, 0);
+                    WebEngageController.trackEvent("SATURDAY MARKED OFF", "Toggle: SATURDAY", null);
+                }
+                else
+                {
+                    WebEngageController.trackEvent("SATURDAY MARKED ON", "Toggle: SATURDAY", null);
+                }
                 break;
             case R.id.chbx_same_time:
                 if(checkBoxAllTime.isChecked()) {
+                    WebEngageController.trackEvent("STORE TIMINGS","Clicking: Use same time for whole week",null);
                     linearLayoutAllTime.setVisibility(View.VISIBLE);
                     findViewById(R.id.et_all_close).setOnTouchListener(BusinessHoursActivity.this);
                     findViewById(R.id.et_all_open).setOnTouchListener(BusinessHoursActivity.this);

@@ -58,6 +58,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -385,6 +386,30 @@ public class Edit_Profile_Activity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        buzzname.setOnClickListener(v -> {
+
+            WebEngageController.trackEvent("BUSINESS NAME","null",session.getFpTag());
+
+        });
+
+        buzzdescription.setOnClickListener(v -> {
+
+            WebEngageController.trackEvent("BUSINESS DESCRIPTION","null",session.getFpTag());
+
+        });
+
+        category.setOnClickListener(v -> {
+
+            WebEngageController.trackEvent("BUSINESS CATEGORY","null",session.getFpTag());
+
+        });
+        productCategory.setOnCheckedChangeListener((group, checkedId) -> {
+            WebEngageController.trackEvent("PRODUCT CATEGORY","null",session.getFpTag());
+
+        });
+
+
 
         buzzname.addTextChangedListener(new TextWatcher() {
 

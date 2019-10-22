@@ -33,6 +33,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -223,6 +224,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         mSubscriberApis.addSubscriber(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
+                WebEngageController.trackEvent("ADD SUBSCRIBER","Add: Subscriber",mSessionManager.getFpTag());
                 mProgressBar.setVisibility(View.GONE);
                 if (response.getStatus() == 200) {
                     mSubscriberList.clear();
@@ -242,6 +244,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
+                WebEngageController.trackEvent("ADD SUBSCRIBER FAILED","Error: Subscriber",mSessionManager.getFpTag());
             }
         });
     }

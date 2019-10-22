@@ -9,6 +9,7 @@ import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -89,12 +90,14 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
             if (status.getStatusCode() == 200) {
                 MixPanelController.track("DeleteCustomPage", null);
                 Log.i("Delete page...","Success");
+                WebEngageController.trackEvent("DELETE CUSTOMPAGE","Delete Custompage",pageId);
                 flag = true;
             }else{
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
+                        WebEngageController.trackEvent("DELETE CUSTOMPAGE","Failed to Delete Custompage",pageId);
                     }
                 });
             }
