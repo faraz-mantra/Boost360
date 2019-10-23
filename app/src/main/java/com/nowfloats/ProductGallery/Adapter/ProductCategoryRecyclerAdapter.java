@@ -158,7 +158,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             tvPrice = itemView.findViewById(R.id.label_price);
             tvBasePrice = itemView.findViewById(R.id.label_base_price);
             tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
-            btnEdit = itemView.findViewById(R.id.button_edit);:wq
+            btnEdit = itemView.findViewById(R.id.button_edit);
             btnEdit.setOnClickListener(v -> callback.onItemClick(productList.get(getAdapterPosition())));
         }
 
