@@ -65,7 +65,7 @@ public class Home_Fragment_Tab extends Fragment {
     OnBoardingManager onBoardingManager;
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
     private MaterialDialog overLayDialog;
-    boolean dialogAlreadyShown=false;
+    private boolean dialogAlreadyShown=false;
 
     public static enum DrawOverLay {FromHome, FromTab};
 

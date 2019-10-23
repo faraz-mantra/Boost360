@@ -146,7 +146,6 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         private TextView tvMissingInfo;
         private Button btnEdit;
 
-
         private ProductListViewHolder(View itemView)
         {
             super(itemView);
@@ -160,10 +159,6 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             tvBasePrice = itemView.findViewById(R.id.label_base_price);
             tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
             btnEdit = itemView.findViewById(R.id.button_edit);
-
-
-
-
             btnEdit.setOnClickListener(v -> callback.onItemClick(productList.get(getAdapterPosition())));
         }
 
@@ -172,6 +167,23 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         {
             callback.onItemClick(productList.get(getAdapterPosition()));
         }
+    }
+
+    public void share(boolean defaultShare,int type,String productUrl)
+    {
+        //type 0 = facebook, type 1= whatsApp, type 3=default
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT, productUrl);
+        if(!defaultShare)
+        {
+            if(type==1)
+            { share.setPackage("com.whatsapp");}
+            else if(type==0)
+            { share.setPackage("com.facebook.katana"); }
+        }
+        context.startActivity(Intent.createChooser(share,  context.getString(R.string.share_updates)));
+
     }
 
     public void setData(List<Product> productList, boolean flag)

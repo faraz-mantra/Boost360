@@ -47,7 +47,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     private View prev_view = null;
     public static boolean deleteCheck = false;
     public Bus bus;
-    CustomPageLink customPageLink;
+    private CustomPageLink customPageLink;
 //    Drawable drawableFromTheme;
     //PorterDuffColorFilter primary;
     public CustomPageAdapter(Activity appContext, ArrayList<CustomPageModel> storeData,
@@ -306,17 +306,16 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                 break;
             }
         }
-
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, url);
         sendIntent.setType("text/plain");
 
         switch (type){
-
             case "facebook": sendIntent.setPackage("com.facebook.katana");
-
+            break;
             case "whatsapp":  sendIntent.setPackage("com.whatsapp");
+            break;
         }
         appContext.startActivity(sendIntent);
 
