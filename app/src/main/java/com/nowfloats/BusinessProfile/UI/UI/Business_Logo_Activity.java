@@ -89,7 +89,6 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
             getSupportActionBar().setTitle("");
         }
-
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.business_logo));
 
         /*toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -102,6 +101,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.business_logo));*/
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
+        WebEngageController.trackEvent("BUSINESS PROFILE","BUSINESS PROFILE",session.getFpTag());
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 

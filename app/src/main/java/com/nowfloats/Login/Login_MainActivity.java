@@ -46,6 +46,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -101,7 +102,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        WebEngageController.trackEvent("LOGIN","Login",session.getFpTag());
         userName = (EditText) findViewById(R.id.userNameEditText);
         password = (EditText) findViewById(R.id.passwordEditText);
 

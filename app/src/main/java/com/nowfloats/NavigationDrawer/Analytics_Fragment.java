@@ -221,6 +221,7 @@ public class Analytics_Fragment extends Fragment {
         bus = BusProvider.getInstance().getBus();
         pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         onBoardingManager = new OnBoardingManager(getContext());
+        WebEngageController.trackEvent("SEARCH ANALYTICS","SEARCH ANALYTICS",session.getFpTag());
 //        if(Util.isNullOrEmpty(session.getVisitorsCount()) || Util.isNullOrEmpty(session.getSubcribersCount())){
         try {
             //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);

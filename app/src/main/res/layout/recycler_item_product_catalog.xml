@@ -112,7 +112,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layerType="software"
-                android:layout_marginRight="8dp"
                 android:layout_below="@+id/label_description"
                 android:background="@drawable/dotted_line"/>
 
@@ -168,63 +167,7 @@
                 </LinearLayout>
 
 
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/share_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="0dp"
-                    android:padding="5dp">
-                    <ImageView
-                        android:id="@+id/shareData"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/share_icon_normal"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        card_view:layout_constraintEnd_toStartOf="@+id/share_facebook"
-                        card_view:layout_constraintHorizontal_bias="0.5"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/share_facebook"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/facebook_icon_share"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
-                        app:layout_constraintStart_toEndOf="@+id/shareData"
-                        app:layout_constraintTop_toTopOf="parent"
-                        card_view:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
-                        card_view:layout_constraintHorizontal_bias="0.5"
-                        card_view:layout_constraintStart_toEndOf="@+id/shareData"
-                        card_view:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/share_whatsapp"
-                        android:layout_width="75dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/share_whatsapp"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintHorizontal_bias="0.5"
-                        card_view:layout_constraintStart_toEndOf="@+id/share_facebook"
-                        card_view:layout_constraintTop_toTopOf="parent" />
-
-                </android.support.constraint.ConstraintLayout>
 
                 <Button
                     android:id="@+id/button_edit"

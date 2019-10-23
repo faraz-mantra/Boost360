@@ -149,7 +149,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         title_card = (CardView) findViewById(R.id.title_card);
         message_card = (CardView) findViewById(R.id.message_card_view);
         ivSpeakUpdate = (ImageView) findViewById(R.id.iv_speak_update);
-
+        WebEngageController.trackEvent("UPDATE","pageview",session.getFpTag());
         TextView shareText = (TextView) findViewById(R.id.shareTextView);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         if(session.getISEnterprise().equals("true"))

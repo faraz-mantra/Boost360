@@ -221,7 +221,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Methods.isOnline(HomeActivity.this);
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
-
+        WebEngageController.trackEvent("HOME","pageview",session.getFpTag());
         Log.d("WEBSITE_ID", "ID : " + session.getFPID());
         //setHotlineUser();
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
@@ -1590,11 +1590,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 }
             }
         }).start();
-        if (Constants.fromLogin) {
+
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                 WebEngageController.setWebEngageProperties(session);
             }
-        }
 
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);

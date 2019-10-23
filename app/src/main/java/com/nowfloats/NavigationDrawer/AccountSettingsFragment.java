@@ -157,6 +157,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         break;
                     case "Change Password":
                         changePassword();
+                        WebEngageController.trackEvent("CHANGEPASSWORD","CHANGEPASSWORD", null);
                         return;
                     case "Log out":
                         logoutAlertDialog_Material();
@@ -188,6 +189,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         sessionManager.logoutUser();
                         dialog.dismiss();
+                        WebEngageController.logout();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {

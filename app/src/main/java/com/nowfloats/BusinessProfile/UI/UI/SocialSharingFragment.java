@@ -202,7 +202,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
         callbackManager = CallbackManager.Factory.create();
         session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
-
+        WebEngageController.trackEvent("CONTENT SHARING","CONTENT SHARING",session.getFpTag());
         this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
 
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_getActivity().this,session.getFPID());

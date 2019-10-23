@@ -1,7 +1,7 @@
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/ParentLayoutStyle"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -10,7 +10,6 @@
             layout="@layout/appbar_layout" />
 
         <android.support.v4.widget.NestedScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
@@ -437,10 +436,11 @@
                         <EditText
                             android:id="@+id/edit_business_email_address"
                             style="@style/ProductEditTextStyle"
-                            android:hint="XXXXXXXXXX"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5"
                             android:enabled="false"
-                            android:inputType="textEmailAddress"
-                            android:layout_marginTop="@dimen/margin_5"/>
+                            android:hint="XXXXXXXXXX"
+                            android:inputType="textEmailAddress" />
 
                     </LinearLayout>
 
@@ -503,7 +503,7 @@
                         android:layout_marginTop="@dimen/margin_40"
                         android:layout_marginBottom="@dimen/margin_10"
                         android:onClick="onSaveClick"
-                        android:text="SAVE CONTACT INO" />
+                        android:text="SAVE CONTACT INFO" />
 
                 </LinearLayout>
 
