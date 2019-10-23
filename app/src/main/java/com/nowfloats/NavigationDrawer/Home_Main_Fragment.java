@@ -83,15 +83,12 @@ public class Home_Main_Fragment extends Fragment implements
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
     private int maxSyncCall = 2;
-
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
     JSONObject data;
-
     public static Bus bus;
     OnRenewPlanClickListener mCallback = null;
-
     private ArrayList<Object> mNewWelcomeTextImageList = new ArrayList<Object>();
     private int visibilityFlag = 1;
     public static UploadPostEvent recentPostEvent = null;
@@ -100,11 +97,7 @@ public class Home_Main_Fragment extends Fragment implements
     public Activity current_Activity;
     private SharedPreferences mPref;
     private boolean mIsNewMsg = false;
-
-    boolean poppShown=false;
-
     private DbController mDbController;
-
     public Home_Main_Fragment() {}
 
     @Override
