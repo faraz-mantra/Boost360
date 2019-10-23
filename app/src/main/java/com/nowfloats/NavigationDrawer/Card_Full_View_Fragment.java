@@ -94,49 +94,9 @@ public class Card_Full_View_Fragment extends Fragment {
         }
 
 
-        shareFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, mainText);
-                share.setPackage("com.facebook.katana"); //Facebook App package
-                appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
-
-
-            } });
-
-        shareWhatsapp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, mainText);
-                share.setPackage("com.whatsapp");
-                appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
-            }
-
-        });
-
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, mainText);
-                appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
-
-
-            }
-
-
-        });
+        shareFacebook.setOnClickListener(v -> share(false,0));
+        shareWhatsapp.setOnClickListener(v -> share(false,1));
+        share.setOnClickListener(v -> share(true,3));
 
 
 
@@ -188,6 +148,23 @@ public class Card_Full_View_Fragment extends Fragment {
 
 
         return mainView;
+    }
+
+    public void share(boolean defaultShare,int type)
+    {
+        //type 0 = facebook, type 1= whatsApp ,type 3=default
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT, mainText);
+        if(!defaultShare)
+        {
+            if(type==1)
+            { share.setPackage("com.whatsapp");}
+            else if(type==0)
+            { share.setPackage("com.facebook.katana"); }
+        }
+        appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
+
     }
 
     @Override
