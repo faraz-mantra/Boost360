@@ -145,16 +145,16 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
         initializeData();
         country.setOnClickListener(v -> {
-            WebEngageController.trackEvent("COUNTRY","null",null);
+            WebEngageController.trackEvent("COUNTRY","COUNTRY",null);
         });
         cityText.setOnClickListener(v -> {
-            WebEngageController.trackEvent("CITY","null",null);
+            WebEngageController.trackEvent("CITY","CITY",null);
         });
         pincodeText.setOnClickListener(v -> {
-            WebEngageController.trackEvent("PINCODE","null",null);
+            WebEngageController.trackEvent("PINCODE","PINCODE",null);
         });
         addressText.setOnClickListener(v -> {
-            WebEngageController.trackEvent("ADDRESS","null",null);
+            WebEngageController.trackEvent("ADDRESS","ADDRESS",null);
         });
         businessAddress.addTextChangedListener(new TextWatcher() {
 

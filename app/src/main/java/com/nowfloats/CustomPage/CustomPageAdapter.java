@@ -196,7 +196,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     }
                 });
 
-                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                holder.fullLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int POs = Integer.parseInt(v.getTag().toString());
