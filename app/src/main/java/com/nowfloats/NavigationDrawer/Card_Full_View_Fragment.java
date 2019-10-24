@@ -55,6 +55,7 @@ public class Card_Full_View_Fragment extends Fragment {
     static View.OnClickListener mylongOnClickListener;
     private Activity appContext;
     String mainText;
+    String imagePath;
 
     public Card_Full_View_Fragment() {
         // Required empty public constructor
@@ -81,7 +82,7 @@ public class Card_Full_View_Fragment extends Fragment {
 
 
         if (bundle != null) {
-            String imagePath = bundle.getString(ImageKey);
+              imagePath = bundle.getString(ImageKey);
             mainText = bundle.getString(MainTextKey);
             String dateText = bundle.getString(DateTextKey);
             String messageid = bundle.getString(MessageIdKey);
@@ -94,9 +95,9 @@ public class Card_Full_View_Fragment extends Fragment {
         }
 
 
-        shareFacebook.setOnClickListener(v -> share(false,0));
-        shareWhatsapp.setOnClickListener(v -> share(false,1));
-        share.setOnClickListener(v -> share(true,3));
+        shareFacebook.setOnClickListener(v -> shareContent("facebook",imagePath));
+        shareWhatsapp.setOnClickListener(v -> shareContent("whatsapp",imagePath));
+        share.setOnClickListener(v -> shareContent("default",imagePath));
 
 
 
@@ -150,22 +151,106 @@ public class Card_Full_View_Fragment extends Fragment {
         return mainView;
     }
 
-    public void share(boolean defaultShare,int type)
+    void shareContent(String type,String imageShare)
     {
-        //type 0 = facebook, type 1= whatsApp ,type 3=default
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("text/plain");
-        share.putExtra(Intent.EXTRA_TEXT, mainText);
-        if(!defaultShare)
-        {
-            if(type==1)
-            { share.setPackage("com.whatsapp");}
-            else if(type==0)
-            { share.setPackage("com.facebook.katana"); }
-        }
-        appContext.startActivity(Intent.createChooser(share,  appContext.getString(R.string.share_updates)));
+        MixPanelController.track("SharePost", null);
+        if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
+            if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
+            } else {
+                ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
+            }
+            return;
+        }
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        switch (type)
+        {
+            case "whatsapp":
+                shareIntent.setPackage("com.whatsapp");
+                break;
+            case "facebook":
+                shareIntent.setPackage("com.facebook.katana");
+                break;
+        }
+
+
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
+            if (Methods.isOnline(appContext)) {
+                String url;
+                if (imageShare.contains("BizImages")) {
+                    url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+                } else {
+                    url = imageShare;
+                }
+                Target target = new Target() {
+
+
+                    @Override
+                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                        try {
+                            Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                            View view = new View(appContext);
+                            view.draw(new Canvas(mutableBitmap));
+                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                            BoostLog.d("Path is:", path);
+                            Uri uri = Uri.parse(path);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, mainText);
+                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                            shareIntent.setType("image/*");
+
+
+                            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+                            } else {
+                                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                            }
+                        } catch (OutOfMemoryError e) {
+                            Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                };
+
+                Picasso.with(appContext)
+                        .load(url)
+                        .into(target);
+
+
+            } else {
+
+                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+            }
+
+
+        } else {
+
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mainText);
+            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+            } else {
+                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+            }
+
+        }
     }
+
 
     @Override
     public void onAttach(Context context) {
