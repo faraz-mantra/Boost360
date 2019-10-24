@@ -81,9 +81,9 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
             titleText = (TextView)itemView.findViewById(R.id.page_name);
             dateText = (TextView)itemView.findViewById(R.id.page_date);
             fullLayout = (LinearLayout)itemView.findViewById(R.id.full_layout_card);
-            share = (ImageView) itemView.findViewById(R.id.shareData);
+           /* share = (ImageView) itemView.findViewById(R.id.shareData);
             share_facebook = (ImageView) itemView.findViewById(R.id.share_facebook);
-            share_whatsapp = (ImageView) itemView.findViewById(R.id.share_whatsapp);
+            share_whatsapp = (ImageView) itemView.findViewById(R.id.share_whatsapp);*/
             cardView=(CardView) itemView.findViewById(R.id.cardView);
 
 
@@ -152,7 +152,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     }
                 });*/
 
-
+/*
                 holder.share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -194,7 +194,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 
 
                     }
-                });
+                });*/
 
                 holder.fullLayout.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -43,21 +43,4 @@ public class WebEngageController {
 
         weUser.logout();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

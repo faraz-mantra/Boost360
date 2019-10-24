@@ -221,7 +221,6 @@ public class Analytics_Fragment extends Fragment {
         bus = BusProvider.getInstance().getBus();
         pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         onBoardingManager = new OnBoardingManager(getContext());
-        WebEngageController.trackEvent("SEARCH ANALYTICS","SEARCH ANALYTICS",session.getFpTag());
 //        if(Util.isNullOrEmpty(session.getVisitorsCount()) || Util.isNullOrEmpty(session.getSubcribersCount())){
         try {
             //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);
@@ -402,7 +401,7 @@ public class Analytics_Fragment extends Fragment {
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SEARCH ANALYTICS","Login error",session.getFpTag());
+                WebEngageController.trackEvent("SEARCH ANALYTICS","SEARCH RANKING",session.getFpTag());
                 Intent i = new Intent(getActivity(), SearchRankingActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
