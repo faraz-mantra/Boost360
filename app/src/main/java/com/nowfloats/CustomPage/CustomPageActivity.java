@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 /**
@@ -23,6 +24,8 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_appearance);
+
+        WebEngageController.trackEvent("CUSTOMPAGE","CUSTOMPAGE",null);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);

@@ -60,6 +60,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.nowfloats.webactions.WebAction;
 import com.nowfloats.webactions.models.WebActionError;
 import com.nowfloats.webactions.models.WebActionVisibility;
@@ -177,7 +178,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(ACTION);
 
-
+        WebEngageController.trackEvent("UPDATE","UPDATE",session.getFpTag());
         PorterDuffColorFilter color = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         save.setColorFilter(color);
 

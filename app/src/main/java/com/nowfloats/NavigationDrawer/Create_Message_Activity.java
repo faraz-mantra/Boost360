@@ -66,6 +66,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -148,7 +149,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         title_card = (CardView) findViewById(R.id.title_card);
         message_card = (CardView) findViewById(R.id.message_card_view);
         ivSpeakUpdate = (ImageView) findViewById(R.id.iv_speak_update);
-
+        WebEngageController.trackEvent("UPDATE","pageview",session.getFpTag());
         TextView shareText = (TextView) findViewById(R.id.shareTextView);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         if(session.getISEnterprise().equals("true"))
@@ -176,7 +177,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                WebEngageController.trackEvent("POST AN UPDATE","null",session.getFpTag());
                 String businessMessage = msg.getText().toString();
 
                 if(TextUtils.isEmpty((businessMessage))){
@@ -362,6 +363,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                                 public void onPositive(MaterialDialog dialog) {
                                     super.onPositive(dialog);
                                     if (tosubscribers) {
+                                        WebEngageController.trackEvent("SUBSCRIBER SHARING ACTIVATED","Has/Clicked Subscriber sharing on",session.getFpTag());
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
                                         create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.subscribe_icon));
                                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
@@ -402,11 +404,13 @@ public class Create_Message_Activity extends AppCompatActivity {
                             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebookpage_icon_inactive));
                             facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                             Toast.makeText(Create_Message_Activity.this, "Facebook Page Disabled", Toast.LENGTH_SHORT).show();
+
                         } else {
                             mFbPageShare = 1;
                             Toast.makeText(Create_Message_Activity.this, "Facebook Page Enabled", Toast.LENGTH_SHORT).show();
                             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_page));
                             facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
+                            WebEngageController.trackEvent("FB PAGE SHARING ACTIVATED","Has/Clicked Fb Page sharing on",session.getFpTag());
                         /* PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(Create_Message_Activity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                         facebookPageShare.setColorFilter(porterDuffColorFilter);*/
                         }
@@ -866,11 +870,13 @@ public class Create_Message_Activity extends AppCompatActivity {
                         path = Util.saveBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
                         picUri = Uri.parse(path);
                         setPicture(CameraBitmap);
+                        WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
 
                     } else {
                         path = getRealPathFromURI(picUri);
                         CameraBitmap = Util.getBitmap(path, activity);
                         setPicture(CameraBitmap);
+                        WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
 
                     }
                 }catch (Exception e){
@@ -890,11 +896,13 @@ public class Create_Message_Activity extends AppCompatActivity {
                             path = Util.saveCameraBitmap(CameraBitmap,activity,tagName + System.currentTimeMillis());
                             picUri = Uri.parse(path);
                             setPicture(CameraBitmap);
+                            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
 
                         }else{
                             path = getRealPathFromURI(picUri);
                             CameraBitmap = Util.getBitmap(path, activity);
                             setPicture(CameraBitmap);
+                            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
 
                         }
                     }else{
@@ -999,6 +1007,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         if(Constants.twitterShareEnabled) {
             twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
             twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
+            WebEngageController.trackEvent("TWITTER SHARING ACTIVATED","Has/Clicked TWITTER sharing on",session.getFpTag());
         }else{
             twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         }
@@ -1051,6 +1060,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         }else {
             super.onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            WebEngageController.trackEvent("POST AN UPDATE-CANCLED","Clicked Cancel",session.getFpTag());
         }
     }
 

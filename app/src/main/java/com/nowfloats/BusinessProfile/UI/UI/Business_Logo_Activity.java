@@ -43,6 +43,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityBusinessLogoBinding;
 
@@ -88,7 +89,6 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
             getSupportActionBar().setTitle("");
         }
-
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.business_logo));
 
         /*toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -101,6 +101,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.business_logo));*/
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
+        WebEngageController.trackEvent("BUSINESS PROFILE","BUSINESS PROFILE",session.getFpTag());
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 
@@ -162,6 +163,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+                        WebEngageController.trackEvent("UPLOAD LOGO","Updated Buinsess Logo",session.getFpTag());
                         cameraIntent();
                         dialog.dismiss();
                     }

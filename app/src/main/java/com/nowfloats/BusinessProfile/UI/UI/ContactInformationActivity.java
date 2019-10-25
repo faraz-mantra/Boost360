@@ -35,6 +35,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityContactInformationBinding;
 
@@ -78,6 +79,30 @@ public class ContactInformationActivity extends BaseActivity {
         session = new UserSessionManager(getApplicationContext(), ContactInformationActivity.this);
 
         this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+        binding.editPrimaryContactNumber.setOnClickListener(v -> {
+            WebEngageController.trackEvent("REGISTERED CONTACT NUMBER","null",null);
+        });
+        binding.editDisplayContactNumber1.setOnClickListener(v -> {
+            WebEngageController.trackEvent("DISPLAY CONTACT 1","null",null);
+        });
+        binding.editDisplayContactNumber1.setOnClickListener(v -> {
+            WebEngageController.trackEvent("DISPLAY CONTACT 2","null",null);
+        });
+        binding.editDisplayContactNumber1.setOnClickListener(v -> {
+            WebEngageController.trackEvent("DISPLAY CONTACT 3","null",null);
+        });
+        binding.editWhatsappNumber.setOnClickListener(v -> {
+            WebEngageController.trackEvent("WHATSAPP FOR BUSINESS NUMBER","null",null);
+        });
+        binding.editBusinessEmailAddress.setOnClickListener(v -> {
+            WebEngageController.trackEvent("EMAIL ADDRESS","null",null);
+        });
+        binding.editWebsiteAddress.setOnClickListener(v -> {
+            WebEngageController.trackEvent("OTHER WEBSITE","null",null);
+        });
+        binding.editFbPageWidget.setOnClickListener(v -> {
+            WebEngageController.trackEvent("FACEBOOK PAGE URL","null",null);
+        });
 
         binding.editPrimaryContactNumber.setOnTouchListener((v, event) -> {
 

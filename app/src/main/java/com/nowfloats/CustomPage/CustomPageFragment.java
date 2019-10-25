@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
+import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -35,6 +36,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.Widget;
 import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
@@ -45,6 +47,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by guru on 25/08/2015.
@@ -66,6 +71,7 @@ public class CustomPageFragment extends Fragment {
 //    private Drawable defaultColor;
 //    private View deleteView = null;
     public CustomPageDeleteInterface deleteInterface;
+    CustomPageLink customPageLink;
 
     @Override
     public void onResume() {
@@ -137,7 +143,6 @@ public class CustomPageFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(null);
 
-        LoadPageList(activity, bus);
 
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
 
@@ -166,6 +171,33 @@ public class CustomPageFragment extends Fragment {
 //        getSupportActionBar().setBackgroundDrawable(defaultColor);
 //        getSupportActionBar().setTitle("Custom Pages");
 
+
+
+        CustomPageInterface pageInterface2 = Constants.restAdapter.create(CustomPageInterface.class);
+        pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0,10,1, new Callback<CustomPageLink>() {
+            @Override
+            public void success(CustomPageLink pageDetail, Response response) {
+
+                customPageLink=pageDetail;
+
+
+                LoadPageList(activity, bus);
+
+
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+
+        });
+
+
+
+
+
         //Title
         titleTextView = HomeActivity.headerText;
         if (titleTextView != null)
@@ -185,6 +217,8 @@ public class CustomPageFragment extends Fragment {
         new CustomPageService().GetPages( session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
     }
 
+
+
     @Subscribe
     public void getPageList(CustomPageEvent response) {
         dataModel = (ArrayList<CustomPageModel>) response.model;
@@ -199,7 +233,7 @@ public class CustomPageFragment extends Fragment {
                 OnBoardingApiCalls.updateData(session.getFpTag(),String.format("custom_page:%s",dataModel.size()>0?"true":"false"));
             }
             progress_layout.setVisibility(View.GONE);
-            custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface, bus);
+            custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface, bus,customPageLink);
 //            AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(custompageAdapter);
 //            ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
 //            scaleAdapter.setFirstOnly(false);
@@ -391,6 +425,7 @@ public class CustomPageFragment extends Fragment {
     private void openAddCustomPageActivity()
     {
         MixPanelController.track("AddCustomPage", null);
+        WebEngageController.trackEvent("CREATE A CUSTOMPAGE","Clicked: Post a Custompage",session.getFpTag());
         Intent intent = new Intent(activity, CreateCustomPageActivity.class);
         startActivity(intent);
 

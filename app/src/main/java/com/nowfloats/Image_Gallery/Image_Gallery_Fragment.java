@@ -44,6 +44,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -208,6 +209,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 .show();
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         MixPanelController.track("AddImage", null);
+        WebEngageController.trackEvent("UPLOAD GALLERY IMAGE","Update Gallery Images",session.getFpTag());
         View view = dialog.getCustomView();
         if (view != null) {
             TextView header = (TextView) view.findViewById(R.id.textview_heading);

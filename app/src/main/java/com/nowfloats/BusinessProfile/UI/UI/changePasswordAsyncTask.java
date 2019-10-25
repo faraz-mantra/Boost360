@@ -5,8 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -39,9 +41,11 @@ public class changePasswordAsyncTask extends AsyncTask<Void, Void, Void> {
 		    pd.dismiss();
 		if (success) {
             Methods.showSnackBarPositive(app,context.getResources().getString(R.string.password_updated));
+			WebEngageController.trackEvent("CHANGEPASSWORD","Successfully Changed password", null);
 //			app.finish();
 		} else {
             Methods.showSnackBarNegative(app,context.getResources().getString(R.string.entered_password_incorrect));
+			WebEngageController.trackEvent("CHANGEPASSWORD","Change Password Error", null);
 		}
 	}
 

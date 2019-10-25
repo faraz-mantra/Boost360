@@ -22,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +37,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
+import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.CustomPage.Model.PageDetail;
 import com.nowfloats.CustomPage.Model.UploadImageToS3Model;
@@ -48,6 +50,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.File;
@@ -125,13 +128,21 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         richText.setPlaceholder(getString(R.string.custom_page_details));
         richText.setFontSize(13);
 
-        if(getIntent().hasExtra("pageid")){
+        if(getIntent().hasExtra("pageid")) {
             final MaterialDialog materialProgress = new MaterialDialog.Builder(this)
                     .widgetColorRes(R.color.accentColor)
                     .content(getString(R.string.loading))
                     .progress(true, 0)
                     .show();
             materialProgress.setCancelable(false);
+
+
+
+
+
+
+
+
             try {
                 CustomPageInterface pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
                 pageInterface.getPageDetail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
@@ -140,20 +151,21 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                             public void success(List<PageDetail> pageDetail, Response response) {
                                 materialProgress.dismiss();
                                 //Intent intent = new Intent(CreateCustomPageActivity, CreateCustomPageActivity.class);
-                              if(pageDetail.size() > 0){
-                                  curName =  pageDetail.get(0).DisplayName;
-                                  curHtml = pageDetail.get(0).HtmlCode;
-                                  curPageid =  pageDetail.get(0)._id;
-                                  titleTxt.setText(curName);
-                                  title.setText(curName);
-                                  richText.setHtml(curHtml);
-                                  mHtmlFormat = curHtml;
-                                  editCheck = true;
-                                  deletePage.setVisibility(View.VISIBLE);
-                              }else{
-                                  Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
-                              }
+                                if (pageDetail.size() > 0) {
+                                    curName = pageDetail.get(0).DisplayName;
+                                    curHtml = pageDetail.get(0).HtmlCode;
+                                    curPageid = pageDetail.get(0)._id;
+                                    titleTxt.setText(curName);
+                                    title.setText(curName);
+                                    richText.setHtml(curHtml);
+                                    mHtmlFormat = curHtml;
+                                    editCheck = true;
+                                    deletePage.setVisibility(View.VISIBLE);
+                                } else {
+                                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                                }
                             }
+
                             @Override
                             public void failure(RetrofitError error) {
                                 materialProgress.dismiss();
@@ -161,13 +173,18 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
                             }
                         });
-            }catch(Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
                 Methods.showSnackBarNegative(this, getString(R.string.something_went_wrong_try_again));
                 materialProgress.dismiss();
             }
         }
+
+
+
+
+
+
 
         titleTxt.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -248,10 +265,12 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                             MixPanelController.track("CreateCustomPage", null);
                                             long time = System.currentTimeMillis();
                                             CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                                            WebEngageController.trackEvent("POST A CUSTOMPAGE","Successfully added custompage",session.getFpTag());
                                             Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                                             finish();
                                         } else {
                                             Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
+                                            WebEngageController.trackEvent("POST A CUSTOMPAGE",getString(R.string.enter_different_title_try_again),session.getFpTag());
                                             //Log.d("Create page Fail", "");
                                         }
                                     }
@@ -260,6 +279,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        WebEngageController.trackEvent("POST A CUSTOMPAGE",getString(R.string.something_went_wrong_try_again),session.getFpTag());
                                         //Log.d("Create page Fail", "" + error.getMessage());
                                     }
                                 });
@@ -275,6 +295,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     public void success(String s, Response response) {
                                         materialProgress.dismiss();
                                         MixPanelController.track("UpdateCustomPage", null);
+                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE","Update a Custompage",session.getFpTag());
                                         //Log.d("Update page success", "");
                                         CustomPageFragment.dataModel.get(curPos).DisplayName = name;
                                         Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
@@ -285,6 +306,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE","Failed to update custompage",session.getFpTag());
                                         //Log.d("Update page Fail", "" + error.getMessage());
                                     }
                                 });

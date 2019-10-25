@@ -1,5 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
 
    <!--
    <LinearLayout
@@ -114,55 +115,73 @@
                 android:layout_below="@+id/label_description"
                 android:background="@drawable/dotted_line"/>
 
-           <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dotted_line"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/label_currency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Price: "
                     android:textColor="@color/secondaryLightTextColor"
                     android:textSize="13sp"
-                    android:text="Price: "
-                    android:layout_gravity="center_vertical"/>
+                    android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/label_price"
+                <LinearLayout
+                    android:id="@+id/linear_layout"
                     android:layout_width="wrap_content"
+                    android:padding="6dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="14sp"
-                    android:text="INR 0"
-                    android:layout_gravity="center_vertical" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/label_base_price"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/secondaryLightTextColor"
-                    android:textSize="14sp"
-                    android:text="INR 0"
-                    android:layout_weight="1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="10dp"
-                    android:gravity="center_vertical" />
+                    <TextView
+                        android:id="@+id/label_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="INR 0"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/label_base_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="INR 0"
+                        android:textColor="@color/secondaryLightTextColor"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+
 
                 <Button
                     android:id="@+id/button_edit"
                     android:layout_width="40dp"
                     android:layout_height="25dp"
-                    android:textColor="@color/secondaryLightTextColor"
-                    android:background="@android:color/transparent"
-                    android:textSize="12sp"
                     android:layout_gravity="end"
+                    android:background="@android:color/transparent"
                     android:gravity="center_vertical|end"
-                    android:text="Edit"/>
+                    android:text="Edit"
+                    android:textColor="@color/secondaryLightTextColor"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
 

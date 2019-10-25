@@ -68,8 +68,7 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 
-public class Home_Main_Fragment extends Fragment implements
-        Fetch_Home_Data.Fetch_Home_Data_Interface {
+public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetch_Home_Data_Interface {
 
     public static LinearLayout retryLayout,emptyMsgLayout;
     public ButteryProgressBar progressBar;
@@ -83,15 +82,12 @@ public class Home_Main_Fragment extends Fragment implements
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
     private int maxSyncCall = 2;
-
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
     JSONObject data;
-
     public static Bus bus;
     OnRenewPlanClickListener mCallback = null;
-
     private ArrayList<Object> mNewWelcomeTextImageList = new ArrayList<Object>();
     private int visibilityFlag = 1;
     public static UploadPostEvent recentPostEvent = null;
@@ -100,9 +96,7 @@ public class Home_Main_Fragment extends Fragment implements
     public Activity current_Activity;
     private SharedPreferences mPref;
     private boolean mIsNewMsg = false;
-
     private DbController mDbController;
-
     public Home_Main_Fragment() {}
 
     @Override
@@ -551,7 +545,7 @@ public class Home_Main_Fragment extends Fragment implements
         }
 
 
-        private void removeItem(View v) {
+       /* private void removeItem(View v) {
             int selectedItemPosition = recyclerView.getChildPosition(v);
             RecyclerView.ViewHolder viewHolder
                     = recyclerView.findViewHolderForPosition(selectedItemPosition);
@@ -567,7 +561,7 @@ public class Home_Main_Fragment extends Fragment implements
             removedItems.add(selectedItemId);
             card.remove(selectedItemPosition);
             adapter.notifyItemRemoved(selectedItemPosition);
-        }
+        }*/
     }
 
 

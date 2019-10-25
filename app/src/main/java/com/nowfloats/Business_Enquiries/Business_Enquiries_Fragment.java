@@ -16,6 +16,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -57,6 +58,7 @@ public class Business_Enquiries_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         BoostLog.d("Business_Enquiri", "onCreateView");
         View mainView = inflater.inflate(R.layout.fragment_business__enguiries, container, false);
+        WebEngageController.trackEvent("BUSINESS ENQUIRIES","BUSINESS ENQUIRIES",null);
         return mainView;
     }
 

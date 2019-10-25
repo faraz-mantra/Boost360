@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -104,8 +105,11 @@ public class ForgotPassword extends Activity {
 
                 if (isUpdatedOnServer) {
                     SuccessDialog();
+                    WebEngageController.trackEvent("FORGOT PASSWORD","null","null");
                 } else {
                    Toast.makeText(ForgotPassword.this,getString(R.string.enter_correct_user_name),Toast.LENGTH_SHORT);
+                    WebEngageController.trackEvent("FORGOT PASSWORD","null","Forgot Password failed");
+
                 }
             }
         };
@@ -138,6 +142,7 @@ public class ForgotPassword extends Activity {
         builder1.setMessage(getString(R.string.check_your_email));
         AlertDialog alert11 = builder1.create();
         alert11.show();
+
 //        try{
 //            final Dialog dialog = new Dialog(ForgotPassword.this);
 //

@@ -42,6 +42,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -143,6 +144,18 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         countryText = (TextView) findViewById(R.id.business_address_countrytext);
 
         initializeData();
+        country.setOnClickListener(v -> {
+            WebEngageController.trackEvent("COUNTRY","COUNTRY",null);
+        });
+        cityText.setOnClickListener(v -> {
+            WebEngageController.trackEvent("CITY","CITY",null);
+        });
+        pincodeText.setOnClickListener(v -> {
+            WebEngageController.trackEvent("PINCODE","PINCODE",null);
+        });
+        addressText.setOnClickListener(v -> {
+            WebEngageController.trackEvent("ADDRESS","ADDRESS",null);
+        });
         businessAddress.addTextChangedListener(new TextWatcher() {
 
 

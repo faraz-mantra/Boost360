@@ -79,6 +79,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
@@ -201,7 +202,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
         callbackManager = CallbackManager.Factory.create();
         session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
-
+        WebEngageController.trackEvent("CONTENT SHARING","CONTENT SHARING",session.getFpTag());
         this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
 
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_getActivity().this,session.getFPID());
@@ -288,7 +289,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     facebookPageCheckBox.setChecked(false);
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
                 } else if (facebookPageCheckBox.isChecked()) {
-
+                    WebEngageController.trackEvent("FACEBOOKPAGE","Connect FACEBOOKPAGE",session.getFpTag());
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -299,6 +300,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }, 200);
 
                 } else {
+                    WebEngageController.trackEvent("FACEBOOKPAGE","Disconnect FACEBOOKPAGE",session.getFpTag());
                     NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookpage")
@@ -329,10 +331,12 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 //                    getGoogleAccounts();
                     Intent signInIntent = googleSignInClient.getSignInIntent();
                     startActivityForResult(signInIntent, GMBHandler.REQUEST_CODE);
+                    WebEngageController.trackEvent("GMB","Connect GMB",session.getFpTag());
                 } else {
 
                     gmbHandler.removeUser(SocialSharingFragment.this);
                     gmbSignOutUserfromGoogle(true);
+                    WebEngageController.trackEvent("GMB","Disconnect GMB",session.getFpTag());
 
                 }
             }
@@ -347,6 +351,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
                 } else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
+                    WebEngageController.trackEvent("FACEBOOKSHOP","Connect FacebookShop",session.getFpTag());
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -355,7 +360,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         }
                     }, 200);
                 } else {
-
+                    WebEngageController.trackEvent("FACEBOOKSHOP","Disconnect FacebookShop",session.getFpTag());
                     NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookusertimeline")
@@ -430,6 +435,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             public void onClick(View v) {
 
                 if (twitterCheckBox.isChecked()) {
+                    WebEngageController.trackEvent("TWITTER","Connect Twitter",session.getFpTag());
                     twitterCheckBox.setChecked(false);
                     if (!Methods.isOnline(getActivity())) {
                         showAlertBox();
@@ -441,6 +447,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }
                     //Rahul twitter
                 } else {
+                    WebEngageController.trackEvent("TWITTER","Disonnect Twitter",session.getFpTag());
                     NfxRequestClient requestClient1 = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("twitter")
@@ -471,6 +478,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             {
                 binding.whatsappCheckbox.setChecked(false);
                 showWhatsAppNumberDialog();
+                WebEngageController.trackEvent("WHATSAPPFORBUSINESS","Connect Whatsapp for Business",session.getFpTag());
             }
 
             else
@@ -484,6 +492,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 update.setMulti(true);
                 updateWhatsAppNumber(update, binding.tvWhatsappNumber.getText().toString());
+                WebEngageController.trackEvent("WHATSAPPFORBUSINESS","Disconnect Whatsapp for Business",session.getFpTag());
             }
         });
 

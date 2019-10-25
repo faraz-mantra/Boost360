@@ -64,7 +64,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity;
-import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
@@ -115,11 +114,11 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.webengage.sdk.android.User;
 import com.webengage.sdk.android.WebEngage;
 
 import org.json.JSONException;
@@ -222,7 +221,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Methods.isOnline(HomeActivity.this);
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
-
+        WebEngageController.trackEvent("HOME","pageview",session.getFpTag());
         Log.d("WEBSITE_ID", "ID : " + session.getFPID());
         //setHotlineUser();
         WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
@@ -242,6 +241,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         } else {
             createView();
         }
+
 
         //WidgetKey.getWidgets(session, this);
     }
@@ -1168,6 +1168,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
+                    WebEngageController.trackEvent("SITE HEALTH","Site health",session.getFpTag());
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home)) || nextScreen.equals(getString(R.string.update))) {
@@ -1200,6 +1201,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.chat))) {
                     if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT, null);
+                        WebEngageController.trackEvent("CONTACT NF","null",session.getFpTag());
 
                         PreferencesManager.getsInstance(HomeActivity.this).setUserName(session.getFpTag());
 
@@ -1430,18 +1432,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private void setWebEngageProperties() {
-
-        User weUser = WebEngage.get().user();
-        weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        weUser.setAttribute("SALES_EXECUTIVE_EMAIL", "reach@nowfloats.com");
-        weUser.setAttribute("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        weUser.setAttribute("Status", "");
-        weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
-        weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-    }
 
     @Override
     public void authenticationStatus(String value) {
@@ -1601,15 +1591,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             }
         }).start();
 
-        if (Constants.fromLogin) {
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-                setWebEngageProperties();
+                WebEngageController.setWebEngageProperties(session);
             }
-//            if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-//                showOnBoardingScreens();
-//            }
-            // Constants.fromLogin = false ;
-        }
+
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);

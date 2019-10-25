@@ -8,7 +8,7 @@
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -37,6 +37,7 @@
         android:name="android.hardware.camera"
         android:required="true" />
     <application
+
         android:name="com.nowfloats.Volley.AppController"
         android:allowBackup="true"
         android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
@@ -47,6 +48,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
+
+        <meta-data android:name="com.webengage.sdk.android.environment" android:value="us" />
+
+
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"
             android:screenOrientation="portrait">

@@ -12,7 +12,7 @@ import com.thinksity.R;
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
 	public TextView textView, welcomeTextView, dateText, congratsTitleTextView;
-    public ImageView imageView, cancelCardImageView, welcomeScreenCreateWebsiteImage, shareImageView ;
+    public ImageView imageView, cancelCardImageView, welcomeScreenCreateWebsiteImage, shareImageView,share_facebook,share_whatsapp ;
     public CardView initialCardView ;
     public Button showWebSiteButton ;
 
@@ -48,6 +48,8 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
             imageView = itemView.findViewById(R.id.imageView);
             dateText = itemView.findViewById(R.id.textViewEmail);
             shareImageView = itemView.findViewById(R.id.shareData);
+            share_facebook=itemView.findViewById(R.id.share_facebook);
+            share_whatsapp=itemView.findViewById(R.id.share_whatsapp);
         }
     }
 }

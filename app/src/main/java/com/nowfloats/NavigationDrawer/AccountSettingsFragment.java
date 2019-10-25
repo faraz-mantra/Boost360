@@ -45,6 +45,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
@@ -118,6 +119,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
+                        WebEngageController.trackEvent("DOMAIN-EMAIL",null,sessionManager.getFpTag());
                         if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
                             MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
                                     .title("Get A Domain")
@@ -155,6 +157,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         break;
                     case "Change Password":
                         changePassword();
+                        WebEngageController.trackEvent("CHANGEPASSWORD","CHANGEPASSWORD", null);
                         return;
                     case "Log out":
                         logoutAlertDialog_Material();
@@ -186,6 +189,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         sessionManager.logoutUser();
                         dialog.dismiss();
+                        WebEngageController.logout();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
