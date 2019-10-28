@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -369,11 +370,10 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         MixPanelController.track("SharePost", null);
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
-            } else {
-                ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
-            }
+
+            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.",
+                    (dialog, which) -> ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
+
             return;
         }
         pd = ProgressDialog.show(appContext, "", "Sharing . . .");
