@@ -252,6 +252,20 @@ public class Methods {
         builder.create().show();
     }
 
+    public static void showDialog(Context mContext, String title, String msg, DialogInterface.OnClickListener listener){
+
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                listener.onClick(dialog, which);
+            }
+        });
+        builder.create().show();
+
+    }
+
     public static boolean isMyActivityAtTop(Context mContext) {
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
