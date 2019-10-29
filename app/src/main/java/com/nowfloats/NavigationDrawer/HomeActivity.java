@@ -55,6 +55,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 //import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
+import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.ShowVmnCallActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -134,6 +135,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -166,6 +169,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     AboutFragment aboutFragment;
     ManageContentFragment manageContentFragment;
     AccountSettingsFragment accountSettingsFragment;
+    UniqueVisitorsFragment uniqueVisitorsFragment;
     Site_Meter_Fragment siteMeterFragment;
     SocialSharingFragment socialSharingFragment;
     HelpAndSupportFragment helpAndSupportFragment;
@@ -332,6 +336,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     public void DeepLinkPage(String url, boolean isFromRia) {
+        System.out.println("DEEEPLINK"+url);
         BoostLog.d("Deep Link URL", "Deep Link URL : " + url);
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
@@ -493,6 +498,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                         .commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
+            }
+            else if (url.contains("accSetting")) {
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
+                        .commit();
+            }
+            else if (url.contains("uniqueVisitor")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, uniqueVisitorsFragment, "uniqueVisitorsFragment")
+                        .commit();
             }
 
         }
@@ -1534,6 +1548,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         aboutFragment = new AboutFragment();
         manageContentFragment = new ManageContentFragment();
         accountSettingsFragment = new AccountSettingsFragment();
+        uniqueVisitorsFragment=new UniqueVisitorsFragment();
         socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
