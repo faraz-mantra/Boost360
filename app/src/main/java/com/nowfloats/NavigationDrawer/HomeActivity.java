@@ -336,7 +336,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     public void DeepLinkPage(String url, boolean isFromRia) {
-        System.out.println("DEEEPLINK"+url);
         BoostLog.d("Deep Link URL", "Deep Link URL : " + url);
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
@@ -505,8 +504,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         .commit();
             }
             else if (url.contains("uniqueVisitor")) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, uniqueVisitorsFragment, "uniqueVisitorsFragment")
-                        .commit();
+                Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
+                accountInfo.putExtra("table_name", Constants.VISITORS_TABLE);
+                startActivity(accountInfo);
             }
 
         }
