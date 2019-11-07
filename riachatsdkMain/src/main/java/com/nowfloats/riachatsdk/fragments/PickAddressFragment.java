@@ -536,7 +536,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             @Override
             public void onClick(View v)
             {
-                showCountryDialog(signUpCountryList);
+                /*showCountryDialog(signUpCountryList);*/
             }
         });
     }
