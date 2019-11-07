@@ -104,7 +104,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     private Map<String, String> mDataMap = new HashMap<>();
     private NFGeoCoder nfGeoCoder;
 
-    private boolean hasCitySelected = false;
+    private boolean hasCitySelected = true;
 
     public static PickAddressFragment newInstance(PICK_TYPE pick_type) {
 
@@ -146,7 +146,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     {
         super.onCreate(savedInstanceState);
 
-        hasCitySelected = false;
+        /*hasCitySelected = false;*/
 
         if (getArguments() != null)
         {
@@ -221,8 +221,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         llManual.bringToFront();
 
-        btnSave.setClickable(false);
-        btnSave.setEnabled(false);
+        /*btnSave.setClickable(false);*/
+        /*btnSave.setEnabled(false);*/
 
         btnSave.setOnClickListener(new View.OnClickListener() {
 
@@ -393,6 +393,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 @Override
                 public void afterTextChanged(Editable s) {
 
+                    loadCountryCodeandCountryNameMap();
+
                     if (getActivity() == null || (etCity.getTag() != null && !(boolean) etCity.getTag()))
                     {
 
@@ -402,9 +404,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     {
                         try
                         {
-                            hasCitySelected = false;
-                            final PendingResult<AutocompletePredictionBuffer> result =
-                                    Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, etCity.getText().toString().trim(),
+                            /*hasCitySelected = false;*/
+                            final PendingResult<AutocompletePredictionBuffer> result = Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, etCity.getText().toString().trim(),
                                             null, filter);
 
                             new Thread(new Runnable() {
@@ -479,7 +480,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     etCity.setText(city);
                     etState.setText(state);
                     etCity.setTag(true);
-                    hasCitySelected = true;
+                    /*hasCitySelected = true;*/
 
                     etCountry.setText(country);
                     etPin.requestFocus();
@@ -621,7 +622,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
             if(!etCity.getText().toString().trim().isEmpty())
             {
-                hasCitySelected = true;
+                /*hasCitySelected = true;*/
             }
 
             if(checkFields())
@@ -977,9 +978,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
             else
             {
-                btnSave.setClickable(false);
+                /*btnSave.setClickable(false);
                 btnSave.setEnabled(false);
-                btnSave.setBackgroundResource(R.drawable.done_button_disabled);
+                btnSave.setBackgroundResource(R.drawable.done_button_disabled);*/
             }
         }
     }

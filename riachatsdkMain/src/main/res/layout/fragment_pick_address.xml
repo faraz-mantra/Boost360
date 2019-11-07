@@ -125,8 +125,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="textCapWords"
                             android:textSize="14sp"
-                            android:enabled="false"
-                            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -154,8 +153,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="textCapWords"
                             android:textSize="14sp"
-                            android:enabled="false"
-                            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
                         <!--
                         android:drawableRight="@drawable/dropselect"
