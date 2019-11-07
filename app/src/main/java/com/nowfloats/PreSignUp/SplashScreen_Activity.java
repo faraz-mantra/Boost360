@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -76,7 +79,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         @Override
         public void run() {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(4000);
             } catch (Exception e) {
                 e.printStackTrace();
             }

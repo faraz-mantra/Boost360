@@ -319,7 +319,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="${applicationId}.Analytics_Screen.SearchQueriesActivity"
+                    android:host="${applicationId}.SearchQueriesActivity"
                     android:pathPrefix="/"
                     android:scheme="http" />
             </intent-filter>
@@ -552,7 +552,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="${applicationId}.Login.Login_MainActivity"
+                    android:host="${applicationId}.LoginMainActivity"
                     android:pathPrefix="/"
                     android:scheme="http" />
             </intent-filter>
