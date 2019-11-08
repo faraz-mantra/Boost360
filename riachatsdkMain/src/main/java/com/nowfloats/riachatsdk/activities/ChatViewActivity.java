@@ -19,15 +19,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.support.v4.os.ResultReceiver;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -66,11 +66,10 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gun0912.tedpermission.PermissionListener;
@@ -546,7 +545,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     public static void showSnackBarNegative(Activity context, String msg) {
-        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
         snackBar.show();
     }

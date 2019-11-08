@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:contentPaddingLeft="5dp"
@@ -20,6 +20,6 @@
             android:textSize="16sp"
             android:id="@+id/tv_inventory_display_name"/>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

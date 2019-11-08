@@ -18,7 +18,7 @@
             android:visibility="visible">
         </com.nowfloats.util.ButteryProgressBar>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/progressCard"
             android:layout_width="match_parent"
             android:visibility="gone"
@@ -73,9 +73,9 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

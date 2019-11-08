@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
@@ -25,7 +25,7 @@
                 layout="@layout/toolbar_website_create_form"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
     </FrameLayout>
 
@@ -46,12 +46,12 @@
             android:orientation="vertical">
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/business_name_ria">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_businessName"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
@@ -63,15 +63,15 @@
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:hint="@string/business_category_ria">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_businessCategory"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
@@ -80,15 +80,15 @@
                     android:drawableRight="@drawable/dropselect"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:hint="@string/plot_number_and_street_address">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_street_address"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
@@ -97,16 +97,16 @@
                     android:inputType="textNoSuggestions"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:hint="@string/locality"
                 android:visibility="gone">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLocality"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
@@ -117,14 +117,14 @@
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5"
@@ -151,10 +151,10 @@
                         android:layout_height="match_parent"
                         android:paddingRight="3dp"
                         android:visibility="gone" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5"
@@ -172,18 +172,18 @@
                         android:singleLine="true"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:layout_weight="0.25"
                 android:hint="@string/pin_code_ria">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_pinCode"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
@@ -195,15 +195,15 @@
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:hint="@string/email_address_ria">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_Email"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
@@ -215,7 +215,7 @@
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
@@ -233,7 +233,7 @@
                     android:textSize="@dimen/medium_text_size"
                     android:visibility="gone" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -241,7 +241,7 @@
                     android:orientation="horizontal">
 
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etWebsiteAddress"
                         style="@style/SignUp_EditText_Style_Ria"
                         fontPath="Roboto-Regular.ttf"
@@ -254,7 +254,7 @@
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -274,31 +274,31 @@
                     android:layout_marginLeft="@dimen/margin_5" />
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:hint="@string/otp_sent_on_mobile"
                 android:visibility="gone">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etOTP"
                     style="@style/SignUp_EditText_Style_Ria"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </android.support.design.widget.TextInputEditText>
+                </com.google.android.material.textfield.TextInputEditText>
 
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5"
@@ -316,7 +316,7 @@
                         android:visibility="gone"
                         tools:ignore="MissingPrefix" />
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editText_Phone"
                         style="@style/SignUp_EditText_Style_Ria"
                         fontPath="Roboto-Regular.ttf"
@@ -327,7 +327,7 @@
                         android:singleLine="true"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
                     android:id="@+id/ivPhoneStatus"

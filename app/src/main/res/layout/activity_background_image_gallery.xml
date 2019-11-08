@@ -1,6 +1,6 @@
 <layout>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         style="@style/ParentLayoutStyle"
@@ -25,7 +25,7 @@
                 android:layout_alignParentTop="true"
                 android:text="@string/background_image_info_text"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/image_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -69,6 +69,6 @@
 
         </RelativeLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

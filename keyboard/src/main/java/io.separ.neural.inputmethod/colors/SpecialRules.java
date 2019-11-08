@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 
 import io.separ.neural.inputmethod.indic.Constants;

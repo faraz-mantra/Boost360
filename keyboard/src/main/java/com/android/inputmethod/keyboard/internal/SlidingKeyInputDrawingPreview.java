@@ -21,7 +21,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.latin.utils.CoordinateUtils;

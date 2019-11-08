@@ -2,7 +2,7 @@ package com.nowfloats.Analytics_Screen.model;
 
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

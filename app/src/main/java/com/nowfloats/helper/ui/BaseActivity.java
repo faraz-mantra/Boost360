@@ -1,7 +1,7 @@
 package com.nowfloats.helper.ui;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 

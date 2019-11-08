@@ -48,7 +48,7 @@
                     android:layout_margin="@dimen/margin_20"
                     android:paddingTop="15dp">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout_profile_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -63,9 +63,9 @@
                             android:minLines="1"
                             tools:ignore="MissingPrefix" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout_business_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                             android:minLines="1"
                             tools:ignore="MissingPrefix" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
                         android:id="@+id/businessName_textline"
@@ -219,7 +219,7 @@
 
                     </LinearLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout_business_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
                             android:maxLines="4"
                             tools:ignore="MissingPrefix" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 

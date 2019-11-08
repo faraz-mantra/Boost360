@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -33,11 +33,11 @@
     </FrameLayout>
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvActionItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+        android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/llProductView"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/primaryColor" />
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vwSAM"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

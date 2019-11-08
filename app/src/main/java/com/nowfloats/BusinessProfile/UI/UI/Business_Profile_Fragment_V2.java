@@ -9,9 +9,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +57,7 @@ import java.util.HashMap;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
- * A simple {@link android.support.v4.app.Fragment} subclass.
+ * A simple {@link Fragment} subclass.
  */
 public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
     TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,

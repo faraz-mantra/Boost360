@@ -1,4 +1,4 @@
-<android.support.v7.widget.AppCompatTextView
+<androidx.appcompat.widget.AppCompatTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:textSize="14sp"
@@ -14,4 +14,4 @@
     android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
     android:paddingRight="?android:attr/listPreferredItemPaddingRight">
 
-</android.support.v7.widget.AppCompatTextView>
+</androidx.appcompat.widget.AppCompatTextView>

@@ -1,7 +1,7 @@
 package com.nowfloats.GMB.Adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
-import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;

@@ -9,10 +9,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -58,7 +58,6 @@ import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
-import com.nowfloats.Analytics_Screen.VmnNumberRequestActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -98,7 +97,7 @@ import retrofit.client.Response;
 import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 
 /**
- * A simple {@link android.support.v4.app.Fragment} subclass.
+ * A simple {@link Fragment} subclass.
  */
 public class Analytics_Fragment extends Fragment {
     View rootView = null;

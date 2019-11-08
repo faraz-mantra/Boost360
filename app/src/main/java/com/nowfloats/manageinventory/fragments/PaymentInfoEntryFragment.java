@@ -3,13 +3,11 @@ package com.nowfloats.manageinventory.fragments;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +20,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.manageinventory.PaymentSettingsActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
 import com.nowfloats.manageinventory.models.WaUpdateDataModel;
-import com.nowfloats.riachatsdk.models.Button;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.io.IOException;

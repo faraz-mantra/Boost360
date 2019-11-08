@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:background="@color/primaryColor" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/homeTabViewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

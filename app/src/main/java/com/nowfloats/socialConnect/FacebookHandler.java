@@ -207,8 +207,8 @@ public class FacebookHandler{
     private void logInWithPublishPermissions(LoginManager manager, Object reference, List<String> permissions){
         if(reference instanceof Fragment){
             manager.logInWithPublishPermissions((Fragment) reference, permissions);
-        }else if(reference instanceof android.support.v4.app.Fragment){
-            manager.logInWithPublishPermissions((android.support.v4.app.Fragment) reference, permissions);
+        }else if(reference instanceof androidx.fragment.app.Fragment){
+            manager.logInWithPublishPermissions((androidx.fragment.app.Fragment) reference, permissions);
         }else if(reference instanceof Activity){
             manager.logInWithPublishPermissions((Activity) reference, permissions);
         }else{
@@ -220,8 +220,8 @@ public class FacebookHandler{
     private void logInWithReadPermissions(LoginManager manager, Object reference, List<String> permissions){
         if(reference instanceof Fragment){
             manager.logInWithReadPermissions((Fragment) reference, permissions);
-        }else if(reference instanceof android.support.v4.app.Fragment){
-            manager.logInWithReadPermissions((android.support.v4.app.Fragment) reference, permissions);
+        }else if(reference instanceof androidx.fragment.app.Fragment){
+            manager.logInWithReadPermissions((androidx.fragment.app.Fragment) reference, permissions);
         }else if(reference instanceof Activity){
             manager.logInWithReadPermissions((Activity) reference, permissions);
         }else{

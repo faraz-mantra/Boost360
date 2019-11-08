@@ -5,7 +5,7 @@ package com.nowfloats.riachatsdk.animators;
  */
 
 import android.animation.ObjectAnimator;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 

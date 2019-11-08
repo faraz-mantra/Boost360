@@ -3,7 +3,7 @@ package com.nowfloats.riachatsdk.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 

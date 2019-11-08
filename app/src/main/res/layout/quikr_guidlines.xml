@@ -8,12 +8,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="@string/quikr_message"/>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
-    <android.support.v7.widget.AppCompatCheckBox
+    </androidx.recyclerview.widget.RecyclerView>
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

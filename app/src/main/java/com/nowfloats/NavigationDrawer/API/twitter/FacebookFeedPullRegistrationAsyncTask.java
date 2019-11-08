@@ -3,7 +3,7 @@ package com.nowfloats.NavigationDrawer.API.twitter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;

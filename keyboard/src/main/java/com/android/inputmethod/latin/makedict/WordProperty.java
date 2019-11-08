@@ -16,7 +16,7 @@
 
 package com.android.inputmethod.latin.makedict;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.android.inputmethod.latin.BinaryDictionary;
 import com.android.inputmethod.latin.utils.CombinedFormatUtils;

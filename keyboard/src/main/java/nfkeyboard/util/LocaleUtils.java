@@ -3,7 +3,7 @@ package nfkeyboard.util;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 

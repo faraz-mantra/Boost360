@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;

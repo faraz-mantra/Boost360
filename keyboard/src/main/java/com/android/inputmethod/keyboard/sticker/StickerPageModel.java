@@ -1,7 +1,7 @@
 package com.android.inputmethod.keyboard.sticker;
 
-import android.support.annotation.AttrRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.AttrRes;
+import androidx.annotation.NonNull;
 
 /**
  * Created by sepehr on 3/5/17.

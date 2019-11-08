@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="Choose your email address through which your customers can contact you. You can select upto 3 email address with your domain."
                 android:textSize="12sp"/>
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_email_expired"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -84,7 +84,7 @@
         android:visibility="gone"
         android:paddingBottom="10dp"
         android:orientation="vertical">
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_email_running"
             android:layout_width="match_parent"
             android:overScrollMode="never"

@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cv_domain_details"
                 android:layout_width="match_parent"
                 android:visibility="gone"
@@ -31,8 +31,8 @@
                 <include layout="@layout/layout_domain_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cv_email_details"
                 android:layout_width="match_parent"
                 android:visibility="gone"
@@ -41,7 +41,7 @@
                 <include layout="@layout/layout_email_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
             <include
                 android:visibility="gone"
                 android:id="@+id/ll_plan_expired"
