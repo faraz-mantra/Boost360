@@ -423,7 +423,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         //holderItem.chatImage.setVisibility(View.VISIBLE);
         // Log.d("Map Urlggg:", url);
         try {
-            Picasso.with(this)
+            Picasso.get()
                     .load(url)
                     .placeholder(R.drawable.default_product_image)
                     .error(R.drawable.default_product_image)
@@ -506,7 +506,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                 String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + getString(R.string.google_map_key);
                 //holderItem.chatImage.setVisibility(View.VISIBLE);
                 try {
-                    Picasso.with(this)
+                    Picasso.get()
                             .load(url)
                             .placeholder(R.drawable.default_product_image)
                             .into(ivMap);

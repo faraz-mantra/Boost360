@@ -108,7 +108,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             }
 
 
-            Picasso picasso = Picasso.with(context);
+            Picasso picasso = Picasso.get();
             String image_url = model.TileImageUri;
 
             if (image_url != null && image_url.length() > 0 && !image_url.equals("null"))

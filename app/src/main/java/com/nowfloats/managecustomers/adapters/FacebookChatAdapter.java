@@ -83,7 +83,7 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             userViewHolder.date.setText(getFormattedTime(data.getTimestamp()));
             //Glide.with(mContext).load(data.getUserData().getProfilePic()).placeholder(R.drawable.ic_user).into(holder.userPic);
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(data.getUserData().getProfilePic())
                     .resize(200, 0)
                     .placeholder(R.drawable.ic_user)

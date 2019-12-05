@@ -146,7 +146,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     mOrder.getBillingDetails().getCurrencyCode() + " " + mProducts.get(position - 1).getActualPrice() + "");
 
             if (mProducts.get(position - 1).getProduct().getFeaturedImage() != null) {
-                Picasso.with(mContext).load(mProducts.get(position - 1).getProduct().getFeaturedImage().getTileImageUri())
+                Picasso.get().load(mProducts.get(position - 1).getProduct().getFeaturedImage().getTileImageUri())
                         .into(productDetailsHolder.ivProductImg);
             } else {
                 productDetailsHolder.ivProductImg.setImageResource(R.drawable.default_product_image);

@@ -381,7 +381,7 @@ public class CallToActionFragment extends Fragment {
             } else {
                 switch (share_via) {
                     case GMAIL:
-                        Picasso.with(getActivity())
+                        Picasso.get()
                                 .load(imageUrl)
                                 .into(new Target() {
                                     @Override
@@ -416,7 +416,7 @@ public class CallToActionFragment extends Fragment {
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
 
                                     }

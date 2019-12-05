@@ -111,12 +111,12 @@ public class FeaturedImageActivity extends AppCompatActivity {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
             if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
-                Picasso.with(FeaturedImageActivity.this).load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(logoimageView);
+                Picasso.get().load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(logoimageView);
             } else {
                 if (iconUrl != null && iconUrl.length() > 0) {
-                    Picasso.with(FeaturedImageActivity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(logoimageView);
+                    Picasso.get().load(iconUrl).placeholder(R.drawable.featured_photo_default).into(logoimageView);
                 } else {
-                    Picasso.with(FeaturedImageActivity.this).load(R.drawable.featured_photo_default).into(logoimageView);
+                    Picasso.get().load(R.drawable.featured_photo_default).into(logoimageView);
                 }
             }
 

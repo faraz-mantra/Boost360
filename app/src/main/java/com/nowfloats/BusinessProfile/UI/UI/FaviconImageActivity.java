@@ -97,12 +97,12 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
             if (!TextUtils.isEmpty(iconUrl))
             {
-                Picasso.with(FaviconImageActivity.this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                Picasso.get().load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
             }
 
             else
             {
-                Picasso.with(FaviconImageActivity.this).load(R.drawable.logo_default_image).into(logoimageView);
+                Picasso.get().load(R.drawable.logo_default_image).into(logoimageView);
             }
         }
 

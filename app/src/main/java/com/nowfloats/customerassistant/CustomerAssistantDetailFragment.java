@@ -267,7 +267,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
             } else {
                 switch (share_via) {
                     case GMAIL:
-                        Picasso.with(getActivity())
+                        Picasso.get()
                                 .load(imageUrl)
                                 .into(new Target() {
                                     @Override
@@ -301,7 +301,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         Toast.makeText(getActivity(), getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
                                     }
 

@@ -171,21 +171,21 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             BoostLog.d("TAG", iconUrl);
                             if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
                                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
-                                Picasso.with(activity)
+                                Picasso.get()
                                         .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                             } else {
                                 if (iconUrl != null && iconUrl.length() > 0) {
-                                    Picasso.with(activity)
+                                    Picasso.get()
                                             .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                                 } else {
-                                    Picasso.with(activity).load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                    Picasso.get().load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                                 }
                             }
                             //}
 
                             //session.getIsSignUpFromFacebook().contains("true")
                             if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
-                                Picasso.with(activity)
+                                Picasso.get()
                                         .load(session.getFacebookPageURL()).placeholder(R.drawable.business_edit_profile_icon)
                                         // optional
                                         .rotate(90)                     // optional

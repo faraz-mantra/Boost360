@@ -50,7 +50,7 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
     public void onBindViewHolder(final PlanDetailsViewHolder holder, final int position) {
         final ActivePackage activePackage = mPackages.get(position);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        Picasso.with(mContext).load(activePackage.getPrimaryImageUri()).into(holder.ivPlanIcon);
+        Picasso.get().load(activePackage.getPrimaryImageUri()).into(holder.ivPlanIcon);
         holder.tvPlanName.setText(activePackage.getName());
         holder.tvActivationDate.setText(parseDate(activePackage.getToBeActivatedOn()));
         holder.tvExpiryDate.setText(format.format(getExpiryDate(activePackage.getToBeActivatedOn(),

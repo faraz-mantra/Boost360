@@ -237,7 +237,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = Constants.BASE_IMAGE_URL + imageUri;
-                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
+                        Picasso.get().load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     } else if (imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard")) {
                         imagePresent = true;
@@ -249,7 +249,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = imageUri;
-                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
+                        Picasso.get().load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }
                 }
@@ -441,12 +441,13 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     }
 
                     @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                         pd.dismiss();
                         targetMap = null;
                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-
                     }
+
+
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
@@ -454,7 +455,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     }
                 };
                 targetMap = target;
-                Picasso.with(appContext)
+                Picasso.get()
                         .load(url)
                         .into(target);
 

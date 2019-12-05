@@ -1389,7 +1389,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 dialog.dismiss();
             }
         });
-        Picasso.with(this)
+        Picasso.get()
                 .load(FB_PAGE_COVER_PHOTO)
                 .resize(0, 200)
                 .placeholder(R.drawable.general_services_background_img)
@@ -1405,7 +1405,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             }
         }
 
-        Picasso.with(this)
+        Picasso.get()
                 .load(logoURI)
                 .resize(0, 75)
                 .placeholder(R.drawable.facebook_page2)

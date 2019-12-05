@@ -259,7 +259,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                             }
                             return;
                         }
-                        Picasso.with(ThirdPartySuggestionDetailActivity.this)
+                        Picasso.get()
                                 .load(imageUrl)
                                 .into(new Target() {
                                     @Override
@@ -291,7 +291,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this, getString(R.string.failed_to_download_image));
 
                                     }

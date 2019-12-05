@@ -537,13 +537,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     image_url = Constants.BASE_IMAGE_URL + product.TileImageUri;
                 }
 
-                Picasso.with(getActivity()).load(image_url).placeholder(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+                Picasso.get().load(image_url).placeholder(R.drawable.default_product_image).into(binding.ivPrimaryImage);
                 binding.ibRemoveProductImage.setVisibility(View.VISIBLE);
             }
 
             else
             {
-                Picasso.with(getActivity()).load(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+                Picasso.get().load(R.drawable.default_product_image).into(binding.ivPrimaryImage);
                 binding.ibRemoveProductImage.setVisibility(View.GONE);
             }
         }

@@ -692,18 +692,18 @@ public class Edit_Profile_Activity extends BaseActivity {
         String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
         if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
             String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
-            Picasso.with(Edit_Profile_Activity.this).load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+            Picasso.get().load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
         } else {
             if (iconUrl != null && iconUrl.length() > 0) {
-                Picasso.with(Edit_Profile_Activity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+                Picasso.get().load(iconUrl).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
             } else {
-                Picasso.with(Edit_Profile_Activity.this).load(R.drawable.featured_photo_default).into(editProfileImageView);
+                Picasso.get().load(R.drawable.featured_photo_default).into(editProfileImageView);
             }
         }
         //}
 
         if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
-            Picasso.with(Edit_Profile_Activity.this)
+            Picasso.get()
                     .load(session.getFacebookPageURL()).placeholder(R.drawable.featured_photo_default)
                     // optional
                     // .resize(150, 100)                        // optional

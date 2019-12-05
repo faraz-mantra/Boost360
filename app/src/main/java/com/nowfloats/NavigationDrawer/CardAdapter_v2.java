@@ -192,7 +192,7 @@ public class CardAdapter_v2 extends RecyclerView.Adapter<CardAdapter_v2.MyViewHo
                     Bitmap bmp = BitmapFactory.decodeFile(imageUri);
                        imageView.setImageBitmap(bmp);
                 } else {
-                    Picasso.with(appContext).load(baseName).into(imageView);
+                    Picasso.get().load(baseName).into(imageView);
                     //imageLoader.displayImage(baseName, imageView, options);
                 }
 

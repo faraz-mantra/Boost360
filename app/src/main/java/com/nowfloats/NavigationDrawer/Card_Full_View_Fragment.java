@@ -215,7 +215,7 @@ public class Card_Full_View_Fragment extends Fragment {
                     }
 
                     @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
 
                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
 
@@ -227,7 +227,7 @@ public class Card_Full_View_Fragment extends Fragment {
                     }
                 };
 
-                Picasso.with(appContext)
+                Picasso.get()
                         .load(url)
                         .into(target);
 
@@ -356,7 +356,7 @@ public class Card_Full_View_Fragment extends Fragment {
                         } else {
                             url = imageUri;
                         }
-                        Picasso.with(appContext)
+                        Picasso.get()
                                 .load(url)
                                 .into(new Target() {
                                     @Override
@@ -385,7 +385,7 @@ public class Card_Full_View_Fragment extends Fragment {
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         pd.dismiss();
                                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
 
@@ -443,7 +443,7 @@ public class Card_Full_View_Fragment extends Fragment {
         {
             imageView.setVisibility(View.VISIBLE);
             baseName = Constants.BASE_IMAGE_URL+"" + imageUri;
-            Picasso.with(getActivity()).load(baseName).noPlaceholder().into(imageView);
+            Picasso.get().load(baseName).noPlaceholder().into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
         }
 

@@ -111,14 +111,14 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         if(logo==null || logo.isEmpty()){
             firstCharText.setText(String.valueOf(name.charAt(0)));
             firstCharText.setVisibility(View.VISIBLE);
-            Picasso.with(context)
+            Picasso.get()
                     .load(R.drawable.studio_architecture)
                     .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
                     .into(logoImage);
         }
         else if(!logo.contains("http")){
             logo = "https://"+logo;
-            Picasso.with(context)
+            Picasso.get()
                     .load(logo)
                     .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
                     .into(logoImage);

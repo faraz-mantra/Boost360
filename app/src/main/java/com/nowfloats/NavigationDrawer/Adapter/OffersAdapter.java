@@ -58,7 +58,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final OfferFloatsModel currentModel = mListOfferFloatsModel.get(position);
-        Picasso.with(mContext).load(currentModel.tileImageUri)
+        Picasso.get().load(currentModel.tileImageUri)
                 .placeholder(R.drawable.default_product_image)
                 .into(holder.ivMainOffer);
         holder.tvOfferTitle.setText(currentModel.message);
@@ -87,7 +87,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                         } else {
                             url = imageShare;
                         }
-                        Picasso.with(activity)
+                        Picasso.get()
                                 .load(url)
                                 .into(new Target() {
                                     @Override
@@ -128,7 +128,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         pd.dismiss();
                                         Methods.showSnackBarNegative(activity,
                                                 activity.getString(R.string.failed_to_download_image));

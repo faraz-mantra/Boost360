@@ -1687,7 +1687,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 dialog.dismiss();
             }
         });
-        Picasso.with(getActivity())
+        Picasso.get()
                 .load(FB_PAGE_COVER_PHOTO)
                 .resize(0, 200)
                 .placeholder(R.drawable.general_services_background_img)
@@ -1703,7 +1703,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             }
         }
 
-        Picasso.with(getActivity())
+        Picasso.get()
                 .load(logoURI)
                 .resize(0, 75)
                 .placeholder(R.drawable.facebook_page2)

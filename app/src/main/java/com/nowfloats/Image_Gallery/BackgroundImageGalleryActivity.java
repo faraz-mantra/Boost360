@@ -170,7 +170,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 {
                     if(!TextUtils.isEmpty(url))
                     {
-                        Picasso.with(BackgroundImageGalleryActivity.this).load(url).into(viewHolder.imageView);
+                        Picasso.get().load(url).into(viewHolder.imageView);
                     }
                 }
 

@@ -122,7 +122,7 @@ public class ImageViewerActivity extends AppCompatActivity
             {
                 if(!TextUtils.isEmpty(url))
                 {
-                    Picasso.with(context).load(url).into(imageView);
+                    Picasso.get().load(url).into(imageView);
                 }
             }
 

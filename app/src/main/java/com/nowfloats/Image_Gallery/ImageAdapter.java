@@ -80,7 +80,7 @@ public class ImageAdapter extends PagerAdapter{
             } else {
                 baseName = serverImage;
             }
-            Picasso.with(context).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
+            Picasso.get().load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
             container.addView(imageView, 0);
         }
         return imageView;

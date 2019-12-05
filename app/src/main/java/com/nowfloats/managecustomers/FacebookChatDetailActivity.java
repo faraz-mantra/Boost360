@@ -115,7 +115,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         sendButton.setOnClickListener(this);
         scrollButton.setOnClickListener(this);
         //Glide.with(this).load(userData.getProfilePic()).into(imgUser);
-        Picasso.with(this)
+        Picasso.get()
                 .load(userData.getProfilePic())
                 .resize(200, 0)
                 .placeholder(R.drawable.ic_user)

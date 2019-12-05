@@ -188,7 +188,7 @@ public class SidePanelFragment extends Fragment {
 
         if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL()))
         {
-            Picasso.with(getActivity())
+            Picasso.get()
                     .load(session.getFacebookPageURL())
                     .rotate(90)
                     .into(iconImage);
@@ -964,7 +964,7 @@ public class SidePanelFragment extends Fragment {
 
                 if (baseNameProfileImage.length() > 0)
                 {
-                    Picasso.with(getActivity())
+                    Picasso.get()
                             .load(baseNameProfileImage)
                             .resize(540, 0)
                             .placeholder(R.drawable.general_services_background_img)
@@ -973,7 +973,7 @@ public class SidePanelFragment extends Fragment {
 
                 else
                 {
-                    Picasso.with(getActivity()).load(R.drawable.general_services_background_img).into(containerImage);
+                    Picasso.get().load(R.drawable.general_services_background_img).into(containerImage);
                 }
             }
 
@@ -1001,7 +1001,7 @@ public class SidePanelFragment extends Fragment {
 
                     String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
 
-                    Picasso.with(getActivity())
+                    Picasso.get()
                             .load(baseNameProfileImage)
                             .resize(200, 0)
                             .placeholder(R.drawable.business_edit_profile_icon)
@@ -1012,7 +1012,7 @@ public class SidePanelFragment extends Fragment {
                 {
                     if (iconUrl.length() > 0)
                     {
-                        Picasso.with(getActivity())
+                        Picasso.get()
                                 .load(iconUrl)
                                 .resize(200, 0)
                                 .placeholder(R.drawable.business_edit_profile_icon)
@@ -1021,7 +1021,7 @@ public class SidePanelFragment extends Fragment {
 
                     else
                     {
-                        Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
+                        Picasso.get().load(R.drawable.business_edit_profile_icon).into(iconImage);
                     }
                 }
             }

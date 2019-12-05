@@ -140,7 +140,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ordersViewHolder.tvItemsCount.setText(orderModel.getOrderDetails().size() > 1 ? orderModel.getOrderDetails().size() + " Items" : orderModel.getOrderDetails().size() + " Item");
 
                     if (orderModel.getOrderDetails().get(0).getProduct() != null && orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage() != null) {
-                        Picasso.with(mContext).load(orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage().getTileImageUri()).
+                        Picasso.get().load(orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage().getTileImageUri()).
                                 into(ordersViewHolder.ivProducts);
                     }
 

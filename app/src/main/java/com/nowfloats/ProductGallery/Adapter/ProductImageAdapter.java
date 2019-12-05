@@ -40,11 +40,11 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
         //holder.ivProductImg.setImageDrawable(null);
         Log.d("path:", path);
         if(path.contains("https://")){
-            Picasso.with(mContext).load(path)
+            Picasso.get().load(path)
                     .placeholder(R.drawable.post_update_normal_icon)
                     .resize(0, 500).into(holder.ivProductImg);
         }else {
-            Picasso.with(mContext).load("file://" + path)
+            Picasso.get().load("file://" + path)
                     .placeholder(R.drawable.post_update_normal_icon)
                     .resize(0, 500).into(holder.ivProductImg);
         }

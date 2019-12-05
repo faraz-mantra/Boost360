@@ -125,7 +125,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
             vi.setTag(R.string.key_selected, position);
             viewHolder.Product_Name.setText(productItemModel.Name);
             final ImageView imageView = viewHolder.ProductImageView;
-            Picasso picasso = Picasso.with(activity);
+            Picasso picasso = Picasso.get();
             String image_url = productItemModel.TileImageUri;
             if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
                 if (!image_url.contains("http")) {

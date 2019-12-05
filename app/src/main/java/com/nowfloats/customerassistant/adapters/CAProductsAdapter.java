@@ -104,7 +104,7 @@ public class CAProductsAdapter extends BaseAdapter {
             viewHolder.cbUpdate.setTag(R.string.key_details, productItemModel);
             viewHolder.Product_Name.setText(productItemModel.getProductName());
             final ImageView imageView = viewHolder.ProductImageView;
-            Picasso picasso = Picasso.with(activity);
+            Picasso picasso = Picasso.get();
             String image_url = productItemModel.getImage();
             if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
 //                if (!image_url.contains("http")) {

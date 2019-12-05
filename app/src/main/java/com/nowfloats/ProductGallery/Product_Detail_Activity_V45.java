@@ -369,7 +369,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                         if (!image_url.contains("http")) {
                             image_url = Constants.BASE_IMAGE_URL + product_data.TileImageUri;
                         }
-                        Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
+                        Picasso.get().load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
                     }
                     ViewCompat.setTransitionName(productImage, "imageKey");
                     //productName
