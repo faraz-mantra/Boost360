@@ -18,7 +18,7 @@
 
         </View>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
@@ -109,10 +109,10 @@
 
             </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
-    <android.support.v7.widget.GridLayout
+    <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"
@@ -123,7 +123,7 @@
 
         app:rowCount="3">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_business_details"
             android:layout_marginBottom="7dp"
             android:layout_marginLeft="1dp"
@@ -154,9 +154,9 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_business_images"
             android:layout_marginBottom="7dp"
             android:layout_marginLeft="7dp"
@@ -187,9 +187,9 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_site_appearance"
             android:layout_marginBottom="7dp"
             android:layout_marginLeft="1dp"
@@ -219,9 +219,9 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_custom_pages"
             android:layout_marginBottom="7dp"
             android:layout_marginLeft="7dp"
@@ -251,9 +251,9 @@
                     android:text="Custom Pages" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_pricing_plans"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="1dp"
@@ -283,9 +283,9 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_domain_details"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="7dp"
@@ -315,8 +315,8 @@
                     android:text="Domain Details" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    </android.support.v7.widget.GridLayout>
+    </androidx.gridlayout.widget.GridLayout>
 
 </LinearLayout>

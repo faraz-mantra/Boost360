@@ -16,7 +16,7 @@
 
 package com.android.inputmethod.latin.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;

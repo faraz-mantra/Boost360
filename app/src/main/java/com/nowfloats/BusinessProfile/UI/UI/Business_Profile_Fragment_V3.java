@@ -8,10 +8,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,15 +100,15 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
         String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
         if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
 
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(Constants.BASE_IMAGE_URL + "" + iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(profileImage);
         } else if ( iconUrl.length() > 0) {
-                Picasso.with(mContext)
+                Picasso.get()
                         .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(profileImage);
         }
 
         if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(session.getFacebookPageURL()).placeholder(R.drawable.business_edit_profile_icon)
                     .rotate(90)
                     .into(profileImage);

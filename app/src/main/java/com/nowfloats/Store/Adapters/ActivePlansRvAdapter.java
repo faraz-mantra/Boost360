@@ -2,8 +2,8 @@ package com.nowfloats.Store.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +50,7 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
     public void onBindViewHolder(final PlanDetailsViewHolder holder, final int position) {
         final ActivePackage activePackage = mPackages.get(position);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        Picasso.with(mContext).load(activePackage.getPrimaryImageUri()).into(holder.ivPlanIcon);
+        Picasso.get().load(activePackage.getPrimaryImageUri()).into(holder.ivPlanIcon);
         holder.tvPlanName.setText(activePackage.getName());
         holder.tvActivationDate.setText(parseDate(activePackage.getToBeActivatedOn()));
         holder.tvExpiryDate.setText(format.format(getExpiryDate(activePackage.getToBeActivatedOn(),

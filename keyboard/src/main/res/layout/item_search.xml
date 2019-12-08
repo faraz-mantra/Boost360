@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView fresco:id="@id/card_view"
+<androidx.cardview.widget.CardView fresco:id="@id/card_view"
     fresco:layout_width="wrap_content"
     fresco:layout_height="wrap_content"
     fresco:layout_marginTop="6dp"
@@ -26,4 +26,4 @@
                 fresco:contentDescription="@string/result_preview_description" card_view:scaleType="fitCenter"/>
         </RelativeLayout>
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

@@ -1,7 +1,7 @@
 package com.nowfloats.riachatsdk.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.models.Items;
 import com.squareup.picasso.Picasso;

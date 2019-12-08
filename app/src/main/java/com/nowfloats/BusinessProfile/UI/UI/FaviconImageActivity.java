@@ -6,15 +6,15 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -97,12 +97,12 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
             if (!TextUtils.isEmpty(iconUrl))
             {
-                Picasso.with(FaviconImageActivity.this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                Picasso.get().load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
             }
 
             else
             {
-                Picasso.with(FaviconImageActivity.this).load(R.drawable.logo_default_image).into(logoimageView);
+                Picasso.get().load(R.drawable.logo_default_image).into(logoimageView);
             }
         }
 

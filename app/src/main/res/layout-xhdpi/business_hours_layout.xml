@@ -38,7 +38,7 @@
             android:textStyle="italic|bold"
             android:layout_marginRight="15dp"
             android:gravity="center" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textOff="close"
@@ -87,7 +87,7 @@
             android:textSize="13sp"
             android:layout_marginRight="15dp"
             android:gravity="center" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_mon"
@@ -135,7 +135,7 @@
             android:focusable="false"
             android:layout_marginRight="15dp"
             android:text="00:00" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_tue"
@@ -183,7 +183,7 @@
             android:textSize="13sp"
             android:layout_marginRight="15dp"
             android:text="00:00"/>
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_wed"
@@ -231,7 +231,7 @@
             android:textSize="13sp"
             android:layout_marginRight="15dp"
             android:text="00:00" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_thu"
@@ -279,7 +279,7 @@
             android:focusable="false"
             android:layout_marginRight="15dp"
             android:text="00:00" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_fri"
@@ -327,7 +327,7 @@
             android:focusable="false"
             android:layout_marginRight="15dp"
             android:text="00:00"/>
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_sat"
@@ -373,7 +373,7 @@
             android:inputType="none"
             android:layout_marginRight="15dp"
             android:gravity="center" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_sun"

@@ -23,7 +23,7 @@
             android:layout_marginRight="5dp"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
@@ -40,7 +40,7 @@
                     android:layout_height="150dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_product_image" />
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <com.nowfloats.ProductGallery.widgets.NonScrollListView
                 android:id="@+id/lv_inventory_data"

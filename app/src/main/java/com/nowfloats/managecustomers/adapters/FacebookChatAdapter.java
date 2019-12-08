@@ -2,7 +2,7 @@ package com.nowfloats.managecustomers.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +83,7 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             userViewHolder.date.setText(getFormattedTime(data.getTimestamp()));
             //Glide.with(mContext).load(data.getUserData().getProfilePic()).placeholder(R.drawable.ic_user).into(holder.userPic);
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(data.getUserData().getProfilePic())
                     .resize(200, 0)
                     .placeholder(R.drawable.ic_user)

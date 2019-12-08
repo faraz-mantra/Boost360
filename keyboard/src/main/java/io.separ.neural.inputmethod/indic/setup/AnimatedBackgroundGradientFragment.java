@@ -5,7 +5,9 @@ package io.separ.neural.inputmethod.indic.setup;
  */
 
 import android.graphics.drawable.TransitionDrawable;
-import android.support.v4.app.Fragment;
+
+
+import androidx.fragment.app.Fragment;
 
 import java.util.Timer;
 import java.util.TimerTask;

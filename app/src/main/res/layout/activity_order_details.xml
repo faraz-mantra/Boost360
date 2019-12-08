@@ -8,14 +8,14 @@
     android:orientation="vertical"
     tools:context="com.nowfloats.manageinventory.OrderDetailsActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
         app:theme="@style/CustomToolbarTheme">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <FrameLayout
@@ -23,12 +23,12 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_order_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <ProgressBar
             android:id="@+id/pb_order_details"

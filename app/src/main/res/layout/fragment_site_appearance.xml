@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:id="@+id/child_layout"
         android:orientation="vertical">
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             xmlns:card="http://schemas.android.com/apk/res-auto"
             card:cardBackgroundColor="@color/white"
             card:cardElevation="3dp"
@@ -54,9 +54,9 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentPadding="10dp"
@@ -83,8 +83,8 @@
                     android:textColor="@color/primaryColor"
                     android:text="@string/site_appearance_upgrade_text"/>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentPadding="10dp"
@@ -108,7 +108,7 @@
                     android:textSize="18sp"
                     android:text="@string/site_appearance_revert_to_old"/>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

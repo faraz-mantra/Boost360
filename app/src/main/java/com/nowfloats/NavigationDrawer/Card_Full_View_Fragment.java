@@ -16,9 +16,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.cardview.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link android.support.v4.app.Fragment} subclass.
+ * A simple {@link Fragment} subclass.
  */
 public class Card_Full_View_Fragment extends Fragment {
 
@@ -215,7 +215,7 @@ public class Card_Full_View_Fragment extends Fragment {
                     }
 
                     @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
 
                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
 
@@ -227,7 +227,7 @@ public class Card_Full_View_Fragment extends Fragment {
                     }
                 };
 
-                Picasso.with(appContext)
+                Picasso.get()
                         .load(url)
                         .into(target);
 
@@ -356,7 +356,7 @@ public class Card_Full_View_Fragment extends Fragment {
                         } else {
                             url = imageUri;
                         }
-                        Picasso.with(appContext)
+                        Picasso.get()
                                 .load(url)
                                 .into(new Target() {
                                     @Override
@@ -385,7 +385,7 @@ public class Card_Full_View_Fragment extends Fragment {
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         pd.dismiss();
                                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
 
@@ -443,7 +443,7 @@ public class Card_Full_View_Fragment extends Fragment {
         {
             imageView.setVisibility(View.VISIBLE);
             baseName = Constants.BASE_IMAGE_URL+"" + imageUri;
-            Picasso.with(getActivity()).load(baseName).noPlaceholder().into(imageView);
+            Picasso.get().load(baseName).noPlaceholder().into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
         }
 

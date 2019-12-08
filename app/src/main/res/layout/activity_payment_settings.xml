@@ -8,14 +8,14 @@
     android:layout_height="match_parent"
     tools:context="com.nowfloats.manageinventory.PaymentSettingsActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:background="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:theme="@style/CustomToolbarTheme">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
@@ -102,9 +102,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/learn_more"/>
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
@@ -157,8 +157,8 @@
                             android:textColor="@color/gray"/>
                     </RadioGroup>
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cv_payment_details"
                 android:visibility="gone"
                 android:layout_marginTop="15dp"
@@ -334,7 +334,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 

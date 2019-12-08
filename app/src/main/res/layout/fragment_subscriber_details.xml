@@ -18,7 +18,7 @@
             android:id="@+id/parent_layout"
             android:orientation="vertical"
             android:gravity="center">
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/subscriber_email"
@@ -28,7 +28,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:text="@string/email"/>
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/subcriber_date"
@@ -37,7 +37,7 @@
                 android:text="@string/date"/>
         </LinearLayout>
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/call_subscriber"
@@ -54,7 +54,7 @@
         android:visibility="gone"
         android:background="@color/black_translucent"/>
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/message_subscriber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
     <View android:layout_height="1dp"
         android:layout_width="match_parent"
         android:background="@color/black_translucent"/>
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/unsubscribe"

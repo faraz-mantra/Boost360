@@ -5,7 +5,7 @@ package io.separ.neural.inputmethod.indic.setup;
  */
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.widget.Button;
 

@@ -1,7 +1,7 @@
 package com.nowfloats.ProductGallery.Adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,11 +40,11 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
         //holder.ivProductImg.setImageDrawable(null);
         Log.d("path:", path);
         if(path.contains("https://")){
-            Picasso.with(mContext).load(path)
+            Picasso.get().load(path)
                     .placeholder(R.drawable.post_update_normal_icon)
                     .resize(0, 500).into(holder.ivProductImg);
         }else {
-            Picasso.with(mContext).load("file://" + path)
+            Picasso.get().load("file://" + path)
                     .placeholder(R.drawable.post_update_normal_icon)
                     .resize(0, 500).into(holder.ivProductImg);
         }

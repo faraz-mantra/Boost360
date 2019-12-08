@@ -6,7 +6,7 @@
     android:id="@+id/parent_linearlayout"
     android:weightSum="1"
     android:layout_height="match_parent">
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/card_view_android"
         card:cardBackgroundColor="@color/white"
@@ -15,8 +15,8 @@
         card:cardElevation="5dp"
         android:layout_weight=".6"
         android:layout_height="0dp">
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/card_view_ios"
         card:cardBackgroundColor="@color/white"
@@ -28,7 +28,7 @@
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:layout_height="0dp">
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
    <!--<Button
        android:id="@+id/button_push_notif"
        android:layout_width="match_parent"

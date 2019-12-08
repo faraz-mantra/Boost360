@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.nowfloats.Store.NewPricingPlansActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/pricing_plans_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -34,7 +34,7 @@
                 android:layout_alignParentRight="true"
                 app:srcCompat="@drawable/ic_history_black_24dp"/>
         </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_marginTop="5dp"

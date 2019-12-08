@@ -9,9 +9,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +57,7 @@ import java.util.HashMap;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
- * A simple {@link android.support.v4.app.Fragment} subclass.
+ * A simple {@link Fragment} subclass.
  */
 public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
     TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
@@ -171,21 +171,21 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             BoostLog.d("TAG", iconUrl);
                             if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
                                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
-                                Picasso.with(activity)
+                                Picasso.get()
                                         .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                             } else {
                                 if (iconUrl != null && iconUrl.length() > 0) {
-                                    Picasso.with(activity)
+                                    Picasso.get()
                                             .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                                 } else {
-                                    Picasso.with(activity).load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                    Picasso.get().load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                                 }
                             }
                             //}
 
                             //session.getIsSignUpFromFacebook().contains("true")
                             if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
-                                Picasso.with(activity)
+                                Picasso.get()
                                         .load(session.getFacebookPageURL()).placeholder(R.drawable.business_edit_profile_icon)
                                         // optional
                                         .rotate(90)                     // optional

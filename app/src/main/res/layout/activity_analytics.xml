@@ -41,7 +41,7 @@
             android:background="#fafafa"
             android:gravity="center"
             android:textColor="@color/dark_grey"/>
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_year_tab"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -61,7 +61,7 @@
 
     </FrameLayout>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

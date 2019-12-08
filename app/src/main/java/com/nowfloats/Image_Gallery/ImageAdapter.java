@@ -2,8 +2,8 @@ package com.nowfloats.Image_Gallery;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +80,7 @@ public class ImageAdapter extends PagerAdapter{
             } else {
                 baseName = serverImage;
             }
-            Picasso.with(context).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
+            Picasso.get().load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
             container.addView(imageView, 0);
         }
         return imageView;

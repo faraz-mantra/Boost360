@@ -199,13 +199,13 @@
                         android:scaleY=".75"
                         android:src="@drawable/ic__drop_down" />
 
-                    <android.support.v7.widget.AppCompatSpinner
+                    <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/sp_web_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_spinner">
 
-                    </android.support.v7.widget.AppCompatSpinner>
+                    </androidx.appcompat.widget.AppCompatSpinner>
 
                     <!--
                     <Spinner

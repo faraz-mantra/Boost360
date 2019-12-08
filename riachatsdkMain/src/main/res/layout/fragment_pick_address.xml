@@ -34,13 +34,13 @@
                     android:layout_marginRight="@dimen/margin_15"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/house_plot_num"
                         app:errorTextAppearance="@style/error_appearance">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_house_plot_num"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -48,15 +48,15 @@
                             android:textSize="14sp"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tlStreet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/street_address">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_street_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -64,14 +64,14 @@
                             android:textSize="14sp"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/street_address_opt">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_locality"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -79,14 +79,14 @@
                             android:textSize="14sp"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/land_mark">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_landmark"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -94,9 +94,9 @@
                             android:textSize="14sp"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/loc_city">
@@ -112,14 +112,14 @@
                             android:textSize="14sp"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/state">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -127,9 +127,9 @@
                             android:textSize="14sp"
                              android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/loc_country"
@@ -147,7 +147,7 @@
                              android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
                         -->
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_country"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -159,14 +159,14 @@
                         android:drawableRight="@drawable/dropselect"
                         -->
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/loc_pincode">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_pincode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                             android:textSize="14sp"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 

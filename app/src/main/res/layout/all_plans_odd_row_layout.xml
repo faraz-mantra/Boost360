@@ -37,12 +37,12 @@
             tools:text="Group name" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/all_plan_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_2"
-        android:paddingLeft="@dimen/margin_20"></android.support.v7.widget.RecyclerView>
+        android:paddingLeft="@dimen/margin_20"></androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
         android:layout_width="wrap_content"

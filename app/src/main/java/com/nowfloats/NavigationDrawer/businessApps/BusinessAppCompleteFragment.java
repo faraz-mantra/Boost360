@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -117,14 +117,14 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         if(logo==null || logo.isEmpty()){
             firstCharText.setText(String.valueOf(name.charAt(0)));
             firstCharText.setVisibility(View.VISIBLE);
-            Picasso.with(context)
+            Picasso.get()
                     .load(R.drawable.studio_architecture)
                     .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
                     .into(logoImage);
         }
         else if(!logo.contains("http")){
             logo = "https://"+logo;
-            Picasso.with(context)
+            Picasso.get()
                     .load(logo)
                     .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
                     .into(logoImage);

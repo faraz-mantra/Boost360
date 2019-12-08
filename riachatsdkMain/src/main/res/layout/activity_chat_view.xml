@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
@@ -84,7 +84,7 @@
             </LinearLayout>
 
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
     </FrameLayout>
 
@@ -105,7 +105,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_chat_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -114,7 +114,7 @@
             android:nestedScrollingEnabled="true"
             android:paddingTop="@dimen/margin_30">
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <ImageView
             android:id="@+id/iv_scroll_down"
@@ -148,14 +148,14 @@
 
             </FrameLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_reply_button_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:visibility="invisible">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
         </LinearLayout>

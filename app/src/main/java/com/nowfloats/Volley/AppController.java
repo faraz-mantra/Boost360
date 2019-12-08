@@ -5,8 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.provider.Settings;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -16,7 +16,6 @@ import com.android.volley.toolbox.Volley;
 import com.apxor.androidsdk.core.ApxorSDK;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.nowfloats.helper.ui.TypefaceUtil;
 import com.nowfloats.util.Constants;
 import com.thinksity.BuildConfig;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;

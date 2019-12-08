@@ -21,7 +21,7 @@ import android.os.Build.VERSION;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.Display;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;

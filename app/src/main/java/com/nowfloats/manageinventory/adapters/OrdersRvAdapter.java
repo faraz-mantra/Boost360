@@ -3,9 +3,9 @@ package com.nowfloats.manageinventory.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,7 +140,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ordersViewHolder.tvItemsCount.setText(orderModel.getOrderDetails().size() > 1 ? orderModel.getOrderDetails().size() + " Items" : orderModel.getOrderDetails().size() + " Item");
 
                     if (orderModel.getOrderDetails().get(0).getProduct() != null && orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage() != null) {
-                        Picasso.with(mContext).load(orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage().getTileImageUri()).
+                        Picasso.get().load(orderModel.getOrderDetails().get(0).getProduct().getFeaturedImage().getTileImageUri()).
                                 into(ordersViewHolder.ivProducts);
                     }
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/app_bar"
         style="@style/AppBarLayoutStyle" >
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -21,12 +21,12 @@
                 android:id="@+id/toolbar_title"
                 style="@style/ToolbarTitleLayoutStyle" />
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
         <!--
         <include layout="@layout/progress_horizontal" />
         -->
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 </layout>

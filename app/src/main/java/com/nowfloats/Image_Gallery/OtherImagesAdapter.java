@@ -119,7 +119,7 @@ public class OtherImagesAdapter extends BaseAdapter {
                         }
                     };
 
-                    Picasso.with(mContext).load("file://" + baseName).transform(t).placeholder(R.drawable.gal).into(imageView);
+                    Picasso.get().load("file://" + baseName).transform(t).placeholder(R.drawable.gal).into(imageView);
                     return convertView;
                 }
             }
@@ -129,12 +129,12 @@ public class OtherImagesAdapter extends BaseAdapter {
                 baseName = serverImage;
             }
 
-            Picasso.with(mContext).load(baseName).placeholder(R.drawable.gal).resize(200, 0).into(imageView);
+            Picasso.get().load(baseName).placeholder(R.drawable.gal).resize(200, 0).into(imageView);
         }
 
         else
         {
-            Picasso.with(mContext).load(R.drawable.gal).into(imageView);
+            Picasso.get().load(R.drawable.gal).into(imageView);
         }
 
         convertView.setTag(position);

@@ -4,7 +4,7 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -15,14 +15,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -537,13 +537,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     image_url = Constants.BASE_IMAGE_URL + product.TileImageUri;
                 }
 
-                Picasso.with(getActivity()).load(image_url).placeholder(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+                Picasso.get().load(image_url).placeholder(R.drawable.default_product_image).into(binding.ivPrimaryImage);
                 binding.ibRemoveProductImage.setVisibility(View.VISIBLE);
             }
 
             else
             {
-                Picasso.with(getActivity()).load(R.drawable.default_product_image).into(binding.ivPrimaryImage);
+                Picasso.get().load(R.drawable.default_product_image).into(binding.ivPrimaryImage);
                 binding.ibRemoveProductImage.setVisibility(View.GONE);
             }
         }

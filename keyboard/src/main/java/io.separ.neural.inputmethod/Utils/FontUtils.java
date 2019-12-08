@@ -2,7 +2,7 @@ package io.separ.neural.inputmethod.Utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 

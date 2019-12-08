@@ -17,7 +17,7 @@
         android:paddingRight="6dp"
         android:tag="cards main container">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvManageCustomers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

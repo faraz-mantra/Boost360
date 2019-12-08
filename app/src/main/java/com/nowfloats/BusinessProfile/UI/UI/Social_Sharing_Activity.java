@@ -11,12 +11,12 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1389,7 +1389,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 dialog.dismiss();
             }
         });
-        Picasso.with(this)
+        Picasso.get()
                 .load(FB_PAGE_COVER_PHOTO)
                 .resize(0, 200)
                 .placeholder(R.drawable.general_services_background_img)
@@ -1405,7 +1405,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             }
         }
 
-        Picasso.with(this)
+        Picasso.get()
                 .load(logoURI)
                 .resize(0, 75)
                 .placeholder(R.drawable.facebook_page2)

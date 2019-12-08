@@ -9,13 +9,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -267,7 +267,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
             } else {
                 switch (share_via) {
                     case GMAIL:
-                        Picasso.with(getActivity())
+                        Picasso.get()
                                 .load(imageUrl)
                                 .into(new Target() {
                                     @Override
@@ -301,7 +301,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         Toast.makeText(getActivity(), getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
                                     }
 

@@ -23,13 +23,13 @@ import android.os.Binder;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Layout;
 import android.text.Spanned;
@@ -59,15 +59,7 @@ import com.thinksity.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,13 +73,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
-
 import okhttp3.OkHttpClient;
 import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
@@ -242,7 +229,7 @@ public class Methods {
     }
 
     public static void showDialog(Context mContext, String title, String msg) {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
         builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -254,7 +241,7 @@ public class Methods {
 
     public static void showDialog(Context mContext, String title, String msg, DialogInterface.OnClickListener listener){
 
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
         builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -296,7 +283,7 @@ public class Methods {
     }
 
     public static void showSnackBar(Activity context, String msg) {
-        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.GRAY);
         snackBar.show();
         /*SnackbarManager.show(
@@ -308,7 +295,7 @@ public class Methods {
     }
 
     public static void showSnackBarPositive(Activity context, String msg) {
-        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_positive_color));
         snackBar.show();
         /*SnackbarManager.show(
@@ -361,7 +348,7 @@ public class Methods {
     }
 
     public static void showSnackBarNegative(Activity context, String msg) {
-        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
         snackBar.show();
     }
@@ -390,13 +377,13 @@ public class Methods {
     }
 
     public static void showSnackBarNegative(View mView, String msg) {
-        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(mView, msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));
         snackBar.show();
     }
 
     public static void snackbarNoInternet(Activity context) {
-        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), android.support.design.widget.Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
         snackBar.show();
     }

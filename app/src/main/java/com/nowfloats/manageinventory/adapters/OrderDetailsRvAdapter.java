@@ -2,8 +2,8 @@ package com.nowfloats.manageinventory.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +17,7 @@ import com.nowfloats.util.Methods;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by NowFloats on 05-09-2017.
@@ -152,7 +146,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     mOrder.getBillingDetails().getCurrencyCode() + " " + mProducts.get(position - 1).getActualPrice() + "");
 
             if (mProducts.get(position - 1).getProduct().getFeaturedImage() != null) {
-                Picasso.with(mContext).load(mProducts.get(position - 1).getProduct().getFeaturedImage().getTileImageUri())
+                Picasso.get().load(mProducts.get(position - 1).getProduct().getFeaturedImage().getTileImageUri())
                         .into(productDetailsHolder.ivProductImg);
             } else {
                 productDetailsHolder.ivProductImg.setImageResource(R.drawable.default_product_image);

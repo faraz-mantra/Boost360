@@ -10,14 +10,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -259,7 +259,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                             }
                             return;
                         }
-                        Picasso.with(ThirdPartySuggestionDetailActivity.this)
+                        Picasso.get()
                                 .load(imageUrl)
                                 .into(new Target() {
                                     @Override
@@ -291,7 +291,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this, getString(R.string.failed_to_download_image));
 
                                     }

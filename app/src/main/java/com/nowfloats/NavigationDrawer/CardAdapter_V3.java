@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -18,9 +17,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.app.ActivityCompat;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +45,6 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by NowFloatsDev on 09/03/2015.
@@ -239,7 +237,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = Constants.BASE_IMAGE_URL + imageUri;
-                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
+                        Picasso.get().load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     } else if (imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard")) {
                         imagePresent = true;
@@ -251,7 +249,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = imageUri;
-                        Picasso.with(appContext).load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
+                        Picasso.get().load(baseName)/*.resize(450, 450)*/.placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }
                 }
@@ -443,12 +441,13 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     }
 
                     @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                         pd.dismiss();
                         targetMap = null;
                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-
                     }
+
+
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
@@ -456,7 +455,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     }
                 };
                 targetMap = target;
-                Picasso.with(appContext)
+                Picasso.get()
                         .load(url)
                         .into(target);
 

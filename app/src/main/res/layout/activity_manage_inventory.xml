@@ -24,7 +24,7 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_below="@id/toolbar"
@@ -69,7 +69,7 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
     <LinearLayout
@@ -135,7 +135,7 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/screen_bg"
@@ -147,5 +147,5 @@
             layout="@layout/manage_inventory_list"
             android:layout_width="fill_parent"
             android:layout_height="match_parent" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

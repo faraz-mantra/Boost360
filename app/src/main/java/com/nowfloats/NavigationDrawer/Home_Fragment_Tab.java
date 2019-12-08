@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,13 +40,12 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 import static com.nowfloats.bubble.BubblesService.ACTION_KILL_DIALOG;
 
 /**
- * A simple {@link android.support.v4.app.Fragment} subclass.
+ * A simple {@link Fragment} subclass.
  */
 public class Home_Fragment_Tab extends Fragment {
     private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 122;

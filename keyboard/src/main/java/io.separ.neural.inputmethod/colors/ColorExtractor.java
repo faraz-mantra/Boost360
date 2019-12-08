@@ -15,7 +15,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build.VERSION;
-import android.support.v7.graphics.Palette;
+import androidx.palette.graphics.Palette;
 
 public class ColorExtractor {
     private static int[] getPrimaryAttrs(Resources res, String packageName) {

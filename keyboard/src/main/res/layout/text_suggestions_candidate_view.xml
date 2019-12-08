@@ -16,7 +16,7 @@
         android:padding="7dp"
         android:src="@drawable/ic_nowfloats_circle" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_suggestions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

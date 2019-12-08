@@ -64,7 +64,7 @@ public class EmojiTabAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public android.support.v4.app.Fragment getItem(int position) {
+    public androidx.core.app.Fragment getItem(int position) {
         switch (position) {
             case 0:
                 return FRAGMENT_EMOJI_RECENTS;

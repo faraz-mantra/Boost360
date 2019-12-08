@@ -2,9 +2,9 @@ package com.nowfloats.ProductGallery.Adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.PagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,10 +67,10 @@ public class ProductImageListAdapter extends PagerAdapter {
         View view = mLayoutInflater.inflate(R.layout.product_images_pager_layout, container, false);
         ImageView productImage = view.findViewById(R.id.iv_product_image);
         if (mList.get(position).getImage().url.startsWith("http")) {
-            Picasso.with(mContext).load(mList.get(position).getImage().url).into(productImage);
+            Picasso.get().load(mList.get(position).getImage().url).into(productImage);
         } else {
             Uri uri = Uri.fromFile(new File(mList.get(position).getImage().url));
-            Picasso.with(mContext).load(uri).into(productImage);
+            Picasso.get().load(uri).into(productImage);
         }
         container.addView(view);
         return view;

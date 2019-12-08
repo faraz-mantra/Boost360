@@ -7,14 +7,14 @@
     android:orientation="vertical"
     tools:context="com.nowfloats.manageinventory.SellerAnalyticsActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
         app:theme="@style/CustomToolbarTheme">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -67,13 +67,13 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.GridLayout
+    <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="15dp"
         android:layout_weight="3">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_total_orders"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="1dp"
@@ -120,9 +120,9 @@
                 android:gravity="center"
                 android:text="@string/total_orders" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_successful_orders"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
@@ -168,9 +168,9 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/received_successful_orders" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_received_orders"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="8dp"
@@ -216,10 +216,10 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/received_orders" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_cancelled_orders"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="1dp"
@@ -264,9 +264,9 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/cancelled_orders" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_returned_orders"
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="1dp"
@@ -313,9 +313,9 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/returned_orders" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_disputed_orders"
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="1dp"
@@ -362,9 +362,9 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/disputed_orders" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_abandoned_orders"
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="8dp"
@@ -410,9 +410,9 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/abandoned_orders" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    </android.support.v7.widget.GridLayout>
+    </androidx.gridlayout.widget.GridLayout>
 
 
 </LinearLayout>

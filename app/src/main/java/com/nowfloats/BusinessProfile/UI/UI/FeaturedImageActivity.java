@@ -8,7 +8,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuffColorFilter;
@@ -16,10 +16,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -31,15 +31,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -48,7 +44,6 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
-import com.thinksity.databinding.ActivityBusinessLogoBinding;
 import com.thinksity.databinding.ActivityFeaturedImageBinding;
 
 import java.io.File;
@@ -116,12 +111,12 @@ public class FeaturedImageActivity extends AppCompatActivity {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
             if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
-                Picasso.with(FeaturedImageActivity.this).load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(logoimageView);
+                Picasso.get().load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(logoimageView);
             } else {
                 if (iconUrl != null && iconUrl.length() > 0) {
-                    Picasso.with(FeaturedImageActivity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(logoimageView);
+                    Picasso.get().load(iconUrl).placeholder(R.drawable.featured_photo_default).into(logoimageView);
                 } else {
-                    Picasso.with(FeaturedImageActivity.this).load(R.drawable.featured_photo_default).into(logoimageView);
+                    Picasso.get().load(R.drawable.featured_photo_default).into(logoimageView);
                 }
             }
 

@@ -6,7 +6,7 @@ package io.separ.neural.inputmethod.colors;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 
 public class ColorUtils {
     private static final int[] DEFAULT_COLORS;

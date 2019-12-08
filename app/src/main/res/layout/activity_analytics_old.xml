@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,14 +23,14 @@
         app:tabTextColor="@color/white"
         android:layout_below="@+id/toolbar"
         app:tabMode="fixed" />
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:layout_width="wrap_content"
         android:layout_below="@+id/sliding_tabs"
         android:id="@+id/viewpager_main"
         android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
-    <android.support.v4.widget.ContentLoadingProgressBar
+    </androidx.viewpager.widget.ViewPager>
+    <androidx.core.widget.ContentLoadingProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

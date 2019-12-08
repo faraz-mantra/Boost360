@@ -1,10 +1,9 @@
 package com.nowfloats.Store.Adapters;
 
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.PricingDetailsFragment;

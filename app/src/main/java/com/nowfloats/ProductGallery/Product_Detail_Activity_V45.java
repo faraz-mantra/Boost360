@@ -3,7 +3,7 @@ package com.nowfloats.ProductGallery;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -20,11 +20,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -369,7 +369,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                         if (!image_url.contains("http")) {
                             image_url = Constants.BASE_IMAGE_URL + product_data.TileImageUri;
                         }
-                        Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
+                        Picasso.get().load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
                     }
                     ViewCompat.setTransitionName(productImage, "imageKey");
                     //productName

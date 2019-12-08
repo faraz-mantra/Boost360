@@ -149,7 +149,7 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 					String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
 					//holderItem.chatImage.setVisibility(View.VISIBLE);
 					try {
-						Picasso.with(appcontext)
+						Picasso.get()
 								.load(url)
 								.placeholder(R.drawable.default_product_image)
 								.into(Business_Address_Activity.ivMap);

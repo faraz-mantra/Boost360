@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cl_products_keyboard"
@@ -44,7 +44,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp" />
 
-        <android.support.v7.widget.AppCompatImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ib_del"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -89,14 +89,14 @@
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_offer" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_vertical_offer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"/>
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_horizontal_offer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -234,4 +234,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

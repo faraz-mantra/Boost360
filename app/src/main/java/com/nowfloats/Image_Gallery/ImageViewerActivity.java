@@ -3,12 +3,12 @@ package com.nowfloats.Image_Gallery;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -122,7 +122,7 @@ public class ImageViewerActivity extends AppCompatActivity
             {
                 if(!TextUtils.isEmpty(url))
                 {
-                    Picasso.with(context).load(url).into(imageView);
+                    Picasso.get().load(url).into(imageView);
                 }
             }
 
