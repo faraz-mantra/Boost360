@@ -528,16 +528,16 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void initializeCountryControls()
     {
-        etCountry.setFocusable(false);
-        etCountry.setFocusableInTouchMode(false);
+       /* etCountry.setFocusable(false);
+        etCountry.setFocusableInTouchMode(false);*//*
         etCountry.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v)
             {
-                /*showCountryDialog(signUpCountryList);*/
+                *//*showCountryDialog(signUpCountryList);*//*
             }
-        });
+        });*/
     }
 
     private void showCountryDialog(ArrayList<String> countries) {

@@ -77,7 +77,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
                         .placeholder(R.drawable.site_sc_default))
                 .into(carouselItemHolder.ivLogo);*/
 
-        Picasso.with(mContext).load(getParsedPrefixPostfixText(getParsedPrefixPostfixText(imageURL)))
+        Picasso.get().load(getParsedPrefixPostfixText(getParsedPrefixPostfixText(imageURL)))
                 .placeholder(R.drawable.site_sc_default)
                 .centerCrop()
                 .into(carouselItemHolder.ivLogo);
