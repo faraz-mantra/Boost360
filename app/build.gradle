@@ -43,7 +43,7 @@ android {
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion '28.0.4'
+    buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
     lintOptions {
         abortOnError true
