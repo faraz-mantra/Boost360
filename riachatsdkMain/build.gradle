@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
     androidTestImplementation 'junit:junit:4.12'
     implementation project(':ZoomImageLibrary')
-    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.kbeanie:multipicker:1.1.31@aar'
     implementation 'com.facebook.android:facebook-android-sdk:4.16.1'
 }

@@ -499,7 +499,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .error(R.drawable.default_product_image))
                     .into(cardViewHolder.ivMap);*/
 
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
                     .placeholder(R.drawable.default_product_image).into(cardViewHolder.ivMap);
 
@@ -535,7 +535,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .into(cardViewHolder.ivMap);*/
 
 
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
                     .placeholder(R.drawable.default_product_image).into(cardViewHolder.ivMap);
 
@@ -668,7 +668,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 .placeholder(R.drawable.site_sc_default))
                         .into(imageViewHolder.ivMainImage);*/
 
-                Picasso.with(mContext)
+                Picasso.get()
                         .load(getParsedPrefixPostfixText(imageURL))
                         .centerCrop()
                         .placeholder(R.drawable.site_sc_default).into(imageViewHolder.ivMainImage);
@@ -681,7 +681,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
 
 
-                Picasso.with(mContext).load(imageURL).into(new Target() {
+                Picasso.get().load(imageURL).into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
 
@@ -725,8 +725,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     }
 
+
+
                     @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                         imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
                     }
 
@@ -780,7 +782,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .placeholder(R.drawable.default_product_image))
                     .into(imageViewHolder.ivMainImage);*/
 
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(section.getUrl())
                     .centerCrop()
                     .placeholder(R.drawable.default_product_image).into(imageViewHolder.ivMainImage);

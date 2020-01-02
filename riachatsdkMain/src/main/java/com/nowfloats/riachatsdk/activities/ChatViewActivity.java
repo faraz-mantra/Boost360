@@ -1046,13 +1046,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             .placeholder(R.drawable.site_sc_default))
                     .into(ivContent);*/
 
-            Picasso.with(ChatViewActivity.this).load(getParsedPrefixPostfixText(url))
+            Picasso.get().load(getParsedPrefixPostfixText(url))
                     .placeholder(R.drawable.site_sc_default)
                     .centerCrop()
                     .into(ivContent);
         } else {
 
-            Picasso.with(ChatViewActivity.this).load(url)
+            Picasso.get().load(url)
                     .placeholder(R.drawable.site_sc_default)
                     .into(ivContent);
         }
