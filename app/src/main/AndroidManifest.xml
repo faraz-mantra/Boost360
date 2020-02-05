@@ -33,6 +33,9 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -661,12 +664,27 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
 
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+
+<!--            </intent-filter>-->
+        </activity>
+        <!--PreSignUp module-->
+        <activity
+            android:name="com.boost.presignup.SplashActivity"
+            android:label="@string/title_activity_splash_screen_"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Splash"
+            tools:replace="android:theme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
             android:launchMode="singleTop"

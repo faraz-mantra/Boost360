@@ -10,6 +10,17 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+//required for databinding
+// for data binding
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'com.google.gms.google-services'
+googleServices { disableVersionCheck = false }
+
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -238,5 +249,7 @@ dependencies {
     implementation 'com.nbsp:library:1.8'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.github.florent37:viewtooltip:1.1.5'
+
+    //presignup library
+    implementation project(path: ':presignup')
 }
-apply plugin: 'com.google.gms.google-services'

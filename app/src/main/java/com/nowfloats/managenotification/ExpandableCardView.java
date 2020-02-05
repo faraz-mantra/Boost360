@@ -128,7 +128,7 @@ public class ExpandableCardView extends LinearLayout {
         //Ottengo attributi
         typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableCardView);
         title = typedArray.getString(R.styleable.ExpandableCardView_title);
-        backgroundColor = typedArray.getInteger(R.styleable.ExpandableCardView_backgroundColor, View.NO_ID);
+        backgroundColor = typedArray.getInteger(R.styleable.ExpandableCardView_backgroundColor_custome, View.NO_ID);
         textColor = typedArray.getInteger(R.styleable.ExpandableCardView_cardTextColor, View.NO_ID);
         message = typedArray.getString(R.styleable.ExpandableCardView_message);
         iconDrawable = typedArray.getDrawable(R.styleable.ExpandableCardView_icon);

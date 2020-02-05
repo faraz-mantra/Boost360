@@ -3,6 +3,8 @@ package com.nowfloats.Volley;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
 import androidx.multidex.MultiDex;
@@ -14,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.apxor.androidsdk.core.ApxorSDK;
+import com.boost.presignup.locale.LocaleManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.nowfloats.util.Constants;
@@ -31,6 +34,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     private ImageLoader mImageLoader;
     private static AppController mInstance;
     String webEngageKey="~10a5cad2d";
+    private LocaleManager localeManager;
 
     @Override
     public void onCreate() {
@@ -237,7 +241,24 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
+        localeManager = new LocaleManager(base);
+        Log.e("getLanguage",">>>>>>>>>>>>>>" + localeManager.getLanguage());
+        try {
+            localeManager.setNewLocale(base, localeManager.getLanguage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.attachBaseContext(localeManager.setLocale(base));
+//        super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        localeManager.setLocale(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Log.d("onConfigurationChanged" , ""+ newConfig.getLocales().toLanguageTags());
+        }
     }
 }

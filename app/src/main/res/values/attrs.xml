@@ -109,7 +109,7 @@
 
     <declare-styleable name="ExpandableCardView">
         <attr name="title" format="string" />
-        <attr name="backgroundColor" format="integer" />
+        <attr name="backgroundColor_custome" format="integer" />
         <attr name="cardTextColor" format="integer" />
         <attr name="message" format="string" />
         <attr name="icon" format="reference" />
