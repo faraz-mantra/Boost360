@@ -74,10 +74,10 @@ class MainFragment : Fragment() {
 //        })
 
         videoURLs = mutableListOf<String>(
-            "https://cdn.withfloats.com/boost/boost_01.mp4",
-            "https://cdn.withfloats.com/boost/boost_01.mp4",
-            "https://d16xu7t5equ9os.cloudfront.net/output/hls/Boost01.m3u8",
-            "https://d16xu7t5equ9os.cloudfront.net/output/hls/Boost01.m3u8",
+            "https://cdn.withfloats.com/boost/videos/en/intro.mp4",
+            "https://cdn.withfloats.com/boost/videos/hi/intro.mp4",
+            "https://cdn.withfloats.com/boost/videos/te/intro.mp4",
+            "https://cdn.withfloats.com/boost/videos/ta/intro.mp4",
             "https://cdn.withfloats.com/boost/boost_01.mp4",
             "https://cdn.withfloats.com/boost/boost_01.mp4",
             "https://cdn.withfloats.com/boost/boost_01.mp4"

@@ -1,126 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/popup_layout"
-    android:gravity="bottom">
+    android:id="@+id/popup_fragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/startGuideline"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/_40sdp" />
+        android:layout_height="match_parent"
+        android:id="@+id/popup_layout"
+        android:gravity="bottom">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/endGuideline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/_40sdp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_40sdp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/bottomGuideline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="88dp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_40sdp" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/ic_curve_header_bg"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/viewDivider"
-        app:layout_constraintVertical_chainStyle="packed" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottomGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="88dp" />
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/email_layout"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="@id/startGuideline"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/endGuideline"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/view"-->
+<!--            android:orientation="vertical"-->
+<!--            android:visibility="gone"-->
+<!--            tools:visibility="visible"-->
+<!--            android:gravity="center">-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/entered_email"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Email"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/entered_password"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:hint="password"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/invalid_credential"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/red_color"-->
+<!--                android:visibility="gone"-->
+<!--                tools:visibility="visible"-->
+<!--                android:text="Invalid User credentials.."/>-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/email_submit_button"-->
+<!--                style="@style/EmailButtonStyle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:drawableStart="@drawable/ic_email_icon"-->
+<!--                android:layout_marginTop="@dimen/_20sdp"-->
+<!--                android:drawablePadding="@dimen/_10sdp"-->
+<!--                android:fontFamily="@font/open_sans_semibold"-->
+<!--                android:paddingStart="@dimen/_20sdp"-->
+<!--                android:paddingEnd="@dimen/_20sdp"-->
+<!--                android:text="Submit" />-->
+<!--        </LinearLayout>-->
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_curve_header_bg"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/viewDivider"
+            app:layout_constraintVertical_chainStyle="packed" />
 
 
-    <View
-        android:id="@+id/viewDivider"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/facebook_button" />
+        <View
+            android:id="@+id/viewDivider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_50sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/facebook_button" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/facebook_button"
-        style="@style/FacebookButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:drawableStart="@drawable/ic_facebook"
-        android:drawablePadding="@dimen/_10sdp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:paddingStart="@dimen/_20sdp"
-        android:paddingEnd="@dimen/_20sdp"
-        android:text="@string/signup_using_facebook"
-        app:layout_constraintBottom_toTopOf="@+id/google_button"
-        app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-        app:layout_constraintStart_toStartOf="@+id/startGuideline" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/google_button"
-        style="@style/GoogleButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:drawableStart="@drawable/ic_google"
-        android:drawablePadding="@dimen/_10sdp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:paddingStart="@dimen/_20sdp"
-        android:paddingEnd="@dimen/_20sdp"
-        android:text="@string/signup_using_google"
-        app:layout_constraintBottom_toTopOf="@+id/email_button"
-        app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-        app:layout_constraintStart_toStartOf="@+id/startGuideline"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/email_button"
-        style="@style/EmailButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_email_icon"
-        android:drawablePadding="@dimen/_10sdp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:paddingStart="@dimen/_20sdp"
-        android:paddingEnd="@dimen/_20sdp"
-        app:layout_constraintBottom_toTopOf="@+id/already_have_account"
-        app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-        app:layout_constraintStart_toStartOf="@+id/startGuideline"
-        android:text="@string/signup_using_email" />
-
-    <LinearLayout
-        android:id="@+id/already_have_account"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-        app:layout_constraintStart_toStartOf="@+id/startGuideline">
-
-        <TextView
-            android:id="@+id/popup_login_text"
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/viewDivider"
+            app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/facebook_button"
+            style="@style/FacebookButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:drawableStart="@drawable/ic_facebook"
+            android:drawablePadding="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:padding="@dimen/_4sdp"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:text="@string/signup_using_facebook"
+            app:layout_constraintBottom_toTopOf="@+id/google_button"
+            app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/google_button"
+            style="@style/GoogleButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:drawableStart="@drawable/ic_google"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:text="@string/signup_using_google"
+            app:layout_constraintBottom_toTopOf="@+id/email_button"
+            app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/email_button"
+            style="@style/EmailButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_email_icon"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/already_have_account"
+            app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline"
+            android:text="@string/signup_using_email" />
+
+        <LinearLayout
+            android:id="@+id/already_have_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/terms_of_use_and_privacy_policy"
-            android:textColor="@color/common_text_color"
-            android:textSize="@dimen/_9ssp" />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline">
+
+            <TextView
+                android:id="@+id/popup_login_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                android:padding="@dimen/_4sdp"
+                android:gravity="center"
+                android:text="@string/terms_of_use_and_privacy_policy"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_9ssp" />
+        </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

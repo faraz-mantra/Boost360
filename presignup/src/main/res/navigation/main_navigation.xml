@@ -29,6 +29,6 @@
     </fragment>
     <fragment
         android:id="@+id/popUpFragment"
-        android:name="com.boost.presignup.ui.PopUpFragment"
+        android:name="com.boost.presignup.ui.PopUpDialogFragment"
         android:label="PopUpFragment" />
 </navigation>

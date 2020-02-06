@@ -44,8 +44,7 @@
         android:textSize="@dimen/_30ssp"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toBottomOf="@+id/back_button"
-        app:textAllCaps="false"
-        android:text="@string/hello" />
+        android:text="@string/hello_presignup" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView2"
@@ -80,7 +79,6 @@
         android:drawablePadding="@dimen/_10sdp"
         android:hint="@string/you_email_com"
         android:background="@drawable/edt_bg_selector"
-        android:editable="false"
         android:drawableStart="@drawable/ic_email_signup"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"

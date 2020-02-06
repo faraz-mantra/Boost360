@@ -1,5 +1,6 @@
 package com.boost.presignup
 
+import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,12 +13,8 @@ import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -585,6 +582,11 @@ class PreSignUpActivity : AppCompatActivity() {
         finish()
         //recreate the activity
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        popUpDialogFragment.onActivityResult(requestCode, resultCode, data)
     }
 
 

@@ -17,16 +17,20 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.boost.presignup.R
 import com.boost.presignup.SignUpActivity
-import com.boost.presignup.utils.AppConstants.Companion.GMBClientId
+import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.curve_popup_layout.view.*
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.firebase.auth.*
+import kotlinx.android.synthetic.main.curve_popup_layout.*
 
 
 class PopUpDialogFragment : DialogFragment() {
@@ -36,6 +40,8 @@ class PopUpDialogFragment : DialogFragment() {
     val TAG = "PopUpDialogFragment"
     lateinit var mAuth: FirebaseAuth
     lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var callbackManager: CallbackManager
+    lateinit var actionCodeSettings: ActionCodeSettings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,24 +69,70 @@ class PopUpDialogFragment : DialogFragment() {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
 
-        root.popup_layout.setOnClickListener {
-            dialog!!.dismiss()
-        }
-        root.view.setOnClickListener {  }
-        root.facebook_button.setOnClickListener {
+        //email authentication
+        actionCodeSettings = ActionCodeSettings.newBuilder()
+                // URL you want to redirect back to. The domain (www.example.com) for this
+                // URL must be whitelisted in the Firebase Console.
+                .setUrl("boost.nowfloats.com")
+                // This must be true
+                .setHandleCodeInApp(true)
+                .setIOSBundleId("com.example.ios")
+                .setAndroidPackageName(
+                        "com.example.android",
+                        true, /* installIfNotAvailable */
+                        "12" /* minimumVersion */)
+                .build()
 
+        root.popup_layout.setOnClickListener {
+                dialog!!.dismiss()
         }
+        root.view.setOnClickListener {
+        }
+
         root.google_button.setOnClickListener {
-            googleSignIn()
+                googleSignIn()
         }
         root.email_button.setOnClickListener {
-
+            createNewEmailSignUp()
         }
+
         root.popup_login_text.setOnClickListener {
 
         }
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        root.facebook_button.setOnClickListener {
+                facebook_login.performClick()
+        }
+
+        // Initialize Facebook Login button
+        callbackManager = CallbackManager.Factory.create()
+
+        //facebook functionality
+        callbackManager = CallbackManager.Factory.create()
+
+        facebook_login.setReadPermissions("email", "public_profile")
+        facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                Log.d(TAG, "facebook:onSuccess:$loginResult")
+                handleFacebookAccessToken(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+                Log.d(TAG, "facebook:onCancel")
+                // ...
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d(TAG, "facebook:onError", error)
+                // ...
+            }
+        })
     }
 
 
@@ -99,6 +151,7 @@ class PopUpDialogFragment : DialogFragment() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
+
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -114,7 +167,13 @@ class PopUpDialogFragment : DialogFragment() {
                 Log.w(TAG, "Google sign in failed", e)
                 // ...
             }
+        }else{
+
+            // Pass the activity result back to the Facebook SDK
+            callbackManager.onActivityResult(requestCode, resultCode, data)
         }
+
+
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
@@ -127,11 +186,12 @@ class PopUpDialogFragment : DialogFragment() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success")
                         val user = mAuth.currentUser
-                        AuthorizedUser(user)
+                        AuthorizedGoogleUser(user)
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        AuthorizedUser(null)
+                        Toast.makeText(context, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
                     }
 
                     // ...
@@ -184,11 +244,10 @@ class PopUpDialogFragment : DialogFragment() {
         root.popup_login_text.setHighlightColor(resources.getColor(android.R.color.transparent))
     }
 
-    fun AuthorizedUser(currentUser: FirebaseUser?) {
+    fun AuthorizedGoogleUser(currentUser: FirebaseUser?) {
         var acct = GoogleSignIn.getLastSignedInAccount(context);
         if (acct != null) {
             val personName = acct.displayName.toString()
-            val personGivenName = acct.givenName.toString()
             val personFamilyName = acct.familyName.toString()
             val personEmail = acct.email.toString()
             val personIdToken = acct.idToken.toString()
@@ -200,14 +259,66 @@ class PopUpDialogFragment : DialogFragment() {
             intent.putExtra("url", personPhoto)
             intent.putExtra("email", personEmail)
             intent.putExtra("person_name", personName)
-            intent.putExtra("personGivenName", personGivenName)
             intent.putExtra("personFamilyName", personFamilyName)
             intent.putExtra("personIdToken", personIdToken)
+            intent.putExtra("provider", "GOOGLE")
             startActivity(intent);
             mGoogleSignInClient.signOut()
             dialog!!.dismiss()
 //            activity!!.finish();
         }
+    }
+
+    fun AuthorizedFacebookUser(currentUser: FirebaseUser?) {
+        if (currentUser != null) {
+            val personName = currentUser.displayName
+            val personEmail = currentUser.email.toString()
+            val personIdToken = currentUser.getIdToken(true).toString()
+            val personPhoto = currentUser.photoUrl.toString()
+
+            Log.d(TAG, "updateUI: photo = " + personPhoto);
+
+            val intent = Intent(requireContext(), SignUpActivity::class.java)
+            intent.putExtra("url", personPhoto)
+            intent.putExtra("email", personEmail)
+            intent.putExtra("person_name", personName)
+            intent.putExtra("personIdToken", personIdToken)
+            intent.putExtra("provider", "FACEBOOK")
+            startActivity(intent);
+            mAuth.signOut()
+            LoginManager.getInstance().logOut();
+            dialog!!.dismiss()
+//            activity!!.finish();
+        }
+    }
+
+    private fun createNewEmailSignUp(){
+        val intent = Intent(requireContext(), SignUpActivity::class.java)
+        intent.putExtra("provider", "EMAIL")
+        startActivity(intent);
+        dialog!!.dismiss()
+    }
+
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        Log.d(TAG, "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success")
+                        val user = mAuth.currentUser
+                        AuthorizedFacebookUser(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.exception)
+                        Toast.makeText(context, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                    }
+
+                    // ...
+                }
     }
 
 }
