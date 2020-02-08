@@ -14,5 +14,8 @@ data class Result(
         @SerializedName("ProfileProperties")
         val ProfileProperties: ProfileProperties,
         @SerializedName("Provider")
-        val Provider: String
+        val Provider: String,
+        @SerializedName("FpIds")
+        val FpIds: Array<String>
+
 )

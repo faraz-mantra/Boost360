@@ -94,6 +94,7 @@ class PreSignUpActivity : AppCompatActivity() {
             popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
         }
 
+
         setUpMvvm()
         languageButtonSelection()
     }

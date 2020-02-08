@@ -1,0 +1,294 @@
+package com.boost.presignup.utils
+
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.util.Log
+import android.widget.Toast
+import com.boost.presignup.R
+import com.boost.presignup.SignUpActivity
+import com.boost.presignup.SignUpConfirmation
+import com.boost.presignup.datamodel.Apis
+import com.boost.presignup.datamodel.userprofile.ProfileProperties
+import com.boost.presignup.datamodel.userprofile.UserProfileRequest
+import com.boost.presignup.datamodel.userprofile.UserProfileResponse
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
+class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: CustomFirebaseAuthListeners){
+
+    private var TAG = "CustomFirebaseAuthHelpers"
+    private lateinit var currentActivity: Activity
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var listener: CustomFirebaseAuthListeners
+    private lateinit var ApiService: Apis
+    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private lateinit var phoneVerificationId: String;
+    private lateinit var phoneVerificationTOken: String
+    private lateinit var phoneNumber: String
+
+    val RC_SIGN_IN = 1
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    lateinit var retrofit: Retrofit
+
+    private fun  FirebaseAuthHelpers(){}
+
+    init {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(activity.getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+        retrofit = Retrofit.Builder()
+                .baseUrl("https://api2.withfloats.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        this.currentActivity = activity
+        this.listener = listener
+        ApiService = retrofit.create(Apis::class.java)
+        mAuth = FirebaseAuth.getInstance()
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
+
+
+    }
+
+
+    fun startFacebookLogin(facebook_login: LoginButton, callbackManager: CallbackManager) {
+
+
+        this.currentActivity = currentActivity;
+        //facebook functionality
+
+
+        facebook_login.setReadPermissions("email", "public_profile")
+        facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                Log.d(TAG, "facebook:onSuccess:$loginResult")
+                handleFacebookAccessToken(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+                Log.d(TAG, "facebook:onCancel")
+                // ...
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d(TAG, "facebook:onError", error)
+                // ...
+            }
+        })
+    }
+
+    fun startGoogleLogin() {
+        val signInIntent = mGoogleSignInClient.signInIntent
+        currentActivity.startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    fun googleLoginActivityResult(requestCode: Int, data: Intent ) {
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e)
+                // ...
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(currentActivity) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success")
+                        val user = mAuth.currentUser
+                        AuthorizedGoogleUser(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                       listener.onFailure()
+
+                    }
+
+                    // ...
+                }
+    }
+
+    private fun AuthorizedGoogleUser(currentUser: FirebaseUser?) {
+        var acct = GoogleSignIn.getLastSignedInAccount(currentActivity);
+        if (acct != null) {
+            val personName = acct.displayName.toString()
+            val personFamilyName = acct.familyName.toString()
+            val personEmail = acct.email.toString()
+            val personIdToken = acct.idToken.toString()
+            val personPhoto = acct.photoUrl.toString()
+
+            Log.d(TAG, "updateUI: photo = " + personPhoto);
+
+            requestUserProfileAPI(personIdToken,
+                    personEmail, "", "", personName, "GOOGLE", personEmail )
+        }
+    }
+
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        Log.d(TAG, "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(currentActivity) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success")
+
+                        val user = mAuth.currentUser
+                        AuthorizedFacebookUser(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.exception)
+                        Toast.makeText(currentActivity, "SignIn Failed: "+task.exception!!.message,
+                                Toast.LENGTH_LONG).show()
+                        mAuth.signOut()
+                        LoginManager.getInstance().logOut();
+                    }
+
+                    // ...
+                }
+    }
+
+    fun AuthorizedFacebookUser(currentUser: FirebaseUser?) {
+        if (currentUser != null) {
+            var personName = currentUser.displayName
+            var personEmail = currentUser.email.toString()
+            var uid = personEmail
+            val personIdToken = currentUser.getIdToken(true).toString()
+            val personPhoto = currentUser.photoUrl.toString()
+            var facebookData = currentUser.providerData
+
+
+            for(data in facebookData) {
+                if(data.providerId?.contains("facebook")) {
+                    uid = data.uid
+                    personName = data.displayName
+                    break
+                }
+            }
+
+            requestUserProfileAPI(personIdToken,
+                    personEmail, "", "", personName as String, "FACEBOOK", uid )
+        }
+    }
+
+    fun requestUserProfileAPI(personIdToken: String,
+                              email: String,
+                              userPassword: String,
+                              userMobile: String,
+                              personName: String,
+                              provider: String,
+                              loginKey: String) {
+        val userInfo = UserProfileRequest(
+                personIdToken,
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+                loginKey,
+                userPassword,
+                ProfileProperties(email, userMobile, personName, userPassword), provider)
+
+        ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
+            override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
+               listener.onFailure()
+            }
+
+            override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+                listener.onSuccess(response.body())
+            }
+        })
+    }
+
+    fun startPhoneAuth(phoneNumber: String, phoneAuthListner: PhoneAuthListener) {
+        this.phoneNumber = "+91"+phoneNumber
+        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationFailed(p0: FirebaseException) {
+                listener.onFailure()
+            }
+
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+
+                Log.d(TAG, "onVerificationCompleted:$credential")
+
+                signInWithPhoneAuthCredential(credential)
+            }
+
+            override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
+                super.onCodeSent(verificationId, token)
+                phoneVerificationId = verificationId
+                phoneVerificationTOken = token.toString()
+                phoneAuthListner.onCodeSent()
+            }
+        }
+
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                this.phoneNumber , // Phone number to verify
+                30, // Timeout duration
+                TimeUnit.SECONDS, // Unit of timeout
+                currentActivity, // Activity (for callback binding)
+                callbacks) // OnVerificationStateChangedCallbacks
+    }
+
+    fun phoneAuthVerification(code: String) {
+        val credential = PhoneAuthProvider.getCredential(phoneVerificationId!!, code)
+        signInWithPhoneAuthCredential(credential)
+    }
+
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(currentActivity) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success")
+
+
+                        requestUserProfileAPI("",
+                                "", "", phoneNumber, "", "OTP", phoneNumber )
+
+
+                        // ...
+                    } else {
+                        listener.onFailure()
+                        // Sign in failed, display a message and update the UI
+                        Log.w(TAG, "signInWithCredential:failure", task.exception)
+                        if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            // The verification code entered was invalid
+                        }
+                    }
+                }
+    }
+
+    interface PhoneAuthListener {
+        fun onCodeSent()
+
+    }
+
+}

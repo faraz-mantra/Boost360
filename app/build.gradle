@@ -67,7 +67,7 @@ android {
         versionCode 2019080075
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
 
     }
     aaptOptions {
@@ -216,7 +216,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.makeramen:roundedimageview:1.5.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.2'
-    implementation 'com.facebook.android:facebook-android-sdk:4.16.1'
+    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
     implementation 'com.twitter.sdk.android:twitter-core:3.0.0'
     implementation 'com.wdullaer:materialdatetimepicker:1.0.1'
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -252,4 +252,6 @@ dependencies {
 
     //presignup library
     implementation project(path: ':presignup')
+
+    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
 }

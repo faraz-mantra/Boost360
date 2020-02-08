@@ -4,19 +4,21 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.appcompat.widget.Toolbar;
+
 import android.text.InputType;
-import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,8 +32,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
+import com.boost.presignup.utils.CustomFirebaseAuthHelpers;
+import com.boost.presignup.utils.CustomFirebaseAuthListeners;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.facebook.CallbackManager;
+import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -48,6 +56,7 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 import com.thinksity.Specific;
 
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,23 +76,27 @@ public class Login_MainActivity extends AppCompatActivity implements
     String userNameText,passwordText ;
     ProgressDialog progressDialog ;
 
-    private Toolbar toolbar;
+    //private Toolbar toolbar;
     private TextView forgotPassword;
     boolean isUpdatedOnServer = true;
-    private TextView headerText;
+    //private TextView headerText;
     private Intent dashboardIntent;
     private RichEditor mEditor;
-    private TextView mPreview;
+    private TextView mPreview, tvHeadingText;
+    private CardView cvFacebookLogin, cvGoogleLogin, cvOtpVerification;
+    private LoginButton loginFacebookButton;
+    private CustomFirebaseAuthHelpers customFirebaseAuthHelpers;
+    private CallbackManager callbackManager;
     /*private String[] permission = new String[]{Manifest.permission.READ_SMS,
             Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};*/
     private final static int READ_MESSAGES_ID=221;
     LinearLayout parent_layout;
-    TextView termAndPolicyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_main);
+
+        setContentView(R.layout.activity_login_main_v2);
         Methods.isOnline(Login_MainActivity.this);
 
         bus = BusProvider.getInstance().getBus();
@@ -91,13 +104,17 @@ public class Login_MainActivity extends AppCompatActivity implements
         dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
         dashboardIntent.putExtras(getIntent());
         parent_layout = (LinearLayout) findViewById(R.id.parent_layout);
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        termAndPolicyTextView = (TextView) findViewById(R.id.term_and_policy);
-        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(getString(R.string.welcome_back));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        cvFacebookLogin = findViewById(R.id.cv_facebook_login);
+        loginFacebookButton = findViewById(R.id.facebook_login_button);
+        cvGoogleLogin = findViewById(R.id.cv_google_login);
+        cvOtpVerification = findViewById(R.id.cv_otp);
+
+        //toolbar = (Toolbar) findViewById(R.id.app_bar);
+       // headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        //headerText.setText(getString(R.string.welcome_back));
+       // setSupportActionBar(toolbar);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+  //      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         WebEngageController.trackEvent("LOGIN","Login",session.getFpTag());
         userName = (EditText) findViewById(R.id.userNameEditText);
         password = (EditText) findViewById(R.id.passwordEditText);
@@ -125,10 +142,15 @@ public class Login_MainActivity extends AppCompatActivity implements
                 return false;
             }
         });
+
+        findViewById(R.id.im_back_button).setOnClickListener(v -> {
+            Login_MainActivity.this.onBackPressed();
+        });
+
         forgotPassword = (TextView) findViewById(R.id.forgotPwdTextView);
+        forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         forgotPassword.setOnClickListener(this);
-        termAndPolicyTextView.setText(Methods.fromHtml("By clicking Login, you agree to our <a href=\""+getString(R.string.settings_tou_url)+"\"><u>Terms and Conditions</u></a>  and that you have read our <a href=\""+getString(R.string.settings_privacy_url)+"\"><u>Privacy Policy</u></a>."));
-        termAndPolicyTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageView userNameIcon = (ImageView) findViewById(R.id.userNameIcon);
         ImageView passwordIcon = (ImageView) findViewById(R.id.passwordIcon);
@@ -162,7 +184,59 @@ public class Login_MainActivity extends AppCompatActivity implements
             }
         });
 
-        //getPermission();
+       CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
+           @Override
+           public void onSuccess(@Nullable UserProfileResponse response) {
+                Log.i(Login_MainActivity.class.getName(), new Gson().toJson(response));
+                if(progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+           }
+
+           @Override
+           public void onFailure() {
+               if(progressDialog != null && progressDialog.isShowing()) {
+                   progressDialog.dismiss();
+               }
+                Methods.showSnackBarNegative(Login_MainActivity.this, "Facebook login failed");
+           }
+       };
+
+       cvFacebookLogin.setOnClickListener(v -> {
+
+           progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
+           progressDialog.setCancelable(false);
+
+           loginFacebookButton.performClick();
+           callbackManager = CallbackManager.Factory.create();
+           customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners);
+           customFirebaseAuthHelpers.startFacebookLogin(loginFacebookButton, callbackManager);
+       });
+
+        cvGoogleLogin.setOnClickListener(v -> {
+            progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
+            progressDialog.setCancelable(true);
+
+            customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners);
+            customFirebaseAuthHelpers.startGoogleLogin();
+        });
+
+        cvOtpVerification.setOnClickListener(v -> {
+            gotoMobileOtpVerificationFragment();
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(customFirebaseAuthHelpers != null) {
+            if(callbackManager != null) {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+            }else{
+                customFirebaseAuthHelpers.googleLoginActivityResult(requestCode, data);
+            }
+        }
     }
 
     @Override
@@ -450,5 +524,67 @@ public class Login_MainActivity extends AppCompatActivity implements
             default:
                 break;
         }
+    }
+
+    private void startPhoneNumberAuth(String phoneNumber) {
+        progressDialog = ProgressDialog.show(this, "", "Loading");
+
+        customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, new CustomFirebaseAuthListeners() {
+            @Override
+            public void onSuccess(@Nullable UserProfileResponse response) {
+                if(progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure() {
+                if(progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to login");
+            }
+        });
+
+        customFirebaseAuthHelpers.startPhoneAuth(phoneNumber, new CustomFirebaseAuthHelpers.PhoneAuthListener() {
+            @Override
+            public void onCodeSent() {
+                if(progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                gotoOtpVerificationFragment(phoneNumber);
+            }
+        });
+    }
+
+    private void gotoMobileOtpVerificationFragment() {
+
+        MobileOtpFragment.OnMobileProvidedListener onMobileProvidedListener = mobileNumber -> startPhoneNumberAuth(mobileNumber);
+
+        MobileOtpFragment mobileOtpFragment = new MobileOtpFragment(onMobileProvidedListener);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.fl_parent_layout, mobileOtpFragment).commit();
+    }
+
+
+    private void gotoOtpVerificationFragment(String phoneNumber) {
+        MobileOtpVerificationFragment.OnOTPProvidedListener onOTPProvidedListener = new MobileOtpVerificationFragment.OnOTPProvidedListener () {
+
+            @Override
+            public void onOTPProvided(String otp) {
+                submitUserOtp(otp);
+            }
+
+            @Override
+            public String getMobileEntered() {
+                return phoneNumber;
+            }
+        };
+
+        MobileOtpVerificationFragment otpVerificationFragment = new MobileOtpVerificationFragment(onOTPProvidedListener);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fl_parent_layout, otpVerificationFragment).commit();
+    }
+
+    private void submitUserOtp(String otp) {
+        progressDialog = ProgressDialog.show(this, "", "Loading");
+        customFirebaseAuthHelpers.phoneAuthVerification(otp);
+
     }
 }

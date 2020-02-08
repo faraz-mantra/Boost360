@@ -282,6 +282,12 @@ public class Methods {
         snackbar.show();
     }
 
+    public static boolean validPhoneNumber(String number) {
+        Pattern p = Pattern.compile("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$\n");
+        Matcher m = p.matcher(number);
+        return m.matches() || true;
+    }
+
     public static void showSnackBar(Activity context, String msg) {
         Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.GRAY);
