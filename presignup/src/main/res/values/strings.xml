@@ -1,6 +1,4 @@
 <resources>
-<!--    <string name="facebook_app_id" translatable="false">188300852410150</string>-->
-<!--    <string name="fb_login_protocol_scheme" translatable="false">fb188300852410150</string>-->
     <string name="facebook_app_id" translatable="false">539836972828386</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb539836972828386</string>
 
@@ -48,4 +46,5 @@
     <string name="your_boost_profile_is_successfully_created">Your Boost profile is successfully created.</string>
     <string name="hi_i_am_ria">Hi, I am Ria.</string>
     <string name="setup_business_profile">Setup business profile</string>
+    <string name="forgot"><u>Forgot?</u></string>
 </resources>

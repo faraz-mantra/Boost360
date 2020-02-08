@@ -43,4 +43,5 @@
     <string name="your_boost_profile_is_successfully_created">Your Boost profile is successfully created.</string>
     <string name="hi_i_am_ria">Hi, I am Ria.</string>
     <string name="setup_business_profile">Setup business profile</string>
+    <string name="forgot"><u>Forgot?</u></string>
 </resources>

@@ -313,8 +313,10 @@ class PopUpDialogFragment : DialogFragment() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        Toast.makeText(context, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "SignIn Failed: "+task.exception!!.message,
+                                Toast.LENGTH_LONG).show()
+                        mAuth.signOut()
+                        LoginManager.getInstance().logOut();
                     }
 
                     // ...

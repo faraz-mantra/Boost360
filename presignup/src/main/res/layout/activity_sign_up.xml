@@ -65,7 +65,9 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:drawableStart="@drawable/ic_user"
         android:drawablePadding="@dimen/_10sdp"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
         android:hint="@string/your_name"
+        android:inputType="text"
         android:background="@drawable/edt_bg_selector"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
@@ -74,7 +76,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/user_email"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:drawablePadding="@dimen/_10sdp"
         android:hint="@string/you_email_com"
@@ -83,16 +85,17 @@
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_password_til"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_25sdp"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toBottomOf="@+id/user_email"
         app:passwordToggleEnabled="true"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:hintEnabled="false"
         >
         <androidx.appcompat.widget.AppCompatEditText
@@ -101,7 +104,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_key"
             android:hint="@string/create_a_password"
-            android:drawablePadding="@dimen/_10sdp"
+            android:drawablePadding="@dimen/_8sdp"
             android:background="@drawable/edt_bg_selector"
             app:layout_constraintEnd_toStartOf="@+id/endGuideline"
             app:layout_constraintHorizontal_bias="0.0"
@@ -112,25 +115,25 @@
 
 
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/password_visiblity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_eye"
-        android:visibility="gone"
-        android:padding="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@id/endGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/user_email"
-        app:layout_constraintBottom_toTopOf="@id/user_mobile"/>
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/password_visiblity"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_eye"-->
+<!--        android:visibility="gone"-->
+<!--        android:padding="@dimen/_10sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/endGuideline"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/user_email"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/user_mobile"/>-->
 
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/user_mobile"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:drawablePadding="@dimen/_10sdp"
-        android:inputType="number"
+        android:inputType="phone"
         android:background="@drawable/edt_bg_selector"
         android:hint="@string/_10_digit_mobile_number"
         android:drawableStart="@drawable/ic_india_flag"

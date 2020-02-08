@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -55,6 +56,8 @@ class SignUpActivity : AppCompatActivity() {
 
                 user_email.setText(email)
                 user_email.isClickable = false
+                user_email.isFocusable = false
+
                 user_name.setText(personName)
             } else if (intent.getStringExtra("provider").equals("FACEBOOK")) {
                 profileUrl = intent.getStringExtra("url")
@@ -65,6 +68,7 @@ class SignUpActivity : AppCompatActivity() {
 
                 user_email.setText(email)
                 user_email.isClickable = false
+                user_email.isFocusable = false
                 user_name.setText(personName)
 
             } else if (intent.getStringExtra("provider").equals("EMAIL")) {
@@ -83,15 +87,6 @@ class SignUpActivity : AppCompatActivity() {
         ApiService = retrofit.create(Apis::class.java)
 
 
-        password_visiblity.setOnClickListener {
-            if (passwordVisiblity) {
-                user_password.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
-                passwordVisiblity = false
-            } else {
-                user_password.inputType = InputType.TYPE_CLASS_TEXT
-                passwordVisiblity = true
-            }
-        }
 
         back_button.setOnClickListener {
             finish()
@@ -133,7 +128,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun validateInput(): Boolean {
-        if (user_email.text!!.isEmpty() && user_password.text!!.isEmpty() && user_mobile.text!!.isEmpty()) {
+        if (user_name.text!!.isEmpty() || user_email.text!!.isEmpty() || user_password.text!!.isEmpty() || user_mobile.text!!.isEmpty()) {
             Toast.makeText(applicationContext, "Fields are Empty!!", Toast.LENGTH_SHORT).show()
             return false
         }

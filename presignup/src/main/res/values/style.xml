@@ -91,6 +91,27 @@
         <item name="android:background">@drawable/google_button_style</item>
         <!--        <item name="android:fontFamily"></item>-->
     </style>
+
+    <style name="SignUpLoginFacebookButtonStyle" >
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/facebook_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
+    <style name="SignUpLoginGoogleButtonStyle" >
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/google_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
     <style name="EmailButtonStyle" >
         <item name="android:paddingTop">@dimen/_8sdp</item>
         <item name="android:paddingBottom">@dimen/_8sdp</item>

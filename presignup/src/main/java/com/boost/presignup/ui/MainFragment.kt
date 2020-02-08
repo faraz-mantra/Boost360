@@ -161,14 +161,16 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         root.mute_video.setOnClickListener {
-            if(muteState) {
-                setVolume(100)
-                muteState = false
-                root.mute_icon.setImageResource(R.drawable.ic_unmute)
-            }else{
-                setVolume(0)
-                muteState = true
-                root.mute_icon.setImageResource(R.drawable.ic_mute)
+            if(root.videoPlayer.isPlaying) {
+                if (muteState) {
+                    setVolume(100)
+                    muteState = false
+                    root.mute_icon.setImageResource(R.drawable.ic_unmute)
+                } else {
+                    setVolume(0)
+                    muteState = true
+                    root.mute_icon.setImageResource(R.drawable.ic_mute)
+                }
             }
         }
 

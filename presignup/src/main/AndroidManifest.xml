@@ -4,10 +4,13 @@
     package="com.boost.presignup">
 
     <application>
-        <activity android:name=".SignUpConfirmation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SignUpActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".SignUpLoginActivity"></activity>
+        <activity
+            android:name=".SignUpConfirmation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignUpActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"

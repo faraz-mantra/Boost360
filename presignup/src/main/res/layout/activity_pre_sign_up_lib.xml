@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+            app:layout_constraintGuide_begin="@dimen/_15sdp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/topGuideline"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/_20sdp" />
+            app:layout_constraintGuide_end="@dimen/_15sdp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottomGuideline"
@@ -91,7 +91,7 @@
             <!--                android:gravity="center"/>-->
             <LinearLayout
                 android:id="@+id/language_layout"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:gravity="center"
@@ -108,9 +108,9 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
+                        android:onClick="@{viewModel.eventHandler::onSetUpEnglishVideoClick}"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/english"
-                        android:onClick="@{viewModel.eventHandler::onSetUpEnglishVideoClick}"/>
+                        android:text="@string/english" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/hindi_button"
@@ -119,9 +119,9 @@
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
                         android:layout_toRightOf="@id/english_button"
+                        android:onClick="@{viewModel.eventHandler::onSetUpHindiVideoClick}"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/hindi"
-                        android:onClick="@{viewModel.eventHandler::onSetUpHindiVideoClick}"/>/>
+                        android:text="@string/hindi" />/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/telugu_button"
@@ -130,9 +130,9 @@
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
                         android:layout_toRightOf="@id/hindi_button"
+                        android:onClick="@{viewModel.eventHandler::onSetUpTeluguVideoClick}"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/telugu"
-                        android:onClick="@{viewModel.eventHandler::onSetUpTeluguVideoClick}"/>
+                        android:text="@string/telugu" />
 
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -141,9 +141,9 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
+                        android:onClick="@{viewModel.eventHandler::onSetUpTamilVideoClick}"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/tamil"
-                        android:onClick="@{viewModel.eventHandler::onSetUpTamilVideoClick}"/>
+                        android:text="@string/tamil" />
 
 
                 </LinearLayout>
@@ -160,9 +160,9 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
+                        android:onClick="@{viewModel.eventHandler::onSetUpMalayalamVideoClick}"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/malayalam"
-                        android:onClick="@{viewModel.eventHandler::onSetUpMalayalamVideoClick}"/>
+                        android:text="@string/malayalam" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/kannada_button"
@@ -171,10 +171,10 @@
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
                         android:layout_toRightOf="@id/telugu_button"
-                        android:visibility="gone"
+                        android:onClick="@{viewModel.eventHandler::onSetUpKannadaVideoClick}"
                         android:padding="@dimen/_2sdp"
                         android:text="@string/kannada"
-                        android:onClick="@{viewModel.eventHandler::onSetUpKannadaVideoClick}"/>
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/marati_button"
@@ -182,9 +182,9 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
+                        android:onClick="@{viewModel.eventHandler::onSetUpMaratiVideoClick}"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/marathi"
-                        android:onClick="@{viewModel.eventHandler::onSetUpMaratiVideoClick}"/>
+                        android:text="@string/marathi" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -237,7 +237,9 @@
             style="@style/CreateAccountButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+
             android:fontFamily="@font/open_sans_bold"
             android:text="@string/create_account"
             android:visibility="gone"
@@ -251,7 +253,8 @@
             style="@style/LoginButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/login"
             android:visibility="gone"
