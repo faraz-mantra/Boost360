@@ -9,6 +9,7 @@ import android.util.Log;
 import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
+import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
@@ -67,6 +68,10 @@ public class Get_FP_Details_Service {
                                 }
                                 if (SplashScreen_Activity.pd != null) {
                                     SplashScreen_Activity.pd.dismiss();
+                                }
+
+                                if(Login_MainActivity.progressDialog != null && Login_MainActivity.progressDialog.isShowing()) {
+                                    Login_MainActivity.progressDialog.dismiss();
                                 }
 
                             }

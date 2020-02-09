@@ -80,7 +80,7 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     UserSessionManager session;
     String userNameText,passwordText ;
-    ProgressDialog progressDialog ;
+    public static ProgressDialog progressDialog ;
     String currentProvider = "";
 
     //private Toolbar toolbar;
@@ -635,6 +635,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                     +getString(R.string.message_2) +
                     "\n" + getString(R.string.message_1));
         }else{
+            progressDialog = ProgressDialog.show(this, "", "Loading");
+
             Result result = userProfileResponse.getResult();
             session.storeISEnterprise(result.getIsEnterprise()+"");
             session.storeIsThinksity((result.getSourceClientId()!= null &&
