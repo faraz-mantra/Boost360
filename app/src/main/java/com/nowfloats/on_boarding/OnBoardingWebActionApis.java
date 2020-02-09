@@ -1,5 +1,6 @@
 package com.nowfloats.on_boarding;
 
+import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.on_boarding.models.OnBoardingAddModel;
 import com.nowfloats.on_boarding.models.OnBoardingDataModel;
@@ -30,5 +31,8 @@ public interface OnBoardingWebActionApis {
     @POST("/fp_onboarding/update-data")
     @Headers({"Authorization: " + ON_BOARDING_KEY})
     void updateData(@Body OnBoardingUpdateModel model, Callback<String> callback);
+
+    @POST("/user/v9/floatingPoint/MerchantProfileStatus")
+    void getMerchantProfieStatus(@Query("clientId") String clientId, @Body String[] fpIds, Callback<ConnectUserProfileResponse> connectUserProfileResponseCallback);
 
 }

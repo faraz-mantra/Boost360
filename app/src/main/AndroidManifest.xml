@@ -544,6 +544,7 @@
         <activity
             android:name="com.nowfloats.Login.Login_MainActivity"
             android:label="@string/title_activity_login__main"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

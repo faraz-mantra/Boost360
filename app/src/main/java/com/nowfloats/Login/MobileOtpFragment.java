@@ -1,9 +1,12 @@
 package com.nowfloats.Login;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -48,6 +51,13 @@ public class MobileOtpFragment extends Fragment {
             }
             onMobileProvidedListener.onMobileProvided(phoneNumber);
         });
+
+        etPhoneNumber.requestFocus();
+
+        new Handler().postDelayed(() -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(etPhoneNumber, InputMethodManager.SHOW_IMPLICIT);
+        }, 500);
 
         return v;
     }

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -47,6 +48,7 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.helper.ui.KeyboardUtil;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.util.BusProvider;
@@ -108,8 +110,13 @@ public class Login_MainActivity extends AppCompatActivity implements
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         setContentView(R.layout.activity_login_main_v2);
         Methods.isOnline(Login_MainActivity.this);
+
+        new KeyboardUtil(this, findViewById(R.id.fl_parent_layout));
+
 
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),Login_MainActivity.this);
@@ -130,6 +137,11 @@ public class Login_MainActivity extends AppCompatActivity implements
         WebEngageController.trackEvent("LOGIN","Login",session.getFpTag());
         userName = (EditText) findViewById(R.id.userNameEditText);
         password = (EditText) findViewById(R.id.passwordEditText);
+
+        new Handler().postDelayed(() -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(userName, InputMethodManager.SHOW_IMPLICIT);
+        }, 500);
 
         password.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -264,6 +276,11 @@ public class Login_MainActivity extends AppCompatActivity implements
             if(callbackManager != null) {
                 callbackManager.onActivityResult(requestCode, resultCode, data);
             }else{
+                if(resultCode != RESULT_OK) {
+                    if(progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+                    Methods.showSnackBar(this, "Login failed. Please try again");
+                    return;
+                }
                 customFirebaseAuthHelpers.googleLoginActivityResult(requestCode, data);
             }
         }

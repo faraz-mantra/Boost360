@@ -35,6 +35,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.ProductGallery.ProductGalleryActivity;
+import com.nowfloats.helper.ui.KeyboardUtil;
 import com.nowfloats.on_boarding.models.OnBoardingModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;
@@ -68,6 +69,8 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
         supportRequestWindowFeature(FEATURE_NO_TITLE);
         setContentView(R.layout.activity_onboarding);
         OnBoardingModel mOnBoardingModel = getIntent().getParcelableExtra("data");
+        new KeyboardUtil(this, findViewById(R.id.fl_parent_layout));
+
         if (mOnBoardingModel == null) {
             finish();
             return;
@@ -206,9 +209,10 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             Log.i(Login_MainActivity.class.getName(), new Gson().toJson(response));
             if(response != null) {
 
-                if(mobileOtpVerificationFragment != null && channel.equals("OTP")) {
-                    getSupportFragmentManager().popBackStackImmediate();
-                    getSupportFragmentManager().popBackStackImmediate();
+                if(channel.equals("OTP")) {
+                   while(getSupportFragmentManager().getBackStackEntryCount() != 0) {
+                       getSupportFragmentManager().popBackStackImmediate();
+                   }
                 }
 
                 Toast.makeText(OnBoardingActivity.this, "Connected", Toast.LENGTH_LONG).show();

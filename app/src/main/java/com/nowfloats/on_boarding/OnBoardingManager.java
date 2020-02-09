@@ -1,5 +1,6 @@
 package com.nowfloats.on_boarding;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,12 +8,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResult;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.on_boarding.models.OnBoardingDataModel;
 import com.nowfloats.on_boarding.models.OnBoardingModel;
 import com.nowfloats.on_boarding.models.OnBoardingStepsModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -60,6 +64,30 @@ public class OnBoardingManager implements OnBoardingCallback {
         mContext.startActivity(i);
     }
 
+    public void getMerchantProfileCOnnection(final String fptag, final View mLockLayout) {
+
+        UserSessionManager session =new UserSessionManager(mContext, (Activity)mContext);
+
+        OnBoardingWebActionApis apis = Constants.restAdapterDev.create(OnBoardingWebActionApis.class);
+        String[] arr = new String[]{session.getFPID()};
+
+        apis.getMerchantProfieStatus(Constants.clientId, arr, new Callback<ConnectUserProfileResponse>() {
+            @Override
+            public void success(ConnectUserProfileResponse response, Response response1) {
+                ConnectUserProfileResult result = response.getResult();
+                session.isGoogleAuthDone(result.getChannels().getGOOGLE());
+                session.isFacebookAuthDone(result.getChannels().getFACEBOOK());
+                session.isOTPAuthDone(result.getChannels().getOTP());
+                getOnBoardingData(fptag, mLockLayout);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                BoostLog.e("ggg", error.getLocalizedMessage());
+            }
+        });
+    }
+
     public void getOnBoardingData(final String fptag, final View mLockLayout) {
 
         Log.d("getOnBoardingData", "I am here");
@@ -86,13 +114,13 @@ public class OnBoardingManager implements OnBoardingCallback {
                     }
 
                     sharedPreferences.edit().putBoolean(Key_Preferences.ON_BOARDING_STATUS, stepsModel.isComplete()).apply();
-                    if (stepsModel.isComplete()) {
-                        if (mLockLayout != null) {
-                            mLockLayout.setVisibility(View.GONE);
-                        }
-                        MixPanelController.track(MixPanelController.ON_BOARDING_COMPLETE, null);
-                        return;
-                    }
+//                    if (stepsModel.isComplete()) {
+//                        if (mLockLayout != null) {
+//                            mLockLayout.setVisibility(View.GONE);
+//                        }
+//                        MixPanelController.track(MixPanelController.ON_BOARDING_COMPLETE, null);
+//                        return;
+//                    }
                     for (int i = 0; i < 6; i++) {
                         OnBoardingModel.ScreenData data = new OnBoardingModel.ScreenData();
                         switch (i) {
@@ -133,7 +161,7 @@ public class OnBoardingManager implements OnBoardingCallback {
 
             @Override
             public void failure(RetrofitError error) {
-
+                BoostLog.d("ggg", "error");
             }
         });
     }

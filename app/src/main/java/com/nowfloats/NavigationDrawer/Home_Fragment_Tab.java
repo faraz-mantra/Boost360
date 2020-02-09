@@ -453,8 +453,8 @@ public class Home_Fragment_Tab extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if (!pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0")))&& !dialogAlreadyShown) {
-            onBoardingManager.getOnBoardingData(session.getFpTag(),null);
+        if ((!session.isAllAuthSet() || !pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))))&& !dialogAlreadyShown) {
+            onBoardingManager.getMerchantProfileCOnnection(session.getFpTag(),null);
             dialogAlreadyShown=true;
         }
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {

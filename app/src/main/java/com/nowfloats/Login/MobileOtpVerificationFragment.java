@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,13 +16,14 @@ import androidx.fragment.app.Fragment;
 import com.mukesh.OtpView;
 import com.thinksity.R;
 
-import io.separ.neural.inputmethod.indic.Constants;
-
 public class MobileOtpVerificationFragment extends Fragment {
+
+    private final String LOG_TAG = "BOOST";
 
     private OnOTPProvidedListener onOTPProvidedListener;
     private CardView nextButton;
-    private TextView tvHint;
+    private TextView tvHint, tvResend;
+    private View tvResendUnderline;
 
     private OtpView otpView;
 
@@ -66,15 +66,26 @@ public class MobileOtpVerificationFragment extends Fragment {
             tvHint.setText(tvHint.getText() + " "+maskedMobile);
         }
 
-        TextView tvResend = v.findViewById(R.id.resend_tv);
+        startOTPResendOperation(v);
+        return v;
+    }
+
+    private void startOTPResendOperation(View v) {
+
+        tvResend = v.findViewById(R.id.resend_tv);
+        tvResendUnderline = v.findViewById(R.id.resend_underline);
+        tvResendUnderline.setVisibility(View.GONE);
+
         new Handler().postDelayed(() -> {
-            tvResend.setVisibility(View.VISIBLE);
+            tvResendUnderline.setVisibility(View.VISIBLE);
         }, 30000);
+
 
         tvResend.setOnClickListener(view -> {
             onOTPProvidedListener.onResend(onOTPProvidedListener.getMobileEntered());
         });
 
-        return v;
+
     }
+
 }

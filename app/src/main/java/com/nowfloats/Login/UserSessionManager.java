@@ -598,6 +598,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_FP_ID, null);
     }
 
+    public boolean isAllAuthSet() {
+        return getGoogleAuthDone() && getOTPAuthDone() && getFacebookAuthDone();
+    }
 
     public void storeFacebookPageURL(String imageURL) {
         editor.putString(KEY_FACEBOOK_IMAGE_URL, imageURL);

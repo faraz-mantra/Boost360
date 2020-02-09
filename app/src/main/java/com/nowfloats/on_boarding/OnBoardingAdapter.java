@@ -68,7 +68,6 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void addAuthScreens() {
 
-
         ArrayList<OnBoardingModel.ScreenData> data = new ArrayList<>();
         OnBoardingModel.ScreenData facebookData = new OnBoardingModel.ScreenData();
         facebookData.key = "FACEBOOK";
