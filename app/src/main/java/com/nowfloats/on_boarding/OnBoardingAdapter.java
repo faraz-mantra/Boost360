@@ -17,11 +17,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nowfloats.Login.AuthLoginInterface;
+import com.nowfloats.Login.LoginManager;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.on_boarding.models.OnBoardingModel;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 16-03-2018.
@@ -49,12 +56,40 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         descriptions = mContext.getResources().getStringArray(R.array.on_boarding_description);
         titles = mContext.getResources().getStringArray(R.array.on_boarding_titles);
         buttonText = mContext.getResources().getStringArray(R.array.on_boarding_btnTexts);
+
+        addAuthScreens();
     }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_onboarding_item,parent,false);
         return new MyViewHolder(view);
+    }
+
+    private void addAuthScreens() {
+
+
+        ArrayList<OnBoardingModel.ScreenData> data = new ArrayList<>();
+        OnBoardingModel.ScreenData facebookData = new OnBoardingModel.ScreenData();
+        facebookData.key = "FACEBOOK";
+        facebookData.setIsComplete(sharedPreferences.getBoolean(facebookData.getKey(), false));
+
+        data.add(facebookData);
+
+        OnBoardingModel.ScreenData googleData = new OnBoardingModel.ScreenData();
+        googleData.key = "GOOGLE";
+        googleData.setIsComplete(sharedPreferences.getBoolean(googleData.getKey(), false));
+
+        data.add(googleData);
+
+        OnBoardingModel.ScreenData otpData = new OnBoardingModel.ScreenData();
+        otpData.key = "OTP";
+        otpData.setIsComplete(sharedPreferences.getBoolean(otpData.getKey(), false));
+
+        data.add(otpData);
+
+        data.addAll(mOnBoardingModel.getScreenDataArrayList());
+        mOnBoardingModel.setScreenDataArrayList(data);
     }
 
     @Override
@@ -82,25 +117,24 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         for (OnBoardingModel.ScreenData data : mOnBoardingModel.getScreenDataArrayList()){
             i++;
             switch (i){
-                case 0:
-
-                    break;
-                case 1:
+                case 3:
                     data.setIsComplete(sharedPreferences.getInt(Key_Preferences.SITE_HEALTH,0)>=80);
                     data.setValue(String.valueOf(sharedPreferences.getInt(Key_Preferences.SITE_HEALTH,0)));
                     break;
-                case 2:
+                case 4:
                     data.setIsComplete(sharedPreferences.getInt(Key_Preferences.CUSTOM_PAGE,0)>0);
                     break;
-                case 3:
+                case 5:
                     data.setIsComplete(sharedPreferences.getInt(Key_Preferences.PRODUCTS_COUNT,0)>0);
                     break;
-                case 4:
+                case 6:
                     data.setIsComplete(true);
                     break;
-                case 5:
+                case 7:
                     data.setIsComplete(sharedPreferences.getBoolean(Key_Preferences.WEBSITE_SHARE,false));
                     break;
+                default:
+                    data.setIsComplete(sharedPreferences.getBoolean(data.getKey(), false));
             }
             if (!data.isComplete() && mOnBoardingModel.getToBeCompletePos() == -1){
                 mOnBoardingModel.setToBeCompletePos(i);
@@ -140,7 +174,17 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             btnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mOnBoardingModel.getScreenDataArrayList().get(getAdapterPosition()).isComplete()
+                    if(titles[getAdapterPosition()].contains("via Google") || titles[getAdapterPosition()].contains("via Facebook") || titles[getAdapterPosition()].contains("via mobile number")) {
+
+                        if(titles[getAdapterPosition()].contains("via Google")) {
+                            LoginManager.getInstance().getListener().onGoogleLogin();
+                        }else if(titles[getAdapterPosition()].contains("via Facebook")){
+                            LoginManager.getInstance().getListener().onFacebookLogin();
+                        }else{
+                            LoginManager.getInstance().getListener().onOTPLogin();
+                        }
+
+                    }else if (mOnBoardingModel.getScreenDataArrayList().get(getAdapterPosition()).isComplete()
                             || getAdapterPosition() == mOnBoardingModel.getToBeCompletePos()){
 
                         ((ItemClickListener)mContext).onItemClick(getAdapterPosition(), mOnBoardingModel.getScreenDataArrayList().get(getAdapterPosition()));
@@ -154,6 +198,9 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         void setData(int position){
+
+            boolean authInfoDisplay = titles[getAdapterPosition()].contains("via Google") || titles[getAdapterPosition()].contains("via Facebook") || titles[getAdapterPosition()].contains("via mobile number");
+
             titleTv.setText(String.format(titles[position],mOnBoardingModel.getScreenDataArrayList().get(position).getValue()+"%"));
             cardNumberTv.setText(String.valueOf(position+1));
             descriptionTv.setText(descriptions[position]);
@@ -164,7 +211,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 layout.setAlpha(1f);
                 itemView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
                 btnTv.setBackgroundResource(R.drawable.btn_bg);
-            }else if(position != mOnBoardingModel.getToBeCompletePos()){
+            }else if(position != mOnBoardingModel.getToBeCompletePos() && !authInfoDisplay){
                 layout.setAlpha(.4f);
                 completeImg.setVisibility(View.GONE);
                 itemView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.light_gray));

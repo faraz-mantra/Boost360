@@ -1,6 +1,7 @@
 package com.nowfloats.Login;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,9 @@ public class MobileOtpVerificationFragment extends Fragment {
 
     private OtpView otpView;
 
-    interface OnOTPProvidedListener {
+    public interface OnOTPProvidedListener {
         void onOTPProvided(String otp);
+        void onResend(String phoneNumber);
 
         String getMobileEntered();
     }
@@ -63,6 +65,15 @@ public class MobileOtpVerificationFragment extends Fragment {
             String maskedMobile = mobile.substring(0, 2) + "XXXXXX" + mobile.substring(8, 10);
             tvHint.setText(tvHint.getText() + " "+maskedMobile);
         }
+
+        TextView tvResend = v.findViewById(R.id.resend_tv);
+        new Handler().postDelayed(() -> {
+            tvResend.setVisibility(View.VISIBLE);
+        }, 30000);
+
+        tvResend.setOnClickListener(view -> {
+            onOTPProvidedListener.onResend(onOTPProvidedListener.getMobileEntered());
+        });
 
         return v;
     }

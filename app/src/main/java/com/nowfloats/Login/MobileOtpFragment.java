@@ -19,7 +19,7 @@ public class MobileOtpFragment extends Fragment {
     private OnMobileProvidedListener onMobileProvidedListener;
     private CardView cvNextButton;
 
-    interface OnMobileProvidedListener {
+    public interface OnMobileProvidedListener {
         void onMobileProvided(String mobileNumber);
     }
 

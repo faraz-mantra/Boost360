@@ -1,5 +1,6 @@
 package com.boost.presignup
 
+import android.app.Activity
 import android.app.Fragment
 import android.content.Context
 import android.content.Intent
@@ -26,6 +27,7 @@ import com.boost.presignup.ui.MainFragment
 import com.boost.presignup.ui.PopUpDialogFragment
 import com.boost.presignup.utils.AppConstants.Companion.ENABLE_BOTTOM_VIEW
 import com.boost.presignup.utils.AppConstants.Companion.SINGLE_LANGUAGE_BUTTON_VIEW
+import com.boost.presignup.utils.PresignupManager
 
 
 class PreSignUpActivity : AppCompatActivity() {
@@ -42,9 +44,10 @@ class PreSignUpActivity : AppCompatActivity() {
     val popUpDialogFragment = PopUpDialogFragment()
     lateinit var localeManager: LocaleManager
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        var activityContext = this
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pre_sign_up_lib)
         viewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
         binding.viewModel = viewModel
@@ -94,6 +97,9 @@ class PreSignUpActivity : AppCompatActivity() {
             popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
         }
 
+        binding.loginButton.setOnClickListener {
+            PresignupManager.getListener()?.loginClicked(activityContext)
+        }
 
         setUpMvvm()
         languageButtonSelection()

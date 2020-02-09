@@ -14,5 +14,7 @@ data class UserProfileRequest(
         @SerializedName("ProfileProperties")
         val ProfileProperties: ProfileProperties,
         @SerializedName("Provider")
-        val Provider: String
+        val Provider: String,
+        @SerializedName("FpIds")
+        var FpIds: Array<String>?
 )

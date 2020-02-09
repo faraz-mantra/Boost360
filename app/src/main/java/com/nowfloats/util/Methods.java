@@ -283,9 +283,7 @@ public class Methods {
     }
 
     public static boolean validPhoneNumber(String number) {
-        Pattern p = Pattern.compile("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$\n");
-        Matcher m = p.matcher(number);
-        return m.matches() || true;
+       return number != null && number.length() == 10;
     }
 
     public static void showSnackBar(Activity context, String msg) {

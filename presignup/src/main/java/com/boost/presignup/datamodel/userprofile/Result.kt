@@ -16,6 +16,12 @@ data class Result(
         @SerializedName("Provider")
         val Provider: String,
         @SerializedName("FpIds")
-        val FpIds: Array<String>
+        val FpIds: Array<String>,
+        @SerializedName("IsEnterprise")
+        val IsEnterprise: Boolean,
+        @SerializedName("SourceClientId")
+        val SourceClientId: String,
+        @SerializedName("ProfileAccessType")
+        val ProfileAccessType: Int
 
 )

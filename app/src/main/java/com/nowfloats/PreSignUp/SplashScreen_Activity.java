@@ -11,8 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.boost.presignup.SignUpActivity;
+import com.boost.presignup.utils.PresignupManager;
 import com.bumptech.glide.Glide;
 import com.nowfloats.Login.Fetch_Home_Data;
+import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
@@ -38,7 +41,7 @@ import java.util.ArrayList;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface {
+public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface , PresignupManager.SignUpLoginHandler {
     UserSessionManager session;
     Bus bus;
     public static ProgressDialog pd;
@@ -50,6 +53,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         setContentView(R.layout.activity_splash_screen_);
         Methods.isOnline(SplashScreen_Activity.this);
         Log.d("Splash Screen", "Splash Screen");
+        PresignupManager.INSTANCE.setListener(this);
 
        /* try {
             Constants.restAdapter = Methods.createAdapter(this,Constants.NOW_FLOATS_API_URL);
@@ -73,6 +77,16 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private Thread mThread;
+
+    @Override
+    public void loginClicked(Activity activity) {
+        MixPanelController.track(EventKeysWL.LOGIN_BUTTON, null);
+        Intent intent = new Intent(activity, Login_MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtras(getIntent());
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
     private class DataRunnable implements Runnable {
 
@@ -149,7 +163,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {
-            Intent i = new Intent(SplashScreen_Activity.this, PreSignUpActivity.class);
+            Intent i = new Intent(SplashScreen_Activity.this, com.boost.presignup.PreSignUpActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtras(getIntent());
             // Staring Login Activity

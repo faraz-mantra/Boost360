@@ -9,6 +9,7 @@ import com.boost.presignup.R
 import com.boost.presignup.SignUpActivity
 import com.boost.presignup.SignUpConfirmation
 import com.boost.presignup.datamodel.Apis
+import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse
 import com.boost.presignup.datamodel.userprofile.ProfileProperties
 import com.boost.presignup.datamodel.userprofile.UserProfileRequest
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
@@ -33,22 +34,23 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: CustomFirebaseAuthListeners){
+class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: CustomFirebaseAuthListeners, fpId: String = ""){
 
     private var TAG = "CustomFirebaseAuthHelpers"
-    private lateinit var currentActivity: Activity
-    private lateinit var mAuth: FirebaseAuth
-    private lateinit var listener: CustomFirebaseAuthListeners
-    private lateinit var ApiService: Apis
+    private var currentActivity: Activity
+    private var mAuth: FirebaseAuth
+    private var listener: CustomFirebaseAuthListeners
+    private var ApiService: Apis
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     private lateinit var phoneVerificationId: String;
     private lateinit var phoneVerificationTOken: String
     private lateinit var phoneNumber: String
+    private var userFpId: String
 
     val RC_SIGN_IN = 1
-    lateinit var mGoogleSignInClient: GoogleSignInClient
+    private var mGoogleSignInClient: GoogleSignInClient
 
-    lateinit var retrofit: Retrofit
+    private var retrofit: Retrofit
 
     private fun  FirebaseAuthHelpers(){}
 
@@ -66,7 +68,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
         ApiService = retrofit.create(Apis::class.java)
         mAuth = FirebaseAuth.getInstance()
         mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
-
+        this.userFpId = fpId
 
     }
 
@@ -78,7 +80,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
         //facebook functionality
 
 
-        facebook_login.setReadPermissions("email", "public_profile")
+        facebook_login.setPermissions("email", "public_profile")
         facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 Log.d(TAG, "facebook:onSuccess:$loginResult")
@@ -147,6 +149,8 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
             val personIdToken = acct.idToken.toString()
             val personPhoto = acct.photoUrl.toString()
 
+            mGoogleSignInClient.signOut()
+
             Log.d(TAG, "updateUI: photo = " + personPhoto);
 
             requestUserProfileAPI(personIdToken,
@@ -209,25 +213,45 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                               personName: String,
                               provider: String,
                               loginKey: String) {
+
+
         val userInfo = UserProfileRequest(
                 personIdToken,
                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
                 loginKey,
                 userPassword,
-                ProfileProperties(email, userMobile, personName, userPassword), provider)
+                ProfileProperties(email, userMobile, personName, userPassword), provider, null)
 
-        ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
-            override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
-               listener.onFailure()
-            }
+        if(userFpId == "") {
 
-            override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
-                listener.onSuccess(response.body())
-            }
-        })
+            ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
+                override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
+                    listener.onFailure()
+                }
+
+                override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+                    listener.onSuccess(response.body(), loginKey)
+                }
+            })
+        }else{
+            userInfo.FpIds = arrayOf(userFpId)
+
+            ApiService.connectUserProfile(userInfo).enqueue(object : Callback<ConnectUserProfileResponse> {
+                override fun onResponse(call: Call<ConnectUserProfileResponse>, response: Response<ConnectUserProfileResponse>) {
+                    listener.onSuccess(response.body())
+                }
+
+                override fun onFailure(call: Call<ConnectUserProfileResponse>, t: Throwable) {
+                    listener.onFailure()
+                }
+
+
+            })
+        }
     }
 
     fun startPhoneAuth(phoneNumber: String, phoneAuthListner: PhoneAuthListener) {
+
         this.phoneNumber = "+91"+phoneNumber
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationFailed(p0: FirebaseException) {

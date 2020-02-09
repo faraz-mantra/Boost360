@@ -554,10 +554,44 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     public void storeFPID(String fpID) {
+
+        if(fpID == null) return;
+
         String fpId = fpID.replaceAll("\"", "");
         // fpId = fpId.replace
         editor.putString(KEY_FP_ID, fpId);
         editor.apply();
+    }
+
+    public void isFacebookAuthDone(boolean done) {
+        editor.putBoolean("FACEBOOK", done);
+        editor.apply();
+    }
+
+    public boolean getFacebookAuthDone() {
+        return pref.getBoolean("FACEBOOK", false);
+    }
+
+    public void isOTPAuthDone(boolean done) {
+        editor.putBoolean("OTP", done);
+        editor.apply();
+    }
+    public void isAuthdone(String key, boolean done) {
+        editor.putBoolean(key, done);
+        editor.apply();
+    }
+
+    public boolean getOTPAuthDone() {
+        return pref.getBoolean("OTP", false);
+    }
+
+    public void isGoogleAuthDone(boolean done) {
+        editor.putBoolean("GOOGLE", done);
+        editor.apply();
+    }
+
+    public boolean getGoogleAuthDone() {
+        return pref.getBoolean("GOOGLE", false);
     }
 
     public String getFPID() {

@@ -742,6 +742,9 @@
         <item>used cars</item>
     </string-array>
     <string-array name="on_boarding_description">
+        <item>To ensure your existing Boost account and your Google account work well together for a secure and faster log in, authenticate your Google account.</item>
+        <item>To ensure your existing Boost account and your Facebook account work well together for a secure and faster log in, authenticate your Facebook account.</item>
+        <item>To ensure your existing Boost account and your Mobile Number work well together for a secure and faster log in, authenticate your Number via OTP.</item>
         <item>Hey, this is your website management dashboard. Let us tell you more about the product and how to use it to get discovered online. Visit our <a href="https://nowfloats.com/FAQ">FAQ</a> section for more information.</item>
         <item>Site health indicates readiness of your website for online discovery. These basic factors ensure that search engines take notice of your new website.</item>
         <item>Now you are ready for getting discovered online, but your site is not optimized for website visitors. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us" Page.</item>
@@ -750,6 +753,9 @@
         <item>Now your website experience is complete for website visitors to discover. Now, let us help you get 20 unique visitors. Why don\'t you broadcast your website on WhatsApp or share it with your Family and Friends group?</item>
     </string-array>
     <string-array name="on_boarding_titles">
+        <item>Enable faster login via Google</item>
+        <item>Enable faster login via Facebook</item>
+        <item>Enable faster login via mobile number</item>
         <item>Welcome Aboard!</item>
         <item>Your Site Health Score is %s!</item>
         <item>Tell more about your Business!</item>
@@ -758,6 +764,9 @@
         <item>Let\'s get some of your friends to see your site!</item>
     </string-array>
     <string-array name="on_boarding_btnTexts">
+        <item>Continue with Google</item>
+        <item>Authorize Facebook Profile</item>
+        <item>Authorize Mobile Number</item>
         <item>Learn How This Product Works</item>
         <item>Take Your Site Health To Minimum 80%</item>
         <item>Add An \"About Us\" Page</item>
@@ -1835,4 +1844,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="button_add"><u>Add</u></string>
     <string name="null_string_exception">Don\'t enter empy updates</string>
     <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
+    <string name="uh_oh">Uh-Oh!</string>
+    <string name="not_auth">not authorized.</string>
+    <string name="message_1"><![CDATA[For now, please login via username & password. Once you do that, post login, we’ll show you an alert to authorize different channels such as gmail, facebook etc. for faster login.]]></string>
+    <string name="message_2">is not authorized to support faster login to your Boost account.</string>
 </resources>
