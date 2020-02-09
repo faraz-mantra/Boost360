@@ -223,7 +223,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 adapter.refreshAfterComplete();
 
             }else{
-                Methods.showSnackBarNegative(OnBoardingActivity.this, "Login failed");
+               Toast.makeText(OnBoardingActivity.this, "Login failed", Toast.LENGTH_LONG).show();
             }
 
         }
@@ -239,7 +239,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
-            Methods.showSnackBarNegative(OnBoardingActivity.this, "Login failed");
+            Toast.makeText(OnBoardingActivity.this, "Login failed", Toast.LENGTH_LONG).show();
         }
     };
 

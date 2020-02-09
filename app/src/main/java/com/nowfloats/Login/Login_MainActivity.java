@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.NetworkResponse;
@@ -49,6 +50,7 @@ import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.helper.ui.KeyboardUtil;
+import com.nowfloats.on_boarding.OnBoardingActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.util.BusProvider;
@@ -238,7 +240,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                if(progressDialog != null && progressDialog.isShowing()) {
                    progressDialog.dismiss();
                }
-                Methods.showSnackBarNegative(Login_MainActivity.this, "login failed");
+               Toast.makeText(Login_MainActivity.this, "Login failed", Toast.LENGTH_LONG).show();
+
            }
        };
 
