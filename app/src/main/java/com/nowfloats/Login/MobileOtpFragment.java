@@ -54,11 +54,6 @@ public class MobileOtpFragment extends Fragment {
 
         etPhoneNumber.requestFocus();
 
-        new Handler().postDelayed(() -> {
-            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.showSoftInput(etPhoneNumber, InputMethodManager.SHOW_IMPLICIT);
-        }, 500);
-
         return v;
     }
 }
