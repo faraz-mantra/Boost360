@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.boost.presignup.utils.WebEngageController
 import kotlinx.android.synthetic.main.activity_sign_up_confirmation.*
 import java.net.URL
 
@@ -15,6 +16,9 @@ class SignUpConfirmation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_confirmation)
+
+        WebEngageController.trackEvent("PS_Account Creation Confirmation", "Account Creation Confirmation", "")
+
         val personName = intent.getStringExtra("person_name")
         val temp = getString(R.string.welcome) + " " + personName
         welcome_user.setText(temp)
@@ -26,6 +30,7 @@ class SignUpConfirmation : AppCompatActivity() {
         }
 //        userProfileImage.setImageURI(Uri.parse(profileUrl))
         set_up_business_profile.setOnClickListener {
+            WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
             val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.RiaChatInitActivity"))
             startActivity(intent)
         }

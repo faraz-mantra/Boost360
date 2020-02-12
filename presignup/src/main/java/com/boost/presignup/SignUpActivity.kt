@@ -14,6 +14,7 @@ import com.boost.presignup.datamodel.userprofile.ProfileProperties
 import com.boost.presignup.datamodel.userprofile.UserProfileRequest
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
 import com.boost.presignup.utils.Utils.hideSoftKeyBoard
+import com.boost.presignup.utils.WebEngageController
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
@@ -42,6 +43,8 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        WebEngageController.trackEvent("PS_Signup Form Loaded", "Signup Form Loaded", "")
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -120,6 +123,7 @@ class SignUpActivity : AppCompatActivity() {
                             } else {
                                 Log.d("createUserProfile", ">>>> Failure")
                                 Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
+                                WebEngageController.trackEvent("PS_Account Creation Failed " + provider, "Create User With Email And Password Failed "+ provider, "")
                             }
                         }
             }
@@ -163,9 +167,11 @@ class SignUpActivity : AppCompatActivity() {
         ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
             override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
                 Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
+                WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
             }
 
             override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+                WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
                 val intent = Intent(applicationContext, SignUpConfirmation::class.java)
                 intent.putExtra("profileUrl", profileUrl)
                 intent.putExtra("person_name", personName)

@@ -14,6 +14,7 @@ import com.boost.presignup.R
 import com.boost.presignup.adapter.IntroPageAdapter
 import com.boost.presignup.datamodel.SharedViewModel
 import com.boost.presignup.datamodel.SingleScreenModel
+import com.boost.presignup.utils.WebEngageController
 import kotlinx.android.synthetic.main.fragment_intro.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -72,6 +73,7 @@ class IntroFragment : Fragment() {
 
         root = inflater.inflate(R.layout.fragment_intro, container, false)
         root.replay_intro_text.setOnClickListener {
+            WebEngageController.trackEvent("PS_Clicked Replay Intro_video", "Replay Intro Video", "")
             requireActivity().onBackPressed()
         }
         root.replay_intro_text.paintFlags =

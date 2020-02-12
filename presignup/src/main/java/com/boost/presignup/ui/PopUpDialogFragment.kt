@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.boost.presignup.R
 import com.boost.presignup.SignUpActivity
+import com.boost.presignup.utils.WebEngageController
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -84,6 +85,7 @@ class PopUpDialogFragment : DialogFragment() {
                 .build()
 
         root.popup_layout.setOnClickListener {
+            WebEngageController.trackEvent("PS_Clicked outlide the pop-up area", "Clicked outlide the pop-up area", "")
                 dialog!!.dismiss()
         }
         root.view.setOnClickListener {
@@ -187,11 +189,13 @@ class PopUpDialogFragment : DialogFragment() {
                         Log.d(TAG, "signInWithCredential:success")
                         val user = mAuth.currentUser
                         AuthorizedGoogleUser(user)
+                        WebEngageController.trackEvent("PS_Auth Provider Success GOOGLE", "Provider Success GOOGLE", "")
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
                         Toast.makeText(context, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show()
+                        WebEngageController.trackEvent("PS_Auth Provider Failed GOOGLE", "Provider Failed GOOGLE", "")
                     }
 
                     // ...
@@ -296,6 +300,7 @@ class PopUpDialogFragment : DialogFragment() {
         val intent = Intent(requireContext(), SignUpActivity::class.java)
         intent.putExtra("provider", "EMAIL")
         startActivity(intent);
+        WebEngageController.trackEvent("PS_Auth Provider Success EMAIL", "Provider Success EMAIL", "")
         dialog!!.dismiss()
     }
 
@@ -310,11 +315,13 @@ class PopUpDialogFragment : DialogFragment() {
                         Log.d(TAG, "signInWithCredential:success")
                         val user = mAuth.currentUser
                         AuthorizedFacebookUser(user)
+                        WebEngageController.trackEvent("PS_Auth Provider Success FACEBOOK", "Provider Success FACEBOOK", "")
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
                         Toast.makeText(context, "SignIn Failed: "+task.exception!!.message,
                                 Toast.LENGTH_LONG).show()
+                        WebEngageController.trackEvent("PS_Auth Provider Failed FACEBOOK", "Provider Failed FACEBOOK", "")
                         mAuth.signOut()
                         LoginManager.getInstance().logOut();
                     }

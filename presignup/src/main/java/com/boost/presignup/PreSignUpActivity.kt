@@ -28,6 +28,7 @@ import com.boost.presignup.ui.PopUpDialogFragment
 import com.boost.presignup.utils.AppConstants.Companion.ENABLE_BOTTOM_VIEW
 import com.boost.presignup.utils.AppConstants.Companion.SINGLE_LANGUAGE_BUTTON_VIEW
 import com.boost.presignup.utils.PresignupManager
+import com.boost.presignup.utils.WebEngageController
 
 
 class PreSignUpActivity : AppCompatActivity() {
@@ -52,7 +53,7 @@ class PreSignUpActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
         binding.viewModel = viewModel
         navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         //custome navigation controller after language selection
         if (intent.hasExtra("fragmentState")) {
@@ -72,10 +73,10 @@ class PreSignUpActivity : AppCompatActivity() {
 
 
         langList = mutableListOf<String>(
-            resources.getString(R.string.english),
-            resources.getString(R.string.hindi),
-            resources.getString(R.string.telugu),
-            resources.getString(R.string.tamil)
+                resources.getString(R.string.english),
+                resources.getString(R.string.hindi),
+                resources.getString(R.string.telugu),
+                resources.getString(R.string.tamil)
 //            resources.getString(R.string.kannada),
 //            resources.getString(R.string.malayalam),
 //            resources.getString(R.string.marathi)
@@ -94,10 +95,12 @@ class PreSignUpActivity : AppCompatActivity() {
         }
 
         binding.createAccountButton.setOnClickListener {
+            WebEngageController.trackEvent("PS_Clicked Create account", "create account clicked", "")
             popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
         }
 
         binding.loginButton.setOnClickListener {
+            WebEngageController.trackEvent("PS_Clicked Login", "login clicked", "")
             PresignupManager.getListener()?.loginClicked(activityContext)
         }
 
@@ -108,19 +111,20 @@ class PreSignUpActivity : AppCompatActivity() {
     private fun getPopupWindow(): PopupWindow {
         val popupWindow: PopupWindow
         val listView: View = LayoutInflater.from(baseContext)
-            .inflate(R.layout.language_recyclerview, null)
+                .inflate(R.layout.language_recyclerview, null)
         val mAdapter = LanguageDropDownAdapter(
-            langList,
-            object : LanguageDropDownAdapter.RecyclerViewClickListener {
-                override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
-                    if (::mPopupWindow.isInitialized) {
-                        mPopupWindow.dismiss()
-                        dropDownStatus = false
+                langList,
+                object : LanguageDropDownAdapter.RecyclerViewClickListener {
+                    override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
+                        if (::mPopupWindow.isInitialized) {
+                            mPopupWindow.dismiss()
+                            dropDownStatus = false
+                        }
+                        binding.languageDropdownText.setText(langList.get(itemPos))
+                        binding.viewModel?.LanguageSelection(langList.get(itemPos))
+                        WebEngageController.trackEvent("PS_Language Changed to " + langList.get(itemPos), "language changed to "+ langList.get(itemPos), "")
                     }
-                    binding.languageDropdownText.setText(langList.get(itemPos))
-                    binding.viewModel?.LanguageSelection(langList.get(itemPos))
-                }
-            })
+                })
         listView.setOnClickListener {
             if (::mPopupWindow.isInitialized) {
                 mPopupWindow.dismiss()
@@ -133,9 +137,9 @@ class PreSignUpActivity : AppCompatActivity() {
         rvPopup.layoutManager = LinearLayoutManager(applicationContext)
         rvPopup.adapter = mAdapter
         popupWindow = PopupWindow(
-            listView,
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT
+                listView,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
         )
         if (Build.VERSION.SDK_INT >= 21) {
             popupWindow.elevation = 5.0f
@@ -146,19 +150,19 @@ class PreSignUpActivity : AppCompatActivity() {
     private fun getCreateAccountPopupWindow(): PopupWindow {
         val popupWindow: PopupWindow
         val listView: View = LayoutInflater.from(baseContext)
-            .inflate(R.layout.curve_popup_layout, null)
+                .inflate(R.layout.curve_popup_layout, null)
         val mAdapter = LanguageDropDownAdapter(
-            langList,
-            object : LanguageDropDownAdapter.RecyclerViewClickListener {
-                override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
-                    if (::mPopupWindow.isInitialized) {
-                        mPopupWindow.dismiss()
-                        dropDownStatus = false
+                langList,
+                object : LanguageDropDownAdapter.RecyclerViewClickListener {
+                    override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
+                        if (::mPopupWindow.isInitialized) {
+                            mPopupWindow.dismiss()
+                            dropDownStatus = false
+                        }
+                        binding.languageDropdownText.setText(langList.get(itemPos))
+                        binding.viewModel?.LanguageSelection(langList.get(itemPos))
                     }
-                    binding.languageDropdownText.setText(langList.get(itemPos))
-                    binding.viewModel?.LanguageSelection(langList.get(itemPos))
-                }
-            })
+                })
         listView.setOnClickListener {
             if (::mPopupWindow.isInitialized) {
                 mPopupWindow.dismiss()
@@ -171,9 +175,9 @@ class PreSignUpActivity : AppCompatActivity() {
         rvPopup.layoutManager = LinearLayoutManager(applicationContext)
         rvPopup.adapter = mAdapter
         popupWindow = PopupWindow(
-            listView,
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT
+                listView,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
         )
         if (Build.VERSION.SDK_INT >= 21) {
             popupWindow.elevation = 5.0f
@@ -183,24 +187,28 @@ class PreSignUpActivity : AppCompatActivity() {
 
     fun languageButtonSelection() {
         binding.englishButton.setOnClickListener {
+            WebEngageController.trackEvent("PS_Language Changed to " + langList.get(0), "language changed to "+ langList.get(0), "")
             if (!binding.viewModel!!.languageSelected.equals(langList.get(0))) {
                 styleLanguageButton(it.id)
                 binding.viewModel?.LanguageSelection(langList.get(0))
             }
         }
         binding.hindiButton.setOnClickListener {
+            WebEngageController.trackEvent("PS_Language Changed to " + langList.get(1), "language changed to "+ langList.get(1), "")
             if (!binding.viewModel!!.languageSelected.equals(langList.get(1))) {
                 styleLanguageButton(it.id)
                 binding.viewModel?.LanguageSelection(langList.get(1))
             }
         }
         binding.teluguButton.setOnClickListener {
+            WebEngageController.trackEvent("PS_Language Changed to " + langList.get(2), "language changed to "+ langList.get(2), "")
             if (!binding.viewModel!!.languageSelected.equals(langList.get(2))) {
                 styleLanguageButton(it.id)
                 binding.viewModel?.LanguageSelection(langList.get(2))
             }
         }
         binding.tamilButton.setOnClickListener {
+            WebEngageController.trackEvent("PS_Language Changed to " + langList.get(3), "language changed to "+ langList.get(3), "")
             if (!binding.viewModel!!.languageSelected.equals(langList.get(3))) {
                 styleLanguageButton(it.id)
                 binding.viewModel?.LanguageSelection(langList.get(3))
@@ -232,207 +240,207 @@ class PreSignUpActivity : AppCompatActivity() {
         when (button) {
             R.id.english_button -> {
                 binding.englishButton.background =
-                    getDrawable(R.drawable.selected_language_button_style)
+                        getDrawable(R.drawable.selected_language_button_style)
                 binding.englishButton.setTextColor(getColor(R.color.red_color))
 
                 binding.hindiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.hindiButton.setTextColor(getColor(R.color.black))
 
                 binding.kannadaButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.kannadaButton.setTextColor(getColor(R.color.black))
 
                 binding.teluguButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.teluguButton.setTextColor(getColor(R.color.black))
 
                 binding.malayalamButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.malayalamButton.setTextColor(getColor(R.color.black))
 
                 binding.tamilButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.tamilButton.setTextColor(getColor(R.color.black))
 
                 binding.maratiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.maratiButton.setTextColor(getColor(R.color.black))
             }
             R.id.hindi_button -> {
                 binding.englishButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.englishButton.setTextColor(getColor(R.color.black))
 
                 binding.hindiButton.background =
-                    getDrawable(R.drawable.selected_language_button_style)
+                        getDrawable(R.drawable.selected_language_button_style)
                 binding.hindiButton.setTextColor(getColor(R.color.red_color))
 
                 binding.kannadaButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.kannadaButton.setTextColor(getColor(R.color.black))
 
                 binding.teluguButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.teluguButton.setTextColor(getColor(R.color.black))
 
                 binding.malayalamButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.malayalamButton.setTextColor(getColor(R.color.black))
 
                 binding.tamilButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.tamilButton.setTextColor(getColor(R.color.black))
 
                 binding.maratiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.maratiButton.setTextColor(getColor(R.color.black))
             }
             R.id.kannada_button -> {
                 binding.englishButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.englishButton.setTextColor(getColor(R.color.black))
 
                 binding.hindiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.hindiButton.setTextColor(getColor(R.color.black))
 
                 binding.kannadaButton.background =
-                    getDrawable(R.drawable.selected_language_button_style)
+                        getDrawable(R.drawable.selected_language_button_style)
                 binding.kannadaButton.setTextColor(getColor(R.color.red_color))
 
                 binding.teluguButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.teluguButton.setTextColor(getColor(R.color.black))
 
                 binding.malayalamButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.malayalamButton.setTextColor(getColor(R.color.black))
 
                 binding.tamilButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.tamilButton.setTextColor(getColor(R.color.black))
 
                 binding.maratiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.maratiButton.setTextColor(getColor(R.color.black))
             }
             R.id.telugu_button -> {
                 binding.englishButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.englishButton.setTextColor(getColor(R.color.black))
 
                 binding.hindiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.hindiButton.setTextColor(getColor(R.color.black))
 
                 binding.kannadaButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.kannadaButton.setTextColor(getColor(R.color.black))
 
                 binding.teluguButton.background =
-                    getDrawable(R.drawable.selected_language_button_style)
+                        getDrawable(R.drawable.selected_language_button_style)
                 binding.teluguButton.setTextColor(getColor(R.color.red_color))
 
                 binding.malayalamButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.malayalamButton.setTextColor(getColor(R.color.black))
 
                 binding.tamilButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.tamilButton.setTextColor(getColor(R.color.black))
 
                 binding.maratiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.maratiButton.setTextColor(getColor(R.color.black))
             }
             R.id.malayalam_button -> {
                 binding.englishButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.englishButton.setTextColor(getColor(R.color.black))
 
                 binding.hindiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.hindiButton.setTextColor(getColor(R.color.black))
 
                 binding.kannadaButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.kannadaButton.setTextColor(getColor(R.color.black))
 
                 binding.teluguButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.teluguButton.setTextColor(getColor(R.color.black))
 
                 binding.malayalamButton.background =
-                    getDrawable(R.drawable.selected_language_button_style)
+                        getDrawable(R.drawable.selected_language_button_style)
                 binding.malayalamButton.setTextColor(getColor(R.color.red_color))
 
                 binding.tamilButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.tamilButton.setTextColor(getColor(R.color.black))
 
                 binding.maratiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.maratiButton.setTextColor(getColor(R.color.black))
 
             }
             R.id.tamil_button -> {
                 binding.englishButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.englishButton.setTextColor(getColor(R.color.black))
 
                 binding.hindiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.hindiButton.setTextColor(getColor(R.color.black))
 
                 binding.kannadaButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.kannadaButton.setTextColor(getColor(R.color.black))
 
                 binding.teluguButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.teluguButton.setTextColor(getColor(R.color.black))
 
                 binding.malayalamButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.malayalamButton.setTextColor(getColor(R.color.black))
 
                 binding.tamilButton.background =
-                    getDrawable(R.drawable.selected_language_button_style)
+                        getDrawable(R.drawable.selected_language_button_style)
                 binding.tamilButton.setTextColor(getColor(R.color.red_color))
 
                 binding.maratiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.maratiButton.setTextColor(getColor(R.color.black))
 
             }
             R.id.marati_button -> {
                 binding.englishButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.englishButton.setTextColor(getColor(R.color.black))
 
                 binding.hindiButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.hindiButton.setTextColor(getColor(R.color.black))
 
                 binding.kannadaButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.kannadaButton.setTextColor(getColor(R.color.black))
 
                 binding.teluguButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.teluguButton.setTextColor(getColor(R.color.black))
 
                 binding.malayalamButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.malayalamButton.setTextColor(getColor(R.color.black))
 
                 binding.tamilButton.background =
-                    getDrawable(R.drawable.un_selected_language_button_style)
+                        getDrawable(R.drawable.un_selected_language_button_style)
                 binding.tamilButton.setTextColor(getColor(R.color.black))
 
                 binding.maratiButton.background =
-                    getDrawable(R.drawable.selected_language_button_style)
+                        getDrawable(R.drawable.selected_language_button_style)
                 binding.maratiButton.setTextColor(getColor(R.color.red_color))
 
             }

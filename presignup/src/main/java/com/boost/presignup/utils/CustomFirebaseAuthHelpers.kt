@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
+import org.jetbrains.annotations.NotNull
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +35,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: CustomFirebaseAuthListeners, fpId: String = ""){
+class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: CustomFirebaseAuthListeners, fpId: String = "") {
 
     private var TAG = "CustomFirebaseAuthHelpers"
     private var currentActivity: Activity
@@ -52,7 +53,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
     private var retrofit: Retrofit
 
-    private fun  FirebaseAuthHelpers(){}
+    private fun FirebaseAuthHelpers() {}
 
     init {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -76,7 +77,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
     fun startFacebookLogin(facebook_login: LoginButton, callbackManager: CallbackManager) {
 
 
-        this.currentActivity = currentActivity;
+//        this.currentActivity = currentActivity;
         //facebook functionality
 
 
@@ -104,7 +105,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
         currentActivity.startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    fun googleLoginActivityResult(requestCode: Int, data: Intent ) {
+    fun googleLoginActivityResult(requestCode: Int, data: Intent) {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
@@ -132,7 +133,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                         AuthorizedGoogleUser(user)
                     } else {
                         // If sign in fails, display a message to the user.
-                       listener.onFailure()
+                        listener.onFailure()
 
                     }
 
@@ -154,7 +155,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
             Log.d(TAG, "updateUI: photo = " + personPhoto);
 
             requestUserProfileAPI(personIdToken,
-                    personEmail, "", "", personName, "GOOGLE", personEmail )
+                    personEmail, "", "", personName, "GOOGLE", personEmail)
         }
     }
 
@@ -173,7 +174,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        Toast.makeText(currentActivity, "SignIn Failed: "+task.exception!!.message,
+                        Toast.makeText(currentActivity, "SignIn Failed: " + task.exception!!.message,
                                 Toast.LENGTH_LONG).show()
                         mAuth.signOut()
                         LoginManager.getInstance().logOut();
@@ -193,8 +194,8 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
             var facebookData = currentUser.providerData
 
 
-            for(data in facebookData) {
-                if(data.providerId?.contains("facebook")) {
+            for (data in facebookData) {
+                if (data.providerId?.contains("facebook")) {
                     uid = data.uid
                     personName = data.displayName
                     break
@@ -202,7 +203,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
             }
 
             requestUserProfileAPI(personIdToken,
-                    personEmail, "", "", personName as String, "FACEBOOK", uid )
+                    personEmail, "", "", personName as String, "FACEBOOK", uid)
         }
     }
 
@@ -222,7 +223,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 userPassword,
                 ProfileProperties(email, userMobile, personName, userPassword), provider, null)
 
-        if(userFpId == "") {
+        if (userFpId == "") {
 
             ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
                 override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
@@ -233,7 +234,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                     listener.onSuccess(response.body(), loginKey)
                 }
             })
-        }else{
+        } else {
             userInfo.FpIds = arrayOf(userFpId)
 
             ApiService.connectUserProfile(userInfo).enqueue(object : Callback<ConnectUserProfileResponse> {
@@ -252,7 +253,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
     fun startPhoneAuth(phoneNumber: String, phoneAuthListner: PhoneAuthListener) {
 
-        this.phoneNumber = "+91"+phoneNumber
+        this.phoneNumber = "+91" + phoneNumber
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationFailed(p0: FirebaseException) {
                 listener.onFailure()
@@ -274,7 +275,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
         }
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                this.phoneNumber , // Phone number to verify
+                this.phoneNumber, // Phone number to verify
                 30, // Timeout duration
                 TimeUnit.SECONDS, // Unit of timeout
                 currentActivity, // Activity (for callback binding)
@@ -282,7 +283,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
     }
 
     fun phoneAuthVerification(code: String) {
-        val credential = PhoneAuthProvider.getCredential(phoneVerificationId!!, code)
+        val credential = PhoneAuthProvider.getCredential(phoneVerificationId, code)
         signInWithPhoneAuthCredential(credential)
     }
 
@@ -295,7 +296,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
 
                         requestUserProfileAPI("",
-                                "", "", phoneNumber, "", "OTP", phoneNumber )
+                                "", "", phoneNumber, "", "OTP", phoneNumber)
 
 
                         // ...

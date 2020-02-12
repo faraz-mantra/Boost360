@@ -6,7 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.boost.presignup.R
 import com.boost.presignup.datamodel.SharedViewModel
 import com.boost.presignup.locale.LocaleManager
+import com.boost.presignup.utils.WebEngageController
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
 
@@ -166,10 +170,12 @@ class MainFragment : Fragment() {
                     setVolume(100)
                     muteState = false
                     root.mute_icon.setImageResource(R.drawable.ic_unmute)
+                    WebEngageController.trackEvent("PS_Clicked unmute Intro_video", "Video Unmuted", "")
                 } else {
                     setVolume(0)
                     muteState = true
                     root.mute_icon.setImageResource(R.drawable.ic_mute)
+                    WebEngageController.trackEvent("PS_Clicked Mute Intro_video", "Video Muted", "")
                 }
             }
         }
@@ -191,8 +197,10 @@ class MainFragment : Fragment() {
                             } else {
                                 Log.e("Swipe >>>>>>>>","Right to Left swipe [Previous]")
                                 navToIntroScreen()
+                                WebEngageController.trackEvent("PS_Swiped on the Intro_video", "Video area swiped", "")
                             }
                         }else{
+                            WebEngageController.trackEvent("PS_Clicked Intro_video area", "Video area clicked", "")
                             if(root.videoPlayer.isPlaying){
                                 root.play_pause_lottie.visibility = View.VISIBLE
                                 root.play_pause_lottie.playAnimation()
@@ -209,6 +217,7 @@ class MainFragment : Fragment() {
                                 root.play_pause_lottie.visibility = View.GONE
                                 root.videoPlayer.seekTo(videoCurrentPosition);
                                 root.videoPlayer.start()
+                                WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                                 setVideoTimerCountDown()
                             }
                         }
@@ -231,12 +240,14 @@ class MainFragment : Fragment() {
         root.videoPlayer.visibility = View.VISIBLE
         root.video_loading.visibility = View.VISIBLE
         root.videoPlayer.start()
+        WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
         viewModel.enableBottomView()
         checkVideoPlaying()
 //        }
 
 
         root.skip_video.setOnClickListener {
+            WebEngageController.trackEvent("PS_Clicked Intro_video skip", "Video skipped", "")
             navToIntroScreen()
         }
         root.videoPlayer.setOnCompletionListener {
@@ -321,6 +332,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
+                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                 }
                 R.string.hindi -> {
                     setVideoURL(videoURLs.get(1))
@@ -332,7 +344,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-
+                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                 }
                 R.string.kannada -> {
                     setVideoURL(videoURLs.get(2))
@@ -344,7 +356,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-
+                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                 }
                 R.string.telugu -> {
                     setVideoURL(videoURLs.get(3))
@@ -356,7 +368,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-
+                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                 }
                 R.string.malayalam -> {
                     setVideoURL(videoURLs.get(4))
@@ -368,7 +380,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-
+                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                 }
                 R.string.tamil -> {
                     setVideoURL(videoURLs.get(5))
@@ -380,7 +392,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-
+                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                 }
                 R.string.marathi -> {
                     setVideoURL(videoURLs.get(6))
@@ -392,6 +404,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
+                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
                 }
             }
         })
