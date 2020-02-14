@@ -25,6 +25,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -63,6 +64,9 @@ public class Get_FP_Details_Service {
                                     return;
                                 }
                                 Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+                                WebEngageController.trackEvent("Business Profile Creation Failed",
+                                        "Business Profile Creation Failed", null);
+
                                 if (WebSiteAddressActivity.pd != null) {
                                     WebSiteAddressActivity.pd.dismiss();
                                 }
@@ -79,13 +83,21 @@ public class Get_FP_Details_Service {
                         bus.post(response);
                     }
                 } catch (Exception e) {
-
+                    WebEngageController.trackEvent(
+                            "Business Profile Creation Failed",
+                            "Business Profile Creation Failed",
+                            null);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d("", "" + error.getMessage());
+                WebEngageController.trackEvent(
+                        "Business Profile Creation Failed",
+                        "Business Profile Creation Failed",
+                        null);
+
                 try {
                     activity.runOnUiThread(new Runnable() {
                         @Override

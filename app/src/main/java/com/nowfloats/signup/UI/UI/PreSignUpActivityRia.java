@@ -10,11 +10,13 @@ import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Spannable;
@@ -77,10 +79,12 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.SmsVerifyModel;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
+import com.webengage.sdk.android.WebEngage;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -135,7 +139,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     //  private String[] businessCategoryList;
 
     boolean allFieldsValid = true;
-//    private boolean goToNextScreen = false;
+    //    private boolean goToNextScreen = false;
 //    private String tagName;
     String fpTag;
 //    private double lng, lat;
@@ -157,7 +161,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 //    public static Email_Validation_Model emailModel;
 //    String facebookPageURL;
 
-//    HashMap<String, String> Country_CodeMap, Code_PhoneMap;
+    //    HashMap<String, String> Country_CodeMap, Code_PhoneMap;
 //    private String Validate_Email_API_KEY = "e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
     public Activity activity;
 
@@ -243,7 +247,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         Bundle extras = getIntent().getExtras();
         existing_profile_id = extras.getString("profile_id", "");
-        if(existing_profile_id != null && existing_profile_id.length() > 0){
+        if (existing_profile_id != null && existing_profile_id.length() > 0) {
 
         }
 //        if (sessionManager.getIsSignUpFromFacebook().contains("true")) {
@@ -867,7 +871,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     if (data_lat.equalsIgnoreCase("0")) {
 
                         LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
-                                etStreetAddress.getText().toString(),  "India",
+                                etStreetAddress.getText().toString(), "India",
                                 "");
                         if (latLng != null) {
                             data_lat = latLng.latitude + "";
@@ -881,6 +885,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     Toast.makeText(activity, "All your inputs are not valid. Please cross check once.", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
+                WebEngageController.trackEvent("Business Profile Creation Failed", "Business Profile Creation Failed", null);
                 e.printStackTrace();
             }
         }
@@ -1307,6 +1312,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             sessionManager.storeIsThinksity("true");
         }
 
+
         // Give a Delay of 4 Seconds and Call this method
         new Handler().postDelayed(new Runnable() {
 
@@ -1354,7 +1360,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             );
             descriptinon.execute();
         }
-
+        if (response != null && response.model != null) {
+            WebEngageController.trackEvent("Business Profile Creation Successful",
+                    "Business Profile Creation Successful", response.model.Tag);
+        }
         Intent webIntent = new Intent(PreSignUpActivityRia.this, HomeActivity.class);
         webIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle loginBundle = new Bundle();
