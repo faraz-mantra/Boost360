@@ -29,11 +29,11 @@
     <string name="confirmed_business_name">CONFIRMED BUSINESS NAME</string>
     <string name="skip">SKIP</string>
     <string name="done">DONE</string>
-    <string name="create_my_website">CREATE MY WEBSITE</string>
+    <string name="create_my_website">CREATE MY BUSINESS PROFILE</string>
     <string name="locate_on_map">LOCATE ON MAP</string>
 
-    <string name="settings_tou_url">https://www.nowfloats.com/tnc/</string>
-    <string name="settings_privacy_url">https://www.nowfloats.com/privacy/</string>
+    <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>
+    <string name="settings_privacy_url">https://www.getboost360.com/privacy/</string>
 
 
     <string name="sure_lets_go">Sure, let\'s go</string>

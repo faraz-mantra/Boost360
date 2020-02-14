@@ -2,12 +2,11 @@ package com.boost.presignup
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.util.Patterns
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.boost.presignup.datamodel.Apis
 import com.boost.presignup.datamodel.userprofile.ProfileProperties
@@ -119,11 +118,11 @@ class SignUpActivity : AppCompatActivity() {
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Log.d("createUserProfile", ">>>> Successfull")
-                                requestUserProfileAPI()
+                                registerUserProfileAPI()
                             } else {
                                 Log.d("createUserProfile", ">>>> Failure")
                                 Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
-                                WebEngageController.trackEvent("PS_Account Creation Failed " + provider, "Create User With Email And Password Failed "+ provider, "")
+                                WebEngageController.trackEvent("PS_Account Creation Failed " + provider, "Create User Failed With "+ provider, "")
                             }
                         }
             }
@@ -156,7 +155,7 @@ class SignUpActivity : AppCompatActivity() {
         return Pattern.compile(MOBILE_STRING).matcher(phone).matches()
     }
 
-    fun requestUserProfileAPI() {
+    fun registerUserProfileAPI() {
         val userInfo = UserProfileRequest(
                 personIdToken,
                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
@@ -164,10 +163,13 @@ class SignUpActivity : AppCompatActivity() {
                 userPassword,
                 ProfileProperties(email, userMobile, personName, userPassword), provider, null)
 
+        create_account_button.isVisible = false;
         ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
             override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
                 Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
                 WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
+
+                create_account_button.isVisible = true;
             }
 
             override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
@@ -175,6 +177,10 @@ class SignUpActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, SignUpConfirmation::class.java)
                 intent.putExtra("profileUrl", profileUrl)
                 intent.putExtra("person_name", personName)
+                if(response.body() != null) {
+                    val responseResult: UserProfileResponse? = response.body()
+                    intent.putExtra("profile_id", responseResult?.Result?.LoginId)
+                }
                 startActivity(intent)
             }
         })

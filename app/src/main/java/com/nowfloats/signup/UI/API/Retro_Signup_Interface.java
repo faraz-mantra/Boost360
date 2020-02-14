@@ -14,6 +14,7 @@ import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 /**
@@ -39,9 +40,8 @@ public interface Retro_Signup_Interface {
     //https://api.withfloats.com/Discover/v3/FloatingPoint/create
 
     @Headers({"Content-Type: application/json","Accept: application/json"})
-    @PUT("/Discover/v3/FloatingPoint/create")
-    void put_createStore(@Body HashMap<String,String> map, Callback<String> callback);
-
+    @PUT("/Discover/v5/FloatingPoint/create")
+    void put_createStore(@Body HashMap<String,String> map, @Query("existingProfileId") String existingProfileId, Callback<String> callback);
 
 
    // Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingPoint/suggestTag";

@@ -20,6 +20,7 @@ class SignUpConfirmation : AppCompatActivity() {
         WebEngageController.trackEvent("PS_Account Creation Confirmation", "Account Creation Confirmation", "")
 
         val personName = intent.getStringExtra("person_name")
+        val profile_id = intent.getStringExtra("profile_id")
         val temp = getString(R.string.welcome) + " " + personName
         welcome_user.setText(temp)
         val profileUrl = intent.getStringExtra("profileUrl")
@@ -31,7 +32,8 @@ class SignUpConfirmation : AppCompatActivity() {
 //        userProfileImage.setImageURI(Uri.parse(profileUrl))
         set_up_business_profile.setOnClickListener {
             WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
-            val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.RiaChatInitActivity"))
+            val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
+            intent.putExtra("profile_id", profile_id)
             startActivity(intent)
         }
     }

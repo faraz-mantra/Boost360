@@ -346,7 +346,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 //                .playOn(llRelevant);
 
         llMessage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down));
-        llRelevant.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.juspay_slide_from_below));
+//        llRelevant.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.juspay_slide_from_below));
 
     }
 

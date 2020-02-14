@@ -42,8 +42,6 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.romeo.mylibrary.Models.OrderDataModel;
-import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.thinksity.R;
 
 import java.text.NumberFormat;
@@ -65,7 +63,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
 
     private Context mContext;
     private EditText opcEditText;
-    private OrderDataModel mOrderData;
+//    private OrderDataModel mOrderData;
     private UserSessionManager mSessionManager;
     ArrayList<ReceiveDraftInvoiceModel.KeyValuePair> mOpcDetails;
     private final int DIRECT_REQUEST_CODE = 2013;
@@ -90,7 +88,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         super.onCreate(savedInstanceState);
         mSessionManager = new UserSessionManager(mContext, getActivity());
         if (getArguments() != null) {
-            mOrderData = getArguments().getParcelable(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER);
+//            mOrderData = getArguments().getParcelable(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER);
             mPurchasePlans = new Gson().fromJson(getArguments().getString("packageList"), new TypeToken<List<PackageDetails>>() {
             }.getType());
         }
@@ -345,18 +343,18 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
     }
 
     private void payWithInstaMojo() {
-        Intent i = new Intent(mContext, InstaMojoMainActivity.class);
-        i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-        //write logic for with and without opc cases
-        if (!opcEditText.isEnabled()) {
-            if (mOpcDetails == null) {
-                initiatePaymentProcess(i, mInvoiceId);
-            } else {
-                showConfirmationDialog(i, mInvoiceId);
-            }
-        } else {
-            initiatePaymentProcess(i, mInvoiceId);
-        }
+//        Intent i = new Intent(mContext, InstaMojoMainActivity.class);
+//        i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+//        //write logic for with and without opc cases
+//        if (!opcEditText.isEnabled()) {
+//            if (mOpcDetails == null) {
+//                initiatePaymentProcess(i, mInvoiceId);
+//            } else {
+//                showConfirmationDialog(i, mInvoiceId);
+//            }
+//        } else {
+//            initiatePaymentProcess(i, mInvoiceId);
+//        }
 
     }
 
@@ -393,12 +391,12 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                     if (paymentTokenResult != null && paymentTokenResult.getResult() != null) {
                         switch (paymentTokenResult.getResult().getPaymentMethodType()) {
                             case "INSTAMOJO":
-                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
-                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId=" + Constants.clientId);//change this later
+//                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
+//                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
+//                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId=" + Constants.clientId);//change this later
 
                                 startActivityForResult(i, OPC_REQUEST_CODE);
-                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 break;
                             case "PADDLE":
                                 Intent paddleIntent = new Intent(getActivity(), PaddleCheckoutActivity.class);

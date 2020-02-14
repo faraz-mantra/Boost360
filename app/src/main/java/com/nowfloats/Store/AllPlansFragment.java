@@ -138,46 +138,46 @@ public class AllPlansFragment extends Fragment {
             if (data == null) {
                 return;
             }
-            final boolean success = data.getBooleanExtra(com.romeo.mylibrary.Constants.RESULT_SUCCESS_KEY, false);
-            final String status = data.getStringExtra(com.romeo.mylibrary.Constants.RESULT_STATUS);
-            final String message = data.getStringExtra(com.romeo.mylibrary.Constants.ERROR_MESSAGE);
-            final String paymentId = data.getStringExtra(com.romeo.mylibrary.Constants.PAYMENT_ID);
-            final String transactionId = data.getStringExtra(com.romeo.mylibrary.Constants.TRANSACTION_ID);
-            final String amount = data.getStringExtra(com.romeo.mylibrary.Constants.FINAL_AMOUNT);
-            final boolean showTobeActivatedOn = data.getBooleanExtra("showToBeActivatedOn", false);
-            final String tobeActivatedOn = data.getStringExtra("toBeActivatedOn");
-            //sendEmail(success, status, message, paymentId, transactionId, amount);
-            BoostLog.d("TransaCtionId", transactionId);
-            if (success) {
-                if (TextUtils.isEmpty(status)) {
-                    String msg = "Sorry! \n" +
-                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
-                    Methods.showDialog(getActivity(), status, msg);
-                } else if (status.equals("Success")) {
-
-                    MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
-
-                    /*String msg = "Thank you! \n" +
-                            "The Payment ID for your transaction is " + paymentId +". Your package will be activated within 24 hours. \n" +
-                            "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                    showDialog(status, msg);*/
-                    pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn, 0);
-                }
-            } else {
-                if (TextUtils.isEmpty(status)) {
-                    String msg = "Sorry! \n" +
-                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
-                    Methods.showDialog(getActivity(), status, msg);
-                } else if (status.equals("Pending")) {
-                    String msg = "Alert! \n" +
-                            "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours";
-                    Methods.showDialog(getActivity(), status, msg);
-                } else if (status.equals("Failure")) {
-                    String msg = "Sorry! \n" +
-                            "This transaction failed. To retry, please go to the Store and pay again.";
-                    Methods.showDialog(getActivity(), status, msg);
-                }
-            }
+//            final boolean success = data.getBooleanExtra(com.romeo.mylibrary.Constants.RESULT_SUCCESS_KEY, false);
+//            final String status = data.getStringExtra(com.romeo.mylibrary.Constants.RESULT_STATUS);
+//            final String message = data.getStringExtra(com.romeo.mylibrary.Constants.ERROR_MESSAGE);
+//            final String paymentId = data.getStringExtra(com.romeo.mylibrary.Constants.PAYMENT_ID);
+//            final String transactionId = data.getStringExtra(com.romeo.mylibrary.Constants.TRANSACTION_ID);
+//            final String amount = data.getStringExtra(com.romeo.mylibrary.Constants.FINAL_AMOUNT);
+//            final boolean showTobeActivatedOn = data.getBooleanExtra("showToBeActivatedOn", false);
+//            final String tobeActivatedOn = data.getStringExtra("toBeActivatedOn");
+//            //sendEmail(success, status, message, paymentId, transactionId, amount);
+//            BoostLog.d("TransaCtionId", transactionId);
+//            if (success) {
+//                if (TextUtils.isEmpty(status)) {
+//                    String msg = "Sorry! \n" +
+//                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
+//                    Methods.showDialog(getActivity(), status, msg);
+//                } else if (status.equals("Success")) {
+//
+//                    MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
+//
+//                    /*String msg = "Thank you! \n" +
+//                            "The Payment ID for your transaction is " + paymentId +". Your package will be activated within 24 hours. \n" +
+//                            "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+//                    showDialog(status, msg);*/
+//                    pollServerForStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn, 0);
+//                }
+//            } else {
+//                if (TextUtils.isEmpty(status)) {
+//                    String msg = "Sorry! \n" +
+//                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
+//                    Methods.showDialog(getActivity(), status, msg);
+//                } else if (status.equals("Pending")) {
+//                    String msg = "Alert! \n" +
+//                            "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours";
+//                    Methods.showDialog(getActivity(), status, msg);
+//                } else if (status.equals("Failure")) {
+//                    String msg = "Sorry! \n" +
+//                            "This transaction failed. To retry, please go to the Store and pay again.";
+//                    Methods.showDialog(getActivity(), status, msg);
+//                }
+//            }
         }
     }
 

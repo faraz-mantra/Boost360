@@ -22,6 +22,8 @@ data class Result(
         @SerializedName("SourceClientId")
         val SourceClientId: String,
         @SerializedName("ProfileAccessType")
-        val ProfileAccessType: Int
+        val ProfileAccessType: Int,
+        @SerializedName("LoginId")
+        val LoginId: String
 
 )

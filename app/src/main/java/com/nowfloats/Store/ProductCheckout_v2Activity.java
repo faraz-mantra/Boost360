@@ -46,7 +46,6 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.romeo.mylibrary.Models.OrderDataModel;
 import com.thinksity.R;
 
 import java.text.NumberFormat;
@@ -65,7 +64,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
 
     private static final int DIRECT_REQUEST_CODE = 2013;
     private UserSessionManager mSessionManager;
-    private OrderDataModel mOrderData;
+//    private OrderDataModel mOrderData;
 
     private String mNewPackage, mFinalAmount;
 
@@ -149,18 +148,18 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
                 //startActivity(new Intent(ProductCheckoutActivity.this, PaymentOptionsActivity.class));
 
                 if (!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
-                    Intent i = new Intent(ProductCheckout_v2Activity.this, PaymentOptionsActivity.class);
-                    mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
-                            mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                            mFinalAmount, mNewPackage.substring(0, mNewPackage.length() - 4),
-                            mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
-                            "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
-                    i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                    i.putExtra("packageList", new Gson().toJson(mPurchasePlans));
-                    i.putExtra("discountCoupon", discountCoupon);
-                    i.putExtra("salesmanModel", salesmanModel);
-                    i.putExtra("tdsPercentage", tdsPercentage);
-                    startActivityForResult(i, DIRECT_REQUEST_CODE);
+//                    Intent i = new Intent(ProductCheckout_v2Activity.this, PaymentOptionsActivity.class);
+//                    mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
+//                            mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
+//                            mFinalAmount, mNewPackage.substring(0, mNewPackage.length() - 4),
+//                            mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
+//                            "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
+//                    i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+//                    i.putExtra("packageList", new Gson().toJson(mPurchasePlans));
+//                    i.putExtra("discountCoupon", discountCoupon);
+//                    i.putExtra("salesmanModel", salesmanModel);
+//                    i.putExtra("tdsPercentage", tdsPercentage);
+//                    startActivityForResult(i, DIRECT_REQUEST_CODE);
                     //write logic for with and without opc cases
                 } else {
                     Methods.showSnackBarNegative(ProductCheckout_v2Activity.this, "Error in processing Amount");

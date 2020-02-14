@@ -289,7 +289,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
             b.putSerializable("discountCoupon", (DiscountCoupon) getIntent().getExtras().get("discountCoupon"));
             b.putInt("tdsPercentage", (int) getIntent().getExtras().get("tdsPercentage"));
             b.putSerializable("salesmanModel", (SalesmanModel) getIntent().getExtras().get("salesmanModel"));
-            b.putString(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, getIntent().getStringExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER));
+//            b.putString(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, getIntent().getStringExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER));
         }
         FragmentManager manager = getSupportFragmentManager();
         Fragment frag = manager.findFragmentByTag(type.name());

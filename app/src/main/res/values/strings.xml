@@ -846,8 +846,8 @@
     <string name="message_soon">Start updating, now!</string>
     <string name="store">Pricing Plans</string>
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
-    <string name="settings_tou_url">https://boost360.nowfloats.com/tnc/</string>
-    <string name="settings_privacy_url">https://boost360.nowfloats.com/privacy/</string>
+    <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>
+    <string name="settings_privacy_url">https://www.getboost360.com/privacy/</string>
     <string-array name="domain_array">
         <item>.com</item>
         <item>.net</item>
@@ -1084,7 +1084,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_city">Enter city</string>
     <string name="select_country">Select country</string>
     <string name="checking_contact_number">Checking contact number..</string>
-    <string name="creating_website">Creating Website &#8230;</string>
+    <string name="creating_website">Creating your business profile &#8230;</string>
     <string name="enter_valid_website_name">Please enter a valid website name</string>
     <string name="chosen_website_available">Chosen website address is available!</string>
     <string name="chosen_website_not_available">Chosen website address is not available!</string>
@@ -1594,14 +1594,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="enter_street_address">Enter Street Address</string>
     <string name="enter_pin_code">Enter Pin Code</string>
-    <string name="plot_number_and_street_address">PLOT NUMBER AND STREET ADDRESS</string>
+    <string name="plot_number_and_street_address">COMPLETE BUSINESS ADDRESS</string>
     <string name="locality">LOCALITY</string>
-    <string name="mobile_number">MOBILE NUMBER</string>
+    <string name="mobile_number">BUSINESS MOBILE NUMBER</string>
     <string name="your_website_addres">YOUR WEBSITE ADDRESS</string>
     <string name="otp_sent_on_mobile">OTP SENT ON MOBILE NUMBER</string>
     <string name="business_name_ria">BUSINESS NAME</string>
     <string name="business_category_ria">BUSINESS CATEGORY</string>
-    <string name="email_address_ria">EMAIL ADDRESS</string>
+    <string name="email_address_ria">BUSINESS EMAIL ADDRESS</string>
     <string name="city_ria">CITY</string>
     <string name="country_ria">COUNTRY</string>
     <string name="state_ria">STATE</string>

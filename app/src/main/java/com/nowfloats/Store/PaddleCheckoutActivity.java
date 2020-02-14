@@ -13,7 +13,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.romeo.mylibrary.Constants;
+//import com.romeo.mylibrary.Constants;
 import com.thinksity.R;
 
 public class PaddleCheckoutActivity extends AppCompatActivity {
@@ -106,12 +106,12 @@ public class PaddleCheckoutActivity extends AppCompatActivity {
             finish();
         }
         Intent resultData =new Intent();
-        resultData.putExtra(Constants.RESULT_SUCCESS_KEY, true);
-        resultData.putExtra(Constants.RESULT_STATUS, "Success");
-        resultData.putExtra(Constants.ERROR_MESSAGE, "Payment Successful");
-        resultData.putExtra(Constants.PAYMENT_ID, "0");
-        resultData.putExtra(Constants.TRANSACTION_ID, paymentReqId);
-        resultData.putExtra(Constants.FINAL_AMOUNT, "0");
+//        resultData.putExtra(Constants.RESULT_SUCCESS_KEY, true);
+//        resultData.putExtra(Constants.RESULT_STATUS, "Success");
+//        resultData.putExtra(Constants.ERROR_MESSAGE, "Payment Successful");
+//        resultData.putExtra(Constants.PAYMENT_ID, "0");
+//        resultData.putExtra(Constants.TRANSACTION_ID, paymentReqId);
+//        resultData.putExtra(Constants.FINAL_AMOUNT, "0");
         setResult(RESULT_OK, resultData);
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

@@ -27,7 +27,7 @@ public class Create_Tag_Service {
     {
         Retro_Signup_Interface createStore = Constants.restAdapter.create(Retro_Signup_Interface.class);
 
-        createStore.put_createStore(jsonObject, new Callback<String>() {
+        createStore.put_createStore(jsonObject, "jhghghgjghghjghghgj", new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 bus.post(new Create_Store_Event(s));
@@ -49,11 +49,11 @@ public class Create_Tag_Service {
 
 
     }
-    public Create_Tag_Service(final PreSignUpActivityRia activity, HashMap<String, String> jsonObject, final Bus bus)
+    public Create_Tag_Service(final PreSignUpActivityRia activity, String existingProfileId, HashMap<String, String> jsonObject, final Bus bus)
     {
         Retro_Signup_Interface createStore = Constants.restAdapter.create(Retro_Signup_Interface.class);
 
-        createStore.put_createStore(jsonObject, new Callback<String>() {
+        createStore.put_createStore(jsonObject, existingProfileId, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
 
@@ -80,7 +80,5 @@ public class Create_Tag_Service {
                 bus.post(new Create_Store_Event(null));
             }
         });
-
-
     }
 }

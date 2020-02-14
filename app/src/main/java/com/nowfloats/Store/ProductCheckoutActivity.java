@@ -41,8 +41,6 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.romeo.mylibrary.Models.OrderDataModel;
-import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.thinksity.R;
 import com.thinksity.Specific;
 
@@ -61,7 +59,7 @@ import retrofit.client.Response;
 public class ProductCheckoutActivity extends AppCompatActivity {
 
     private UserSessionManager mSessionManager;
-    private OrderDataModel mOrderData;
+//    private OrderDataModel mOrderData;
 
     private String mNewPackage, mFinalAmount, mInvoiceId;
 
@@ -138,24 +136,24 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 //startActivity(new Intent(ProductCheckoutActivity.this, PaymentOptionsActivity.class));
 
                 if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
-                    Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
-                    mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
-                            mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                            mFinalAmount , mNewPackage.substring(0, mNewPackage.length() - 4),
-                            mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
-                            "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
-                    i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                    i.putExtra("packageList",new Gson().toJson(mPurchasePlans));
-                    //write logic for with and without opc cases
-                    if(!etOpc.isEnabled()) {
-                        if(mOpcDetails==null) {
-                            initiatePaymentProcess(i, mInvoiceId);
-                        }else {
-                            showConfirmationDialog(i, mInvoiceId);
-                        }
-                    }else {
-                        initiatePaymentProcess(i, mInvoiceId);
-                    }
+//                    Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
+//                    mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
+//                            mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
+//                            mFinalAmount , mNewPackage.substring(0, mNewPackage.length() - 4),
+//                            mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
+//                            "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
+//                    i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+//                    i.putExtra("packageList",new Gson().toJson(mPurchasePlans));
+//                    //write logic for with and without opc cases
+//                    if(!etOpc.isEnabled()) {
+//                        if(mOpcDetails==null) {
+//                            initiatePaymentProcess(i, mInvoiceId);
+//                        }else {
+//                            showConfirmationDialog(i, mInvoiceId);
+//                        }
+//                    }else {
+//                        initiatePaymentProcess(i, mInvoiceId);
+//                    }
                 }else {
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error in processing Amount");
                 }
@@ -474,9 +472,9 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                         switch (paymentTokenResult.getResult().getPaymentMethodType())
                         {
                             case "INSTAMOJO":
-                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
-                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+//                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
+//                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
+//                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
 
                                 startActivityForResult(i, OPC_REQUEST_CODE);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

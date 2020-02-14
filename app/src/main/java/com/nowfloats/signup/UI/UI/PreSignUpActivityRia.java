@@ -7,13 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AlertDialog;
@@ -25,26 +21,21 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,12 +43,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.AutocompletePredictionBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
@@ -127,75 +112,64 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         API_Layer_Signup.SignUp_Interface, View.OnClickListener,
         LoadCountryData.LoadCountryData_Interface,
         Valid_Email.Valid_Email_Interface
-        , GoogleApiClient.OnConnectionFailedListener, DomainAvailabilityCheck.CallBack {
+        , DomainAvailabilityCheck.CallBack {
     UserSessionManager sessionManager;
     private static final String TAG = "PreSignUp";
     public String[] cat = null;
     ListView l;
     HeaderText title;
-    ImageView ivWebsiteStatus, ivPhoneStatus;
+    ImageView ivPhoneStatus;
     Bus bus;
-    public static ProgressBar cityProgress;
-    private static EditText businessNameEditText, businessCategoryEditText, countryEditText, emailEditText,
-            phoneEditText, etStreetAddress, edtLocality, etWebsiteAddress, etPinCode, etOTP, editState;
+    private static EditText businessNameEditText, businessCategoryEditText, emailEditText,
+            phoneEditText, etStreetAddress, etOTP;
 
-    public static AutoCompleteTextView cityEditText;
-    private static TextView countryPhoneCode, tvtermAndPolicy;
+    private static TextView countryPhoneCode;
     String data_businessName, data_businessCategory, data_city, data_country, data_email, data_phone, data_country_code,
             data_lat = "0", data_lng = "0";
 
     EditText otpEditText;
     private MaterialDialog progressDialog, progressbar;
     private boolean businessCategory_Selected = false;
-    SharedPreferences sharedpreferences;
+    //SharedPreferences sharedpreferences;
     private boolean country_Selected = false;
     //  private String[] businessCategoryList;
 
     boolean allFieldsValid = true;
-    private boolean goToNextScreen = false;
-    private String tagName;
+//    private boolean goToNextScreen = false;
+//    private String tagName;
     String fpTag;
-    private double lng, lat;
-    private LatLng latlong;
+//    private double lng, lat;
+//    private LatLng latlong;
 
-    public static final String MyPREFERENCES = "PrefsSignUp";
-    public static final String Save_Name = "nameKey";
-    public static final String Save_Cat = "categoryKey";
-    public static final String Save_Street_Address = "streetAddressKey";
-    public static final String Save_Locality = "localityKey";
-    public static final String Save_Phone = "phoneNumberKey";
-    public static final String Save_Phone_Code = "phoneCodeKey";
-    public static final String Save_Email = "emailKey";
-    public static final String Save_Website_Address = "websiteAdressKey";
-    public static final String Save_Otp = "otpKey";
-    public static final String Save_Pin_Code = "pincodeKey";
-    public static final String Save_Country = "countryKey";
-    public static final String Save_City = "cityKey";
-    public static final String Save_State = "stateKey";
-    public static final String Save_Lat = "ria_latKey";
-    public static final String Save_Lng = "ria_lngKey";
-    public static final String Save_IS_FP_AVAILABLE = "isFPAvailable";
 
-    public static Email_Validation_Model emailModel;
-    String facebookPageURL;
+//    public static final String Save_Name = "nameKey";
+//    public static final String Save_Cat = "categoryKey";
+//    public static final String Save_Street_Address = "streetAddressKey";
+//    public static final String Save_Phone = "phoneNumberKey";
+//    public static final String Save_Phone_Code = "phoneCodeKey";
+//    public static final String Save_Email = "emailKey";
+//    public static final String Save_Website_Address = "websiteAdressKey";
+//    public static final String Save_Otp = "otpKey";
+//    public static final String Save_Lat = "ria_latKey";
+//    public static final String Save_Lng = "ria_lngKey";
+//    public static final String Save_IS_FP_AVAILABLE = "isFPAvailable";
 
-    HashMap<String, String> Country_CodeMap, Code_PhoneMap;
-    private String Validate_Email_API_KEY = "e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
+//    public static Email_Validation_Model emailModel;
+//    String facebookPageURL;
+
+//    HashMap<String, String> Country_CodeMap, Code_PhoneMap;
+//    private String Validate_Email_API_KEY = "e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
     public Activity activity;
 
-
-    AutocompleteFilter filter;
-    private List<String> citys = new ArrayList<>();
-    ArrayAdapter<String> adapter;
     ArrayList<String> signUpCountryList = new ArrayList<>();
-    private GoogleApiClient mGoogleApiClient;
     private ArrayList<String> categories;
     private LinearLayout verify_button;
-    private DomainAvailabilityCheck mDomainAvailabilityCheck;
+
     private DataBase dataBase;
-    private String citytext = "";
+
     public ProgressDialog pd;
     private PopupWindow popup;
+    private String existing_profile_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,7 +177,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         //setContentView(R.layout.pre_sign_up_trial_4);
         setContentView(R.layout.activity_pre_sign_up);
         if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            findViewById(R.id.layout_ria).setVisibility(View.GONE);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {
@@ -230,48 +203,24 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         bus = BusProvider.getInstance().getBus();
         businessNameEditText = (EditText) findViewById(R.id.editText_businessName);
         businessCategoryEditText = (EditText) findViewById(R.id.editText_businessCategory);
-        cityEditText = (AutoCompleteTextView) findViewById(R.id.editText_city);
-        countryEditText = (EditText) findViewById(R.id.editText_Country);
         emailEditText = (EditText) findViewById(R.id.editText_Email);
         phoneEditText = (EditText) findViewById(R.id.editText_Phone);
-        ivWebsiteStatus = (ImageView) findViewById(R.id.ivWebsiteStatus);
+
         ivPhoneStatus = (ImageView) findViewById(R.id.ivPhoneStatus);
 
-        etStreetAddress = (EditText) findViewById(R.id.et_street_address);
-        edtLocality = (EditText) findViewById(R.id.etLocality);
-        etPinCode = (EditText) findViewById(R.id.editText_pinCode);
-        etWebsiteAddress = (EditText) findViewById(R.id.etWebsiteAddress);
-        etOTP = (EditText) findViewById(R.id.etOTP);
-        editState = findViewById(R.id.editText_state);
+        etStreetAddress = findViewById(R.id.et_street_address);
+        etOTP = findViewById(R.id.etOTP);
 
-        verify_button = (LinearLayout) findViewById(R.id.verify_button);
-        countryPhoneCode = (TextView) findViewById(R.id.countrycode_signupscreen);
-        tvtermAndPolicy = (TextView) findViewById(R.id.tvtermAndPolicy);
-        cityProgress = (ProgressBar) findViewById(R.id.city_progressbar);
-        cityProgress.setVisibility(View.GONE);
+        verify_button = findViewById(R.id.verify_button);
+        countryPhoneCode = findViewById(R.id.countrycode_signupscreen);
 
         businessCategoryEditText.setFocusable(false);
         businessCategoryEditText.setFocusableInTouchMode(false);
-        makeAutoCompleteFilter(null);
-        CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY SITE' you agree to our " +
+
+        CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY BUSINESS PROFILE' you agree to our " +
                 "<a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
         makeLinkClickable(spannableStringBuilder, charSequence);
-
-        tvtermAndPolicy.setMovementMethod(LinkMovementMethod.getInstance());
-        tvtermAndPolicy.setText(spannableStringBuilder);
-
-
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
-        adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, citys);
-        cityEditText.setAdapter(adapter);
-
 
         sessionManager = new UserSessionManager(activity, activity);
 //        Typeface robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
@@ -288,173 +237,24 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         /*LoadCountryData countryData = new LoadCountryData(activity);
         countryData.LoadCountryData_Listener(this);
         countryData.execute();*/
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        //sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         verify_button.setOnClickListener(this);
         setEnableCreateWebsiteButton(true);
 
-        /*cityEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                cityEditText.setText(citytext);
-            }
-        });*/
-        cityEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                /*if (s.toString().trim().length() >= 3) {
-                    cityProgress.setVisibility(View.VISIBLE);
-                    PlacesTask placesTask = new PlacesTask(activity);
-                    placesTask.execute(s.toString());
-                }*/
+        Bundle extras = getIntent().getExtras();
+        existing_profile_id = extras.getString("profile_id", "");
+        if(existing_profile_id != null && existing_profile_id.length() > 0){
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                //ArrayList<String> citys=new ArrayList<String>();
-                //cityEditText.setAdapter(null);
-                if (cityEditText.getTag() != null && !(boolean) cityEditText.getTag()) {
-
-                } else {
-                    try {
-
-                        final PendingResult<AutocompletePredictionBuffer> result =
-                                Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityEditText.getText().toString().trim(),
-                                        null, filter);
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                final AutocompletePredictionBuffer a = result.await();
-                                //Log.v("ggg","ok");
-
-                                cityEditText.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        citys.clear();
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                });
-
-
-                                cityEditText.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        for (int i = 0; i < a.getCount(); i++) {
-                                            //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
-//                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                                            String city = a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString();
-                                            /*if (city.contains(",")) {
-                                                String country[] = city.split(",");
-                                                city = country[0];
-                                                if (country.length > 1) {
-                                                    city += ", " + (country[country.length - 1].trim());
-                                                }
-                                            }*/
-                                            citys.add(city);
-                                        }
-
-                                        a.release();
-                                        adapter = new ArrayAdapter<>(PreSignUpActivityRia.this,
-                                                android.R.layout.simple_dropdown_item_1line, citys);
-                                        if (!isFinishing()) {
-                                            cityEditText.setAdapter(adapter);
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                });
-                            }
-                        }).start();
-                    } catch (Exception e) {
-
-                    }
-                }
-            }
-        });
-
-        cityEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                /*String city = ((TextView) view).getText().toString();
-                if (city.contains(", ")) {
-                    String country[] = city.split(", ");
-                    city = country[0];
-                    if (country.length > 1) {
-                        countryEditText.setText(country[country.length - 1].trim());
-                    }
-//                  countryEditText.setFocusable(true);
-                }*/
-
-                String city = ((TextView) view).getText().toString();
-                String state = "";
-                String country = "";
-
-                try
-                {
-                    if (city.contains(","))
-                    {
-                        String result[] = city.split(",");
-                        city = result[0];
-                        state = result.length > 1 ? result[result.length-2].replaceFirst("^ *", "") : "";
-                        country = result[result.length-1].replaceFirst("^ *", "");
-                    }
-                }
-
-                catch (ArrayIndexOutOfBoundsException e)
-                {
-                    e.printStackTrace();
-                }
-
-                cityEditText.setTag(false);
-                cityEditText.setText(city);
-                cityEditText.setTag(true);
-                editState.setText(state);
-                etPinCode.requestFocus();
-                countryEditText.setText(country);
-                countryEditText.setFocusable(true);
-                citytext = city;
-                updateCountry();
-
-                //Log.v("ggg",country_code);
-//                countryPhoneCode.setText("+" + phone_code);
-//
-//                if (!data_country_code.equalsIgnoreCase(country_code)) {
-//                    phoneEditText.setText("");
-//                    ivPhoneStatus.setBackgroundResource(R.drawable.warning);
-//                }
-//
-//                data_country_code = country_code;
-//                sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
-            }
-        });
-
-        if (sessionManager.getIsSignUpFromFacebook().contains("true")) {
-            Bundle extras = getIntent().getExtras();
-            if (extras != null) {
-                businessNameEditText.setText(extras.getString("facebook_businessName"));
-                cityEditText.setText(extras.getString("facebook_city"));
-                countryEditText.setText(extras.getString("facebook_country"));
-                emailEditText.setText(extras.getString("facebook_email"));
-                businessCategoryEditText.setText("GENERAL SERVICES");
-                facebookPageURL = extras.getString("facebook_page_url");
-            }
         }
-        countryEditText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select city first");
-                }
-                return true;
+//        if (sessionManager.getIsSignUpFromFacebook().contains("true")) {
+//            if (extras != null) {
+//                businessNameEditText.setText(extras.getString("facebook_businessName"));
+//                emailEditText.setText(extras.getString("facebook_email"));
+//                businessCategoryEditText.setText("GENERAL SERVICES");
+//                facebookPageURL = extras.getString("facebook_page_url");
+//            }
+//        }
 
-            }
-        });
         ivPhoneStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -464,28 +264,28 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 }
             }
         });
-        emailEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String result = s.toString().replaceAll(" ", "");
-                if (!s.toString().equals(result)) {
-                    emailEditText.setText(result);
-                    emailEditText.setSelection(result.length());
-                    // validateEmail(activity,result,Validate_Email_API_KEY,bus);
-                    // Valid_Email.validateEmail(activity,result);
-                }
-            }
-        });
+//        emailEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                String result = s.toString().replaceAll(" ", "");
+//                if (!s.toString().equals(result)) {
+//                    emailEditText.setText(result);
+//                    emailEditText.setSelection(result.length());
+//                    // validateEmail(activity,result,Validate_Email_API_KEY,bus);
+//                    // Valid_Email.validateEmail(activity,result);
+//                }
+//            }
+//        });
 
         businessCategoryEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -527,223 +327,31 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         });
 
 
-        phoneEditText.setFocusable(false);
-        phoneEditText.setFocusableInTouchMode(false);
+//        phoneEditText.setFocusable(false);
+//        phoneEditText.setFocusableInTouchMode(false);
 
 //        countryEditText.setFocusable(false);
 //        countryEditText.setFocusableInTouchMode(false);
 
-        phoneEditText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    if (TextUtils.isEmpty(countryEditText.getText().toString())) {
-                        Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select city first");
-                    } else {
-                        showOtpDialog();
-                    }
-                }
-
-                return true;
-            }
-        });
-
-        mDomainAvailabilityCheck = new DomainAvailabilityCheck(PreSignUpActivityRia.this);
-        etWebsiteAddress.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(final Editable s) {
-
-                if (!isFirstCheck) {
-
-                    if (etWebsiteAddress.getText().toString().trim().length() == 0) {
-                        ivWebsiteStatus.setVisibility(View.GONE);
-                    } else if (Util.isNetworkStatusAvialable(PreSignUpActivityRia.this)) {
-                        mDomainAvailabilityCheck.domainCheck(s.toString());
-                    } else {
-                        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
+//        phoneEditText.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+//
+//                    if (TextUtils.isEmpty(countryEditText.getText().toString())) {
+//                        Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select city first");
+//                    } else {
+//                        showOtpDialog();
+//                    }
+//                }
+//
+//                return true;
+//            }
+//        });
         setDetails();
     }
 
-    private void updateCountry() {
-        String selectedCountry = countryEditText.getText().toString();
-
-        if (Country_CodeMap != null && Country_CodeMap.containsKey(selectedCountry)) {
-            String country_code = Country_CodeMap.get(selectedCountry);
-            if (Code_PhoneMap.containsKey(country_code))
-                data_country_code = Code_PhoneMap.get(country_code);
-            sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, data_country_code);
-        }
-
-        if (phoneEditText.getText().toString().trim().length() != 0) {
-            //phoneEditText.setText("");
-            ivPhoneStatus.setImageResource(R.drawable.icon_info);
-        }
-    }
-
-    private boolean isFirstCheck = true;
     private MaterialDialog otpDialog, numberDialog;
-
-    private void showOtpDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp, null);
-
-        TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-        tvTitle.setText("Please verify your mobile number");
-        tvTitle.setVisibility(View.GONE);
-        final EditText number = (EditText) view.findViewById(R.id.editText);
-        numberDialog = new MaterialDialog.Builder(this)
-                .customView(view, false)
-                .titleColorRes(R.color.primary_color)
-                .title("Enter Mobile Number")
-                .negativeText("Cancel")
-
-                /*.positiveText(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")
-                        ? "Verify & Send OTP" : "Confirm")*/
-
-                .positiveText("Confirm")
-
-                //               .positiveText("Confirm")
-                .autoDismiss(false)
-                .canceledOnTouchOutside(false)
-                .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        hideKeyBoard();
-                        if (Utils.isNetworkConnected(PreSignUpActivityRia.this)) {
-                            int length = number.getText().toString().trim().length();
-                            if (length == 0) {
-                                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
-                            } else if (length < 4 || length > 13) {
-                                Toast.makeText(PreSignUpActivityRia.this, "Enter valid number", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
-
-                                    //verifyPhoneNumberAndSendOTP(number.getText().toString().trim());
-
-                                    /**
-                                     * Below two lines added to store phone number on data_phone by skipping verifyPhoneNumberAndSendOTP method
-                                     */
-                                    data_phone = number.getText().toString().trim();
-                                    phoneEditText.setText(String.valueOf(data_country_code + " - " + data_phone));
-                                    dialog.dismiss();
-                                } else {
-                                    API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim(), data_country_code);
-                                }
-                            }
-                        } else {
-                            Toast.makeText(PreSignUpActivityRia.this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        hideKeyBoard();
-                        dialog.dismiss();
-                    }
-                }).show();
-
-        final TextView positive = numberDialog.getActionButton(DialogAction.POSITIVE);
-        positive.setTextColor(ContextCompat.getColor(PreSignUpActivityRia.this, R.color.gray_transparent));
-        number.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (number.getText().toString().trim().length() > 0) {
-                    positive.setTextColor(ContextCompat.getColor(PreSignUpActivityRia.this, R.color.primary));
-                } else {
-                    positive.setTextColor(ContextCompat.getColor(PreSignUpActivityRia.this, R.color.gray_transparent));
-                }
-            }
-        });
-    }
-
-//    private void verifyPhoneNumberAndSendOTP(String phoneNumber) {
-//        //data_country_code
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
-//            startProgressDialog();
-//        }
-//        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
-//        Map<String, String> hashMap = new HashMap<>();
-//        hashMap.put("PHONE", phoneNumber);
-//        hashMap.put("COUNTRYCODE", sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
-//        smsApi.verifyPhoneNumberAndSendOTP(hashMap, new Callback<VerifyPhoneNumberAndSendOTP>() {
-//            @Override
-//            public void success(VerifyPhoneNumberAndSendOTP model, Response response) {
-//                if (model == null) {
-//                    stopProgressDialog();
-//                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                if (!model.isPhoneNumberInUse() && model.isOTPSent()) {
-//                    stopProgressDialog();
-//                    if (numberDialog != null) {
-//                        numberDialog.dismiss();
-//                    }
-//                    otpVerifyDialog(model.getPHONE());
-//
-//                } else {
-//                    stopProgressDialog();
-//                    if (model.isPhoneNumberInUse()) {
-//                        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
-//                        //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
-//                    } else if (!model.isOTPSent()) {
-//                        Toast.makeText(PreSignUpActivityRia.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                stopProgressDialog();
-//                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//
-//    }
-
-    private void showCategoryDialog(ArrayList<String> categories) {
-        new MaterialDialog.Builder(activity)
-                .title("Select a Category")
-                .items(categories)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        businessCategoryEditText.setText(text);
-                        return false;
-                    }
-                })
-                .show();
-    }
 
     private void showCategoriesDialog(ArrayList<String> categories) {
 
@@ -824,19 +432,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     }
 
-    private void makeAutoCompleteFilter(String country_code) {
-
-        filter = null;
-        AutocompleteFilter.Builder builder = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES);
-
-        if (country_code != null) {
-            builder.setCountry(country_code.toUpperCase());
-        }
-        filter = builder.build();
-
-    }
-
     private void suggestTag(PreSignUpActivityRia preSignUpActivity, String data_businessName, String data_country, String data_city, String data_businessCategory, Bus bus) {
 
         new Suggest_Tag_Service(preSignUpActivity, data_businessName, data_country, data_city, data_businessCategory, Constants.clientId, bus);
@@ -867,155 +462,124 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
             MaterialProgressBar.dismissProgressBar();
             //PreSignUpDialog.showDialog_WebSiteCreation(activity,"Number Already Registered. . .","Try Again . . .");
-            goToNextScreen = false;
+            //goToNextScreen = false;
 
         }
 
     }
 
     private void setDetails() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                showProgressbar();
-                loadCountryCodeandCountryNameMap();
-            }
-        }).start();
-        Bundle mBundle = getIntent().getExtras();
-
-        if (mBundle != null &&
-                mBundle.containsKey("mBundle")) {
-
-            mBundle = mBundle.getBundle("mBundle");
-
-            if(mBundle == null)
-            {
-                return;
-            }
-
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Name))) {
-                businessNameEditText.setText(mBundle.getString(Save_Name, ""));
-
-            }
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Cat))) {
-                businessCategoryEditText.setText(mBundle.getString(Save_Cat, ""));
-
-            }
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Country))) {
-                countryEditText.setText(mBundle.getString(Save_Country, ""));
-            } else {
-                updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
-            }
-
-            if (!TextUtils.isEmpty(mBundle.getString(Save_City))) {
-                cityEditText.setText(mBundle.getString(Save_City, ""));
-                citytext = cityEditText.getText().toString().trim();
-            }
-
-            if (!TextUtils.isEmpty(mBundle.getString(Save_State))) {
-                editState.setText(mBundle.getString(Save_State, ""));
-            }
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Email))) {
-                emailEditText.setText(mBundle.getString(Save_Email, ""));
-            }
-
-            /*if (TextUtils.isEmpty(mBundle.getString(Save_Phone)) || TextUtils.isEmpty(mBundle.getString(Save_Otp))) {
-
-            }*/
-
-            /**
-             * Modified above condition and added because OTP verification is removed from the flow
-             */
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Phone)))
-            {
-                data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
-                phoneEditText.setText(String.valueOf(mBundle.getString(Save_Phone_Code, "") + " - " +
-                        mBundle.getString(Save_Phone, "")));
-                data_phone = mBundle.getString(Save_Phone, "");
-            }
-
-            else if (mBundle.getString(Save_Otp, "").equalsIgnoreCase("true")) {
-
-                ivPhoneStatus.setImageResource(R.drawable.green_check);
-                data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
-                phoneEditText.setText(String.valueOf(mBundle.getString(Save_Phone_Code, "") + " - " +
-                        mBundle.getString(Save_Phone, "")));
-                data_phone = mBundle.getString(Save_Phone, "");
-
-                phoneEditText.setFocusable(false);
-                phoneEditText.setFocusableInTouchMode(false);
-
-                etOTP.setFocusable(false);
-                etOTP.setFocusableInTouchMode(false);
-
-                phoneEditText.setEnabled(false);
-                phoneEditText.setClickable(false);
-
-                countryPhoneCode.setTextColor(getResources().getColor(R.color.light_gray));
-                phoneEditText.setTextColor(getResources().getColor(R.color.light_gray));
-
-            } else {
-
-                ivPhoneStatus.setImageResource(R.drawable.icon_info);
-                phoneEditText.setEnabled(true);
-                phoneEditText.setClickable(true);
-
-                phoneEditText.setTextColor(getResources().getColor(R.color.black));
-            }
-
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Street_Address))) {
-                etStreetAddress.setText(mBundle.getString(Save_Street_Address, ""));
-
-            }
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Locality))) {
-                edtLocality.setText(mBundle.getString(Save_Locality, ""));
-            }
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Pin_Code))) {
-                etPinCode.setText(mBundle.getString(Save_Pin_Code, ""));
-            }
-
-            if (TextUtils.isEmpty(mBundle.getString(Save_Website_Address)) || TextUtils.isEmpty(mBundle.getString(Save_IS_FP_AVAILABLE)))
-            {
-                if (ivWebsiteStatus.getVisibility() == View.VISIBLE) {
-                    ivWebsiteStatus.setVisibility(View.GONE);
-                }
-            } else if (mBundle.getString(Save_IS_FP_AVAILABLE, "").equalsIgnoreCase("true")) {
-                if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
-                    ivWebsiteStatus.setVisibility(View.VISIBLE);
-                }
-                ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
-                fpTag = mBundle.getString(Save_Website_Address, "");
-                etWebsiteAddress.setText(mBundle.getString(Save_Website_Address, ""));
-            } else {
-                if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
-                    ivWebsiteStatus.setVisibility(View.VISIBLE);
-                }
-                ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
-                API_Layer_Signup.getTag(activity, businessNameEditText.getText().toString(),
-                        countryEditText.getText().toString(), cityEditText.getText().toString(),
-                        businessCategoryEditText.getText().toString());
-            }
-
-            etWebsiteAddress.setClickable(true);
-            etWebsiteAddress.setEnabled(true);
-//            etWebsiteAddress.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-            etWebsiteAddress.setTextColor(getResources().getColor(R.color.black));
-
-
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Lat))) {
-                data_lat = mBundle.getString(Save_Lat);
-            }
-
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Lng))) {
-                data_lng = mBundle.getString(Save_Lng);
-            }
-
-
-            isFirstCheck = false;
-            if (!TextUtils.isEmpty(mBundle.getString(Save_Otp))) {
-                etOTP.setText(mBundle.getString(Save_Otp, ""));
-            }
-        }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                showProgressbar();
+//                loadCountryCodeandCountryNameMap();
+//            }
+//        }).start();
+//        Bundle mBundle = getIntent().getExtras();
+//
+//        if (mBundle != null &&
+//                mBundle.containsKey("mBundle")) {
+//
+//            mBundle = mBundle.getBundle("mBundle");
+//
+//            if(mBundle == null)
+//            {
+//                return;
+//            }
+//
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Name))) {
+//                businessNameEditText.setText(mBundle.getString(Save_Name, ""));
+//
+//            }
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Cat))) {
+//                businessCategoryEditText.setText(mBundle.getString(Save_Cat, ""));
+//
+//            }
+//
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Email))) {
+//                emailEditText.setText(mBundle.getString(Save_Email, ""));
+//            }
+//
+//            /*if (TextUtils.isEmpty(mBundle.getString(Save_Phone)) || TextUtils.isEmpty(mBundle.getString(Save_Otp))) {
+//
+//            }*/
+//
+//            /**
+//             * Modified above condition and added because OTP verification is removed from the flow
+//             */
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Phone)))
+//            {
+//                data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
+//                phoneEditText.setText(String.valueOf(mBundle.getString(Save_Phone_Code, "") + " - " +
+//                        mBundle.getString(Save_Phone, "")));
+//                data_phone = mBundle.getString(Save_Phone, "");
+//            }
+//
+//            else if (mBundle.getString(Save_Otp, "").equalsIgnoreCase("true")) {
+//
+//                ivPhoneStatus.setImageResource(R.drawable.green_check);
+//                data_country_code = mBundle.getString(Save_Phone_Code, "").replace("+", "");
+//                phoneEditText.setText(String.valueOf(mBundle.getString(Save_Phone_Code, "") + " - " +
+//                        mBundle.getString(Save_Phone, "")));
+//                data_phone = mBundle.getString(Save_Phone, "");
+//
+//                phoneEditText.setFocusable(false);
+//                phoneEditText.setFocusableInTouchMode(false);
+//
+//                etOTP.setFocusable(false);
+//                etOTP.setFocusableInTouchMode(false);
+//
+//                phoneEditText.setEnabled(false);
+//                phoneEditText.setClickable(false);
+//
+//                countryPhoneCode.setTextColor(getResources().getColor(R.color.light_gray));
+//                phoneEditText.setTextColor(getResources().getColor(R.color.light_gray));
+//
+//            } else {
+//
+//                ivPhoneStatus.setImageResource(R.drawable.icon_info);
+//                phoneEditText.setEnabled(true);
+//                phoneEditText.setClickable(true);
+//
+//                phoneEditText.setTextColor(getResources().getColor(R.color.black));
+//            }
+//
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Street_Address))) {
+//                etStreetAddress.setText(mBundle.getString(Save_Street_Address, ""));
+//
+//            }
+//
+//            if (TextUtils.isEmpty(mBundle.getString(Save_Website_Address)) || TextUtils.isEmpty(mBundle.getString(Save_IS_FP_AVAILABLE)))
+//            {
+//                if (ivWebsiteStatus.getVisibility() == View.VISIBLE) {
+//                    ivWebsiteStatus.setVisibility(View.GONE);
+//                }
+//            } else if (mBundle.getString(Save_IS_FP_AVAILABLE, "").equalsIgnoreCase("true")) {
+//                if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
+//                    ivWebsiteStatus.setVisibility(View.VISIBLE);
+//                }
+//                ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
+//                fpTag = mBundle.getString(Save_Website_Address, "");
+//            } else {
+//                if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
+//                    ivWebsiteStatus.setVisibility(View.VISIBLE);
+//                }
+//                ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
+//            }
+//
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Lat))) {
+//                data_lat = mBundle.getString(Save_Lat);
+//            }
+//
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Lng))) {
+//                data_lng = mBundle.getString(Save_Lng);
+//            }
+//
+//            if (!TextUtils.isEmpty(mBundle.getString(Save_Otp))) {
+//                etOTP.setText(mBundle.getString(Save_Otp, ""));
+//            }
+//        }
 
     }
 
@@ -1029,48 +593,30 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    private void loadCountryCodeandCountryNameMap() {
-        Country_CodeMap = new HashMap<>();
-        Code_PhoneMap = new HashMap<>();
-        String[] locales = Locale.getISOCountries();
-        for (String countryCode : locales) {
-            Locale obj = new Locale("", countryCode);
-            signUpCountryList.add(obj.getDisplayCountry());
-            Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-            //Log.v("ggg",obj.getCountry());
-        }
-        Country_CodeMap.put("USA", "US");
-        Collections.sort(signUpCountryList);
-        if (isFinishing()) {
-            return;
-        }
-        hideProgressbar();
-        String[] string_array = getResources().getStringArray(R.array.CountryCodes);
-        for (int i = 0; i < string_array.length; i++) {
-            String phoneCode = string_array[i].split(",")[0];
-            String countryCode = string_array[i].split(",")[1];
-            Code_PhoneMap.put(countryCode, phoneCode);
-        }
-
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                if (TextUtils.isEmpty(data_country_code)) {
-                    String selectedCountry = countryEditText.getText().toString();
-
-                    if (Country_CodeMap != null && Country_CodeMap.containsKey(selectedCountry)) {
-                        String country_code = Country_CodeMap.get(selectedCountry);
-                        if (Code_PhoneMap.containsKey(country_code))
-                            data_country_code = Code_PhoneMap.get(country_code);
-                    }
-                }
-                hideProgressbar();
-            }
-        });
-
-    }
+//    private void loadCountryCodeandCountryNameMap() {
+//        Country_CodeMap = new HashMap<>();
+//        Code_PhoneMap = new HashMap<>();
+//        String[] locales = Locale.getISOCountries();
+//        for (String countryCode : locales) {
+//            Locale obj = new Locale("", countryCode);
+//            signUpCountryList.add(obj.getDisplayCountry());
+//            Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
+//            //Log.v("ggg",obj.getCountry());
+//        }
+//        Country_CodeMap.put("USA", "US");
+//        Collections.sort(signUpCountryList);
+//        if (isFinishing()) {
+//            return;
+//        }
+//        hideProgressbar();
+//        String[] string_array = getResources().getStringArray(R.array.CountryCodes);
+//        for (int i = 0; i < string_array.length; i++) {
+//            String phoneCode = string_array[i].split(",")[0];
+//            String countryCode = string_array[i].split(",")[1];
+//            Code_PhoneMap.put(countryCode, phoneCode);
+//        }
+//
+//    }
 
     private void initiatePopupWindow(View image) {
         Rect location = locateView(image);
@@ -1134,14 +680,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             MixPanelController.track("EnterDetailsNext", null);
             data_businessName = businessNameEditText.getText().toString().trim();
             data_businessCategory = businessCategoryEditText.getText().toString().trim();
-            data_city = cityEditText.getText().toString().trim();
-            data_country = countryEditText.getText().toString().trim();
             data_email = emailEditText.getText().toString().trim();
 
-            fpTag = etWebsiteAddress.getText().toString().trim();
+            fpTag = "";
 
-//            data_phone = phoneEditText.getText().toString();
-//            data_country_code = countryPhoneCode.getText().toString();
             allFieldsValid = true;
             if (data_businessName.trim().length() == 0) {
                 allFieldsValid = false;
@@ -1151,49 +693,20 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(businessCategoryEditText);
                 Methods.showSnackBarNegative(activity, getString(R.string.select_business_category));
-            } else if (data_city.trim().length() == 0) {
-                allFieldsValid = false;
-                YoYo.with(Techniques.Shake).playOn(cityEditText);
-                Methods.showSnackBarNegative(activity, getString(R.string.enter_city));
-            } else if (!citytext.trim().equals(data_city)) {
-                allFieldsValid = false;
-                YoYo.with(Techniques.Shake).playOn(cityEditText);
-                Methods.showSnackBarNegative(activity, "Enter valid city");
-            } else if (data_country.trim().length() == 0) {
-                allFieldsValid = false;
-                YoYo.with(Techniques.Shake).playOn(countryEditText);
-                Methods.showSnackBarNegative(activity, getString(R.string.select_country));
             } else if (etStreetAddress.getText().toString().trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(etStreetAddress);
                 Methods.showSnackBarNegative(activity, getString(R.string.enter_street_address));
-            } else if (etPinCode.getText().toString().trim().length() == 0) {
-                allFieldsValid = false;
-                YoYo.with(Techniques.Shake).playOn(etPinCode);
-                Methods.showSnackBarNegative(activity, getString(R.string.enter_pin_code));
             } else if (!(Signup_Validation.isValidEmail(emailEditText.getText().toString()))) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(emailEditText);
                 Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_email));
-            } else if (etWebsiteAddress.getText().toString().trim().length() == 0) {
-                allFieldsValid = false;
-                YoYo.with(Techniques.Shake).playOn(etWebsiteAddress);
-                String message = (String) ivWebsiteStatus.getTag();
-                Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_website_name));
-            } else if (TextUtils.isEmpty(fpTag)) {
-                allFieldsValid = false;
-                YoYo.with(Techniques.Shake).playOn(etWebsiteAddress);
-                Methods.showSnackBarNegative(activity, "Website name is already exists, Try something else.");
             } else if (phoneEditText.getText().toString().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(phoneEditText);
                 Methods.showSnackBarNegative(activity, getString(R.string.enter_mobile_number));
             }
-//            if (!Signup_Validation.isValidPhoneNumber(phoneEditText.getText().toString())) {
-//                allFieldsValid = false;
-//                YoYo.with(Techniques.Shake).playOn(phoneEditText);
-//                Methods.showSnackBarNegative(activity, getString(R.string.enter_password_6to12_char));
-//            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1202,27 +715,17 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     @Override
     public void onItemClick(String itemName) {
-
         if (businessCategory_Selected) {
             businessCategoryEditText.setText(itemName);
             businessCategory_Selected = false;
         } else if (country_Selected) {
-            countryEditText.setText(itemName);
             country_Selected = false;
         }
-
     }
 
     @Override
     public void tagStatus(String status, String tag) {
 
-        if (TextUtils.isEmpty(tag)) {
-            ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
-        } else {
-            fpTag = tag.toLowerCase();
-            etWebsiteAddress.setText(fpTag);
-            ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
-        }
     }
 
 
@@ -1276,10 +779,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         } else if (value.equalsIgnoreCase("Error")) {
             Methods.showSnackBarNegative(numberDialog.getView(), getString(R.string.something_went_wrong_try_again));
-            goToNextScreen = false;
+//            goToNextScreen = false;
         } else {
             Methods.showSnackBarNegative(numberDialog.getView(), getString(R.string.number_already_exists));
-            goToNextScreen = false;
+//            goToNextScreen = false;
         }
     }
 
@@ -1288,23 +791,26 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private HashMap<String, String> getJSONData() {
         HashMap<String, String> store = new HashMap<String, String>();
         try {
+            //            store.put("tag", fpTag);
+            //            store.put("city", data_city);
+            //            store.put("country", data_country);
+            //            store.put("lat", data_lat);
+            //            store.put("lng", data_lng);
             store.put("clientId", Constants.clientId);
-            store.put("tag", fpTag);
-            store.put("contactName", contactName);
+            store.put("profile_id", "dlkfjds");
             store.put("name", data_businessName);
-            store.put("desc", "");
             store.put("address", etStreetAddress.getText().toString());
-            store.put("city", data_city);
-            store.put("pincode", etPinCode.getText().toString());
-            store.put("country", data_country);
+
+            store.put("pincode", "------");
+            store.put("country", "India");
+
             store.put("primaryNumber", data_phone);
             store.put("email", data_email);
-            store.put("primaryNumberCountryCode", data_country_code);
+            store.put("primaryNumberCountryCode", "91");
             store.put("Uri", "");
             store.put("fbPageName", "");
             store.put("primaryCategory", data_businessCategory);
-            store.put("lat", data_lat);
-            store.put("lng", data_lng);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1340,85 +846,29 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-//        SharedPreferences.Editor editor = sharedpreferences.edit();
-//        editor.clear();
-//        editor.commit();
     }
 
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, "91");
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.clear();
-        editor.apply();
-    }
-
-    public void selectC() {
-        final List<String> stringList = signUpCountryList;
-        String[] countryList = new String[stringList.size()];
-        countryList = stringList.toArray(countryList);
-
-        //Another way showing the material dialog using custom Adapter
-
-//        final CustomFilterableAdapter adapter = new CustomFilterableAdapter(
-//                stringList, activity);
-//        final MaterialDialog dialog = new MaterialDialog.Builder(this)
-//                .title("Choose Country")
-//                .adapter(adapter)
-//                .build();
-//
-//        ListView listView = dialog.getListView();
-//        if (listView != null) {
-//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    //Toast.makeText(activity, "Clicked item " + position, Toast.LENGTH_SHORT).show();
-//                    String strName = adapter.getItem(position);
-//                    countryEditText.setText(strName);
-//                    dialog.dismiss();
-//                }
-//            });
-//        }
-//
-//        dialog.show();
-
-        new MaterialDialog.Builder(activity)
-                .title("Select Country")
-                .items(countryList)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        countryEditText.setText(text);
-                        //Log.v("ggg",text.toString());
-                        try {
-                            String country_code = Country_CodeMap.get(text.toString());
-                            //Log.v("ggg",country_code);
-                            String phone_code = Code_PhoneMap.get(country_code);
-                            countryPhoneCode.setText("+" + phone_code);
-                            sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
-                        } catch (Exception e) {
-                            //Log.v("ggg ",e.toString());
-                        }
-                        return false;
-                    }
-                })
-                .show();
+//        super.onBackPressed();
+//        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//        sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, "91");
+//        SharedPreferences.Editor editor = sharedpreferences.edit();
+//        editor.clear();
+//        editor.apply();
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.verify_button && (Boolean) v.getTag()) {
+        if (v.getId() == R.id.verify_button) {
             try {
                 if (getEditTextData()) {
                     if (data_lat.equalsIgnoreCase("0")) {
 
                         LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
-                                etStreetAddress.getText().toString(), cityEditText.getText().toString(), countryEditText.getText().toString(),
-                                etPinCode.getText().toString());
+                                etStreetAddress.getText().toString(),  "India",
+                                "");
                         if (latLng != null) {
                             data_lat = latLng.latitude + "";
                             data_lng = latLng.longitude + "";
@@ -1427,8 +877,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     hideKeyBoard();
                     MixPanelController.track("CreateMyWebsite", null);
                     createStore_retrofit(PreSignUpActivityRia.this, getJSONData(), bus);
-
-                    Log.d("PRE_SIGN_UP", "I AM HERE");
+                } else {
+                    Toast.makeText(activity, "All your inputs are not valid. Please cross check once.", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1437,38 +887,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void hideKeyBoard() {
-
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(verify_button.getWindowToken(), 0);
-
-    }
-
-    public boolean updateBasedOnMostRecentLocation(Address address) {
-        if (address != null) {
-            String countryPhoneCodeString = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE);
-            String lastKnownCountry = address.getCountryName();
-            String lastKnownState = address.getAdminArea();
-            String lastKnownCity = address.getLocality();
-            String lastKnownPin = address.getPostalCode();
-
-            if (!Util.isNullOrEmpty(lastKnownCountry)) {
-                countryEditText.setText(lastKnownCountry);
-            }
-
-            if (!Util.isNullOrEmpty(lastKnownCity)) {
-                cityEditText.setText(lastKnownCity);
-            }
-
-            if (!Util.isNullOrEmpty(countryPhoneCodeString)) {
-                data_country_code = countryPhoneCodeString;
-                countryPhoneCode.setText("+" + countryPhoneCodeString);
-                //countryPhoneCode.setTextColor((new PreSignUpActivity()).getResources().getColor(R.color.accentColor));
-            }
-
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
@@ -1560,11 +980,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         } else {
             Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
         }
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
@@ -1664,7 +1079,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("PHONE", number);
-        hashMap.put("COUNTRY", countryEditText.getText().toString().trim());
+        hashMap.put("COUNTRY", "India");
         smsApi.resendOTPOverCall(hashMap, new Callback<SmsVerifyModel>() {
             @Override
             public void success(SmsVerifyModel model, Response response) {
@@ -1728,7 +1143,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("OTP", otpCode);
         hashMap.put("PHONE", number);
-        hashMap.put("COUNTRY", countryEditText.getText().toString().trim());
+        hashMap.put("COUNTRY", "India");
         smsApi.verifyOTPCode(hashMap, new Callback<SmsVerifyModel>() {
             @Override
             public void success(SmsVerifyModel model, Response response) {
@@ -1844,27 +1259,27 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     @Override
     public void onDomainAvailable(String websiteTag) {
         this.fpTag = websiteTag;
-        if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
-            ivWebsiteStatus.setVisibility(View.VISIBLE);
-        }
-        ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
+//        if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
+//            ivWebsiteStatus.setVisibility(View.VISIBLE);
+//        }
+//        ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
     }
 
     @Override
     public void onDomainNotAvailable() {
         this.fpTag = "";
-        if (etWebsiteAddress.getText().toString().trim().length() == 0) {
-            ivWebsiteStatus.setVisibility(View.GONE);
-        } else if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
-            ivWebsiteStatus.setVisibility(View.VISIBLE);
-        }
-        ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
+//        if (etWebsiteAddress.getText().toString().trim().length() == 0) {
+//            ivWebsiteStatus.setVisibility(View.GONE);
+//        } else if (ivWebsiteStatus.getVisibility() != View.VISIBLE) {
+//            ivWebsiteStatus.setVisibility(View.VISIBLE);
+//        }
+//        ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
     }
 
     private void createStore_retrofit(PreSignUpActivityRia webSiteAddressActivity, HashMap<String, String> jsonData, Bus bus) {
         setEnableCreateWebsiteButton(false);
         showLoader(getString(R.string.creating_website));
-        new Create_Tag_Service(webSiteAddressActivity, jsonData, bus);
+        new Create_Tag_Service(webSiteAddressActivity, existing_profile_id, jsonData, bus);
     }
 
     private void setEnableCreateWebsiteButton(boolean bool) {
