@@ -79,7 +79,8 @@ public class ImageShareAdapter extends BaseAdapter<AllSuggestionModel> {
                                 .fitCenter())
                         .into(imageView);*/
 
-                Picasso.with(mContext).load(suggestionModel.getImageUri())
+
+                Picasso.get().load(suggestionModel.getImageUri())
                         .placeholder(R.drawable.placeholder_ic_image_padded)
                         .fit().centerCrop()
                         .into(imageView);

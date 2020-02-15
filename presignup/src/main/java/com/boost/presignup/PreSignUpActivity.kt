@@ -101,7 +101,9 @@ class PreSignUpActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener {
             WebEngageController.trackEvent("PS_Clicked Login", "login clicked", "")
-            PresignupManager.getListener()?.loginClicked(activityContext)
+            val intent = Intent(applicationContext, Class.forName("com.nowfloats.Login.Login_MainActivity"))
+            startActivity(intent)
+            //PresignupManager.getListener()?.loginClicked(activityContext)
         }
 
         setUpMvvm()
