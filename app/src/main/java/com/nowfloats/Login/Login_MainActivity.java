@@ -198,14 +198,15 @@ public class Login_MainActivity extends AppCompatActivity implements
 
                 if (userNameText.length() > 0 && passwordText.length() > 0) {
                     userName.clearFocus();
-                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
+                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.processing_request));
                     progressDialog.setCancelable(true);
+                    Methods.hideKeyboard(Login_MainActivity.this);
                     API_Login apiLogin = new API_Login(Login_MainActivity.this,session,bus);
                     apiLogin.authenticate(userName.getText().toString().toLowerCase(), password.getText().toString(), Specific.clientId2);
                 } else {
                     YoYo.with(Techniques.Shake).playOn(userName);
                     YoYo.with(Techniques.Shake).playOn(password);
-                    Methods.showSnackBarNegative(Login_MainActivity.this,getString(R.string.enter_valid_username_or_password));
+                    Toast.makeText(Login_MainActivity.this, getString(R.string.enter_valid_login_details), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -260,6 +261,7 @@ public class Login_MainActivity extends AppCompatActivity implements
             currentProvider = "Google";
             customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
             customFirebaseAuthHelpers.startGoogleLogin();
+            // if he already exists with fpId = null, then send him to Business Profile creation screen.
         });
 
         cvOtpVerification.setOnClickListener(v -> {
@@ -361,6 +363,15 @@ public class Login_MainActivity extends AppCompatActivity implements
                 progressDialog.dismiss();
                 progressDialog = null ;
             }
+            if(value.equals("Partial")){
+                session.setUserLogin(true);
+                Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
+                signupConfirmationPage.putExtra("profileUrl", "");
+                signupConfirmationPage.putExtra("person_name", "");
+                signupConfirmationPage.putExtra("profile_id", session.getUserProfileId());
+                startActivity(signupConfirmationPage);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            }
         }
     }
 
@@ -398,19 +409,10 @@ public class Login_MainActivity extends AppCompatActivity implements
             progressDialog.dismiss();
             progressDialog = null ;
         }
+        Toast.makeText(Login_MainActivity.this, "Sorry, no Boost account was found for the given login details. Please try again.", Toast.LENGTH_SHORT).show();
     }
 
-
-//    @Subscribe
-//    public void getMessages(ArrayList<FloatsMessageModel> floats){
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelableArrayList("message",floats);
-//        dashboardIntent.putExtras(bundle);
-//        authenticationStatus("Success");
-//    }
-
     protected void sendPasswordToEmail(String enteredText) {
-        // TODO Auto-generated method stub
         final ProgressDialog dialog = ProgressDialog.show(this,"",getString(R.string.processing_request),true);
         JSONObject obj = new JSONObject();
         try {
@@ -650,10 +652,19 @@ public class Login_MainActivity extends AppCompatActivity implements
         if(userProfileResponse == null) {
             Methods.showSnackBarNegative(this, "Login failed");
         }else if(userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0) {
-            Methods.showDialog(this, getString(R.string.uh_oh)+" " + provider +" "+
-                    getString(R.string.not_auth), "It seems the " + addressType +" " + id + " "
-                    +getString(R.string.message_2) +
-                    "\n" + getString(R.string.message_1));
+            session.setUserLogin(true);
+            Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
+            signupConfirmationPage.putExtra("profileUrl", "");
+            signupConfirmationPage.putExtra("person_name", "");
+            signupConfirmationPage.putExtra("profile_id", userProfileResponse.getResult().getLoginId());
+            startActivity(signupConfirmationPage);
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+            //Code below leads to Connect existing FP acco
+//            Methods.showDialog(this, getString(R.string.uh_oh)+" " + provider +" "+
+//                    getString(R.string.not_auth), "It seems the " + addressType +" " + id + " "
+//                    +getString(R.string.message_2) +
+//                    "\n" + getString(R.string.message_1));
         }else{
             progressDialog = ProgressDialog.show(this, "", "Loading");
 

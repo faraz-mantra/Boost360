@@ -280,7 +280,7 @@ class MainFragment : Fragment() {
     }
 
     fun checkVideoPlaying() {
-        checkvideo = object : CountDownTimer(5000, 1000) {
+        checkvideo = object : CountDownTimer(6000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
             }
 

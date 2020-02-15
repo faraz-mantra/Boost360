@@ -121,7 +121,7 @@ class IntroFragment : Fragment() {
             override fun run() {
                 handler.post(Update)
             }
-        }, 2000, 2000)
+        }, 3000, 3000)
 
         return root
     }

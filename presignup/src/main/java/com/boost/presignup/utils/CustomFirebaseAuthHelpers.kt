@@ -152,6 +152,8 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
             mGoogleSignInClient.signOut()
 
+            //TODO: [Ronak] Make webEngage user login here
+
             Log.d(TAG, "updateUI: photo = " + personPhoto);
 
             requestUserProfileAPI(personIdToken,
@@ -224,7 +226,6 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 ProfileProperties(email, userMobile, personName, userPassword), provider, null)
 
         if (userFpId == "") {
-
             ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
                 override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
                     listener.onFailure()
@@ -235,6 +236,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 }
             })
         } else {
+            //used from post login - account mapping scenarios
             userInfo.FpIds = arrayOf(userFpId)
 
             ApiService.connectUserProfile(userInfo).enqueue(object : Callback<ConnectUserProfileResponse> {

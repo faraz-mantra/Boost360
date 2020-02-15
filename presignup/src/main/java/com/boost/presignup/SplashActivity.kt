@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         initLottieAnimation()
 //        if(BuildConfig.DEBUG){
-            hashGeneration()
+//            hashGeneration()
 //        }
     }
 
@@ -28,22 +28,22 @@ class SplashActivity : AppCompatActivity() {
         animation_view.setAnimation(R.raw.boost_lottie)
         animation_view.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
-                Log.d("onAnimationRepeat", "")
+//                Log.d("onAnimationRepeat", "")
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                Log.d("onAnimationEnd", "")
+//                Log.d("onAnimationEnd", "")
                 val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
                 startActivity(mainIntent)
                 finish()
             }
 
             override fun onAnimationCancel(animation: Animator?) {
-                Log.d("onAnimationCancel", "")
+//                Log.d("onAnimationCancel", "")
             }
 
             override fun onAnimationStart(animation: Animator?) {
-                Log.d("onAnimationStart", "")
+//                Log.d("onAnimationStart", "")
             }
 
         })

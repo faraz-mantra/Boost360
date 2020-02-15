@@ -1,9 +1,11 @@
 package com.boost.presignup
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -114,6 +116,8 @@ class SignUpActivity : AppCompatActivity() {
         create_account_button.setOnClickListener {
             hideSoftKeyBoard(applicationContext, it)
             if (validateInput()) {
+                Toast.makeText(applicationContext, "Processing...", Toast.LENGTH_SHORT).show()
+                create_account_button.isVisible = false;
                 mAuth.createUserWithEmailAndPassword(email, userPassword)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
@@ -163,7 +167,6 @@ class SignUpActivity : AppCompatActivity() {
                 userPassword,
                 ProfileProperties(email, userMobile, personName, userPassword), provider, null)
 
-        create_account_button.isVisible = false;
         ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
             override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
                 Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()

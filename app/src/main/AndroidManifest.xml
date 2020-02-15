@@ -659,18 +659,18 @@
             android:name="com.nowfloats.Login.ForgotPassword"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"
-            android:label="@string/title_activity_splash_screen_"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Splash">
+<!--        <activity-->
+<!--            android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"-->
+<!--            android:label="@string/title_activity_splash_screen_"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/AppTheme.Splash">-->
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
 
-            </intent-filter>
-        </activity>
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <!--PreSignUp module-->
         <activity
             android:name="com.boost.presignup.SplashActivity"
@@ -682,7 +682,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
-
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 

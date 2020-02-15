@@ -764,7 +764,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void hideLoader() {
-
         if (pd != null && pd.isShowing()) {
             pd.dismiss();
         }
@@ -801,7 +800,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             //            store.put("lat", data_lat);
             //            store.put("lng", data_lng);
             store.put("clientId", Constants.clientId);
-            store.put("profile_id", "dlkfjds");
             store.put("name", data_businessName);
             store.put("address", etStreetAddress.getText().toString());
 
@@ -880,6 +878,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     }
                     hideKeyBoard();
                     MixPanelController.track("CreateMyWebsite", null);
+                    WebEngageController.trackEvent("Business Profile Creation Initiated", "Business Profile Creation Initiated", null);
                     createStore_retrofit(PreSignUpActivityRia.this, getJSONData(), bus);
                 } else {
                     Toast.makeText(activity, "All your inputs are not valid. Please cross check once.", Toast.LENGTH_SHORT).show();
@@ -1300,6 +1299,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         final String fpId = response.fpId;
         if (TextUtils.isEmpty(fpId)) {
             hideLoader();
+            Toast.makeText(PreSignUpActivityRia.this, "Failed to create your business profile. Please try again.", Toast.LENGTH_SHORT).show();
             setEnableCreateWebsiteButton(true);
             return;
         }
