@@ -40,6 +40,7 @@ allprojects {
         maven {
             url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
         }
+        maven { url "https://maven.google.com" }
         google()
     }
 }
@@ -64,7 +65,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020017
+        versionCode 2020020018
 
 
         multiDexEnabled true
@@ -139,7 +140,7 @@ android {
         }
         partone {
 
-            versionName "5.2.6"
+            versionName "5.2.7"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -169,8 +170,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':library')
-    implementation project(':cropper')
-    implementation project(':ZoomImageLibrary')
+    //implementation project(':cropper')
+    //implementation project(':ZoomImageLibrary')
     implementation project(':instamojoLib')
     implementation files('libs/libraries/signpost-core-1.2.1.2.jar')
     implementation files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
@@ -246,6 +247,7 @@ dependencies {
     implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
     implementation project(':keyboard')
     implementation project(':imagepicker')
+    implementation 'com.edmodo:cropper:1.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.angads25:toggle:1.1.0'
     implementation 'com.nbsp:library:1.8'

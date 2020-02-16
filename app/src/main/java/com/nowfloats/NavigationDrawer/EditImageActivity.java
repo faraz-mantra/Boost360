@@ -77,14 +77,9 @@ public class EditImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
-                    if (cropImageView.getCropOverlayViewVisible()){
-                        croppedImage = cropImageView.getCroppedImage();
-                        if(croppedImage!=null) {
-                            cropImageView.setImageBitmap(croppedImage);
-                            cropImageView.setCropOverlayViewVisible(false);
-                        }
-                    }else{
-                        cropImageView.setCropOverlayViewVisible(true);
+                    croppedImage = cropImageView.getCroppedImage();
+                    if(croppedImage!=null) {
+                        cropImageView.setImageBitmap(croppedImage);
                     }
                 }catch(Exception e){System.gc();e.printStackTrace();}
             }

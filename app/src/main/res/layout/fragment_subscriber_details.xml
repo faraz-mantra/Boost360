@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:id="@+id/divider1"
         android:visibility="gone"
-        android:background="@color/black_translucent"/>
+        android:background="#80000000"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/message_subscriber"
@@ -67,7 +67,7 @@
 
     <View android:layout_height="1dp"
         android:layout_width="match_parent"
-        android:background="@color/black_translucent"/>
+        android:background="#80000000"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

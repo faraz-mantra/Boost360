@@ -1,4 +1,4 @@
-include ':app', ':cropper', ':ZoomImageLibrary', ':instamojoLib', ':riachatsdkMain', ':keyboard', ':imagepicker' , ':presignup'
+include ':app', ':instamojoLib', ':imagepicker', ':riachatsdkMain', ':keyboard', ':presignup'
 
 include ':messagelibrary'
 
