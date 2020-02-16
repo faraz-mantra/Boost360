@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.WebEngageController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_up_confirmation.*
 import java.net.URL
 
@@ -18,18 +20,26 @@ class SignUpConfirmation : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up_confirmation)
 
         WebEngageController.trackEvent("PS_Account Creation Confirmation", "Account Creation Confirmation", "")
-
-        val personName = intent.getStringExtra("person_name")
+        val currentFirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
         val profile_id = intent.getStringExtra("profile_id")
-        val temp = getString(R.string.welcome) + " " + personName
-        welcome_user.setText(temp)
-        val profileUrl = intent.getStringExtra("profileUrl")
+
+        var personName = intent.getStringExtra("person_name")
+        if(personName.isEmpty()){
+            personName = currentFirebaseUser?.displayName
+        }
+        welcome_user.setText(getString(R.string.welcome) + " " + personName)
+
+
+        var profileUrl = intent.getStringExtra("profileUrl")
+        if(profileUrl.isEmpty()){
+            profileUrl = currentFirebaseUser?.photoUrl?.toString()
+        }
         if (!profileUrl.isEmpty()) {
             val url = URL(profileUrl)
             val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
             userProfileImage.setImageBitmap(bmp)
         }
-//        userProfileImage.setImageURI(Uri.parse(profileUrl))
+
         set_up_business_profile.setOnClickListener {
             WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
             val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))

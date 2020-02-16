@@ -171,19 +171,21 @@ class SignUpActivity : AppCompatActivity() {
             override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
                 Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
                 WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
-
                 create_account_button.isVisible = true;
             }
 
             override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+                val responseResult: UserProfileResponse? = response.body()
+
+                WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
+                WebEngageController.setUserContactAttributes(email, userMobile, personName)
                 WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+
                 val intent = Intent(applicationContext, SignUpConfirmation::class.java)
                 intent.putExtra("profileUrl", profileUrl)
                 intent.putExtra("person_name", personName)
-                if(response.body() != null) {
-                    val responseResult: UserProfileResponse? = response.body()
-                    intent.putExtra("profile_id", responseResult?.Result?.LoginId)
-                }
+                intent.putExtra("profile_id", responseResult?.Result?.LoginId)
+
                 startActivity(intent)
             }
         })

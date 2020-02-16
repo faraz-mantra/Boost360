@@ -1605,7 +1605,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }).start();
 
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-                WebEngageController.setWebEngageProperties(session);
+                WebEngageController.setUserContactInfoProperties(session);
             }
 
 

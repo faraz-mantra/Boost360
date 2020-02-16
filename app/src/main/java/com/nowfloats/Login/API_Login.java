@@ -48,7 +48,7 @@ public class API_Login {
 
     public void authenticate(String userName, String password, final String clientId)
     {
-    BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
+        BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("loginKey", userName);
         params.put("loginSecret", password);
@@ -101,7 +101,8 @@ public class API_Login {
                         }
                         BoostLog.d("FPID: ", fpId);
                         apiInterface.authenticationStatus("Success");
-                    } else if(response_Data.loginId != null) {
+                    }
+                    else if(response_Data.loginId != null) {
                         WebEngageController.trackEvent("Login Without Business Profile","Login Without Business Profile",appContext.getString(R.string.check_your_crediential));
                         session.setUserProfileId(response_Data.loginId);
                         apiInterface.authenticationStatus("Partial");

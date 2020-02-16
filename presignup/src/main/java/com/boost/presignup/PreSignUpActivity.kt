@@ -48,7 +48,6 @@ class PreSignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var activityContext = this
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pre_sign_up_lib)
         viewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
         binding.viewModel = viewModel
@@ -70,7 +69,6 @@ class PreSignUpActivity : AppCompatActivity() {
             }
 
         }
-
 
         langList = mutableListOf<String>(
                 resources.getString(R.string.english),

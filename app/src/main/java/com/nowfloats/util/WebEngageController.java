@@ -15,28 +15,47 @@ public class WebEngageController {
     static Analytics weAnalytics = WebEngage.get().analytics();
     public static User weUser;
 
-
-    public static void trackEvent(String event_name,String event_label,String event_value)
-    {
-
+    public static void trackEvent(String event_name,String event_label,String event_value) {
         Map<String, Object> trackEvent = new HashMap<>();
         trackEvent.put("event_name", event_name);
         trackEvent.put("fptag", event_value);
         trackEvent.put("event_label",event_label);
         weAnalytics.track(event_name,trackEvent);
-
     }
 
-
-    public static void setWebEngageProperties(UserSessionManager session) {
-
-
+    public static void initiateUserLogin(String profileId){
         weUser = WebEngage.get().user();
-        weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
-        weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        weUser.login(profileId);
+    }
+
+    public static void setUserContactInfoProperties(String profileId, String email, String mobile, String name) {
+        try {
+            if (weUser == null && profileId != null) {
+                initiateUserLogin(profileId);
+            }
+            if (weUser != null) {
+                if(email != null && email.length() > 0)
+                    weUser.setEmail(email);
+                if(name != null && name.length() > 0)
+                    weUser.setFirstName(name);
+                if(mobile != null && mobile.length() > 0)
+                    weUser.setPhoneNumber(mobile);
+            }
+        } catch (Exception e){}
+    }
+
+    public static void setUserContactInfoProperties(UserSessionManager session) {
+        try {
+            if (weUser == null && session.getUserProfileId() != null) {
+                initiateUserLogin(session.getUserProfileId());
+            }
+            if (weUser != null) {
+                weUser.setEmail(session.getUserProfileEmail());
+                weUser.setFirstName(session.getUserProfileName());
+                weUser.setPhoneNumber(session.getUserProfileMobile());
+                weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+            }
+        } catch (Exception e){}
     }
 
     public static void logout(){

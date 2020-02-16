@@ -258,4 +258,5 @@ dependencies {
     implementation project(path: ':presignup')
 
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
 }

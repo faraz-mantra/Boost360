@@ -232,6 +232,10 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 }
 
                 override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+                    WebEngageController.initiateUserLogin(response.body()?.Result?.LoginId)
+                    WebEngageController.setUserContactAttributes(email, userMobile, personName)
+                    WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+
                     listener.onSuccess(response.body(), loginKey)
                 }
             })
@@ -241,6 +245,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
             ApiService.connectUserProfile(userInfo).enqueue(object : Callback<ConnectUserProfileResponse> {
                 override fun onResponse(call: Call<ConnectUserProfileResponse>, response: Response<ConnectUserProfileResponse>) {
+                    //TODO: Ronak - how to handle this login scenario? on webenagage
                     listener.onSuccess(response.body())
                 }
 

@@ -3,8 +3,14 @@ package com.nowfloats.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 
 public class Utils {
@@ -25,6 +31,34 @@ public class Utils {
 	public static int dipToPx(Context c,float dipValue) {
 		DisplayMetrics metrics = c.getResources().getDisplayMetrics();
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+	}
+
+	public static void logOnBoardingCompleteConversionGoals(Context context, String fpId){
+		try{
+			WebEngageController.trackEvent("Business Profile Creation Success", "Business Profile Creation Success", fpId);
+
+			String loginMethod = "unknown";
+			try{
+				FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+				if (user != null) {
+					for (UserInfo profile : user.getProviderData()) {
+						// Id of the provider (ex: google.com)
+						loginMethod = profile.getProviderId();
+					}
+				}
+			} catch (Exception e1){
+				loginMethod = "unknown";
+			}
+
+			FirebaseAnalytics mAnalytics = FirebaseAnalytics.getInstance(context);
+			if(mAnalytics != null){
+				Bundle params = new Bundle();
+				params.putString(FirebaseAnalytics.Param.METHOD, loginMethod);
+				mAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, params);
+			}
+		} catch (Exception e){
+
+		}
 	}
 
 }

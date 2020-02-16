@@ -46,6 +46,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
@@ -61,7 +62,6 @@ import com.nowfloats.signup.UI.API.Signup_Descriptinon;
 import com.nowfloats.signup.UI.API.Valid_Email;
 import com.nowfloats.signup.UI.DomainAvailabilityCheck;
 import com.nowfloats.signup.UI.Model.Create_Store_Event;
-import com.nowfloats.signup.UI.Model.Email_Validation_Model;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Primary_Number_Event;
 import com.nowfloats.signup.UI.Model.Suggest_Tag_Event;
@@ -84,7 +84,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.webengage.sdk.android.WebEngage;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -99,10 +98,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -1293,7 +1289,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     @Subscribe
     public void put_createStore(Create_Store_Event response) {
-
         Log.d("Store_Event_Response", "" + response.fpId);
 
         final String fpId = response.fpId;
@@ -1303,33 +1298,32 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             setEnableCreateWebsiteButton(true);
             return;
         }
+        //Log the Conversion Goal for Boost OnBoarding Complete
+        Utils.logOnBoardingCompleteConversionGoals(activity, fpId);
+
         dataBase.insertLoginStatus(fpId);
         sessionManager = new UserSessionManager(getApplicationContext(), PreSignUpActivityRia.this);
         sessionManager.storeFPID(fpId);
         sessionManager.storeSourceClientId(Constants.clientId);
+
         //thinksity check
         if (Constants.clientId.equals(Constants.clientIdThinksity)) {
             sessionManager.storeIsThinksity("true");
         }
 
 
-        // Give a Delay of 4 Seconds and Call this method
+        // Give a Delay of 2 Seconds and Call this method
         new Handler().postDelayed(new Runnable() {
-
             @Override
             public void run() {
                 hideLoader();
-                // This method will be executed once the timer is over Start your app main activity
-                getFPDetails(PreSignUpActivityRia.this, fpId, Constants.clientId, bus);
+                downloadBusinessProfileDetails(PreSignUpActivityRia.this, fpId, Constants.clientId, bus);
             }
-        }, 5000);
-
-        // Store it in Database
-        // Store it in Shared pref
+        }, 2000);
     }
 
-    private void getFPDetails(PreSignUpActivityRia activity, String fpId, String clientId, Bus bus) {
-        showLoader(getString(R.string.please_wait));
+    private void downloadBusinessProfileDetails(PreSignUpActivityRia activity, String fpId, String clientId, Bus bus) {
+        showLoader(getString(R.string.please_wait_for_dashboard));
         new Get_FP_Details_Service(activity, fpId, clientId, bus);
     }
 

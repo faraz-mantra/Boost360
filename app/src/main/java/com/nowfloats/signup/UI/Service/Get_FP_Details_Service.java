@@ -45,7 +45,7 @@ import static com.nfx.leadmessages.Constants.SMS_REGEX;
  */
 public class Get_FP_Details_Service {
 
-    public Get_FP_Details_Service(final Activity activity, String fpID, String clientID, final Bus bus) {
+public Get_FP_Details_Service(final Activity activity, String fpID, String clientID, final Bus bus) {
         HashMap<String, String> map = new HashMap<>();
         map.put("clientId", clientID);
         Retro_Signup_Interface getFPDetails = Constants.restAdapter.create(Retro_Signup_Interface.class);
@@ -64,8 +64,10 @@ public class Get_FP_Details_Service {
                                     return;
                                 }
                                 Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
-                                WebEngageController.trackEvent("Business Profile Creation Failed",
-                                        "Business Profile Creation Failed", null);
+                                WebEngageController.trackEvent(
+                                        "[Android] Get_FP_Details FP Data Null",
+                                        "[Android] Get_FP_Details FP Data Null",
+                                        fpID);
 
                                 if (WebSiteAddressActivity.pd != null) {
                                     WebSiteAddressActivity.pd.dismiss();
@@ -84,9 +86,9 @@ public class Get_FP_Details_Service {
                     }
                 } catch (Exception e) {
                     WebEngageController.trackEvent(
-                            "Business Profile Creation Failed",
-                            "Business Profile Creation Failed",
-                            null);
+                            "[Android] Get_FP_Details Service Exception",
+                            "[Android] Get_FP_Details Service Exception",
+                            e.getMessage());
                 }
             }
 
@@ -94,9 +96,9 @@ public class Get_FP_Details_Service {
             public void failure(RetrofitError error) {
                 Log.d("", "" + error.getMessage());
                 WebEngageController.trackEvent(
-                        "Business Profile Creation Failed",
-                        "Business Profile Creation Failed",
-                        null);
+                        "[Android] Failed to load data in Get_FP_Details",
+                        "[Android] Failed to load data in Get_FP_Details",
+                        fpID);
 
                 try {
                     activity.runOnUiThread(new Runnable() {

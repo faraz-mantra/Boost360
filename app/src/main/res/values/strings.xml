@@ -914,6 +914,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="password_updated">Your password has been updated.</string>
     <string name="entered_password_incorrect">The password you entered is incorrect.</string>
     <string name="please_wait">Please Wait&#8230;</string>
+    <string name="please_wait_for_dashboard">Please wait, while we setup your business dashboard&#8230;</string>
     <string name="enter_valid_website">Enter Valid Website</string>
     <string name="enter_valid_email">Please enter valid email</string>
     <string name="primary_num_can_not_empty">Primary number cannot be empty</string>

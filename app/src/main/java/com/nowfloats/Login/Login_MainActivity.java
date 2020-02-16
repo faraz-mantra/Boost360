@@ -44,6 +44,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
@@ -119,6 +121,10 @@ public class Login_MainActivity extends AppCompatActivity implements
 
         new KeyboardUtil(this, findViewById(R.id.fl_parent_layout));
 
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        if(mAuth != null && mAuth.getCurrentUser() != null){
+//            mAuth.signOut();
+//        }
 
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),Login_MainActivity.this);
@@ -224,11 +230,17 @@ public class Login_MainActivity extends AppCompatActivity implements
                    progressDialog.dismiss();
                }
                if(response != null) {
-                   session.isAuthdone(response.getResult().getProvider(), true);
+                   try {
+                       FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
+                       session.isAuthdone(response.getResult().getProvider(), true);
+                       session.setUserProfileEmail(u.getEmail());
+                       session.setUserProfileName(u.getDisplayName());
+                       session.setUserProfileMobile(u.getPhoneNumber());
+                   } catch (Exception e){}
+
                    if(progressDialog != null && progressDialog.isShowing()) {
                        progressDialog.dismiss();
                    }
-
                    loginSuccess(response);
                    processUserProfile(response, currentProvider, currentProvider == "Facebook" ? "facebook address" : "gmail account ",uniqueId);
                }else{
@@ -365,12 +377,7 @@ public class Login_MainActivity extends AppCompatActivity implements
             }
             if(value.equals("Partial")){
                 session.setUserLogin(true);
-                Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
-                signupConfirmationPage.putExtra("profileUrl", "");
-                signupConfirmationPage.putExtra("person_name", "");
-                signupConfirmationPage.putExtra("profile_id", session.getUserProfileId());
-                startActivity(signupConfirmationPage);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                showBusinessProfileCreationStartScreen(session.getUserProfileId());
             }
         }
     }
@@ -651,21 +658,10 @@ public class Login_MainActivity extends AppCompatActivity implements
     private void processUserProfile(UserProfileResponse userProfileResponse, String provider, String addressType, String id) {
         if(userProfileResponse == null) {
             Methods.showSnackBarNegative(this, "Login failed");
-        }else if(userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0) {
+        } else if(userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0) {
             session.setUserLogin(true);
-            Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
-            signupConfirmationPage.putExtra("profileUrl", "");
-            signupConfirmationPage.putExtra("person_name", "");
-            signupConfirmationPage.putExtra("profile_id", userProfileResponse.getResult().getLoginId());
-            startActivity(signupConfirmationPage);
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-
-            //Code below leads to Connect existing FP acco
-//            Methods.showDialog(this, getString(R.string.uh_oh)+" " + provider +" "+
-//                    getString(R.string.not_auth), "It seems the " + addressType +" " + id + " "
-//                    +getString(R.string.message_2) +
-//                    "\n" + getString(R.string.message_1));
-        }else{
+            showBusinessProfileCreationStartScreen(userProfileResponse.getResult().getLoginId());
+        } else {
             progressDialog = ProgressDialog.show(this, "", "Loading");
 
             Result result = userProfileResponse.getResult();
@@ -675,6 +671,19 @@ public class Login_MainActivity extends AppCompatActivity implements
             session.storeFPID(userProfileResponse.getResult().getFpIds()[0]);
             authenticationStatus("Success");
         }
+    }
+
+    private void showBusinessProfileCreationStartScreen(String userProfileId){
+        WebEngageController.initiateUserLogin(userProfileId);
+        WebEngageController.setUserContactInfoProperties(session);
+        WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "");
+
+        Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
+        signupConfirmationPage.putExtra("profileUrl", "");
+        signupConfirmationPage.putExtra("person_name", "");
+        signupConfirmationPage.putExtra("profile_id", userProfileId);
+        startActivity(signupConfirmationPage);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     private void loginSuccess(UserProfileResponse userProfileResponse) {

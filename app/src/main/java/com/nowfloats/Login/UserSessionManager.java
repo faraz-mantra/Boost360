@@ -72,6 +72,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public static final String KEY_FP_ID = "fpid";
 
     private final String PROFILE_ID = "user_profile_id";
+    private final String PROFILE_EMAIL = "user_profile_email";
+    private final String PROFILE_NUMBER = "user_profile_mobile";
+    private final String PROFILE_NAME = "user_profile_name";
 
     public static final String KEY_FP_Details = "fpdetails";
     private Activity activity;
@@ -167,6 +170,33 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public String getUserProfileId(){
         return pref.getString(PROFILE_ID, null);
+    }
+
+    public void setUserProfileEmail(String email) {
+        editor.putString(PROFILE_EMAIL, email);
+        editor.commit();
+    }
+
+    public String getUserProfileEmail(){
+        return pref.getString(PROFILE_EMAIL, null);
+    }
+
+    public void setUserProfileMobile(String mobile) {
+        editor.putString(PROFILE_NUMBER, mobile);
+        editor.commit();
+    }
+
+    public String getUserProfileMobile(){
+        return pref.getString(PROFILE_NUMBER, null);
+    }
+
+    public void setUserProfileName(String name) {
+        editor.putString(PROFILE_NAME, name);
+        editor.commit();
+    }
+
+    public String getUserProfileName(){
+        return pref.getString(PROFILE_NAME, null);
     }
 
     public void setUserLogin(boolean val) {
