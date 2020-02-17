@@ -65,7 +65,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020018
+        versionCode 2020020019
 
 
         multiDexEnabled true
@@ -140,7 +140,7 @@ android {
         }
         partone {
 
-            versionName "5.2.7"
+            versionName "5.2.8"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'

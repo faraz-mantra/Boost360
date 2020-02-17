@@ -25,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun initLottieAnimation() {
-        animation_view.setAnimation(R.raw.boost_lottie)
+        animation_view.setAnimation(R.raw.boost_lottie2)
         animation_view.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
 //                Log.d("onAnimationRepeat", "")
