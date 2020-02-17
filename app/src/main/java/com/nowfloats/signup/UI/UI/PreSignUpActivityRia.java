@@ -681,7 +681,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             data_businessName = businessNameEditText.getText().toString().trim();
             data_businessCategory = businessCategoryEditText.getText().toString().trim();
             data_email = emailEditText.getText().toString().trim();
-
+            data_phone = phoneEditText.getText().toString().trim();
             fpTag = "";
 
             allFieldsValid = true;

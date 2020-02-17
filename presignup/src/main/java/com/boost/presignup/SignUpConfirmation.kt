@@ -24,21 +24,21 @@ class SignUpConfirmation : AppCompatActivity() {
         val profile_id = intent.getStringExtra("profile_id")
 
         var personName = intent.getStringExtra("person_name")
-        if(personName.isEmpty()){
+        if (personName.isEmpty()) {
             personName = currentFirebaseUser?.displayName
         }
         welcome_user.setText(getString(R.string.welcome) + " " + personName)
 
 
         var profileUrl = intent.getStringExtra("profileUrl")
-        if(profileUrl.isEmpty()){
+        if (profileUrl == null || profileUrl.isEmpty()) {
             profileUrl = currentFirebaseUser?.photoUrl?.toString()
-        }
-        if (!profileUrl.isEmpty()) {
-            val url = URL(profileUrl)
-            val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-            userProfileImage.setImageBitmap(bmp)
-        }
+        } else
+            if (!profileUrl.isEmpty()) {
+                val url = URL(profileUrl)
+                val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+                userProfileImage.setImageBitmap(bmp)
+            }
 
         set_up_business_profile.setOnClickListener {
             WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
