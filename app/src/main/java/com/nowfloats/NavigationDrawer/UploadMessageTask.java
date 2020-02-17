@@ -179,8 +179,12 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
+            if(!url.toLowerCase().contains("createbizimage"))
+                connection.setRequestProperty("Content-Type",
+                        "application/x-www-form-urlencoded");
+            else
+                connection.setRequestProperty("Content-Type",
+                        "text/plain");
 
             if (imageData != null) {
                 outputStream = new DataOutputStream(connection.getOutputStream());

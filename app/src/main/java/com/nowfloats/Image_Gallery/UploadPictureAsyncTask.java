@@ -359,56 +359,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
 
 
     public String uploadImage(String imagePath) {
-        // Toast.makeText(appContext,"Image Path : "+imagePath,Toast.LENGTH_SHORT).show();
-        //  BoostLog.d(TAG,"Image Path : "+imagePath);
-//        Handler handler =  new Handler(appContext.getMainLooper());
-//        handler.post( new Runnable(){
-//            public void run(){
-//                // Toast.makeText(appContext, "Image Path : "+imagePath,Toast.LENGTH_LONG).show();
-//            }
-//        });
-//        FileInputStream fileInputStream = null;
-//        File img = new File(imagePath);
-//        int _totalChunks = 0;
-//
-//        ArrayList<byte[]> _chunks = new ArrayList<byte[]>();
-//
-//        try {
-//            if (!Util.isNullOrEmpty(imagePath)) {
-//                fileInputStream = new FileInputStream(img);
-//            }
-//
-//            int bytesAvailable = fileInputStream.available();
-//            if(!isParallel)
-//            {
-//                chunkLength = bytesAvailable;
-//            }
-//            _totalChunks = (int) Math
-//                    .ceil(((double) bytesAvailable / (double) chunkLength));
-//
-//            for (int i = 0; i < _totalChunks; i++) {
-//                int startPosition = i * chunkLength;
-//                int dataLength = (int) (Math.min(bytesAvailable
-//                        - startPosition, chunkLength));
-//                byte[] buffer = new byte[dataLength];
-//
-//                fileInputStream.read(buffer, 0, dataLength);
-//                _chunks.add(buffer);
-//            }
-//
-//        } catch (Exception e) {
-//            BoostLog.d(TAG,"E : "+e.getMessage());
-//
-//        } finally {
-//            try {
-//                fileInputStream.close();
-//            } catch (Exception e) {
-//            }
-//        }
-//
-//        int _totalCallsMade = _chunks.size();
-        //Path path = Paths.get("path/to/file");
-        //String filepath = "/sdcard/temp.png";
+
         File imagefile = new File(imagePath);
         FileInputStream fis = null;
         String response = null;
@@ -584,6 +535,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             connection.setUseCaches(false);
             connection.setChunkedStreamingMode(1024);
             connection.setRequestMethod("PUT");
+            connection.setRequestProperty("Content-Type", "application/octet-stream");
 
             connection.setRequestProperty("Connection", "Keep-Alive");
 
