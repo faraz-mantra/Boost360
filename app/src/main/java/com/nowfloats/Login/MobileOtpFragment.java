@@ -44,6 +44,7 @@ public class MobileOtpFragment extends Fragment {
         });
 
         cvNextButton.setOnClickListener(view -> {
+            Methods.hideKeyboard(getContext());
             String phoneNumber = etPhoneNumber.getText().toString();
             if(!Methods.validPhoneNumber(phoneNumber)) {
                 Methods.showSnackBarNegative(getActivity(), "Enter valid number");

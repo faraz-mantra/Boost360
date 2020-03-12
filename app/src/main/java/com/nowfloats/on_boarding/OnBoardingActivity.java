@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResult;
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.VerificationRequestResult;
 import com.boost.presignup.utils.CustomFirebaseAuthHelpers;
 import com.boost.presignup.utils.CustomFirebaseAuthListeners;
 import com.facebook.CallbackManager;
@@ -59,7 +60,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     private LoginButton facebookloginButton;
     private String channel = "";
     private CallbackManager callbackManager;
-    private MobileOtpVerificationFragment mobileOtpVerificationFragment;
+    private com.nowfloats.Login.MobileOtpVerificationFragment mobileOtpVerificationFragment;
     private boolean isOtpInForegrouond = false;
 
 
@@ -198,7 +199,12 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
 
     private CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
         @Override
-        public void onSuccess(@org.jetbrains.annotations.Nullable ConnectUserProfileResponse response) {
+        public void onSuccess(@Nullable VerificationRequestResult response) {
+            Log.i(OnBoardingActivity.class.getName(), new Gson().toJson(response));
+        }
+
+        @Override
+        public void onSuccess(@Nullable ConnectUserProfileResponse response) {
 
             isOtpInForegrouond = false;
 
@@ -229,8 +235,8 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
         }
 
         @Override
-        public void onSuccess(@org.jetbrains.annotations.Nullable UserProfileResponse response, String uniqueId) {
-            Log.i(Login_MainActivity.class.getName(), new Gson().toJson(response));
+        public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
+            Log.i(OnBoardingActivity.class.getName(), new Gson().toJson(response));
         }
 
         @Override
@@ -239,7 +245,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
-            Toast.makeText(OnBoardingActivity.this, "Login failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(OnBoardingActivity.this, "Failed to connect account. Please try again", Toast.LENGTH_SHORT).show();
         }
     };
 

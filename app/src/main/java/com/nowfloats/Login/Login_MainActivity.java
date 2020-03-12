@@ -38,6 +38,7 @@ import com.android.volley.toolbox.Volley;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.Result;
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.VerificationRequestResult;
 import com.boost.presignup.utils.CustomFirebaseAuthHelpers;
 import com.boost.presignup.utils.CustomFirebaseAuthListeners;
 import com.daimajia.androidanimations.library.Techniques;
@@ -195,30 +196,19 @@ public class Login_MainActivity extends AppCompatActivity implements
         userNameIcon.setColorFilter(whiteLabelFilter);
         passwordIcon.setColorFilter(whiteLabelFilter);
 
-        loginButton = (CardView) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userNameText = userName.getText().toString().trim();
-                passwordText = password.getText().toString().trim();
-
-                if (userNameText.length() > 0 && passwordText.length() > 0) {
-                    userName.clearFocus();
-                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.processing_request));
-                    progressDialog.setCancelable(true);
-                    Methods.hideKeyboard(Login_MainActivity.this);
-                    API_Login apiLogin = new API_Login(Login_MainActivity.this,session,bus);
-                    apiLogin.authenticate(userName.getText().toString().toLowerCase(), password.getText().toString(), Specific.clientId2);
-                } else {
-                    YoYo.with(Techniques.Shake).playOn(userName);
-                    YoYo.with(Techniques.Shake).playOn(password);
-                    Toast.makeText(Login_MainActivity.this, getString(R.string.enter_valid_login_details), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
 
        CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
+           @Override
+           public void onSuccess(@Nullable VerificationRequestResult response){
+               if(progressDialog != null && progressDialog.isShowing()) {
+                   progressDialog.dismiss();
+               }
+               if(response != null)
+                    processLoginSuccessRequest(response);
+               else
+                   Methods.showSnackBarNegative(Login_MainActivity.this, "login failed");
+           }
+
            @Override
            public void onSuccess(@Nullable ConnectUserProfileResponse response) {
 
@@ -230,14 +220,6 @@ public class Login_MainActivity extends AppCompatActivity implements
                    progressDialog.dismiss();
                }
                if(response != null) {
-                   try {
-                       FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
-                       session.isAuthdone(response.getResult().getProvider(), true);
-                       session.setUserProfileEmail(u.getEmail());
-                       session.setUserProfileName(u.getDisplayName());
-                       session.setUserProfileMobile(u.getPhoneNumber());
-                   } catch (Exception e){}
-
                    if(progressDialog != null && progressDialog.isShowing()) {
                        progressDialog.dismiss();
                    }
@@ -258,12 +240,36 @@ public class Login_MainActivity extends AppCompatActivity implements
            }
        };
 
+        loginButton = (CardView) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userNameText = userName.getText().toString().trim();
+                passwordText = password.getText().toString().trim();
+
+                if (userNameText.length() > 0 && passwordText.length() > 0) {
+                    userName.clearFocus();
+                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.processing_request));
+                    progressDialog.setCancelable(true);
+                    Methods.hideKeyboard(Login_MainActivity.this);
+                    currentProvider = "";
+                    customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
+                    customFirebaseAuthHelpers.verifyUserProfileAPI(userNameText, passwordText, "");
+                } else {
+                    YoYo.with(Techniques.Shake).playOn(userName);
+                    YoYo.with(Techniques.Shake).playOn(password);
+                    Toast.makeText(Login_MainActivity.this, getString(R.string.enter_valid_login_details), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
        cvFacebookLogin.setOnClickListener(v -> {
            currentProvider = "Facebook";
 
            loginFacebookButton.performClick();
            callbackManager = CallbackManager.Factory.create();
            customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
+           customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
            customFirebaseAuthHelpers.startFacebookLogin(loginFacebookButton, callbackManager);
        });
 
@@ -272,8 +278,8 @@ public class Login_MainActivity extends AppCompatActivity implements
             progressDialog.setCancelable(true);
             currentProvider = "Google";
             customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
+            customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
             customFirebaseAuthHelpers.startGoogleLogin();
-            // if he already exists with fpId = null, then send him to Business Profile creation screen.
         });
 
         cvOtpVerification.setOnClickListener(v -> {
@@ -298,6 +304,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                     Methods.showSnackBar(this, "Login failed. Please try again");
                     return;
                 }
+                customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
                 customFirebaseAuthHelpers.googleLoginActivityResult(requestCode, data);
             }
         }
@@ -585,10 +592,40 @@ public class Login_MainActivity extends AppCompatActivity implements
         }
     }
 
+    private void processLoginSuccessRequest(VerificationRequestResult response){
+        session.setUserLogin(true);
+        session.setUserProfileEmail(response.getChannelProfileProperties().getUserEmail());
+        session.setUserProfileName(response.getChannelProfileProperties().getUserName());
+        session.setUserProfileMobile(response.getChannelProfileProperties().getUserMobile());
+
+        if(response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
+            showBusinessProfileCreationStartScreen(response.getLoginId());
+        } else {
+            progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
+
+            session.storeISEnterprise(response.isEnterprise()+"");
+            session.storeIsThinksity((response.getSourceClientId()!= null &&
+                    response.getSourceClientId().equals(Constants.clientIdThinksity))+"");
+            session.storeFPID(response.getValidFPIds()[0]);
+            authenticationStatus("Success");
+        }
+    }
+
     private void startPhoneNumberAuth(String phoneNumber, boolean gotoNextPage) {
         progressDialog = ProgressDialog.show(this, "", "Loading");
 
         customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, new CustomFirebaseAuthListeners() {
+            @Override
+            public void onSuccess(@Nullable VerificationRequestResult response) {
+                if(progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if(response != null)
+                    processLoginSuccessRequest(response);
+                else
+                    Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
+            }
+
             @Override
             public void onSuccess(@Nullable ConnectUserProfileResponse response) {
 
@@ -606,10 +643,11 @@ public class Login_MainActivity extends AppCompatActivity implements
             public void onFailure() {
                 if(progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to login");
+                Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
             }
         }, "");
 
+        customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
         customFirebaseAuthHelpers.startPhoneAuth(phoneNumber, () -> {
             if(progressDialog != null && progressDialog.isShowing())
                 progressDialog.dismiss();

@@ -1,18 +1,12 @@
 package com.boost.presignup.utils
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.boost.presignup.R
-import com.boost.presignup.SignUpActivity
-import com.boost.presignup.SignUpConfirmation
 import com.boost.presignup.datamodel.Apis
-import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse
-import com.boost.presignup.datamodel.userprofile.ProfileProperties
-import com.boost.presignup.datamodel.userprofile.UserProfileRequest
-import com.boost.presignup.datamodel.userprofile.UserProfileResponse
+import com.boost.presignup.datamodel.userprofile.*
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -27,7 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
-import org.jetbrains.annotations.NotNull
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,6 +40,8 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
     private lateinit var phoneVerificationTOken: String
     private lateinit var phoneNumber: String
     private var userFpId: String
+
+    private var autoUserProfileCreateMode = true
 
     val RC_SIGN_IN = 1
     private var mGoogleSignInClient: GoogleSignInClient
@@ -71,6 +66,10 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
         mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
         this.userFpId = fpId
 
+    }
+
+    fun disableAutoUserProfileCreationMode(){
+        autoUserProfileCreateMode = false
     }
 
 
@@ -156,8 +155,12 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
             Log.d(TAG, "updateUI: photo = " + personPhoto);
 
-            requestUserProfileAPI(personIdToken,
-                    personEmail, "", "", personName, "GOOGLE", personEmail)
+            if(autoUserProfileCreateMode) {
+                requestUserProfileAPI(personIdToken,
+                        personEmail, "", "", personName, "GOOGLE", personEmail)
+            } else{
+                verifyUserProfileAPI(personIdToken, "", "GOOGLE")
+            }
         }
     }
 
@@ -204,8 +207,12 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 }
             }
 
-            requestUserProfileAPI(personIdToken,
-                    personEmail, "", "", personName as String, "FACEBOOK", uid)
+            if(autoUserProfileCreateMode) {
+                requestUserProfileAPI(personIdToken,
+                        personEmail, "", "", personName as String, "FACEBOOK", uid)
+            } else{
+                verifyUserProfileAPI(personIdToken, "", "FACEBOOK")
+            }
         }
     }
 
@@ -258,6 +265,38 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
         }
     }
 
+    fun verifyUserProfileAPI(loginKey: String,
+                              loginSecret: String,
+                              provider: String) {
+
+
+        val userInfo = UserProfileVerificationRequest(
+                "",
+                provider,
+                loginKey,
+                loginSecret,
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+
+        ApiService.verifyUserProfile(userInfo).enqueue(object : Callback<UserProfileVerificationResponse> {
+            override fun onFailure(call: Call<UserProfileVerificationResponse>, t: Throwable) {
+                listener.onFailure()
+            }
+
+            override fun onResponse(call: Call<UserProfileVerificationResponse>, response: Response<UserProfileVerificationResponse>) {
+                val responseObj = response.body()?.Result;
+                if(responseObj != null){
+                    WebEngageController.initiateUserLogin(responseObj.LoginId)
+                    WebEngageController.setUserContactAttributes(responseObj.channelProfileProperties?.userEmail,
+                            responseObj.channelProfileProperties?.userMobile,
+                            responseObj.channelProfileProperties?.userName)
+                    WebEngageController.trackEvent("PS_Login Success", "Login Success", "")
+
+                    listener.onSuccess(responseObj)
+                }
+            }
+        })
+    }
+
     fun startPhoneAuth(phoneNumber: String, phoneAuthListner: PhoneAuthListener) {
 
         this.phoneNumber = "+91" + phoneNumber
@@ -302,10 +341,12 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                         Log.d(TAG, "signInWithCredential:success")
 
 
-                        requestUserProfileAPI("",
-                                "", "", phoneNumber, "", "OTP", phoneNumber)
-
-
+                        if(autoUserProfileCreateMode) {
+                            requestUserProfileAPI("",
+                                    "", "", phoneNumber, "", "OTP", phoneNumber)
+                        } else{
+                            verifyUserProfileAPI(phoneNumber, "", "OTP")
+                        }
                         // ...
                     } else {
                         listener.onFailure()

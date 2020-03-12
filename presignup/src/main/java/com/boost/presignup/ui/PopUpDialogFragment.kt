@@ -267,7 +267,7 @@ class PopUpDialogFragment : DialogFragment() {
             intent.putExtra("personIdToken", personIdToken)
             intent.putExtra("provider", "GOOGLE")
             startActivity(intent);
-            mGoogleSignInClient.signOut()
+//            mGoogleSignInClient.signOut()
             dialog!!.dismiss()
 //            activity!!.finish();
         }
@@ -289,8 +289,6 @@ class PopUpDialogFragment : DialogFragment() {
             intent.putExtra("personIdToken", personIdToken)
             intent.putExtra("provider", "FACEBOOK")
             startActivity(intent);
-            mAuth.signOut()
-            LoginManager.getInstance().logOut();
             dialog!!.dismiss()
 //            activity!!.finish();
         }

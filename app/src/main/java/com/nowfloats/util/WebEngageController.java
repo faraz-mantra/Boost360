@@ -18,7 +18,7 @@ public class WebEngageController {
     public static void trackEvent(String event_name,String event_label,String event_value) {
         Map<String, Object> trackEvent = new HashMap<>();
         trackEvent.put("event_name", event_name);
-        trackEvent.put("fptag", event_value);
+//        trackEvent.put("fptag", event_value);
         trackEvent.put("event_label",event_label);
         weAnalytics.track(event_name,trackEvent);
     }

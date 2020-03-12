@@ -35,6 +35,7 @@ class SignUpActivity : AppCompatActivity() {
     var provider = ""
     var userPassword = ""
     var userMobile = ""
+    var registerWithFirebaseEmailProvider = true
     lateinit var retrofit: Retrofit
     lateinit var ApiService: Apis
     var passwordVisiblity = false
@@ -59,10 +60,11 @@ class SignUpActivity : AppCompatActivity() {
                 provider = intent.getStringExtra("provider")
 
                 user_email.setText(email)
-                user_email.isClickable = false
-                user_email.isFocusable = false
+//                user_email.isClickable = false
+//                user_email.isFocusable = false
 
                 user_name.setText(personName)
+                registerWithFirebaseEmailProvider = false
             } else if (intent.getStringExtra("provider").equals("FACEBOOK")) {
                 profileUrl = intent.getStringExtra("url")
                 email = intent.getStringExtra("email")
@@ -71,25 +73,26 @@ class SignUpActivity : AppCompatActivity() {
                 provider = intent.getStringExtra("provider")
 
                 user_email.setText(email)
-                user_email.isClickable = false
-                user_email.isFocusable = false
+//                user_email.isClickable = false
+//                user_email.isFocusable = false
                 user_name.setText(personName)
 
+                registerWithFirebaseEmailProvider = false
+
             } else if (intent.getStringExtra("provider").equals("EMAIL")) {
-
                 provider = intent.getStringExtra("provider")
-
-
+                registerWithFirebaseEmailProvider = true
             }
+
         }
 
+        create_account_button.isVisible = true
 
         retrofit = Retrofit.Builder()
                 .baseUrl("https://api2.withfloats.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         ApiService = retrofit.create(Apis::class.java)
-
 
 
         back_button.setOnClickListener {
@@ -117,18 +120,23 @@ class SignUpActivity : AppCompatActivity() {
             hideSoftKeyBoard(applicationContext, it)
             if (validateInput()) {
                 Toast.makeText(applicationContext, "Processing...", Toast.LENGTH_SHORT).show()
-                create_account_button.isVisible = false;
-                mAuth.createUserWithEmailAndPassword(email, userPassword)
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                Log.d("createUserProfile", ">>>> Successfull")
-                                registerUserProfileAPI()
-                            } else {
-                                Log.d("createUserProfile", ">>>> Failure")
-                                Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
-                                WebEngageController.trackEvent("PS_Account Creation Failed " + provider, "Create User Failed With "+ provider, "")
+                create_account_button.isVisible = false
+                if(registerWithFirebaseEmailProvider) {
+                    mAuth.createUserWithEmailAndPassword(email, userPassword)
+                            .addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    Log.d("createUserProfile", ">>>> Successfull")
+                                    registerUserProfileAPI()
+                                } else {
+                                    Log.d("createUserProfile", ">>>> Failure")
+                                    create_account_button.isVisible = true
+                                    Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
+                                    WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
+                                }
                             }
-                        }
+                } else {
+                    registerUserProfileAPI()
+                }
             }
         }
 
@@ -171,7 +179,7 @@ class SignUpActivity : AppCompatActivity() {
             override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
                 Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
                 WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
-                create_account_button.isVisible = true;
+                create_account_button.isVisible = true
             }
 
             override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {

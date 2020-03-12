@@ -66,6 +66,7 @@
                 android:gravity="bottom"
                 android:hint="@string/_10_digit_mobile_number"
                 android:inputType="phone"
+                android:importantForAutofill="no"
                 android:textColor="@color/text_color_roboto_lt_30_edittext"
                 android:textColorHint="@color/hint_color_roboto_lt_30_edittext"
                 android:textSize="17sp" />
