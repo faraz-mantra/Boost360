@@ -59,7 +59,7 @@ public class WebEngageController {
     }
 
     public static void logout(){
-
-        weUser.logout();
+        if(weUser != null)
+            weUser.logout();
     }
 }

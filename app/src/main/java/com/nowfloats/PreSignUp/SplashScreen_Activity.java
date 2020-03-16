@@ -52,8 +52,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen_);
         Methods.isOnline(SplashScreen_Activity.this);
-        Log.d("Splash Screen", "Splash Screen");
-        PresignupManager.INSTANCE.setListener(this);
+//        Log.d("Splash Screen", "Splash Screen");
+//        PresignupManager.INSTANCE.setListener(this);
 
        /* try {
             Constants.restAdapter = Methods.createAdapter(this,Constants.NOW_FLOATS_API_URL);
@@ -69,8 +69,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         }
 
 
-        Constants.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        Log.d("Device ID", "Device ID : " + Constants.deviceId);
+//        Constants.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        Log.d("Device ID", "Device ID : " + Constants.deviceId);
 
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
@@ -93,7 +93,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         @Override
         public void run() {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(1200);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -101,15 +101,16 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
                 @Override
                 public void run() {
                     try {
+                        displayHomeScreen();
                         // This method will be executed once the timer is over Start your app main activity
-                        MixPanelController.setMixPanel(SplashScreen_Activity.this, MixPanelController.mainActivity);
-                        if (session.checkLogin()) {
-                            loginCheck = "true";
-                            displayHomeScreen();
-                        } else {
-                            loginCheck = "false";
-                            displayPreSignUpScreens();
-                        }
+//                        MixPanelController.setMixPanel(SplashScreen_Activity.this, MixPanelController.mainActivity);
+//                        if (session.checkLogin()) {
+//                            loginCheck = "true";
+//
+//                        } else {
+//                            loginCheck = "false";
+//                            displayPreSignUpScreens();
+//                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

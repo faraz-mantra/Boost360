@@ -896,26 +896,39 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if (pd.isShowing())
                     pd.dismiss();
-                WebEngage.get().user().logout();
+
                 setUserLogin(false);
-                AnaCore.logoutUser(activity);
+
                 DataBase db = new DataBase(activity);
                 DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
                 db.deleteLoginStatus();
+
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
                 editor.apply();
+
 
                 SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit();
                 twitterEditor.clear();
                 twitterEditor.apply();
 
-                AppController.getInstance().clearApplicationData();
 
-                Date date = new Date(System.currentTimeMillis());
-                String dateString = date.toString();
+                try {
+                    WebEngage.get().user().logout();
 
-                MixPanelController.setProperties("LastLogoutDate", dateString);
+                    AnaCore.logoutUser(activity);
+
+                    AppController.getInstance().clearApplicationData();
+
+                    Date date = new Date(System.currentTimeMillis());
+                    String dateString = date.toString();
+
+                    MixPanelController.setProperties("LastLogoutDate", dateString);
+
+                    LoginManager.getInstance().logOut();
+
+                } catch (Exception e){}
+
 
                 // After logout redirect user to Login Activity
                 Constants.clearStore();
@@ -930,17 +943,22 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Constants.ImageGalleryWidget = false;
                 Constants.BusinessTimingsWidget = false;
                 Constants.BusinessEnquiryWidget = false;
-                HomeActivity.StorebizFloats.clear();
-                HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
-                LoginManager.getInstance().logOut();
+
+                if(HomeActivity.StorebizFloats != null) {
+                    HomeActivity.StorebizFloats.clear();
+                    HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
+                }
+
                 //Analytics_Fragment.subscriberCount.setText("0");
                 //Analytics_Fragment.visitCount.setText("0");
-                _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
+                if(_context != null)
+                    _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 //Mobihelp.clearUserData(activity.getApplicationContext());
 
-                MixPanelController.track("LogoutSuccess", null);
+//                MixPanelController.track("LogoutSuccess", null);
                 //activity.finish();
-                Intent i = new Intent(activity, SplashScreen_Activity.class);
+
+                Intent i = new Intent(activity, com.boost.presignup.SplashActivity.class);
                 // Closing all the Activities
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

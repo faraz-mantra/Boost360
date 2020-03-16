@@ -277,21 +277,20 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 loginSecret,
                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
 
-        ApiService.verifyUserProfile(userInfo).enqueue(object : Callback<UserProfileVerificationResponse> {
-            override fun onFailure(call: Call<UserProfileVerificationResponse>, t: Throwable) {
+        ApiService.verifyUserProfile(userInfo).enqueue(object : Callback<VerificationRequestResult> {
+            override fun onFailure(call: Call<VerificationRequestResult>, t: Throwable) {
                 listener.onFailure()
             }
 
-            override fun onResponse(call: Call<UserProfileVerificationResponse>, response: Response<UserProfileVerificationResponse>) {
-                val responseObj = response.body()?.Result;
-                if(responseObj != null){
-                    WebEngageController.initiateUserLogin(responseObj.LoginId)
-                    WebEngageController.setUserContactAttributes(responseObj.channelProfileProperties?.userEmail,
-                            responseObj.channelProfileProperties?.userMobile,
-                            responseObj.channelProfileProperties?.userName)
+            override fun onResponse(call: Call<VerificationRequestResult>, responseObj: Response<VerificationRequestResult>) {
+                if(responseObj.body() != null){
+                    WebEngageController.initiateUserLogin(responseObj.body()?.LoginId)
+                    WebEngageController.setUserContactAttributes(responseObj.body()?.channelProfileProperties?.userEmail,
+                            responseObj.body()?.channelProfileProperties?.userMobile,
+                            responseObj.body()?.channelProfileProperties?.userName)
                     WebEngageController.trackEvent("PS_Login Success", "Login Success", "")
 
-                    listener.onSuccess(responseObj)
+                    listener.onSuccess(responseObj.body())
                 }
             }
         })

@@ -24,15 +24,15 @@ class SignUpConfirmation : AppCompatActivity() {
         val profile_id = intent.getStringExtra("profile_id")
 
         var personName = intent.getStringExtra("person_name")
-        if (personName.isEmpty()) {
-            personName = currentFirebaseUser?.displayName
+        if (personName.isEmpty() && currentFirebaseUser != null) {
+            personName = currentFirebaseUser.displayName
         }
         welcome_user.setText(getString(R.string.welcome) + " " + personName)
 
 
         var profileUrl = intent.getStringExtra("profileUrl")
-        if (profileUrl == null || profileUrl.isEmpty()) {
-            profileUrl = currentFirebaseUser?.photoUrl?.toString()
+        if ((profileUrl == null || profileUrl.isEmpty()) && currentFirebaseUser != null) {
+            profileUrl = currentFirebaseUser.photoUrl?.toString()
         } else
             if (!profileUrl.isEmpty()) {
                 val url = URL(profileUrl)

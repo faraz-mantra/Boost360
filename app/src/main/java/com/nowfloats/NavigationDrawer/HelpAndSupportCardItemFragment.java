@@ -18,6 +18,14 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import zendesk.support.guide.HelpCenterActivity;
+import zendesk.support.request.RequestActivity;
+import zendesk.support.requestlist.RequestListActivity;
+
 /**
  * Created by Admin on 28-12-2017.
  */
@@ -69,6 +77,11 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         TextView requestActionBtn = view.findViewById(R.id.btn_request_callback);
         requestActionBtn.setOnClickListener(this);
 
+        view.findViewById(R.id.btn_faqs).setOnClickListener(this);
+        view.findViewById(R.id.btn_my_tickets).setOnClickListener(this);
+
+        WebEngageController.trackEvent("ACCOUNT MANAGER","Support Screen Loaded",null);
+
 
         switch (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType())){
             case CHC:
@@ -77,7 +90,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 //callActionBtn.setText("CALL NOW");
                 requestActionBtn.setVisibility(View.VISIBLE);
                 callActionBtn.setVisibility(View.GONE);
-                descriptionTv.setText("Your Local City Consultant");
+                descriptionTv.setText("Your Digital Consultant");
                 personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_consultant_female:R.drawable.ic_consultant_male);
                 break;
 //            case WEB:
@@ -95,15 +108,13 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
 //                personImage.setImageResource(R.drawable.ria_circle_image);
 //                descriptionTv.setText("Customer Support");
             default:
-
-                descriptionTv.setText("Customer Support");
+                descriptionTv.setText("Your Digital Assistant");
                 personImage.setImageResource(R.drawable.ria_circle_image);
                 break;
         }
         nameTv.setText(riaSupportModel.getName());
         numberTv.setText(riaSupportModel.getPhoneNumber());
         emailTv.setText(riaSupportModel.getEmail());
-
     }
 
     @Override
@@ -116,21 +127,42 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                     MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 }*/
+
                 WebEngageController.trackEvent("ACCOUNT MANAGER","Chat option in Account",null);
-                ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateobj = new Date();
+                RequestActivity.builder()
+                            .withRequestSubject("Support required: " + df.format(dateobj))
+                            .withTags("sdk", "android")
+                            .show(mContext);
+
+                //Old Code - to trigger RIA chat sdk powered by ANA
+//                ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 break;
             case R.id.tv_person_email:
-                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_EMAIL,null);
+                WebEngageController.trackEvent("ACCOUNT MANAGER","Email option in Account",null);
+//                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_EMAIL,null);
                 Methods.sendEmail(mContext,new String[]{riaSupportModel.getEmail()});
                 break;
             case R.id.tv_person_number:
-                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
+                WebEngageController.trackEvent("ACCOUNT MANAGER","Direct Agent Call option in Account",null);
+//                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;
             case R.id.btn_request_callback:
-                WebEngageController.trackEvent("ACCOUNT MANAGER","Call option in Account",null);
-                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
+                WebEngageController.trackEvent("ACCOUNT MANAGER","Call Support option in Account",null);
+//                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
+                break;
+            case R.id.btn_my_tickets:
+                WebEngageController.trackEvent("ACCOUNT MANAGER","View My Support Tickets",null);
+                RequestListActivity.builder()
+                        .show(mContext);
+                break;
+            case R.id.btn_faqs:
+                WebEngageController.trackEvent("ACCOUNT MANAGER","Learn How to use",null);
+                HelpCenterActivity.builder()
+                        .show(mContext);
                 break;
         }
     }

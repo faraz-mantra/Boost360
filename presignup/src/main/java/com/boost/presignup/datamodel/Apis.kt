@@ -15,5 +15,5 @@ interface Apis{
 
     @Headers("Content-Type: application/json")
     @POST("/discover/v1/floatingPoint/verifyLogin")
-    fun verifyUserProfile(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Call<UserProfileVerificationResponse>
+    fun verifyUserProfile(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Call<VerificationRequestResult>
 }

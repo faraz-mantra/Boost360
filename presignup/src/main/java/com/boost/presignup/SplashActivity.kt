@@ -2,6 +2,7 @@ package com.boost.presignup
 
 import android.animation.Animator
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -15,13 +16,20 @@ import java.security.NoSuchAlgorithmException
 
 class SplashActivity : AppCompatActivity() {
 
+    var isUserLoggedIn = false;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         initLottieAnimation()
-//        if(BuildConfig.DEBUG){
-//            hashGeneration()
-//        }
+        val pref: SharedPreferences = this.getSharedPreferences( "nowfloatsPrefs", 0)
+        if(pref.getBoolean("IsUserLoggedIn", false))
+            isUserLoggedIn = true
+        else
+            isUserLoggedIn = false
+        if(BuildConfig.DEBUG){
+            hashGeneration()
+        }
     }
 
     private fun initLottieAnimation() {
@@ -33,9 +41,16 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animator?) {
 //                Log.d("onAnimationEnd", "")
-                val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
-                startActivity(mainIntent)
-                finish()
+
+                if(isUserLoggedIn){
+                    val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+                    startActivity(intent)
+                    finish()
+                } else {
+                    val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
+                    startActivity(mainIntent)
+                    finish()
+                }
             }
 
             override fun onAnimationCancel(animation: Animator?) {
@@ -58,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
             for (signature in info.signatures) {
                 val md: MessageDigest = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
-                Log.e("KeyHash:", ">>>>" + Base64.encodeToString(md.digest(), Base64.DEFAULT))
+                Log.e("BST_KeyHash:", ">>>>" + Base64.encodeToString(md.digest(), Base64.DEFAULT))
             }
         } catch (e: PackageManager.NameNotFoundException) {
         } catch (e: NoSuchAlgorithmException) {

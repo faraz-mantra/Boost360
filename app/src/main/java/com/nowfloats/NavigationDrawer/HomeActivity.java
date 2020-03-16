@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.StrictMode;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -140,6 +141,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import zendesk.core.AnonymousIdentity;
+import zendesk.core.Identity;
+import zendesk.core.Zendesk;
+import zendesk.support.Support;
 
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
@@ -244,6 +249,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             createView();
         }
 
+        initialiseZendeskSupportSdk();
 
         //WidgetKey.getWidgets(session, this);
     }
@@ -509,6 +515,28 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         }
         mDeepLinkUrl = null;
+    }
+
+    private void initialiseZendeskSupportSdk(){
+        try{
+            Zendesk.INSTANCE.init(HomeActivity.this,
+                    "https://boost360.zendesk.com",
+                    "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49",
+                    "mobile_sdk_client_6c56562cfec5c64c7857");
+
+//            Identity identity = new AnonymousIdentity();
+
+            Identity identity = new AnonymousIdentity.Builder()
+                    .withNameIdentifier(session.getFpTag())
+                    .withEmailIdentifier(session.getFPEmail())
+                    .build();
+
+            Zendesk.INSTANCE.setIdentity(identity);
+
+            Support.INSTANCE.init(Zendesk.INSTANCE);
+        } catch (Exception e){
+
+        }
     }
 
     private String getCountryCode() {
@@ -1109,7 +1137,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Override
     public void onClick(final String nextScreen) {
         Methods.isOnline(HomeActivity.this);
-        mDrawerLayout.closeDrawer(Gravity.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         shareButton.setVisibility(View.GONE);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -1237,6 +1265,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                    } else {
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
                 } else if (nextScreen.equalsIgnoreCase("Store")) {
@@ -1658,7 +1687,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             public void onClick(View v) {
                 BoostLog.d("cek", "home selected");
                 if (drawerFragment.mDrawerToggle.isDrawerIndicatorEnabled()) {
-                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.START);
+                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(GravityCompat.START);
                 } else {
                     try {
                         drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(true);

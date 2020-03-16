@@ -110,8 +110,8 @@ public class HelpAndSupportFragment extends Fragment {
             addDefaultRiaData();
             setAdapterWithPager(view);
         }
-        TextView queryMessageText = view.findViewById(R.id.textView9);
-        makeLinkClickable(queryMessageText);
+//        TextView queryMessageText = view.findViewById(R.id.textView9);
+//        makeLinkClickable(queryMessageText);
 //        CharSequence charSequence = Methods.fromHtml("If your query is still unanswered, please contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +
 //                "or call at <a href=\"tel:"+ getString(R.string.contact_us_number)+"\">"+getString(R.string.contact_us_number)+"</a>."+
 //                "or <a href=\"" + CHAT_INTENT_URI + "\"><u>CHAT</u></a>.");
@@ -123,23 +123,23 @@ public class HelpAndSupportFragment extends Fragment {
 
     }
 
-    protected void makeLinkClickable(TextView view) {
-
-        SpannableStringBuilder spanTxt = new SpannableStringBuilder("If your query is still unanswered, please check ");
-        spanTxt.append(Methods.fromHtml("<u><b>FAQs</b></u>"));
-        spanTxt.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                Intent i = new Intent(mContext, Mobile_Site_Activity.class);
-                i.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url));
-                startActivity(i);
-            }
-        }, spanTxt.length() - Methods.fromHtml("<u><b>FAQs</b></u>").length(), spanTxt.length(), 0);
-        spanTxt.append(" ");
-        spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>" + getString(R.string.settings_feedback_link) + "</b></a> or call our toll number <a href=\"tel:" + getString(R.string.contact_us_number) + "\"><b>" + getString(R.string.contact_us_number) + "</b></a>."));
-        view.setMovementMethod(LinkMovementMethod.getInstance());
-        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
-    }
+//    protected void makeLinkClickable(TextView view) {
+//
+//        SpannableStringBuilder spanTxt = new SpannableStringBuilder("If your query is still unanswered, please check ");
+//        spanTxt.append(Methods.fromHtml("<u><b>FAQs</b></u>"));
+//        spanTxt.setSpan(new ClickableSpan() {
+//            @Override
+//            public void onClick(View widget) {
+//                Intent i = new Intent(mContext, Mobile_Site_Activity.class);
+//                i.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url));
+//                startActivity(i);
+//            }
+//        }, spanTxt.length() - Methods.fromHtml("<u><b>FAQs</b></u>").length(), spanTxt.length(), 0);
+//        spanTxt.append(" ");
+//        spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>" + getString(R.string.settings_feedback_link) + "</b></a> or call our toll number <a href=\"tel:" + getString(R.string.contact_us_number) + "\"><b>" + getString(R.string.contact_us_number) + "</b></a>."));
+//        view.setMovementMethod(LinkMovementMethod.getInstance());
+//        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
+//    }
 
 
     class GetMembers extends AsyncTask<String, String, List<RiaSupportModel>>

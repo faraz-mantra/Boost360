@@ -187,8 +187,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         sessionManager.logoutUser();
-                        dialog.dismiss();
-                        WebEngageController.logout();
+//                        dialog.dismiss();
+//                        WebEngageController.logout();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {

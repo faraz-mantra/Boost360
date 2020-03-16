@@ -978,7 +978,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_user_name">Enter Username/ E-mail/ Phone Number</string>
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
     <string name="logging_out">Logging out &#8230;</string>
-    <string name="unable_to_logout">Not able to logout</string>
+    <string name="unable_to_logout">We are facing some issues to process your logout request. Please try again.</string>
     <string name="percent_site_completed">site completed</string>
     <string name="choose_app_to_share">Choose app to share</string>
     <string name="share_message">Share your message</string>
@@ -1704,7 +1704,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="pp_business_category">Business Category:</string>
     <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
-    <string name="contact_us_message">If your query is still unanswered, please check <b>FAQs</b> or contact us at <b>ria@nowfloats.com</b> or call our toll number <a href="tel:18601231233"><b>1860&#8211;123&#8211;1233</b></a>.</string>
+    <string name="contact_us_message">  </string>
     <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
     <string name="wildfire_ad_cost_text"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
     <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
@@ -1849,4 +1849,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="not_auth">not authorized.</string>
     <string name="message_1"><![CDATA[For now, please login via username & password. Once you do that, post login, we’ll show you an alert to authorize different channels such as gmail, facebook etc. for faster login.]]></string>
     <string name="message_2">is not authorized to support faster login to your Boost account.</string>
+    <string name="how_to_use_boost">Learn How-To-Use Boost</string>
+    <string name="view_support_tickets">View My Support Tickets</string>
+    <string name="loading_boost_dashboard_for_logged_in_user">Loading your Digital Business Dashboard ...</string>
 </resources>
