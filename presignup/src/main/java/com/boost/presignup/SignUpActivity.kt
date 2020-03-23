@@ -1,6 +1,5 @@
 package com.boost.presignup
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -38,7 +37,6 @@ class SignUpActivity : AppCompatActivity() {
     var registerWithFirebaseEmailProvider = true
     lateinit var retrofit: Retrofit
     lateinit var ApiService: Apis
-    var passwordVisiblity = false
 
     lateinit var mAuth: FirebaseAuth
 
@@ -50,37 +48,42 @@ class SignUpActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance();
 
-        if (intent.hasExtra("provider")) {
-            if (intent.getStringExtra("provider").equals("GOOGLE")) {
+        if (intent != null && intent.hasExtra("provider")) {
+            val intentProvider = intent.getStringExtra("provider") as String
+
+            if (intentProvider.equals("GOOGLE")) {
                 profileUrl = intent.getStringExtra("url")
                 email = intent.getStringExtra("email")
                 personName = intent.getStringExtra("person_name")
                 personFamilyName = intent.getStringExtra("personFamilyName")
                 personIdToken = intent.getStringExtra("personIdToken")
-                provider = intent.getStringExtra("provider")
+                provider = intentProvider
+
+                if (!email.contains('@'))
+                    email = "";
 
                 user_email.setText(email)
-//                user_email.isClickable = false
-//                user_email.isFocusable = false
 
                 user_name.setText(personName)
                 registerWithFirebaseEmailProvider = false
-            } else if (intent.getStringExtra("provider").equals("FACEBOOK")) {
+            } else if (intentProvider.equals("FACEBOOK")) {
                 profileUrl = intent.getStringExtra("url")
                 email = intent.getStringExtra("email")
                 personName = intent.getStringExtra("person_name")
                 personIdToken = intent.getStringExtra("personIdToken")
-                provider = intent.getStringExtra("provider")
+                provider = intentProvider
+
+                if (!email.contains('@'))
+                    email = "";
 
                 user_email.setText(email)
-//                user_email.isClickable = false
-//                user_email.isFocusable = false
+
                 user_name.setText(personName)
 
                 registerWithFirebaseEmailProvider = false
 
-            } else if (intent.getStringExtra("provider").equals("EMAIL")) {
-                provider = intent.getStringExtra("provider")
+            } else if (intentProvider.equals("EMAIL")) {
+                provider = intentProvider
                 registerWithFirebaseEmailProvider = true
             }
 
@@ -144,7 +147,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateInput(): Boolean {
         if (user_name.text!!.isEmpty() || user_email.text!!.isEmpty() || user_password.text!!.isEmpty() || user_mobile.text!!.isEmpty()) {
-            Toast.makeText(applicationContext, "Fields are Empty!!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Please enter all values.", Toast.LENGTH_SHORT).show()
             return false
         }
         if (!isValidMail(email)) {
@@ -159,12 +162,21 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun isValidMail(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        return Pattern.compile(
+                "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                        "\\@" +
+                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                        "(" +
+                        "\\." +
+                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                        ")+"
+        ).matcher(email).matches()
     }
 
     private fun isValidMobile(phone: String): Boolean {
-        val MOBILE_STRING = ("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
-        return Pattern.compile(MOBILE_STRING).matcher(phone).matches()
+        return Pattern.compile(
+                "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
+                .matcher(phone).matches()
     }
 
     fun registerUserProfileAPI() {

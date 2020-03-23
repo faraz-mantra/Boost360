@@ -58,6 +58,13 @@ public class WebEngageController {
         } catch (Exception e){}
     }
 
+    public static void setFPTag(String fpTag){
+        try{
+            if(weUser != null)
+                weUser.setAttribute("fpTag", fpTag);
+        }catch (Exception e){}
+    }
+
     public static void logout(){
         if(weUser != null)
             weUser.logout();

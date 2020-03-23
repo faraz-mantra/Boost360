@@ -52,8 +52,10 @@ import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.android.inputmethod.latin.utils.JniUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 //import com.nfx.leadmessages.ReadMessages;
+import com.google.firebase.iid.InstanceIdResult;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
@@ -228,10 +230,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Methods.isOnline(HomeActivity.this);
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
-        WebEngageController.trackEvent("HOME","pageview",session.getFpTag());
         Log.d("WEBSITE_ID", "ID : " + session.getFPID());
-        //setHotlineUser();
-        WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
+
+
+        WebEngageController.initiateUserLogin(session.getUserProfileId());
+        WebEngageController.setUserContactInfoProperties(session);
+        WebEngageController.setFPTag(session.getFpTag());
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String token = instanceIdResult.getToken();
+                WebEngage.get().setRegistrationID(token);
+            }
+        });
+
+        WebEngageController.trackEvent("HOME","pageview", null);
+
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {

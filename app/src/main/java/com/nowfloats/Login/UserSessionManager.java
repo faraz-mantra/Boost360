@@ -886,96 +886,107 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         final ProgressDialog pd;
         pd = ProgressDialog.show(activity, "", activity.getString(R.string.logging_out));
         pd.setCancelable(false);
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("clientId", Constants.clientId);
-        params.put("fpId", fpID);
-        Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
-        api_login_request.logoutUnsubcribeRIA(params, new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                Log.d("Valid Email", "Valid Email Response: " + response);
-                if (pd.isShowing())
-                    pd.dismiss();
+        if(fpID != null && fpID.length() > 2) {
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("clientId", Constants.clientId);
+            params.put("fpId", fpID);
+            Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
+            api_login_request.logoutUnsubcribeRIA(params, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    Log.d("Valid Email", "Valid Email Response: " + response);
+                    if (pd.isShowing())
+                        pd.dismiss();
 
-                setUserLogin(false);
-
-                DataBase db = new DataBase(activity);
-                DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
-                db.deleteLoginStatus();
-
-                SharedPreferences.Editor editor = pref.edit();
-                editor.clear();
-                editor.apply();
-
-
-                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit();
-                twitterEditor.clear();
-                twitterEditor.apply();
-
-
-                try {
-                    WebEngage.get().user().logout();
-
-                    AnaCore.logoutUser(activity);
-
-                    AppController.getInstance().clearApplicationData();
-
-                    Date date = new Date(System.currentTimeMillis());
-                    String dateString = date.toString();
-
-                    MixPanelController.setProperties("LastLogoutDate", dateString);
-
-                    LoginManager.getInstance().logOut();
-
-                } catch (Exception e){}
-
-
-                // After logout redirect user to Login Activity
-                Constants.clearStore();
-                Constants.StorebizQueries = new ArrayList<>();
-                Constants.storeSecondaryImages = null;
-                Constants.storeActualSecondaryImages = new ArrayList<>();
-                Constants.StoreUserSearch = new DataMap();
-                Constants.StorebizEnterpriseQueries = new ArrayList<Entity_model>();
-                Constants.StorePackageIds = new ArrayList<>();
-                Constants.widgets = new HashSet<String>();
-                Constants.StoreWidgets = new ArrayList<>();
-                Constants.ImageGalleryWidget = false;
-                Constants.BusinessTimingsWidget = false;
-                Constants.BusinessEnquiryWidget = false;
-
-                if(HomeActivity.StorebizFloats != null) {
-                    HomeActivity.StorebizFloats.clear();
-                    HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
+                    processUserSessionDataClear();
                 }
 
-                //Analytics_Fragment.subscriberCount.setText("0");
-                //Analytics_Fragment.visitCount.setText("0");
-                if(_context != null)
-                    _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
-                //Mobihelp.clearUserData(activity.getApplicationContext());
+                @Override
+                public void failure(RetrofitError error) {
+                    if (pd.isShowing())
+                        pd.dismiss();
+                    Methods.showSnackBarNegative(activity, activity.getString(R.string.unable_to_logout));
+                }
+            });
+        } else {
+            if (pd.isShowing())
+                pd.dismiss();
+            processUserSessionDataClear();
+        }
+    }
+
+    private void processUserSessionDataClear(){
+        setUserLogin(false);
+
+        DataBase db = new DataBase(activity);
+        DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
+        db.deleteLoginStatus();
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.apply();
+
+
+        SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit();
+        twitterEditor.clear();
+        twitterEditor.apply();
+
+
+        try {
+            WebEngage.get().user().logout();
+
+            AnaCore.logoutUser(activity);
+
+            AppController.getInstance().clearApplicationData();
+
+            Date date = new Date(System.currentTimeMillis());
+            String dateString = date.toString();
+
+            MixPanelController.setProperties("LastLogoutDate", dateString);
+
+            LoginManager.getInstance().logOut();
+
+        } catch (Exception e) {
+        }
+
+
+        // After logout redirect user to Login Activity
+        Constants.clearStore();
+        Constants.StorebizQueries = new ArrayList<>();
+        Constants.storeSecondaryImages = null;
+        Constants.storeActualSecondaryImages = new ArrayList<>();
+        Constants.StoreUserSearch = new DataMap();
+        Constants.StorebizEnterpriseQueries = new ArrayList<Entity_model>();
+        Constants.StorePackageIds = new ArrayList<>();
+        Constants.widgets = new HashSet<String>();
+        Constants.StoreWidgets = new ArrayList<>();
+        Constants.ImageGalleryWidget = false;
+        Constants.BusinessTimingsWidget = false;
+        Constants.BusinessEnquiryWidget = false;
+
+        if (HomeActivity.StorebizFloats != null) {
+            HomeActivity.StorebizFloats.clear();
+            HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
+        }
+
+        //Analytics_Fragment.subscriberCount.setText("0");
+        //Analytics_Fragment.visitCount.setText("0");
+        if (_context != null)
+            _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
+        //Mobihelp.clearUserData(activity.getApplicationContext());
 
 //                MixPanelController.track("LogoutSuccess", null);
-                //activity.finish();
+        //activity.finish();
 
-                Intent i = new Intent(activity, com.boost.presignup.SplashActivity.class);
-                // Closing all the Activities
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent i = new Intent(activity, com.boost.presignup.SplashActivity.class);
+        // Closing all the Activities
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                // Staring Login Activity
-                activity.startActivity(i);
-                //activity.finish();
-                System.gc();
-                System.exit(0);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (pd.isShowing())
-                    pd.dismiss();
-                Methods.showSnackBarNegative(activity, activity.getString(R.string.unable_to_logout));
-            }
-        });
+        // Staring Login Activity
+        activity.startActivity(i);
+        //activity.finish();
+        System.gc();
+        System.exit(0);
     }
 
     public boolean isSiteAppearanceShown() {

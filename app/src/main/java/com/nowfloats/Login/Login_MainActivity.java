@@ -206,7 +206,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                if(response != null)
                     processLoginSuccessRequest(response);
                else
-                   Methods.showSnackBarNegative(Login_MainActivity.this, "login failed");
+                   Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
            }
 
            @Override
@@ -220,13 +220,9 @@ public class Login_MainActivity extends AppCompatActivity implements
                    progressDialog.dismiss();
                }
                if(response != null) {
-                   if(progressDialog != null && progressDialog.isShowing()) {
-                       progressDialog.dismiss();
-                   }
                    loginSuccess(response);
-                   processUserProfile(response, currentProvider, currentProvider == "Facebook" ? "facebook address" : "gmail account ",uniqueId);
-               }else{
-                   Methods.showSnackBarNegative(Login_MainActivity.this, "login failed");
+               } else{
+                   Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
                }
            }
 
@@ -235,7 +231,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                if(progressDialog != null && progressDialog.isShowing()) {
                    progressDialog.dismiss();
                }
-               Toast.makeText(Login_MainActivity.this, "Login failed", Toast.LENGTH_LONG).show();
+               Toast.makeText(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team", Toast.LENGTH_LONG).show();
 
            }
        };
@@ -635,8 +631,11 @@ public class Login_MainActivity extends AppCompatActivity implements
             public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
                 if(progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                loginSuccess(response);
-                processUserProfile(response, "Number", "mobile number", uniqueId);
+                if(response != null) {
+                    loginSuccess(response);
+                } else {
+                    Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred processing your mobile number. Please get in touch with Boost support to resolve your login issue.");
+                }
             }
 
             @Override
@@ -693,7 +692,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         customFirebaseAuthHelpers.phoneAuthVerification(otp);
     }
 
-    private void processUserProfile(UserProfileResponse userProfileResponse, String provider, String addressType, String id) {
+    private void processUserProfile(UserProfileResponse userProfileResponse) {
         if(userProfileResponse == null) {
             Methods.showSnackBarNegative(this, "Login failed");
         } else if(userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0) {
@@ -725,21 +724,24 @@ public class Login_MainActivity extends AppCompatActivity implements
     }
 
     private void loginSuccess(UserProfileResponse userProfileResponse) {
+        if(userProfileResponse != null && userProfileResponse.getResult() != null) {
+            if (userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0)
+                return;
 
-        if(userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0) return;
+            Login_Data_Model response_Data = new Login_Data_Model();
+            Result result = userProfileResponse.getResult();
 
-        Login_Data_Model response_Data = new Login_Data_Model();
+            response_Data.accessType = result.getProfileAccessType() + "";
+            response_Data.sourceClientId = result.getSourceClientId();
+            response_Data.isEnterprise = result.getIsEnterprise() + "";
+            response_Data.isRestricted = false + "";
+            response_Data.ValidFPIds = new ArrayList<>();
+            session.storeFPID(result.getFpIds()[0]);
+            response_Data.ValidFPIds.addAll(Arrays.asList(result.getFpIds()));
+            DataBase dataBase = new DataBase(this);
+            dataBase.insertLoginStatus(response_Data, session.getFPID());
 
-        Result result = userProfileResponse.getResult();
-
-        response_Data.accessType = result.getProfileAccessType() + "";
-        response_Data.sourceClientId = result.getSourceClientId();
-        response_Data.isEnterprise = result.getIsEnterprise()+"";
-        response_Data.isRestricted = false+"";
-        response_Data.ValidFPIds = new ArrayList<>();
-        session.storeFPID(result.getFpIds()[0]);
-        response_Data.ValidFPIds.addAll( Arrays.asList(result.getFpIds()));
-        DataBase dataBase = new DataBase(this);
-        dataBase.insertLoginStatus(response_Data, session.getFPID());
+            processUserProfile(userProfileResponse);
+        }
     }
 }

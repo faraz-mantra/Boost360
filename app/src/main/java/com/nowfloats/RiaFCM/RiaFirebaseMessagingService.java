@@ -71,7 +71,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         saveTokenToPreferenceAndUpload(token);
         if (token != null) {
             AnaCore.saveFcmToken(this, token);
-            WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
+            WebEngage.get().setRegistrationID(token);
         }
 
         Log.d(TAG, "Token: " + token);
@@ -89,7 +89,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             sendNotification(mapResult);
             Constants.GCM_Msg = true;
         }
-        ApxorSDK.logAppEvent("onMessageReceived", new HashMap<String, String>());
+//        ApxorSDK.logAppEvent("onMessageReceived", new HashMap<String, String>());
     }
 
     private static final String SAM_BUBBLE_MSG = "I have Got some data";
