@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+  <declare-styleable name="CustomMaterialButton"></declare-styleable>
+
+  <declare-styleable name="CustomCardView">
+    <attr name="shadow_radius" format="enum">
+      <enum name="SHADOW_0" value="0" />
+      <enum name="SHADOW_2" value="2" />
+      <enum name="SHADOW_4" value="4" />
+      <enum name="SHADOW_8" value="8" />
+      <enum name="SHADOW_12" value="12" />
+      <enum name="SHADOW_16" value="16" />
+      <enum name="SHADOW_24" value="24" />
+      <enum name="SHADOW_32" value="32" />
+      <enum name="SHADOW_48" value="48" />
+    </attr>
+
+    <attr name="corner_radius" format="enum">
+      <enum name="RADIUS_0" value="0" />
+      <enum name="RADIUS_2" value="2" />
+      <enum name="RADIUS_4" value="4" />
+      <enum name="RADIUS_8" value="8" />
+      <enum name="RADIUS_12" value="12" />
+      <enum name="RADIUS_16" value="16" />
+    </attr>
+
+    <attr format="dimension" name="cardCornerRadius" />
+    <attr format="dimension" name="cardElevation" tools:overide="true" />
+  </declare-styleable>
+
+  <declare-styleable name="CustomTextView">
+    <attr name="textType" format="enum">
+      <enum name="TITLE" value="0" />
+      <enum name="SUBTITLE" value="1" />
+      <enum name="HEADING_1" value="2" />
+      <enum name="HEADING_2" value="3" />
+      <enum name="HEADING_3" value="4" />
+      <enum name="HEADING_4" value="5" />
+      <enum name="HEADING_5" value="6" />
+      <enum name="HEADING_6" value="7" />
+      <enum name="SUBHEADING_1" value="8" />
+      <enum name="SUBHEADING_2" value="9" />
+      <enum name="SUBTITLE_1" value="10" />
+      <enum name="SUBTITLE_2" value="11" />
+      <enum name="BODY_1" value="12" />
+      <enum name="BODY_2" value="13" />
+      <enum name="BODY_3" value="14" />
+      <enum name="CAPTION" value="15" />
+      <enum name="OVERLINE" value="16" />
+    </attr>
+  </declare-styleable>
+
+  <declare-styleable name="CustomImageView">
+    <attr format="reference" name="srcCompat" tools:overide="true" />
+  </declare-styleable>
+</resources>
