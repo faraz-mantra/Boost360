@@ -1,0 +1,159 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+  <!-- Base application theme. -->
+  <style name="BaseTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <!--    <item name="colorPrimary">@color/primaryColorVariant</item>-->
+    <!--    <item name="colorPrimaryDark">@color/primaryColorAccent</item>-->
+    <item name="dialogCornerRadius">8dp</item>
+    <!--    <item name="android:windowBackground">@drawable/bg_splash_screen</item>-->
+    <item name="actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
+    <item name="actionMenuTextColor">@color/cerulean_blue</item>
+    <item name="android:actionMenuTextColor">@color/cerulean_blue</item>
+    <item name="dialogTheme">@style/MaterialDialogTheme</item>
+    <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="toolbarStyle">@style/ToolbarStyle</item>
+    <item name="android:toolbarStyle" tools:ignore="NewApi">@style/ToolbarStyle</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    <!--    <item name="colorControlActivated">@color/primaryColorVariant</item>-->
+    <!--    <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
+    <!--    <item name="appBarLayoutStyle">@style/AppbarLayoutStyle</item>-->
+  </style>
+
+
+  <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+    <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+    <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+    <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+    <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+  </style>
+
+  <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+    <item name="android:windowBackground">@color/transparent</item>
+  </style>
+
+  <style name="MaterialDialogThemeFull" parent="MaterialDialogTheme">
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsFloating">false</item>
+    <!--    <item name="android:windowAnimationStyle">@style/Animation.WindowSlideUpDown</item>-->
+  </style>
+
+  <style name="Animation.WindowSlideUpDown" parent="@android:style/Animation.Activity">
+    <item name="android:windowEnterAnimation">@anim/slide_up</item>
+    <item name="android:windowExitAnimation">@anim/slide_down</item>
+  </style>
+
+  <style name="MaterialProgressBarTheme.Circular" parent="Widget.AppCompat.ProgressBar">
+    <!--    <item name="android:colorControlActivated">@color/colorPrimary</item>-->
+  </style>
+
+  <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+  </style>
+
+  <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+    <item name="android:background">@drawable/bg_rounded_top_white</item>
+  </style>
+
+  <style name="AppbarLayoutStyle" parent="Widget.MaterialComponents.AppBarLayout.Primary">
+    <!--    <item name="android:elevation">0dp</item>-->
+    <!--    <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>-->
+  </style>
+
+  <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+    <item name="titleTextAppearance">@style/ToolbarStyle.TextAppearance</item>
+    <item name="android:background">@color/transparent</item>
+  </style>
+
+  <style name="ToolbarStyle.TextAppearance" parent="TextAppearance.MaterialComponents.Body1">
+    <item name="font">@font/bold</item>
+    <item name="fontFamily">@font/bold</item>
+    <item name="android:textAlignment">gravity</item>
+    <item name="android:gravity">center_horizontal</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <!--    <item name="titleTextAppearance">@style/Body1TextAppearance</item>-->
+    <!--    <item name="android:titleTextAppearance">@style/Body1TextAppearance</item>-->
+    <!--    <item name="subtitleTextAppearance">@style/Body2TextAppearance</item>-->
+    <!--    <item name="android:titleTextColor">@color/primaryColorVariant</item>-->
+    <!--    <item name="titleTextColor">@color/primaryColorVariant</item>-->
+    <!--    <item name="android:background">@color/bg</item>-->
+    <!--    <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>-->
+    <!--    <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>-->
+    <!--    <item name="android:titleMarginStart">16dp</item>-->
+    <!--    <item name="android:colorControlNormal">@color/primaryColorVariant</item>-->
+    <!--    <item name="colorControlNormal">@color/primaryColorVariant</item>-->
+    <!--    <item name="android:colorPrimary">@color/whiteColor</item>-->
+    <!--    <item name="android:colorAccent">@color/green</item>-->
+    <!--    <item name="android:colorSecondary">@color/green</item>-->
+    <!--    <item name="collapseIcon">@drawable/ic_arrow_back</item>-->
+    <!--    <item name="android:elevation">0dp</item>-->
+  </style>
+
+
+  <style name="ActionButtonOverflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+    <item name="android:tint">@color/greyish_brown</item>
+  </style>
+
+  <style name="ButtonStyle">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="fontFamily">@font/semi_bold</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:paddingRight">@dimen/size_32</item>
+    <item name="android:paddingLeft">@dimen/size_32</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:drawableEnd">@null</item>
+    <item name="android:layout_height">@dimen/size_48</item>
+    <item name="android:foreground">@null</item>
+  </style>
+
+  <style name="ButtonStyle.Rounded" parent="ButtonStyle">
+    <item name="android:background">@drawable/bg_button_rounded_orange</item>
+  </style>
+
+  <!--    <style name="EditTextHeaderStyle">-->
+  <!--        <item name="android:layout_width">wrap_content</item>-->
+  <!--        <item name="android:layout_height">wrap_content</item>-->
+  <!--        <item name="android:textStyle">bold</item>-->
+  <!--    </style>-->
+
+  <!--    <style name="EditTextSubHeaderStyle">-->
+  <!--        <item name="android:layout_width">wrap_content</item>-->
+  <!--        <item name="android:layout_height">wrap_content</item>-->
+  <!--    </style>-->
+
+  <!--    <style name="EditTextStyle">-->
+  <!--        <item name="android:layout_width">match_parent</item>-->
+  <!--        <item name="android:layout_height">match_parent</item>-->
+  <!--        <item name="android:maxLines">1</item>-->
+  <!--        <item name="android:imeOptions">actionNext</item>-->
+  <!--    </style>-->
+
+  <!--  <style name="RadioButtonStyle">-->
+  <!--    <item name="android:layout_width">wrap_content</item>-->
+  <!--    <item name="android:layout_height">wrap_content</item>-->
+  <!--    <item name="android:textColor">@color/radioButtonTextColor</item>-->
+  <!--    <item name="android:foregroundTint">@color/radioButtonTintColor</item>-->
+  <!--    <item name="android:layout_weight">1</item>-->
+  <!--  </style>-->
+
+  <style name="CustomSpinnerStyle" parent="Base.Widget.AppCompat.Spinner.Underlined">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">44dp</item>
+    <item name="android:textColor">@color/black</item>
+  </style>
+
+  <style name="NestedRecyclerViewStyle">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+    <item name="android:overScrollMode">never</item>
+  </style>
+
+
+  <style name="CardContainerStyle" parent="Widget.MaterialComponents.CardView">
+
+  </style>
+
+</resources>
