@@ -86,7 +86,7 @@ class IntroFragment : Fragment() {
                 positionOffsetPixels: Int
             ) {
                 currentPage = position
-//                Log.e("onPageScrolled :", "" + position)
+                WebEngageController.trackEvent("PS_Intro Feature Slider", "Slide # " + currentPage, "")
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 

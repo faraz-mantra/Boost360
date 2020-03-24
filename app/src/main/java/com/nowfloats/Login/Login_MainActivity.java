@@ -368,8 +368,8 @@ public class Login_MainActivity extends AppCompatActivity implements
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
 
-            MixPanelController.setProperties("LastLoginDate", dateString);
-            MixPanelController.setProperties("LoggedIn", "True");
+//            MixPanelController.setProperties("LastLoginDate", dateString);
+//            MixPanelController.setProperties("LoggedIn", "True");
 
             getFPDetails(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
             HomeActivity.registerChat(session.getFPID());
@@ -590,9 +590,11 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     private void processLoginSuccessRequest(VerificationRequestResult response){
         session.setUserLogin(true);
-        session.setUserProfileEmail(response.getChannelProfileProperties().getUserEmail());
-        session.setUserProfileName(response.getChannelProfileProperties().getUserName());
-        session.setUserProfileMobile(response.getChannelProfileProperties().getUserMobile());
+        try {
+            session.setUserProfileEmail(response.getChannelProfileProperties().getUserEmail());
+            session.setUserProfileName(response.getChannelProfileProperties().getUserName());
+            session.setUserProfileMobile(response.getChannelProfileProperties().getUserMobile());
+        } catch (Exception e){}
 
         if(response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
             showBusinessProfileCreationStartScreen(response.getLoginId());
@@ -697,6 +699,11 @@ public class Login_MainActivity extends AppCompatActivity implements
             Methods.showSnackBarNegative(this, "Login failed");
         } else if(userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0) {
             session.setUserLogin(true);
+            try {
+                session.setUserProfileEmail(userProfileResponse.getResult().getProfileProperties().getUserEmail());
+                session.setUserProfileName(userProfileResponse.getResult().getProfileProperties().getUserName());
+                session.setUserProfileMobile(userProfileResponse.getResult().getProfileProperties().getUserMobile());
+            } catch (Exception e){}
             showBusinessProfileCreationStartScreen(userProfileResponse.getResult().getLoginId());
         } else {
             progressDialog = ProgressDialog.show(this, "", "Loading");
@@ -713,7 +720,6 @@ public class Login_MainActivity extends AppCompatActivity implements
     private void showBusinessProfileCreationStartScreen(String userProfileId){
         WebEngageController.initiateUserLogin(userProfileId);
         WebEngageController.setUserContactInfoProperties(session);
-        WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "");
 
         Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
         signupConfirmationPage.putExtra("profileUrl", "");

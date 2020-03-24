@@ -1472,20 +1472,19 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private boolean isCalled = false;
 
     private void navigateView() {
-
         isCalled = true;
 
         Bundle bundle = getIntent().getExtras();
 
-        if (bundle != null && bundle.containsKey("Username")) {
-
-            progressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading));
-            progressDialog.setCancelable(false);
-
-            API_Login apiLogin = new API_Login(HomeActivity.this, session, bus);
-            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Constants.clientId);
-
-        }
+//        if (bundle != null && bundle.containsKey("Username")) {
+//
+//            progressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading));
+//            progressDialog.setCancelable(false);
+//
+//            API_Login apiLogin = new API_Login(HomeActivity.this, session, bus);
+//            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Constants.clientId);
+//
+//        }
     }
 
 

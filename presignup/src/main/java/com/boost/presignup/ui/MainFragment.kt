@@ -1,6 +1,7 @@
 package com.boost.presignup.ui
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -30,6 +31,7 @@ class MainFragment : Fragment() {
     var videoCurrentPosition: Int = 0
     lateinit var timer: CountDownTimer
     lateinit var videoURLs: MutableList<String>
+    lateinit var splashImageResources: MutableList<Int>
     lateinit var checkvideo: CountDownTimer
     val initialTime = "00"
     lateinit var localeManager: LocaleManager
@@ -77,6 +79,8 @@ class MainFragment : Fragment() {
 //
 //        })
 
+        //NOTE: Both videoURLs and splashImageResources should always be of the same length.
+        //each videoURL has the corresponding SplashImageResource stored in the corresponding index of the other array
         videoURLs = mutableListOf<String>(
             "https://cdn.withfloats.com/boost/videos/en/intro.mp4",
             "https://cdn.withfloats.com/boost/videos/hi/intro.mp4",
@@ -86,24 +90,34 @@ class MainFragment : Fragment() {
             "https://cdn.withfloats.com/boost/boost_01.mp4",
             "https://cdn.withfloats.com/boost/boost_01.mp4"
         )
+        splashImageResources = mutableListOf<Int>(
+                R.drawable.intro_video_splash_en,
+                R.drawable.intro_video_splash_hi,
+                R.drawable.intro_video_splash_en,
+                R.drawable.intro_video_splash_en,
+                R.drawable.intro_video_splash_en,
+                R.drawable.intro_video_splash_en,
+                R.drawable.intro_video_splash_en
+        )
+
         if (::localeManager.isInitialized && !localeManager.getLanguage()!!.isEmpty()) {
             val langType = localeManager.getLanguage()
             when (langType) {
                 "en" -> {
-                    setVideoURL(videoURLs.get(0))
+                    setVideoURL(videoURLs.get(0), splashImageResources.get(0))
                 }
                 "hi" -> {
-                    setVideoURL(videoURLs.get(1))
+                    setVideoURL(videoURLs.get(1), splashImageResources.get(1))
                 }
                 "te" -> {
-                    setVideoURL(videoURLs.get(2))
+                    setVideoURL(videoURLs.get(2), splashImageResources.get(2))
                 }
                 "ta" -> {
-                    setVideoURL(videoURLs.get(3))
+                    setVideoURL(videoURLs.get(3), splashImageResources.get(4))
                 }
             }
         } else {
-            setVideoURL(videoURLs.get(0))
+            setVideoURL(videoURLs.get(0), splashImageResources.get(0))
         }
 
         val onInfoToPlayStateListener = MediaPlayer.OnInfoListener { mp, what, extra ->
@@ -236,26 +250,32 @@ class MainFragment : Fragment() {
 //            root.animation_view.playAnimation()
 //        }else{
 //            root.animation_view.visibility = View.GONE
-        root.replay_intro.visibility = View.VISIBLE
-        root.videoPlayer.visibility = View.VISIBLE
-        root.video_loading.visibility = View.VISIBLE
-        root.videoPlayer.start()
-        WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
-        viewModel.enableBottomView()
-        checkVideoPlaying()
-//        }
-
 
         root.skip_video.setOnClickListener {
             WebEngageController.trackEvent("PS_Clicked Intro_video skip", "Video skipped", "")
             navToIntroScreen()
         }
+
         root.videoPlayer.setOnCompletionListener {
             Log.e("Video completed", "$$$$$$$$$$$$$$$$$$$")
             navToIntroScreen()
         }
-//        root.videoPlayer.start()
 
+        root.introVideoSplash.setOnClickListener{
+            WebEngageController.trackEvent("PS_Intro Video Splash Clicked", "Start Intro Video", "")
+            root.play_pause_lottie.visibility = View.GONE
+            WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+            root.videoPlayer.start()
+            root.videoPlayer.seekTo(0)
+            root.introVideoSplash.visibility = View.GONE
+            root.replay_intro.visibility = View.VISIBLE
+            root.videoPlayer.visibility = View.VISIBLE
+            root.video_loading.visibility = View.VISIBLE
+            checkVideoPlaying()
+        }
+        resetVideo()
+//        root.videoPlayer.start()
+        viewModel.enableBottomView()
         setUpMvvm()
     }
 
@@ -276,6 +296,15 @@ class MainFragment : Fragment() {
         if (::timer.isInitialized) {
             timer.cancel()
         }
+        resetVideo()
+    }
+
+    fun resetVideo(){
+        root.introVideoSplash.visibility = View.VISIBLE
+        root.replay_intro.visibility = View.GONE
+        root.videoPlayer.visibility = View.GONE
+        root.video_loading.visibility = View.GONE
+
         root.video_time.setText(initialTime + " " + getString(R.string.seconds))
     }
 
@@ -285,6 +314,7 @@ class MainFragment : Fragment() {
             }
 
             override fun onFinish() {
+                WebEngageController.trackEvent("PS_Intro_Video Failed to start", "6000", "")
                 Log.e("Video not playing", "###################")
                 if (!root.videoPlayer.isPlaying) {
                     navToIntroScreen()
@@ -323,7 +353,7 @@ class MainFragment : Fragment() {
             viewModel.postValueToUpdateButtonStyle(it)
             when (it) {
                 R.string.english -> {
-                    setVideoURL(videoURLs.get(0))
+                    setVideoURL(videoURLs.get(0), splashImageResources.get(0))
 //                    root.videoPlayer.setVideoURI(Uri.parse(videoURLs.get(0)))
                     videoDuration = 0
                     if (::timer.isInitialized) {
@@ -332,11 +362,10 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                    WebEngageController.trackEvent("PS_Intro_Video Started english", "Video started", "")
                 }
                 R.string.hindi -> {
-                    setVideoURL(videoURLs.get(1))
-//                    root.videoPlayer.setVideoURI(Uri.parse(videoURLs.get(1)))
+                    setVideoURL(videoURLs.get(1), splashImageResources.get(1))
                     videoDuration = 0
                     if (::timer.isInitialized) {
                         timer.cancel()
@@ -344,10 +373,10 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                    WebEngageController.trackEvent("PS_Intro_Video Started hindi", "Video started", "")
                 }
                 R.string.kannada -> {
-                    setVideoURL(videoURLs.get(2))
+                    setVideoURL(videoURLs.get(2), splashImageResources.get(2))
 //                    root.videoPlayer.setVideoURI(Uri.parse(videoURLs.get(2)))
                     videoDuration = 0
                     if (::timer.isInitialized) {
@@ -356,10 +385,10 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                    WebEngageController.trackEvent("PS_Intro_Video Started kannada", "Video started", "")
                 }
                 R.string.telugu -> {
-                    setVideoURL(videoURLs.get(3))
+                    setVideoURL(videoURLs.get(3), splashImageResources.get(3))
 //                    root.videoPlayer.setVideoURI(Uri.parse(videoURLs.get(3)))
                     videoDuration = 0
                     if (::timer.isInitialized) {
@@ -368,10 +397,10 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                    WebEngageController.trackEvent("PS_Intro_Video Started telugu", "Video started", "")
                 }
                 R.string.malayalam -> {
-                    setVideoURL(videoURLs.get(4))
+                    setVideoURL(videoURLs.get(4), splashImageResources.get(4))
 //                    root.videoPlayer.setVideoURI(Uri.parse(videoURLs.get(4)))
                     videoDuration = 0
                     if (::timer.isInitialized) {
@@ -380,10 +409,10 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                    WebEngageController.trackEvent("PS_Intro_Video Started malayalam", "Video started", "")
                 }
                 R.string.tamil -> {
-                    setVideoURL(videoURLs.get(5))
+                    setVideoURL(videoURLs.get(5), splashImageResources.get(5))
 //                    root.videoPlayer.setVideoURI(Uri.parse(videoURLs.get(5)))
                     videoDuration = 0
                     if (::timer.isInitialized) {
@@ -392,10 +421,10 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                    WebEngageController.trackEvent("PS_Intro_Video Started tamil", "Video started", "")
                 }
                 R.string.marathi -> {
-                    setVideoURL(videoURLs.get(6))
+                    setVideoURL(videoURLs.get(6), splashImageResources.get(6))
 //                    root.videoPlayer.setVideoURI(Uri.parse(videoURLs.get(6)))
                     videoDuration = 0
                     if (::timer.isInitialized) {
@@ -404,7 +433,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                    WebEngageController.trackEvent("PS_Intro_Video Started marathi", "Video started", "")
                 }
             }
         })
@@ -420,8 +449,9 @@ class MainFragment : Fragment() {
         videoDuration = 0
     }
 
-    fun setVideoURL(url: String) {
-        root.videoPlayer.setVideoURI(Uri.parse(url))
+    fun setVideoURL(videoUrl: String, splashImageUrlResource: Int) {
+        root.videoPlayer.setVideoURI(Uri.parse(videoUrl))
+        root.introVideoSplash.setImageResource(splashImageUrlResource)
     }
 
     private fun setVolume(amount: Int) {
