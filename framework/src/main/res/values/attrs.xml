@@ -48,6 +48,10 @@
       <enum name="BODY_3" value="14" />
       <enum name="CAPTION" value="15" />
       <enum name="OVERLINE" value="16" />
+        <enum name="HEADING_TEXT_1" value="17" />
+        <enum name="HEADING_TEXT_2" value="18" />
+        <enum name="HEADING_TEXT_3" value="19" />
+        <enum name="HEADING_7" value="20" />
     </attr>
   </declare-styleable>
 

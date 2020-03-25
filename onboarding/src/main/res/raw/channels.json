@@ -1,0 +1,47 @@
+{
+  "data": [
+    {
+      "id": "",
+      "image": "",
+      "priority": "important",
+      "type": "google_search",
+      "isSelected": true,
+      "link": "http://www.google.com"
+    },
+    {
+      "id": "",
+      "image": "",
+      "priority": "recommended",
+      "type": "fb_page",
+      "link": "http://www.google.com"
+    },
+    {
+      "id": "",
+      "image": "",
+      "priority": "recommended",
+      "type": "google_maps",
+      "link": "http://www.google.com"
+    },
+    {
+      "id": "",
+      "image": "",
+      "priority": "learn_more",
+      "type": "fb_shop",
+      "link": "http://www.google.com"
+    },
+    {
+      "id": "",
+      "image": "",
+      "priority": "learn_more",
+      "type": "whatsapp_business",
+      "link": "http://www.google.com"
+    },
+    {
+      "id": "",
+      "image": "",
+      "priority": "learn_more",
+      "type": "twitter_profile",
+      "link": "http://www.google.com"
+    }
+  ]
+}

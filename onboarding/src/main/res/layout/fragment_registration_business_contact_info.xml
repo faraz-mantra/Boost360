@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="contactInfo"
+            type="com.onboarding.nowfloats.model.contactinfo.ContactInfo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/view_business"
+                    style="@style/Onboarding.Registration.FormStyle"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    tools:alpha="1">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/title"
+                        style="@style/Onboarding.Registration.HeaderTitleStyle"
+                        android:alpha="0"
+                        android:text="@string/building_your_business_ncontact_info"
+                        tools:alpha="1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/sub_title"
+                        style="@style/Onboarding.Registration.HeaderDescriptionStyle"
+                        android:alpha="0"
+                        android:text="@string/this_info_will_be_used_to_onboard_sync_across_all_channels"
+                        tools:alpha="1" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/view_form"
+                        style="@style/Onboarding.Registration.FormContainerStyle"
+                        android:layout_height="match_parent"
+                        android:alpha="0"
+                        tools:alpha="1">
+
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/store_name"
+                            style="@style/Onboarding.TextFieldStyle"
+                            android:inputType="textCapWords"
+                            android:drawableStart="@drawable/ic_store_focusable"
+                            android:hint="@string/enter_your_business_name" />
+
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/address"
+                            style="@style/Onboarding.TextFieldStyle"
+                            android:drawableStart="@drawable/ic_location_focusable"
+                          android:hint="@string/city_name" />
+
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/email"
+                            style="@style/Onboarding.TextFieldStyle"
+                            android:drawableStart="@drawable/ic_mail_focusable"
+                            android:hint="@string/enter_your_business_email"
+                            android:inputType="textEmailAddress" />
+
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/number"
+                            style="@style/Onboarding.TextFieldStyle"
+                            android:drawableStart="@drawable/ic_phone_focusable"
+                            android:hint="@string/business_contact_number"
+                            android:inputType="phone"
+                            android:maxLength="10" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/view_image"
+                    style="@style/Onboarding.Registration.FormHeaderCardStyle"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:alpha="0"
+                    tools:alpha="1">
+
+                    <com.framework.views.customViews.CustomImageView
+                        style="@style/Onboarding.Registration.FormHeaderImageStyle"
+                        app:srcCompat="@drawable/ic_ria" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+            </FrameLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <FrameLayout
+            android:id="@+id/next"
+            style="@style/ButtonStyle.Rounded"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginEnd="@dimen/size_32"
+            android:layout_marginBottom="@dimen/size_32"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:alpha="1">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/text_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:textColor="@color/white"
+                app:fontFamily="@font/bold" />
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

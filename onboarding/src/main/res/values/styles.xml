@@ -1,0 +1,195 @@
+<resources>
+
+  <style name="BusinessOnboardingTheme" parent="AppBaseTheme"/>
+
+  <style name="FooterButtonStyle">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">@dimen/footer_button_height</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="fontFamily">@font/semi_bold</item>
+    <item name="android:background">@drawable/bg_button_orange</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:drawableEnd">@drawable/ic_right_arrow_white</item>
+    <item name="android:paddingRight">@dimen/size_32</item>
+    <item name="android:paddingLeft">@dimen/size_32</item>
+    <item name="android:foreground">@null</item>
+    <item name="android:textAllCaps">false</item>
+  </style>
+
+  <style name="ButtonStyle">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="fontFamily">@font/semi_bold</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:paddingRight">@dimen/size_32</item>
+    <item name="android:paddingLeft">@dimen/size_32</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:drawableEnd">@null</item>
+    <item name="android:layout_height">@dimen/size_48</item>
+    <item name="android:foreground">@null</item>
+  </style>
+
+  <style name="ButtonStyle.Rounded" parent="ButtonStyle">
+    <item name="android:background">@drawable/bg_button_rounded_orange</item>
+  </style>
+
+
+  <style name="Onboarding" />
+
+  <style name="Onboarding.Registration" parent="Onboarding" />
+
+  <style name="Onboarding.HeaderImageContainerStyle">
+    <item name="cardElevation">@dimen/size_4</item>
+    <item name="cardCornerRadius">@dimen/size_30</item>
+    <item name="android:layout_marginStart">@dimen/size_32</item>
+    <item name="android:layout_marginTop">@dimen/size_24</item>
+    <item name="android:layout_marginBottom">@dimen/size_20</item>
+    <item name="android:layout_width">@dimen/size_60</item>
+    <item name="android:layout_height">@dimen/size_60</item>
+  </style>
+
+  <style name="Onboarding.HeaderTitleStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">@dimen/size_32</item>
+    <item name="android:layout_marginEnd">@dimen/size_32</item>
+    <item name="android:layout_marginBottom">@dimen/size_4</item>
+    <item name="android:textColor">@color/greyish_brown</item>
+    <item name="textType">HEADING_5</item>
+    <item name="android:includeFontPadding">false</item>
+    <item name="fontFamily">@font/semi_bold</item>
+  </style>
+
+  <style name="Onboarding.HeaderDescriptionStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">@dimen/size_32</item>
+    <item name="android:layout_marginEnd">@dimen/size_32</item>
+    <item name="android:textColor">@color/greyish_brown</item>
+    <item name="textType">SUBHEADING_2</item>
+    <item name="fontFamily">@font/regular</item>
+  </style>
+
+  <style name="Onboarding.ChannelCardStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">@dimen/size_16</item>
+    <item name="android:layout_marginEnd">@dimen/size_16</item>
+    <item name="android:layout_marginBottom">@dimen/size_16</item>
+    <item name="cardCornerRadius">@dimen/size_4</item>
+    <item name="cardElevation">@dimen/size_2</item>
+    <item name="cardUseCompatPadding">true</item>
+  </style>
+
+  <style name="Onboarding.TextFieldStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+      <item name="android:textColor">@color/black</item>
+    <item name="android:layout_marginBottom">@dimen/size_16</item>
+      <item name="textType">HEADING_7</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:inputType">text</item>
+    <item name="android:drawablePadding">@dimen/size_8</item>
+    <item name="android:importantForAutofill">no</item>
+  </style>
+
+  <style name="Onboarding.Registration.HeaderTitleStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textAlignment">gravity</item>
+    <item name="android:textColor">@color/greyish_brown</item>
+    <item name="android:gravity">center</item>
+    <item name="textType">HEADING_4</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:layout_marginStart">@dimen/size_28</item>
+    <item name="android:layout_marginEnd">@dimen/size_28</item>
+    <item name="android:layout_marginBottom">@dimen/size_16</item>
+  </style>
+
+  <style name="Onboarding.Registration.HeaderDescriptionStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textAlignment">gravity</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/warm_grey</item>
+    <item name="android:lineSpacingExtra">@dimen/size_2</item>
+    <item name="textType">SUBHEADING_2</item>
+      <item name="fontFamily">@font/semi_bold</item>
+  </style>
+
+  <style name="Onboarding.Registration.FormStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:layout_marginTop">@dimen/size_40</item>
+    <item name="android:paddingTop">@dimen/size_48</item>
+    <item name="android:background">@drawable/bg_rounded_top_white_three</item>
+  </style>
+
+  <style name="Onboarding.Registration.FormHeaderCardStyle">
+    <item name="android:layout_width">@dimen/size_48</item>
+    <item name="android:layout_height">@dimen/size_48</item>
+      <item name="cardElevation">@dimen/size_2</item>
+    <item name="cardCornerRadius">@dimen/size_24</item>
+    <item name="cardBackgroundColor">@color/white</item>
+  </style>
+
+  <style name="Onboarding.Registration.FormHeaderImageStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+  </style>
+
+  <style name="Onboarding.Registration.FormButtonStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:fontFamily">@font/bold</item>
+    <item name="android:layout_marginStart">@dimen/size_8</item>
+    <item name="android:layout_marginEnd">@dimen/size_8</item>
+    <item name="android:layout_marginBottom">@dimen/size_32</item>
+    <item name="textType">SUBTITLE_2</item>
+  </style>
+
+  <style name="Onboarding.Registration.FormTitleStyle">
+    <item name="android:fontFamily">@font/light</item>
+    <item name="android:textColor">@color/black</item>
+    <item name="android:gravity">center_horizontal</item>
+    <item name="android:textAlignment">gravity</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="textType">HEADING_2</item>
+  </style>
+
+  <style name="Onboarding.Registration.FormDescriptionStyle">
+    <item name="android:includeFontPadding">false</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:gravity">center_horizontal</item>
+    <item name="android:textAlignment">gravity</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="textType">HEADING_2</item>
+  </style>
+
+  <style name="Onboarding.Registration.FormContainerStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:background">@drawable/bg_rounded_top_white</item>
+    <item name="android:paddingStart">@dimen/size_32</item>
+    <item name="android:paddingEnd">@dimen/size_32</item>
+    <item name="android:layout_marginTop">@dimen/size_40</item>
+    <item name="android:paddingTop">@dimen/size_48</item>
+    <item name="android:paddingBottom">@dimen/footer_button_height</item>
+  </style>
+
+  <style name="ButtonStyle.Rounded.Outlined">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_marginStart">@dimen/size_32</item>
+    <item name="android:layout_marginBottom">@dimen/size_32</item>
+    <item name="android:layout_marginEnd">@dimen/size_32</item>
+    <item name="android:fontFamily">@font/regular</item>
+    <item name="android:textColor">@color/greyish_brown</item>
+    <item name="android:background">@drawable/bg_button_rounded_greyish_brown_outlined</item>
+  </style>
+
+</resources>

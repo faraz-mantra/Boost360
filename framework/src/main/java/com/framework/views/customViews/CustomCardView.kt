@@ -6,7 +6,7 @@ import android.os.Build
 import android.util.AttributeSet
 import androidx.annotation.RequiresApi
 import com.framework.R
-import com.framework.decorators.getDensity
+import com.framework.extensions.getDensity
 import com.google.android.material.card.MaterialCardView
 
 open class CustomCardView : MaterialCardView {

@@ -1,0 +1,3 @@
+package com.onboarding.nowfloats.recyclerView
+
+interface AppBaseRecyclerViewItem : BaseRecyclerViewItem

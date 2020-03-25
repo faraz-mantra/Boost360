@@ -9,17 +9,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
-    app:elevation="@dimen/size_0">
+    app:elevation="0dp">
 
     <com.framework.views.customViews.CustomToolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/toolbar_size"
+      android:layout_height="?android:attr/actionBarSize"
       android:hapticFeedbackEnabled="true"
       app:navigationIcon="@drawable/ic_toolbar_back"
       app:titleMarginEnd="@dimen/toolbar_title_margin_end"
-      app:elevation="@dimen/size_0"
-      android:elevation="@dimen/size_0"
+      android:elevation="0dp"
+      app:elevation="0dp"
       tools:title="@tools:sample/lorem/random">
 
     </com.framework.views.customViews.CustomToolbar>

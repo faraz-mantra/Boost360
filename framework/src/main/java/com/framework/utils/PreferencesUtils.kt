@@ -4,6 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 
+enum class PreferencesKey {
+  FACEBOOK_USER_TOKEN,
+  FACEBOOK_USER_ID
+}
+
 class PreferencesUtils {
 
   internal lateinit var sharedPref: SharedPreferences
@@ -18,83 +23,107 @@ class PreferencesUtils {
     }
   }
 
-  @Synchronized
-  fun saveData(key: String, value: String?): Boolean {
-    editor?.putString(key, value)
-    return editor?.commit() ?: false
+  fun saveFacebookUserId(userId: String): Boolean {
+    return saveData(PreferencesKey.FACEBOOK_USER_ID, userId)
   }
 
-  @Synchronized
-  fun saveData(key: String, value: Set<String>): Boolean {
-    editor?.putStringSet(key, value)
-    return editor?.commit() ?: false
+  fun getFacebookUserId(): String? {
+    return getData(PreferencesKey.FACEBOOK_USER_ID)
   }
 
-  @Synchronized
-  fun saveData(key: String, value: Boolean): Boolean {
-    editor?.putBoolean(key, value)
-    return editor?.commit() ?: false
+  fun saveFacebookUserToken(token: String): Boolean {
+    return saveData(PreferencesKey.FACEBOOK_USER_TOKEN, token)
   }
 
-  @Synchronized
-  fun saveData(key: String, value: Long): Boolean {
-    editor?.putLong(key, value)
-    return editor?.commit() ?: false
+  fun getFacebookUserToken(): String? {
+    return getData(PreferencesKey.FACEBOOK_USER_TOKEN)
   }
 
-
-  @Synchronized
-  fun saveData(key: String, value: Float): Boolean {
-    editor?.putFloat(key, value)
-    return editor?.commit() ?: false
+  fun saveData(key: PreferencesKey, value: String): Boolean {
+    return saveData(key.name, value)
   }
 
-  @Synchronized
-  fun saveData(key: String, value: Int): Boolean {
-    editor?.putInt(key, value)
-    return editor?.commit() ?: false
+  fun getData(key: PreferencesKey): String? {
+    return getData(key.name, null)
   }
+}
 
-  @Synchronized
-  fun removeData(key: String): Boolean {
-    editor?.remove(key)
-    return editor?.commit() ?: false
-  }
+@Synchronized
+fun PreferencesUtils.saveData(key: String, value: String?): Boolean {
+  editor?.putString(key, value)
+  return editor?.commit() ?: false
+}
 
-  @Synchronized
-  fun getData(key: String, defaultValue: Boolean): Boolean {
-    return sharedPref.getBoolean(key, defaultValue)
-  }
+@Synchronized
+fun PreferencesUtils.saveData(key: String, value: Set<String>): Boolean {
+  editor?.putStringSet(key, value)
+  return editor?.commit() ?: false
+}
 
-  @Synchronized
-  fun getData(key: String, defaultValue: String?): String? {
-    return sharedPref.getString(key, defaultValue)
-  }
+@Synchronized
+fun PreferencesUtils.saveData(key: String, value: Boolean): Boolean {
+  editor?.putBoolean(key, value)
+  return editor?.commit() ?: false
+}
 
-  @Synchronized
-  fun getData(key: String, defaultValue: Set<String>): Set<String>? {
-    return sharedPref.getStringSet(key, defaultValue)
-  }
+@Synchronized
+fun PreferencesUtils.saveData(key: String, value: Long): Boolean {
+  editor?.putLong(key, value)
+  return editor?.commit() ?: false
+}
 
-  @Synchronized
-  fun getData(key: String, defaultValue: Float): Float {
 
-    return sharedPref.getFloat(key, defaultValue)
-  }
+@Synchronized
+fun PreferencesUtils.saveData(key: String, value: Float): Boolean {
+  editor?.putFloat(key, value)
+  return editor?.commit() ?: false
+}
 
-  @Synchronized
-  fun getData(key: String, defaultValue: Int): Int {
-    return sharedPref.getInt(key, defaultValue)
-  }
+@Synchronized
+fun PreferencesUtils.saveData(key: String, value: Int): Boolean {
+  editor?.putInt(key, value)
+  return editor?.commit() ?: false
+}
 
-  @Synchronized
-  fun getData(key: String, defaultValue: Long): Long {
-    return sharedPref.getLong(key, defaultValue)
-  }
+@Synchronized
+fun PreferencesUtils.removeData(key: String): Boolean {
+  editor?.remove(key)
+  return editor?.commit() ?: false
+}
 
-  @Synchronized
-  fun deleteAllData() {
-    editor?.clear()
-    editor?.commit()
-  }
+@Synchronized
+fun PreferencesUtils.getData(key: String, defaultValue: Boolean): Boolean {
+  return sharedPref.getBoolean(key, defaultValue)
+}
+
+@Synchronized
+fun PreferencesUtils.getData(key: String, defaultValue: String?): String? {
+  return sharedPref.getString(key, defaultValue)
+}
+
+@Synchronized
+fun PreferencesUtils.getData(key: String, defaultValue: Set<String>): Set<String>? {
+  return sharedPref.getStringSet(key, defaultValue)
+}
+
+@Synchronized
+fun PreferencesUtils.getData(key: String, defaultValue: Float): Float {
+
+  return sharedPref.getFloat(key, defaultValue)
+}
+
+@Synchronized
+fun PreferencesUtils.getData(key: String, defaultValue: Int): Int {
+  return sharedPref.getInt(key, defaultValue)
+}
+
+@Synchronized
+fun PreferencesUtils.getData(key: String, defaultValue: Long): Long {
+  return sharedPref.getLong(key, defaultValue)
+}
+
+@Synchronized
+fun PreferencesUtils.deleteAllData() {
+  editor?.clear()
+  editor?.commit()
 }

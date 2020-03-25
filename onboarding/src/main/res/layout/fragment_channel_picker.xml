@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/footer_button_height">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.framework.views.customViews.CustomCardView
+                        android:id="@+id/view_channel"
+                        style="@style/Onboarding.ChannelCardStyle"
+                        android:layout_marginTop="@dimen/size_24"
+                        android:alpha="0"
+                        tools:alpha="1">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/size_20"
+                            android:paddingTop="@dimen/size_24"
+                            android:paddingEnd="@dimen/size_24"
+                            android:paddingBottom="@dimen/size_24">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.framework.views.customViews.CustomImageView
+                                    android:layout_width="@dimen/size_16"
+                                    android:layout_height="@dimen/size_16"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_share" />
+
+                                <com.framework.views.customViews.CustomTextView
+                                    android:id="@+id/channelPresence"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/size_8"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    tools:text="Presence on 0 channels"
+                                    android:textColor="@color/dodger_blue_two"
+                                    app:fontFamily="@font/semi_bold"
+                                    app:textType="SUBHEADING_2" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <com.framework.views.viewgroups.BaseRecyclerView
+                                android:id="@+id/channelList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/size_12"
+                                android:layout_marginEnd="@dimen/size_32"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:overScrollMode="never"
+                                android:translationX="-2dp"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                tools:listitem="@layout/item_channel"
+                                tools:spanCount="3" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|end"
+                            android:layout_marginEnd="@dimen/size_16"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/size_4">
+
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="@dimen/size_16"
+                                android:layout_height="@dimen/size_16"
+                                app:srcCompat="@drawable/ic_pencil" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/edit"
+                                app:textType="OVERLINE" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <View
+                            android:id="@+id/editContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                    </com.framework.views.customViews.CustomCardView>
+
+                    <com.framework.views.viewgroups.BaseRecyclerView
+                        android:id="@+id/featureList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_channel_feature" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:layout_width="@dimen/size_160"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/ic_combined_shape_top" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/boost_features_mentioned_above"
+                            android:textColor="@color/greyish"
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_1" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-10dp"
+                            android:layout_marginBottom="-10dp"
+                            android:includeFontPadding="false"
+                            android:text="@string/free_forever"
+                            android:textColor="@color/pinkish_grey_two"
+                            app:fontFamily="@font/bold_italic"
+                            app:textType="HEADING_TEXT_3" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/doctors_amp_clinic_business"
+                            android:textColor="@color/greyish"
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_1" />
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:layout_width="@dimen/size_160"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/ic_combined_shape_bottom" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </FrameLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/next"
+            style="@style/FooterButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:alpha="0"
+            android:drawableEnd="@null"
+            android:text="@string/get_started"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:alpha="1" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

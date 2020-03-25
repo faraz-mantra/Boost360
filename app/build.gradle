@@ -261,4 +261,5 @@ dependencies {
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation group: 'com.zendesk', name: 'support', version: '3.0.2'
+    implementation project(path: ':onboarding')
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/size_8">
+
+    <include
+      android:id="@+id/image_card"
+      layout="@layout/item_channel"
+      android:layout_width="@dimen/size_20"
+      android:layout_height="@dimen/size_20"
+      android:layout_margin="@dimen/size_6"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_6"
+      android:layout_marginTop="@dimen/size_8"
+      android:includeFontPadding="false"
+      android:text="Connecting Google account…"
+      android:textColor="@color/greyish_brown_40"
+      app:fontFamily="@font/semi_bold"
+      app:layout_constraintStart_toEndOf="@+id/image_card"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="SUBHEADING_1" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
