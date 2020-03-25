@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.boost.upgrades.UpgradeActivity;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
@@ -77,7 +78,7 @@ public class SidePanelFragment extends Fragment {
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
     TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvSocialSharing, tvManageInventory, tvInbox, tvManageContent,
-            accountSettingsText, upgradeText, addOnText, keyboardTextView, helpAndSupportText, shareText, aboutText;
+            accountSettingsText, upgradeText, addOnText, keyboardTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -94,7 +95,7 @@ public class SidePanelFragment extends Fragment {
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
-    LinearLayout homeLayout, analyticsLayout, upgradeLayout, addOnLayout, accountSettingsLayout, keyboardLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+    LinearLayout homeLayout, analyticsLayout, upgradeLayout, addOnLayout, accountSettingsLayout, keyboardLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
             manageContentLayout, manageCustomersLayout, socialLayout, manageInventoryLayout, inboxLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -107,7 +108,7 @@ public class SidePanelFragment extends Fragment {
     private final int gallery_req_id = 6;
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
-    private ImageView shareImageView, keyboardImageView, upgradeImageView, addOnImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
+    private ImageView shareImageView, keyboardImageView, marketplaceImageView, upgradeImageView, addOnImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView,
             socialImageView, manageInventoryImageView, inboxImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
@@ -304,6 +305,7 @@ public class SidePanelFragment extends Fragment {
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
         socialLayout = card.findViewById(R.id.eleventh_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
+        marketplaceLayout = (LinearLayout) card.findViewById(R.id.marketplace_layout);
         accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
         upgradeLayout = card.findViewById(R.id.secondRow_Layout);
         addOnLayout = card.findViewById(R.id.thirdRow_Layout);
@@ -333,6 +335,7 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
         aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
+        marketplaceTextView = (TextView) marketplaceLayout.findViewById(R.id.marketplace_TextView);
         if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
             keyboardTextView.setText("RedTim Keyboard");
             addOnLayout.setVisibility(View.GONE);
@@ -391,6 +394,7 @@ public class SidePanelFragment extends Fragment {
 //        });
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
         keyboardImageView = (ImageView) keyboardLayout.findViewById(R.id.keyboard_ImageView);
+        marketplaceImageView = (ImageView) keyboardLayout.findViewById(R.id.marketplace_ImageView);
         manageCustomerImageView = (ImageView) manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
         socialImageView = (ImageView) socialLayout.findViewById(R.id.eleventh_ImageView);
         manageInventoryImageView = (ImageView) manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
@@ -440,6 +444,18 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
                 onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
+            }
+        });
+
+        marketplaceTextView.setTypeface(robotoMedium);
+        marketplaceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), UpgradeActivity.class);
+                intent.putExtra("data","21");
+                startActivity(intent);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+                onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);
             }
         });
 

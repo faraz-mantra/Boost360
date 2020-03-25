@@ -56,7 +56,7 @@ android {
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion '28.0.3'
+    buildToolsVersion rootProject.buildToolsVersion
     useLibrary 'org.apache.http.legacy'
     lintOptions {
         abortOnError true
@@ -257,6 +257,9 @@ dependencies {
 
     //presignup library
     implementation project(path: ':presignup')
+
+    //upgrade library
+    implementation project(path: ':upgrades')
 
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'

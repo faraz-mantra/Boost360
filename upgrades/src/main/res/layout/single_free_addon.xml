@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imageLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_margin="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/single_freeaddon_image"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/backgroundwhite"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/rectangle_copy_18" />
+
+    <TextView
+        android:id="@+id/single_freeaddon_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/single_freeaddon_image"
+        android:text="Domain Booking Widget"
+        android:gravity="center"
+        android:textSize="@dimen/_9sdp"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/common_bold_text_color"/>
+
+</LinearLayout>

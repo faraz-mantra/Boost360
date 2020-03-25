@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "title": "Marketing",
+    "name": "Facebook Ads (upto 75 leads)",
+    "price": 400.0,
+    "image": "https://i.imgur.com/xP4sB8n.jpg"
+  },
+  {
+    "id": "2",
+    "title": "Security",
+    "name": "Domain, SSL &amp; DNS manager",
+    "price": 333.0,
+    "image": "https://i.imgur.com/ehbOzO3.png"
+  },
+  {
+    "id": "3",
+    "title": "Technology",
+    "name": "SAM Chatbot",
+    "price": 160.0,
+    "image": "https://i.imgur.com/IQNyboy.png"
+  },
+  {
+    "id": "4",
+    "title": "Services",
+    "name": "Dictate Starter",
+    "price": 320.0,
+    "image": "https://i.imgur.com/fNh7rpr.png"
+  },
+  {
+    "id": "1",
+    "title": "Marketing",
+    "name": "Facebook Ads (upto 75 leads)",
+    "price": 400.0,
+    "image": "https://i.imgur.com/xP4sB8n.jpg"
+  },
+  {
+    "id": "2",
+    "title": "Security",
+    "name": "Domain, SSL &amp; DNS manager",
+    "price": 333.0,
+    "image": "https://i.imgur.com/ehbOzO3.png"
+  },
+  {
+    "id": "3",
+    "title": "Technology",
+    "name": "SAM Chatbot",
+    "price": 160.0,
+    "image": "https://i.imgur.com/IQNyboy.png"
+  },
+  {
+    "id": "4",
+    "title": "Services",
+    "name": "Dictate Starter",
+    "price": 320.0,
+    "image": "https://i.imgur.com/fNh7rpr.png"
+  }
+]
