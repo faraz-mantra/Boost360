@@ -5,11 +5,12 @@ import android.content.res.TypedArray
 import android.os.Build
 import android.util.AttributeSet
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import com.framework.R
 import com.framework.extensions.getDensity
 import com.google.android.material.card.MaterialCardView
 
-open class CustomCardView : MaterialCardView {
+open class CustomCardView : CardView {
 
   enum class Shadow constructor(val shadow: Int) {
     SHADOW_0(0), SHADOW_2(2), SHADOW_4(4), SHADOW_8(8),
