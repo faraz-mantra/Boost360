@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.onboarding.nowfloats"
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:dist="http://schemas.android.com/apk/distribution"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <application
-    android:theme="@style/BusinessOnboardingTheme">
+  <application>
     <activity android:name="com.onboarding.nowfloats.ui.AppFragmentContainerActivity" />
     <activity android:name="com.onboarding.nowfloats.ui.channel.ChannelPickerActivity" />
     <activity android:name="com.onboarding.nowfloats.ui.category.CategorySelectorActivity" />

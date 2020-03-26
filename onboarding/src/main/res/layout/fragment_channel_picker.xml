@@ -88,7 +88,7 @@
                             <com.framework.views.customViews.CustomImageView
                                 android:layout_width="@dimen/size_16"
                                 android:layout_height="@dimen/size_16"
-                                app:srcCompat="@drawable/ic_pencil" />
+                                app:srcCompat="@drawable/ic_pencil2" />
 
                             <com.framework.views.customViews.CustomTextView
                                 android:layout_width="wrap_content"

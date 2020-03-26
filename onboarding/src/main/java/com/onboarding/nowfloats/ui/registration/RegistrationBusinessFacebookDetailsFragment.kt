@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.facebook.CallbackManager
@@ -78,6 +79,11 @@ class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<Fra
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun onFacebookLoginSuccess(result: LoginResult?) {
         showShortToast(result?.toString())
         val accessToken = result?.accessToken ?: return
@@ -96,7 +102,11 @@ class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<Fra
 
     override fun onCompleted(type: FacebookGraphRequestType, facebookGraphMeAccountResponse: FacebookGraphMeAccountResponse?) {
         if (type != USER_ACCOUNT) return
-        val pageName = facebookGraphMeAccountResponse?.data?.first()?.category_list?.first()?.name
-        showShortToast(pageName)
+        val pages = facebookGraphMeAccountResponse?.data ?: return
+
+        if (pages.size > 1) return showShortToast("Select only one page")
+
+        val page = pages.firstOrNull() ?: return
+        showShortToast(page.name)
     }
 }

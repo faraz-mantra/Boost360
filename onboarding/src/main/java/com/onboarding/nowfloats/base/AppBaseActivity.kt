@@ -15,7 +15,7 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   override fun setTheme() {
-    super.setTheme()
+
   }
 
   override fun getToolbarTitleTypeface(): Typeface? {
