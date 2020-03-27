@@ -1,10 +1,8 @@
-package com.nowfloats.facebook.models
+package com.nowfloats.facebook.models.userPages
 
-import java.net.HttpURLConnection
-import java.net.URL
 import kotlin.collections.ArrayList
 
-data class FacebookGraphMeAccountDataModel(
+data class FacebookGraphUserPagesDataModel(
         val access_token: String? = null,
         val category: String? = null,
         val category_list: ArrayList<CategoryModel> = ArrayList(),

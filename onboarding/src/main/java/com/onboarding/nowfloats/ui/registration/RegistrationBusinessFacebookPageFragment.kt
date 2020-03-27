@@ -3,7 +3,6 @@ package com.onboarding.nowfloats.ui.registration
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
@@ -11,110 +10,132 @@ import com.facebook.login.LoginResult
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
-import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_ACCOUNT
+import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_DETAILS
+import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_PAGES
 import com.nowfloats.facebook.constants.FacebookPermissions
 import com.nowfloats.facebook.graph.FacebookGraphManager
-import com.nowfloats.facebook.models.FacebookGraphMeAccountResponse
+import com.nowfloats.facebook.models.BaseFacebookGraphResponse
+import com.nowfloats.facebook.models.userDetails.FacebookGraphUserDetailsResponse
+import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesResponse
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookPageBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.*
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding>(),
         FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
-    private val callbackManager = CallbackManager.Factory.create()
-    private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
+  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookpage)
 
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): RegistrationBusinessFacebookPageFragment {
-            val fragment = RegistrationBusinessFacebookPageFragment()
-            fragment.arguments = bundle
-            return fragment
+  private val callbackManager = CallbackManager.Factory.create()
+  private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
+
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): RegistrationBusinessFacebookPageFragment {
+      val fragment = RegistrationBusinessFacebookPageFragment()
+      fragment.arguments = bundle
+      return fragment
+    }
+  }
+
+  override fun onCreateView() {
+    super.onCreateView()
+    registerFacebookLoginCallback(this, callbackManager)
+    binding?.facebookChannels?.post {
+      (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
+              ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
+              ?.andThen(binding?.linkFacebook?.fadeIn(200L))
+              ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
+    }
+    setOnClickListener(binding?.next, binding?.linkFacebook)
+    setSetSelectedFacebookChannels(channels)
+  }
+
+  private fun setSetSelectedFacebookChannels(list: ArrayList<ChannelModel>) {
+    val selectedItems = list.filter { it.isFacebookPage() }.map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
+    facebookChannelsAdapter = binding?.facebookChannels?.setGridRecyclerViewAdapter(baseActivity, selectedItems.size, selectedItems)
+    facebookChannelsAdapter?.notifyDataSetChanged()
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.next -> {
+        when {
+          channels.haveFacebookShop() -> {
+            gotoFacebookShop()
+          }
+          channels.haveTwitterChannels() -> {
+            gotoTwitterDetails()
+          }
+          channels.haveWhatsAppChannels() -> {
+            gotoWhatsAppCallDetails()
+          }
+          else -> {
+            gotoBusinessApiCallDetails()
+          }
         }
+      }
+      binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
     }
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        registerFacebookLoginCallback(this, callbackManager)
-        binding?.facebookChannels?.post {
-            (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
-                    ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
-                    ?.andThen(binding?.linkFacebook?.fadeIn(200L))
-                    ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
-        }
-        setOnClickListener(binding?.next, binding?.linkFacebook)
-        setSetSelectedFacebookChannels(channels)
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    callbackManager.onActivityResult(requestCode, resultCode, data)
+  }
+
+  override fun onFacebookLoginSuccess(result: LoginResult?) {
+    showShortToast(result?.toString())
+    val accessToken = result?.accessToken ?: return
+    PreferencesUtils.instance.saveFacebookUserToken(accessToken.token)
+    PreferencesUtils.instance.saveFacebookUserId(accessToken.userId)
+    FacebookGraphManager.requestUserPages(accessToken, this)
+    FacebookGraphManager.requestUserPublicDetails(accessToken, accessToken.userId, this)
+  }
+
+  override fun onFacebookLoginCancel() {
+    showShortToast("Canceled")
+  }
+
+  override fun onFacebookLoginError(error: FacebookException?) {
+    showShortToast(error?.localizedMessage)
+  }
+
+  override fun onCompleted(type: FacebookGraphRequestType, facebookGraphResponse: BaseFacebookGraphResponse?) {
+    when (type) {
+      USER_PAGES -> onFacebookPagesFetched(facebookGraphResponse as? FacebookGraphUserPagesResponse)
+      USER_DETAILS -> onFacebookDetailsFetched(facebookGraphResponse as? FacebookGraphUserDetailsResponse)
     }
+  }
 
-    private fun setSetSelectedFacebookChannels(list: ArrayList<ChannelModel>) {
-        val selectedItems = list.filter { it.isFacebookPage() }.map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
-        facebookChannelsAdapter = binding?.facebookChannels?.setGridRecyclerViewAdapter(baseActivity, selectedItems.size, selectedItems)
-        facebookChannelsAdapter?.notifyDataSetChanged()
-    }
+  private fun onFacebookDetailsFetched(response: FacebookGraphUserDetailsResponse?) {
+    channelAccessToken.userAccountName = response?.name
+    gotoPageConnectedScreen()
+  }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v) {
-            binding?.next -> {
-                when {
-                    channels.haveFacebookShop() -> {
-                        gotoFacebookShop()
-                    }
-                    channels.haveTwitterChannels() -> {
-                        gotoTwitterDetails()
-                    }
-                    channels.haveWhatsAppChannels() -> {
-                        gotoWhatsAppCallDetails()
-                    }
-                    else -> {
-                        gotoBusinessApiCallDetails()
-                    }
-                }
-            }
-            binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list))
-        }
-    }
+  private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
+    val pages = response?.data ?: return
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-    }
+    if (pages.size > 1) return showShortToast("Select only one page")
 
-    override fun onFacebookLoginSuccess(result: LoginResult?) {
-        showShortToast(result?.toString())
-        val accessToken = result?.accessToken ?: return
-        PreferencesUtils.instance.saveFacebookUserToken(accessToken.token)
-        PreferencesUtils.instance.saveFacebookUserId(accessToken.userId)
-        FacebookGraphManager.requestUserAccount(accessToken, this)
-    }
+    val page = pages.firstOrNull() ?: return
+    page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
 
-    override fun onFacebookLoginCancel() {
-        showShortToast("cancel")
-    }
+    channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
+    channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
+    gotoPageConnectedScreen()
+  }
 
-    override fun onFacebookLoginError(error: FacebookException?) {
-        showShortToast(error?.localizedMessage)
-    }
+  private fun gotoPageConnectedScreen() {
+    if (channelAccessToken.userAccountId == null) return
+    if (channelAccessToken.userAccessTokenKey == null) return
+    if (channelAccessToken.userAccountName == null) return
 
-    override fun onCompleted(type: FacebookGraphRequestType, facebookGraphMeAccountResponse: FacebookGraphMeAccountResponse?) {
-        if (type != USER_ACCOUNT) return
-        val pages = facebookGraphMeAccountResponse?.data ?: return
-
-        if (pages.size > 1) return showShortToast("Select only one page")
-
-        val page = pages.firstOrNull() ?: return
-        page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
-        showShortToast(page.name)
-
-        AccessToken.getCurrentAccessToken().token
-        AccessToken.getCurrentAccessToken().userId
-
-        viewModel?.getUrlStatusCode(page.getShopUrl())?.observe(this, Observer {
-            showShortToast(it.toString())
-        })
-    }
+    // TODO Goto Next Screen
+  }
 }

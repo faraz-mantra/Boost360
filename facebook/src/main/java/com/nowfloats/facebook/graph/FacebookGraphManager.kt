@@ -6,37 +6,54 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.nowfloats.facebook.constants.FacebookGraphPath
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
-import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_ACCOUNT
-import com.nowfloats.facebook.models.FacebookGraphMeAccountErrorModel
-import com.nowfloats.facebook.models.FacebookGraphMeAccountResponse
+import com.nowfloats.facebook.models.BaseFacebookGraphResponse
+import com.nowfloats.facebook.models.userDetails.FacebookGraphUserDetailsResponse
+import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesErrorModel
+import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesResponse
 
 object FacebookGraphManager {
 
-  enum class ProfilePictureType{
+  enum class ProfilePictureType {
     Small, Normal, Large, Square
   }
 
   interface GraphRequestUserAccountCallback {
     fun onCompleted(type: FacebookGraphRequestType,
-                    facebookGraphMeAccountResponse: FacebookGraphMeAccountResponse?)
+                    facebookGraphResponse: BaseFacebookGraphResponse?)
   }
 
   fun getPageProfilePictureUrl(pageId: String, type: ProfilePictureType = ProfilePictureType.Square): String {
     return "https://graph.facebook.com/v6.0/$pageId/picture?type=${type.name.toLowerCase()}"
   }
 
-  fun requestUserAccount(accessToken: AccessToken?, callback: GraphRequestUserAccountCallback) {
+  fun requestUserPages(accessToken: AccessToken?, callback: GraphRequestUserAccountCallback) {
     val request = GraphRequest.newGraphPathRequest(accessToken,
-            FacebookGraphPath.USER_ACCOUNT) { graphResponse ->
+            FacebookGraphPath.USER_PAGES) { graphResponse ->
 
       val response = try {
-        Gson().fromJson(graphResponse.rawResponse, FacebookGraphMeAccountResponse::class.java)
+        Gson().fromJson(graphResponse.rawResponse, FacebookGraphUserPagesResponse::class.java)
       } catch (e: JsonSyntaxException) {
-        val error = FacebookGraphMeAccountErrorModel(error = e.localizedMessage)
-        FacebookGraphMeAccountResponse(error = error)
+        val error = FacebookGraphUserPagesErrorModel(error = e.localizedMessage)
+        FacebookGraphUserPagesResponse(error = error)
       }
-      callback.onCompleted(USER_ACCOUNT, response)
+      callback.onCompleted(FacebookGraphRequestType.USER_PAGES, response)
     }
     request.executeAsync()
+  }
+
+  fun requestUserPublicDetails(accessToken: AccessToken?, userId: String, callback: GraphRequestUserAccountCallback) {
+    val request = GraphRequest.newGraphPathRequest(accessToken, userId) { graphResponse ->
+      val response = try {
+        Gson().fromJson(graphResponse.rawResponse, FacebookGraphUserDetailsResponse::class.java)
+      } catch (e: JsonSyntaxException) {
+        FacebookGraphUserDetailsResponse(error = e.localizedMessage)
+      }
+      callback.onCompleted(FacebookGraphRequestType.USER_DETAILS, response)
+    }
+    request.executeAsync()
+  }
+
+  fun sdasd() {
+
   }
 }

@@ -1,5 +1,6 @@
 package com.nowfloats.facebook.constants
 
 enum class FacebookGraphRequestType {
-  USER_ACCOUNT
+  USER_PAGES,
+  USER_DETAILS,
 }

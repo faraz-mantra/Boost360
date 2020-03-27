@@ -1,4 +1,4 @@
-package com.nowfloats.facebook.models
+package com.nowfloats.facebook.models.userPages
 
 data class CursorsModel(
     val after: String? = null,
