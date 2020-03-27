@@ -5,6 +5,7 @@ import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.twitter.TwitterConfigHelper
 import com.onboarding.nowfloats.rest.ApiClient
+import com.onboarding.nowfloats.rest.EndPoints
 
 open class BaseBoardingApplication : BaseApplication() {
 
@@ -22,7 +23,7 @@ open class BaseBoardingApplication : BaseApplication() {
         @JvmStatic
         public fun initModule(application: MultiDexApplication){
             PreferencesUtils.initSharedPreferences(application)
-            ApiClient.shared.init("http://www.mocky.io/")
+            ApiClient.shared.init(EndPoints.BASE_URL)
             TwitterConfigHelper.debug(true)
             TwitterConfigHelper.initialize(application)
         }
