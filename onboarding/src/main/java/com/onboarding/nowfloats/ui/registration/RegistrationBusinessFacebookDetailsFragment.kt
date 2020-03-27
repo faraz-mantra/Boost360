@@ -107,6 +107,7 @@ class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<Fra
         if (pages.size > 1) return showShortToast("Select only one page")
 
         val page = pages.firstOrNull() ?: return
+        page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
         showShortToast(page.name)
     }
 }

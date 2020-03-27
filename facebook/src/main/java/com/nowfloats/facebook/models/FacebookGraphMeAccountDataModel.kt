@@ -6,5 +6,6 @@ data class FacebookGraphMeAccountDataModel(
     val category_list: ArrayList<CategoryModel> = ArrayList(),
     val id: String? = null,
     val name: String? = null,
-    val tasks: ArrayList<String> = ArrayList()
+    val tasks: ArrayList<String> = ArrayList(),
+    var profilePicture: String? = null
 )

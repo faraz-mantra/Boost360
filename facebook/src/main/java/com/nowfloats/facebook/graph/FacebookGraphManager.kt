@@ -12,9 +12,17 @@ import com.nowfloats.facebook.models.FacebookGraphMeAccountResponse
 
 object FacebookGraphManager {
 
+  enum class ProfilePictureType{
+    Small, Normal, Large, Square
+  }
+
   interface GraphRequestUserAccountCallback {
     fun onCompleted(type: FacebookGraphRequestType,
                     facebookGraphMeAccountResponse: FacebookGraphMeAccountResponse?)
+  }
+
+  fun getPageProfilePictureUrl(pageId: String, type: ProfilePictureType = ProfilePictureType.Square): String {
+    return "https://graph.facebook.com/v6.0/$pageId/picture?type=${type.name.toLowerCase()}"
   }
 
   fun requestUserAccount(accessToken: AccessToken?, callback: GraphRequestUserAccountCallback) {
