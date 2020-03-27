@@ -11,10 +11,11 @@ import com.facebook.login.LoginResult
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
-import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_ACCOUNT
+import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_PAGES
 import com.nowfloats.facebook.constants.FacebookPermissions
 import com.nowfloats.facebook.graph.FacebookGraphManager
-import com.nowfloats.facebook.models.FacebookGraphMeAccountResponse
+import com.nowfloats.facebook.models.BaseFacebookGraphResponse
+import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesResponse
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookShopBinding
 import com.onboarding.nowfloats.extensions.fadeIn
@@ -23,6 +24,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.haveTwitterChannels
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isFacebookShop
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding>(),
@@ -30,6 +32,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
     private val callbackManager = CallbackManager.Factory.create()
     private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
+    private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookshop)
 
     companion object {
         @JvmStatic
@@ -75,7 +78,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
                     }
                 }
             }
-            binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list))
+            binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
         }
     }
 
@@ -89,7 +92,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         val accessToken = result?.accessToken ?: return
         PreferencesUtils.instance.saveFacebookUserToken(accessToken.token)
         PreferencesUtils.instance.saveFacebookUserId(accessToken.userId)
-        FacebookGraphManager.requestUserAccount(accessToken, this)
+        FacebookGraphManager.requestUserPages(accessToken, this)
     }
 
     override fun onFacebookLoginCancel() {
@@ -100,21 +103,16 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         showShortToast(error?.localizedMessage)
     }
 
-    override fun onCompleted(type: FacebookGraphRequestType, facebookGraphMeAccountResponse: FacebookGraphMeAccountResponse?) {
-        if (type != USER_ACCOUNT) return
-        val pages = facebookGraphMeAccountResponse?.data ?: return
+    override fun onCompleted(type: FacebookGraphRequestType, facebookGraphResponse: BaseFacebookGraphResponse?) {
+        val graphUserPagesResponse = facebookGraphResponse as? FacebookGraphUserPagesResponse
+        val pages = graphUserPagesResponse?.data ?: return
 
         if (pages.size > 1) return showShortToast("Select only one page")
 
         val page = pages.firstOrNull() ?: return
         page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
-        showShortToast(page.name)
 
-        AccessToken.getCurrentAccessToken().token
-        AccessToken.getCurrentAccessToken().userId
-
-        viewModel?.getUrlStatusCode(page.getShopUrl())?.observe(this, Observer {
-            showShortToast(it.toString())
-        })
+        channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
+        channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
     }
 }

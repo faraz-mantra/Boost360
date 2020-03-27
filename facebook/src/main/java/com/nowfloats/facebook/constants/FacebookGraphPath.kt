@@ -1,5 +1,5 @@
 package com.nowfloats.facebook.constants
 
 object FacebookGraphPath {
-  const val USER_ACCOUNT = "me/accounts"
+  const val USER_PAGES = "me/accounts"
 }

@@ -11,6 +11,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isTwitterChannel
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessTwitterDetailsBinding
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
@@ -19,6 +20,8 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton
 
 class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(),
   TwitterLoginHelper {
+
+  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter)
 
   private var twitterChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var twitterButton: TwitterLoginButton? = null
@@ -75,9 +78,12 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   }
 
   override fun onTwitterLoginSuccess(result: Result<TwitterSession>?) {
-    showShortToast(result?.data?.authToken?.token)
-    showShortToast(result?.data?.userName)
-    showShortToast(result?.data?.id?.toString())
+    if (result == null) return
+    channelAccessToken.userAccountId = result.data?.id?.toString()
+    channelAccessToken.userAccessTokenKey = result.data?.authToken?.token
+    channelAccessToken.userAccountName = result.data?.userName
+
+    gotoWhatsAppCallDetails()
   }
 
   override fun onTwitterLoginFailure(exception: TwitterException?) {

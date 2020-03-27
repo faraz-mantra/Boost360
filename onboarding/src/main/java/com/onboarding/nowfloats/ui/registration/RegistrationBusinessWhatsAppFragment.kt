@@ -12,10 +12,12 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWhatsappBinding
+import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
 
+    private var whatsAppData = ChannelActionData()
     private var whatsAppAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
 
     companion object {
@@ -47,9 +49,12 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
             binding?.number?.drawableEnd = takeIf { it1.length == 10 }?.let {
                 resources.getDrawable(baseActivity, R.drawable.ic_valid)
             }
-            binding?.confirmBtn?.alpha = takeIf { it1.length == 10 }?.let { 1F } ?: 0.3F
+            binding?.confirmBtn?.alpha = takeIf { it1.length == 10 }?.let { 1f } ?: 0.3f
             binding?.skip?.text =
                 resources.getString(takeIf { it1.length == 10 }?.let { R.string.skip } ?: R.string.i_don_t_have_one_will_do_later)
+        }
+        if (binding?.confirmBtn?.alpha == 1f) {
+            whatsAppData.active_whatsapp_number = binding?.number?.text?.toString()
         }
     }
 

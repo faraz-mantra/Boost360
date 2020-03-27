@@ -23,7 +23,7 @@ open class BaseBoardingApplication : BaseApplication() {
         @JvmStatic
         public fun initModule(application: MultiDexApplication){
             PreferencesUtils.initSharedPreferences(application)
-            ApiClient.shared.init(EndPoints.BASE_URL)
+            ApiClient.shared.init(EndPoints.NFX_BASE_URL)
             TwitterConfigHelper.debug(true)
             TwitterConfigHelper.initialize(application)
         }

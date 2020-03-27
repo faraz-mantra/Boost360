@@ -7,5 +7,6 @@ enum class FacebookPermissions {
   publish_pages,
   read_insights,
   pages_messaging,
-  catalog_management
+  catalog_management,
+  public_profile
 }

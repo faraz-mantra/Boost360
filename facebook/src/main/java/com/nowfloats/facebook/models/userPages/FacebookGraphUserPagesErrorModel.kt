@@ -1,6 +1,6 @@
-package com.nowfloats.facebook.models
+package com.nowfloats.facebook.models.userPages
 
-data class FacebookGraphMeAccountErrorModel(
+data class FacebookGraphUserPagesErrorModel(
     val error: String? = null,
     val type: String? = null,
     val code: Int? = null,
