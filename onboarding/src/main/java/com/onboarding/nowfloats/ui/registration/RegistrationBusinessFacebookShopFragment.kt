@@ -17,14 +17,12 @@ import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.nowfloats.facebook.models.FacebookGraphMeAccountResponse
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookShopBinding
-import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookDetailsBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.haveTwitterChannels
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isFacebookShop
-import com.onboarding.nowfloats.model.channel.isFacebookChannel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding>(),

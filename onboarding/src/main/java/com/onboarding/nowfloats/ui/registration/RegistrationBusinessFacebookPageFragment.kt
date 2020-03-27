@@ -3,6 +3,8 @@ package com.onboarding.nowfloats.ui.registration
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
+import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
@@ -105,6 +107,14 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
         if (pages.size > 1) return showShortToast("Select only one page")
 
         val page = pages.firstOrNull() ?: return
+        page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
         showShortToast(page.name)
+
+        AccessToken.getCurrentAccessToken().token
+        AccessToken.getCurrentAccessToken().userId
+
+        viewModel?.getUrlStatusCode(page.getShopUrl())?.observe(this, Observer {
+            showShortToast(it.toString())
+        })
     }
 }

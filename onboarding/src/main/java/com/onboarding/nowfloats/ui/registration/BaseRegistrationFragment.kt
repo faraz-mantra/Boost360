@@ -18,7 +18,6 @@ import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.registration.RegistrationViewModel
-import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.ui.startFragmentActivity
 
 open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<binding, RegistrationViewModel>() {
