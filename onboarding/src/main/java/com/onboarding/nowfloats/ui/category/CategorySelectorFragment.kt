@@ -8,26 +8,25 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
-import com.onboarding.nowfloats.model.RequestFloatsModel
-import com.onboarding.nowfloats.model.category.CategoryModel
-import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentCategorySelectorBinding
+import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
-import com.onboarding.nowfloats.rest.response.category.CategoryListResponse
+import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.ui.channel.ChannelPickerActivity
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 
 class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
-    private var baseAdapter: AppBaseRecyclerViewAdapter<CategoryModel>? = null
-    private var categoryList = ArrayList<CategoryModel>()
-    private var category: CategoryModel? = null
+    private var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>? = null
+    private var categoryList = ArrayList<CategoryDataModel>()
+    private var category: CategoryDataModel? = null
 
     companion object {
         @JvmStatic
@@ -55,13 +54,13 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
         if (response.error != null) {
             showLongToast(response.error?.localizedMessage); return
         }
-        val apiResponse = response as? CategoryListResponse ?: return
+        val apiResponse = response as? ResponseDataCategory ?: return
         categoryList.clear()
-        categoryList.addAll(apiResponse.data)
+        apiResponse.data?.let { categoryList.addAll(it) }
         setAdapter(categoryList)
     }
 
-    private fun setAdapter(list: ArrayList<CategoryModel>) {
+    private fun setAdapter(list: ArrayList<CategoryDataModel>) {
         baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
         val gridLayoutManager = GridLayoutManager(baseActivity, 2)
         gridLayoutManager.spanSizeLookup = object : SpanSizeLookup() {
@@ -74,18 +73,15 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
         }
         binding?.recyclerView?.layoutManager = gridLayoutManager
         binding?.recyclerView?.adapter = baseAdapter
-        if (this.categoryList.size > 0 && category == null) {
-//            category = this.categoryList[0]
-        }
         baseAdapter?.runLayoutAnimation(binding?.recyclerView, R.anim.grid_layout_animation_from_bottom)
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when (actionType) {
             RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
-                category = item as? CategoryModel
+                category = item as? CategoryDataModel
                 for (listItem in categoryList) {
-                    (listItem as? CategoryModel)?.let {
+                    (listItem as? CategoryDataModel)?.let {
                         it.isSelected = (it == item)
                     }
                 }
@@ -105,10 +101,7 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
 
     private fun gotoChannelPicker() {
         val bundle = Bundle()
-        bundle.putParcelable(
-            IntentConstant.REQUEST_FLOATS_INTENT.name,
-            RequestFloatsModel(category)
-        )
+        bundle.putParcelable(IntentConstant.CATEGORY_INTENT.name, category)
         navigator?.startActivity(ChannelPickerActivity::class.java, bundle)
     }
 }

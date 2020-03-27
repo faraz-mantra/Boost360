@@ -13,7 +13,7 @@
     <string name="boost_features_mentioned_above">Enjoy all Boost features mentioned above</string>
     <string name="free_forever">Free Forever</string>
     <string name="doctors_amp_clinic_business"><![CDATA[for your Doctors & Clinic Business]]></string>
-    <string name="recommended_on_5_channels">Recommended on 5 channels</string>
+    <string name="recommended_on">Recommended on</string>
     <string name="select_relevant_channels_or_remove_unwanted_channels">Please select relevant channels or remove unwanted channels to adjust your content’s reach.</string>
     <string name="done">DONE</string>
 
@@ -96,5 +96,10 @@
   <string name="logout">Logout</string>
   <string name="ok">OK</string>
   <string name="press_again_exit">Press again to exit!</string>
+    <string name="facebook_page_connect_later_Skip">If you don’t have a Facebook Page, or if you want to connect it later; please tap ‘Skip’</string>
+    <string name="synn_facebook_page">Yes, Sync my Facebook Page</string>
+    <string name="shop_section_on_your_fb_page">Do you have shop section on your Fb page?</string>
+    <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later; please tap ‘Skip’.</string>
+    <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
 
 </resources>

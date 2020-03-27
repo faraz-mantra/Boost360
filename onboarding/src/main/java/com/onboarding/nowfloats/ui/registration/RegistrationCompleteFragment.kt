@@ -11,12 +11,12 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
+import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.R
-import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
@@ -55,7 +55,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     }
 
     private fun setBusinessName() {
-        var title = requestFloatsModel?.category?.title ?: return
+        var title = requestFloatsModel?.categoryDataModel?.category_Name ?: return
         title = title.replace('\n', ' ')
         val regular = getFont(R.font.regular) ?: return
         val semiBold = getFont(R.font.semi_bold) ?: return

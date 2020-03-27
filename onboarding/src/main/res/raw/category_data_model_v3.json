@@ -1,0 +1,276 @@
+{
+  "data": [
+    {
+      "category_key": "SPA",
+      "category_Name": "Spas\n& Salons",
+      "icon": "/icons/spa.svg",
+      "channels": [
+        "G_SEARCH",
+        "G_MAPS",
+        "FB_PAGE",
+        "FB_SHOP",
+        "WAB",
+        "T_FEED"
+      ],
+      "sections": [
+        {
+          "title": "Digital appointments & Enquries",
+          "desc": "",
+          "icon": "/icons/digital_appointment.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Customers can find, book & even pay for appointments online",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Two way appointment reminders",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Enable customers to their submit service enquiry online",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Reply to customer enquries instantly",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Manage unlimited enquries & appointments",
+              "desc": "detailed desc of the above point"
+            }
+          ]
+        },
+        {
+          "title": "Secure Digital Payments",
+          "desc": "",
+          "icon": "/icons/digital_payment.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Ready to use Payment Gateway",
+              "desc": "nowfloats branded, integrated with appointment for services"
+            },
+            {
+              "title": "Secure PCI/DSS compliant payment gateway",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Receive money in your bank account in 10 working days",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Zero setup fees",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Support all payment modes",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Zero Annual Maintianance fees",
+              "desc": "detailed description of the above point"
+            }
+          ]
+        },
+        {
+          "title": "Manage your latest offers, services and all your digital content",
+          "desc": "",
+          "icon": "/icons/digital_content.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Create & Manage all your digital content on the go",
+              "desc": "nowfloats branded, integrated with appointment for services"
+            },
+            {
+              "title": "Unlimited Images",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Upto 10 services of your business",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Upto 50 latest updates, offers or blogs",
+              "desc": "detailed description of the above point"
+            }
+          ]
+        },
+        {
+          "title": "Ria - Your digital assistant",
+          "desc": "",
+          "icon": "/icons/digital_assistant_ria.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Suggestions on digital growth strategies",
+              "desc": "nowfloats branded, integrated with appointment for services"
+            },
+            {
+              "title": "Regular tips on content for better digital discovery",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Weekly performane reporting",
+              "desc": "To help mitigate no shows and cancellations"
+            }
+          ]
+        },
+        {
+          "title": "Data Security & Privacy",
+          "desc": "",
+          "icon": "/icons/digital_security.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Powered by secure cloud native services",
+              "desc": "nowfloats branded, integrated with appointment for services"
+            },
+            {
+              "title": "State of the art encryption technology",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "No public IP/port exposed",
+              "desc": "To help mitigate no shows and cancellations"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category_key": "HEALTHCARE",
+      "category_Name": "Doctors\n& Clinics",
+      "icon": "/icons/healthcare.svg",
+      "channels": [
+        "G_SEARCH",
+        "G_MAPS",
+        "FB_PAGE",
+        "WAB"
+      ],
+      "sections": [
+        {
+          "title": "Digital appointments & Enquiries",
+          "desc": "",
+          "icon": "/icons/digital_appointment.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Patients can find, book & even pay for appointments online",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Two way appointment reminders",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Enable patients to their submit service enquiry online",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Reply to patients enquries instantly",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Manage unlimited enquries & appointments",
+              "desc": "detailed description of the above point"
+            }
+          ]
+        },
+        {
+          "title": "Data compliance & privacy",
+          "desc": "",
+          "icon": "/icons/digital_compliance.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "HIPPA compliant data centers",
+              "desc": "some text explaining HIPPA"
+            },
+            {
+              "title": "State of the art encryption technology",
+              "desc": "To help mitigate no shows and cancellations"
+            }
+          ]
+        },
+        {
+          "title": "Secure Digital Payments",
+          "desc": "PCI/DSS compliant payment gateway\nAbsolutely Free Setup\nAll payment modes along with UPI, PayLater, EMI etc\nMinimal fee of 2% + ₹15 on each transaction\nZero Annual Maintainace Fee\nNo minimum commitment\nReceive money in your bank account in 10 working days",
+          "icon": "/icons/digital_payment.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Ready to use Payment Gateway",
+              "desc": "nowfloats branded, integrated with appointment for services"
+            },
+            {
+              "title": "Secure PCI/DSS compliant payment gateway",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Receive money in your bank account in 10 working days",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Zero setup fees",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Support all payment modes",
+              "desc": "detailed description of the above point"
+            },
+            {
+              "title": "Zero Annual Maintianance fees",
+              "desc": "detailed description of the above point"
+            }
+          ]
+        },
+        {
+          "title": "Manage your latest health tips, service updates and all other digital content",
+          "desc": "",
+          "icon": "/icons/digital_content.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Create & Manage all your digital content on the go",
+              "desc": "nowfloats branded, integrated with appointment for services"
+            },
+            {
+              "title": "Unlimited Images",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Upto 10 services/treatments offered by you",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Upto 50 latest updates, offers or blogs",
+              "desc": "detailed description of the above point"
+            }
+          ]
+        },
+        {
+          "title": "Ria - Your digital assistant",
+          "desc": "",
+          "icon": "/icons/digital_assistant_ria.svg",
+          "boost_widget_key": "",
+          "details": [
+            {
+              "title": "Suggestions on digital growth strategies",
+              "desc": "nowfloats branded, integrated with appointment for services"
+            },
+            {
+              "title": "Regular tips on content for better digital discovery",
+              "desc": "To help mitigate no shows and cancellations"
+            },
+            {
+              "title": "Weekly performane reporting",
+              "desc": "To help mitigate no shows and cancellations"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

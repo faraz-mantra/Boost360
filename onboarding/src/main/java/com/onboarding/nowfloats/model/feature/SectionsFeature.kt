@@ -1,0 +1,78 @@
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.os.Parcel
+import android.os.Parcelable
+import androidx.core.content.res.ResourcesCompat
+import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.RecyclerViewItemType
+import com.onboarding.nowfloats.model.feature.FeatureTypeNew
+import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
+
+data class SectionsFeature(
+        val title: String? = null,
+        val desc: String? = null,
+        val icon: String? = null,
+        val boost_widget_boost_widget_key: String? = null,
+        val details: ArrayList<DetailsFeature>? = null
+) : AppBaseRecyclerViewItem, Parcelable {
+
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.createTypedArrayList(DetailsFeature.CREATOR))
+
+    override fun getViewType(): Int {
+        return RecyclerViewItemType.FEATURE_ITEM.getLayout()
+    }
+
+    fun getDrawable(context: Context?): Drawable? {
+        if (context == null) return null
+        return when (icon?.let { FeatureTypeNew.from(it) }) {
+            FeatureTypeNew.DIGITAL_CONTENT -> ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_documentation_n,
+                    context.theme
+            )
+            FeatureTypeNew.DIGITAL_PAYMENT -> ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_rupee_n,
+                    context.theme
+            )
+            FeatureTypeNew.DIGITAL_SECURITY -> ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_security_n,
+                    context.theme
+            )
+            FeatureTypeNew.DIGITAL_ASSISTANT -> ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_review_support_n,
+                    context.theme
+            )
+            else -> null
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(title)
+        parcel.writeString(desc)
+        parcel.writeString(icon)
+        parcel.writeString(boost_widget_boost_widget_key)
+        parcel.writeTypedList(details)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<SectionsFeature> {
+        override fun createFromParcel(parcel: Parcel): SectionsFeature {
+            return SectionsFeature(parcel)
+        }
+
+        override fun newArray(size: Int): Array<SectionsFeature?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

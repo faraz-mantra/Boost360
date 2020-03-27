@@ -1,6 +1,6 @@
 package com.onboarding.nowfloats.holders.features
 
-import com.onboarding.nowfloats.model.feature.FeatureDetailsModel
+import DetailsFeature
 import com.onboarding.nowfloats.databinding.ItemFeatureDetailsBottomSheetBinding
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
@@ -8,16 +8,16 @@ import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 class FeatureDetailsRecyclerViewHolder(binding: ItemFeatureDetailsBottomSheetBinding) :
         AppBaseRecyclerViewHolder<ItemFeatureDetailsBottomSheetBinding>(binding) {
 
-  var model: FeatureDetailsModel? = null
+    var model: DetailsFeature? = null
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    model = item as? FeatureDetailsModel
+      model = item as? DetailsFeature
     setViews(model)
   }
 
-  private fun setViews(model: FeatureDetailsModel?) {
+    private fun setViews(model: DetailsFeature?) {
     binding.title.text = model?.title
-    binding.desc.text = model?.description
+        binding.desc.text = model?.desc
   }
 }
