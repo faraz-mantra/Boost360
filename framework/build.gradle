@@ -84,4 +84,7 @@ dependencies {
 
     // Multi Dex
     api "com.android.support:multidex:1.0.3"
+
+    // lottie animation
+    api "com.airbnb.android:lottie:3.3.1"
 }

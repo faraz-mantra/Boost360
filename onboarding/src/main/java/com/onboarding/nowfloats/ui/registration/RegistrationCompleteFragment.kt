@@ -45,12 +45,25 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         setBusinessName()
 
         binding?.profileView?.post {
-            binding?.profileView?.fadeIn()?.andThen(binding?.congratsText?.fadeIn(200L))
-                ?.andThen(binding?.businessText?.fadeIn(100L))?.andThen(binding?.tagImage?.fadeIn(300L))
-                ?.andThen(binding?.cardView?.fadeIn(300L))?.andThen(binding?.businessName?.fadeIn(100L))
-                ?.andThen(binding?.settingUpChannels?.fadeIn(100L))?.andThen(binding?.selectedChannels?.fadeIn(100L))
-                ?.andThen(binding?.desc?.fadeIn(100L))?.andThen(binding?.done?.fadeIn(200L))
-                ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+            binding?.profileView?.fadeIn()?.andThen(binding?.congratsText?.fadeIn(100L))
+                    ?.andThen(binding?.businessText?.fadeIn(100L))?.andThen(binding?.tagImage?.fadeIn(200L))
+                    ?.andThen(binding?.cardView?.fadeIn(200L))?.andThen(binding?.businessName?.fadeIn(100L))
+                    ?.andThen(binding?.settingUpChannels?.fadeIn(100L))?.andThen(binding?.selectedChannels?.fadeIn(100L))
+                    ?.andThen(binding?.desc?.fadeIn(50L))?.andThen(binding?.done?.fadeIn(50L))
+                    ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { startCheckAnimation() }?.subscribe()
+        }
+    }
+
+    private fun initLottieAnimation() {
+        binding?.lottieAnimation?.setAnimation(R.raw.lottie_anim_congratulation)
+        binding?.lottieAnimation?.repeatCount = 2
+        startCheckAnimation()
+    }
+
+    private fun startCheckAnimation() {
+        binding?.lottieAnimation?.let {
+            if (it.isAnimating) it.pauseAnimation()
+            else it.playAnimation()
         }
     }
 
