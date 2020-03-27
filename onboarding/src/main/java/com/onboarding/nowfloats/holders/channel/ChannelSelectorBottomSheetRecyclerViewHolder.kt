@@ -5,14 +5,10 @@ import com.framework.extensions.gone
 import com.framework.extensions.underlineText
 import com.framework.extensions.visible
 import com.framework.utils.ConversionUtils
-import com.onboarding.nowfloats.constant.ChannelPriority
-import com.onboarding.nowfloats.constant.RecyclerViewActionType
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.getDrawable
-import com.onboarding.nowfloats.model.channel.getName
-import com.onboarding.nowfloats.model.channel.getPriority
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.databinding.ItemChannelBottomSheetBinding
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
@@ -71,7 +67,7 @@ class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChan
             getColor(R.color.aliceblue)?.let { binding.card.setCardBackgroundColor(it) }
             binding.card.cardElevation = 0F
             binding.check.setImageResource(takeIf { adapterPosition == 0 }?.let { R.drawable.ic_check_permanent }
-                ?: R.drawable.ic_check)
+                    ?: R.drawable.ic_check_blue)
         } else {
             getColor(R.color.white)?.let { binding.card.setCardBackgroundColor(it) }
             binding.card.cardElevation = ConversionUtils.dp2px(2.0f).toFloat()

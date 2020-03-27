@@ -4,16 +4,16 @@ import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
 import com.framework.utils.ConversionUtils
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.IntentConstant
-import com.onboarding.nowfloats.model.RequestFloatsModel
-import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.ActivityChannelPickerBinding
+import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
 class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, ChannelPlanViewModel>(), ChannelSelectorAnimator.OnAnimationCompleteListener, MotionLayout.TransitionListener {
 
-    private var requestFloatsModel: RequestFloatsModel? = null
+    private var categoryDataModel: CategoryDataModel? = null
     private val animations = ChannelSelectorAnimator()
     val fragment: ChannelPickerFragment?
         get() = supportFragmentManager.findFragmentById(R.id.channelPickerFragment) as? ChannelPickerFragment
@@ -36,15 +36,15 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
             animations.listener = this
             animations.startAnimation()
         }
-        requestFloatsModel = intent.extras?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name) as? RequestFloatsModel
-        fragment?.setBundle(requestFloatsModel)
+        categoryDataModel = intent.extras?.getParcelable(IntentConstant.CATEGORY_INTENT.name) as? CategoryDataModel
+        fragment?.setBundle(categoryDataModel)
         setCategoryImage()
         setOnClickListener(binding?.home)
         binding?.motionLayout?.setTransitionListener(this)
     }
 
     private fun setCategoryImage() {
-        binding?.categoryImage?.setImageDrawable(requestFloatsModel?.category?.getImage(this))
+        binding?.categoryImage?.setImageDrawable(categoryDataModel?.getImage(this))
         binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, theme))
     }
 

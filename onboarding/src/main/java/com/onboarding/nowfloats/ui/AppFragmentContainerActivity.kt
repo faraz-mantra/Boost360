@@ -14,9 +14,9 @@ import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.FragmentType
-import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.ui.category.CategorySelectorFragment
 import com.onboarding.nowfloats.ui.channel.ChannelPickerFragment
 import com.onboarding.nowfloats.ui.registration.*
@@ -34,7 +34,8 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
             FragmentType.REGISTRATION_BUSINESS_WEBSITE,
             FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
-            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_DETAILS,
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
             FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ContextCompat.getColor(this, R.color.white_two)
 
             FragmentType.REGISTRATION_BUSINESS_API_CALL -> ContextCompat.getColor(this, R.color.white_four)
@@ -54,7 +55,8 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         return when (type) {
             FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
             FragmentType.REGISTRATION_BUSINESS_WEBSITE,
-            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_DETAILS,
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
             FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
             FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS ->
                 ContextCompat.getColor(this, R.color.dodger_blue_two)
@@ -121,7 +123,8 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
             FragmentType.CHANNEL_PICKER -> ChannelPickerFragment.newInstance()
             FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> RegistrationBusinessContactInfoFragment.newInstance()
             FragmentType.REGISTRATION_BUSINESS_WEBSITE -> RegistrationBusinessWebsiteFragment.newInstance()
-            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_DETAILS -> RegistrationBusinessFacebookDetailsFragment.newInstance()
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> RegistrationBusinessFacebookPageFragment.newInstance()
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> RegistrationBusinessFacebookShopFragment.newInstance()
             FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> RegistrationBusinessTwitterDetailsFragment.newInstance()
             FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> RegistrationBusinessWhatsAppFragment.newInstance()
             FragmentType.REGISTRATION_BUSINESS_API_CALL -> RegistrationBusinessApiFragment.newInstance()
@@ -136,14 +139,13 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         }
     }
 
-    override fun onBackPressed() {
-        when (type) {
-            FragmentType.REGISTRATION_BUSINESS_API_CALL,
-            FragmentType.REGISTRATION_COMPLETE -> showMessageBackPress()
-            else -> super.onBackPressed()
-        }
-
-    }
+//    override fun onBackPressed() {
+//        when (type) {
+//            FragmentType.REGISTRATION_BUSINESS_API_CALL,
+//            FragmentType.REGISTRATION_COMPLETE -> showMessageBackPress()
+//            else -> super.onBackPressed()
+//        }
+//    }
 
     private fun showMessageBackPress() {
 //        if (exitToast?.view?.windowToken != null) {

@@ -3,12 +3,12 @@ package com.onboarding.nowfloats.ui.channel
 import android.view.View
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
-import com.onboarding.nowfloats.extensions.fadeIn
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogChannelBottomSheetNewBinding
+import com.onboarding.nowfloats.extensions.fadeIn
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
@@ -19,7 +19,7 @@ class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNew
     private var adapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
     private var channels = ArrayList<ChannelModel>()
 
-    var onDoneClicked: () -> Unit = { }
+    var onDoneClicked: (channels: ArrayList<ChannelModel>?) -> Unit = { }
 
     override fun getLayout(): Int {
         return R.layout.dialog_channel_bottom_sheet_new
@@ -40,11 +40,14 @@ class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNew
 
     override fun onViewCreated() {
         setOnClickListener(binding?.done)
+        val text = StringBuilder(resources.getString(R.string.recommended_on) + " " + list.size + " " + resources.getString(R.string.channel))
+        if (channels.size > 1 || channels.size == 0) text.append(resources.getString(R.string.more_than_one_add_s))
+        binding?.title?.text = text
         binding?.iconShare?.post {
             binding?.iconShare?.fadeIn()?.andThen(binding?.title?.fadeIn(100L))
-                ?.andThen(binding?.subTitle?.fadeIn(100L))?.doOnComplete {
-                    setChannelAdapter(list)
-                }?.andThen(binding?.done?.fadeIn(300L))?.subscribe()
+                    ?.andThen(binding?.subTitle?.fadeIn(100L))?.doOnComplete {
+                        setChannelAdapter(list)
+                    }?.andThen(binding?.done?.fadeIn(300L))?.subscribe()
         }
     }
 
@@ -62,7 +65,7 @@ class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNew
 
 
     override fun onClick(v: View?) {
-        onDoneClicked()
+        onDoneClicked(list)
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -70,9 +73,14 @@ class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNew
             RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal -> openWhyChannelDialog(item as? ChannelModel)
             RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal -> {
                 if (position != 0) {
-                    list[position].isSelected = !list[position].isSelected
-                    if (position == 1) list[3].isSelected = list[position].isSelected
-                    else if (position == 3) list[1].isSelected = list[position].isSelected
+                    list[position].isSelected = !list[position].isSelected!!
+                    if (list[position].isFacebookPage()) {
+                        val isShop = list.isFbPageOrShop(ChannelType.FB_SHOP)
+                        isShop?.isSelected = !isShop?.isSelected!!
+                    } else if (list[position].isFacebookShop()) {
+                        val isPage = list.isFbPageOrShop(ChannelType.FB_PAGE)
+                        isPage?.isSelected = !isPage?.isSelected!!
+                    }
                     adapter?.notifyDataSetChanged()
                 }
             }

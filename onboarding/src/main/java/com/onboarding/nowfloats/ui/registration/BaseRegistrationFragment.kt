@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding
 import com.framework.base.BaseFragment
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.views.DotProgressBar
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.extensions.addInt
@@ -14,7 +15,7 @@ import com.onboarding.nowfloats.extensions.addParcelable
 import com.onboarding.nowfloats.extensions.getInt
 import com.onboarding.nowfloats.extensions.getParcelable
 import com.onboarding.nowfloats.model.RequestFloatsModel
-import com.onboarding.nowfloats.model.category.CategoryModel
+import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.registration.RegistrationViewModel
 import com.onboarding.nowfloats.R
@@ -27,9 +28,9 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
             return requestFloatsModel?.channels ?: ArrayList()
         }
 
-    protected val category: CategoryModel?
+    protected val categoryDataModel: CategoryDataModel?
         get() {
-            return requestFloatsModel?.category
+            return requestFloatsModel?.categoryDataModel
         }
 
     protected var requestFloatsModel: RequestFloatsModel? = null
@@ -41,7 +42,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
         return when (this) {
             is RegistrationBusinessContactInfoFragment -> R.layout.fragment_registration_business_contact_info
             is RegistrationBusinessWebsiteFragment -> R.layout.fragment_registration_business_website
-            is RegistrationBusinessFacebookDetailsFragment -> R.layout.fragment_registration_business_facebook_details
+            is RegistrationBusinessFacebookPageFragment -> R.layout.fragment_registration_business_facebook_page
+            is RegistrationBusinessFacebookShopFragment -> R.layout.fragment_registration_business_facebook_shop
             is RegistrationBusinessTwitterDetailsFragment -> R.layout.fragment_registration_business_twitter_details
             is RegistrationBusinessWhatsAppFragment -> R.layout.fragment_registration_business_whatsapp
             is RegistrationBusinessApiFragment -> R.layout.fragment_registration_business_api
@@ -80,8 +82,12 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WEBSITE, getBundle())
     }
 
-    protected fun gotoFacebookDetails() {
-        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_DETAILS, getBundle())
+    protected fun gotoFacebookShop() {
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, getBundle())
+    }
+
+    protected fun gotoFacebookPage() {
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
     }
 
     protected fun gotoTwitterDetails() {

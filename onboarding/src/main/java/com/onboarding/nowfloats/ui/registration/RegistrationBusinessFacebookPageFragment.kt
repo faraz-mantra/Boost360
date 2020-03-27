@@ -3,8 +3,8 @@ package com.onboarding.nowfloats.ui.registration
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
-import com.facebook.*
+import com.facebook.CallbackManager
+import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
@@ -14,25 +14,22 @@ import com.nowfloats.facebook.constants.FacebookPermissions
 import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.nowfloats.facebook.models.FacebookGraphMeAccountResponse
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
-import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookDetailsBinding
+import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookPageBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.haveTwitterChannels
-import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
-import com.onboarding.nowfloats.model.channel.isFacebookChannel
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookDetailsBinding>(),
-    FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
+class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding>(),
+        FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
     private val callbackManager = CallbackManager.Factory.create()
     private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
 
     companion object {
         @JvmStatic
-        fun newInstance(bundle: Bundle? = null): RegistrationBusinessFacebookDetailsFragment {
-            val fragment = RegistrationBusinessFacebookDetailsFragment()
+        fun newInstance(bundle: Bundle? = null): RegistrationBusinessFacebookPageFragment {
+            val fragment = RegistrationBusinessFacebookPageFragment()
             fragment.arguments = bundle
             return fragment
         }
@@ -43,16 +40,16 @@ class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<Fra
         registerFacebookLoginCallback(this, callbackManager)
         binding?.facebookChannels?.post {
             (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
-                ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
-                ?.andThen(binding?.linkFacebook?.fadeIn(200L))
-                ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
+                    ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
+                    ?.andThen(binding?.linkFacebook?.fadeIn(200L))
+                    ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
         }
         setOnClickListener(binding?.next, binding?.linkFacebook)
         setSetSelectedFacebookChannels(channels)
     }
 
     private fun setSetSelectedFacebookChannels(list: ArrayList<ChannelModel>) {
-        val selectedItems = list.filter { it.isFacebookChannel() }.map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
+        val selectedItems = list.filter { it.isFacebookPage() }.map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
         facebookChannelsAdapter = binding?.facebookChannels?.setGridRecyclerViewAdapter(baseActivity, selectedItems.size, selectedItems)
         facebookChannelsAdapter?.notifyDataSetChanged()
     }
@@ -62,6 +59,9 @@ class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<Fra
         when (v) {
             binding?.next -> {
                 when {
+                    channels.haveFacebookShop() -> {
+                        gotoFacebookShop()
+                    }
                     channels.haveTwitterChannels() -> {
                         gotoTwitterDetails()
                     }
@@ -105,14 +105,6 @@ class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<Fra
         if (pages.size > 1) return showShortToast("Select only one page")
 
         val page = pages.firstOrNull() ?: return
-        page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
         showShortToast(page.name)
-
-        AccessToken.getCurrentAccessToken().token
-        AccessToken.getCurrentAccessToken().userId
-
-        viewModel?.getUrlStatusCode(page.getShopUrl())?.observe(this, Observer {
-            showShortToast(it.toString())
-        })
     }
 }

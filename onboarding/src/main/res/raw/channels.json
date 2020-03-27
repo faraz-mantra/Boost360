@@ -4,7 +4,7 @@
       "id": "",
       "image": "",
       "priority": "important",
-      "type": "google_search",
+      "type": "g_search",
       "isSelected": true,
       "link": "http://www.google.com"
     },
@@ -19,7 +19,7 @@
       "id": "",
       "image": "",
       "priority": "recommended",
-      "type": "google_maps",
+      "type": "g_maps",
       "link": "http://www.google.com"
     },
     {
@@ -33,14 +33,14 @@
       "id": "",
       "image": "",
       "priority": "learn_more",
-      "type": "whatsapp_business",
+      "type": "wab",
       "link": "http://www.google.com"
     },
     {
       "id": "",
       "image": "",
       "priority": "learn_more",
-      "type": "twitter_profile",
+      "type": "t_feed",
       "link": "http://www.google.com"
     }
   ]

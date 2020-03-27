@@ -4,21 +4,21 @@ import android.view.View
 import com.framework.extensions.invisible
 import com.framework.extensions.setTextColorCompat
 import com.framework.extensions.visible
-import com.onboarding.nowfloats.constant.RecyclerViewActionType
-import com.onboarding.nowfloats.model.category.CategoryModel
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.databinding.ItemCategoryBinding
+import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
 class CategoryRecyclerViewHolder constructor(binding: ItemCategoryBinding) :
         AppBaseRecyclerViewHolder<ItemCategoryBinding>(binding) {
 
-  private var model: CategoryModel? = null
+    private var model: CategoryDataModel? = null
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    model = item as? CategoryModel
+      model = item as? CategoryDataModel
     setViews(model)
   }
 
@@ -53,10 +53,10 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryBinding) :
     }
   }
 
-  private fun setViews(model: CategoryModel?) {
+    private fun setViews(model: CategoryDataModel?) {
     val resources = getResources() ?: return
     val activity = this.activity ?: return
-    binding.name.text = model?.title
+        binding.name.text = model?.category_Name
     val drawable = model?.getImage(activity) ?: return
     binding.image.setImageDrawable(drawable)
     setClickListeners(binding.card)

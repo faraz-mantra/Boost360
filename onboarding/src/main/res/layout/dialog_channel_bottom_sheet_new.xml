@@ -46,7 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/size_4"
-                        android:text="@string/recommended_on_5_channels"
+                        tools:text="@string/recommended_on"
                         android:textColor="@color/dodger_blue_two"
                         app:fontFamily="@font/semi_bold"
                         android:id="@+id/title"

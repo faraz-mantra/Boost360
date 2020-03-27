@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.framework.extensions.getDrawable
-import com.onboarding.nowfloats.constant.ChannelType
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
+import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.factory.ObservableFactory
 import com.onboarding.nowfloats.factory.afterTextChangeEvents
 import com.onboarding.nowfloats.model.channel.*
-import com.onboarding.nowfloats.R
-import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
+import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -75,7 +75,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         val selectedItems = ArrayList(list.filter { it.isGoogleChannel() }.map {
             it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it
         })
-        val googleBusiness = ChannelModel(type = ChannelType.GOOGLE_BUSINESS.name)
+        val googleBusiness = ChannelModel(type = ChannelType.G_BUSINESS.name)
         googleBusiness.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout()
         selectedItems.add(googleBusiness)
 
@@ -99,8 +99,11 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                         it.removeAllViews()
                         binding?.textBtn?.visibility = View.VISIBLE
                         when {
-                            channels.haveFacebookChannels() -> {
-                                gotoFacebookDetails()
+                            channels.haveFacebookPage() -> {
+                                gotoFacebookPage()
+                            }
+                            channels.haveFacebookShop() -> {
+                                gotoFacebookShop()
                             }
                             channels.haveTwitterChannels() -> {
                                 gotoTwitterDetails()
