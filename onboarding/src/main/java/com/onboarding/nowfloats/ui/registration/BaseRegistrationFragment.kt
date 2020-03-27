@@ -16,11 +16,11 @@ import com.onboarding.nowfloats.extensions.getParcelable
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.contactinfo.ContactInfo
+import com.onboarding.nowfloats.model.registration.RegistrationViewModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.ui.startFragmentActivity
 
-open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<binding, ContactInfo>() {
+open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<binding, RegistrationViewModel>() {
 
     protected val channels: ArrayList<ChannelModel>
         get() {
@@ -57,8 +57,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
         }
     }
 
-    override fun getViewModelClass(): Class<ContactInfo> {
-        return ContactInfo::class.java
+    override fun getViewModelClass(): Class<RegistrationViewModel> {
+        return RegistrationViewModel::class.java
     }
 
     override fun onCreateView() {

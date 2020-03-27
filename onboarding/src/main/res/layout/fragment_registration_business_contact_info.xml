@@ -8,7 +8,7 @@
 
         <variable
             name="contactInfo"
-            type="com.onboarding.nowfloats.model.contactinfo.ContactInfo" />
+            type="com.onboarding.nowfloats.model.registration.RegistrationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

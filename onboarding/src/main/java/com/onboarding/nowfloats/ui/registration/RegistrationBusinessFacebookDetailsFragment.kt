@@ -3,26 +3,24 @@ package com.onboarding.nowfloats.ui.registration
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.facebook.CallbackManager
-import com.facebook.FacebookException
-import com.facebook.GraphRequest
+import androidx.lifecycle.Observer
+import com.facebook.*
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
-import com.nowfloats.facebook.constants.FacebookGraphRequestType.*
+import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_ACCOUNT
 import com.nowfloats.facebook.constants.FacebookPermissions
 import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.nowfloats.facebook.models.FacebookGraphMeAccountResponse
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
+import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookDetailsBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.haveTwitterChannels
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isFacebookChannel
-import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookDetailsBinding
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookDetailsBinding>(),
@@ -109,5 +107,12 @@ class RegistrationBusinessFacebookDetailsFragment : BaseRegistrationFragment<Fra
         val page = pages.firstOrNull() ?: return
         page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
         showShortToast(page.name)
+
+        AccessToken.getCurrentAccessToken().token
+        AccessToken.getCurrentAccessToken().userId
+
+        viewModel?.getUrlStatusCode(page.getShopUrl())?.observe(this, Observer {
+            showShortToast(it.toString())
+        })
     }
 }

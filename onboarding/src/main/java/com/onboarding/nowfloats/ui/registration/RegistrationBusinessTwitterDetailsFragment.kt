@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.nowfloats.twitter.TwitterLoginHelper
@@ -63,7 +64,9 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
       binding?.next -> if (channels.haveWhatsAppChannels()) {
         gotoWhatsAppCallDetails()
       } else gotoBusinessApiCallDetails()
-      binding?.linkTwitter -> getTwitterLoginButton()?.performClick()
+      binding?.linkTwitter -> {
+        getTwitterLoginButton()?.performClick()
+      }
     }
   }
 
@@ -72,10 +75,17 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   }
 
   override fun onTwitterLoginSuccess(result: Result<TwitterSession>?) {
+    showShortToast(result?.data?.authToken?.token)
     showShortToast(result?.data?.userName)
+    showShortToast(result?.data?.id?.toString())
   }
 
   override fun onTwitterLoginFailure(exception: TwitterException?) {
     showShortToast(exception?.localizedMessage)
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    getTwitterLoginButton()?.onActivityResult(requestCode, resultCode, data)
   }
 }

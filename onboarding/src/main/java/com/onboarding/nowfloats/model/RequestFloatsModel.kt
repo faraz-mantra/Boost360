@@ -4,18 +4,18 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.onboarding.nowfloats.model.category.CategoryModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.contactinfo.ContactInfo
+import com.onboarding.nowfloats.model.registration.RegistrationViewModel
 
 class RequestFloatsModel(
         var category: CategoryModel? = null,
         var channels: ArrayList<ChannelModel>? = null,
-        var contactInfo: ContactInfo? = null
+        var contactInfo: RegistrationViewModel? = null
 ) : Parcelable {
 
   constructor(source: Parcel) : this(
           source.readParcelable<CategoryModel>(CategoryModel::class.java.classLoader),
           source.createTypedArrayList(ChannelModel.CREATOR),
-          source.readParcelable<ContactInfo>(ContactInfo::class.java.classLoader)
+          source.readParcelable<RegistrationViewModel>(RegistrationViewModel::class.java.classLoader)
   )
 
   override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
