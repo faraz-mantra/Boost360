@@ -5,26 +5,25 @@ import android.os.Bundle
 import android.view.View
 import com.nowfloats.twitter.TwitterLoginHelper
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
+import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessTwitterDetailsBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isTwitterChannel
-import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessTwitterDetailsBinding
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
-import com.twitter.sdk.android.core.identity.TwitterLoginButton
+import com.twitter.sdk.android.core.identity.TwitterAuthClient
 
 class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(),
   TwitterLoginHelper {
 
+  private val twitterAuthClient = TwitterAuthClient()
   private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter)
-
   private var twitterChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
-  private var twitterButton: TwitterLoginButton? = null
 
   companion object {
     @JvmStatic
@@ -37,8 +36,6 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
 
     override fun onCreateView() {
         super.onCreateView()
-        twitterButton = TwitterLoginButton(context)
-        registerTwitterLogin()
         binding?.twitterChannels?.post {
             (binding?.twitterChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
                 ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
@@ -64,17 +61,18 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.next -> if (channels.haveWhatsAppChannels()) {
-        gotoWhatsAppCallDetails()
-      } else gotoBusinessApiCallDetails()
+      binding?.next -> gotoNextScreen()
       binding?.linkTwitter -> {
-        getTwitterLoginButton()?.performClick()
+        twitterAuthClient.cancelAuthorize()
+        loginWithTwitter(baseActivity, twitterAuthClient)
       }
     }
   }
 
-  override fun getTwitterLoginButton(): TwitterLoginButton? {
-    return twitterButton
+  private fun gotoNextScreen() {
+    if (channels.haveWhatsAppChannels()) {
+      gotoWhatsAppCallDetails()
+    } else gotoBusinessApiCallDetails()
   }
 
   override fun onTwitterLoginSuccess(result: Result<TwitterSession>?) {
@@ -83,7 +81,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     channelAccessToken.userAccessTokenKey = result.data?.authToken?.token
     channelAccessToken.userAccountName = result.data?.userName
 
-    gotoWhatsAppCallDetails()
+    gotoNextScreen()
   }
 
   override fun onTwitterLoginFailure(exception: TwitterException?) {
@@ -92,6 +90,6 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    getTwitterLoginButton()?.onActivityResult(requestCode, resultCode, data)
+    twitterAuthClient.onActivityResult(requestCode, resultCode, data)
   }
 }
