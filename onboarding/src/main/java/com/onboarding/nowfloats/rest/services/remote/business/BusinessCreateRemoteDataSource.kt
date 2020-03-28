@@ -11,6 +11,6 @@ import retrofit2.http.Url
 
 interface BusinessCreateRemoteDataSource {
     @POST(EndPoints.POST_CREATE_BUSINESS_URL)
-    fun createBusinessOnboarding(@Url url: String = EndPoints.NFX_BASE_URL_NEW,
+    fun createBusinessOnboarding(@Url url: String = EndPoints.BASE_WITH_FLOATS,
                                  @Body request: BusinessCreateRequest): Observable<Response<BusinessCreateResponse>>
 }

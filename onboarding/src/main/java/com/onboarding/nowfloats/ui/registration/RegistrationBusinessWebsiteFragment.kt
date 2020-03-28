@@ -1,27 +1,30 @@
 package com.onboarding.nowfloats.ui.registration
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import com.framework.extensions.getDrawable
-import com.framework.models.BaseViewModel
+import com.framework.extensions.observeOnce
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
+import com.onboarding.nowfloats.extensions.afterTextChanged
+import com.onboarding.nowfloats.extensions.drawableEnd
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
-import com.onboarding.nowfloats.factory.ObservableFactory
-import com.onboarding.nowfloats.factory.afterTextChangeEvents
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.ChannelType
+import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
-import io.reactivex.disposables.Disposable
-import java.util.concurrent.TimeUnit
+import com.onboarding.nowfloats.viewmodel.domain.BusinessDomainViewModel
 
-class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding, BaseViewModel>() {
+class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding, BusinessDomainViewModel>() {
 
     private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
-    private var subdomainObservable: Disposable? = null
 
     companion object {
         @JvmStatic
@@ -36,39 +39,40 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         super.onCreateView()
         binding?.googleChannels?.post {
             (binding?.googleChannels?.fadeIn(1000L)?.mergeWith(binding?.viewBusiness?.fadeIn()))
-                ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
-                ?.andThen(binding?.subdomain?.fadeIn()?.mergeWith(binding?.inputType?.fadeIn(200L)))
-                ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
+                    ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
+                    ?.andThen(binding?.subdomain?.fadeIn()?.mergeWith(binding?.inputType?.fadeIn(200L)))
+                    ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
         }
         setOnClickListener(binding?.next)
         setSetSelectedGoogleChannels(channels)
         setSubDomain(requestFloatsModel?.contactInfo?.storeName, isInitial = true)
-        addSubdomainObservable()
+        binding?.subdomain?.afterTextChanged { setSubDomain(it) }
     }
 
-    private fun addSubdomainObservable() {
-        subdomainObservable = ObservableFactory.afterTextChangeEvents(binding?.subdomain)
-            ?.debounce(0, TimeUnit.MILLISECONDS)
-            ?.map { it.editable()?.toString() }
-            ?.subscribe { setSubDomain(it) }
-    }
-
-    override fun getObservables(): List<Disposable?> {
-        return listOf(subdomainObservable)
-    }
 
     private fun setSubDomain(storeName: String?, isInitial: Boolean = false) {
-        val subdomain = storeName?.filter { it.isLetterOrDigit() } ?: return
-        val lengthDifference = storeName.length - subdomain.length
-
-        if (subdomain.isNotEmpty()) {
-            resources.getDrawable(baseActivity, R.drawable.ic_valid)
-        }
-
-        if (subdomain != storeName || isInitial) {
+        val subDomain = storeName?.filter { it.isLetterOrDigit() } ?: return
+        val lengthDifference = storeName.length - subDomain.length
+        if (subDomain != storeName || isInitial) {
             val selection = binding?.subdomain?.selectionEnd?.minus(lengthDifference) ?: return
-            binding?.subdomain?.setText(subdomain)
+            binding?.subdomain?.setText(subDomain)
             if (selection > 1) binding?.subdomain?.setSelection(selection)
+        }
+        apiCheckDomain(subDomain)
+    }
+
+    private fun apiCheckDomain(subDomain: String) {
+        if (!TextUtils.isEmpty(subDomain)) {
+            val pref: SharedPreferences = baseActivity.getSharedPreferences("nowfloatsPrefs", 0)
+            val data = BusinessDomainRequest(pref.getString("user_profile_id", "5e7dfd3d5a9ed3000146ca56"), subDomain, requestFloatsModel?.contactInfo?.storeName)
+            viewModel?.checkBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
+                Log.i("jshdbfhj", "" + it)
+                binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
+
+            })
+        } else {
+            showLongToast("Please enter valid domain!")
+            binding?.subdomain?.drawableEnd = null
         }
     }
 
@@ -81,9 +85,9 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         selectedItems.add(googleBusiness)
 
         googleChannelsAdapter = binding?.googleChannels?.setGridRecyclerViewAdapter(
-            baseActivity,
-            selectedItems.size,
-            selectedItems
+                baseActivity,
+                selectedItems.size,
+                selectedItems
         )
         googleChannelsAdapter?.notifyDataSetChanged()
     }
@@ -122,7 +126,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         }
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<BusinessDomainViewModel> {
+        return BusinessDomainViewModel::class.java
     }
 }
