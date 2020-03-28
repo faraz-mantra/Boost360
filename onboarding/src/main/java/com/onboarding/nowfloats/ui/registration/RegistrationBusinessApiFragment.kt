@@ -3,18 +3,21 @@ package com.onboarding.nowfloats.ui.registration
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessApiBinding
+import com.onboarding.nowfloats.model.ProcessApiSyncModel
+import com.onboarding.nowfloats.model.business.BusinessCreateRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
+import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 import java.util.*
 
-class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
+class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding, BusinessCreateViewModel>(), RecyclerItemClickListener {
 
     private var list: ArrayList<ProcessApiSyncModel>? = null
     private var apiProcessAdapter: AppBaseRecyclerViewAdapter<ProcessApiSyncModel>? = null
+    private var businessCreateRequest: BusinessCreateRequest? = null
 
     companion object {
         @JvmStatic
@@ -70,7 +73,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        TODO("Not yet implemented")
     }
 
     override fun onClick(v: View) {
@@ -80,5 +82,9 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                 gotoRegistrationComplete()
             }
         }
+    }
+
+    override fun getViewModelClass(): Class<BusinessCreateViewModel> {
+        return BusinessCreateViewModel::class.java
     }
 }

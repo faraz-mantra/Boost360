@@ -6,11 +6,12 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.framework.extensions.isVisible
-import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactInfoBinding
+import com.onboarding.nowfloats.extensions.fadeIn
+import com.onboarding.nowfloats.model.registration.RegistrationViewModel
 
-class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding>() {
+class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding, RegistrationViewModel>() {
 
     companion object {
         @JvmStatic
@@ -25,9 +26,9 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         super.onCreateView()
         binding?.viewImage?.post {
             (binding?.viewImage?.fadeIn(600L)?.mergeWith(binding?.viewBusiness?.fadeIn()))
-                ?.andThen(binding?.title?.fadeIn(150L)?.mergeWith(binding?.subTitle?.fadeIn(150L)))
-                ?.andThen(binding?.viewForm?.fadeIn())?.andThen(binding?.next?.fadeIn(150L))
-                ?.subscribe()
+                    ?.andThen(binding?.title?.fadeIn(150L)?.mergeWith(binding?.subTitle?.fadeIn(150L)))
+                    ?.andThen(binding?.viewForm?.fadeIn())?.andThen(binding?.next?.fadeIn(150L))
+                    ?.subscribe()
         }
         binding?.contactInfo = viewModel
         setOnClickListener(binding?.next)
@@ -72,5 +73,9 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
                 false
             } else true
         } ?: false
+    }
+
+    override fun getViewModelClass(): Class<RegistrationViewModel> {
+        return RegistrationViewModel::class.java
     }
 }

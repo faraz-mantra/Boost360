@@ -1,28 +1,34 @@
 package com.onboarding.nowfloats.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.framework.CustomTypefaceSpan
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
 import com.onboarding.nowfloats.extensions.fadeIn
+import com.onboarding.nowfloats.extensions.getBitmap
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import java.io.File
 
-class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
+class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding, BaseViewModel>() {
 
     private var selectedChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
+    var isProfileImage: Boolean? = null
 
     companion object {
         @JvmStatic
@@ -51,14 +57,14 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                     ?.andThen(binding?.cardView?.fadeIn(200L))?.andThen(binding?.businessName?.fadeIn(100L))
                     ?.andThen(binding?.settingUpChannels?.fadeIn(100L))?.andThen(binding?.selectedChannels?.fadeIn(100L))
                     ?.andThen(binding?.desc?.fadeIn(50L))?.andThen(binding?.done?.fadeIn(50L))
-                    ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { startCheckAnimation() }?.subscribe()
+                    ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
         }
         setOnClickListener(binding?.profileView, binding?.businessNameInitial)
     }
 
     private fun initLottieAnimation() {
         binding?.lottieAnimation?.setAnimation(R.raw.lottie_anim_congratulation)
-        binding?.lottieAnimation?.repeatCount = 2
+        binding?.lottieAnimation?.repeatCount = 0
         startCheckAnimation()
     }
 
@@ -113,11 +119,12 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         when (v) {
             binding?.menuView -> showMenuLogout(v)
             binding?.profileView -> openImagePicker(true)
-            binding?.businessNameInitial -> openImagePicker(false)
+//            binding?.businessNameInitial -> openImagePicker(false)
         }
     }
 
     private fun openImagePicker(isProfileImage: Boolean) {
+        this.isProfileImage = isProfileImage
         ImagePicker.Builder(baseActivity)
                 .mode(ImagePicker.Mode.CAMERA_AND_GALLERY)
                 .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
@@ -139,5 +146,20 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
             true
         })
         popup.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+            val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
+            if (mPaths.isNotEmpty()) {
+                val imageBitmap = File(mPaths[0]).getBitmap()
+                imageBitmap?.let { binding?.profileImg?.setImageBitmap(it) }
+            }
+        }
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
     }
 }

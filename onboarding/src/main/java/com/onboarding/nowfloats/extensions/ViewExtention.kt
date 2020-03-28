@@ -1,9 +1,13 @@
 package com.onboarding.nowfloats.extensions
 
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.ThumbnailUtils
 import android.text.Editable
 import android.text.TextWatcher
 import com.framework.views.customViews.CustomTextField
+import java.io.File
 
 fun CustomTextField.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -25,4 +29,8 @@ fun getScreenWidth(): Int {
 
 fun getScreenHeight(): Int {
     return Resources.getSystem().displayMetrics.heightPixels
+}
+
+fun File.getBitmap(): Bitmap? {
+    return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 800, 800)
 }

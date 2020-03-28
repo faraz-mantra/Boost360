@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import androidx.databinding.ViewDataBinding
 import com.framework.base.BaseFragment
 import com.framework.exceptions.IllegalFragmentTypeException
+import com.framework.models.BaseViewModel
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
@@ -17,10 +18,9 @@ import com.onboarding.nowfloats.extensions.getParcelable
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.registration.RegistrationViewModel
 import com.onboarding.nowfloats.ui.startFragmentActivity
 
-open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<binding, RegistrationViewModel>() {
+open class BaseRegistrationFragment<binding : ViewDataBinding, ViewModel : BaseViewModel?> : BaseFragment<binding, ViewModel>() {
 
     protected val channels: ArrayList<ChannelModel>
         get() {
@@ -58,9 +58,9 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
         }
     }
 
-    override fun getViewModelClass(): Class<RegistrationViewModel> {
-        return RegistrationViewModel::class.java
-    }
+//    override fun getViewModelClass(): Class<BaseViewModel> {
+//        return BaseViewModel::class.java
+//    }
 
     override fun onCreateView() {
         requestFloatsModel = arguments?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
@@ -73,8 +73,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
 
     fun getDotProgress(): DotProgressBar? {
         return DotProgressBar.Builder().setMargin(0).setAnimationDuration(800)
-            .setDotBackground(R.drawable.ic_dot).setMaxScale(.7f).setMinScale(0.3f)
-            .setNumberOfDots(3).setdotRadius(8).build(baseActivity)
+                .setDotBackground(R.drawable.ic_dot).setMaxScale(.7f).setMinScale(0.3f)
+                .setNumberOfDots(3).setdotRadius(8).build(baseActivity)
     }
 
     protected fun gotoBusinessWebsite() {
@@ -108,8 +108,12 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
     private fun getBundle(): Bundle {
         val bundle = Bundle()
         bundle.addParcelable(IntentConstant.REQUEST_FLOATS_INTENT, requestFloatsModel)
-            .addInt(IntentConstant.TOTAL_PAGES, totalPages)
-            .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
+                .addInt(IntentConstant.TOTAL_PAGES, totalPages)
+                .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
         return bundle
+    }
+
+    override fun getViewModelClass(): Class<ViewModel> {
+        return getViewModelClass()
     }
 }

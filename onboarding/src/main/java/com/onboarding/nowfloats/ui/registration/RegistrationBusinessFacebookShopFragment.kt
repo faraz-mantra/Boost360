@@ -3,15 +3,14 @@ package com.onboarding.nowfloats.ui.registration
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
-import androidx.lifecycle.Observer
-import com.facebook.*
 import com.facebook.login.LoginResult
+import com.framework.models.BaseViewModel
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
-import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_PAGES
 import com.nowfloats.facebook.constants.FacebookPermissions
 import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.nowfloats.facebook.models.BaseFacebookGraphResponse
@@ -27,7 +26,7 @@ import com.onboarding.nowfloats.model.channel.isFacebookShop
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding>(),
+class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding, BaseViewModel>(),
     FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
     private val callbackManager = CallbackManager.Factory.create()
@@ -114,5 +113,9 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
         channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
         channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
     }
 }

@@ -12,7 +12,6 @@ import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
-import com.framework.imagepicker.ImagePicker
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
@@ -21,13 +20,11 @@ import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.category.CategorySelectorFragment
 import com.onboarding.nowfloats.ui.channel.ChannelPickerFragment
 import com.onboarding.nowfloats.ui.registration.*
-import kotlinx.android.synthetic.main.fragment_registration_business_twitter_details.*
 
 open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
     private var type: FragmentType? = null
     private var exitToast: Toast? = null
-
 
     private var categorySelectorFragment: CategorySelectorFragment? = null
     private var channelPickerFragment: ChannelPickerFragment? = null
@@ -186,7 +183,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
         registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -198,25 +195,18 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 //        }
 //    }
 
-    private fun showMessageBackPress() {
+//    private fun showMessageBackPress() {
 //        if (exitToast?.view?.windowToken != null) {
 //            this@AppFragmentContainerActivity.finish()
 //            exitProcess(0)
 //        } else exitToast?.show()
-    }
+//    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-            val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<*>
-//            checkOutFragment.onActivityResult(mPaths)
-        }
-    }
 }
 
 fun Fragment.startFragmentActivity(
-    type: FragmentType, bundle: Bundle = Bundle(),
-    clearTop: Boolean = false
+        type: FragmentType, bundle: Bundle = Bundle(),
+        clearTop: Boolean = false
 ) {
 
     val intent = Intent(activity, AppFragmentContainerActivity::class.java)
@@ -227,8 +217,8 @@ fun Fragment.startFragmentActivity(
 }
 
 fun AppCompatActivity.startFragmentActivity(
-    type: FragmentType, bundle: Bundle = Bundle(),
-    clearTop: Boolean = false
+        type: FragmentType, bundle: Bundle = Bundle(),
+        clearTop: Boolean = false
 ) {
     val intent = Intent(this, AppFragmentContainerActivity::class.java)
     intent.putExtras(bundle)

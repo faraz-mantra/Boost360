@@ -3,19 +3,20 @@ package com.onboarding.nowfloats.ui.registration
 import android.os.Bundle
 import android.view.View
 import com.framework.extensions.getDrawable
+import com.framework.models.BaseViewModel
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
+import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWhatsappBinding
 import com.onboarding.nowfloats.extensions.afterTextChanged
 import com.onboarding.nowfloats.extensions.drawableEnd
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
-import com.onboarding.nowfloats.R
-import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWhatsappBinding
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
+class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding, BaseViewModel>() {
 
     private var whatsAppData = ChannelActionData()
     private var whatsAppAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -78,5 +79,9 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
             }
             binding?.skip -> gotoBusinessApiCallDetails()
         }
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
     }
 }

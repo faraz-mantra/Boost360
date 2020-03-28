@@ -34,6 +34,7 @@ open class ImageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(0, 0)
         val intent: Intent = intent
         mImgConfig = intent.getSerializableExtra(ImageTags.Tags.IMG_CONFIG) as ImageConfig
         if (savedInstanceState == null) {
@@ -300,5 +301,10 @@ open class ImageActivity : AppCompatActivity() {
             intent.putExtra(ImageTags.Tags.IMG_CONFIG, imageConfig)
             return intent
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, 0)
     }
 }

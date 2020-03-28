@@ -7,6 +7,7 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
+import com.framework.models.BaseViewModel
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
@@ -25,7 +26,7 @@ import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding>(),
+class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding, BaseViewModel>(),
         FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
   private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookpage)
@@ -138,4 +139,8 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
 
     // TODO Goto Next Screen
   }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
+    }
 }

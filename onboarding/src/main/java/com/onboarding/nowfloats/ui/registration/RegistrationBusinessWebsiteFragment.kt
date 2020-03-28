@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.framework.extensions.getDrawable
+import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
@@ -17,7 +18,7 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
-class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding>() {
+class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding, BaseViewModel>() {
 
     private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
     private var subdomainObservable: Disposable? = null
@@ -119,5 +120,9 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                 }
             }
         }
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
     }
 }

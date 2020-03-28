@@ -3,6 +3,7 @@ package com.onboarding.nowfloats.ui.registration
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.framework.models.BaseViewModel
 import com.nowfloats.twitter.TwitterLoginHelper
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessTwitterDetailsBinding
@@ -18,7 +19,7 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 
-class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(),
+class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding, BaseViewModel>(),
   TwitterLoginHelper {
 
   private val twitterAuthClient = TwitterAuthClient()
@@ -92,4 +93,8 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     super.onActivityResult(requestCode, resultCode, data)
     twitterAuthClient.onActivityResult(requestCode, resultCode, data)
   }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
+    }
 }
