@@ -10,7 +10,7 @@ import com.twitter.sdk.android.core.TwitterConfig
 
 object TwitterConfigHelper {
 
-  var debug = true
+  var debug = false
 
   fun initialize(context: Context) {
     val config = TwitterConfig.Builder(context)
