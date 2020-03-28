@@ -3,8 +3,7 @@ package com.onboarding.nowfloats.rest.repositories
 import android.content.Context
 import com.framework.base.BaseResponse
 import com.onboarding.nowfloats.base.rest.AppBaseRepository
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken.*
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken.AccessTokenType
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.rest.Taskcode
 import com.onboarding.nowfloats.rest.services.local.channel.ChannelLocalDataSource

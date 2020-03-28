@@ -12,6 +12,7 @@ import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
+import com.framework.imagepicker.ImagePicker
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
@@ -152,6 +153,14 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 //            this@AppFragmentContainerActivity.finish()
 //            exitProcess(0)
 //        } else exitToast?.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+            val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<*>
+//            checkOutFragment.onActivityResult(mPaths)
+        }
     }
 }
 

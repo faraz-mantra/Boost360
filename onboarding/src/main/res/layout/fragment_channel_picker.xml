@@ -25,6 +25,7 @@
                         android:id="@+id/view_channel"
                         style="@style/Onboarding.ChannelCardStyle"
                         android:layout_marginTop="@dimen/size_24"
+                        android:layout_marginBottom="@dimen/size_8"
                         android:alpha="0"
                         tools:alpha="1">
 

@@ -19,15 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.support.v4.os.ResultReceiver;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -53,6 +45,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
@@ -113,6 +114,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -304,8 +306,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         if (connectivityManager != null) {
             NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
             if (netInfos != null)
-                if (netInfos.isConnected())
-                    return true;
+                return netInfos.isConnected();
         }
         return false;
     }
@@ -314,7 +315,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         facebookHandler = new FacebookHandler(this, ChatViewActivity.this);
         mSessionId = UUID.randomUUID().toString();
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -399,7 +400,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         && isValidInput(etChatInput.getText().toString().trim())) {
 
                     hideSoftKeyboard();
-                    StringBuffer chatText = new StringBuffer("");
+                    StringBuffer chatText = new StringBuffer();
                     if (mCurrButton.getPrefixText() != null) {
                         chatText.append(getParsedPrefixPostfixText(mCurrButton.getPrefixText()));
                     }
@@ -1031,14 +1032,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         params.width = displayMetrics.widthPixels;
         params.height = displayMetrics.heightPixels;
 
-        dialog.getWindow().setAttributes((WindowManager.LayoutParams) params);
+        dialog.getWindow().setAttributes(params);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-        final ImageViewTouch ivContent = (ImageViewTouch) dialog.findViewById(R.id.ivContent);
+        final ImageViewTouch ivContent = dialog.findViewById(R.id.ivContent);
 
         if (!url.contains("http")) {
-
             /*Glide.with(ChatViewActivity.this)
                     .load(getParsedPrefixPostfixText(url))
                     .apply(new RequestOptions()
@@ -1058,7 +1058,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
 
-        LinearLayout llClose = (LinearLayout) dialog.findViewById(R.id.llClose);
+        LinearLayout llClose = dialog.findViewById(R.id.llClose);
         llClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1079,7 +1079,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .setPositiveButton(getString(R.string.media_picker_camera), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         final Activity activity = ChatViewActivity.this;
                         final String[] permissions = new String[]{Manifest.permission.CAMERA};
                         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -1093,14 +1092,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .setNegativeButton(getString(R.string.media_picker_gallery), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         new ImagePicker.Builder(ChatViewActivity.this)
                                 .mode(ImagePicker.Mode.GALLERY)
                                 .directory(ImagePicker.Directory.DEFAULT)
                                 .allowMultipleImages(false)
                                 .enableDebuggingMode(true)
                                 .build();
-
                     }
                 })
                 .setCancelable(false)
@@ -1855,8 +1852,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         View view = LayoutInflater.from(ChatViewActivity.this).inflate(R.layout.search_list_layout, null);
         builderSingle.setView(view);
 
-        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
-        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
+        EditText edtSearch = view.findViewById(R.id.edtSearch);
+        ListView lvItems = view.findViewById(R.id.lvItems);
 
         lvItems.setAdapter(adapter);
 
@@ -2013,7 +2010,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;

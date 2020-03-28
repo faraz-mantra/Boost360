@@ -21,28 +21,54 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.framework.views.customViews.CustomCardView
-                    android:id="@+id/profileView"
-                    android:layout_width="@dimen/size_100"
-                    android:layout_height="@dimen/size_100"
+                <FrameLayout
+                    android:id="@+id/image_View"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="@dimen/size_16"
-                    android:layout_marginTop="@dimen/size_50"
-                    android:layout_marginEnd="@dimen/size_16"
-                    android:layout_marginBottom="@dimen/size_16"
                     android:alpha="0"
-                    android:clipToPadding="true"
-                    app:cardCornerRadius="@dimen/size_50"
-                    app:cardElevation="@dimen/size_4"
-                    app:strokeWidth="@dimen/size_4"
                     tools:alpha="1">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/ic_user2" />
 
-                </com.framework.views.customViews.CustomCardView>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomCardView
+                            android:id="@+id/profileView"
+                            android:layout_width="@dimen/size_100"
+                            android:layout_height="@dimen/size_100"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/size_16"
+                            android:layout_marginTop="@dimen/size_50"
+                            android:layout_marginEnd="@dimen/size_16"
+                            android:layout_marginBottom="@dimen/size_16"
+                            android:clipToPadding="true"
+                            app:cardCornerRadius="@dimen/size_50"
+                            app:cardElevation="@dimen/size_4"
+                            app:strokeWidth="@dimen/size_4">
+
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_user2" />
+
+                        </com.framework.views.customViews.CustomCardView>
+                    </FrameLayout>
+
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_28"
+                        android:layout_height="@dimen/size_28"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginStart="@dimen/size_16"
+                        android:layout_marginTop="@dimen/size_50"
+                        android:layout_marginEnd="@dimen/size_16"
+                        android:layout_marginBottom="@dimen/size_16"
+                        android:padding="@dimen/size_2"
+                        app:srcCompat="@drawable/ic_add" />
+                </FrameLayout>
+
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/congratsText"
@@ -181,14 +207,15 @@
                             tools:text="M" />
 
                         <com.framework.views.customViews.CustomImageView
-                            android:layout_width="@dimen/size_32"
-                            android:layout_height="@dimen/size_32"
+                            android:layout_width="@dimen/size_28"
+                            android:layout_height="@dimen/size_28"
                             android:layout_gravity="end|bottom"
                             android:clickable="true"
                             android:focusable="true"
-                            android:translationX="@dimen/size_2"
-                            android:translationY="@dimen/size_2"
-                            app:srcCompat="@drawable/ic_add_photo" />
+                            android:padding="@dimen/size_2"
+                            android:translationX="-4dp"
+                            android:translationY="-4dp"
+                            app:srcCompat="@drawable/ic_add" />
 
                     </FrameLayout>
 

@@ -12,9 +12,9 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
         BaseRepository<RemoteDataSource, LocalDataSource>() {
 
   protected fun <T : BaseResponse> makeRemoteRequest(
-          observable: Observable<Response<T>>, taskcode: Taskcode
+          observable: Observable<Response<T>>, taskCode: Taskcode
   ): Observable<BaseResponse> {
-    return makeRemoteRequest(observable, taskcode.ordinal)
+      return makeRemoteRequest(observable, taskCode.ordinal)
   }
 
   override fun getApiClient(): Retrofit {
@@ -23,17 +23,17 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
 
   fun makeLocalRequest(
           observable: Observable<BaseResponse>,
-          taskcode: Taskcode
+          taskCode: Taskcode
   ): Observable<BaseResponse> {
-    return makeLocalResponse(observable, taskcode.ordinal)
+      return makeLocalResponse(observable, taskCode.ordinal)
   }
 
-  protected fun onFailure(response: BaseResponse, taskcode: Taskcode) {
-    super.onFailure(response, taskcode.ordinal)
+    protected fun onFailure(response: BaseResponse, taskCode: Taskcode) {
+        super.onFailure(response, taskCode.ordinal)
   }
 
-  protected fun onSuccess(response: BaseResponse, taskcode: Taskcode) {
-    super.onSuccess(response, taskcode.ordinal)
-    localDataSource.saveToLocal(response, taskcode)
+    protected fun onSuccess(response: BaseResponse, taskCode: Taskcode) {
+        super.onSuccess(response, taskCode.ordinal)
+        localDataSource.saveToLocal(response, taskCode)
   }
 }

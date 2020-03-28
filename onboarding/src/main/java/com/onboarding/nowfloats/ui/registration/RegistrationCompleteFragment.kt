@@ -9,6 +9,7 @@ import androidx.appcompat.widget.PopupMenu
 import com.framework.CustomTypefaceSpan
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.imagepicker.ImagePicker
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
@@ -44,14 +45,15 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         }
         setBusinessName()
 
-        binding?.profileView?.post {
-            binding?.profileView?.fadeIn()?.andThen(binding?.congratsText?.fadeIn(100L))
+        binding?.imageView?.post {
+            binding?.imageView?.fadeIn()?.andThen(binding?.congratsText?.fadeIn(100L))
                     ?.andThen(binding?.businessText?.fadeIn(100L))?.andThen(binding?.tagImage?.fadeIn(200L))
                     ?.andThen(binding?.cardView?.fadeIn(200L))?.andThen(binding?.businessName?.fadeIn(100L))
                     ?.andThen(binding?.settingUpChannels?.fadeIn(100L))?.andThen(binding?.selectedChannels?.fadeIn(100L))
                     ?.andThen(binding?.desc?.fadeIn(50L))?.andThen(binding?.done?.fadeIn(50L))
                     ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { startCheckAnimation() }?.subscribe()
         }
+        setOnClickListener(binding?.profileView, binding?.businessNameInitial)
     }
 
     private fun initLottieAnimation() {
@@ -110,7 +112,20 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         super.onClick(v)
         when (v) {
             binding?.menuView -> showMenuLogout(v)
+            binding?.profileView -> openImagePicker(true)
+            binding?.businessNameInitial -> openImagePicker(false)
         }
+    }
+
+    private fun openImagePicker(isProfileImage: Boolean) {
+        ImagePicker.Builder(baseActivity)
+                .mode(ImagePicker.Mode.CAMERA_AND_GALLERY)
+                .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+                .directory(ImagePicker.Directory.DEFAULT)
+                .extension(ImagePicker.Extension.PNG) //       .scale(600, 600)
+                .allowMultipleImages(false)
+                .enableDebuggingMode(true)
+                .build()
     }
 
     private fun showMenuLogout(view: View) {

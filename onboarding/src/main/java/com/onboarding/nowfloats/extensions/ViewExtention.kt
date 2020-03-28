@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.extensions
 
+import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import com.framework.views.customViews.CustomTextField
@@ -16,4 +17,12 @@ fun CustomTextField.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
     })
+}
+
+fun getScreenWidth(): Int {
+    return Resources.getSystem().displayMetrics.widthPixels
+}
+
+fun getScreenHeight(): Int {
+    return Resources.getSystem().displayMetrics.heightPixels
 }

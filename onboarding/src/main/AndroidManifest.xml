@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.onboarding.nowfloats"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.onboarding.nowfloats">
 
-  <application>
-    <activity android:name="com.onboarding.nowfloats.ui.AppFragmentContainerActivity" />
-    <activity android:name="com.onboarding.nowfloats.ui.channel.ChannelPickerActivity" />
-    <activity android:name="com.onboarding.nowfloats.ui.category.CategorySelectorActivity" />
-  </application>
+    <application android:largeHeap="true">
+        <activity android:name="com.onboarding.nowfloats.ui.AppFragmentContainerActivity" />
+        <activity android:name="com.onboarding.nowfloats.ui.channel.ChannelPickerActivity" />
+        <activity android:name="com.onboarding.nowfloats.ui.category.CategorySelectorActivity" />
+
+        <activity
+            android:name="com.framework.imagepicker.ImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:windowSoftInputMode="stateHidden" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
 
 </manifest>

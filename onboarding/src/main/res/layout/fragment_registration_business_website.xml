@@ -84,7 +84,7 @@
       style="@style/ButtonStyle.Rounded"
       android:layout_marginStart="@dimen/size_32"
       android:layout_marginEnd="@dimen/size_32"
-      android:layout_marginBottom="@dimen/size_32"
+        android:layout_marginBottom="@dimen/size_24"
       android:alpha="0"
       android:text="CONFIRM"
       app:layout_constraintBottom_toBottomOf="parent"

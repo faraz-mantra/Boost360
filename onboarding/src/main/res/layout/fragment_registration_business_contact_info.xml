@@ -53,6 +53,8 @@
                         android:id="@+id/view_form"
                         style="@style/Onboarding.Registration.FormContainerStyle"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/size_28"
+                        android:paddingTop="@dimen/size_40"
                         android:alpha="0"
                         tools:alpha="1">
 
@@ -112,7 +114,7 @@
             style="@style/ButtonStyle.Rounded"
             android:layout_marginStart="@dimen/size_32"
             android:layout_marginEnd="@dimen/size_32"
-            android:layout_marginBottom="@dimen/size_32"
+            android:layout_marginBottom="@dimen/size_24"
             android:alpha="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
