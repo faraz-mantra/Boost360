@@ -28,16 +28,16 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     private var exitToast: Toast? = null
 
 
-    private val categorySelectorFragment = CategorySelectorFragment.newInstance()
-    private val channelPickerFragment = ChannelPickerFragment.newInstance()
-    private val registrationBusinessContactInfoFragment = RegistrationBusinessContactInfoFragment.newInstance()
-    private val registrationBusinessWebsiteFragment = RegistrationBusinessWebsiteFragment.newInstance()
-    private val registrationBusinessFacebookPageFragment = RegistrationBusinessFacebookPageFragment.newInstance()
-    private val registrationBusinessFacebookShopFragment = RegistrationBusinessFacebookShopFragment.newInstance()
-    private val registrationBusinessTwitterDetailsFragment = RegistrationBusinessTwitterDetailsFragment.newInstance()
-    private val registrationBusinessWhatsAppFragment = RegistrationBusinessWhatsAppFragment.newInstance()
-    private val registrationBusinessApiFragment = RegistrationBusinessApiFragment.newInstance()
-    private val registrationCompleteFragment = RegistrationCompleteFragment.newInstance()
+    private var categorySelectorFragment: CategorySelectorFragment? = null
+    private var channelPickerFragment: ChannelPickerFragment? = null
+    private var registrationBusinessContactInfoFragment: RegistrationBusinessContactInfoFragment? = null
+    private var registrationBusinessWebsiteFragment: RegistrationBusinessWebsiteFragment? = null
+    private var registrationBusinessFacebookPageFragment: RegistrationBusinessFacebookPageFragment? = null
+    private var registrationBusinessFacebookShopFragment: RegistrationBusinessFacebookShopFragment? = null
+    private var registrationBusinessTwitterDetailsFragment: RegistrationBusinessTwitterDetailsFragment? = null
+    private var registrationBusinessWhatsAppFragment: RegistrationBusinessWhatsAppFragment? = null
+    private var registrationBusinessApiFragment: RegistrationBusinessApiFragment? = null
+    private var registrationCompleteFragment: RegistrationCompleteFragment? = null
 
 
     override fun getToolbarBackgroundColor(): Int? {
@@ -127,22 +127,52 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
     private fun setFragment() {
         val fragment = getFragmentInstance(type)
-        fragment.arguments = intent.extras
+        fragment?.arguments = intent.extras
         binding?.container?.id?.let { addFragmentReplace(it, fragment, shouldAddToBackStack()) }
     }
 
-    private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *> {
+    private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
-            FragmentType.CATEGORY_VIEW -> categorySelectorFragment
-            FragmentType.CHANNEL_PICKER -> channelPickerFragment
-            FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> registrationBusinessContactInfoFragment
-            FragmentType.REGISTRATION_BUSINESS_WEBSITE -> registrationBusinessWebsiteFragment
-            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> registrationBusinessFacebookPageFragment
-            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> registrationBusinessFacebookShopFragment
-            FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> registrationBusinessTwitterDetailsFragment
-            FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> registrationBusinessWhatsAppFragment
-            FragmentType.REGISTRATION_BUSINESS_API_CALL -> registrationBusinessApiFragment
-            FragmentType.REGISTRATION_COMPLETE -> registrationCompleteFragment
+            FragmentType.CATEGORY_VIEW -> {
+                categorySelectorFragment = CategorySelectorFragment.newInstance()
+                categorySelectorFragment
+            }
+            FragmentType.CHANNEL_PICKER -> {
+                channelPickerFragment = ChannelPickerFragment.newInstance()
+                channelPickerFragment
+            }
+            FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> {
+                registrationBusinessContactInfoFragment = RegistrationBusinessContactInfoFragment.newInstance()
+                registrationBusinessContactInfoFragment
+            }
+            FragmentType.REGISTRATION_BUSINESS_WEBSITE -> {
+                registrationBusinessWebsiteFragment = RegistrationBusinessWebsiteFragment.newInstance()
+                registrationBusinessWebsiteFragment
+            }
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> {
+                registrationBusinessFacebookPageFragment = RegistrationBusinessFacebookPageFragment.newInstance()
+                registrationBusinessFacebookPageFragment
+            }
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> {
+                registrationBusinessFacebookShopFragment = RegistrationBusinessFacebookShopFragment.newInstance()
+                registrationBusinessFacebookShopFragment
+            }
+            FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> {
+                registrationBusinessTwitterDetailsFragment = RegistrationBusinessTwitterDetailsFragment.newInstance()
+                registrationBusinessTwitterDetailsFragment
+            }
+            FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> {
+                registrationBusinessWhatsAppFragment = RegistrationBusinessWhatsAppFragment.newInstance()
+                registrationBusinessWhatsAppFragment
+            }
+            FragmentType.REGISTRATION_BUSINESS_API_CALL -> {
+                registrationBusinessApiFragment = RegistrationBusinessApiFragment.newInstance()
+                registrationBusinessApiFragment
+            }
+            FragmentType.REGISTRATION_COMPLETE -> {
+                registrationCompleteFragment = RegistrationCompleteFragment.newInstance()
+                registrationCompleteFragment
+            }
             else -> throw IllegalFragmentTypeException()
         }
     }
@@ -155,7 +185,8 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        registrationBusinessTwitterDetailsFragment.onActivityResult(requestCode, resultCode, data)
+
+        registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     }
 
 //    override fun onBackPressed() {
