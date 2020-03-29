@@ -26,7 +26,9 @@
                     android:layout_width="@dimen/size_100"
                     android:layout_height="@dimen/size_100"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/size_50">
+                    android:layout_marginTop="@dimen/size_50"
+                    android:alpha="0"
+                    tools:alpha="1">
 
                     <com.framework.views.customViews.CustomCardView
                         android:id="@+id/profileView"
@@ -188,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:alpha="1"
+                        android:alpha="0"
                         android:elevation="@dimen/size_8"
                         android:outlineAmbientShadowColor="@color/transparent"
                         android:outlineSpotShadowColor="@color/transparent"
