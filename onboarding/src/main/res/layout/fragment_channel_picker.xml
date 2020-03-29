@@ -181,6 +181,7 @@
             android:alpha="0"
             android:drawableEnd="@null"
             android:text="@string/get_started"
+          app:textType="HEADING_6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

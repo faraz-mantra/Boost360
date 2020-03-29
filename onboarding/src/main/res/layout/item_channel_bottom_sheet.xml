@@ -65,7 +65,7 @@
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/whyLink_click"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
@@ -100,7 +100,7 @@
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/learnMoreLink"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/learn_more"
                         android:textColor="@color/warm_grey"

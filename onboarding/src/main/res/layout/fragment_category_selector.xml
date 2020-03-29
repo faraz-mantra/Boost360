@@ -48,6 +48,7 @@
             style="@style/FooterButtonStyle"
             android:text="@string/next"
             android:visibility="gone"
+          app:textType="HEADING_6"
             android:textAllCaps="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

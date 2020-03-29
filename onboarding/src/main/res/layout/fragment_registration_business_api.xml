@@ -89,7 +89,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/size_16"
             android:orientation="vertical"
-            android:overScrollMode="always"
+            android:overScrollMode="never"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"
@@ -117,6 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        app:textType="HEADING_6"
         android:text="Start your digital journey!"
         android:textColor="@color/white"
         app:fontFamily="@font/bold" />

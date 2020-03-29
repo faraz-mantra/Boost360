@@ -11,6 +11,8 @@ import androidx.appcompat.widget.PopupMenu
 import com.framework.CustomTypefaceSpan
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.glide.GlideImageLoader
+import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -50,6 +52,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
             binding?.businessNameInitial?.text = it.firstOrNull()?.toUpperCase()?.toString()
         }
         setBusinessName()
+        setBusinessImage()
 
         binding?.imageView?.post {
             binding?.imageView?.fadeIn()?.andThen(binding?.congratsText?.fadeIn(100L))
@@ -60,6 +63,16 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                     ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
         }
         setOnClickListener(binding?.profileView, binding?.businessNameInitial)
+    }
+
+    private fun setBusinessImage() {
+        val imageUrl = requestFloatsModel?.channelAccessTokens?.map { it.profilePicture }
+                ?.firstOrNull { it?.isNotEmpty() == true } ?: return
+
+        binding?.businessNameInitial?.gone()
+        binding?.businessImage?.visible()
+
+        baseActivity.glideLoad(binding?.businessImage, imageUrl)
     }
 
     private fun initLottieAnimation() {
