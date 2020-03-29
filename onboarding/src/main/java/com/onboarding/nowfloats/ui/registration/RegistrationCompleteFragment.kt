@@ -119,7 +119,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         when (v) {
             binding?.menuView -> showMenuLogout(v)
             binding?.profileView -> openImagePicker(true)
-//            binding?.businessNameInitial -> openImagePicker(false)
+            binding?.businessNameInitial -> openImagePicker(false)
         }
     }
 
@@ -154,7 +154,13 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
             val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
             if (mPaths.isNotEmpty()) {
                 val imageBitmap = File(mPaths[0]).getBitmap()
-                imageBitmap?.let { binding?.profileImg?.setImageBitmap(it) }
+                if (this.isProfileImage != null && this.isProfileImage!!) {
+                    imageBitmap?.let { binding?.profileImage?.setImageBitmap(it) }
+                } else {
+                    binding?.businessNameInitial?.gone()
+                    binding?.businessImage?.visible()
+                    imageBitmap?.let { binding?.businessImage?.setImageBitmap(it) }
+                }
             }
         }
     }

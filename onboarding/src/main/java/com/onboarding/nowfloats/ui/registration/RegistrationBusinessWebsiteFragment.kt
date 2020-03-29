@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.framework.extensions.getDrawable
@@ -93,35 +92,38 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
 
     override fun onClick(v: View) {
         when (v) {
-            binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
-                getDotProgress()?.let {
-                    binding?.textBtn?.visibility = View.GONE
-                    binding?.next?.addView(it)
-                    it.startAnimation()
-                    Handler().postDelayed({
-                        it.stopAnimation()
-                        it.removeAllViews()
-                        binding?.textBtn?.visibility = View.VISIBLE
-                        when {
-                            channels.haveFacebookPage() -> {
-                                gotoFacebookPage()
-                            }
-                            channels.haveFacebookShop() -> {
-                                gotoFacebookShop()
-                            }
-                            channels.haveTwitterChannels() -> {
-                                gotoTwitterDetails()
-                            }
-                            channels.haveWhatsAppChannels() -> {
-                                gotoWhatsAppCallDetails()
-                            }
-                            else -> {
-                                gotoBusinessApiCallDetails()
-                            }
+            binding?.next ->
+                if (!binding?.subdomain?.text.isNullOrEmpty()) {
+                    if ((binding?.textBtn?.visibility == View.VISIBLE)) {
+                        getDotProgress()?.let {
+                            binding?.textBtn?.visibility = View.GONE
+                            binding?.next?.addView(it)
+                            it.startAnimation()
+                            Handler().postDelayed({
+                                it.stopAnimation()
+                                it.removeAllViews()
+                                binding?.textBtn?.visibility = View.VISIBLE
+                                when {
+                                    channels.haveFacebookPage() -> {
+                                        gotoFacebookPage()
+                                    }
+                                    channels.haveFacebookShop() -> {
+                                        gotoFacebookShop()
+                                    }
+                                    channels.haveTwitterChannels() -> {
+                                        gotoTwitterDetails()
+                                    }
+                                    channels.haveWhatsAppChannels() -> {
+                                        gotoWhatsAppCallDetails()
+                                    }
+                                    else -> {
+                                        gotoBusinessApiCallDetails()
+                                    }
+                                }
+                            }, 1000)
                         }
-                    }, 1000)
+                    }
                 }
-            }
         }
     }
 
