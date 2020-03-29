@@ -1,14 +1,21 @@
 package com.onboarding.nowfloats.viewmodel.business
 
+import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
+import com.framework.models.toLiveData
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
+import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.rest.repositories.BusinessCreateRepository
-import io.reactivex.Observable
+import com.onboarding.nowfloats.rest.repositories.ChannelRepository
 
 class BusinessCreateViewModel : BaseViewModel() {
 
-    fun createBusinessOnboarding(request: BusinessCreateRequest): Observable<BaseResponse> {
-        return BusinessCreateRepository.postCreateBusinessOnboarding(request)
+    fun createBusinessOnboarding(request: BusinessCreateRequest): LiveData<BaseResponse> {
+        return BusinessCreateRepository.postCreateBusinessOnboarding(request).toLiveData()
+    }
+
+    fun updateChannelAccessToken(request: UpdateChannelAccessTokenRequest): LiveData<BaseResponse> {
+        return ChannelRepository.updateChannelAccessTokens(request).toLiveData()
     }
 }

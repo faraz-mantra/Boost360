@@ -44,7 +44,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         }
         setOnClickListener(binding?.next)
         setSetSelectedGoogleChannels(channels)
-        setSubDomain(requestFloatsModel?.contactInfo?.storeName, isInitial = true)
+        setSubDomain(requestFloatsModel?.contactInfo?.businessName, isInitial = true)
         binding?.subdomain?.afterTextChanged { setSubDomain(it) }
     }
 
@@ -63,7 +63,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     private fun apiCheckDomain(subDomain: String) {
         if (!TextUtils.isEmpty(subDomain)) {
             val pref: SharedPreferences = baseActivity.getSharedPreferences("nowfloatsPrefs", 0)
-            val data = BusinessDomainRequest(pref.getString("user_profile_id", "5e7dfd3d5a9ed3000146ca56"), subDomain, requestFloatsModel?.contactInfo?.storeName)
+            val data = BusinessDomainRequest(pref.getString("user_profile_id", "5e7dfd3d5a9ed3000146ca56"), subDomain, requestFloatsModel?.contactInfo?.businessName)
             viewModel?.checkBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
                 showShortToast(it.error?.message)
                 binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
@@ -81,7 +81,6 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         val googleBusiness = ChannelModel(type = ChannelType.G_BUSINESS.name)
         googleBusiness.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout()
         selectedItems.add(googleBusiness)
-
         googleChannelsAdapter = binding?.googleChannels?.setGridRecyclerViewAdapter(
                 baseActivity,
                 selectedItems.size,
@@ -94,6 +93,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         when (v) {
             binding?.next ->
                 if (!binding?.subdomain?.text.isNullOrEmpty()) {
+                    requestFloatsModel?.contactInfo?.domainName = binding?.subdomain?.text.toString()
                     if ((binding?.textBtn?.visibility == View.VISIBLE)) {
                         getDotProgress()?.let {
                             binding?.textBtn?.visibility = View.GONE

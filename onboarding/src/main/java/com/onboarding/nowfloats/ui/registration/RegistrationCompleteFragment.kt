@@ -45,7 +45,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         setSetSelectedChannels(channels)
         setOnClickListener(binding?.menuView)
         binding?.congratsText?.text = resources.getString(R.string.congratulations)
-        requestFloatsModel?.contactInfo?.storeName?.let {
+        requestFloatsModel?.contactInfo?.businessName?.let {
             binding?.businessName?.text = it
             binding?.businessNameInitial?.text = it.firstOrNull()?.toUpperCase()?.toString()
         }

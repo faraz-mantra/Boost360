@@ -68,12 +68,12 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     }
 
     private fun isValid(): Boolean {
-        viewModel?.storeName = binding?.storeName?.text?.toString()
+        viewModel?.businessName = binding?.storeName?.text?.toString()
         viewModel?.address = binding?.address?.text?.toString()
         viewModel?.email = binding?.email?.text?.toString()
         viewModel?.number = binding?.number?.text?.toString()?.let { replaceCountryCode(it) }
         return viewModel?.let {
-            return if (it.storeName.isNullOrBlank()) {
+            return if (it.businessName.isNullOrBlank()) {
                 showShortToast(resources.getString(R.string.business_cant_empty))
                 false
             } else if (it.address.isNullOrBlank()) {
