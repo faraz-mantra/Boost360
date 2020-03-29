@@ -31,11 +31,12 @@ import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.clear
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import io.reactivex.rxkotlin.toObservable
 
 class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding, BaseViewModel>(),
         FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
-  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookpage)
+  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookpage.name.toLowerCase())
 
   private val callbackManager = CallbackManager.Factory.create()
   private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -83,6 +84,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   private fun gotoNextScreen() {
+    if (channelAccessToken.isLinked()) {
+      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
+    }
     when {
       channels.haveFacebookShop() -> {
         gotoFacebookShop()

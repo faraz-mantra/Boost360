@@ -34,7 +34,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
 
   private val twitterAuthClient = TwitterAuthClient()
   private var selectedChannel: List<ChannelModel>? = null
-  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter)
+  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter.name.toLowerCase())
   private var twitterChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
 
 
@@ -86,6 +86,9 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   }
 
   private fun gotoNextScreen() {
+    if (channelAccessToken.isLinked()) {
+      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
+    }
     if (channels.haveWhatsAppChannels()) {
       gotoWhatsAppCallDetails()
     } else gotoBusinessApiCallDetails()

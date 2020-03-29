@@ -38,7 +38,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
     private val callbackManager = CallbackManager.Factory.create()
     private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
-    private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookshop)
+    private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookshop.name.toLowerCase())
 
     companion object {
         @JvmStatic
@@ -84,6 +84,9 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
 
     private fun gotoNextScreen() {
+        if (channelAccessToken.isLinked()) {
+            requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
+        }
         when {
             channels.haveTwitterChannels() -> {
                 gotoTwitterDetails()
