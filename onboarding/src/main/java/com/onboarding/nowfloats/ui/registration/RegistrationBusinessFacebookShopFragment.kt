@@ -7,6 +7,9 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
+import com.framework.extensions.gone
+import com.framework.extensions.visible
+import com.framework.glide.util.glideLoad
 import com.framework.models.BaseViewModel
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
@@ -14,7 +17,9 @@ import com.nowfloats.facebook.constants.FacebookGraphRequestType
 import com.nowfloats.facebook.constants.FacebookPermissions
 import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.nowfloats.facebook.models.BaseFacebookGraphResponse
+import com.nowfloats.facebook.models.userDetails.FacebookGraphUserDetailsResponse
 import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesResponse
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebookShopBinding
 import com.onboarding.nowfloats.extensions.fadeIn
@@ -24,6 +29,8 @@ import com.onboarding.nowfloats.model.channel.haveTwitterChannels
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isFacebookShop
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.model.channel.request.clear
+import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding, BaseViewModel>(),
@@ -65,7 +72,14 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         super.onClick(v)
         when (v) {
             binding?.skip -> gotoNextScreen()
-            binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.public_profile))
+            binding?.linkFacebook -> {
+                if (channelAccessToken.isLinked()){
+                    gotoNextScreen()
+                }
+                else{
+                    loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
+                }
+            }
         }
     }
 
@@ -89,15 +103,15 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
 
     override fun onFacebookLoginSuccess(result: LoginResult?) {
-        showShortToast(result?.toString())
         val accessToken = result?.accessToken ?: return
         PreferencesUtils.instance.saveFacebookUserToken(accessToken.token)
         PreferencesUtils.instance.saveFacebookUserId(accessToken.userId)
         FacebookGraphManager.requestUserPages(accessToken, this)
+        FacebookGraphManager.requestUserPublicDetails(accessToken, accessToken.userId, this)
     }
 
     override fun onFacebookLoginCancel() {
-        showShortToast("cancel")
+        showShortToast("Canceled")
     }
 
     override fun onFacebookLoginError(error: FacebookException?) {
@@ -105,16 +119,50 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
 
     override fun onCompleted(type: FacebookGraphRequestType, facebookGraphResponse: BaseFacebookGraphResponse?) {
-        val graphUserPagesResponse = facebookGraphResponse as? FacebookGraphUserPagesResponse
-        val pages = graphUserPagesResponse?.data ?: return
+        when (type) {
+            FacebookGraphRequestType.USER_PAGES -> onFacebookPagesFetched(facebookGraphResponse as? FacebookGraphUserPagesResponse)
+            FacebookGraphRequestType.USER_DETAILS -> onFacebookDetailsFetched(facebookGraphResponse as? FacebookGraphUserDetailsResponse)
+        }
+    }
 
+    private fun onFacebookDetailsFetched(response: FacebookGraphUserDetailsResponse?) {
+        channelAccessToken.userAccountName = response?.name
+        setProfileDetails()
+    }
+
+    private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
+        val pages = response?.data ?: return
         if (pages.size > 1) return showShortToast("Select only one page")
-
         val page = pages.firstOrNull() ?: return
-        page.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
-
         channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
         channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
+        channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
+        setProfileDetails()
+    }
+
+    private fun setProfileDetails() {
+        val binding = binding?.facebookPageSuccess ?: return
+        this.binding?.skip?.gone()
+        binding.maimView.visible()
+        binding.disconnect.setOnClickListener { disconnectFacebookPage() }
+        this.binding?.title?.text = resources.getString(R.string.facebook_shop_connected)
+        this.binding?.subTitle?.text = resources.getString(R.string.facebook_shop_allows_digital_business_boost)
+        this.binding?.linkFacebook?.text = resources.getString(R.string.save_continue)
+        binding.profileTitle.text = channelAccessToken.userAccountName
+        binding.channelType.setImageResource(R.drawable.ic_facebook_shop_n)
+        val profilePicture = channelAccessToken.profilePicture
+        if (profilePicture?.isNotBlank() == true) {
+            baseActivity.glideLoad(binding.profileImage, profilePicture, R.drawable.ic_user3)
+            channelAccessToken.profilePicture = profilePicture
+        }
+    }
+
+    private fun disconnectFacebookPage() {
+        binding?.skip?.visible()
+        binding?.facebookPageSuccess?.maimView?.gone()
+        binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
+        binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
+        channelAccessToken.clear()
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {

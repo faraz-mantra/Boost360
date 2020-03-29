@@ -31,8 +31,6 @@ import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.clear
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
-import com.twitter.sdk.android.core.Result
-import com.twitter.sdk.android.core.models.User
 
 class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding, BaseViewModel>(),
         FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
@@ -75,10 +73,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     when (v) {
       binding?.skip -> gotoNextScreen()
       binding?.linkFacebook -> {
-        if (channelAccessToken.isLinked()){
+        if (channelAccessToken.isLinked()) {
           gotoNextScreen()
-        }
-        else{
+        } else {
           loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
         }
       }
@@ -108,7 +105,6 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun onFacebookLoginSuccess(result: LoginResult?) {
-    showShortToast(result?.toString())
     val accessToken = result?.accessToken ?: return
     PreferencesUtils.instance.saveFacebookUserToken(accessToken.token)
     PreferencesUtils.instance.saveFacebookUserId(accessToken.userId)
@@ -151,7 +147,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     this.binding?.skip?.gone()
     binding.maimView.visible()
     binding.disconnect.setOnClickListener { disconnectFacebookPage() }
-    this.binding?.subTitle?.text = resources.getString(R.string.twitter_allows_digital_business_boost)
+
+    this.binding?.title?.text = resources.getString(R.string.facebook_page_connected)
+    this.binding?.subTitle?.text = resources.getString(R.string.facebook_page_allows_digital_business_boost)
     this.binding?.linkFacebook?.text = resources.getString(R.string.save_continue)
     binding.profileTitle.text = channelAccessToken.userAccountName
     binding.channelType.setImageResource(R.drawable.ic_facebook_page_n)
@@ -170,13 +168,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     channelAccessToken.clear()
   }
 
-  private fun gotoPageConnectedScreen() {
-    if (channelAccessToken.userAccountId == null) return
-    if (channelAccessToken.userAccessTokenKey == null) return
-    if (channelAccessToken.userAccountName == null) return
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
   }
-
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
-    }
 }
