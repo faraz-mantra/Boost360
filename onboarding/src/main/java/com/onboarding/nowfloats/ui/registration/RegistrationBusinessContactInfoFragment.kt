@@ -36,6 +36,12 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
             if (hasFocus){
                 if (binding?.number?.text?.startsWith("+91") != true){
                     binding?.number?.setText("+91${binding?.number?.text ?: ""}")
+                    binding?.number?.setSelection(3)
+                }
+            }
+            else{
+                if(binding?.number?.text?.toString() == "+91"){
+                    binding?.number?.setText("")
                 }
             }
         }

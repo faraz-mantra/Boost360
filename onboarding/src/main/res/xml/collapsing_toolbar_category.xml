@@ -51,6 +51,7 @@
       style="@style/Onboarding.HeaderTitleStyle"
       android:text="What is your business like?"
       app:layout_constraintBottom_toTopOf="@id/sub_title"
+      app:layout_constraintEnd_toEndOf="@id/toolbar_image"
       app:layout_constraintStart_toStartOf="parent" />
     <Constraint
       android:id="@+id/sub_title"
@@ -90,7 +91,8 @@
       android:scaleY="0.725"
       android:text="What is your business like?"
       app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-      app:layout_constraintLeft_toLeftOf="@+id/image_riya"
+      app:layout_constraintStart_toStartOf="@id/image_riya"
+      app:layout_constraintEnd_toEndOf="@id/toolbar_image"
       app:layout_constraintTop_toTopOf="@id/toolbar_image" />
     <Constraint
       android:id="@+id/sub_title"

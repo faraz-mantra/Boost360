@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.ui.channel
 
 import android.view.View
+import android.view.ViewOutlineProvider
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
 import com.framework.utils.ConversionUtils
