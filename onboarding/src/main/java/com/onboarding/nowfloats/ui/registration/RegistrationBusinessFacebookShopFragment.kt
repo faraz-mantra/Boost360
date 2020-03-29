@@ -129,7 +129,6 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
 
     private fun onFacebookDetailsFetched(response: FacebookGraphUserDetailsResponse?) {
-        channelAccessToken.userAccountName = response?.name
         setProfileDetails()
     }
 
@@ -140,6 +139,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
         channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
         channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
+        channelAccessToken.userAccountName = page.name
         setProfileDetails()
     }
 
