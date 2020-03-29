@@ -64,20 +64,22 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.skip -> {
-                when {
-                    channels.haveTwitterChannels() -> {
-                        gotoTwitterDetails()
-                    }
-                    channels.haveWhatsAppChannels() -> {
-                        gotoWhatsAppCallDetails()
-                    }
-                    else -> {
-                        gotoBusinessApiCallDetails()
-                    }
-                }
-            }
+            binding?.skip -> gotoNextScreen()
             binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.public_profile))
+        }
+    }
+
+    private fun gotoNextScreen() {
+        when {
+            channels.haveTwitterChannels() -> {
+                gotoTwitterDetails()
+            }
+            channels.haveWhatsAppChannels() -> {
+                gotoWhatsAppCallDetails()
+            }
+            else -> {
+                gotoBusinessApiCallDetails()
+            }
         }
     }
 
@@ -109,7 +111,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         if (pages.size > 1) return showShortToast("Select only one page")
 
         val page = pages.firstOrNull() ?: return
-        page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
+        page.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
 
         channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
         channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
