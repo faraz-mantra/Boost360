@@ -54,7 +54,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         val lengthDifference = storeName.length - subDomain.length
         if (subDomain != storeName || isInitial) {
             val selection = binding?.subdomain?.selectionEnd?.minus(lengthDifference) ?: return
-            binding?.subdomain?.setText(subDomain)
+            binding?.subdomain?.setText(subDomain.toLowerCase())
             if (selection > 1) binding?.subdomain?.setSelection(selection)
         }
         apiCheckDomain(subDomain)

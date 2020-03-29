@@ -5,13 +5,10 @@ import android.os.Handler
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import com.framework.extensions.gone
 import com.framework.extensions.isVisible
-import com.framework.extensions.visible
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
-import com.onboarding.nowfloats.extensions.replaceCountryCode
 import com.onboarding.nowfloats.model.registration.RegistrationViewModel
 
 class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding, RegistrationViewModel>() {
@@ -35,15 +32,17 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         }
         binding?.contactInfo = viewModel
         setOnClickListener(binding?.next)
-        binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && binding?.countryCode?.visibility == GONE) {
-                binding?.countryCode?.visible()
-                binding?.number?.hint = ""
-                binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
-            } else if (binding?.number?.text.isNullOrEmpty()) {
-                binding?.countryCode?.gone()
-                binding?.number?.hint = resources.getString(R.string.business_contact_number)
-                binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_4)
+        binding?.number?.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus){
+                if (binding?.number?.text?.startsWith("+91") != true){
+                    binding?.number?.setText("+91${binding?.number?.text ?: ""}")
+                    binding?.number?.setSelection(3)
+                }
+            }
+            else{
+                if(binding?.number?.text?.toString() == "+91"){
+                    binding?.number?.setText("")
+                }
             }
         }
     }
@@ -71,7 +70,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         viewModel?.businessName = binding?.storeName?.text?.toString()
         viewModel?.address = binding?.address?.text?.toString()
         viewModel?.email = binding?.email?.text?.toString()
-        viewModel?.number = binding?.number?.text?.toString()?.let { replaceCountryCode(it) }
+        viewModel?.number = binding?.number?.text?.substring(3)
         return viewModel?.let {
             return if (it.businessName.isNullOrBlank()) {
                 showShortToast(resources.getString(R.string.business_cant_empty))

@@ -90,6 +90,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:alpha="0"
+              app:textType="HEADING_6"
                 android:text="@string/yes_sync_my_fb_page_shop"
                 tools:alpha="1" />
 
@@ -101,6 +102,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:alpha="0"
+              app:textType="HEADING_6"
                 android:text="@string/skip"
                 tools:alpha="1" />
         </LinearLayout>

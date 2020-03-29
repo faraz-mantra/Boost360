@@ -90,6 +90,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:alpha="0"
+              app:textType="HEADING_6"
                 android:text="@string/yes_link_my_existing_twitter_profile"
                 tools:alpha="1" />
 
@@ -102,6 +103,7 @@
                 android:layout_marginBottom="0dp"
                 android:alpha="0"
                 android:text="@string/skip"
+              app:textType="HEADING_6"
                 tools:alpha="1" />
         </LinearLayout>
 

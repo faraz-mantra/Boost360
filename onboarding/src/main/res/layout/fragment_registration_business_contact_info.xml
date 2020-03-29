@@ -79,28 +79,14 @@
                             android:hint="@string/enter_your_business_email"
                             android:inputType="textEmailAddress" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/number"
+                            style="@style/Onboarding.TextFieldStyle"
+                            android:drawableStart="@drawable/ic_phone_focusable"
+                            android:hint="@string/business_contact_number"
+                            android:inputType="phone"
+                            android:maxLength="13" />
 
-                            <com.framework.views.customViews.CustomTextView
-                                android:id="@+id/country_code"
-                                style="@style/Onboarding.TextFieldStyle"
-                                android:layout_marginStart="@dimen/size_28"
-                                android:layout_marginTop="@dimen/size_10"
-                                android:text="+91"
-                                android:visibility="gone"
-                                tools:visibility="visible" />
-
-                            <com.framework.views.customViews.CustomTextField
-                                android:id="@+id/number"
-                                style="@style/Onboarding.TextFieldStyle"
-                                android:drawableStart="@drawable/ic_phone_focusable"
-                                android:hint="@string/business_contact_number"
-                                android:inputType="phone"
-                                android:maxLength="10"
-                                tools:drawablePadding="@dimen/size_36" />
-                        </RelativeLayout>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -143,6 +129,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/confirm"
+                app:textType="HEADING_6"
                 android:textColor="@color/white"
                 app:fontFamily="@font/bold" />
         </FrameLayout>

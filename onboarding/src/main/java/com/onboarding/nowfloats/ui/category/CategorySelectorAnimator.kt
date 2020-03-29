@@ -110,7 +110,7 @@ class CategorySelectorAnimator {
 
     private fun largeLogoPositionAnimators(imageRiyaLargeParams: FrameLayout.LayoutParams): Pair<ValueAnimator, ValueAnimator> {
         val marginTopAnimator = ValueAnimator.ofInt(imageRiyaLargeParams.topMargin,
-                ConversionUtils.dp2px(72f))
+                ConversionUtils.dp2px(68f))
         marginTopAnimator.addUpdateListener {
             imageRiyaLargeParams.topMargin = it.animatedValue as Int
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams

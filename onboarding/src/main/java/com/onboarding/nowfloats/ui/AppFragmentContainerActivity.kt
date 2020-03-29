@@ -13,6 +13,7 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
+import com.framework.utils.ConversionUtils
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
@@ -60,6 +61,18 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
             FragmentType.REGISTRATION_BUSINESS_API_CALL,
             FragmentType.REGISTRATION_COMPLETE -> false
             else -> super.isVisibleBackButton()
+        }
+    }
+
+    override fun getToolbarTitleSize(): Float? {
+        return when (type){
+            FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
+            FragmentType.REGISTRATION_BUSINESS_WEBSITE,
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
+            FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
+            FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ConversionUtils.dp2px(16f).toFloat()
+            else -> return super.getToolbarTitleSize()
         }
     }
 
