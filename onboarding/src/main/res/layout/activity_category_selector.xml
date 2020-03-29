@@ -72,9 +72,9 @@
                 android:alpha="1"
                 android:text="@string/let_me_know_describes_business"
                 android:visibility="gone"
+              tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:alpha="0" />
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <View
                 android:id="@+id/subTitleForeground"
@@ -94,8 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
-            app:cardBackgroundColor="@color/transparent"
-            tools:alpha="1">
+            app:cardBackgroundColor="@color/transparent">
 
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="match_parent"

@@ -100,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+              app:textType="HEADING_6"
                 android:text="@string/create_my_business_website"
                 android:textColor="@color/white"
                 app:fontFamily="@font/bold" />

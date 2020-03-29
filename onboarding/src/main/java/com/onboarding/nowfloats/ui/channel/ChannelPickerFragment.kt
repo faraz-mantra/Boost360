@@ -29,6 +29,8 @@ import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
 class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
+    private var featuresBottomSheetDialog: FeaturesBottomSheetDialog? = null
+
     private var categoryDataModel: CategoryDataModel? = null
     private var channelBottomSheetNDialog: ChannelBottomSheetNDialog? = null
     private var channelFeaturesAdapter: AppBaseRecyclerViewAdapter<SectionsFeature>? = null
@@ -122,10 +124,11 @@ class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, Channel
 
 
     private fun openFeatureDetailSheet(feature: SectionsFeature?) {
-        val bottomSheetFragment = FeaturesBottomSheetDialog()
-        bottomSheetFragment.isCancelable = false
-        bottomSheetFragment.setFeature(feature)
-        bottomSheetFragment.show(baseActivity.supportFragmentManager, bottomSheetFragment::class.java.name)
+        val featuresBottomSheetDialog = FeaturesBottomSheetDialog()
+        featuresBottomSheetDialog.isCancelable = true
+        featuresBottomSheetDialog.setFeature(feature)
+        featuresBottomSheetDialog.show(baseActivity.supportFragmentManager, featuresBottomSheetDialog::class.java.name)
+        this.featuresBottomSheetDialog = featuresBottomSheetDialog
     }
 
     private fun setChannelFeaturesAdapter(list: ArrayList<SectionsFeature>?) {
@@ -138,7 +141,7 @@ class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, Channel
 
     }
 
-    private fun setChannelAdapter(list: ArrayList<ChannelModel>?) {
+    private fun setChannelAdapter(list: ArrayList<ChannelModel>?, animate: Boolean = true) {
         list?.let { channels ->
             channelAdapter = AppBaseRecyclerViewAdapter(baseActivity, channels, this)
             val recyclerViewWidth =
@@ -147,7 +150,10 @@ class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, Channel
             val spanCount = recyclerViewWidth / itemWidth
             binding?.channelList?.layoutManager = GridLayoutManager(baseActivity, spanCount)
             binding?.channelList?.adapter = channelAdapter
-            binding?.channelList?.let { channelAdapter?.runLayoutAnimation(it) }
+            binding?.channelList?.let {
+                if(animate) channelAdapter?.runLayoutAnimation(it)
+                else channelAdapter?.notifyDataSetChanged()
+            }
             val text = StringBuilder(resources.getString(R.string.presence_on) + " ${channels.size} " + resources.getString(R.string.channel))
             if (channels.size > 1 || channels.size == 0) text.append(resources.getString(R.string.more_than_one_add_s))
             binding?.channelPresence?.text = text
@@ -175,8 +181,8 @@ class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, Channel
 
     fun startAnimationChannelFragment() {
         binding?.viewChannel?.post {
+            setChannelAdapter(selectedChannels, animate = false)
             binding?.viewChannel?.fadeIn(200L)?.doOnComplete {
-                setChannelAdapter(selectedChannels)
                 setChannelFeaturesAdapter(responseFeatures)
             }?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
         }

@@ -32,6 +32,13 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         }
         binding?.contactInfo = viewModel
         setOnClickListener(binding?.next)
+        binding?.number?.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus){
+                if (binding?.number?.text?.startsWith("+91") != true){
+                    binding?.number?.setText("+91${binding?.number?.text ?: ""}")
+                }
+            }
+        }
     }
 
     override fun onClick(v: View) {
@@ -57,7 +64,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         viewModel?.storeName = binding?.storeName?.text?.toString()
         viewModel?.address = binding?.address?.text?.toString()
         viewModel?.email = binding?.email?.text?.toString()
-        viewModel?.number = binding?.number?.text?.toString()
+        viewModel?.number = binding?.number?.text?.substring(3)
         return viewModel?.let {
             return if (it.storeName.isNullOrBlank()) {
                 showShortToast(resources.getString(R.string.business_cant_empty))

@@ -116,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                  app:textType="HEADING_6"
                     android:text="@string/confirm_and_proceed"
                     android:textColor="@color/white"
                     app:fontFamily="@font/bold" />
@@ -129,6 +130,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:alpha="0"
+              app:textType="HEADING_6"
                 android:text="@string/i_don_t_have_one_will_do_later"
                 tools:alpha="1" />
         </LinearLayout>
