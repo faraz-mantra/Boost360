@@ -1,11 +1,12 @@
 package com.onboarding.nowfloats.model.channel.request
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class ChannelAccessToken(
-        val type: AccessTokenType,
         @SerializedName("Type")
-        private var _type: String? = type?.name?.toLowerCase(),
+        var type: String? = null,
         @SerializedName("UserAccessTokenKey")
         var userAccessTokenKey: String? = null,
         @SerializedName("UserAccessTokenSecret")
@@ -15,9 +16,41 @@ data class ChannelAccessToken(
         @SerializedName("UserAccountName")
         var userAccountName: String? = null,
         var profilePicture: String? = null
-) {
+) : Parcelable {
+  constructor(parcel: Parcel) : this(
+          parcel.readString(),
+          parcel.readString(),
+          parcel.readString(),
+          parcel.readString(),
+          parcel.readString(),
+          parcel.readString()) {
+  }
+
   enum class AccessTokenType {
     Facebookpage, Facebookshop, GoogleMyBusiness, Twitter
+  }
+
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    parcel.writeString(type)
+    parcel.writeString(userAccessTokenKey)
+    parcel.writeString(userAccessTokenSecret)
+    parcel.writeString(userAccountId)
+    parcel.writeString(userAccountName)
+    parcel.writeString(profilePicture)
+  }
+
+  override fun describeContents(): Int {
+    return 0
+  }
+
+  companion object CREATOR : Parcelable.Creator<ChannelAccessToken> {
+    override fun createFromParcel(parcel: Parcel): ChannelAccessToken {
+      return ChannelAccessToken(parcel)
+    }
+
+    override fun newArray(size: Int): Array<ChannelAccessToken?> {
+      return arrayOfNulls(size)
+    }
   }
 
 }
@@ -32,4 +65,8 @@ fun ChannelAccessToken.clear(){
   this.userAccountId = null
   this.userAccountName = null
   this.profilePicture = null
+}
+
+fun ChannelAccessToken.getType(): ChannelAccessToken.AccessTokenType {
+  return ChannelAccessToken.AccessTokenType.values().first { it.name.toLowerCase() ==  type}
 }

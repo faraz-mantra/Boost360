@@ -34,7 +34,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
 
   private val twitterAuthClient = TwitterAuthClient()
   private var selectedChannel: List<ChannelModel>? = null
-  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter)
+  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter.name.toLowerCase())
   private var twitterChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
 
 
@@ -86,6 +86,9 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   }
 
   private fun gotoNextScreen() {
+    if (channelAccessToken.isLinked()) {
+      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
+    }
     if (channels.haveWhatsAppChannels()) {
       gotoWhatsAppCallDetails()
     } else gotoBusinessApiCallDetails()
@@ -110,7 +113,8 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
       binding?.skip?.gone()
       twitterSuccess.maimView.visible()
       twitterSuccess.disconnect.setOnClickListener { disconnectTwitter(twitterSuccess) }
-      binding?.subTitle?.text = resources.getString(R.string.twitter_allows_digital_business_boost)
+      this.binding?.title?.text = resources.getString(R.string.twitter_connected)
+      this.binding?.subTitle?.text = resources.getString(R.string.twitter_allows_digital_business_boost)
       binding?.linkTwitter?.text = resources.getString(R.string.save_continue)
       twitterSuccess.profileTitle.text = channelAccessToken.userAccountName
       selectedChannel?.let { channels ->
@@ -129,7 +133,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   private fun disconnectTwitter(twitterSuccess: SuccessSocialLayoutBinding) {
     binding?.skip?.visible()
     twitterSuccess.maimView.gone()
-    binding?.subTitle?.text = resources.getString(R.string.twitter_acocunt_business_Skip)
+    binding?.subTitle?.text = resources.getString(R.string.twitter_account_business_Skip)
     binding?.linkTwitter?.text = resources.getString(R.string.do_you_already_have_a_twitter_profile)
     channelAccessToken.clear()
   }

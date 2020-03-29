@@ -101,8 +101,13 @@
     <string name="shop_section_on_your_fb_page">Do you have shop section on your Fb page?</string>
     <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later; please tap ‘Skip’.</string>
     <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
-    <string name="twitter_acocunt_business_Skip">If you don’t have a twitter acocunt for your business, or if you want to connect it later; please tap ‘Skip’.</string>
+    <string name="twitter_account_business_Skip">If you don’t have a twitter account for your business, or if you want to connect it later; please tap ‘Skip’.</string>
     <string name="twitter_allows_digital_business_boost">Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.</string>
+    <string name="facebook_page_allows_digital_business_boost">Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.</string>
+    <string name="facebook_shop_allows_digital_business_boost">It allows you to list your offerings on your business’s facebook page which can be accessed by your potential customers across facebook.</string>
+    <string name="twitter_connected">Twitter Connected</string>
+    <string name="facebook_shop_connected">Facebook Shop Connected</string>
+    <string name="facebook_page_connected">Facebook Page Connected</string>
     <string name="save_continue">Save and continue</string>
 
 </resources>

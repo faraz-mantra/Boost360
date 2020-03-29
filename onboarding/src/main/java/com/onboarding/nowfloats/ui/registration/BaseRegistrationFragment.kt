@@ -97,7 +97,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding, ViewModel : BaseV
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, getBundle())
     }
 
-    protected fun gotoBusinessApiCallDetails() {
+    protected open fun gotoBusinessApiCallDetails() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle())
     }
 

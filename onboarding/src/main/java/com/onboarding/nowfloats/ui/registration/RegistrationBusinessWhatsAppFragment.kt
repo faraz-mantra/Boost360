@@ -14,6 +14,7 @@ import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
+import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding, BaseViewModel>() {
@@ -79,6 +80,13 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
             }
             binding?.skip -> gotoBusinessApiCallDetails()
         }
+    }
+
+    override fun gotoBusinessApiCallDetails() {
+        if (whatsAppData.isLinked()) {
+            requestFloatsModel?.channelActionDatas?.add(whatsAppData)
+        }
+        super.gotoBusinessApiCallDetails()
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {

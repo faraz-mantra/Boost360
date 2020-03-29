@@ -46,7 +46,7 @@
                         android:alpha="0"
                         android:paddingStart="@dimen/size_32"
                         android:paddingEnd="@dimen/size_32"
-                        android:text="@string/twitter_acocunt_business_Skip"
+                        android:text="@string/twitter_account_business_Skip"
                         tools:alpha="1" />
 
                     <include

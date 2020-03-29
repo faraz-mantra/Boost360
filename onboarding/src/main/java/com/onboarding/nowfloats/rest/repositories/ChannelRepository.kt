@@ -5,6 +5,7 @@ import com.framework.base.BaseResponse
 import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken.AccessTokenType
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
+import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.rest.apiClients.NfxApiClient
 import com.onboarding.nowfloats.rest.Taskcode
 import com.onboarding.nowfloats.rest.services.local.channel.ChannelLocalDataSource
@@ -27,7 +28,7 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
   }
 
   fun updateChannelAccessTokens(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
-    return when(request.accessToken.type){
+    return when(request.accessToken.getType()){
       AccessTokenType.Facebookpage -> postUpdateFacebookPageAccessToken(request)
       AccessTokenType.Facebookshop -> postUpdateFacebookShopAccessToken(request)
       AccessTokenType.Twitter -> postUpdateTwitterAccessToken(request)
