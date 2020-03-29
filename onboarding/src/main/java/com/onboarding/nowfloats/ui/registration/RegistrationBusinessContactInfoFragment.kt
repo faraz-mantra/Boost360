@@ -43,7 +43,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
             } else if (binding?.number?.text.isNullOrEmpty()) {
                 binding?.countryCode?.gone()
                 binding?.number?.hint = resources.getString(R.string.business_contact_number)
-                binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_0)
+                binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_4)
             }
         }
     }
