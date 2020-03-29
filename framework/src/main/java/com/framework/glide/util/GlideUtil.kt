@@ -27,7 +27,8 @@ fun Context.glideLoad(mImageView: CustomImageView, url: String) {
             .into(mImageView)
 }
 
-fun Context.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int) {
+fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int) {
+  if(url?.isEmpty() == true) return
     Glide.with(this)
             .load(url)
             .skipMemoryCache(true)

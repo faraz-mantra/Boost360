@@ -13,10 +13,23 @@ data class ChannelAccessToken(
         @SerializedName("UserAccountId")
         var userAccountId: String? = null,
         @SerializedName("UserAccountName")
-        var userAccountName: String? = null
+        var userAccountName: String? = null,
+        var profilePicture: String? = null
 ) {
   enum class AccessTokenType {
     Facebookpage, Facebookshop, GoogleMyBusiness, Twitter
   }
 
+}
+
+fun ChannelAccessToken.isLinked(): Boolean {
+  return this.userAccessTokenKey != null && this.userAccountId != null
+}
+
+fun ChannelAccessToken.clear(){
+  this.userAccessTokenKey = null
+  this.userAccessTokenSecret = null
+  this.userAccountId = null
+  this.userAccountName = null
+  this.profilePicture = null
 }

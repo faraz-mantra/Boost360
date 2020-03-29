@@ -22,8 +22,8 @@ object FacebookGraphManager {
                     facebookGraphResponse: BaseFacebookGraphResponse?)
   }
 
-  fun getPageProfilePictureUrl(pageId: String, type: ProfilePictureType = ProfilePictureType.Square): String {
-    return "https://graph.facebook.com/v6.0/$pageId/picture?type=${type.name.toLowerCase()}"
+  fun getProfilePictureUrl(id: String, type: ProfilePictureType = ProfilePictureType.Square): String {
+    return "https://graph.facebook.com/v6.0/$id/picture?type=${type.name.toLowerCase()}"
   }
 
   fun requestUserPages(accessToken: AccessToken?, callback: GraphRequestUserAccountCallback) {
