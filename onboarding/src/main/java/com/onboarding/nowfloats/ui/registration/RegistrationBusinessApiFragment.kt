@@ -66,7 +66,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                     }
                 })
             }
-        }
+        } else apiBusinessComplete(dotProgressBar)
     }
 
     private fun apiBusinessComplete(dotProgressBar: DotProgressBar) {
