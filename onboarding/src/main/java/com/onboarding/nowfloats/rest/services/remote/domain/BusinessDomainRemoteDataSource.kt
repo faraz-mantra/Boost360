@@ -11,6 +11,5 @@ import retrofit2.http.Url
 
 interface BusinessDomainRemoteDataSource {
     @POST(EndPoints.POST_BUSINESS_DOMAIN_URL)
-    fun checkBusinessDomain(@Url url: String = EndPoints.BASE_WITH_FLOATS,
-                            @Body request: BusinessDomainRequest): Observable<Response<BusinessDomainResponse>>
+    fun checkBusinessDomain(@Body request: BusinessDomainRequest): Observable<Response<String>>
 }

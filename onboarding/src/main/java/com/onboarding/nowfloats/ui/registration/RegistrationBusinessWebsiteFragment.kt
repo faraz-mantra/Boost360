@@ -66,9 +66,8 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
             val pref: SharedPreferences = baseActivity.getSharedPreferences("nowfloatsPrefs", 0)
             val data = BusinessDomainRequest(pref.getString("user_profile_id", "5e7dfd3d5a9ed3000146ca56"), subDomain, requestFloatsModel?.contactInfo?.storeName)
             viewModel?.checkBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
-                Log.i("jshdbfhj", "" + it)
+                showShortToast(it.error?.message)
                 binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
-
             })
         } else {
             showLongToast("Please enter valid domain!")

@@ -5,10 +5,12 @@ import com.framework.base.BaseResponse
 import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken.AccessTokenType
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
+import com.onboarding.nowfloats.rest.apiClients.NfxApiClient
 import com.onboarding.nowfloats.rest.Taskcode
 import com.onboarding.nowfloats.rest.services.local.channel.ChannelLocalDataSource
 import com.onboarding.nowfloats.rest.services.remote.channel.ChannelRemoteDataSource
 import io.reactivex.Observable
+import retrofit2.Retrofit
 
 object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLocalDataSource>() {
 
@@ -45,5 +47,9 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
 
   fun postUpdateGoogleMyBusinessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse>{
     return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_GOOGLE_MY_BUSINESS_TOKEN)
+  }
+
+  override fun getApiClient(): Retrofit {
+    return NfxApiClient.shared.retrofit
   }
 }

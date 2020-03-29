@@ -1,5 +1,6 @@
 package com.framework.base
 
+import com.framework.exceptions.BaseException
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -17,10 +18,16 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
     protected abstract fun getApiClient(): Retrofit
 
-    fun <T : BaseResponse> makeRemoteRequest(observable: Observable<Response<T>>, taskcode: Int): Observable<BaseResponse> {
+    fun <T> makeRemoteRequest(
+            observable: Observable<Response<T>>, taskcode: Int
+    ): Observable<BaseResponse> {
         return observable.map {
             if (it.isSuccessful) {
-                val response = it.body() ?: BaseResponse()
+                val response = when(it.body()){
+                    is Array<*> -> BaseResponse(arrayResponse = it.body() as Array<*>)
+                    is String -> BaseResponse(stringResponse = it.body() as String)
+                    else -> it.body() as BaseResponse
+                }
                 response.status = it.code()
                 onSuccess(response, taskcode)
                 return@map response
@@ -28,6 +35,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
                 val response = BaseResponse()
                 response.status = it.code()
                 response.message = it.message()
+                response.error = BaseException(it.errorBody()?.string() ?: "")
 //                response.error = it.errorBody()
                 onFailure(response, taskcode)
                 return@map response
@@ -53,7 +61,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
     }
 
     protected fun onFailure(response: BaseResponse, taskcode: Int) {
-        response.error = Exception()
+        if (response.error == null) response.error = Exception()
     }
 
     protected fun onSuccess(response: BaseResponse, taskcode: Int) {
