@@ -49,9 +49,9 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
             (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
                 ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
                 ?.andThen(binding?.linkFacebook?.fadeIn(200L))
-                ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
+                    ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
         }
-        setOnClickListener(binding?.next, binding?.linkFacebook)
+        setOnClickListener(binding?.skip, binding?.linkFacebook)
         setSetSelectedFacebookChannels(channels)
     }
 
@@ -64,7 +64,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.next -> {
+            binding?.skip -> {
                 when {
                     channels.haveTwitterChannels() -> {
                         gotoTwitterDetails()
@@ -77,7 +77,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
                     }
                 }
             }
-            binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
+            binding?.linkFacebook -> loginWithFacebook(this, listOf(FacebookPermissions.public_profile))
         }
     }
 

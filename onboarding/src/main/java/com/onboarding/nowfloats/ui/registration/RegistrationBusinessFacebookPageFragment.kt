@@ -50,9 +50,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
       (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
               ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
               ?.andThen(binding?.linkFacebook?.fadeIn(200L))
-              ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
+              ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
     }
-    setOnClickListener(binding?.next, binding?.linkFacebook)
+    setOnClickListener(binding?.skip, binding?.linkFacebook)
     setSetSelectedFacebookChannels(channels)
   }
 
@@ -65,7 +65,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.next -> {
+      binding?.skip -> {
         when {
           channels.haveFacebookShop() -> {
             gotoFacebookShop()
@@ -121,12 +121,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
 
   private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
     val pages = response?.data ?: return
-
     if (pages.size > 1) return showShortToast("Select only one page")
-
     val page = pages.firstOrNull() ?: return
     page.profilePicture = FacebookGraphManager.getPageProfilePictureUrl(page.id ?: "")
-
     channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
     channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
     gotoPageConnectedScreen()
@@ -136,8 +133,6 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     if (channelAccessToken.userAccountId == null) return
     if (channelAccessToken.userAccessTokenKey == null) return
     if (channelAccessToken.userAccountName == null) return
-
-    // TODO Goto Next Screen
   }
 
     override fun getViewModelClass(): Class<BaseViewModel> {

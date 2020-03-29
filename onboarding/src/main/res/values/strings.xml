@@ -91,15 +91,18 @@
     <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, You can use regular WhatsApp contact number for your customers to reach you easily.</string>
     <string name="confirm_and_proceed">Confirm and Proceed</string>
     <string name="processing_your_business_information">Processing your business\ninformation…</string>
-  <string name="business_information_completed">Your business information\nsetup is completed!</string>
-  <string name="city_name">City name</string>
-  <string name="logout">Logout</string>
-  <string name="ok">OK</string>
-  <string name="press_again_exit">Press again to exit!</string>
+    <string name="business_information_completed">Your business information\nsetup is completed!</string>
+    <string name="city_name">City name</string>
+    <string name="logout">Logout</string>
+    <string name="ok">OK</string>
+    <string name="press_again_exit">Press again to exit!</string>
     <string name="facebook_page_connect_later_Skip">If you don’t have a Facebook Page, or if you want to connect it later; please tap ‘Skip’</string>
-    <string name="synn_facebook_page">Yes, Sync my Facebook Page</string>
+    <string name="sync_facebook_page">Yes, Sync my Facebook Page</string>
     <string name="shop_section_on_your_fb_page">Do you have shop section on your Fb page?</string>
     <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later; please tap ‘Skip’.</string>
     <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
+    <string name="twitter_acocunt_business_Skip">If you don’t have a twitter acocunt for your business, or if you want to connect it later; please tap ‘Skip’.</string>
+    <string name="twitter_allows_digital_business_boost">Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.</string>
+    <string name="save_continue">Save and continue</string>
 
 </resources>

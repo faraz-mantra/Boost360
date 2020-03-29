@@ -1,209 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_two">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white_two">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:id="@+id/view_business"
-          style="@style/Onboarding.Registration.FormContainerStyle"
-          android:layout_height="match_parent"
-          android:alpha="0"
-          android:paddingStart="@dimen/size_0"
-          android:paddingEnd="@dimen/size_0"
-          tools:alpha="1">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/title"
-            style="@style/Onboarding.Registration.HeaderTitleStyle"
-            android:layout_marginTop="@dimen/size_10"
-            android:alpha="0"
-            android:paddingStart="@dimen/size_32"
-            android:paddingEnd="@dimen/size_32"
-              android:text="@string/do_you_already_have_a_twitter_profile"
-            tools:alpha="1" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/sub_title"
-            style="@style/Onboarding.Registration.HeaderDescriptionStyle"
-            android:alpha="0"
-            android:paddingStart="@dimen/size_32"
-            android:paddingEnd="@dimen/size_32"
-              android:text="@string/setting_up_or_syncing_your_twitter_business_profile"
-            tools:alpha="1" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/view_business"
+                    style="@style/Onboarding.Registration.FormContainerStyle"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    android:paddingStart="@dimen/size_0"
+                    android:paddingEnd="@dimen/size_0"
+                    tools:alpha="1">
 
-          <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/Onboarding.Registration.FormContainerStyle"
-            android:layout_marginTop="@dimen/size_72"
-            android:paddingStart="@dimen/size_0"
-            android:paddingTop="@dimen/size_0"
-            android:paddingEnd="@dimen/size_0">
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/title"
+                        style="@style/Onboarding.Registration.HeaderTitleStyle"
+                        android:layout_marginTop="@dimen/size_10"
+                        android:alpha="0"
+                        android:paddingStart="@dimen/size_32"
+                        android:paddingEnd="@dimen/size_32"
+                        android:text="@string/do_you_already_have_a_twitter_profile"
+                        tools:alpha="1" />
 
-            <com.framework.views.customViews.CustomButton
-              android:id="@+id/linkTwitter"
-              style="@style/ButtonStyle.Rounded"
-              android:layout_width="match_parent"
-              android:layout_margin="@dimen/size_32"
-              android:alpha="0"
-                android:text="@string/yes_link_my_existing_twitter_profile"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              tools:alpha="1" />
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/sub_title"
+                        style="@style/Onboarding.Registration.HeaderDescriptionStyle"
+                        android:alpha="0"
+                        android:paddingStart="@dimen/size_32"
+                        android:paddingEnd="@dimen/size_32"
+                        android:text="@string/twitter_acocunt_business_Skip"
+                        tools:alpha="1" />
 
-            <com.framework.views.customViews.CustomButton
-              android:id="@+id/next"
-              style="@style/ButtonStyle.Rounded.Outlined"
-              android:alpha="0"
-                android:text="@string/i_don_t_have_one_will_do_later"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              tools:alpha="1" />
+                    <include
+                        android:id="@+id/twitter_success"
+                        layout="@layout/success_social_layout" />
 
-          </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.framework.views.viewgroups.BaseRecyclerView
+                    android:id="@+id/twitterChannels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:alpha="0"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:alpha="1"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_selected_channel"
+                    tools:spanCount="3" />
+
+            </FrameLayout>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <com.framework.views.viewgroups.BaseRecyclerView
-          android:id="@+id/twitterChannels"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:alpha="0"
-          app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-          tools:alpha="1"
-          tools:itemCount="3"
-          tools:listitem="@layout/item_selected_channel"
-          tools:spanCount="3" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginEnd="@dimen/size_32"
+            android:layout_marginBottom="@dimen/size_20"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-      </FrameLayout>
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/linkTwitter"
+                style="@style/ButtonStyle.Rounded"
+                android:layout_width="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:alpha="0"
+                android:text="@string/yes_link_my_existing_twitter_profile"
+                tools:alpha="1" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-  </androidx.constraintlayout.widget.ConstraintLayout>
-</layout><!--<?xml version="1.0" encoding="utf-8"?>-->
-  <!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
-  <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-  <!--    xmlns:tools="http://schemas.android.com/tools">-->
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/skip"
+                style="@style/ButtonStyle.Rounded.Outlined"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:alpha="0"
+                android:text="@string/skip"
+                tools:alpha="1" />
+        </LinearLayout>
 
-  <!--  <androidx.constraintlayout.widget.ConstraintLayout-->
-  <!--      android:layout_width="match_parent"-->
-  <!--      android:layout_height="match_parent"-->
-  <!--      android:background="@color/white_two">-->
-
-  <!--    <androidx.core.widget.NestedScrollView-->
-  <!--        android:id="@+id/nestedScrollView"-->
-  <!--        android:layout_width="match_parent"-->
-  <!--        android:layout_height="wrap_content"-->
-  <!--        app:layout_constraintStart_toStartOf="parent"-->
-  <!--        app:layout_constraintEnd_toEndOf="parent"-->
-  <!--        app:layout_constraintTop_toTopOf="parent"-->
-  <!--        app:layout_constraintBottom_toTopOf="@id/view">-->
-
-  <!--      <androidx.appcompat.widget.LinearLayoutCompat-->
-  <!--          android:layout_width="match_parent"-->
-  <!--          android:layout_height="match_parent"-->
-  <!--          android:orientation="vertical">-->
-
-  <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-  <!--            android:layout_width="match_parent"-->
-  <!--            android:layout_height="match_parent">-->
-
-  <!--          <androidx.appcompat.widget.LinearLayoutCompat-->
-  <!--              app:layout_constraintStart_toStartOf="parent"-->
-  <!--              app:layout_constraintEnd_toEndOf="parent"-->
-  <!--              app:layout_constraintTop_toBottomOf="@id/twitterChannels"-->
-  <!--              app:layout_constraintTop_toTopOf="@id/twitterChannels"-->
-  <!--              style="@style/Onboarding.Registration.FormContainerStyle"-->
-  <!--              android:paddingStart="@dimen/size_0"-->
-  <!--              android:paddingEnd="@dimen/size_0">-->
-
-  <!--            <com.framework.views.customViews.CustomTextView-->
-  <!--                android:text="Do you already have a Twitter profile?"-->
-  <!--                android:paddingStart="@dimen/size_32"-->
-  <!--                android:paddingEnd="@dimen/size_32"-->
-  <!--                style="@style/Onboarding.Registration.HeaderTitleStyle" />-->
-
-  <!--            <com.framework.views.customViews.CustomTextView-->
-  <!--                android:text="Setting up or Syncing your Twitter business profile"-->
-  <!--                android:paddingStart="@dimen/size_32"-->
-  <!--                android:paddingEnd="@dimen/size_32"-->
-  <!--                android:lines="2"-->
-  <!--                style="@style/Onboarding.Registration.HeaderDescriptionStyle" />-->
-
-  <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
-  <!--                style="@style/Onboarding.Registration.FormContainerStyle"-->
-  <!--                android:layout_marginTop="@dimen/size_72"-->
-  <!--                android:paddingTop="@dimen/size_0"-->
-  <!--                android:paddingStart="@dimen/size_0"-->
-  <!--                android:paddingEnd="@dimen/size_0">-->
-
-  <!--              <com.framework.views.customViews.CustomButton-->
-  <!--                  android:id="@+id/linkTwitter"-->
-  <!--                  android:text="Yes, link my existing Twitter profile"-->
-  <!--                  app:layout_constraintStart_toStartOf="parent"-->
-  <!--                  app:layout_constraintEnd_toEndOf="parent"-->
-  <!--                  app:layout_constraintBottom_toBottomOf="parent"-->
-  <!--                  android:layout_width="match_parent"-->
-  <!--                  android:layout_margin="@dimen/size_32"-->
-  <!--                  style="@style/ButtonStyle.Rounded" />-->
-
-  <!--              <com.framework.views.customViews.CustomButton-->
-  <!--                  android:id="@+id/next"-->
-  <!--                  android:text="I don’t have one, Will do later"-->
-  <!--                  app:layout_constraintStart_toStartOf="parent"-->
-  <!--                  app:layout_constraintEnd_toEndOf="parent"-->
-  <!--                  app:layout_constraintBottom_toBottomOf="parent"-->
-  <!--                  style="@style/ButtonStyle.Rounded.Outlined" />-->
-
-  <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-  <!--          </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-  <!--          <com.framework.views.viewgroups.BaseRecyclerView-->
-  <!--              android:id="@+id/twitterChannels"-->
-  <!--              android:layout_width="wrap_content"-->
-  <!--              android:layout_height="wrap_content"-->
-  <!--              tools:spanCount="3"-->
-  <!--              tools:itemCount="3"-->
-  <!--              tools:listitem="@layout/item_selected_channel"-->
-  <!--              app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
-  <!--              app:layout_constraintTop_toTopOf="parent"-->
-  <!--              app:layout_constraintStart_toStartOf="parent"-->
-  <!--              app:layout_constraintEnd_toEndOf="parent"-->
-  <!--              android:gravity="center_horizontal" />-->
-
-  <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-  <!--      </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-  <!--    </androidx.core.widget.NestedScrollView>-->
-
-  <!--    <View-->
-  <!--        android:id="@+id/view"-->
-  <!--        android:layout_width="match_parent"-->
-  <!--        android:layout_height="0dp"-->
-  <!--        android:background="@color/white"-->
-  <!--        app:layout_constraintStart_toStartOf="parent"-->
-  <!--        app:layout_constraintEnd_toEndOf="parent"-->
-  <!--        app:layout_constraintTop_toBottomOf="@id/nestedScrollView"-->
-  <!--        app:layout_constraintBottom_toBottomOf="parent" />-->
-
-  <!--  </androidx.constraintlayout.widget.ConstraintLayout>-->
-  <!--</layout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

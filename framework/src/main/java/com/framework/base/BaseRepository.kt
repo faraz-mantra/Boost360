@@ -18,12 +18,10 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
     protected abstract fun getApiClient(): Retrofit
 
-    fun <T> makeRemoteRequest(
-            observable: Observable<Response<T>>, taskcode: Int
-    ): Observable<BaseResponse> {
+    fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskcode: Int): Observable<BaseResponse> {
         return observable.map {
             if (it.isSuccessful) {
-                val response = when(it.body()){
+                val response = when (it.body()) {
                     is Array<*> -> BaseResponse(arrayResponse = it.body() as Array<*>)
                     is String -> BaseResponse(stringResponse = it.body() as String)
                     else -> it.body() as BaseResponse
