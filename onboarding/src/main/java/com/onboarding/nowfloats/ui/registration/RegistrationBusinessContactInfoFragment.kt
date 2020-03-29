@@ -5,10 +5,13 @@ import android.os.Handler
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.framework.extensions.gone
 import com.framework.extensions.isVisible
+import com.framework.extensions.visible
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
+import com.onboarding.nowfloats.extensions.replaceCountryCode
 import com.onboarding.nowfloats.model.registration.RegistrationViewModel
 
 class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding, RegistrationViewModel>() {
@@ -32,6 +35,17 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         }
         binding?.contactInfo = viewModel
         setOnClickListener(binding?.next)
+        binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && binding?.countryCode?.visibility == GONE) {
+                binding?.countryCode?.visible()
+                binding?.number?.hint = ""
+                binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
+            } else if (binding?.number?.text.isNullOrEmpty()) {
+                binding?.countryCode?.gone()
+                binding?.number?.hint = resources.getString(R.string.business_contact_number)
+                binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_0)
+            }
+        }
     }
 
     override fun onClick(v: View) {
@@ -57,7 +71,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         viewModel?.storeName = binding?.storeName?.text?.toString()
         viewModel?.address = binding?.address?.text?.toString()
         viewModel?.email = binding?.email?.text?.toString()
-        viewModel?.number = binding?.number?.text?.toString()
+        viewModel?.number = binding?.number?.text?.toString()?.let { replaceCountryCode(it) }
         return viewModel?.let {
             return if (it.storeName.isNullOrBlank()) {
                 showShortToast(resources.getString(R.string.business_cant_empty))
