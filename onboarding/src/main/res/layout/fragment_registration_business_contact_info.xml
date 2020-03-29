@@ -54,22 +54,23 @@
                         style="@style/Onboarding.Registration.FormContainerStyle"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/size_28"
-                        android:paddingTop="@dimen/size_40"
                         android:alpha="0"
+                        android:paddingTop="@dimen/size_40"
                         tools:alpha="1">
 
                         <com.framework.views.customViews.CustomTextField
                             android:id="@+id/store_name"
                             style="@style/Onboarding.TextFieldStyle"
-                            android:inputType="textCapWords"
                             android:drawableStart="@drawable/ic_store_focusable"
-                            android:hint="@string/enter_your_business_name" />
+                            android:hint="@string/enter_your_business_name"
+                            android:inputType="textCapWords" />
 
                         <com.framework.views.customViews.CustomTextField
                             android:id="@+id/address"
                             style="@style/Onboarding.TextFieldStyle"
                             android:drawableStart="@drawable/ic_location_focusable"
-                          android:hint="@string/city_name" />
+                            android:drawablePadding="@dimen/size_6"
+                            android:hint="@string/city_name" />
 
                         <com.framework.views.customViews.CustomTextField
                             android:id="@+id/email"
@@ -128,7 +129,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/confirm"
-              app:textType="HEADING_6"
+                app:textType="HEADING_6"
                 android:textColor="@color/white"
                 app:fontFamily="@font/bold" />
         </FrameLayout>

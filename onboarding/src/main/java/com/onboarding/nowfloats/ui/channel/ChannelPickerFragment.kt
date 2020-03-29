@@ -84,6 +84,7 @@ class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, Channel
                     }
                     ChannelConfirmDialog().apply {
                         setCount(channels.count())
+                        isCancelable = false
                         setOnConfirmClick(this@ChannelPickerFragment::onChannelConfirmed)
                         show(this@ChannelPickerFragment.parentFragmentManager, "")
                     }
