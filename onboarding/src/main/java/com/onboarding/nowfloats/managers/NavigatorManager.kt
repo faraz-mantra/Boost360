@@ -13,7 +13,9 @@ object NavigatorManager {
   val stack = Stack<ScreenModel>()
 
   fun push(screen: ScreenModel) {
-    stack.push(screen)
+    if (stack.firstOrNull { it.type == screen.type } == null) {
+      stack.push(screen)
+    }
   }
 
   fun pushToStackAndSaveRequest(screen: ScreenModel, request: RequestFloatsModel?){
@@ -35,6 +37,12 @@ object NavigatorManager {
   fun peek(): ScreenModel? {
     return if (stack.isEmpty()) null
     else stack.peek()
+  }
+
+  fun popCurrentScreen(screen: ScreenModel.Screen){
+    if (stack.isEmpty()) return
+    val model = stack.firstOrNull { it.type == screen.name } ?: return
+    stack.remove(model)
   }
 
   fun popStack() {

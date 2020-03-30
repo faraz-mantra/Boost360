@@ -8,6 +8,8 @@ import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.databinding.ActivityCategorySelectorBinding
+import com.onboarding.nowfloats.managers.NavigatorManager
+import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.disposables.Disposable
 
@@ -73,5 +75,10 @@ class CategorySelectorActivity : AppBaseActivity<ActivityCategorySelectorBinding
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         return if (animations.isAnimating()) true
         else super.dispatchTouchEvent(ev)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        NavigatorManager.popCurrentScreen(ScreenModel.Screen.CATEGORY_SELECT)
     }
 }

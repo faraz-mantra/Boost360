@@ -43,7 +43,8 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         }
         setOnClickListener(binding?.next)
         setSetSelectedGoogleChannels(channels)
-        setSubDomain(requestFloatsModel?.contactInfo?.businessName, isInitial = true)
+        val contactInfo = requestFloatsModel?.contactInfo
+        setSubDomain(contactInfo?.domainName ?: contactInfo?.businessName, isInitial = true)
         binding?.subdomain?.afterTextChanged { setSubDomain(it) }
     }
 

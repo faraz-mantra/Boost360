@@ -8,12 +8,16 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivityChannelPickerBinding
+import com.onboarding.nowfloats.extensions.getParcelable
+import com.onboarding.nowfloats.managers.NavigatorManager
+import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
+import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
 class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, ChannelPlanViewModel>(), ChannelSelectorAnimator.OnAnimationCompleteListener, MotionLayout.TransitionListener {
 
-    private var categoryDataModel: CategoryDataModel? = null
+    private var requestFloatsModel: RequestFloatsModel? = null
     private val animations = ChannelSelectorAnimator()
     val fragment: ChannelPickerFragment?
         get() = supportFragmentManager.findFragmentById(R.id.channelPickerFragment) as? ChannelPickerFragment
@@ -36,6 +40,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
             animations.listener = this
             animations.startAnimation()
         }
+        requestFloatsModel = intent.extras?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
         fragment?.updateBundleArguments(intent.extras)
         setCategoryImage()
         setOnClickListener(binding?.home)
@@ -43,7 +48,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
     }
 
     private fun setCategoryImage() {
-        binding?.categoryImage?.setImageDrawable(categoryDataModel?.getImage(this))
+        binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(this))
         binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, theme))
     }
 
@@ -73,5 +78,10 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
     override fun onAnimationComplete() {
         super.onAnimationComplete()
         fragment?.startAnimationChannelFragment()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        NavigatorManager.popCurrentScreen(ScreenModel.Screen.CHANNEL_SELECT)
     }
 }

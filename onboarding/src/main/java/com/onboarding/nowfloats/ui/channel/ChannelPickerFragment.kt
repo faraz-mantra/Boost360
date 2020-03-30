@@ -75,7 +75,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     fun updateBundleArguments(arguments: Bundle?) {
         this.arguments = arguments
         requestFloatsModel = arguments?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
-        this.categoryDataModel?.getChannelList()?.let { channelList.addAll(it) }
+        requestFloatsModel?.categoryDataModel?.getChannelList()?.let { channelList.addAll(it) }
     }
 
     override fun onCreateView() {
@@ -179,10 +179,9 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
             if (channels.haveTwitterChannels()) totalPages++
             if (channels.haveWhatsAppChannels()) totalPages++
         }
-        bundle.addParcelable(
-                IntentConstant.REQUEST_FLOATS_INTENT,
-                        RequestFloatsModel(categoryDataModel, ArrayList(selectedChannels))
-            )
+
+        requestFloatsModel?.channels = ArrayList(selectedChannels)
+        bundle.addParcelable(IntentConstant.REQUEST_FLOATS_INTENT, requestFloatsModel)
             .addInt(IntentConstant.TOTAL_PAGES, totalPages)
             .addInt(IntentConstant.CURRENT_PAGES, 1)
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS, bundle)
@@ -191,6 +190,10 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
 
 
     fun startAnimationChannelFragment() {
+        for (channel in requestFloatsModel?.channels ?: ArrayList()){
+            channelList.firstOrNull { it.getName() == channel.getName() }?.isSelected = true
+        }
+
         binding?.viewChannel?.post {
             setChannelAdapter(selectedChannels ?: ArrayList(), animate = false)
             binding?.viewChannel?.fadeIn(200L)?.doOnComplete {

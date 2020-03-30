@@ -79,6 +79,12 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
         binding?.recyclerView?.layoutManager = gridLayoutManager
         binding?.recyclerView?.adapter = baseAdapter
         baseAdapter?.runLayoutAnimation(binding?.recyclerView, R.anim.grid_layout_animation_from_bottom)
+
+        val requestFloatsModel = NavigatorManager.getRequest() ?: return
+        val category = requestFloatsModel.categoryDataModel ?: return
+
+        this.requestFloatsModel = requestFloatsModel
+        onItemClick(-1, category, RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal)
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -87,7 +93,7 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
                 category = item as? CategoryDataModel
                 for (listItem in categoryList) {
                     (listItem as? CategoryDataModel)?.let {
-                        it.isSelected = (it == item)
+                        it.isSelected = (it.icon == (item as? CategoryDataModel)?.icon)
                     }
                 }
                 binding?.next?.visible()

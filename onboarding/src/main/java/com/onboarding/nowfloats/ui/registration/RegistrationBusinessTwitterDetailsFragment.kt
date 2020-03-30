@@ -21,6 +21,7 @@ import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isTwitterChannel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.clear
+import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.twitter.sdk.android.core.Result
@@ -34,7 +35,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
 
   private val twitterAuthClient = TwitterAuthClient()
   private var selectedChannel: List<ChannelModel>? = null
-  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter.name.toLowerCase())
+  private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter.name.toLowerCase())
   private var twitterChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
 
 
@@ -57,6 +58,16 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     }
     setOnClickListener(binding?.skip, binding?.linkTwitter)
     setSelectedTwitterChannels(channels)
+
+    setSavedData()
+  }
+
+  override fun setSavedData() {
+    val channelAccessToken = requestFloatsModel?.channelAccessTokens
+            ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+    setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+    requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
+    this.channelAccessToken = channelAccessToken
   }
 
   private fun setSelectedTwitterChannels(list: ArrayList<ChannelModel>) {
@@ -103,30 +114,28 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     getUserDetails(result.data) { userDetails, error ->
       if (error != null) showShortToast(error.localizedMessage)
       else {
-        setProfileDetails(binding?.twitterSuccess, userDetails)
+        channelAccessToken.profilePicture = userDetails?.data?.profileImageUrl
+        setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
       }
     }
   }
 
-  private fun setProfileDetails(bindingSuccess: SuccessSocialLayoutBinding?, userDetails: Result<User>?) {
-    bindingSuccess?.let { twitterSuccess ->
-      binding?.skip?.gone()
-      twitterSuccess.maimView.visible()
-      twitterSuccess.disconnect.setOnClickListener { disconnectTwitter(twitterSuccess) }
-      this.binding?.title?.text = resources.getString(R.string.twitter_connected)
-      this.binding?.subTitle?.text = resources.getString(R.string.twitter_allows_digital_business_boost)
-      binding?.linkTwitter?.text = resources.getString(R.string.save_continue)
-      twitterSuccess.profileTitle.text = channelAccessToken.userAccountName
-      selectedChannel?.let { channels ->
-        if (channels.isNotEmpty()) {
-          channels[0].getDrawable(baseActivity)?.let { img -> twitterSuccess.channelType.setImageDrawable(img) }
-        }
+  override fun setProfileDetails(name: String?, profilePicture: String?) {
+    val binding = binding?.twitterSuccess ?: return
+    this.binding?.skip?.gone()
+    binding.maimView.visible()
+    binding.disconnect.setOnClickListener { disconnectTwitter(binding) }
+    this.binding?.title?.text = resources.getString(R.string.twitter_connected)
+    this.binding?.subTitle?.text = resources.getString(R.string.twitter_allows_digital_business_boost)
+    this.binding?.linkTwitter?.text = resources.getString(R.string.save_continue)
+    binding.profileTitle.text = name
+    selectedChannel?.let { channels ->
+      if (channels.isNotEmpty()) {
+        channels[0].getDrawable(baseActivity)?.let { img -> binding.channelType.setImageDrawable(img) }
       }
-      val profilePicture = userDetails?.data?.profileImageUrl
-      if (profilePicture?.isNotBlank() == true) {
-        baseActivity.glideLoad(twitterSuccess.profileImage, profilePicture, R.drawable.ic_user3)
-        channelAccessToken.profilePicture = profilePicture
-      }
+    }
+    if (profilePicture?.isNotBlank() == true) {
+      baseActivity.glideLoad(binding.profileImage, profilePicture, R.drawable.ic_user3)
     }
   }
 

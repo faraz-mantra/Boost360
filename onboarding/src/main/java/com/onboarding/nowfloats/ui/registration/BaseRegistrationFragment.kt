@@ -62,6 +62,10 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
         }
     }
 
+    protected open fun setSavedData(){
+
+    }
+
 //    override fun getViewModelClass(): Class<BaseViewModel> {
 //        return BaseViewModel::class.java
 //    }
@@ -112,6 +116,10 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
     protected fun gotoRegistrationComplete() {
         startFragmentActivity(FragmentType.REGISTRATION_COMPLETE, getBundle())
+    }
+
+    protected open fun setProfileDetails(name: String?, profilePicture: String?){
+
     }
 
     private fun getBundle(): Bundle {

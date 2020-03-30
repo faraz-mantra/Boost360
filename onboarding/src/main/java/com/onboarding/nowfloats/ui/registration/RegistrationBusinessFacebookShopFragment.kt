@@ -30,6 +30,7 @@ import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isFacebookShop
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.clear
+import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
@@ -38,7 +39,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
     private val callbackManager = CallbackManager.Factory.create()
     private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
-    private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookshop.name.toLowerCase())
+    private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookshop.name.toLowerCase())
 
     companion object {
         @JvmStatic
@@ -60,6 +61,16 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         }
         setOnClickListener(binding?.skip, binding?.linkFacebook)
         setSetSelectedFacebookChannels(channels)
+
+        setSavedData()
+    }
+
+    override fun setSavedData() {
+        val channelAccessToken = requestFloatsModel?.channelAccessTokens
+                ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+        setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+        requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
+        this.channelAccessToken = channelAccessToken
     }
 
     private fun setSetSelectedFacebookChannels(list: ArrayList<ChannelModel>) {
@@ -129,7 +140,6 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
 
     private fun onFacebookDetailsFetched(response: FacebookGraphUserDetailsResponse?) {
-        setProfileDetails()
     }
 
     private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
@@ -140,10 +150,10 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
         channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
         channelAccessToken.userAccountName = page.name
-        setProfileDetails()
+        setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
     }
 
-    private fun setProfileDetails() {
+    override fun setProfileDetails(name: String?, profilePicture: String?) {
         val binding = binding?.facebookPageSuccess ?: return
         this.binding?.skip?.gone()
         binding.maimView.visible()
@@ -151,12 +161,11 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         this.binding?.title?.text = resources.getString(R.string.facebook_shop_connected)
         this.binding?.subTitle?.text = resources.getString(R.string.facebook_shop_allows_digital_business_boost)
         this.binding?.linkFacebook?.text = resources.getString(R.string.save_continue)
-        binding.profileTitle.text = channelAccessToken.userAccountName
+        binding.profileTitle.text = name
         binding.channelType.setImageResource(R.drawable.ic_facebook_shop_n)
-        val profilePicture = channelAccessToken.profilePicture
+        val profilePicture = profilePicture
         if (profilePicture?.isNotBlank() == true) {
             baseActivity.glideLoad(binding.profileImage, profilePicture, R.drawable.ic_user3)
-            channelAccessToken.profilePicture = profilePicture
         }
     }
 

@@ -18,6 +18,8 @@ import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.FragmentType
+import com.onboarding.nowfloats.managers.NavigatorManager
+import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.ui.category.CategorySelectorFragment
 import com.onboarding.nowfloats.ui.channel.ChannelPickerFragment
 import com.onboarding.nowfloats.ui.registration.*
@@ -185,6 +187,20 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
                 registrationCompleteFragment
             }
             else -> throw IllegalFragmentTypeException()
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        when(type){
+            FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_INFO)
+            FragmentType.REGISTRATION_BUSINESS_WEBSITE -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_SUBDOMAIN)
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE)
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP)
+            FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_TWITTER)
+            FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_WHATSAPP)
+            FragmentType.REGISTRATION_COMPLETE -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTRATION_COMPLETE)
+            else -> {}
         }
     }
 

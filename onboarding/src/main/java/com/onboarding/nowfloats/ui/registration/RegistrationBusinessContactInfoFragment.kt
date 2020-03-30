@@ -13,7 +13,7 @@ import com.onboarding.nowfloats.model.registration.BusinessInfoModel
 
 class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding>() {
 
-  private val businessInfoModel = BusinessInfoModel()
+  private var businessInfoModel = BusinessInfoModel()
 
   companion object {
     @JvmStatic
@@ -45,6 +45,18 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
         }
       }
     }
+
+    setSavedData()
+  }
+
+  override fun setSavedData(){
+    val contactInfo = this.requestFloatsModel?.contactInfo ?: return
+    businessInfoModel = contactInfo
+    binding?.storeName?.setText(contactInfo.businessName)
+    binding?.address?.setText(contactInfo.address)
+    binding?.email?.setText(contactInfo.email)
+    val number = contactInfo.number ?: return
+    binding?.number?.setText("+91${number}")
   }
 
   override fun onClick(v: View) {

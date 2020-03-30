@@ -3,7 +3,6 @@ package com.onboarding.nowfloats.ui.registration
 import android.os.Bundle
 import android.view.View
 import com.framework.extensions.getDrawable
-import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWhatsappBinding
@@ -16,10 +15,11 @@ import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import com.thedevelopercat.sonic.utils.ValidationUtils
 
 class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
 
-    private var whatsAppData = ChannelActionData()
+    private var whatsAppData: ChannelActionData = ChannelActionData()
     private var whatsAppAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
 
     companion object {
@@ -33,11 +33,17 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
     override fun onCreateView() {
         super.onCreateView()
+        setSavedData()
+        var confirmButtonAlpha = 0.3f
+        if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: "")){
+            confirmButtonAlpha = 1f
+        }
+
         binding?.whatsappChannels?.post {
             (binding?.whatsappChannels?.fadeIn(1000L)?.mergeWith(binding?.viewBusiness?.fadeIn()))
                 ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
                 ?.andThen(
-                    binding?.edtView?.fadeIn()?.mergeWith(binding?.confirmBtn?.fadeIn(200L, 0.3F))
+                    binding?.edtView?.fadeIn()?.mergeWith(binding?.confirmBtn?.fadeIn(200L, confirmButtonAlpha))
                 )
                 ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
         }
@@ -46,17 +52,36 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         binding?.number?.afterTextChanged { checkValidNumber(it) }
     }
 
-    private fun checkValidNumber(phoneNumber: String?) {
-        phoneNumber?.let { it1 ->
-            binding?.number?.drawableEnd = takeIf { it1.length == 10 }?.let {
-                resources.getDrawable(baseActivity, R.drawable.ic_valid)
-            }
-            binding?.confirmBtn?.alpha = takeIf { it1.length == 10 }?.let { 1f } ?: 0.3f
-            binding?.skip?.text =
-                resources.getString(takeIf { it1.length == 10 }?.let { R.string.skip } ?: R.string.i_don_t_have_one_will_do_later)
+    override fun setSavedData() {
+        val whatsAppData = requestFloatsModel?.
+        channelActionDatas?.firstOrNull()?: return
+
+        requestFloatsModel?.channelActionDatas?.remove(whatsAppData)
+        this.whatsAppData = whatsAppData
+
+        binding?.number?.setText(whatsAppData.active_whatsapp_number)
+        binding?.confirmBtn?.post {
+            onNumberValid(ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: ""))
         }
-        if (binding?.confirmBtn?.alpha == 1f) {
+    }
+
+    private fun checkValidNumber(phoneNumber: String?) {
+        val number = phoneNumber ?: return
+        val isNumberValid = ValidationUtils.isMobileNumberValid(number)
+
+        onNumberValid(isNumberValid)
+    }
+
+    private fun onNumberValid(isNumberValid: Boolean) {
+        if (isNumberValid) {
+            binding?.number?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
+            binding?.confirmBtn?.alpha = 1f
+            binding?.skip?.text = resources.getString(R.string.skip)
             whatsAppData.active_whatsapp_number = binding?.number?.text?.toString()
+        } else {
+            binding?.number?.drawableEnd = null
+            binding?.confirmBtn?.alpha = 0.3f
+            binding?.skip?.text = resources.getString(R.string.i_don_t_have_one_will_do_later)
         }
     }
 

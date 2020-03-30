@@ -10,7 +10,6 @@ import com.facebook.login.LoginResult
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
-import com.framework.models.BaseViewModel
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
@@ -29,14 +28,14 @@ import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.clear
+import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
-import io.reactivex.rxkotlin.toObservable
 
 class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding>(),
         FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
-  private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookpage.name.toLowerCase())
+  private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookpage.name.toLowerCase())
 
   private val callbackManager = CallbackManager.Factory.create()
   private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -61,6 +60,16 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     }
     setOnClickListener(binding?.skip, binding?.linkFacebook)
     setSetSelectedFacebookChannels(channels)
+
+    setSavedData()
+  }
+
+  override fun setSavedData() {
+    val channelAccessToken = requestFloatsModel?.channelAccessTokens
+            ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+    setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+    requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
+    this.channelAccessToken = channelAccessToken
   }
 
   private fun setSetSelectedFacebookChannels(list: ArrayList<ChannelModel>) {
@@ -132,7 +141,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   private fun onFacebookDetailsFetched(response: FacebookGraphUserDetailsResponse?) {
-    setProfileDetails()
+
   }
 
   private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
@@ -143,10 +152,10 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
     channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
     channelAccessToken.userAccountName = page.name
-    setProfileDetails()
+    setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
   }
 
-  private fun setProfileDetails() {
+  override fun setProfileDetails(name: String?, profilePicture: String?) {
     val binding = binding?.facebookPageSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
@@ -155,12 +164,10 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     this.binding?.title?.text = resources.getString(R.string.facebook_page_connected)
     this.binding?.subTitle?.text = resources.getString(R.string.facebook_page_allows_digital_business_boost)
     this.binding?.linkFacebook?.text = resources.getString(R.string.save_continue)
-    binding.profileTitle.text = channelAccessToken.userAccountName
+    binding.profileTitle.text = name
     binding.channelType.setImageResource(R.drawable.ic_facebook_page_n)
-    val profilePicture = channelAccessToken.profilePicture
     if (profilePicture?.isNotBlank() == true) {
       baseActivity.glideLoad(binding.profileImage, profilePicture, R.drawable.ic_user3)
-      channelAccessToken.profilePicture = profilePicture
     }
   }
 
