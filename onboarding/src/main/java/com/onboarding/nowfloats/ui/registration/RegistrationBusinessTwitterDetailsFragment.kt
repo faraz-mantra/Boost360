@@ -29,7 +29,7 @@ import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
 
-class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding, BaseViewModel>(),
+class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(),
         TwitterLoginHelper, TwitterUserHelper {
 
   private val twitterAuthClient = TwitterAuthClient()
@@ -145,9 +145,5 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     twitterAuthClient.onActivityResult(requestCode, resultCode, data)
-  }
-
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
   }
 }

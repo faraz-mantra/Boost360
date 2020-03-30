@@ -19,8 +19,9 @@ import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.ui.startFragmentActivity
+import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
-open class BaseRegistrationFragment<binding : ViewDataBinding, ViewModel : BaseViewModel?> : BaseFragment<binding, ViewModel>() {
+open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<binding, BusinessCreateViewModel>() {
 
     protected val channels: ArrayList<ChannelModel>
         get() {
@@ -113,7 +114,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding, ViewModel : BaseV
         return bundle
     }
 
-    override fun getViewModelClass(): Class<ViewModel> {
-        return getViewModelClass()
+    override fun getViewModelClass(): Class<BusinessCreateViewModel> {
+        return BusinessCreateViewModel::class.java
     }
 }

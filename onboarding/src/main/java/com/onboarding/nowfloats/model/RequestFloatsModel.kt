@@ -6,12 +6,12 @@ import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
-import com.onboarding.nowfloats.model.registration.RegistrationViewModel
+import com.onboarding.nowfloats.model.registration.BusinessInfoModel
 
 class RequestFloatsModel(
         var categoryDataModel: CategoryDataModel? = null,
         var channels: ArrayList<ChannelModel>? = null,
-        var contactInfo: RegistrationViewModel? = null,
+        var contactInfo: BusinessInfoModel? = null,
         var channelAccessTokens: ArrayList<ChannelAccessToken>? = ArrayList(),
         var channelActionDatas: ArrayList<ChannelActionData>? = ArrayList()
 ) : Parcelable {
@@ -19,7 +19,7 @@ class RequestFloatsModel(
   constructor(source: Parcel) : this(
           source.readParcelable<CategoryDataModel>(CategoryDataModel::class.java.classLoader),
           source.createTypedArrayList(ChannelModel.CREATOR),
-          source.readParcelable<RegistrationViewModel>(RegistrationViewModel::class.java.classLoader),
+          source.readParcelable<BusinessInfoModel>(BusinessInfoModel::class.java.classLoader),
           source.createTypedArrayList(ChannelAccessToken.CREATOR),
           source.createTypedArrayList(ChannelActionData.CREATOR)
   )

@@ -14,6 +14,8 @@ import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentCategorySelectorBinding
+import com.onboarding.nowfloats.extensions.getParcelable
+import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
@@ -24,6 +26,7 @@ import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 
 class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
+    private var requestFloatsModel: RequestFloatsModel? = RequestFloatsModel()
     private var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>? = null
     private var categoryList = ArrayList<CategoryDataModel>()
     private var category: CategoryDataModel? = null
@@ -101,7 +104,8 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
 
     private fun gotoChannelPicker() {
         val bundle = Bundle()
-        bundle.putParcelable(IntentConstant.CATEGORY_INTENT.name, category)
+        category?.let { requestFloatsModel?.categoryDataModel = it }
+        bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, requestFloatsModel)
         navigator?.startActivity(ChannelPickerActivity::class.java, bundle)
     }
 }

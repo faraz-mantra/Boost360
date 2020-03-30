@@ -33,7 +33,7 @@ import com.onboarding.nowfloats.model.channel.request.clear
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding, BaseViewModel>(),
+class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding>(),
     FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
     private val callbackManager = CallbackManager.Factory.create()
@@ -166,9 +166,5 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
         binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
         channelAccessToken.clear()
-    }
-
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
     }
 }

@@ -17,7 +17,7 @@ import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
-class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding, BusinessCreateViewModel>(), RecyclerItemClickListener {
+class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
 
   private var list: ArrayList<ProcessApiSyncModel>? = null
   private var apiProcessAdapter: AppBaseRecyclerViewAdapter<ProcessApiSyncModel>? = null

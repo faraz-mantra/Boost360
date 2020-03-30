@@ -33,7 +33,7 @@ import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import io.reactivex.rxkotlin.toObservable
 
-class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding, BaseViewModel>(),
+class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding>(),
         FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
   private val channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Facebookpage.name.toLowerCase())
@@ -170,9 +170,5 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
     binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
     channelAccessToken.clear()
-  }
-
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
   }
 }

@@ -4,18 +4,17 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.framework.models.BaseViewModel
 import com.thedevelopercat.sonic.utils.ValidationUtils
 import java.net.HttpURLConnection
 import java.net.URL
 
-class RegistrationViewModel(
+class BusinessInfoModel(
         var businessName: String? = null,
         var address: String? = null,
         var email: String? = null,
         var number: String? = null,
         var domainName: String? = null
-) : BaseViewModel(), Parcelable {
+): Parcelable {
 
     fun isEmailValid(): Boolean {
         return ValidationUtils.isEmailValid(email ?: "")
@@ -45,9 +44,9 @@ class RegistrationViewModel(
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<RegistrationViewModel> = object : Parcelable.Creator<RegistrationViewModel> {
-            override fun createFromParcel(source: Parcel): RegistrationViewModel = RegistrationViewModel(source)
-            override fun newArray(size: Int): Array<RegistrationViewModel?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<BusinessInfoModel> = object : Parcelable.Creator<BusinessInfoModel> {
+            override fun createFromParcel(source: Parcel): BusinessInfoModel = BusinessInfoModel(source)
+            override fun newArray(size: Int): Array<BusinessInfoModel?> = arrayOfNulls(size)
         }
     }
 

@@ -19,9 +19,8 @@ import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
-import com.onboarding.nowfloats.viewmodel.domain.BusinessDomainViewModel
 
-class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding, BusinessDomainViewModel>() {
+class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding>() {
 
     private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
 
@@ -125,9 +124,5 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                     }
                 }
         }
-    }
-
-    override fun getViewModelClass(): Class<BusinessDomainViewModel> {
-        return BusinessDomainViewModel::class.java
     }
 }

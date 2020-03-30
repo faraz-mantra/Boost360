@@ -27,7 +27,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import java.io.File
 
-class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding, BaseViewModel>() {
+class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
 
     private var selectedChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
     var isProfileImage: Boolean? = null
@@ -176,9 +176,5 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                 }
             }
         }
-    }
-
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
     }
 }

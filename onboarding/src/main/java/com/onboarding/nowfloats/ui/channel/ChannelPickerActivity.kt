@@ -1,7 +1,6 @@
 package com.onboarding.nowfloats.ui.channel
 
 import android.view.View
-import android.view.ViewOutlineProvider
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
 import com.framework.utils.ConversionUtils
@@ -37,8 +36,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
             animations.listener = this
             animations.startAnimation()
         }
-        categoryDataModel = intent.extras?.getParcelable(IntentConstant.CATEGORY_INTENT.name) as? CategoryDataModel
-        fragment?.setBundle(categoryDataModel)
+        fragment?.updateBundleArguments(intent.extras)
         setCategoryImage()
         setOnClickListener(binding?.home)
         binding?.motionLayout?.setTransitionListener(this)

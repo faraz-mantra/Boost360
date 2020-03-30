@@ -17,6 +17,7 @@ import com.onboarding.nowfloats.databinding.FragmentChannelPickerBinding
 import com.onboarding.nowfloats.extensions.addInt
 import com.onboarding.nowfloats.extensions.addParcelable
 import com.onboarding.nowfloats.extensions.fadeIn
+import com.onboarding.nowfloats.extensions.getParcelable
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.*
@@ -29,9 +30,8 @@ import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
 class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
+    private var requestFloatsModel: RequestFloatsModel? = null
     private var featuresBottomSheetDialog: FeaturesBottomSheetDialog? = null
-
-    private var categoryDataModel: CategoryDataModel? = null
     private var channelBottomSheetNDialog: ChannelBottomSheetNDialog? = null
     private var channelFeaturesAdapter: AppBaseRecyclerViewAdapter<SectionsFeature>? = null
     private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -44,6 +44,12 @@ class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, Channel
         get() {
             return categoryDataModel?.sections
         }
+
+    private val categoryDataModel: CategoryDataModel?
+        get() {
+            return requestFloatsModel?.categoryDataModel
+        }
+
 
     companion object {
         @JvmStatic
@@ -62,8 +68,9 @@ class ChannelPickerFragment : BaseFragment<FragmentChannelPickerBinding, Channel
         return ChannelPlanViewModel::class.java
     }
 
-    fun setBundle(categoryDataModel: CategoryDataModel?) {
-        this.categoryDataModel = categoryDataModel
+    fun updateBundleArguments(arguments: Bundle?) {
+        this.arguments = arguments
+        requestFloatsModel = arguments?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
         this.categoryDataModel?.getChannelList()?.let { channelList.addAll(it) }
     }
 

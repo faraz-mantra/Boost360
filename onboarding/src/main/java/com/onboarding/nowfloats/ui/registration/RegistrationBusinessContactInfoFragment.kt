@@ -9,9 +9,11 @@ import com.framework.extensions.isVisible
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
-import com.onboarding.nowfloats.model.registration.RegistrationViewModel
+import com.onboarding.nowfloats.model.registration.BusinessInfoModel
 
-class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding, RegistrationViewModel>() {
+class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding>() {
+
+  private val businessInfoModel = BusinessInfoModel()
 
   companion object {
     @JvmStatic
@@ -30,7 +32,6 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
               ?.andThen(binding?.viewForm?.fadeIn())?.andThen(binding?.next?.fadeIn(150L))
               ?.subscribe()
     }
-    binding?.contactInfo = viewModel
     setOnClickListener(binding?.next)
     binding?.number?.setOnFocusChangeListener { v, hasFocus ->
       if (hasFocus) {
@@ -48,51 +49,48 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.next -> if (binding?.textBtn?.isVisible() == true && isValid()) {
-        requestFloatsModel?.contactInfo = viewModel
-        getDotProgress()?.let {
-          binding?.textBtn?.visibility = GONE
-          binding?.next?.addView(it)
-          it.startAnimation()
-          Handler().postDelayed({
-            it.stopAnimation()
-            it.removeAllViews()
-            binding?.textBtn?.visibility = VISIBLE
-            gotoBusinessWebsite()
-          }, 1000)
+      binding?.next -> {
+        requestFloatsModel?.contactInfo = businessInfoModel
+        if (binding?.textBtn?.isVisible() == true && isValid()) {
+          getDotProgress()?.let {
+            binding?.textBtn?.visibility = GONE
+            binding?.next?.addView(it)
+            it.startAnimation()
+            Handler().postDelayed({
+              it.stopAnimation()
+              it.removeAllViews()
+              binding?.textBtn?.visibility = VISIBLE
+              gotoBusinessWebsite()
+            }, 1000)
+          }
         }
       }
     }
   }
 
   private fun isValid(): Boolean {
-    viewModel?.businessName = binding?.storeName?.text?.toString()
-    viewModel?.address = binding?.address?.text?.toString()
-    viewModel?.email = binding?.email?.text?.toString()
+    requestFloatsModel?.contactInfo?.businessName = binding?.storeName?.text?.toString()
+    requestFloatsModel?.contactInfo?.address = binding?.address?.text?.toString()
+    requestFloatsModel?.contactInfo?.email = binding?.email?.text?.toString()
 
     try {
-      viewModel?.number = binding?.number?.text?.substring(3)
+      businessInfoModel.number = binding?.number?.text?.substring(3)
     } catch (e: StringIndexOutOfBoundsException) {
-      viewModel?.number = null
+      businessInfoModel.number = null
     }
-    return viewModel?.let {
-      return if (it.businessName.isNullOrBlank()) {
-        showShortToast(resources.getString(R.string.business_cant_empty))
-        false
-      } else if (it.address.isNullOrBlank()) {
-        showShortToast(resources.getString(R.string.business_address_cant_empty))
-        false
-      } else if (!it.isEmailValid()) {
-        showShortToast(resources.getString(R.string.email_invalid))
-        false
-      } else if (!it.isNumberValid()) {
-        showShortToast(resources.getString(R.string.phone_number_invalid))
-        false
-      } else true
-    } ?: false
-  }
 
-  override fun getViewModelClass(): Class<RegistrationViewModel> {
-    return RegistrationViewModel::class.java
+    return if (businessInfoModel.businessName.isNullOrBlank()) {
+      showShortToast(resources.getString(R.string.business_cant_empty))
+      false
+    } else if (businessInfoModel.address.isNullOrBlank()) {
+      showShortToast(resources.getString(R.string.business_address_cant_empty))
+      false
+    } else if (!businessInfoModel.isEmailValid()) {
+      showShortToast(resources.getString(R.string.email_invalid))
+      false
+    } else if (!businessInfoModel.isNumberValid()) {
+      showShortToast(resources.getString(R.string.phone_number_invalid))
+      false
+    } else true
   }
 }
