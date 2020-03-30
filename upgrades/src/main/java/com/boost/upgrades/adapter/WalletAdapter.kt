@@ -4,15 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.UpdatesModel
-import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.interfaces.PaymentListener
-import com.bumptech.glide.Glide
 
 
 class WalletAdapter(itemList: ArrayList<String>, val listener: PaymentListener) :

@@ -2,7 +2,6 @@ package com.boost.upgrades.ui.removeaddons
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,7 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.RemoveAddonsAdapter
-import com.boost.upgrades.data.model.Cart
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.RemoveItemsListener
 import com.boost.upgrades.utils.Constants.Companion.REMOVE_ADDONS_CONFIRMATION_FRAGMENT
@@ -31,9 +29,9 @@ class RemoveAddonsFragment : BaseFragment(), RemoveItemsListener {
 
     lateinit var localStorage: LocalStorage
 
-    var cart_list: MutableList<Cart>? = null
+    var cart_list: MutableList<CartModel>? = null
 
-    val selectedItem: MutableList<Cart> = ArrayList()
+    val selectedItem: MutableList<CartModel> = ArrayList()
 
     companion object {
         fun newInstance() = RemoveAddonsFragment()
@@ -65,7 +63,7 @@ class RemoveAddonsFragment : BaseFragment(), RemoveItemsListener {
         loadData()
 
         viewModel.cartResult().observe(this, Observer {
-            cart_list = it as MutableList<Cart>?
+            cart_list = it as MutableList<CartModel>?
             initializeRecycler()
         })
 
@@ -105,17 +103,17 @@ class RemoveAddonsFragment : BaseFragment(), RemoveItemsListener {
         updateRecycler(cart_list!!)
     }
 
-    fun updateRecycler(list: List<Cart>){
+    fun updateRecycler(list: List<CartModel>){
         removeAddonsAdapter.addupdates(list)
         remove_recyclerDetails.adapter = removeAddonsAdapter
         removeAddonsAdapter.notifyDataSetChanged()
     }
 
-    override fun addItemToCart(item: Cart) {
+    override fun addItemToCart(item: CartModel) {
         selectedItem.remove(item)
     }
 
-    override fun removeItemFromCart(item: Cart) {
+    override fun removeItemFromCart(item: CartModel) {
         selectedItem.add(item)
     }
 

@@ -16,11 +16,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginStart
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
@@ -28,8 +26,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.PackageViewPagerAdapter
 import com.boost.upgrades.adapter.SimplePageTransformer
 import com.boost.upgrades.adapter.UpgradeAdapter
-import com.boost.upgrades.adapter.ZoomOutPageTransformer
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.cart.CartFragment
@@ -46,13 +43,11 @@ import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.snackbar.Snackbar
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.dots_indicator
 import retrofit2.Retrofit
-import java.lang.Math.abs
 import java.util.*
 
 class HomeFragment : BaseFragment(), HomeListener {
@@ -69,7 +64,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
 
-    var cart_list: List<UpdatesModel>? = null
+    var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
 //    val compositeDisposable = CompositeDisposable()
 
@@ -298,7 +293,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         viewModel.loadUpdates()
     }
 
-    fun updateRecycler(list: List<UpdatesModel>) {
+    fun updateRecycler(list: List<WidgetModel>) {
         if (shimmer_view_container.isAnimationStarted) {
             shimmer_view_container.stopShimmerAnimation()
             shimmer_view_container.visibility = View.GONE

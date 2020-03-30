@@ -71,18 +71,18 @@ class RazorPayWebView : DialogFragment() {
         try {
             // Make webview visible before submitting payment details
             razorpay.setWebView(razorpay_webview);
-            razorpay.submit(data, object : PaymentResultWithDataListener {
+            razorpay.submit(data, object : PaymentResultListener {
 
-                override fun onPaymentSuccess(razorpayPaymentId: String, paymentData: PaymentData) {
+                override fun onPaymentSuccess(razorpayPaymentId: String) {
                     // Razorpay payment ID is passed here after a successful payment
                     Log.i("onPaymentSuccess", razorpayPaymentId)
                     redirectOrderConfirmation()
                     dialog!!.dismiss()
                 }
 
-                override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
+                override fun onPaymentError(p0: Int, p1: String?) {
                     // Error code and description is passed here
-                    Log.e("onPaymentError", "p1 >>>"+ p1+ "\np2>>>"+p2.toString())
+                    Log.e("onPaymentError", "p1 >>>"+ p1)
                     redirectTransactionFailure()
                     dialog!!.dismiss()
                 }

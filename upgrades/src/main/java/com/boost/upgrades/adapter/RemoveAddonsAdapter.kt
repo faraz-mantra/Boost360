@@ -9,23 +9,21 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.Cart
-import com.boost.upgrades.data.model.UpdatesModel
-import com.boost.upgrades.interfaces.MyAddonsListener
+import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.RemoveItemsListener
 import com.bumptech.glide.Glide
 
 
 class RemoveAddonsAdapter(
-    val activity: UpgradeActivity,
-    itemList: List<Cart>?, val listener: RemoveItemsListener
+        val activity: UpgradeActivity,
+        itemList: List<CartModel>?, val listener: RemoveItemsListener
 ) : RecyclerView.Adapter<RemoveAddonsAdapter.upgradeViewHolder>() {
 
-    private var list = ArrayList<Cart>()
+    private var list = ArrayList<CartModel>()
     private lateinit var context: Context
 
     init {
-        this.list = itemList as ArrayList<Cart>
+        this.list = itemList as ArrayList<CartModel>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -68,7 +66,7 @@ class RemoveAddonsAdapter(
         }
     }
 
-    fun addupdates(upgradeModel: List<Cart>) {
+    fun addupdates(upgradeModel: List<CartModel>) {
         val initPosition = list.size
         list.clear()
         list.addAll(upgradeModel)
@@ -86,7 +84,7 @@ class RemoveAddonsAdapter(
         private var context: Context = itemView.context
 
 
-        fun upgradeListItem(item: Cart) {
+        fun upgradeListItem(item: CartModel) {
 //            upgradeTitle.text = updateModel.title
 //            upgradeDetails.text = updateModel.name
 //            upgradePrice.text=updateModel.price

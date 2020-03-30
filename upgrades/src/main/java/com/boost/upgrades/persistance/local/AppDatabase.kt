@@ -7,12 +7,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.biz2.nowfloats.boost.updates.persistance.dao.CartDao
 
-import com.biz2.nowfloats.boost.updates.persistance.dao.UpdatesDao
-import com.boost.upgrades.data.model.Cart
-import com.boost.upgrades.data.model.UpdatesModel
+import com.biz2.nowfloats.boost.updates.persistance.dao.WidgetDao
+import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Constants
 
-@Database(entities = [UpdatesModel::class, Cart::class], version = 1)
+@Database(entities = [WidgetModel::class, CartModel::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -32,7 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun updatesDao(): UpdatesDao
+    abstract fun widgetDao(): WidgetDao
 
     abstract fun cartDao(): CartDao
 }

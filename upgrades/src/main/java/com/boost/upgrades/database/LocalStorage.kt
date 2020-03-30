@@ -2,11 +2,10 @@ package com.boost.upgrades.database
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Constants.Companion.USER_PREFERENCES
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.util.Collections.list
 
 class LocalStorage(context: Context) {
     private val sharedPreferences: SharedPreferences
@@ -14,26 +13,26 @@ class LocalStorage(context: Context) {
     private val INITIAL_LOAD_DATA = "INITIAL_LOAD_DATA"
     private val CART_ITEMS = "CART_ITEMS"
 
-    fun setInitialLoad(updatesModel: List<UpdatesModel>) {
+    fun setInitialLoad(updatesModel: List<WidgetModel>) {
         editor = sharedPreferences!!.edit()
         editor!!.putString(INITIAL_LOAD_DATA, Gson().toJson(updatesModel))
         editor!!.apply()
     }
 
-    fun getInitialLoad(): List<UpdatesModel>? {
+    fun getInitialLoad(): List<WidgetModel>? {
         val gson = Gson()
-        var initDataModel: List<UpdatesModel>?
+        var initDataModel: List<WidgetModel>?
         val data = sharedPreferences.getString(INITIAL_LOAD_DATA, null)
 
         initDataModel =
-            gson.fromJson(data, object : TypeToken<List<UpdatesModel>?>() {}.type)
+            gson.fromJson(data, object : TypeToken<List<WidgetModel>?>() {}.type)
         return initDataModel
     }
 
-    fun addCartItem(updatesModel: UpdatesModel) {
-        var items = getCartItems() as MutableList<UpdatesModel>?
+    fun addCartItem(updatesModel: WidgetModel) {
+        var items = getCartItems() as MutableList<WidgetModel>?
         if (items == null) {
-            var item: MutableList<UpdatesModel> = ArrayList()
+            var item: MutableList<WidgetModel> = ArrayList()
             item.add(updatesModel)
             editor = sharedPreferences!!.edit()
             editor!!.putString(CART_ITEMS, Gson().toJson(item))
@@ -46,19 +45,19 @@ class LocalStorage(context: Context) {
         }
     }
 
-    fun setCartItem(list: List<UpdatesModel>) {
+    fun setCartItem(list: List<WidgetModel>) {
         editor = sharedPreferences!!.edit()
         editor!!.putString(CART_ITEMS, Gson().toJson(list))
         editor!!.apply()
     }
 
-    fun getCartItems(): List<UpdatesModel>? {
+    fun getCartItems(): List<WidgetModel>? {
         val gson = Gson()
-        var initDataModel: List<UpdatesModel>?
+        var initDataModel: List<WidgetModel>?
         val data = sharedPreferences.getString(CART_ITEMS, null)
 
         initDataModel =
-            gson.fromJson(data, object : TypeToken<List<UpdatesModel>?>() {}.type)
+            gson.fromJson(data, object : TypeToken<List<WidgetModel>?>() {}.type)
         return initDataModel
     }
 

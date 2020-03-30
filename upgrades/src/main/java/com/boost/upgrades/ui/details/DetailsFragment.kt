@@ -1,7 +1,6 @@
 package com.boost.upgrades.ui.details
 
 import android.graphics.Color
-import android.graphics.Paint
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -15,10 +14,12 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.adapter.DetailsViewPagerAdapter
+import com.boost.upgrades.adapter.ReviewViewPagerAdapter
 import com.boost.upgrades.adapter.ZoomOutPageTransformer
-import com.boost.upgrades.data.model.Cart
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.api_model.GetAllWidgets.FeatureDetails
+import com.boost.upgrades.data.api_model.GetAllWidgets.Review
+import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.webview.WebViewFragment
@@ -30,7 +31,9 @@ import com.boost.upgrades.utils.Utils.longToast
 import com.bumptech.glide.Glide
 //import com.devs.readmoreoption.ReadMoreOption
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.JsonParser
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.details_fragment.*
 import retrofit2.Retrofit
 
@@ -44,13 +47,14 @@ class DetailsFragment : BaseFragment() {
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
     lateinit var localStorage: LocalStorage
-    var singleItemId: Int? = null
+    var singleItemId: String? = null
     var badgeNumber = 0
-    var addons_list: List<UpdatesModel>? = null
-    var cart_list: List<Cart>? = null
+    var addons_list: List<WidgetModel>? = null
+    var cart_list: List<CartModel>? = null
     var itemInCartStatus = false
+    var widgetLearnMoreLink: String? = null
 
-    lateinit var detailsAdapter: DetailsViewPagerAdapter
+    lateinit var reviewAdaptor: ReviewViewPagerAdapter
 //    private var detailsAdapter = DetailsAdapter(ArrayList())
 
     companion object {
@@ -58,21 +62,21 @@ class DetailsFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.details_fragment, container, false)
 
 
         detailsViewModelFactory =
-            DetailsViewModelFactory(requireNotNull(requireActivity().application))
+                DetailsViewModelFactory(requireNotNull(requireActivity().application))
 
         viewModel = ViewModelProviders.of(requireActivity(), detailsViewModelFactory)
-            .get(DetailsViewModel::class.java)
+                .get(DetailsViewModel::class.java)
 
-        detailsAdapter = DetailsViewPagerAdapter(ArrayList())
+        reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
         localStorage = LocalStorage.getInstance(context!!)!!
-        singleItemId = arguments!!.getInt("itemId")
+        singleItemId = arguments!!.getString("itemId")
 
 //        addons_list = localStorage.getInitialLoad()
 
@@ -92,17 +96,31 @@ class DetailsFragment : BaseFragment() {
             viewModel.getCartItems()
             addons_list = it
             if (addons_list != null) {
-                for(item in addons_list!!) {
-                    if (item.id.toInt() == singleItemId) {
+                for (item in addons_list!!) {
+                    if (item.id == singleItemId) {
+                        val featureType = object : TypeToken<FeatureDetails>() {}.type
+                        val featureDetails: FeatureDetails = Gson().fromJson(item.featureDetails, featureType)
                         Glide.with(this).load(item.image)
-                            .into(image1222)
+                                .into(image1222)
 
                         Glide.with(this).load(item.image)
-                            .into(title_image)
+                                .into(title_image)
+
+                        Glide.with(this).load(featureDetails.backgroundImage)
+                                .into(details_image_bg)
 
                         title_top_1.text = item.title
                         title_top.text = item.name
                         title_appbar.text = item.name
+                        details_discount.text = item.discount.toString()+"% OFF"
+                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
+                        money.text = "₹" + item.price + "/month"
+                        orig_cost.text = "Original cost ₹" + item.MRPPrice + "/month"
+                        widgetLearnMore.text = featureDetails.learnMore.title
+                        widgetLearnMoreLink = featureDetails.learnMore.link
+                        xheader.text = featureDetails.subTitle
+                        abcText.text = featureDetails.subDesc
+                        updateReview(featureDetails.review)
                         break
                     }
                 }
@@ -115,10 +133,10 @@ class DetailsFragment : BaseFragment() {
             if (cart_list != null && cart_list!!.size > 0) {
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
-                    if (item.item_id!!.toInt() == singleItemId) {
+                    if (item.id == singleItemId) {
                         add_item_to_cart.background = ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.added_to_cart_grey
+                                requireContext(),
+                                R.drawable.added_to_cart_grey
                         )
                         add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
                         add_item_to_cart.setText(getString(R.string.added_to_cart))
@@ -130,22 +148,22 @@ class DetailsFragment : BaseFragment() {
                 badgeNumber = cart_list!!.size
                 badge121.setText(badgeNumber.toString())
                 Constants.CART_VALUE = badgeNumber
-                if(!itemInCartStatus){
+                if (!itemInCartStatus) {
                     add_item_to_cart.background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.orange_button_click_effect
+                            requireContext(),
+                            R.drawable.orange_button_click_effect
                     )
                     add_item_to_cart.setTextColor(Color.WHITE)
                     add_item_to_cart.setText(getString(R.string.add_for_99_month))
                     havent_bought_the_feature.visibility = View.VISIBLE
                 }
-            }else{
+            } else {
                 badgeNumber = 0
                 badge121.visibility = View.GONE
                 itemInCartStatus = false
                 add_item_to_cart.background = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.orange_button_click_effect
+                        requireContext(),
+                        R.drawable.orange_button_click_effect
                 )
                 add_item_to_cart.setTextColor(Color.WHITE)
                 add_item_to_cart.setText(getString(R.string.add_for_99_month))
@@ -154,11 +172,11 @@ class DetailsFragment : BaseFragment() {
         })
 
         viewModel.addonsError().observe(this, Observer {
-            longToast(requireContext(), "onFailure: "+ it)
+            longToast(requireContext(), "onFailure: " + it)
         })
 
         viewModel.addonsLoader().observe(this, Observer {
-            if(!it){
+            if (!it) {
 
             }
         })
@@ -199,13 +217,13 @@ class DetailsFragment : BaseFragment() {
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
                 if (addons_list != null) {
-                    for (item in addons_list!!){
-                        if(item.id.toInt() == singleItemId) {
+                    for (item in addons_list!!) {
+                        if (item.id == singleItemId) {
                             viewModel.addItemToCart(item)
                             break
                         }
                     }
-                    badgeNumber = badgeNumber+1
+                    badgeNumber = badgeNumber + 1
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
                     Constants.CART_VALUE = badgeNumber
@@ -213,8 +231,8 @@ class DetailsFragment : BaseFragment() {
 //                    localStorage.addCartItem(addons_list!!.get(itemId))
 
                     add_item_to_cart.background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.grey_button_click_effect
+                            requireContext(),
+                            R.drawable.grey_button_click_effect
                     )
                     add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
                     add_item_to_cart.setText(getString(R.string.added_to_cart))
@@ -230,15 +248,19 @@ class DetailsFragment : BaseFragment() {
 
         imageViewCart121.setOnClickListener {
             (activity as UpgradeActivity).addFragment(
-                CartFragment.newInstance(),
-                CART_FRAGMENT
+                    CartFragment.newInstance(),
+                    CART_FRAGMENT
             )
         }
 
         fb_layout.setOnClickListener {
+            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+            val args = Bundle()
+            args.putString("link", widgetLearnMoreLink)
+            webViewFragment.arguments = args
             (activity as UpgradeActivity).addFragment(
-                WebViewFragment.newInstance(),
-                WEB_VIEW_FRAGMENT
+                    webViewFragment,
+                    WEB_VIEW_FRAGMENT
             )
         }
 
@@ -247,17 +269,17 @@ class DetailsFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         val pos = 2
-        viewpager.postDelayed(Runnable { viewpager.setCurrentItem(pos) }, 100)
+        reviewViewpager.postDelayed(Runnable { reviewViewpager.setCurrentItem(pos) }, 100)
     }
 
     fun spannableString() {
         val origCost = SpannableString("Original cost ₹799/month")
 
         origCost.setSpan(
-            StrikethroughSpan(),
-            15,
-            origCost.length,
-            0
+                StrikethroughSpan(),
+                15,
+                origCost.length,
+                0
         )
         orig_cost.setText(origCost)
     }
@@ -266,23 +288,27 @@ class DetailsFragment : BaseFragment() {
         viewModel.loadAddonsFromDB()
     }
 
-    private fun initializeViewPager() {
-        viewpager.adapter = detailsAdapter
-        dots_indicator.setViewPager2(viewpager)
-        viewpager.offscreenPageLimit = 1
+    fun updateReview(list: List<Review>){
+        reviewAdaptor.addupdates(list)
+    }
 
-        viewpager.setPageTransformer(ZoomOutPageTransformer())
+    private fun initializeViewPager() {
+        reviewViewpager.adapter = reviewAdaptor
+        dots_indicator.setViewPager2(reviewViewpager)
+        reviewViewpager.offscreenPageLimit = 1
+
+        reviewViewpager.setPageTransformer(ZoomOutPageTransformer())
 
         val itemDecoration = HorizontalMarginItemDecoration(
-            requireContext(),
-            R.dimen.viewpager_current_item_horizontal_margin
+                requireContext(),
+                R.dimen.viewpager_current_item_horizontal_margin
         )
-        viewpager.addItemDecoration(itemDecoration)
+        reviewViewpager.addItemDecoration(itemDecoration)
 //        viewpager.setPageTransformer(ZoomOutPageTransformer())
     }
 
     override fun onBackPressed() {
-        if(::viewModel.isInitialized){
+        if (::viewModel.isInitialized) {
             viewModel.getCartItems()
         }
     }

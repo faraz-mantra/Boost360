@@ -4,24 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.UpdatesModel
-import com.boost.upgrades.interfaces.MyAddonsListener
-import com.bumptech.glide.Glide
+import com.boost.upgrades.data.model.WidgetModel
 
 
-class UPIAdapter(itemList: List<UpdatesModel>?) :
+class UPIAdapter(itemList: List<WidgetModel>?) :
     RecyclerView.Adapter<UPIAdapter.upgradeViewHolder>(), View.OnClickListener {
 
-    private var list = ArrayList<UpdatesModel>()
+    private var list = ArrayList<WidgetModel>()
     private lateinit var context: Context
 
     init {
-        this.list = itemList as ArrayList<UpdatesModel>
+        this.list = itemList as ArrayList<WidgetModel>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -48,7 +43,7 @@ class UPIAdapter(itemList: List<UpdatesModel>?) :
 
     }
 
-    fun addupdates(upgradeModel: List<UpdatesModel>) {
+    fun addupdates(upgradeModel: List<WidgetModel>) {
         val initPosition = list.size
         list.clear()
         list.addAll(upgradeModel)

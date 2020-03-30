@@ -19,11 +19,9 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CartAddonsAdaptor
 import com.boost.upgrades.adapter.CartPackageAdaptor
-import com.boost.upgrades.data.api_model.PurchaseOrder.CreatePurchaseOrderRequest
-import com.boost.upgrades.data.api_model.PurchaseOrder.PaymentDetails
-import com.boost.upgrades.data.api_model.PurchaseOrder.Widget
+import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
-import com.boost.upgrades.data.model.Cart
+import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.payment.PaymentFragment
@@ -40,7 +38,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var customerId: String? = null
 
-    var total = 0f
+    var total = 0
 
     lateinit var progressDialog: ProgressDialog
 
@@ -87,20 +85,37 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 viewModel.InitiatePurchaseOrder(
                         CreatePurchaseOrderRequest(
                                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
-                                "5e6b572c959b7e77e0c5883e",
-                                PaymentDetails(20.66, "GST", 0, 1, 0, 0, 18, 1000.25),
+                                "58b97497120d4005385f2800",
+                                PaymentDetails(
+                                        "INR",
+                                        0,
+                                        "RAZORPAY",
+                                        TaxDetails(
+                                                "36ARVPS3698F1Zf",
+                                                0,
+                                                null,
+                                                18),
+                                        118),
                                 listOf(
                                         Widget(
-                                                "SERVICES",
-                                                "TIME",
-                                                "Description",
+                                                ConsumptionConstraint(
+                                                        "LIMIT",
+                                                        30
+                                                ),
+                                                "Display most popular courses.",
                                                 0,
-                                                30,
+                                                Expiry(
+                                                        "DAYS",
+                                                        3
+                                                ),
                                                 listOf(),
-                                                "Latest Updates",
-                                                1000,
-                                                1,
-                                                "TOB"
+                                                true,
+                                                true,
+                                                "Product / Courses Catalogue",
+                                                100,
+                                                "MONTHLY",
+                                                "COURSES",
+                                                1
                                         )
                                 )
                         )
@@ -166,9 +181,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 val paymentFragment = PaymentFragment.newInstance()
                 val args = Bundle()
                 args.putString("customerId", customerId)
-                args.putInt("amount", (total * 100).toInt())// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
+                args.putInt("amount", (total * 100))// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
 //                args.putString("order_id", "order_DgZ26rHjbzLLY2") //For testing dont send order Id
-                args.putString("order_id", it.OrderId)
+                args.putString("order_id", it.Result.OrderId)
                 args.putString("email", "gaurav.kumar@example.com")
                 args.putString("currency", "INR");
                 args.putString("contact", "9876543210")
@@ -192,14 +207,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         })
     }
 
-    fun totalCalculation(list: List<Cart>) {
+    fun totalCalculation(list: List<CartModel>) {
+        total = 0
         if (list != null && list.size > 0) {
             for (item in list) {
                 total = total + item.price
             }
             cart_amount_value.setText("₹" + total.toString())
             coupon_discount_value.setText("0")
-            order_total_value.setText((total + 0).toString())
+            order_total_value.setText("₹" +(total + 0).toString())
             cart_grand_total.setText("₹" + total.toString())
             footer_grand_total.setText("₹" + total.toString())
         }

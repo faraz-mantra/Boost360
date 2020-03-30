@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 
 import com.boost.upgrades.R
@@ -20,6 +21,8 @@ class WebViewFragment : BaseFragment() {
 
     lateinit var root: View
 
+    var link: String? = null
+
     companion object {
         fun newInstance() = WebViewFragment()
     }
@@ -27,20 +30,24 @@ class WebViewFragment : BaseFragment() {
     private lateinit var viewModel: WebViewViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.web_view_fragment, container, false)
-
+        link = arguments!!.getString("link")
         return root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(WebViewViewModel::class.java)
-        // TODO: Use the ViewModel
 
-        webview.loadUrl("https://www.google.com/")
+        if (link != null) {
+            webview.loadUrl(link)
+        } else {
+            Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
+            (activity as UpgradeActivity).popFragmentFromBackStack()
+        }
 
         web_addons_back.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()

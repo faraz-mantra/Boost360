@@ -7,12 +7,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.data.api_model.PurchaseOrder.CreatePurchaseOrderRequest
-import com.boost.upgrades.data.api_model.PurchaseOrder.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.api_model.PurchaseOrder.request.CreatePurchaseOrderRequest
+import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
-import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
-import com.boost.upgrades.data.model.Cart
+import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,12 +20,11 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONObject
 import retrofit2.HttpException
 
 class CartViewModel(application: Application) : BaseViewModel(application){
 
-    var cartResult: MutableLiveData<List<Cart>> = MutableLiveData()
+    var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
@@ -38,7 +36,7 @@ class CartViewModel(application: Application) : BaseViewModel(application){
     val compositeDisposable = CompositeDisposable()
 
 
-    fun cartResult(): LiveData<List<Cart>> {
+    fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
     }
 
@@ -58,69 +56,75 @@ class CartViewModel(application: Application) : BaseViewModel(application){
         return _initiatePurchaseOrder
     }
 
-    fun InitiatePurchaseOrder(createPurchaseOrderRequest: CreatePurchaseOrderRequest){
-        updatesLoader.postValue(true)
-        APIRequestStatus = "InitiatePurchaseOrder"
-        compositeDisposable.add(
-            ApiService.CreatePurchaseOrder(createPurchaseOrderRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        Log.i("InitiatePurchaseOrder>>",it.toString())
-                        _initiatePurchaseOrder.postValue(it)
+    fun InitiatePurchaseOrder(createPurchaseOrderRequest: CreatePurchaseOrderRequest) {
+        if (Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
+            APIRequestStatus = "InitiatePurchaseOrder"
+            compositeDisposable.add(
+                    ApiService.CreatePurchaseOrder(createPurchaseOrderRequest)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("InitiatePurchaseOrder>>", it.toString())
+                                        _initiatePurchaseOrder.postValue(it)
 //                        customerId = it.CustomerId
-                        updatesLoader.postValue(false)
-                    },
-                    {
-                        updatesError.postValue(it.message)
-                         updatesLoader.postValue(false)
-                    }
-                )
-        )
+                                        updatesLoader.postValue(false)
+                                    },
+                                    {
+                                        Toast.makeText(getApplication(), it.message, Toast.LENGTH_SHORT).show()
+                                        updatesError.postValue(it.message)
+                                        updatesLoader.postValue(false)
+                                    }
+                            )
+            )
+        }
     }
 
-    fun requestCustomerId(customerIDRequest: CustomerIDRequest){
-        updatesLoader.postValue(true)
-        APIRequestStatus = "Get Customer Info"
-        compositeDisposable.add(
-            ApiService.getCustomerId(customerIDRequest.InternalSourceId, customerIDRequest.ClientId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        Log.i("getCustomerId>>",it.Result.ExternalSourceId)
-                        customerId = it.Result.ExternalSourceId
-                         updatesLoader.postValue(false)
-                    },
-                    {
-                        val errorBody: CreateCustomerIDResponse = Gson().fromJson(
-                                (it as HttpException).response()!!.errorBody()!!.string(), object : TypeToken<CreateCustomerIDResponse>() {}.type
-                        )
-                        if(errorBody!=null && errorBody.StatusCode == 400) {
-                            compositeDisposable.add(
-                                    ApiService.createCustomerId(customerIDRequest)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(
-                                                    {
-                                                        Log.i("CreateCustomerId>>",it.toString())
-                                                        customerId = it.Result.CustomerId
-                                                        updatesLoader.postValue(false)
-                                                    },
-                                                    {
-                                                        Toast.makeText(getApplication(),it.message, Toast.LENGTH_SHORT).show()
-                                                        updatesError.postValue(it.message)
-                                                        updatesLoader.postValue(false)
-                                                    }
+    fun requestCustomerId(customerIDRequest: CustomerIDRequest) {
+        if (Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
+            APIRequestStatus = "Get Customer Info"
+            compositeDisposable.add(
+                    ApiService.getCustomerId(customerIDRequest.InternalSourceId, customerIDRequest.ClientId)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("getCustomerId>>", it.Result.ExternalSourceId)
+                                        customerId = it.Result.ExternalSourceId
+                                        updatesLoader.postValue(false)
+                                    },
+                                    {
+                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                                        val errorBody: CreateCustomerIDResponse = Gson().fromJson(
+                                                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
+                                        )
+                                        if (errorBody != null && errorBody.StatusCode == 400) {
+                                            compositeDisposable.add(
+                                                    ApiService.createCustomerId(customerIDRequest)
+                                                            .subscribeOn(Schedulers.io())
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe(
+                                                                    {
+                                                                        Log.i("CreateCustomerId>>", it.toString())
+                                                                        customerId = it.Result.CustomerId
+                                                                        updatesLoader.postValue(false)
+                                                                    },
+                                                                    {
+                                                                        Toast.makeText(getApplication(), it.message, Toast.LENGTH_SHORT).show()
+                                                                        updatesError.postValue(it.message)
+                                                                        updatesLoader.postValue(false)
+                                                                    }
+                                                            )
                                             )
-                            )
-                        }
+                                        }
 //                        updatesError.postValue(it.message)
 //                        updatesLoader.postValue(false)
-                    }
-                )
-        )
+                                    }
+                            )
+            )
+        }
     }
 
     fun getCartItems(){

@@ -6,10 +6,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -61,14 +63,14 @@ object Utils {
         Toast.makeText(context, msg.toString(), Toast.LENGTH_LONG).show()
     }
 
-    fun readJSONFromAsset(context: Context): List<UpdatesModel>? {
-        val data: List<UpdatesModel>
+    fun readJSONFromAsset(context: Context): List<GetAllWidgets>? {
+        val data: List<GetAllWidgets>
         var jsonString: String? = null
         try {
             val  inputStream: InputStream = context.assets.open("initialLoad.json")
             jsonString = inputStream.bufferedReader().use{it.readText()}
             val gson = Gson()
-            val listPersonType = object : TypeToken<List<UpdatesModel>>() {}.type
+            val listPersonType = object : TypeToken<List<GetAllWidgets>>() {}.type
 
             data = gson.fromJson(jsonString, listPersonType)
         } catch (ex: Exception) {

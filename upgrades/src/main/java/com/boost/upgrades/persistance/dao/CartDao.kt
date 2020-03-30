@@ -1,17 +1,17 @@
 package com.biz2.nowfloats.boost.updates.persistance.dao
 
 import androidx.room.*
-import com.boost.upgrades.data.model.Cart
+import com.boost.upgrades.data.model.CartModel
 import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
 interface CartDao {
     @Query("SELECT * FROM Cart")
-    fun getCartItems(): Single<List<Cart>>
+    fun getCartItems(): Single<List<CartModel>>
 
     @Query("SELECT * FROM Cart WHERE id=:item_id")
-    fun getCartItemById(item_id: Int): Flowable<List<Cart?>?>?
+    fun getCartItemById(item_id: Int): Flowable<List<CartModel?>?>?
 
     @Query("SELECT COUNT(*)from Cart")
     fun countCartItems(): Int
@@ -20,14 +20,14 @@ interface CartDao {
     fun emptyCart()
 
     @Insert
-    fun insertToCart(vararg carts: Cart?)
+    fun insertToCart(vararg carts: CartModel?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllUPdates(updates: List<Cart>)
+    fun insertAllUPdates(updates: List<CartModel>)
 
     @Update
-    fun updateCart(vararg carts: Cart?)
+    fun updateCart(vararg carts: CartModel?)
 
-    @Query("DELETE FROM Cart WHERE item_id=:itemId")
+    @Query("DELETE FROM Cart WHERE id=:itemId")
     fun deleteCartItem(vararg itemId: String)
 }

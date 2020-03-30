@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.model.WidgetModel
 
 
-class CartPackageAdaptor(cryptoCurrencies: List<UpdatesModel>?) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
+class CartPackageAdaptor(cryptoCurrencies: List<WidgetModel>?) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<UpdatesModel>()
+    private var upgradeList = ArrayList<WidgetModel>()
     private lateinit var context : Context
-    init { this.upgradeList = cryptoCurrencies as ArrayList<UpdatesModel> }
+    init { this.upgradeList = cryptoCurrencies as ArrayList<WidgetModel> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
@@ -31,7 +31,7 @@ class CartPackageAdaptor(cryptoCurrencies: List<UpdatesModel>?) : RecyclerView.A
 
     }
 
-    fun addupdates(upgradeModel: List<UpdatesModel>) {
+    fun addupdates(upgradeModel: List<WidgetModel>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
@@ -39,7 +39,7 @@ class CartPackageAdaptor(cryptoCurrencies: List<UpdatesModel>?) : RecyclerView.A
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun upgradeListItem(updateModel: UpdatesModel) {
+        fun upgradeListItem(updateModel: WidgetModel) {
 
         }
     }

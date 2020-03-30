@@ -1,8 +1,8 @@
 package com.boost.upgrades.interfaces
 
-import com.boost.upgrades.data.model.Cart
+import com.boost.upgrades.data.model.CartModel
 
 interface RemoveItemsListener {
-    fun addItemToCart(item: Cart)
-    fun removeItemFromCart(item: Cart)
+    fun addItemToCart(item: CartModel)
+    fun removeItemFromCart(item: CartModel)
 }

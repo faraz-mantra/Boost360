@@ -14,13 +14,10 @@ import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.AllFeatureAdaptor
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
-import com.boost.upgrades.ui.home.HomeViewModel
-import com.boost.upgrades.ui.home.HomeViewModelFactory
 import com.boost.upgrades.utils.Utils
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.view_all_features_fragment.*
 import retrofit2.Retrofit
 
@@ -102,7 +99,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
         viewModel.loadAddonsFromDB()
     }
 
-    fun initialiseRecyclerView(upgradeList: List<UpdatesModel>){
+    fun initialiseRecyclerView(upgradeList: List<WidgetModel>){
         if(shimmer_view_container2.isAnimationStarted) {
             shimmer_view_container2.stopShimmerAnimation()
             shimmer_view_container2.visibility = View.GONE

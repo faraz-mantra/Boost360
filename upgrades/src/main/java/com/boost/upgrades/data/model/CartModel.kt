@@ -5,18 +5,28 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Cart")
-class Cart {
-    @PrimaryKey(autoGenerate = true)
+data class CartModel (
+
+    @PrimaryKey
     @ColumnInfo(name = "id")
-    var id = 0
-    @ColumnInfo(name = "item_id")
-    var item_id: String? = null
+    var id: String,
+
     @ColumnInfo(name = "item_name")
-    var item_name: String? = null
+    var item_name: String? = null,
+
     @ColumnInfo(name = "link")
-    var link: String? = null
+    var link: String? = null,
+
     @ColumnInfo(name = "price")
-    var price: Float = 0f
+    var price: Int = 0,
+
+    @ColumnInfo(name = "MRPPrice")
+    var MRPPrice: Int = 0,
+
+    @ColumnInfo(name = "discount")
+    var discount: Int = 0,
+
     @ColumnInfo(name = "quantity")
     var quantity: Int = 0
-}
+
+)

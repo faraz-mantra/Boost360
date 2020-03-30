@@ -15,12 +15,9 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.FreeAddonsAdapter
 import com.boost.upgrades.adapter.PaidAddonsAdapter
-import com.boost.upgrades.data.model.UpdatesModel
-import com.boost.upgrades.database.LocalStorage
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
-import com.boost.upgrades.ui.home.HomeViewModel
-import com.boost.upgrades.ui.home.HomeViewModelFactory
 import com.boost.upgrades.ui.removeaddons.RemoveAddonsFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.REMOVE_ADDONS_FRAGMENT
@@ -43,7 +40,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     var freeaddonsSeeMoreStatus = false
     var paidaddonsSeeMoreStatus = false
 
-    var totalItemList: List<UpdatesModel>? = null
+    var totalItemList: List<WidgetModel>? = null
 
     companion object {
         fun newInstance() = MyAddonsFragment()
@@ -212,13 +209,13 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         viewModel.loadUpdates()
     }
 
-    private fun updateFreeAddonsRecycler(list: List<UpdatesModel>) {
+    private fun updateFreeAddonsRecycler(list: List<WidgetModel>) {
         freeAddonsAdapter.addupdates(list)
         recycler_freeaddons.adapter = freeAddonsAdapter
         freeAddonsAdapter.notifyDataSetChanged()
     }
 
-    private fun updatePaidAddonsRecycler(list: List<UpdatesModel>) {
+    private fun updatePaidAddonsRecycler(list: List<WidgetModel>) {
         paidAddonsAdapter.addupdates(list)
         recycler_paidaddons.adapter = paidAddonsAdapter
         paidAddonsAdapter.notifyDataSetChanged()

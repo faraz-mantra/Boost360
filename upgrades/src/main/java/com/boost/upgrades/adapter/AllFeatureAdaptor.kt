@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.UpdatesModel
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.bumptech.glide.Glide
@@ -18,14 +18,14 @@ import com.bumptech.glide.Glide
 
 class AllFeatureAdaptor(
     val activity: UpgradeActivity,
-    cryptoCurrencies: List<UpdatesModel>?
+    cryptoCurrencies: List<WidgetModel>?
 ) : RecyclerView.Adapter<AllFeatureAdaptor.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<UpdatesModel>()
+    private var upgradeList = ArrayList<WidgetModel>()
     private lateinit var context: Context
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<UpdatesModel>
+        this.upgradeList = cryptoCurrencies as ArrayList<WidgetModel>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -60,7 +60,7 @@ class AllFeatureAdaptor(
         }
     }
 
-    fun addupdates(upgradeModel: List<UpdatesModel>) {
+    fun addupdates(upgradeModel: List<WidgetModel>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
@@ -78,7 +78,7 @@ class AllFeatureAdaptor(
         private var context: Context = itemView.context
 
 
-        fun upgradeListItem(updateModel: UpdatesModel) {
+        fun upgradeListItem(updateModel: WidgetModel) {
             upgradeTitle.text = updateModel.title
             upgradeDetails.text = updateModel.name
             upgradePrice.text = "₹" + updateModel.price.toString() + "/month"

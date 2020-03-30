@@ -1,8 +1,8 @@
-package com.boost.upgrades.data.api_model.PurchaseOrder
+package com.boost.upgrades.data.api_model.PurchaseOrder.request
 
 data class CreatePurchaseOrderRequest(
     val ClientId: String,
-    val FpId: String,
+    val FloatingPointId: String,
     val PaymentDetails: PaymentDetails,
     val Widgets: List<Widget>
 )

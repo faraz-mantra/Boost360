@@ -6,26 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.UpdatesModel
-import com.boost.upgrades.interfaces.MyAddonsListener
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Utils.hideSoftKeyboard
-import com.bumptech.glide.Glide
 
 
-class CardPaymentAdapter(val activity: FragmentActivity, itemList: List<UpdatesModel>?) :
+class CardPaymentAdapter(val activity: FragmentActivity, itemList: List<WidgetModel>?) :
     RecyclerView.Adapter<CardPaymentAdapter.upgradeViewHolder>(), View.OnClickListener {
 
-    private var list = ArrayList<UpdatesModel>()
+    private var list = ArrayList<WidgetModel>()
     private lateinit var context: Context
 
     init {
-        this.list = itemList as ArrayList<UpdatesModel>
+        this.list = itemList as ArrayList<WidgetModel>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -59,7 +54,7 @@ class CardPaymentAdapter(val activity: FragmentActivity, itemList: List<UpdatesM
 
     }
 
-    fun addupdates(upgradeModel: List<UpdatesModel>) {
+    fun addupdates(upgradeModel: List<WidgetModel>) {
         val initPosition = list.size
         list.clear()
         list.addAll(upgradeModel)

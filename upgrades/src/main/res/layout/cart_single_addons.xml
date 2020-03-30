@@ -42,6 +42,7 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/cart_item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="0dp"
@@ -51,6 +52,7 @@
                 android:textColor="#0068e0" />
 
             <TextView
+                android:id="@+id/cart_item_orig_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="0dp"
@@ -60,6 +62,7 @@
                 android:textColor="#9b9b9b" />
 
             <TextView
+                android:id="@+id/cart_item_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/all_side_curve_percentage_bg"

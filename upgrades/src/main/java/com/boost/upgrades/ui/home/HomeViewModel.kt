@@ -1,41 +1,36 @@
 package com.boost.upgrades.ui.home
 
 import android.app.Application
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.data.model.Cart
-import com.boost.upgrades.data.model.UpdatesModel
-import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
+import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.Utils.readJSONFromAsset
+import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.home_fragment.*
-import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 class HomeViewModel(application: Application) : BaseViewModel(application) {
-    var updatesResult: MutableLiveData<List<UpdatesModel>> = MutableLiveData()
+    var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
-    var cartResult: MutableLiveData<List<Cart>> = MutableLiveData()
+    var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
-    fun upgradeResult(): LiveData<List<UpdatesModel>> {
+    fun upgradeResult(): LiveData<List<WidgetModel>> {
         return updatesResult
     }
 
-    fun cartResult(): LiveData<List<Cart>> {
+    fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
     }
 
@@ -58,21 +53,34 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 //                .subscribe(
 //                    {
 //                        Timber.e(it.size.toString())
-            val data: List<UpdatesModel>? = readJSONFromAsset(getApplication())
-                        Completable.fromAction {
-                            AppDatabase.getInstance(getApplication())!!.updatesDao().insertAllUPdates(data!!)
-                        }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-                                updatesResult.postValue(data)
-                                updatesLoader.postValue(false)
-                            }
-                            .doOnError {
-                                updatesError.postValue(it.message)
-                                updatesLoader.postValue(false)
-                            }
-                            .subscribe()
+            val data: List<GetAllWidgets>? = readJSONFromAsset(getApplication())
+            val widgetsData = arrayListOf<WidgetModel>()
+            data!!.forEachIndexed { index, getAllWidgets ->
+                widgetsData.add(WidgetModel(
+                        getAllWidgets.id,
+                        getAllWidgets.title,
+                        getAllWidgets.name,
+                        getAllWidgets.price,
+                        getAllWidgets.MRPPrice,
+                        getAllWidgets.discount,
+                        getAllWidgets.image,
+                        Gson().toJson(getAllWidgets.featureDetails)
+                ))
+            }
+            Completable.fromAction {
+                AppDatabase.getInstance(getApplication())!!.widgetDao().insertAllUPdates(widgetsData!!)
+            }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete {
+                        updatesResult.postValue(widgetsData)
+                        updatesLoader.postValue(false)
+                    }
+                    .doOnError {
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                    .subscribe()
 //                    },
 //                    {
 //                        updatesError.postValue(it.message)
@@ -82,40 +90,40 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 //            )
         } else {
             compositeDisposable.add(
-                AppDatabase.getInstance(getApplication())!!
-                    .updatesDao()
-                    .queryUpdates()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess {
-                        updatesResult.postValue(it)
-                        updatesLoader.postValue(false)
-                    }
-                    .doOnError {
-                        updatesError.postValue(it.message)
-                        updatesLoader.postValue(false)
-                    }
-                    .subscribe()
+                    AppDatabase.getInstance(getApplication())!!
+                            .widgetDao()
+                            .queryUpdates()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnSuccess {
+                                updatesResult.postValue(it)
+                                updatesLoader.postValue(false)
+                            }
+                            .doOnError {
+                                updatesError.postValue(it.message)
+                                updatesLoader.postValue(false)
+                            }
+                            .subscribe()
             )
         }
     }
 
-    fun getCartItems(){
+    fun getCartItems() {
         compositeDisposable.add(
-            AppDatabase.getInstance(getApplication())!!
-                .cartDao()
-                .getCartItems()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess {
-                    cartResult.postValue(it)
-                    updatesLoader.postValue(false)
-                }
-                .doOnError {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                .subscribe()
+                AppDatabase.getInstance(getApplication())!!
+                        .cartDao()
+                        .getCartItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess {
+                            cartResult.postValue(it)
+                            updatesLoader.postValue(false)
+                        }
+                        .doOnError {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        .subscribe()
         )
     }
 
