@@ -55,10 +55,10 @@
                                     android:layout_marginStart="@dimen/size_8"
                                     android:ellipsize="end"
                                     android:maxLines="2"
-                                    tools:text="Presence on 0 channels"
                                     android:textColor="@color/dodger_blue_two"
                                     app:fontFamily="@font/semi_bold"
-                                    app:textType="SUBHEADING_2" />
+                                    app:textType="SUBHEADING_2"
+                                    tools:text="Presence on 0 channels" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -181,10 +181,10 @@
             android:alpha="0"
             android:drawableEnd="@null"
             android:text="@string/get_started"
-          app:textType="HEADING_6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:textType="HEADING_6"
             tools:alpha="1" />
 
 
