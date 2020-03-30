@@ -4,24 +4,27 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.databinding.ViewDataBinding
-import com.framework.base.BaseFragment
 import com.framework.exceptions.IllegalFragmentTypeException
-import com.framework.models.BaseViewModel
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.extensions.addInt
 import com.onboarding.nowfloats.extensions.addParcelable
 import com.onboarding.nowfloats.extensions.getInt
 import com.onboarding.nowfloats.extensions.getParcelable
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
+import com.onboarding.nowfloats.model.navigator.ScreenModel
+import com.onboarding.nowfloats.model.navigator.ScreenModel.*
+import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.*
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
-open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<binding, BusinessCreateViewModel>() {
+open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment<binding, BusinessCreateViewModel>() {
 
     protected val channels: ArrayList<ChannelModel>
         get() {
@@ -80,22 +83,27 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : BaseFragment<bi
 
     protected fun gotoBusinessWebsite() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WEBSITE, getBundle())
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_INFO, getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoFacebookShop() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, getBundle())
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_FACEBOOK_SHOP, getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoFacebookPage() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_FACEBOOK_PAGE, getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoTwitterDetails() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, getBundle())
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_TWITTER, getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoWhatsAppCallDetails() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, getBundle())
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_WHATSAPP, getToolbarTitle()), requestFloatsModel)
     }
 
     protected open fun gotoBusinessApiCallDetails() {

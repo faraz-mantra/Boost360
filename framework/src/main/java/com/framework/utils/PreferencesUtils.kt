@@ -6,7 +6,8 @@ import android.content.SharedPreferences
 
 enum class PreferencesKey {
   FACEBOOK_USER_TOKEN,
-  FACEBOOK_USER_ID
+  FACEBOOK_USER_ID,
+  REQUEST_FLOAT,
 }
 
 class PreferencesUtils {

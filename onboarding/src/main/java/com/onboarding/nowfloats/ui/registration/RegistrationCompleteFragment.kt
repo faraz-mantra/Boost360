@@ -11,10 +11,8 @@ import androidx.appcompat.widget.PopupMenu
 import com.framework.CustomTypefaceSpan
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.glide.GlideImageLoader
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
@@ -23,7 +21,11 @@ import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.getBitmap
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.channel.ChannelModel
+import com.onboarding.nowfloats.model.navigator.ScreenModel
+import com.onboarding.nowfloats.model.navigator.ScreenModel.*
+import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import java.io.File
 
@@ -44,6 +46,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     @ExperimentalStdlibApi
     override fun onCreateView() {
         super.onCreateView()
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(REGISTRATION_COMPLETE, getToolbarTitle()), requestFloatsModel)
         setSetSelectedChannels(channels)
         setOnClickListener(binding?.menuView)
         binding?.congratsText?.text = resources.getString(R.string.congratulations)

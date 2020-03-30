@@ -23,4 +23,8 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   }
 
+  protected fun getToolbarTitle(): String? {
+    return appBaseActivity?.getToolbarTitle()
+  }
+
 }

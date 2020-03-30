@@ -14,9 +14,11 @@ import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentCategorySelectorBinding
-import com.onboarding.nowfloats.extensions.getParcelable
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
+import com.onboarding.nowfloats.model.navigator.ScreenModel
+import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
@@ -107,5 +109,6 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
         category?.let { requestFloatsModel?.categoryDataModel = it }
         bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, requestFloatsModel)
         navigator?.startActivity(ChannelPickerActivity::class.java, bundle)
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.CATEGORY_SELECT, getToolbarTitle()), requestFloatsModel)
     }
 }
