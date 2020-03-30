@@ -34,6 +34,7 @@
   <color name="greyish">#afafaf</color>
   <color name="pinkish_grey_two">#bababa</color>
   <color name="scarlet_40">#66D0021B</color>
+    <color name="scarlet">#D0021B</color>
 
   <color name="ripple_color">@color/white</color>
 </resources>

@@ -6,8 +6,8 @@ import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken.AccessTokenType
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.request.getType
-import com.onboarding.nowfloats.rest.apiClients.NfxApiClient
 import com.onboarding.nowfloats.rest.Taskcode
+import com.onboarding.nowfloats.rest.apiClients.NfxApiClient
 import com.onboarding.nowfloats.rest.services.local.channel.ChannelLocalDataSource
 import com.onboarding.nowfloats.rest.services.remote.channel.ChannelRemoteDataSource
 import io.reactivex.Observable

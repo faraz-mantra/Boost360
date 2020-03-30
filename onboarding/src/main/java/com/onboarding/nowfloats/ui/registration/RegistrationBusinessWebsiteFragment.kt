@@ -1,6 +1,5 @@
 package com.onboarding.nowfloats.ui.registration
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -23,6 +22,8 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding>() {
 
     private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
+    private var isDomain: Boolean = false
+    private var domainValue: String? = null
 
     companion object {
         @JvmStatic
@@ -62,16 +63,19 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
 
     private fun apiCheckDomain(subDomain: String) {
         if (!TextUtils.isEmpty(subDomain)) {
-            val pref: SharedPreferences = baseActivity.getSharedPreferences("nowfloatsPrefs", 0)
-            val data = BusinessDomainRequest(pref.getString("user_profile_id", "5e7dfd3d5a9ed3000146ca56"), subDomain, requestFloatsModel?.contactInfo?.businessName)
+            val data = BusinessDomainRequest(userProfileId, subDomain, requestFloatsModel?.contactInfo?.businessName)
             viewModel?.checkBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
-                showShortToast(it.error?.message)
-                binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
+                if (it.status == 200 || it.status == 201 || it.status == 202) {
+                    isDomain = true
+                    domainValue = if (it.stringResponse.isNullOrEmpty()) it.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
+                    binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
+                } else {
+                    isDomain = false
+                    domainValue = ""
+                    binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
+                }
             })
-        } else {
-            showLongToast("Please enter valid domain!")
-            binding?.subdomain?.drawableEnd = null
-        }
+        } else binding?.subdomain?.drawableEnd = null
     }
 
     private fun setSetSelectedGoogleChannels(list: ArrayList<ChannelModel>) {
@@ -92,8 +96,8 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     override fun onClick(v: View) {
         when (v) {
             binding?.next ->
-                if (!binding?.subdomain?.text.isNullOrEmpty()) {
-                    requestFloatsModel?.contactInfo?.domainName = binding?.subdomain?.text.toString()
+                if (domainValue.isNullOrEmpty().not() && isDomain) {
+                    requestFloatsModel?.contactInfo?.domainName = domainValue
                     if ((binding?.textBtn?.visibility == View.VISIBLE)) {
                         getDotProgress()?.let {
                             binding?.textBtn?.visibility = View.GONE

@@ -4,6 +4,7 @@ import com.framework.exceptions.BaseException
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.util.*
 
 abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalService> {
 
@@ -24,7 +25,8 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
                 val response = when (it.body()) {
                     is Array<*> -> BaseResponse(arrayResponse = it.body() as Array<*>)
                     is String -> BaseResponse(stringResponse = it.body() as String)
-                    else -> it.body() as BaseResponse
+                    is Objects -> it.body() as BaseResponse
+                    else -> BaseResponse(message = "Success")
                 }
                 response.status = it.code()
                 onSuccess(response, taskcode)
@@ -42,6 +44,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
             it.printStackTrace()
             val response = BaseResponse()
             response.error = it
+            response.message = it.localizedMessage
             response
         }
     }

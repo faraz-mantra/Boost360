@@ -1,6 +1,6 @@
 package com.onboarding.nowfloats.ui.registration
 
-import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,17 +11,17 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.IntentConstant
+import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.extensions.*
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel
-import com.onboarding.nowfloats.model.navigator.ScreenModel.*
-import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.*
+import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
+import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.BUSINESS_INFO
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
-import java.lang.StringBuilder
 
 open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment<binding, BusinessCreateViewModel>() {
 
@@ -33,6 +33,19 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     protected val categoryDataModel: CategoryDataModel?
         get() {
             return requestFloatsModel?.categoryDataModel
+        }
+
+    protected val pref: SharedPreferences?
+        get() {
+            return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0)
+        }
+    protected val userProfileId: String?
+        get() {
+            return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "5e7dfd3d5a9ed3000146ca56")
+        }
+    protected val clientId: String?
+        get() {
+            return pref?.getString(PreferenceConstant.CLIENT_ID, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
         }
 
     protected var requestFloatsModel: RequestFloatsModel? = null
@@ -144,7 +157,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
     }
 
-    public open fun clearInfo(){
+    open fun clearInfo() {
 
     }
 

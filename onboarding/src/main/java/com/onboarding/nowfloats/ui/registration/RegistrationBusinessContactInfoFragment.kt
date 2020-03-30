@@ -5,7 +5,9 @@ import android.os.Handler
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.framework.extensions.gone
 import com.framework.extensions.isVisible
+import com.framework.extensions.visible
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
@@ -33,16 +35,15 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
               ?.subscribe()
     }
     setOnClickListener(binding?.next)
-    binding?.number?.setOnFocusChangeListener { v, hasFocus ->
-      if (hasFocus) {
-        if (binding?.number?.text?.startsWith("+91") != true) {
-          binding?.number?.setText("+91${binding?.number?.text ?: ""}")
-          binding?.number?.setSelection(3)
-        }
-      } else {
-        if (binding?.number?.text?.toString() == "+91") {
-          binding?.number?.setText("")
-        }
+    binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+      if (hasFocus && binding?.countryCode?.visibility == GONE) {
+        binding?.countryCode?.visible()
+        binding?.number?.hint = ""
+        binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
+      } else if (binding?.number?.text.isNullOrEmpty()) {
+        binding?.countryCode?.gone()
+        binding?.number?.hint = resources.getString(R.string.business_contact_number)
+        binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_4)
       }
     }
 
