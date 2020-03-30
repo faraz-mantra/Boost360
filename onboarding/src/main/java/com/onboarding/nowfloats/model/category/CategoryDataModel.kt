@@ -14,7 +14,7 @@ import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 class CategoryDataModel(
-        val category_Key: String? = null,
+        val category_key: String? = null,
         val category_Name: String? = null,
         val icon: String? = null,
         val channels: ArrayList<String>? = null,
@@ -101,7 +101,7 @@ class CategoryDataModel(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(category_Key)
+        parcel.writeString(category_key)
         parcel.writeString(category_Name)
         parcel.writeString(icon)
         parcel.writeStringList(channels)

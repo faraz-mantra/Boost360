@@ -87,6 +87,11 @@ object NavigatorManager {
     PreferencesUtils.instance.saveData(NAVIGATION_STACK, Gson().toJson(stack))
   }
 
+  fun clearStackAndFormData(){
+    PreferencesUtils.instance.saveData(NAVIGATION_STACK, "")
+    PreferencesUtils.instance.saveData(REQUEST_FLOAT, "")
+  }
+
   fun peekAndPop(): ScreenModel? {
     val screen = peek()
     popStack()

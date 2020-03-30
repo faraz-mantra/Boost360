@@ -10,10 +10,13 @@ import com.framework.extensions.visible
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessApiBinding
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
+import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
@@ -49,10 +52,13 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun apiProcessBusinessCreate(dotProgressBar: DotProgressBar) {
     val request = getBusinessRequest()
-    viewModel?.createBusinessOnboarding(request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.createBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
+      it.error?.localizedMessage?.let { showShortToast(it) }
+
+
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         if (it.stringResponse.isNullOrEmpty().not()) {
-          apiProcessChannelWhatsApp(dotProgressBar, it.stringResponse!!)
+          apiProcessChannelWhatsApp(dotProgressBar, it.stringResponse ?: "")
         } else updateError("Floating point null return!", it.status, "CREATE")
       } else updateError(it.message, it.status, "CREATE")
     })
@@ -131,6 +137,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.title?.text = resources.getString(R.string.business_information_completed)
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))
       apiProcessAdapter?.notify(list)
+      NavigatorManager.clearStackAndFormData()
     }
   }
 
@@ -164,19 +171,17 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.autoFillSampleWebsiteData = true
     createRequest.clientId = clientId
     createRequest.tag = requestFloatsModel?.contactInfo?.domainName
-    createRequest.contactName = requestFloatsModel?.contactInfo?.businessName
-    createRequest.name = ""
-    createRequest.desc = ""
+    createRequest.name = requestFloatsModel?.contactInfo?.businessName
     createRequest.address = requestFloatsModel?.contactInfo?.address
     createRequest.city = ""
     createRequest.pincode = ""
-    createRequest.country = ""
+    createRequest.country = "india"
     createRequest.primaryNumber = requestFloatsModel?.contactInfo?.number
     createRequest.email = requestFloatsModel?.contactInfo?.email
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.fbPageName = requestFloatsModel?.contactInfo?.businessName
-    createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_Name
+    createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() ==  ChannelAccessToken.AccessTokenType.Facebookpage }?.userAccountName
+    createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     return createRequest
   }
 }

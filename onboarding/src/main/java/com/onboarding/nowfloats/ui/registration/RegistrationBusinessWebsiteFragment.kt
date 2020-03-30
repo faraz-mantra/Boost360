@@ -45,7 +45,11 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         setOnClickListener(binding?.next)
         setSetSelectedGoogleChannels(channels)
         val contactInfo = requestFloatsModel?.contactInfo
-        setSubDomain(contactInfo?.domainName ?: contactInfo?.businessName, isInitial = true)
+
+        val subdomain = contactInfo?.domainName ?: contactInfo?.businessName ?: ""
+        setSubDomain(subdomain, isInitial = true)
+        apiCheckDomain(subdomain)
+
         binding?.subdomain?.afterTextChanged { setSubDomain(it) }
     }
 
@@ -63,11 +67,13 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
 
     private fun apiCheckDomain(subDomain: String) {
         if (!TextUtils.isEmpty(subDomain)) {
-            val data = BusinessDomainRequest(userProfileId, subDomain, requestFloatsModel?.contactInfo?.businessName)
+            val data = BusinessDomainRequest(clientId, subDomain, requestFloatsModel?.contactInfo?.businessName)
             viewModel?.checkBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
+                it.error?.localizedMessage?.let { showShortToast(it) }
+
                 if (it.status == 200 || it.status == 201 || it.status == 202) {
                     isDomain = true
-                    domainValue = if (it.stringResponse.isNullOrEmpty()) it.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
+                    domainValue = if (!it.stringResponse.isNullOrEmpty()) it.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
                     binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
                 } else {
                     isDomain = false

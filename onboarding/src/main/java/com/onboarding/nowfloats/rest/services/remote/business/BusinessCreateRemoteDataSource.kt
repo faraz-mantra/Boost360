@@ -6,8 +6,10 @@ import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Query
 
 interface BusinessCreateRemoteDataSource {
-    @POST(EndPoints.POST_CREATE_BUSINESS_URL)
-    fun createBusinessOnboarding(@Body request: BusinessCreateRequest): Observable<Response<String>>
+    @PUT(EndPoints.POST_CREATE_BUSINESS_URL)
+    fun createBusinessOnboarding(@Query("existingProfileId") profileId: String?, @Body request: BusinessCreateRequest): Observable<Response<String>>
 }

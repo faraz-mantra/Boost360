@@ -57,7 +57,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     binding?.address?.setText(contactInfo.address)
     binding?.email?.setText(contactInfo.email)
     val number = contactInfo.number ?: return
-    binding?.number?.setText("+91${number}")
+    binding?.number?.setText(number)
   }
 
   override fun onClick(v: View) {
@@ -85,12 +85,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     requestFloatsModel?.contactInfo?.businessName = binding?.storeName?.text?.toString()
     requestFloatsModel?.contactInfo?.address = binding?.address?.text?.toString()
     requestFloatsModel?.contactInfo?.email = binding?.email?.text?.toString()
-
-    try {
-      businessInfoModel.number = binding?.number?.text?.substring(3)
-    } catch (e: StringIndexOutOfBoundsException) {
-      businessInfoModel.number = null
-    }
+    businessInfoModel.number = binding?.number?.text?.toString()
 
     return if (businessInfoModel.businessName.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_cant_empty))
