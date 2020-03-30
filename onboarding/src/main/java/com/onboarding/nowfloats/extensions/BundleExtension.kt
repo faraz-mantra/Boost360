@@ -14,6 +14,11 @@ fun Bundle.addInt(key: IntentConstant, value: Int): Bundle {
   return this
 }
 
+fun Bundle.addString(key: IntentConstant, value: String?): Bundle {
+  this.putString(key.name, value)
+  return this
+}
+
 fun <T : Parcelable> Bundle.getParcelable(key: IntentConstant): T? {
   return this.getParcelable<T>(key.name)
 }

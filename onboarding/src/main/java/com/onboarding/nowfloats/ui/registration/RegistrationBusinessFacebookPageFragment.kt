@@ -178,4 +178,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
     channelAccessToken.clear()
   }
+
+  override fun clearInfo() {
+    super.clearInfo()
+    requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookpage }
+  }
 }

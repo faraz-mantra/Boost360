@@ -193,13 +193,33 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     override fun onBackPressed() {
         super.onBackPressed()
         when(type){
-            FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_INFO)
-            FragmentType.REGISTRATION_BUSINESS_WEBSITE -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_SUBDOMAIN)
-            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE)
-            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP)
-            FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_TWITTER)
-            FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_WHATSAPP)
-            FragmentType.REGISTRATION_COMPLETE -> NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTRATION_COMPLETE)
+            FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> {
+                registrationBusinessContactInfoFragment?.clearInfo()
+                NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_INFO)
+            }
+            FragmentType.REGISTRATION_BUSINESS_WEBSITE -> {
+                registrationBusinessWebsiteFragment?.clearInfo()
+                NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_SUBDOMAIN)
+            }
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> {
+                registrationBusinessFacebookPageFragment?.clearInfo()
+                NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE)
+            }
+            FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> {
+                registrationBusinessFacebookShopFragment?.clearInfo()
+                NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP)
+            }
+            FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> {
+                registrationBusinessTwitterDetailsFragment?.clearInfo()
+                NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_TWITTER)
+            }
+            FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> {
+                registrationBusinessWhatsAppFragment?.clearInfo()
+                NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_WHATSAPP)
+            }
+            FragmentType.REGISTRATION_COMPLETE -> {
+                NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTRATION_COMPLETE)
+            }
             else -> {}
         }
     }
@@ -256,6 +276,6 @@ fun AppCompatActivity.startFragmentActivity(
     startActivity(intent)
 }
 
-fun Intent.setFragmentType(type: FragmentType) {
-    this.putExtra(FRAGMENT_TYPE, type.ordinal)
+fun Intent.setFragmentType(type: FragmentType): Intent {
+    return this.putExtra(FRAGMENT_TYPE, type.ordinal)
 }

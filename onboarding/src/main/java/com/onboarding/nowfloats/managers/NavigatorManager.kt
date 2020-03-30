@@ -1,34 +1,53 @@
 package com.onboarding.nowfloats.managers
 
+import android.app.Activity
+import android.os.Bundle
+import android.util.Log
+import com.framework.utils.PreferencesKey.NAVIGATION_STACK
 import com.framework.utils.PreferencesKey.REQUEST_FLOAT
 import com.framework.utils.PreferencesUtils
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.model.RequestFloatsModel
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.navigator.ScreenModel
-import java.util.*
 
 object NavigatorManager {
 
-  val stack = Stack<ScreenModel>()
+  var stack = ArrayList<ScreenModel>()
+
+  fun initialize() {
+    try {
+      val stackJson = PreferencesUtils.instance.getData(NAVIGATION_STACK) ?: return
+      stack = ArrayList(Gson().fromJson(stackJson, Array<ScreenModel>::class.java).toList())
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+    Log.d("Stack", stack.toString())
+  }
 
   fun push(screen: ScreenModel) {
     if (stack.firstOrNull { it.type == screen.type } == null) {
-      stack.push(screen)
+      stack.add(screen)
     }
   }
 
-  fun pushToStackAndSaveRequest(screen: ScreenModel, request: RequestFloatsModel?){
+  fun pushToStackAndSaveRequest(screen: ScreenModel, request: RequestFloatsModel?) {
     push(screen)
 
-    request?.let { PreferencesUtils.instance.saveData(REQUEST_FLOAT, Gson().toJson(it)) }
+    request?.let {
+      PreferencesUtils.instance.saveData(REQUEST_FLOAT, Gson().toJson(it))
+      updateStackInPreferences()
+    }
   }
 
   fun getRequest(): RequestFloatsModel? {
     return try {
-      Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT) ?: "", RequestFloatsModel::class.java)
-    }
-    catch (e: JsonSyntaxException){
+      Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT)
+              ?: "", RequestFloatsModel::class.java)
+    } catch (e: JsonSyntaxException) {
       e.printStackTrace()
       null
     }
@@ -36,18 +55,70 @@ object NavigatorManager {
 
   fun peek(): ScreenModel? {
     return if (stack.isEmpty()) null
-    else stack.peek()
+    else stack.lastOrNull()
   }
 
-  fun popCurrentScreen(screen: ScreenModel.Screen){
+  fun popCurrentScreen(screen: ScreenModel.Screen) {
+    removeStoredRequestEntries(screen)
+
     if (stack.isEmpty()) return
     val model = stack.firstOrNull { it.type == screen.name } ?: return
     stack.remove(model)
+    updateStackInPreferences()
+  }
+
+  private fun removeStoredRequestEntries(screen: ScreenModel.Screen){
+    val request = getRequest() ?: return
+    when(screen){
+      ScreenModel.Screen.CATEGORY_SELECT -> request.categoryDataModel = null
+      ScreenModel.Screen.CHANNEL_SELECT -> request.channels = null
+      ScreenModel.Screen.BUSINESS_INFO -> request.contactInfo?.clearAllDomain()
+      ScreenModel.Screen.BUSINESS_SUBDOMAIN -> request.contactInfo?.domainName = null
+      ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookpage }
+      ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookshop }
+      ScreenModel.Screen.BUSINESS_TWITTER -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Twitter }
+      ScreenModel.Screen.BUSINESS_WHATSAPP -> request.channelActionDatas?.clear()
+      ScreenModel.Screen.REGISTRATION_COMPLETE -> {}
+    }
+    PreferencesUtils.instance.saveData(REQUEST_FLOAT, Gson().toJson(request))
+  }
+
+  private fun updateStackInPreferences() {
+    PreferencesUtils.instance.saveData(NAVIGATION_STACK, Gson().toJson(stack))
+  }
+
+  fun peekAndPop(): ScreenModel? {
+    val screen = peek()
+    popStack()
+    return screen
   }
 
   fun popStack() {
     if (stack.isNotEmpty()) {
-      stack.pop()
+      stack[stack.lastIndex]
+      stack.removeAt(stack.lastIndex)
+    }
+  }
+
+  fun startActivities(activity: Activity) {
+    val bundle = Bundle()
+
+    bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, getRequest())
+
+    if (stack.isEmpty()){
+      activity.startActivity(ScreenModel(ScreenModel.Screen.CATEGORY_SELECT).getIntent(activity), bundle)
+      return
+    }
+
+    for (index in stack.indices) {
+      val screen = stack[index]
+      bundle.putString(IntentConstant.TOOLBAR_TITLE.name, screen.title)
+      val intent = screen.getIntent(activity)
+      intent?.putExtras(bundle)
+      activity.startActivity(intent)
+      if (index < stack.size - 1) {
+        activity.overridePendingTransition(0, 0)
+      }
     }
   }
 }

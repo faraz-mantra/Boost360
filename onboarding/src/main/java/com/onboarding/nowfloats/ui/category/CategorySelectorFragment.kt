@@ -14,6 +14,8 @@ import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentCategorySelectorBinding
+import com.onboarding.nowfloats.extensions.addParcelable
+import com.onboarding.nowfloats.extensions.addString
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
@@ -53,6 +55,8 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
     override fun onCreateView() {
         viewModel?.getCategories(baseActivity)?.observeOnce(viewLifecycleOwner, Observer { onGetCategories(it) })
         setOnClickListener(binding?.next)
+
+        NavigatorManager.getRequest()?.let { requestFloatsModel = it }
     }
 
     private fun onGetCategories(response: BaseResponse) {
@@ -80,10 +84,7 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
         binding?.recyclerView?.adapter = baseAdapter
         baseAdapter?.runLayoutAnimation(binding?.recyclerView, R.anim.grid_layout_animation_from_bottom)
 
-        val requestFloatsModel = NavigatorManager.getRequest() ?: return
-        val category = requestFloatsModel.categoryDataModel ?: return
-
-        this.requestFloatsModel = requestFloatsModel
+        val category = requestFloatsModel?.categoryDataModel ?: return
         onItemClick(-1, category, RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal)
     }
 

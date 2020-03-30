@@ -8,6 +8,7 @@ enum class PreferencesKey {
   FACEBOOK_USER_TOKEN,
   FACEBOOK_USER_ID,
   REQUEST_FLOAT,
+  NAVIGATION_STACK,
 }
 
 class PreferencesUtils {

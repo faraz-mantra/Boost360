@@ -21,6 +21,7 @@ import com.framework.utils.hideKeyBoard
 import com.framework.views.customViews.CustomToolbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import java.lang.IllegalStateException
 
 abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : AppCompatActivity(), View.OnClickListener {
 
@@ -208,7 +209,12 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(fragment.javaClass.name)
         }
-        fragmentTransaction.replace(containerId, fragment).commit()
+        try {
+            fragmentTransaction.replace(containerId, fragment).commit()
+        }
+        catch (e: IllegalStateException){
+            e.printStackTrace()
+        }
     }
 
     open fun getTopFragment(): Fragment? {

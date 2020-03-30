@@ -23,7 +23,6 @@ import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.navigator.ScreenModel
-import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
@@ -185,6 +184,11 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
             .addInt(IntentConstant.TOTAL_PAGES, totalPages)
             .addInt(IntentConstant.CURRENT_PAGES, 1)
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS, bundle)
+
+        if(NavigatorManager.getRequest()?.contactInfo?.isAllExceptDomainEmpty() == true){
+          requestFloatsModel?.contactInfo?.clearAllDomain()
+        }
+
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
     }
 

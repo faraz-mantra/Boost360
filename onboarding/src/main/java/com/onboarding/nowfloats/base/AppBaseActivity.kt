@@ -18,6 +18,10 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   }
 
+  override fun getToolbarTitle(): String? {
+    return super.getToolbarTitle()
+  }
+
   override fun getToolbarTitleTypeface(): Typeface? {
     return ResourcesCompat.getFont(this, R.font.semi_bold)
   }

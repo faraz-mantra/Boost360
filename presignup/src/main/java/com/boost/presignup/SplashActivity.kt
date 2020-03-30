@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.ui.category.CategorySelectorActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.security.MessageDigest
@@ -43,8 +44,9 @@ class SplashActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator?) {
 //                Log.d("onAnimationEnd", "")
 
-                val intent = Intent(baseContext, CategorySelectorActivity::class.java)
-                startActivity(intent)
+                NavigatorManager.startActivities(this@SplashActivity)
+//                val intent = Intent(baseContext, CategorySelectorActivity::class.java)
+//                startActivity(intent)
                 return
 
                 if(isUserLoggedIn){

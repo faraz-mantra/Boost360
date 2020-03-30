@@ -82,6 +82,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
 
     override fun onBackPressed() {
         super.onBackPressed()
+        requestFloatsModel?.channels = null
         NavigatorManager.popCurrentScreen(ScreenModel.Screen.CHANNEL_SELECT)
     }
 }

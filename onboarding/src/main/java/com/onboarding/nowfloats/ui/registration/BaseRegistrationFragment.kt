@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,10 +11,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.IntentConstant
-import com.onboarding.nowfloats.extensions.addInt
-import com.onboarding.nowfloats.extensions.addParcelable
-import com.onboarding.nowfloats.extensions.getInt
-import com.onboarding.nowfloats.extensions.getParcelable
+import com.onboarding.nowfloats.extensions.*
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
@@ -23,6 +21,7 @@ import com.onboarding.nowfloats.model.navigator.ScreenModel.*
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.*
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
+import java.lang.StringBuilder
 
 open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment<binding, BusinessCreateViewModel>() {
 
@@ -72,10 +71,27 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
     override fun onCreateView() {
         requestFloatsModel = arguments?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
-        currentPage = arguments?.getInt(IntentConstant.CURRENT_PAGES) ?: currentPage
-        totalPages = arguments?.getInt(IntentConstant.TOTAL_PAGES) ?: totalPages
-        if (this !is RegistrationCompleteFragment) {
-            if (this !is RegistrationBusinessApiFragment) setToolbarTitle(resources.getString(R.string.step) + " $currentPage/$totalPages")
+        val title = arguments?.getString(IntentConstant.TOOLBAR_TITLE.name)
+        if(title!=null){
+            setToolbarTitle(title)
+
+            try {
+                val stringBuilder = StringBuilder(title.removePrefix("Step "))
+                val split = stringBuilder.split('/')
+                currentPage = split.firstOrNull()?.toInt() ?: return
+                totalPages = split.lastOrNull()?.toInt() ?: return
+                currentPage = currentPage
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+            }
+        }
+        else{
+            currentPage = arguments?.getInt(IntentConstant.CURRENT_PAGES) ?: currentPage
+            totalPages = arguments?.getInt(IntentConstant.TOTAL_PAGES) ?: totalPages
+            if (this !is RegistrationCompleteFragment) {
+                if (this !is RegistrationBusinessApiFragment) setToolbarTitle(resources.getString(R.string.step) + " $currentPage/$totalPages")
+            }
         }
     }
 
@@ -87,27 +103,33 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
     protected fun gotoBusinessWebsite() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WEBSITE, getBundle())
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_INFO, getToolbarTitle()), requestFloatsModel)
+        if(NavigatorManager.getRequest()?.contactInfo?.isDomainEmpty() == true){
+            requestFloatsModel?.contactInfo?.domainName = null
+        }
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoFacebookShop() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, getBundle())
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_FACEBOOK_SHOP, getToolbarTitle()), requestFloatsModel)
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoFacebookPage() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_FACEBOOK_PAGE, getToolbarTitle()), requestFloatsModel)
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoTwitterDetails() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, getBundle())
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_TWITTER, getToolbarTitle()), requestFloatsModel)
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
     }
 
     protected fun gotoWhatsAppCallDetails() {
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, getBundle())
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(BUSINESS_WHATSAPP, getToolbarTitle()), requestFloatsModel)
+        if(NavigatorManager.getRequest()?.channelActionDatas.isNullOrEmpty()){
+            requestFloatsModel?.channelActionDatas?.clear()
+        }
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
     }
 
     protected open fun gotoBusinessApiCallDetails() {
@@ -122,12 +144,40 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
     }
 
+    public open fun clearInfo(){
+
+    }
+
     private fun getBundle(): Bundle {
         val bundle = Bundle()
         bundle.addParcelable(IntentConstant.REQUEST_FLOATS_INTENT, requestFloatsModel)
                 .addInt(IntentConstant.TOTAL_PAGES, totalPages)
                 .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
+                .addString(IntentConstant.PREVIOUS_SCREEN, getCurrentScreenType()?.name)
         return bundle
+    }
+
+    private fun getPreviousScreen(): Screen? {
+        return if(this is RegistrationBusinessContactInfoFragment){
+            BUSINESS_INFO
+        }
+        else{
+            Screen.values().firstOrNull { it.name == arguments?.getString(IntentConstant.PREVIOUS_SCREEN.name) }
+        }
+    }
+
+    private fun getCurrentScreenType(): ScreenModel.Screen?{
+        return when(this){
+            is RegistrationBusinessContactInfoFragment -> Screen.BUSINESS_INFO
+            is RegistrationBusinessWebsiteFragment -> Screen.BUSINESS_SUBDOMAIN
+            is RegistrationBusinessFacebookPageFragment -> Screen.BUSINESS_FACEBOOK_PAGE
+            is RegistrationBusinessFacebookShopFragment -> Screen.BUSINESS_FACEBOOK_SHOP
+            is RegistrationBusinessTwitterDetailsFragment -> Screen.BUSINESS_TWITTER
+            is RegistrationBusinessWhatsAppFragment -> Screen.BUSINESS_WHATSAPP
+            is RegistrationBusinessApiFragment -> Screen.REGISTERING
+            is RegistrationCompleteFragment -> Screen.REGISTRATION_COMPLETE
+            else -> null
+        }
     }
 
     override fun getViewModelClass(): Class<BusinessCreateViewModel> {

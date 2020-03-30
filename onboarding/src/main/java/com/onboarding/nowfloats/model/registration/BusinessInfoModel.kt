@@ -66,4 +66,21 @@ class BusinessInfoModel(
         }
         return code
     }
+
+    fun clearAllDomain(){
+        businessName = null
+        address = null
+        email = null
+        number = null
+        domainName = null
+    }
+
+    fun isAllExceptDomainEmpty(): Boolean {
+        return businessName.isNullOrEmpty() && address.isNullOrEmpty() && email.isNullOrEmpty()
+                && number.isNullOrEmpty()
+    }
+
+    fun isDomainEmpty(): Boolean{
+        return domainName.isNullOrEmpty()
+    }
 }

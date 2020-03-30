@@ -125,5 +125,11 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                     }
                 }
         }
+
+    }
+
+    override fun clearInfo() {
+        super.clearInfo()
+        requestFloatsModel?.contactInfo?.domainName = null
     }
 }
