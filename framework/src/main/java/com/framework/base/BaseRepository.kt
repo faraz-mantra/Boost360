@@ -1,6 +1,8 @@
 package com.framework.base
 
 import com.framework.exceptions.BaseException
+import com.framework.exceptions.NoNetworkException
+import com.framework.utils.NetworkUtils
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -20,6 +22,11 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
     protected abstract fun getApiClient(): Retrofit
 
     fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskcode: Int): Observable<BaseResponse> {
+        if(!NetworkUtils.isNetworkConnected()){
+            val response = BaseResponse(error = NoNetworkException())
+            return Observable.just(response)
+        }
+
         return observable.map {
             if (it.isSuccessful) {
                 val response = when (it.body()) {

@@ -65,7 +65,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         apiCheckDomain(subDomain)
     }
 
-    private fun apiCheckDomain(subDomain: String) {
+    private fun apiCheckDomain(subDomain: String, onSuccess: ()->Unit = {}) {
         if (!TextUtils.isEmpty(subDomain)) {
             val data = BusinessDomainRequest(clientId, subDomain, requestFloatsModel?.contactInfo?.businessName)
             viewModel?.checkBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
@@ -75,6 +75,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                     isDomain = true
                     domainValue = if (!it.stringResponse.isNullOrEmpty()) it.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
                     binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
+                    onSuccess()
                 } else {
                     isDomain = false
                     domainValue = ""
@@ -133,6 +134,10 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                             }, 1000)
                         }
                     }
+                }
+                else{
+                    apiCheckDomain(binding?.subdomain?.text?.toString() ?: "")
+                    {binding?.next?.performClick()}
                 }
         }
 

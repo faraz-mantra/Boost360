@@ -58,6 +58,9 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     binding?.email?.setText(contactInfo.email)
     val number = contactInfo.number ?: return
     binding?.number?.setText(number)
+    binding?.countryCode?.visible()
+    binding?.number?.hint = ""
+    binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
   }
 
   override fun onClick(v: View) {

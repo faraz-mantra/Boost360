@@ -1,5 +1,6 @@
 package com.framework
 
+import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
@@ -14,7 +15,7 @@ open class BaseApplication : MultiDexApplication() {
   }
 
   companion object {
-    lateinit var instance: BaseApplication
+    lateinit var instance: Application
   }
 
   override fun attachBaseContext(base: Context) {

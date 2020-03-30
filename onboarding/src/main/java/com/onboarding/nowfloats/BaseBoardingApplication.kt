@@ -26,6 +26,7 @@ open class BaseBoardingApplication : BaseApplication() {
             TwitterConfigHelper.debug(true)
             TwitterConfigHelper.initialize(application)
             NavigatorManager.initialize()
+            BaseApplication.instance = application
         }
     }
 

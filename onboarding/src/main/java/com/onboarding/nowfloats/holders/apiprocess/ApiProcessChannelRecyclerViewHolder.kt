@@ -28,6 +28,7 @@ class ApiProcessChannelRecyclerViewHolder(binding: ItemChildApiCallingBinding) :
         } else if (model?.status == ProcessApiSyncModel.SyncStatus.ERROR.name) {
             binding.title.text = model.getName().replace("""[$,.]""".toRegex(), "")
             getColor(R.color.scarlet_40)?.let { binding.title.setTextColor(it) }
+            binding.imageCard.image.makeGreyscale()
         } else {
             binding.title.text = model?.getName()?.replace("""[$,.]""".toRegex(), "")
             getColor(R.color.greyish_brown_40)?.let { binding.title.setTextColor(it) }

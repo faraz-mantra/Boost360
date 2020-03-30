@@ -146,11 +146,11 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
 
     protected open fun gotoBusinessApiCallDetails() {
-        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle())
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle(), clearTop = true)
     }
 
     protected fun gotoRegistrationComplete() {
-        startFragmentActivity(FragmentType.REGISTRATION_COMPLETE, getBundle())
+        startFragmentActivity(FragmentType.REGISTRATION_COMPLETE, getBundle(), clearTop = true)
     }
 
     protected open fun setProfileDetails(name: String?, profilePicture: String?){

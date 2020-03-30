@@ -41,6 +41,7 @@ class ApiProcessRecyclerViewHolder(binding: ItemApiCallingProcessBinding) : AppB
                 binding.title.text = model?.title?.replace("""[$,.]""".toRegex(), "")
                 getColor(R.color.warm_grey)?.let { binding.title.setTextColor(it) }
                 binding.okImage.visibility = View.VISIBLE
+                binding.progress.visibility = View.GONE
                 binding.okImage.setImageResource(R.drawable.ic_error)
             }
         }
