@@ -119,5 +119,7 @@
     <string name="internet_connection_not_available">Internet connection not available.</string>
     <string name="please_check_and_retry">Please check and retry.</string>
     <string name="retry">Retry</string>
+    <string name="for_your">for your</string>
+    <string name="business">Business</string>
 
 </resources>

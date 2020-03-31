@@ -65,7 +65,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
             binding?.subdomain?.setText(subDomain.toLowerCase())
             if (selection > 1) binding?.subdomain?.setSelection(selection)
         }
-        apiCheckDomain(subDomain)
+        apiCheckDomain(subDomain.toLowerCase())
     }
 
     private fun apiCheckDomain(subDomain: String, onSuccess: ()->Unit = {}) {
@@ -154,7 +154,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     }
 
     override fun clearInfo() {
-        super.clearInfo()
         requestFloatsModel?.contactInfo?.domainName = null
+        super.clearInfo()
     }
 }

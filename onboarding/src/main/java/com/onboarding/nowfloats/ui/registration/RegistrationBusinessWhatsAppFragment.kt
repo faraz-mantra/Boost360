@@ -2,6 +2,7 @@ package com.onboarding.nowfloats.ui.registration
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import com.framework.extensions.getDrawable
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
@@ -34,6 +35,7 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
     override fun onCreateView() {
         super.onCreateView()
         setSavedData()
+        baseActivity.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         var confirmButtonAlpha = 0.3f
         if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: "")){
             confirmButtonAlpha = 1f

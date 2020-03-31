@@ -25,10 +25,9 @@ object NavigatorManager {
     } catch (e: Exception) {
       e.printStackTrace()
     }
-    Log.d("Stack", stack.toString())
   }
 
-  fun push(screen: ScreenModel) {
+  private fun push(screen: ScreenModel) {
     if (stack.firstOrNull { it.type == screen.type } == null) {
       stack.add(screen)
     }
@@ -36,11 +35,14 @@ object NavigatorManager {
 
   fun pushToStackAndSaveRequest(screen: ScreenModel, request: RequestFloatsModel?) {
     push(screen)
-
     request?.let {
-      PreferencesUtils.instance.saveData(REQUEST_FLOAT, Gson().toJson(it))
+      updateRequest(it)
       updateStackInPreferences()
     }
+  }
+
+  fun updateRequest(request: RequestFloatsModel?) {
+    PreferencesUtils.instance.saveData(REQUEST_FLOAT, Gson().toJson(request))
   }
 
   fun getRequest(): RequestFloatsModel? {
@@ -88,7 +90,8 @@ object NavigatorManager {
   }
 
   fun clearStackAndFormData(){
-    PreferencesUtils.instance.saveData(NAVIGATION_STACK, "")
+    stack.clear()
+    PreferencesUtils.instance.saveData(NAVIGATION_STACK, Gson().toJson(stack))
     PreferencesUtils.instance.saveData(REQUEST_FLOAT, "")
   }
 
@@ -107,11 +110,10 @@ object NavigatorManager {
 
   fun startActivities(activity: Activity) {
     val bundle = Bundle()
-
-    bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, getRequest())
+//    bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, getRequest())
 
     if (stack.isEmpty()){
-      activity.startActivity(ScreenModel(ScreenModel.Screen.CATEGORY_SELECT).getIntent(activity), bundle)
+      activity.startActivity(ScreenModel(ScreenModel.Screen.CATEGORY_SELECT).getIntent(activity))
       return
     }
 

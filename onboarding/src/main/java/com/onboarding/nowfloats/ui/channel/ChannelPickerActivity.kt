@@ -40,7 +40,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
             animations.listener = this
             animations.startAnimation()
         }
-        requestFloatsModel = intent.extras?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
+        requestFloatsModel = NavigatorManager.getRequest()
         fragment?.updateBundleArguments(intent.extras)
         setCategoryImage()
         setOnClickListener(binding?.home)

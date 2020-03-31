@@ -20,6 +20,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.BUSINESS_INFO
+import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.CHANNEL_SELECT
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
@@ -83,7 +84,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 //    }
 
     override fun onCreateView() {
-        requestFloatsModel = arguments?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
+        requestFloatsModel = NavigatorManager.getRequest()
         val title = arguments?.getString(IntentConstant.TOOLBAR_TITLE.name)
         if(title!=null){
             setToolbarTitle(title)
@@ -115,37 +116,32 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
 
     protected fun gotoBusinessWebsite() {
-        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WEBSITE, getBundle())
-        if(NavigatorManager.getRequest()?.contactInfo?.isDomainEmpty() == true){
-            requestFloatsModel?.contactInfo?.domainName = null
-        }
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WEBSITE, getBundle())
     }
 
     protected fun gotoFacebookShop() {
-        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, getBundle())
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, getBundle())
     }
 
     protected fun gotoFacebookPage() {
-        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
     }
 
     protected fun gotoTwitterDetails() {
-        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, getBundle())
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, getBundle())
     }
 
     protected fun gotoWhatsAppCallDetails() {
-        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, getBundle())
-        if(NavigatorManager.getRequest()?.channelActionDatas.isNullOrEmpty()){
-            requestFloatsModel?.channelActionDatas?.clear()
-        }
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+        startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, getBundle())
     }
 
     protected open fun gotoBusinessApiCallDetails() {
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle(), clearTop = true)
     }
 
@@ -158,13 +154,12 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
 
     open fun clearInfo() {
-
+        NavigatorManager.updateRequest(requestFloatsModel)
     }
 
     private fun getBundle(): Bundle {
         val bundle = Bundle()
-        bundle.addParcelable(IntentConstant.REQUEST_FLOATS_INTENT, requestFloatsModel)
-                .addInt(IntentConstant.TOTAL_PAGES, totalPages)
+        bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages)
                 .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
                 .addString(IntentConstant.PREVIOUS_SCREEN, getCurrentScreenType()?.name)
         return bundle
@@ -175,7 +170,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
             BUSINESS_INFO
         }
         else{
-            Screen.values().firstOrNull { it.name == arguments?.getString(IntentConstant.PREVIOUS_SCREEN.name) }
+            getCurrentScreenType()
         }
     }
 

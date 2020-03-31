@@ -191,7 +191,6 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         when(type){
             FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> {
                 registrationBusinessContactInfoFragment?.clearInfo()
@@ -222,6 +221,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
             }
             else -> {}
         }
+        super.onBackPressed()
     }
 
     private fun shouldAddToBackStack(): Boolean {
@@ -261,7 +261,7 @@ fun Fragment.startFragmentActivity(
     val intent = Intent(activity, AppFragmentContainerActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
-    if (clearTop) Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(intent)
 }
 
@@ -272,7 +272,7 @@ fun AppCompatActivity.startFragmentActivity(
     val intent = Intent(this, AppFragmentContainerActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
-    if (clearTop) Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(intent)
 }
 

@@ -46,7 +46,6 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     @ExperimentalStdlibApi
     override fun onCreateView() {
         super.onCreateView()
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(REGISTRATION_COMPLETE, getToolbarTitle()), requestFloatsModel)
         setSetSelectedChannels(channels)
         setOnClickListener(binding?.menuView)
         binding?.congratsText?.text = resources.getString(R.string.congratulations)
@@ -66,6 +65,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                     ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
         }
         setOnClickListener(binding?.profileView, binding?.businessNameInitial)
+        NavigatorManager.clearStackAndFormData()
     }
 
     private fun setBusinessImage() {
@@ -109,7 +109,10 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         val itemSize = ConversionUtils.dp2px(48f)
         var spanCount = (ScreenUtils.instance.getWidth(baseActivity) - ConversionUtils.dp2px(96f)) / itemSize
 
-        if (spanCount > list.size) {
+        if (spanCount == 0){
+            spanCount = 1
+        }
+        else if (spanCount > list.size) {
             spanCount = list.size
         }
 

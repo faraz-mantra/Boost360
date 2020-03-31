@@ -180,7 +180,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun clearInfo() {
-    super.clearInfo()
     requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookpage }
+    super.clearInfo()
   }
 }

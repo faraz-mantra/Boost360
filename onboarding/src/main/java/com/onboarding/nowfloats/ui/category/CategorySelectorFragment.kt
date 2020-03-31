@@ -112,10 +112,10 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
     }
 
     private fun gotoChannelPicker() {
-        val bundle = Bundle()
         category?.let { requestFloatsModel?.categoryDataModel = it }
-        bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, requestFloatsModel)
-        navigator?.startActivity(ChannelPickerActivity::class.java, bundle)
+        val bundle = Bundle()
+//        bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, requestFloatsModel)
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.CATEGORY_SELECT, getToolbarTitle()), requestFloatsModel)
+        navigator?.startActivity(ChannelPickerActivity::class.java, bundle)
     }
 }

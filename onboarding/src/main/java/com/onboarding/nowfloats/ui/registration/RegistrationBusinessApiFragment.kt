@@ -173,7 +173,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.title?.text = resources.getString(R.string.business_information_completed)
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))
       apiProcessAdapter?.notify(list)
-      NavigatorManager.clearStackAndFormData()
     }
   }
 

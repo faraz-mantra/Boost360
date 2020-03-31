@@ -45,6 +45,7 @@ class SplashActivity : AppCompatActivity() {
 //                Log.d("onAnimationEnd", "")
 
                 NavigatorManager.startActivities(this@SplashActivity)
+                finish()
 //                val intent = Intent(baseContext, CategorySelectorActivity::class.java)
 //                startActivity(intent)
                 return

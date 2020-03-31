@@ -73,8 +73,13 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
 
     fun updateBundleArguments(arguments: Bundle?) {
         this.arguments = arguments
-        requestFloatsModel = arguments?.getParcelable(IntentConstant.REQUEST_FLOATS_INTENT)
+        requestFloatsModel = NavigatorManager.getRequest()
         requestFloatsModel?.categoryDataModel?.getChannelList()?.let { channelList.addAll(it) }
+
+        val business = getString(R.string.business)
+        val forYour = getString(R.string.for_your)
+        val name = categoryDataModel?.category_Name?.replace("\n", " ") ?: return
+        binding?.categorySelectedDesc?.text = "$forYour $name $business"
     }
 
     override fun onCreateView() {
@@ -180,16 +185,10 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         }
 
         requestFloatsModel?.channels = ArrayList(selectedChannels)
-        bundle.addParcelable(IntentConstant.REQUEST_FLOATS_INTENT, requestFloatsModel)
-            .addInt(IntentConstant.TOTAL_PAGES, totalPages)
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
+        bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages)
             .addInt(IntentConstant.CURRENT_PAGES, 1)
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS, bundle)
-
-        if(NavigatorManager.getRequest()?.contactInfo?.isAllExceptDomainEmpty() == true){
-          requestFloatsModel?.contactInfo?.clearAllDomain()
-        }
-
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
     }
 
 
