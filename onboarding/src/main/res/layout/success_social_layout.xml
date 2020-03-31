@@ -60,7 +60,7 @@
             android:layout_marginBottom="@dimen/size_4"
             android:paddingStart="@dimen/size_32"
             android:paddingEnd="@dimen/size_32"
-            android:text="Sood hospital and Clinic"
+            tools:text="Sood hospital and Clinic"
             app:fontFamily="@font/regular" />
 
         <View
@@ -78,7 +78,7 @@
             android:layout_marginBottom="@dimen/size_2"
             android:background="@drawable/line_bac"
             android:padding="@dimen/size_2"
-            android:text="Disconnect this account"
+            android:text="@string/disconnect_this_account"
             android:textColor="@color/warm_grey_two"
             app:fontFamily="@font/regular"
             app:textType="SUBTITLE_1" />

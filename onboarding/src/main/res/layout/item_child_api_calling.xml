@@ -27,7 +27,7 @@
       android:layout_marginStart="@dimen/size_6"
       android:layout_marginTop="@dimen/size_8"
       android:includeFontPadding="false"
-      android:text="Connecting Google account…"
+      android:text="@string/connecting_google_account"
       android:textColor="@color/greyish_brown_40"
       app:fontFamily="@font/semi_bold"
       app:layout_constraintStart_toEndOf="@+id/image_card"

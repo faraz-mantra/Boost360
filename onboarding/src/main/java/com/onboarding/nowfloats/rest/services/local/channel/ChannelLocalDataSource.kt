@@ -8,8 +8,4 @@ import com.onboarding.nowfloats.rest.response.channel.ChannelListResponse
 import io.reactivex.Observable
 
 object ChannelLocalDataSource : AppBaseLocalService() {
-
-  fun getChannels(context: Context): Observable<BaseResponse> {
-    return fromJsonRes(context, R.raw.channels, ChannelListResponse::class.java)
-  }
 }

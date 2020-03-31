@@ -17,9 +17,4 @@ object FeatureRepository : AppBaseRepository<FeatureRemoteDataSource, FeatureLoc
   override fun getLocalDataSourceInstance(): FeatureLocalDataSource {
     return FeatureLocalDataSource
   }
-
-  fun getFeatures(context: Context): Observable<BaseResponse> {
-//        return makeRemoteRequest(remoteDataSource.getFeatures(), Taskcode.GET_FEATURES)
-    return makeLocalRequest(localDataSource.getFeatures(context), Taskcode.GET_FEATURES)
-  }
 }

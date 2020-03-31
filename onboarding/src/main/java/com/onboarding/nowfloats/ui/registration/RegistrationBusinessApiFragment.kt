@@ -7,12 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessApiBinding
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
+import com.onboarding.nowfloats.model.channel.ChannelModel
+import com.onboarding.nowfloats.model.channel.ChannelType
+import com.onboarding.nowfloats.model.channel.getType
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
@@ -20,6 +24,7 @@ import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
+import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
 class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
@@ -40,21 +45,52 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.next)
-    list = ProcessApiSyncModel().getData(channels)
+    setProcessApiSyncModel()
     setApiProcessAdapter(list)
     getDotProgress()?.let {
       binding?.textBtn?.visibility = View.GONE
       binding?.next?.addView(it)
-      it.startAnimation()
-      apiProcessBusinessCreate(it)
+
+      if (NetworkUtils.isNetworkConnected()){
+        it.startAnimation()
+        putCreateBusinessOnboarding(it)
+      }
+      else{
+        val dialog = InternetErrorDialog()
+        dialog.onRetryTapped = {it.startAnimation();putCreateBusinessOnboarding(it)}
+        dialog.show(parentFragmentManager, dialog.javaClass.name)
+      }
     }
   }
 
-  private fun apiProcessBusinessCreate(dotProgressBar: DotProgressBar) {
-    val request = getBusinessRequest()
-    viewModel?.createBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
-      it.error?.localizedMessage?.let { showShortToast(it) }
+  private fun setProcessApiSyncModel() {
+    val channels = this.channels
+    val connectedChannelsAccessTokens = requestFloatsModel?.channelAccessTokens?.map { it.getType() }
+    val connectedWhatsApp = requestFloatsModel?.channelActionDatas?.firstOrNull()
 
+    val connectedChannels = ArrayList<ChannelModel>()
+    for (channel in channels){
+      val isSelected = when (channel.getType()){
+        ChannelType.G_SEARCH -> true
+        ChannelType.FB_PAGE -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.Facebookpage)
+        ChannelType.G_MAPS -> true
+        ChannelType.FB_SHOP -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.Facebookshop)
+        ChannelType.WAB -> connectedWhatsApp != null
+        ChannelType.T_FEED -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.Twitter)
+        ChannelType.G_BUSINESS -> true
+        null -> false
+      }
+      if (isSelected == true){
+        connectedChannels.add(channel)
+      }
+    }
+    list = ProcessApiSyncModel().getData(connectedChannels)
+  }
+
+  private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
+    val request = getBusinessRequest()
+    viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
+      it.error?.localizedMessage?.let { showShortToast(it) }
 
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         if (it.stringResponse.isNullOrEmpty().not()) {

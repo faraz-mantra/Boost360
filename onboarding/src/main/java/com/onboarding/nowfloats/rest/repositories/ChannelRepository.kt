@@ -23,10 +23,6 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
     return ChannelLocalDataSource
   }
 
-  fun getChannels(context: Context): Observable<BaseResponse> {
-    return makeLocalRequest(localDataSource.getChannels(context), Taskcode.GET_CHANNELS)
-  }
-
   fun updateChannelAccessTokens(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
     return when(request.accessToken.getType()){
       AccessTokenType.Facebookpage -> postUpdateFacebookPageAccessToken(request)

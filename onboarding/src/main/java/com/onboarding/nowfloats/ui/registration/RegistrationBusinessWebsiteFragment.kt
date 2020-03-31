@@ -5,6 +5,8 @@ import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
+import com.framework.base.BaseResponse
+import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.getDrawable
 import com.framework.extensions.observeOnce
 import com.onboarding.nowfloats.R
@@ -18,6 +20,7 @@ import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import com.onboarding.nowfloats.ui.InternetErrorDialog
 
 class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding>() {
 
@@ -68,21 +71,28 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     private fun apiCheckDomain(subDomain: String, onSuccess: ()->Unit = {}) {
         if (!TextUtils.isEmpty(subDomain)) {
             val data = BusinessDomainRequest(clientId, subDomain, requestFloatsModel?.contactInfo?.businessName)
-            viewModel?.checkBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
-                it.error?.localizedMessage?.let { showShortToast(it) }
-
-                if (it.status == 200 || it.status == 201 || it.status == 202) {
-                    isDomain = true
-                    domainValue = if (!it.stringResponse.isNullOrEmpty()) it.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
-                    binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
-                    onSuccess()
-                } else {
-                    isDomain = false
-                    domainValue = ""
-                    binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
-                }
+            viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
+                onPostBusinessDomainCheckResponse(it, onSuccess)
             })
         } else binding?.subdomain?.drawableEnd = null
+    }
+
+    private fun onPostBusinessDomainCheckResponse(response: BaseResponse, onSuccess: () -> Unit) {
+        if (response.error is NoNetworkException){
+            InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
+            return
+        }
+
+        if (response.status == 200 || response.status == 201 || response.status == 202) {
+            isDomain = true
+            domainValue = if (!response.stringResponse.isNullOrEmpty()) response.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
+            binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
+            onSuccess()
+        } else {
+            isDomain = false
+            domainValue = ""
+            binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
+        }
     }
 
     private fun setSetSelectedGoogleChannels(list: ArrayList<ChannelModel>) {

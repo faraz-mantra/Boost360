@@ -9,8 +9,4 @@ import io.reactivex.Observable
 
 
 object FeatureLocalDataSource : AppBaseLocalService() {
-
-  fun getFeatures(context: Context): Observable<BaseResponse> {
-    return fromJsonRes(context, R.raw.features, FeatureListResponse::class.java)
-  }
 }

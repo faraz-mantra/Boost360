@@ -2,10 +2,13 @@ package com.onboarding.nowfloats.ui
 
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
+import com.framework.utils.NetworkUtils
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogInternetErrorBinding
 
 class InternetErrorDialog : BaseDialogFragment<DialogInternetErrorBinding, BaseViewModel>() {
+
+    var onRetryTapped = {}
 
     override fun getLayout(): Int {
         return R.layout.dialog_internet_error
@@ -21,6 +24,11 @@ class InternetErrorDialog : BaseDialogFragment<DialogInternetErrorBinding, BaseV
 
     override fun onViewCreated() {
         isCancelable = false
-        binding?.retryBtn?.setOnClickListener { dismiss() }
+        binding?.retryBtn?.setOnClickListener {
+            if(NetworkUtils.isNetworkConnected()){
+                onRetryTapped()
+                dismiss()
+            }
+        }
     }
 }

@@ -15,13 +15,11 @@
     <string name="doctors_amp_clinic_business"><![CDATA[for your Doctors & Clinic Business]]></string>
     <string name="recommended_on">Recommended on</string>
     <string name="select_relevant_channels_or_remove_unwanted_channels">Please select relevant channels or remove unwanted channels to adjust your content’s reach.</string>
-    <string name="done">DONE</string>
 
     <string name="at_least_one_channel_selected">At least 1 channel must be selected</string>
     <string name="you_selected">You\'ve selected</string>
     <string name="more_than_one_add_s">s</string>
     <string name="press_confirm__business_info">When you press confirm, I’ll take you to business setup form to fill your business info.</string>
-    <string name="confirm">CONFIRM</string>
     <string name="manage_all_your_digital_content">Manage all your Digital Content</string>
     <string name="okay">OKAY</string>
 
@@ -109,5 +107,17 @@
     <string name="facebook_shop_connected">Facebook Shop Connected</string>
     <string name="facebook_page_connected">Facebook Page Connected</string>
     <string name="save_continue">Save and continue</string>
+  <string name="recommended_on_5_channels">Recommended on 5 channels</string>
+    <string name="when_you_press_confirm_i_ll_take_you_to_business_setup_form_to_fill_your_business_info">When you press confirm, I’ll take you to business setup form to fill your business info.</string>
+    <string name="please_select_relevant_channels_or_remove_unwanted_channels_to_adjust_your_content_s_reach">Please select relevant channels or remove unwanted channels to adjust your content’s reach.</string>
+    <string name="done">DONE</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="creating_your_business_profile">Creating your business profile...</string>
+    <string name="registering_business_name_n_adding_business_location_n_adding_contact_number_n_adding_business_email_address">• Registering business name…\n• Adding business location…\n• Adding Contact number…\n• Adding Business Email address…</string>
+    <string name="connecting_google_account">Connecting Google account…</string>
+    <string name="disconnect_this_account">Disconnect this account</string>
+    <string name="internet_connection_not_available">Internet connection not available.</string>
+    <string name="please_check_and_retry">Please check and retry.</string>
+    <string name="retry">Retry</string>
 
 </resources>

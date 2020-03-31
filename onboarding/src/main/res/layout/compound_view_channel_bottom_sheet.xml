@@ -41,7 +41,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="@dimen/size_4"
-          android:text="Recommended on 5 channels"
+          android:text="@string/recommended_on_5_channels"
           android:textColor="@color/dodger_blue_two"
           app:fontFamily="@font/semi_bold"
           app:textType="SUBHEADING_1" />
@@ -49,7 +49,7 @@
         <com.framework.views.customViews.CustomTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Please select relevant channels or remove unwanted channels to adjust your content’s reach."
+          android:text="@string/please_select_relevant_channels_or_remove_unwanted_channels_to_adjust_your_content_s_reach"
           android:textColor="@color/warm_grey"
           app:fontFamily="@font/regular"
           app:textType="SUBHEADING_2" />
@@ -74,7 +74,7 @@
       style="@style/FooterButtonStyle"
       android:layout_marginBottom="@dimen/footer_button_height"
       android:drawableEnd="@null"
-      android:text="DONE"
+      android:text="@string/done"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

@@ -15,8 +15,8 @@ import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
 
 class BusinessCreateViewModel : BaseViewModel() {
 
-    fun createBusinessOnboarding(profileId: String?, request: BusinessCreateRequest): LiveData<BaseResponse> {
-        return BusinessCreateRepository.postCreateBusinessOnboarding(profileId, request).toLiveData()
+    fun putCreateBusinessOnboarding(profileId: String?, request: BusinessCreateRequest): LiveData<BaseResponse> {
+        return BusinessCreateRepository.putCreateBusinessOnboarding(profileId, request).toLiveData()
     }
 
     fun updateChannelAccessToken(request: UpdateChannelAccessTokenRequest): LiveData<BaseResponse> {
@@ -27,7 +27,7 @@ class BusinessCreateViewModel : BaseViewModel() {
         return WhatsAppRepository.postUpdateWhatsappRequest(request).toLiveData()
     }
 
-    fun checkBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
+    fun postCheckBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
         return BusinessDomainRepository.postCheckBusinessDomain(request).toLiveData()
     }
 }

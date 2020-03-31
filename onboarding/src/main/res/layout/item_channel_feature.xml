@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +48,7 @@
                             android:layout_marginStart="@dimen/size_4"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="Manage all your Digital Content"
+                            tools:text="Manage all your Digital Content"
                             android:textColor="@color/dodger_blue_two"
                             app:fontFamily="@font/semi_bold"
                             app:textType="SUBHEADING_2" />
@@ -60,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_16"
                         android:ellipsize="end"
-                        android:text="Suggestions on digital growth strategies Regular Tips on Content for better discovery Weekly Performance Reporting"
+                        tools:text="Suggestions on digital growth strategies Regular Tips on Content for better discovery Weekly Performance Reporting"
                         android:textColor="@color/greyish_brown"
                         android:visibility="gone"
                         app:fontFamily="@font/regular"

@@ -88,7 +88,7 @@
             android:layout_marginEnd="@dimen/size_32"
             android:layout_marginBottom="@dimen/size_24"
             android:alpha="0"
-            android:text="CONFIRM"
+            android:text="@string/confirm"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -52,7 +52,7 @@
         android:layout_marginTop="@dimen/size_8"
         android:layout_marginBottom="@dimen/size_16"
         android:gravity="center_horizontal"
-        android:text="When you press confirm, I’ll take you to business setup form to fill your business info."
+        android:text="@string/when_you_press_confirm_i_ll_take_you_to_business_setup_form_to_fill_your_business_info"
         android:textAlignment="gravity"
         android:textColor="@color/warm_grey"
         app:fontFamily="@font/regular"
