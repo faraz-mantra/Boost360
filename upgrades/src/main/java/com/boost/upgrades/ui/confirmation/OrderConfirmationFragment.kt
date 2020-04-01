@@ -32,11 +32,11 @@ class OrderConfirmationFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
 
         back_button.setOnClickListener {
-            (activity as UpgradeActivity).popFragmentFromBackStack()
+            (activity as UpgradeActivity).goToHomeFragment()
         }
 
         check_activation_status.setOnClickListener {
-
+            (activity as UpgradeActivity).goBackToMyAddonsScreen()
         }
 
         order_needs_help.setOnClickListener {

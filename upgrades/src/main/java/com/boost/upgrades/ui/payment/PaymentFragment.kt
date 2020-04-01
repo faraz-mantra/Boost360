@@ -54,6 +54,8 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
 
     var netbankingList = arrayListOf<SingleNetBankData>()
 
+    var totalAmount = 0.0
+
     companion object {
         fun newInstance() = PaymentFragment()
     }
@@ -64,9 +66,11 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
     ): View? {
         root = inflater.inflate(R.layout.payment_fragment, container, false)
 
+        totalAmount = arguments!!.getDouble("amount")
+
         cartCheckoutData.put("customerId", arguments!!.getString("customerId"))
-        cartCheckoutData.put("amount", arguments!!.getInt("amount"))
-//        cartCheckoutData.put("order_id", arguments!!.getInt("order_id"))
+        cartCheckoutData.put("amount", totalAmount * 100)
+        cartCheckoutData.put("order_id", arguments!!.getString("order_id"))
 //        cartCheckoutData.put("amount", 211*100)
 //        cartCheckoutData.put("order_id", "order_ETcdJ4Cuh9yIQq")
         cartCheckoutData.put("email", arguments!!.getString("email"))
@@ -104,6 +108,11 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
         initializeNetBankingSelector()
         initializeUPIRecycler()
         initializeWalletRecycler()
+
+        payment_amount_value.setText("₹"+totalAmount)
+        order_total_value.setText("₹"+totalAmount)
+        payment_total_value.setText("₹"+totalAmount)
+        items_cost.setText("₹"+totalAmount)
 
         back_button.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()

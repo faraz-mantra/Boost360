@@ -31,6 +31,9 @@ class CartViewModel(application: Application) : BaseViewModel(application){
     private var customerId: String? = null
     private var APIRequestStatus: String? = null
 
+    var _updateGSTIN: MutableLiveData<String> = MutableLiveData()
+    var _updateTAN: MutableLiveData<String> = MutableLiveData()
+
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
     val compositeDisposable = CompositeDisposable()
@@ -46,6 +49,22 @@ class CartViewModel(application: Application) : BaseViewModel(application){
 
     fun getAPIRequestStatus(): String?{
         return APIRequestStatus
+    }
+
+    fun updateGSTIN(gstinValue: String){
+        _updateGSTIN.postValue(gstinValue)
+    }
+
+    fun getGSTIN(): LiveData<String>{
+        return _updateGSTIN
+    }
+
+    fun updateTAN(gstinValue: String){
+        _updateTAN.postValue(gstinValue)
+    }
+
+    fun getTAN(): LiveData<String>{
+        return _updateTAN
     }
 
     fun getLoaderStatus(): LiveData<Boolean>{

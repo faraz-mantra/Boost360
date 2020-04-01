@@ -62,7 +62,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     lateinit var upgradeAdapter: UpgradeAdapter
 
-    lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
+//    lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
 
     var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
@@ -84,7 +84,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             .get(HomeViewModel::class.java)
 
         upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
-        packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this)
+//        packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this)
 
         //request retrofit instance
         ApiService = getRetrofit()
@@ -157,7 +157,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
         }
 
-        initializeViewPager()
+//        initializeViewPager()
         initializeRecycler()
 
         share_fb_1.setOnClickListener {
@@ -243,8 +243,8 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     override fun onResume() {
         super.onResume()
-        val pos = 2
-        package_viewpager.postDelayed(Runnable { package_viewpager.setCurrentItem(pos) }, 100)
+//        val pos = 2
+//        package_viewpager.postDelayed(Runnable { package_viewpager.setCurrentItem(pos) }, 100)
     }
 
     fun spannableString() {
@@ -313,20 +313,20 @@ class HomeFragment : BaseFragment(), HomeListener {
         }
     }
 
-    private fun initializeViewPager() {
-        package_viewpager.adapter = packageViewPagerAdapter
-        dots_indicator.setViewPager2(package_viewpager)
-        package_viewpager.offscreenPageLimit = 1
-
-        package_viewpager.setPageTransformer(SimplePageTransformer())
-
-        val itemDecoration = HorizontalMarginItemDecoration(
-            requireContext(),
-            R.dimen.viewpager_current_item_horizontal_margin
-        )
-        package_viewpager.addItemDecoration(itemDecoration)
-
-    }
+//    private fun initializeViewPager() {
+//        package_viewpager.adapter = packageViewPagerAdapter
+//        dots_indicator.setViewPager2(package_viewpager)
+//        package_viewpager.offscreenPageLimit = 1
+//
+//        package_viewpager.setPageTransformer(SimplePageTransformer())
+//
+//        val itemDecoration = HorizontalMarginItemDecoration(
+//            requireContext(),
+//            R.dimen.viewpager_current_item_horizontal_margin
+//        )
+//        package_viewpager.addItemDecoration(itemDecoration)
+//
+//    }
 
     override fun onBackPressed() {
         if (::viewModel.isInitialized) {

@@ -16,6 +16,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.InputStream
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 object Utils {
 
@@ -97,6 +99,18 @@ object Utils {
         listOfPattern.add(ptJcb);
 
         return listOfPattern
+    }
+
+    fun isValidGSTIN(value: String): Boolean {
+
+        val pattern: Pattern
+        val matcher: Matcher
+        val GSTIN_PATTERN = "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}\$"
+        pattern = Pattern.compile(GSTIN_PATTERN)
+        matcher = pattern.matcher(value)
+
+        return matcher.matches()
+
     }
 
     fun monthRange(): ArrayList<String> {

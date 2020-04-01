@@ -9,7 +9,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.ui.home.HomeFragment
+import com.boost.upgrades.ui.myaddons.MyAddonsFragment
+import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Utils
 import com.razorpay.Razorpay
 
@@ -63,7 +68,11 @@ class UpgradeActivity : AppCompatActivity() {
                 val tag = currentFragment!!.tag
                 Log.e("back pressed tag", ">>>$tag")
                 if (tag != null) {
-                    fragmentManager!!.popBackStack()
+                    if(tag == ORDER_CONFIRMATION_FRAGMENT){
+                        goToHomeFragment()
+                    }else {
+                        fragmentManager!!.popBackStack()
+                    }
                 }
             } else {
                 super.onBackPressed()
@@ -103,20 +112,18 @@ class UpgradeActivity : AppCompatActivity() {
         fragmentManager!!.popBackStack()
     }
 
-    fun resetFragment(fragment: Fragment, fragmentTag: String?) {
-        fragmentTransaction = null
-        val fragmentPopped =
-            fragmentManager!!.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//        if(!fragmentPopped){
-        replaceFragment(fragment, fragmentTag)
-//        }else{
-//            addFragment(fragment, fragmentTag)
-//        }
-//        fragmentManager!!.popBackStack()
-//        currentFragment = null
-//        fragmentManager = null
-//        fragmentTransaction = null
-//        replaceFragment(fragment, fragmentTag)
+    fun goToHomeFragment() {
+        val detailsFragment = fragmentManager!!.findFragmentByTag(DETAILS_FRAGMENT)
+        if(detailsFragment != null){
+            fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }else{
+            fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
+
+    fun goBackToMyAddonsScreen(){
+        goToHomeFragment()
+        addFragment(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT)
     }
 
     private fun tellFragments() {

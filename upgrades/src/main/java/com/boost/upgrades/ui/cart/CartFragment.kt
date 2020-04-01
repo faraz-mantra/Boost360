@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,8 +27,12 @@ import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
+import com.boost.upgrades.ui.popup.GSTINPopUpFragment
+import com.boost.upgrades.ui.popup.TANPopUpFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
+import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
+import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import kotlinx.android.synthetic.main.cart_fragment.*
 
 class CartFragment : BaseFragment(), CartFragmentListener {
@@ -38,7 +43,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var customerId: String? = null
 
-    var total = 0
+    var total = 0.0
+
+    var GSTINNumber: String? = null
+    var TANNumber: String? = null
+
+    var taxValue = 0.0
 
     lateinit var progressDialog: ProgressDialog
 
@@ -47,6 +57,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     lateinit var cartAddonsAdaptor: CartAddonsAdaptor
 
     val couponPopUpFragment = CouponPopUpFragment()
+
+    val gstinPopUpFragment = GSTINPopUpFragment()
+
+    val tanPopUpFragment = TANPopUpFragment()
 
     companion object {
         fun newInstance() = CartFragment()
@@ -71,7 +85,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(CartViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
 
         loadData()
         initMvvM()
@@ -91,11 +105,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                         0,
                                         "RAZORPAY",
                                         TaxDetails(
-                                                "36ARVPS3698F1Zf",
+                                                GSTINNumber,
                                                 0,
                                                 null,
                                                 18),
-                                        118),
+                                        total + taxValue),
                                 listOf(
                                         Widget(
                                                 ConsumptionConstraint(
@@ -112,7 +126,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 true,
                                                 true,
                                                 "Product / Courses Catalogue",
-                                                100,
+                                                total,
                                                 "MONTHLY",
                                                 "COURSES",
                                                 1
@@ -141,6 +155,26 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             couponPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     COUPON_POPUP_FRAGEMENT
+            )
+        }
+        enter_gst_number.setOnClickListener {
+            gstinPopUpFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    GSTIN_POPUP_FRAGEMENT
+            )
+        }
+
+        remove_gstin_number.setOnClickListener {
+            GSTINNumber = null
+            gstin_layout1.visibility = View.VISIBLE
+            gstin_layout2.visibility = View.GONE
+            fill_in_gstin_value.setText("")
+        }
+
+        enter_tan_number.setOnClickListener {
+            tanPopUpFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    TAN_POPUP_FRAGEMENT
             )
         }
     }
@@ -181,12 +215,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 val paymentFragment = PaymentFragment.newInstance()
                 val args = Bundle()
                 args.putString("customerId", customerId)
-                args.putInt("amount", (total * 100))// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
+                args.putDouble("amount", it.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
 //                args.putString("order_id", "order_DgZ26rHjbzLLY2") //For testing dont send order Id
                 args.putString("order_id", it.Result.OrderId)
-                args.putString("email", "gaurav.kumar@example.com")
+                args.putString("email", "tanmay.majumdar@nowfloats.com")
                 args.putString("currency", "INR");
-                args.putString("contact", "9876543210")
+                args.putString("contact", "9738084090")
                 paymentFragment.arguments = args
                 (activity as UpgradeActivity).addFragment(
                         paymentFragment,
@@ -205,19 +239,42 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 progressDialog.dismiss()
             }
         })
+
+        viewModel.getGSTIN().observe(this, Observer {
+            if (it != null) {
+                Log.i("getGSTIN >> ", it)
+                GSTINNumber = it
+                gstin_layout1.visibility = View.GONE
+                gstin_layout2.visibility = View.VISIBLE
+                fill_in_gstin_value.setText(it)
+            }
+        })
+
+        viewModel.getTAN().observe(this, Observer {
+            if (it != null) {
+                Log.i("getTAN >> ", it)
+                TANNumber = it
+                enter_tan_number.visibility = View.GONE
+                entered_tan_number.visibility = View.VISIBLE
+                entered_tan_number.setText(it)
+            }
+        })
     }
 
     fun totalCalculation(list: List<CartModel>) {
-        total = 0
+        total = 0.0
         if (list != null && list.size > 0) {
             for (item in list) {
                 total = total + item.price
             }
             cart_amount_value.setText("₹" + total.toString())
             coupon_discount_value.setText("0")
-            order_total_value.setText("₹" +(total + 0).toString())
-            cart_grand_total.setText("₹" + total.toString())
-            footer_grand_total.setText("₹" + total.toString())
+            val temp = (total * 18) / 100
+            taxValue = Math.round(temp * 100) / 100.0
+            igst_value.setText("₹" + taxValue)
+            order_total_value.setText("₹" + (total + taxValue).toString())
+            cart_grand_total.setText("₹" + (total + taxValue).toString())
+            footer_grand_total.setText("₹" + (total + taxValue).toString())
         }
     }
 

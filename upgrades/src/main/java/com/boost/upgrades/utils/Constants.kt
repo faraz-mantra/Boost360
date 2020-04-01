@@ -12,8 +12,6 @@ import com.boost.upgrades.ui.popup.*
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
 import com.boost.upgrades.ui.removeaddons.RemoveAddonConfirmationFragment
 import com.boost.upgrades.ui.removeaddons.RemoveAddonsFragment
-import com.boost.upgrades.ui.thanks.Thanks2Fragment
-import com.boost.upgrades.ui.thanks.ThanksFragment
 import com.boost.upgrades.ui.webview.WebViewFragment
 
 class Constants {
@@ -35,8 +33,6 @@ class Constants {
         var VIEW_ALL_FEATURE: String = ViewAllFeaturesFragment::class.java.getName()
         var DETAILS_FRAGMENT: String = DetailsFragment::class.java.getName()
         var PAYMENT_FRAGMENT: String = PaymentFragment::class.java.getName()
-        var THANKS_FRAGMENT: String = ThanksFragment::class.java.getName()
-        var THANKS_2_FRAGMENT: String = Thanks2Fragment::class.java.getName()
         var MYADDONS_FRAGMENT: String = MyAddonsFragment::class.java.getName()
         var WEB_VIEW_FRAGMENT: String = WebViewFragment::class.java.getName()
         var REMOVE_ADDONS_FRAGMENT: String = RemoveAddonsFragment::class.java.getName()
@@ -47,6 +43,8 @@ class Constants {
         var ORDER_CONFIRMATION_FRAGMENT: String = OrderConfirmationFragment::class.java.getName()
         var FAILED_TRANSACTION_FRAGMENT: String = FailedTransactionPopUpFragment::class.java.getName()
         var COUPON_POPUP_FRAGEMENT: String = CouponPopUpFragment::class.java.getName()
+        var GSTIN_POPUP_FRAGEMENT: String = GSTINPopUpFragment::class.java.getName()
+        var TAN_POPUP_FRAGEMENT: String = TANPopUpFragment::class.java.getName()
         var RAZORPAY_WEBVIEW_POPUP_FRAGMENT: String = RazorPayWebView::class.java.getName()
 
     }

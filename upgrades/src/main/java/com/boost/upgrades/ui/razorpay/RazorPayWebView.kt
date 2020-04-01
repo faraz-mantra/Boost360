@@ -93,8 +93,14 @@ class RazorPayWebView : DialogFragment() {
         }
     }
 
+
+
     fun redirectOrderConfirmation() {
-        (activity as UpgradeActivity).addFragment(
+//        (activity as UpgradeActivity).addFragment(
+//            OrderConfirmationFragment.newInstance(),
+//            Constants.ORDER_CONFIRMATION_FRAGMENT
+//        )
+        (activity as UpgradeActivity).replaceFragment(
             OrderConfirmationFragment.newInstance(),
             Constants.ORDER_CONFIRMATION_FRAGMENT
         )

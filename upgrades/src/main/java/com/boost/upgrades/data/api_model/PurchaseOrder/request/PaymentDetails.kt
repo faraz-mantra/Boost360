@@ -5,5 +5,5 @@ data class PaymentDetails(
     val Discount: Int,
     val PaymentChannelProvider: String,
     val TaxDetails: TaxDetails,
-    val TotalPrice: Int
+    val TotalPrice: Double
 )

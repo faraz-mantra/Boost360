@@ -9,7 +9,7 @@ data class Widget(
     val IsCancellable: Boolean,
     val IsRecurringPayment: Boolean,
     val Name: String,
-    val Price: Int,
+    val Price: Double,
     val RecurringPaymentFrequency: String,
     val WidgetKey: String,
     val Quantity: Int
