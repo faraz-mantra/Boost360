@@ -120,6 +120,8 @@
                 android:layout_marginBottom="@dimen/size_8"
                 android:drawableStart="@drawable/ic_error_red"
                 android:drawablePadding="@dimen/size_6"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="Connection error: 001"
                 android:textColor="@color/scarlet"
                 app:fontFamily="@font/semi_bold"

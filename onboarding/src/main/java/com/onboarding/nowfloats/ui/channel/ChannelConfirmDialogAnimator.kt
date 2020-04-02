@@ -13,12 +13,12 @@ import java.lang.ref.WeakReference
 
 class ChannelConfirmDialogAnimator {
 
-    private val animationDelay = 80L
-    private val largeLogoAnimationDuration = 600L
-    private val logoFadeInDuration = 160L
-    private val titleFadeInDuration = 160L
-    private val descFadeInDuration = 160L
-    private val confirmFadeInDuration = 160L
+    private val animationDelay = 70L
+    private val largeLogoAnimationDuration = 500L
+    private val logoFadeInDuration = 120L
+    private val titleFadeInDuration = 120L
+    private val descFadeInDuration = 120L
+    private val confirmFadeInDuration = 120L
   private val accelerateInterpolator = AccelerateInterpolator()
 
   private var imageRiyaLarge: WeakReference<CustomCardView?>? = null

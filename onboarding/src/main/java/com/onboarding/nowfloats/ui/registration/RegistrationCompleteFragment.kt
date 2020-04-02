@@ -23,9 +23,6 @@ import com.onboarding.nowfloats.extensions.getBitmap
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.navigator.ScreenModel
-import com.onboarding.nowfloats.model.navigator.ScreenModel.*
-import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import java.io.File
 
@@ -57,11 +54,11 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         setBusinessImage()
 
         binding?.imageView?.post {
-            binding?.imageView?.fadeIn()?.andThen(binding?.congratsText?.fadeIn(100L))
-                    ?.andThen(binding?.businessText?.fadeIn(100L))?.andThen(binding?.tagImage?.fadeIn(200L))
-                    ?.andThen(binding?.cardView?.fadeIn(200L))?.andThen(binding?.businessName?.fadeIn(100L))
-                    ?.andThen(binding?.settingUpChannels?.fadeIn(100L))?.andThen(binding?.selectedChannels?.fadeIn(100L))
-                    ?.andThen(binding?.desc?.fadeIn(50L))?.andThen(binding?.done?.fadeIn(50L))
+            binding?.imageView?.fadeIn(300L)?.andThen(binding?.congratsText?.fadeIn(50L))
+                    ?.andThen(binding?.businessText?.fadeIn(50L))?.andThen(binding?.tagImage?.fadeIn(100L))
+                    ?.andThen(binding?.cardView?.fadeIn(100L))?.andThen(binding?.businessName?.fadeIn(50L))
+                    ?.andThen(binding?.settingUpChannels?.fadeIn(50L))?.andThen(binding?.selectedChannels?.fadeIn(50L))
+                    ?.andThen(binding?.desc?.fadeIn(30L))?.andThen(binding?.done?.fadeIn(30L))
                     ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
         }
         setOnClickListener(binding?.profileView, binding?.businessNameInitial)

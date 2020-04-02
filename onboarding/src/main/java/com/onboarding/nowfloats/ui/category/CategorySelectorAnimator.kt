@@ -36,8 +36,8 @@ class CategorySelectorAnimator {
 
     private val typingSpeed = 15L
     private val animationDelay = 100L
-    private val largeLogoAnimationDuration = 800L
-    private val contentFadeInDuration = 800L
+    private val largeLogoAnimationDuration = 700L
+    private val contentFadeInDuration = 500L
     private val accelerateInterpolator = AccelerateInterpolator()
     private var isAnimating: Boolean = true
 

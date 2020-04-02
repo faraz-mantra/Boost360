@@ -10,12 +10,9 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
-import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentCategorySelectorBinding
-import com.onboarding.nowfloats.extensions.addParcelable
-import com.onboarding.nowfloats.extensions.addString
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
@@ -82,7 +79,7 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
         }
         binding?.recyclerView?.layoutManager = gridLayoutManager
         binding?.recyclerView?.adapter = baseAdapter
-        baseAdapter?.runLayoutAnimation(binding?.recyclerView, R.anim.grid_layout_animation_from_bottom)
+        baseAdapter?.runLayoutAnimation(binding?.recyclerView, R.anim.grid_layout_animation_scale)
 
         val category = requestFloatsModel?.categoryDataModel ?: return
         onItemClick(-1, category, RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal)
