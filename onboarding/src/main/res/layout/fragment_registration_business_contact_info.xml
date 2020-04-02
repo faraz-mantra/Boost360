@@ -63,6 +63,7 @@
                             style="@style/Onboarding.TextFieldStyle"
                             android:drawableStart="@drawable/ic_location_focusable"
                             android:drawablePadding="@dimen/size_6"
+                            android:inputType="textCapWords"
                             android:hint="@string/city_name" />
 
                         <com.framework.views.customViews.CustomTextField

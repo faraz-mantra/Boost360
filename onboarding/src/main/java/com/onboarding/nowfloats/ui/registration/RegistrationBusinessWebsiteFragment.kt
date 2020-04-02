@@ -40,20 +40,23 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     override fun onCreateView() {
         super.onCreateView()
         binding?.googleChannels?.post {
-            (binding?.googleChannels?.fadeIn(1000L)?.mergeWith(binding?.viewBusiness?.fadeIn()))
-                    ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
-                    ?.andThen(binding?.subdomain?.fadeIn()?.mergeWith(binding?.inputType?.fadeIn(200L)))
-                    ?.andThen(binding?.next?.fadeIn(100L))?.subscribe()
+            (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
+                    ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+                    ?.andThen(binding?.subdomain?.fadeIn(100)?.mergeWith(binding?.inputType?.fadeIn(50L)))
+                    ?.andThen(binding?.next?.fadeIn(0L))?.andThen {
+                        setDataView()
+                    }?.subscribe()
         }
         setOnClickListener(binding?.next)
+        binding?.subdomain?.afterTextChanged { setSubDomain(it) }
+    }
+
+    private fun setDataView() {
         setSetSelectedGoogleChannels(channels)
         val contactInfo = requestFloatsModel?.contactInfo
-
         val subdomain = contactInfo?.domainName ?: contactInfo?.businessName ?: ""
         setSubDomain(subdomain, isInitial = true)
         apiCheckDomain(subdomain)
-
-        binding?.subdomain?.afterTextChanged { setSubDomain(it) }
     }
 
 
@@ -144,8 +147,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                             }, 1000)
                         }
                     }
-                }
-                else{
+                } else {
                     apiCheckDomain(binding?.subdomain?.text?.toString() ?: "")
                     {binding?.next?.performClick()}
                 }

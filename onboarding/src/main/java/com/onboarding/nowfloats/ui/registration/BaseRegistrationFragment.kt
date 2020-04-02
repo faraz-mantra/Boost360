@@ -12,7 +12,9 @@ import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.PreferenceConstant
-import com.onboarding.nowfloats.extensions.*
+import com.onboarding.nowfloats.extensions.addInt
+import com.onboarding.nowfloats.extensions.addString
+import com.onboarding.nowfloats.extensions.getInt
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
@@ -20,7 +22,6 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.BUSINESS_INFO
-import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.CHANNEL_SELECT
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
@@ -75,18 +76,14 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
         }
     }
 
-    protected open fun setSavedData(){
+    protected open fun setSavedData() {
 
     }
-
-//    override fun getViewModelClass(): Class<BaseViewModel> {
-//        return BaseViewModel::class.java
-//    }
 
     override fun onCreateView() {
         requestFloatsModel = NavigatorManager.getRequest()
         val title = arguments?.getString(IntentConstant.TOOLBAR_TITLE.name)
-        if(title!=null){
+        if (title != null) {
             setToolbarTitle(title)
 
             try {
@@ -95,12 +92,10 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
                 currentPage = split.firstOrNull()?.toInt() ?: return
                 totalPages = split.lastOrNull()?.toInt() ?: return
                 currentPage = currentPage
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-        else{
+        } else {
             currentPage = arguments?.getInt(IntentConstant.CURRENT_PAGES) ?: currentPage
             totalPages = arguments?.getInt(IntentConstant.TOTAL_PAGES) ?: totalPages
             if (this !is RegistrationCompleteFragment) {
@@ -149,7 +144,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
         startFragmentActivity(FragmentType.REGISTRATION_COMPLETE, getBundle(), clearTop = true)
     }
 
-    protected open fun setProfileDetails(name: String?, profilePicture: String?){
+    protected open fun setProfileDetails(name: String?, profilePicture: String?) {
 
     }
 
@@ -166,17 +161,16 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
 
     private fun getPreviousScreen(): Screen? {
-        return if(this is RegistrationBusinessContactInfoFragment){
+        return if (this is RegistrationBusinessContactInfoFragment) {
             BUSINESS_INFO
-        }
-        else{
+        } else {
             getCurrentScreenType()
         }
     }
 
-    private fun getCurrentScreenType(): ScreenModel.Screen?{
-        return when(this){
-            is RegistrationBusinessContactInfoFragment -> Screen.BUSINESS_INFO
+    private fun getCurrentScreenType(): Screen? {
+        return when (this) {
+            is RegistrationBusinessContactInfoFragment -> BUSINESS_INFO
             is RegistrationBusinessWebsiteFragment -> Screen.BUSINESS_SUBDOMAIN
             is RegistrationBusinessFacebookPageFragment -> Screen.BUSINESS_FACEBOOK_PAGE
             is RegistrationBusinessFacebookShopFragment -> Screen.BUSINESS_FACEBOOK_SHOP

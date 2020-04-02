@@ -37,17 +37,15 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         setSavedData()
         baseActivity.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         var confirmButtonAlpha = 0.3f
-        if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: "")){
+        if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: "")) {
             confirmButtonAlpha = 1f
         }
 
         binding?.whatsappChannels?.post {
-            (binding?.whatsappChannels?.fadeIn(1000L)?.mergeWith(binding?.viewBusiness?.fadeIn()))
-                ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
-                ?.andThen(
-                    binding?.edtView?.fadeIn()?.mergeWith(binding?.confirmBtn?.fadeIn(200L, confirmButtonAlpha))
-                )
-                ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+            (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(0L)))
+                    ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+                    ?.andThen(binding?.edtView?.fadeIn(100L)?.mergeWith(binding?.confirmBtn?.fadeIn(50L, confirmButtonAlpha))
+                    )?.andThen(binding?.skip?.fadeIn(0L))?.subscribe()
         }
         setOnClickListener(binding?.confirmBtn, binding?.skip)
         setSetSelectedWhatsAppChannel(channels)
@@ -55,8 +53,7 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
     }
 
     override fun setSavedData() {
-        val whatsAppData = requestFloatsModel?.
-        channelActionDatas?.firstOrNull()?: return
+        val whatsAppData = requestFloatsModel?.channelActionDatas?.firstOrNull() ?: return
 
         requestFloatsModel?.channelActionDatas?.remove(whatsAppData)
         this.whatsAppData = whatsAppData
@@ -93,9 +90,9 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         })
 
         whatsAppAdapter = binding?.whatsappChannels?.setGridRecyclerViewAdapter(
-            baseActivity,
-            selectedItems.size,
-            selectedItems
+                baseActivity,
+                selectedItems.size,
+                selectedItems
         )
         whatsAppAdapter?.notifyDataSetChanged()
     }

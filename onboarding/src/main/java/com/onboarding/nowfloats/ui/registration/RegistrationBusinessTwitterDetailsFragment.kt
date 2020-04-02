@@ -6,7 +6,7 @@ import android.view.View
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
-import com.framework.models.BaseViewModel
+import com.framework.utils.NetworkUtils
 import com.nowfloats.twitter.TwitterLoginHelper
 import com.nowfloats.twitter.TwitterUserHelper
 import com.onboarding.nowfloats.R
@@ -24,11 +24,11 @@ import com.onboarding.nowfloats.model.channel.request.clear
 import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
-import com.twitter.sdk.android.core.models.User
 
 class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(),
         TwitterLoginHelper, TwitterUserHelper {
@@ -51,10 +51,10 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   override fun onCreateView() {
     super.onCreateView()
     binding?.twitterChannels?.post {
-      (binding?.twitterChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
-              ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
-              ?.andThen(binding?.linkTwitter?.fadeIn(200L))
-              ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+      (binding?.twitterChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
+              ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+              ?.andThen(binding?.linkTwitter?.fadeIn(50L))
+              ?.andThen(binding?.skip?.fadeIn(0L))?.subscribe()
     }
     setOnClickListener(binding?.skip, binding?.linkTwitter)
     setSelectedTwitterChannels(channels)
@@ -85,10 +85,11 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     when (v) {
       binding?.skip -> gotoNextScreen()
       binding?.linkTwitter -> {
-        if (channelAccessToken.isLinked()){
+        if (channelAccessToken.isLinked()) {
           gotoNextScreen()
-        }
-        else{
+        } else if (!NetworkUtils.isNetworkConnected()) {
+          InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
+        } else {
           twitterAuthClient.cancelAuthorize()
           loginWithTwitter(baseActivity, twitterAuthClient)
         }

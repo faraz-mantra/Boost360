@@ -11,7 +11,6 @@ import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessApiBinding
-import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
 import com.onboarding.nowfloats.model.channel.ChannelModel
@@ -50,14 +49,15 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     getDotProgress()?.let {
       binding?.textBtn?.visibility = View.GONE
       binding?.next?.addView(it)
-
-      if (NetworkUtils.isNetworkConnected()){
+      if (NetworkUtils.isNetworkConnected()) {
         it.startAnimation()
         putCreateBusinessOnboarding(it)
-      }
-      else{
+      } else {
         val dialog = InternetErrorDialog()
-        dialog.onRetryTapped = {it.startAnimation();putCreateBusinessOnboarding(it)}
+        dialog.onRetryTapped = {
+          it.startAnimation()
+          putCreateBusinessOnboarding(it)
+        }
         dialog.show(parentFragmentManager, dialog.javaClass.name)
       }
     }
@@ -69,8 +69,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     val connectedWhatsApp = requestFloatsModel?.channelActionDatas?.firstOrNull()
 
     val connectedChannels = ArrayList<ChannelModel>()
-    for (channel in channels){
-      val isSelected = when (channel.getType()){
+    for (channel in channels) {
+      val isSelected = when (channel.getType()) {
         ChannelType.G_SEARCH -> true
         ChannelType.FB_PAGE -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.Facebookpage)
         ChannelType.G_MAPS -> true
@@ -80,7 +80,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         ChannelType.G_BUSINESS -> true
         null -> false
       }
-      if (isSelected == true){
+      if (isSelected == true) {
         connectedChannels.add(channel)
       }
     }
@@ -215,7 +215,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.email = requestFloatsModel?.contactInfo?.email
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() ==  ChannelAccessToken.AccessTokenType.Facebookpage }?.userAccountName
+    createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.Facebookpage }?.userAccountName
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     return createRequest
   }

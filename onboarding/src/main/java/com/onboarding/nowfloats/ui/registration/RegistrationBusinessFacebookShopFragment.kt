@@ -10,7 +10,7 @@ import com.facebook.login.LoginResult
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
-import com.framework.models.BaseViewModel
+import com.framework.utils.NetworkUtils
 import com.framework.utils.PreferencesUtils
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
@@ -33,9 +33,10 @@ import com.onboarding.nowfloats.model.channel.request.clear
 import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import com.onboarding.nowfloats.ui.InternetErrorDialog
 
 class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding>(),
-    FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
+        FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
 
     private val callbackManager = CallbackManager.Factory.create()
     private var facebookChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -54,10 +55,10 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         super.onCreateView()
         registerFacebookLoginCallback(this, callbackManager)
         binding?.facebookChannels?.post {
-            (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(1000L)))
-                ?.andThen(binding?.title?.fadeIn(200L))?.andThen(binding?.subTitle?.fadeIn(200L))
-                ?.andThen(binding?.linkFacebook?.fadeIn(200L))
-                    ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+            (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
+                    ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+                    ?.andThen(binding?.linkFacebook?.fadeIn(50L))
+                    ?.andThen(binding?.skip?.fadeIn(0L))?.subscribe()
         }
         setOnClickListener(binding?.skip, binding?.linkFacebook)
         setSetSelectedFacebookChannels(channels)
@@ -84,12 +85,11 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         when (v) {
             binding?.skip -> gotoNextScreen()
             binding?.linkFacebook -> {
-                if (channelAccessToken.isLinked()){
+                if (channelAccessToken.isLinked()) {
                     gotoNextScreen()
-                }
-                else{
-                    loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
-                }
+                } else if (!NetworkUtils.isNetworkConnected()) {
+                    InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
+                } else loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
             }
         }
     }

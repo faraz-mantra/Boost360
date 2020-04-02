@@ -68,7 +68,6 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 2020020026
 
-
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
