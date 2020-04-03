@@ -45,10 +45,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         super.onCreateView()
         setOnClickListener(binding?.next)
         setProcessApiSyncModel()
+        setApiProcessAdapter(list)
         if (requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
             getDotProgress()?.let { apiBusinessComplete(it, requestFloatsModel?.floatingPointId!!) }
         } else {
-            setApiProcessAdapter(list)
             getDotProgress()?.let {
                 binding?.textBtn?.visibility = View.GONE
                 binding?.next?.addView(it)

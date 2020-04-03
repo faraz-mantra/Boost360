@@ -30,8 +30,8 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         return observable.map {
             if (it.isSuccessful) {
                 val response = when (it.body()) {
-                    is Array<*> -> BaseResponse(arrayResponse = it.body() as Array<*>)
-                    is String -> BaseResponse(stringResponse = it.body() as String)
+                    is Array<*> -> BaseResponse(message = "Success", arrayResponse = it.body() as Array<*>)
+                    is String -> BaseResponse(message = "Success", stringResponse = it.body() as String)
                     is Objects -> it.body() as BaseResponse
                     else -> BaseResponse(message = "Success")
                 }

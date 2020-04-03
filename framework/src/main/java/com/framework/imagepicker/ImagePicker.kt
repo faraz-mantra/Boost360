@@ -16,7 +16,7 @@ class ImagePicker(builder: Builder) {
     }
 
     enum class ComperesLevel(val value: Int) {
-        HARD(20), MEDIUM(50), SOFT(80), NONE(100);
+        HARD(20), MEDIUM(50), SOFT(70), NONE(100);
 
         companion object {
             fun getEnum(value: Int): ComperesLevel {

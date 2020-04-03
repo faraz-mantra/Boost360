@@ -8,8 +8,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.lifecycle.Observer
 import com.framework.CustomTypefaceSpan
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -21,8 +23,12 @@ import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.getBitmap
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.channel.ChannelModel
+import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import java.io.File
 
 class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
@@ -63,7 +69,6 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                     ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
         }
         setOnClickListener(binding?.profileView, binding?.businessNameInitial)
-//        NavigatorManager.clearStackAndFormData()
     }
 
     private fun setBusinessImage() {
@@ -141,16 +146,29 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     }
 
     private fun uploadImageBusinessLogo() {
-        businessImage?.let {
+        if (businessImage != null) {
+            showProgress("Uploading Image...")
+            viewModel?.putUploadImageBusiness(getRequestData(businessImage!!))?.observeOnce(viewLifecycleOwner, Observer {
+                hideProgress()
+                if (it.status == 200 || it.status == 201 || it.status == 202) {
+                    NavigatorManager.clearStackAndFormData()
+                }
+                showLongToast(it.message)
+            })
+        } else NavigatorManager.clearStackAndFormData()
+    }
 
-        }
+    private fun getRequestData(businessImage: File): UploadFileBusinessRequest {
+        val responseBody = RequestBody.create(MediaType.parse("image/png"), businessImage.readBytes())
+        val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
+        return UploadFileBusinessRequest(clientId, requestFloatsModel?.floatingPointId, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
     }
 
     private fun openImagePicker(isProfileImage: Boolean) {
         this.isProfileImage = isProfileImage
         ImagePicker.Builder(baseActivity)
                 .mode(ImagePicker.Mode.CAMERA_AND_GALLERY)
-                .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+                .compressLevel(ImagePicker.ComperesLevel.SOFT)
                 .directory(ImagePicker.Directory.DEFAULT)
                 .extension(ImagePicker.Extension.PNG) //       .scale(600, 600)
                 .allowMultipleImages(false)

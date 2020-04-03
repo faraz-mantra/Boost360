@@ -9,4 +9,9 @@ data class UploadFileBusinessRequest(
         var identifierType: String? = null,
         var fileName: String? = null,
         var requestBody: RequestBody? = null
-) : BaseRequest()
+) : BaseRequest() {
+
+    enum class Type {
+        DEFAULT, SINGLE, MULTI;
+    }
+}
