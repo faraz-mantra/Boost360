@@ -210,6 +210,9 @@
                             <com.framework.views.customViews.CustomCardView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:id="@+id/business_click"
+                                android:clickable="true"
+                                android:focusable="true"
                                 app:cardCornerRadius="@dimen/size_4">
 
                                 <FrameLayout

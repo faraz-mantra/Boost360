@@ -31,22 +31,13 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     }
 
     protected open fun hideProgress() {
-        progressView?.let { if (it.dialog != null && it.dialog?.isShowing!!) progressView?.hideProgress() }
+        progressView?.hideProgress()
     }
 
-
-    protected open fun showProgress() {
-        progressView?.let { if (it.isVisible.not()) progressView?.showProgress(activity?.supportFragmentManager) }
+    protected open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
+        title?.let { progressView?.setTitle(it) }
+        cancelable?.let { progressView?.isCancelable = it }
+        activity?.let { progressView?.showProgress(it.supportFragmentManager) }
     }
 
-    protected open fun showProgress(title: String?, cancelable: Boolean) {
-        progressView?.setTitle(title!!)
-        progressView?.isCancelable = cancelable
-        showProgress()
-    }
-
-    protected open fun showProgress(title: String?) {
-        progressView?.setTitle(title!!)
-        showProgress()
-    }
 }

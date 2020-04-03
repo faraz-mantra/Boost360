@@ -36,7 +36,6 @@ class ProgressDialog : BaseDialogFragment<DialogProgressBinding, BaseViewModel>(
     }
 
     override fun onViewCreated() {
-        isCancelable = false
         title?.let { binding?.title?.setText(it) }
     }
 
@@ -44,9 +43,9 @@ class ProgressDialog : BaseDialogFragment<DialogProgressBinding, BaseViewModel>(
         return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(32f)
     }
 
-    fun showProgress(manager: FragmentManager?) {
+    fun showProgress(manager: FragmentManager) {
         try {
-            show(manager!!, "")
+            if (this.isVisible.not()) show(manager, "")
         } catch (e: IllegalStateException) {
             e.printStackTrace()
         }
@@ -54,7 +53,7 @@ class ProgressDialog : BaseDialogFragment<DialogProgressBinding, BaseViewModel>(
 
     fun hideProgress() {
         try {
-            if (!isRemoving) dismiss()
+            if (isRemoving.not()) dismiss()
         } catch (e: IllegalStateException) {
             e.printStackTrace()
         }

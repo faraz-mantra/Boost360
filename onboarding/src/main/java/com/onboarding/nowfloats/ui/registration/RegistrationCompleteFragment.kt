@@ -51,7 +51,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     override fun onCreateView() {
         super.onCreateView()
         setSetSelectedChannels(channels)
-        setOnClickListener(binding?.menuView, binding?.done)
+        setOnClickListener(binding?.menuView, binding?.done, binding?.businessClick, binding?.profileView)
         binding?.congratsText?.text = resources.getString(R.string.congratulations)
         requestFloatsModel?.contactInfo?.businessName?.let {
             binding?.businessName?.text = it
@@ -68,7 +68,6 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                     ?.andThen(binding?.desc?.fadeIn(30L))?.andThen(binding?.done?.fadeIn(30L))
                     ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
         }
-        setOnClickListener(binding?.profileView, binding?.businessNameInitial)
     }
 
     private fun setBusinessImage() {
@@ -140,20 +139,21 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         when (v) {
             binding?.menuView -> showMenuLogout(v)
             binding?.profileView -> openImagePicker(true)
-            binding?.businessNameInitial -> openImagePicker(false)
+            binding?.businessClick -> openImagePicker(false)
             binding?.done -> uploadImageBusinessLogo()
         }
     }
 
     private fun uploadImageBusinessLogo() {
         if (businessImage != null) {
-            showProgress("Uploading Image...")
+            showProgress("Uploading image...")
             viewModel?.putUploadImageBusiness(getRequestData(businessImage!!))?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()
                 if (it.status == 200 || it.status == 201 || it.status == 202) {
                     NavigatorManager.clearStackAndFormData()
-                }
-                showLongToast(it.message)
+                    showLongToast("Image uploaded.")
+                } else showLongToast(it.message)
+
             })
         } else NavigatorManager.clearStackAndFormData()
     }
