@@ -105,8 +105,8 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     } else true
   }
 
-  override fun clearInfo() {
+    override fun updateInfo() {
     requestFloatsModel?.contactInfo?.clearAllDomain()
-    super.clearInfo()
+        super.updateInfo()
   }
 }

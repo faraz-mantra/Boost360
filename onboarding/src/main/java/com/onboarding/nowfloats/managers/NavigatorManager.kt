@@ -2,7 +2,6 @@ package com.onboarding.nowfloats.managers
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import com.framework.utils.PreferencesKey.NAVIGATION_STACK
 import com.framework.utils.PreferencesKey.REQUEST_FLOAT
 import com.framework.utils.PreferencesUtils
@@ -69,9 +68,9 @@ object NavigatorManager {
     updateStackInPreferences()
   }
 
-  private fun removeStoredRequestEntries(screen: ScreenModel.Screen){
+  private fun removeStoredRequestEntries(screen: ScreenModel.Screen) {
     val request = getRequest() ?: return
-    when(screen){
+    when (screen) {
       ScreenModel.Screen.CATEGORY_SELECT -> request.categoryDataModel = null
       ScreenModel.Screen.CHANNEL_SELECT -> request.channels = null
       ScreenModel.Screen.BUSINESS_INFO -> request.contactInfo?.clearAllDomain()
@@ -80,7 +79,8 @@ object NavigatorManager {
       ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookshop }
       ScreenModel.Screen.BUSINESS_TWITTER -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Twitter }
       ScreenModel.Screen.BUSINESS_WHATSAPP -> request.channelActionDatas?.clear()
-      ScreenModel.Screen.REGISTRATION_COMPLETE -> {}
+      ScreenModel.Screen.REGISTRATION_COMPLETE -> {
+      }
     }
     PreferencesUtils.instance.saveData(REQUEST_FLOAT, Gson().toJson(request))
   }
@@ -89,7 +89,7 @@ object NavigatorManager {
     PreferencesUtils.instance.saveData(NAVIGATION_STACK, Gson().toJson(stack))
   }
 
-  fun clearStackAndFormData(){
+  fun clearStackAndFormData() {
     stack.clear()
     PreferencesUtils.instance.saveData(NAVIGATION_STACK, Gson().toJson(stack))
     PreferencesUtils.instance.saveData(REQUEST_FLOAT, "")
@@ -112,8 +112,15 @@ object NavigatorManager {
     val bundle = Bundle()
 //    bundle.putParcelable(IntentConstant.REQUEST_FLOATS_INTENT.name, getRequest())
 
-    if (stack.isEmpty()){
+    if (stack.isEmpty()) {
       activity.startActivity(ScreenModel(ScreenModel.Screen.CATEGORY_SELECT).getIntent(activity))
+      return
+    } else if (stack.lastOrNull { (it.type == ScreenModel.Screen.REGISTERING.name || it.type == ScreenModel.Screen.REGISTRATION_COMPLETE.name) } != null) {
+      val screen = stack[stack.size - 1]
+      bundle.putString(IntentConstant.TOOLBAR_TITLE.name, screen.title)
+      val intent = screen.getIntent(activity)
+      intent?.putExtras(bundle)
+      activity.startActivity(intent)
       return
     }
 

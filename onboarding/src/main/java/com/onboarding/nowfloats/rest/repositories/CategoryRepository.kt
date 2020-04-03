@@ -8,19 +8,20 @@ import com.onboarding.nowfloats.rest.services.local.category.CategoryLocalDataSo
 import com.onboarding.nowfloats.rest.services.remote.category.CategoryRemoteDataSource
 import io.reactivex.Observable
 
+@Deprecated("old")
 object CategoryRepository : AppBaseRepository<CategoryRemoteDataSource, CategoryLocalDataSource>() {
 
-  fun getCategories(context: Context): Observable<BaseResponse> {
+    fun getCategories(context: Context): Observable<BaseResponse> {
 //        return makeRemoteRequest(remoteDataSource.getCategories(), Taskcode.GET_CATEGORIES)
-    return makeLocalRequest(CategoryLocalDataSource.getCategory(context), Taskcode.GET_CATEGORIES)
-  }
+        return makeLocalRequest(CategoryLocalDataSource.getCategory(context), Taskcode.GET_CATEGORIES)
+    }
 
-  override fun getRemoteDataSourceClass(): Class<CategoryRemoteDataSource> {
-    return CategoryRemoteDataSource::class.java
-  }
+    override fun getRemoteDataSourceClass(): Class<CategoryRemoteDataSource> {
+        return CategoryRemoteDataSource::class.java
+    }
 
-  override fun getLocalDataSourceInstance(): CategoryLocalDataSource {
-    return CategoryLocalDataSource
-  }
+    override fun getLocalDataSourceInstance(): CategoryLocalDataSource {
+        return CategoryLocalDataSource
+    }
 
 }

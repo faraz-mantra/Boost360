@@ -40,10 +40,11 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     override fun onCreateView() {
         super.onCreateView()
         binding?.googleChannels?.post {
-            (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
+            (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
+                    ?.doOnComplete { setSetSelectedGoogleChannels(channels) })
                     ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
                     ?.andThen(binding?.subdomain?.fadeIn(100)?.mergeWith(binding?.inputType?.fadeIn(50L)))
-                    ?.andThen(binding?.next?.fadeIn(0L))?.andThen {
+                    ?.andThen(binding?.next?.fadeIn(0L))?.doOnComplete {
                         setDataView()
                     }?.subscribe()
         }
@@ -52,7 +53,6 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     }
 
     private fun setDataView() {
-        setSetSelectedGoogleChannels(channels)
         val contactInfo = requestFloatsModel?.contactInfo
         val subdomain = contactInfo?.domainName ?: contactInfo?.businessName ?: ""
         setSubDomain(subdomain, isInitial = true)
@@ -71,7 +71,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         apiCheckDomain(subDomain.toLowerCase())
     }
 
-    private fun apiCheckDomain(subDomain: String, onSuccess: ()->Unit = {}) {
+    private fun apiCheckDomain(subDomain: String, onSuccess: () -> Unit = {}) {
         if (!TextUtils.isEmpty(subDomain)) {
             val data = BusinessDomainRequest(clientId, subDomain, requestFloatsModel?.contactInfo?.businessName)
             viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
@@ -81,7 +81,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     }
 
     private fun onPostBusinessDomainCheckResponse(response: BaseResponse, onSuccess: () -> Unit) {
-        if (response.error is NoNetworkException){
+        if (response.error is NoNetworkException) {
             InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
             return
         }
@@ -149,14 +149,14 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                     }
                 } else {
                     apiCheckDomain(binding?.subdomain?.text?.toString() ?: "")
-                    {binding?.next?.performClick()}
+                    { binding?.next?.performClick() }
                 }
         }
 
     }
 
-    override fun clearInfo() {
+    override fun updateInfo() {
         requestFloatsModel?.contactInfo?.domainName = null
-        super.clearInfo()
+        super.updateInfo()
     }
 }

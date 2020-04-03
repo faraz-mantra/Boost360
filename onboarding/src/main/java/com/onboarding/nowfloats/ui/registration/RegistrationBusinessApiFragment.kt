@@ -45,20 +45,24 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         super.onCreateView()
         setOnClickListener(binding?.next)
         setProcessApiSyncModel()
-        setApiProcessAdapter(list)
-        getDotProgress()?.let {
-            binding?.textBtn?.visibility = View.GONE
-            binding?.next?.addView(it)
-            if (NetworkUtils.isNetworkConnected()) {
-                it.startAnimation()
-                putCreateBusinessOnboarding(it)
-            } else {
-                val dialog = InternetErrorDialog()
-                dialog.onRetryTapped = {
+        if (requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
+            getDotProgress()?.let { apiBusinessComplete(it, requestFloatsModel?.floatingPointId!!) }
+        } else {
+            setApiProcessAdapter(list)
+            getDotProgress()?.let {
+                binding?.textBtn?.visibility = View.GONE
+                binding?.next?.addView(it)
+                if (NetworkUtils.isNetworkConnected()) {
                     it.startAnimation()
                     putCreateBusinessOnboarding(it)
+                } else {
+                    val dialog = InternetErrorDialog()
+                    dialog.onRetryTapped = {
+                        it.startAnimation()
+                        putCreateBusinessOnboarding(it)
+                    }
+                    dialog.show(parentFragmentManager, dialog.javaClass.name)
                 }
-                dialog.show(parentFragmentManager, dialog.javaClass.name)
             }
         }
     }
@@ -90,7 +94,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
         val request = getBusinessRequest()
         viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
-//            it.error?.localizedMessage?.let { it1 -> showShortToast(it1) }
             if (it.status == 200 || it.status == 201 || it.status == 202) {
                 if (it.stringResponse.isNullOrEmpty().not()) {
                     apiProcessChannelWhatsApp(dotProgressBar, it.stringResponse ?: "")
@@ -120,7 +123,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                     viewModel?.updateChannelAccessToken(UpdateChannelAccessTokenRequest(channelAccessToken, clientId!!, floatingPointId))?.observeOnce(viewLifecycleOwner, Observer {
                         index += 1
                         if (it.status == 200 || it.status == 201 || it.status == 202) {
-                            if (requestFloatsModel?.channelAccessTokens?.size == index) apiBusinessComplete(dotProgressBar)
+                            if (requestFloatsModel?.channelAccessTokens?.size == index) apiBusinessComplete(dotProgressBar, floatingPointId)
                         } else {
                             isBreak = true
                             updateError(it.error?.localizedMessage, it.status, "CHANNELS")
@@ -129,7 +132,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                     if (isBreak) return@forEach
                 }
             }
-        } else apiBusinessComplete(dotProgressBar)
+        } else apiBusinessComplete(dotProgressBar, floatingPointId)
     }
 
     private fun updateError(message: String?, status: Int?, type: String) {
@@ -155,8 +158,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         binding?.next?.gone()
     }
 
-    private fun apiBusinessComplete(dotProgressBar: DotProgressBar) {
+    private fun apiBusinessComplete(dotProgressBar: DotProgressBar, floatingPointId: String) {
         binding?.apiRecycler?.post {
+            requestFloatsModel?.floatingPointId = floatingPointId
+            updateInfo()
             list?.map { it1 ->
                 it1.status = ProcessApiSyncModel.SyncStatus.SUCCESS.name
                 it1.channels?.map { it2 -> it2.status = ProcessApiSyncModel.SyncStatus.SUCCESS.name; }

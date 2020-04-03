@@ -177,8 +177,8 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
         channelAccessToken.clear()
     }
 
-    override fun clearInfo() {
+    override fun updateInfo() {
         requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookshop }
-        super.clearInfo()
+        super.updateInfo()
     }
 }

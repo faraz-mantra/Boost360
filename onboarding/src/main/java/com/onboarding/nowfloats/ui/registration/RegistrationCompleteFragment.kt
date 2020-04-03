@@ -21,13 +21,14 @@ import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.getBitmap
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
-import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import java.io.File
 
 class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
 
+    private var businessImage: File? = null
+    private var profileImage: File? = null
     private var selectedChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
     var isProfileImage: Boolean? = null
 
@@ -44,7 +45,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     override fun onCreateView() {
         super.onCreateView()
         setSetSelectedChannels(channels)
-        setOnClickListener(binding?.menuView)
+        setOnClickListener(binding?.menuView, binding?.done)
         binding?.congratsText?.text = resources.getString(R.string.congratulations)
         requestFloatsModel?.contactInfo?.businessName?.let {
             binding?.businessName?.text = it
@@ -62,7 +63,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                     ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
         }
         setOnClickListener(binding?.profileView, binding?.businessNameInitial)
-        NavigatorManager.clearStackAndFormData()
+//        NavigatorManager.clearStackAndFormData()
     }
 
     private fun setBusinessImage() {
@@ -106,10 +107,9 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         val itemSize = ConversionUtils.dp2px(48f)
         var spanCount = (ScreenUtils.instance.getWidth(baseActivity) - ConversionUtils.dp2px(96f)) / itemSize
 
-        if (spanCount == 0){
+        if (spanCount == 0) {
             spanCount = 1
-        }
-        else if (spanCount > list.size) {
+        } else if (spanCount > list.size) {
             spanCount = list.size
         }
 
@@ -136,6 +136,13 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
             binding?.menuView -> showMenuLogout(v)
             binding?.profileView -> openImagePicker(true)
             binding?.businessNameInitial -> openImagePicker(false)
+            binding?.done -> uploadImageBusinessLogo()
+        }
+    }
+
+    private fun uploadImageBusinessLogo() {
+        businessImage?.let {
+
         }
     }
 
@@ -169,13 +176,14 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
             val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
             if (mPaths.isNotEmpty()) {
-                val imageBitmap = File(mPaths[0]).getBitmap()
                 if (this.isProfileImage != null && this.isProfileImage!!) {
-                    imageBitmap?.let { binding?.profileImage?.setImageBitmap(it) }
+                    profileImage = File(mPaths[0])
+                    profileImage?.getBitmap()?.let { binding?.profileImage?.setImageBitmap(it) }
                 } else {
+                    businessImage = File(mPaths[0])
                     binding?.businessNameInitial?.gone()
                     binding?.businessImage?.visible()
-                    imageBitmap?.let { binding?.businessImage?.setImageBitmap(it) }
+                    businessImage?.getBitmap()?.let { binding?.businessImage?.setImageBitmap(it) }
                 }
             }
         }

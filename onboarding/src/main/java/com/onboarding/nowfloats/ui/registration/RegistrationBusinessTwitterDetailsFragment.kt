@@ -157,8 +157,8 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     twitterAuthClient.onActivityResult(requestCode, resultCode, data)
   }
 
-  override fun clearInfo() {
+    override fun updateInfo() {
     requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Twitter }
-    super.clearInfo()
+        super.updateInfo()
   }
 }

@@ -136,11 +136,12 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
 
     protected open fun gotoBusinessApiCallDetails() {
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.REGISTERING, getToolbarTitle()), requestFloatsModel)
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle(), clearTop = true)
     }
 
     protected fun gotoRegistrationComplete() {
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.REGISTRATION_COMPLETE, getToolbarTitle()), requestFloatsModel)
         startFragmentActivity(FragmentType.REGISTRATION_COMPLETE, getBundle(), clearTop = true)
     }
 
@@ -148,7 +149,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
     }
 
-    open fun clearInfo() {
+    open fun updateInfo() {
         NavigatorManager.updateRequest(requestFloatsModel)
     }
 

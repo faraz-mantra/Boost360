@@ -113,8 +113,8 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         super.gotoBusinessApiCallDetails()
     }
 
-    override fun clearInfo() {
-        super.clearInfo()
+    override fun updateInfo() {
+        super.updateInfo()
         requestFloatsModel?.channelActionDatas?.clear()
     }
 }

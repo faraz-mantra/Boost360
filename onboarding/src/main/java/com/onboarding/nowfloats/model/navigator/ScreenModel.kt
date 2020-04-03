@@ -17,8 +17,7 @@ data class ScreenModel(
 
   constructor(parcel: Parcel) : this(
           parcel.readString(),
-          parcel.readString() ?: Screen.CATEGORY_SELECT.name) {
-  }
+          parcel.readString() ?: Screen.CATEGORY_SELECT.name)
 
   constructor(screen: Screen? = null,
               title: String? = null) : this(title, screen?.name)
@@ -46,6 +45,7 @@ data class ScreenModel(
       Screen.BUSINESS_FACEBOOK_SHOP -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP)
       Screen.BUSINESS_TWITTER -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS)
       Screen.BUSINESS_WHATSAPP -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_WHATSAPP)
+      Screen.REGISTERING -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_API_CALL)
       Screen.REGISTRATION_COMPLETE -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_COMPLETE)
       else -> null
     }

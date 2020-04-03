@@ -46,13 +46,11 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
             FragmentType.CHANNEL_PICKER -> ContextCompat.getColor(this, R.color.white_two)
             FragmentType.CATEGORY_VIEW,
             FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> ContextCompat.getColor(this, R.color.white)
-
             FragmentType.REGISTRATION_BUSINESS_WEBSITE,
             FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
             FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
             FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
             FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ContextCompat.getColor(this, R.color.white_two)
-
             FragmentType.REGISTRATION_BUSINESS_API_CALL -> ContextCompat.getColor(this, R.color.white_four)
             else -> super.getToolbarBackgroundColor()
         }
@@ -67,7 +65,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     }
 
     override fun getToolbarTitleSize(): Float? {
-        return when (type){
+        return when (type) {
             FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
             FragmentType.REGISTRATION_BUSINESS_WEBSITE,
             FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
@@ -191,37 +189,45 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     }
 
     override fun onBackPressed() {
-        when(type){
+        when (type) {
             FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> {
-                registrationBusinessContactInfoFragment?.clearInfo()
+                registrationBusinessContactInfoFragment?.updateInfo()
                 NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_INFO)
+                super.onBackPressed()
             }
             FragmentType.REGISTRATION_BUSINESS_WEBSITE -> {
-                registrationBusinessWebsiteFragment?.clearInfo()
+                registrationBusinessWebsiteFragment?.updateInfo()
                 NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_SUBDOMAIN)
+                super.onBackPressed()
             }
             FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> {
-                registrationBusinessFacebookPageFragment?.clearInfo()
+                registrationBusinessFacebookPageFragment?.updateInfo()
                 NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE)
+                super.onBackPressed()
             }
             FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> {
-                registrationBusinessFacebookShopFragment?.clearInfo()
+                registrationBusinessFacebookShopFragment?.updateInfo()
                 NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP)
+                super.onBackPressed()
             }
             FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> {
-                registrationBusinessTwitterDetailsFragment?.clearInfo()
+                registrationBusinessTwitterDetailsFragment?.updateInfo()
                 NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_TWITTER)
+                super.onBackPressed()
             }
             FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> {
-                registrationBusinessWhatsAppFragment?.clearInfo()
+                registrationBusinessWhatsAppFragment?.updateInfo()
                 NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_WHATSAPP)
+                super.onBackPressed()
             }
-            FragmentType.REGISTRATION_COMPLETE -> {
-                NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTRATION_COMPLETE)
+            FragmentType.REGISTRATION_COMPLETE,
+            FragmentType.REGISTRATION_BUSINESS_API_CALL -> {
+                if (exitToast?.view?.windowToken != null) {
+                    super.onBackPressed()
+                } else exitToast?.show()
             }
-            else -> {}
+            else -> super.onBackPressed()
         }
-        super.onBackPressed()
     }
 
     private fun shouldAddToBackStack(): Boolean {
@@ -235,21 +241,6 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
         registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     }
-
-//    override fun onBackPressed() {
-//        when (type) {
-//            FragmentType.REGISTRATION_BUSINESS_API_CALL,
-//            FragmentType.REGISTRATION_COMPLETE -> showMessageBackPress()
-//            else -> super.onBackPressed()
-//        }
-//    }
-
-//    private fun showMessageBackPress() {
-//        if (exitToast?.view?.windowToken != null) {
-//            this@AppFragmentContainerActivity.finish()
-//            exitProcess(0)
-//        } else exitToast?.show()
-//    }
 
 }
 

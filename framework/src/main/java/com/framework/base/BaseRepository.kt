@@ -41,9 +41,8 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
             } else {
                 val response = BaseResponse()
                 response.status = it.code()
-                response.message = it.message()
                 response.error = BaseException(it.errorBody()?.string() ?: "")
-//                response.error = it.errorBody()
+                response.message = response.error?.localizedMessage
                 onFailure(response, taskcode)
                 return@map response
             }

@@ -5,9 +5,10 @@ import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
 
+@Deprecated("old")
 interface CategoryRemoteDataSource {
 
-  @GET("")
-  fun getCategories(): Observable<Response<CategoryListResponse>>
+    @GET("")
+    fun getCategories(): Observable<Response<CategoryListResponse>>
 
 }
