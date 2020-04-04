@@ -49,8 +49,8 @@
     <string name="side_panel_row_one">Home</string>
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
-    <string name="manage_inventory">E-Commerce</string>
-    <string name="manage_inbox">Inbox</string>
+<!--    <string name="manage_inventory">E-Commerce</string>-->
+<!--    <string name="manage_inbox">Inbox</string>-->
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_four">Photo Gallery</string>
@@ -331,8 +331,6 @@
     <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
 
     <string name="your_site_health">Your Site Health</string>
-
-    <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_about_us_link">https://boost360.nowfloats.com/about-us/</string>
 
     <string name="settings_tou_url">https://boost360.nowfloats.com/tnc/</string>
@@ -383,5 +381,4 @@
     <string name="payment_config_acceptance_message">I agree that Boost will charge %s of the total cart value as convenience fee(as part of your current boost plan)</string>
 
     <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
-
 </resources>

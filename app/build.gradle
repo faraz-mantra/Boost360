@@ -66,7 +66,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020027
+        versionCode 2020020028
 
 
         multiDexEnabled true
@@ -141,7 +141,7 @@ android {
         }
         partone {
 
-            versionName "5.3.5"
+            versionName "5.3.6"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -261,4 +261,5 @@ dependencies {
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation group: 'com.zendesk', name: 'support', version: '3.0.2'
+    implementation group: 'com.zopim.android', name: 'sdk', version: '1.4.4'
 }

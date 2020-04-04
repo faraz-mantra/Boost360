@@ -590,10 +590,11 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     private void processLoginSuccessRequest(VerificationRequestResult response){
         session.setUserLogin(true);
+        session.setUserProfileId(response.getLoginId());
         try {
-            session.setUserProfileEmail(response.getChannelProfileProperties().getUserEmail());
-            session.setUserProfileName(response.getChannelProfileProperties().getUserName());
-            session.setUserProfileMobile(response.getChannelProfileProperties().getUserMobile());
+            session.setUserProfileEmail(response.getProfileProperties().getUserEmail());
+            session.setUserProfileName(response.getProfileProperties().getUserName());
+            session.setUserProfileMobile(response.getProfileProperties().getUserMobile());
         } catch (Exception e){}
 
         if(response.getValidFPIds() == null || response.getValidFPIds().length == 0) {

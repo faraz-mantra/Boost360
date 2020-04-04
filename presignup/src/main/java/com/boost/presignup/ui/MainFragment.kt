@@ -93,8 +93,8 @@ class MainFragment : Fragment() {
         splashImageResources = mutableListOf<Int>(
                 R.drawable.intro_video_splash_en,
                 R.drawable.intro_video_splash_hi,
-                R.drawable.intro_video_splash_en,
-                R.drawable.intro_video_splash_en,
+                R.drawable.intro_video_splash_telegu,
+                R.drawable.intro_video_splash_tamil,
                 R.drawable.intro_video_splash_en,
                 R.drawable.intro_video_splash_en,
                 R.drawable.intro_video_splash_en
