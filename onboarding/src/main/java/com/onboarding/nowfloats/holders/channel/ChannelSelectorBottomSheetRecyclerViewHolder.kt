@@ -27,8 +27,8 @@ class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChan
         super.onClick(v)
         when (v) {
             binding.card -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal)
+            binding.learnMoreLink,
             binding.whyLinkClick -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal)
-            binding.learnMoreLink -> showShortToast(binding.learnMoreLink.text)
         }
     }
 

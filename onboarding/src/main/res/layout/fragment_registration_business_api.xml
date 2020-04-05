@@ -49,7 +49,7 @@
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_ria" />
+                app:srcCompat="@drawable/ic_ria_circle" />
         </com.framework.views.customViews.CustomCardView>
 
         <com.framework.views.customViews.CustomTextView

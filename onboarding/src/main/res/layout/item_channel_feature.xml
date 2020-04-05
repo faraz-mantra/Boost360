@@ -45,13 +45,15 @@
                             android:id="@+id/title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/size_4"
+                            android:layout_marginStart="@dimen/size_8"
                             android:ellipsize="end"
                             android:maxLines="1"
                             tools:text="Manage all your Digital Content"
                             android:textColor="@color/dodger_blue_two"
                             app:fontFamily="@font/semi_bold"
-                            app:textType="SUBHEADING_2" />
+                            android:layout_marginBottom="@dimen/size_2"
+                            android:includeFontPadding="false"
+                            app:textType="SUBHEADING_1" />
 
                     </LinearLayout>
 
@@ -59,11 +61,12 @@
                         android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginTop="@dimen/size_14"
                         android:ellipsize="end"
                         tools:text="Suggestions on digital growth strategies Regular Tips on Content for better discovery Weekly Performance Reporting"
                         android:textColor="@color/greyish_brown"
                         android:visibility="gone"
+                        tools:visibility="visible"
                         app:fontFamily="@font/regular"
                         app:textType="SUBTITLE_1" />
 

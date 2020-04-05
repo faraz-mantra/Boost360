@@ -52,6 +52,8 @@
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                         android:gravity="center_horizontal"
                         android:hint="@string/subdomain"
+                        android:maxLength="25"
+                        app:textType="HEADING_4"
                         android:inputType="textFilter"
                         android:textAlignment="gravity"
                         tools:alpha="1" />
@@ -61,6 +63,10 @@
                         style="@style/Onboarding.Registration.HeaderDescriptionStyle"
                         android:layout_marginTop="@dimen/size_0"
                         android:alpha="0"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/greyish_brown"
+                        app:fontFamily="@font/regular"
+                        app:textType="SUBHEADING_1"
                         android:text="@string/nowfloats_dot_com"
                         tools:alpha="1" />
 
@@ -100,10 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-              app:textType="HEADING_6"
                 android:text="@string/create_my_business_website"
                 android:textColor="@color/white"
-                app:fontFamily="@font/bold" />
+                app:fontFamily="@font/bold"
+                app:textType="HEADING_6" />
         </FrameLayout>
 
 

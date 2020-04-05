@@ -26,6 +26,7 @@ import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
+import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -71,13 +72,13 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     }
 
     private fun setBusinessImage() {
-        val imageUrl = requestFloatsModel?.channelAccessTokens?.map { it.profilePicture }
-                ?.firstOrNull { it?.isNotEmpty() == true } ?: return
-
+        val imageUrl = takeIf { requestFloatsModel?.businessUrl.isNullOrEmpty() }?.let {
+            requestFloatsModel?.channelAccessTokens?.map { it.profilePicture }?.firstOrNull { it?.isNotEmpty() == true } ?: return
+        } ?: requestFloatsModel?.businessUrl
         binding?.businessNameInitial?.gone()
         binding?.businessImage?.visible()
-
-        baseActivity.glideLoad(binding?.businessImage, imageUrl)
+        imageUrl?.let { baseActivity.glideLoad(binding?.businessImage, it) }
+        requestFloatsModel?.profileUrl?.let { baseActivity.glideLoad(binding?.profileImage, it) }
     }
 
     private fun initLottieAnimation() {
@@ -140,28 +141,11 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
             binding?.menuView -> showMenuLogout(v)
             binding?.profileView -> openImagePicker(true)
             binding?.businessClick -> openImagePicker(false)
-            binding?.done -> uploadImageBusinessLogo()
+            binding?.skip,
+            binding?.done -> {
+                NavigatorManager.clearStackAndFormData()
+            }
         }
-    }
-
-    private fun uploadImageBusinessLogo() {
-        if (businessImage != null) {
-            showProgress("Uploading image...")
-            viewModel?.putUploadImageBusiness(getRequestData(businessImage!!))?.observeOnce(viewLifecycleOwner, Observer {
-                hideProgress()
-                if (it.status == 200 || it.status == 201 || it.status == 202) {
-                    NavigatorManager.clearStackAndFormData()
-                    showLongToast("Image uploaded.")
-                } else showLongToast(it.message)
-
-            })
-        } else NavigatorManager.clearStackAndFormData()
-    }
-
-    private fun getRequestData(businessImage: File): UploadFileBusinessRequest {
-        val responseBody = RequestBody.create(MediaType.parse("image/png"), businessImage.readBytes())
-        val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
-        return UploadFileBusinessRequest(clientId, requestFloatsModel?.floatingPointId, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
     }
 
     private fun openImagePicker(isProfileImage: Boolean) {
@@ -197,13 +181,55 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                 if (this.isProfileImage != null && this.isProfileImage!!) {
                     profileImage = File(mPaths[0])
                     profileImage?.getBitmap()?.let { binding?.profileImage?.setImageBitmap(it) }
+                    uploadImageProfileLogo()
                 } else {
                     businessImage = File(mPaths[0])
                     binding?.businessNameInitial?.gone()
                     binding?.businessImage?.visible()
                     businessImage?.getBitmap()?.let { binding?.businessImage?.setImageBitmap(it) }
+                    uploadImageBusinessLogo()
                 }
             }
         }
+    }
+
+    private fun uploadImageBusinessLogo() {
+        if (businessImage != null) {
+            showProgress("Uploading business image...")
+            viewModel?.putUploadImageBusiness(getRequestBusinessDate(businessImage!!))?.observeOnce(viewLifecycleOwner, Observer {
+                hideProgress()
+                if (it.status == 200 || it.status == 201 || it.status == 202) {
+                    showLongToast("Business Image uploaded.")
+                    requestFloatsModel?.businessUrl = it.stringResponse
+                    updateInfo()
+                } else showLongToast(it.message)
+            })
+        }
+    }
+
+    private fun getRequestBusinessDate(businessImage: File): UploadFileBusinessRequest {
+        val responseBody = RequestBody.create(MediaType.parse("image/png"), businessImage.readBytes())
+        val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
+        return UploadFileBusinessRequest(clientId, requestFloatsModel?.floatingPointId, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
+    }
+
+    private fun uploadImageProfileLogo() {
+        if (profileImage != null) {
+            showProgress("Uploading profile image...")
+            viewModel?.putUploadImageProfile(getRequestProfileData(profileImage!!))?.observeOnce(viewLifecycleOwner, Observer {
+                hideProgress()
+                if (it.status == 200 || it.status == 201 || it.status == 202) {
+                    showLongToast("Profile Image uploaded.")
+                    requestFloatsModel?.profileUrl = it.stringResponse
+                    updateInfo()
+                } else showLongToast(it.message)
+            })
+        }
+    }
+
+    private fun getRequestProfileData(profileImage: File): UploadFileProfileRequest {
+        val responseBody = RequestBody.create(MediaType.parse("image/png"), profileImage.readBytes())
+        val fileName = takeIf { profileImage.name.isNullOrEmpty().not() }?.let { profileImage.name } ?: "PROFILE_${requestFloatsModel?.contactInfo?.domainName}.png"
+        return UploadFileProfileRequest(clientId, userProfileId, fileName, responseBody)
     }
 }

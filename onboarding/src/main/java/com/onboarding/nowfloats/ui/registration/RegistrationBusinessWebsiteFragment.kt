@@ -77,7 +77,12 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
             viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
                 onPostBusinessDomainCheckResponse(it, onSuccess)
             })
-        } else binding?.subdomain?.drawableEnd = null
+        } else {
+            isDomain = false
+            domainValue = ""
+            binding?.next?.alpha = 0.3f
+            binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
+        }
     }
 
     private fun onPostBusinessDomainCheckResponse(response: BaseResponse, onSuccess: () -> Unit) {
@@ -85,15 +90,16 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
             InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
             return
         }
-
         if (response.status == 200 || response.status == 201 || response.status == 202) {
             isDomain = true
+            binding?.next?.alpha = 1f
             domainValue = if (!response.stringResponse.isNullOrEmpty()) response.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
             binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
             onSuccess()
         } else {
             isDomain = false
             domainValue = ""
+            binding?.next?.alpha = 0.3f
             binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
         }
     }

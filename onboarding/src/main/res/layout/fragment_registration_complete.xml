@@ -51,6 +51,7 @@
                                 android:id="@+id/profile_image"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
                                 app:srcCompat="@drawable/ic_user2" />
                         </com.framework.views.customViews.CustomCardView>
 
@@ -224,6 +225,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:visibility="gone"
+                                        android:scaleType="centerCrop"
                                         app:srcCompat="@drawable/ic_user3" />
 
 

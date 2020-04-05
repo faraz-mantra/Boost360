@@ -12,7 +12,7 @@ import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 data class ChannelModel(
-        var image: String? = null,
+        var moreDesc: String? = null,
         var priority: String? = null,
         var type: String? = null,
         var isSelected: Boolean? = false,
@@ -35,7 +35,7 @@ data class ChannelModel(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(image)
+        parcel.writeString(moreDesc)
         parcel.writeString(priority)
         parcel.writeString(type)
         parcel.writeValue(isSelected)

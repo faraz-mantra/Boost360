@@ -111,7 +111,7 @@
 
                     <com.framework.views.customViews.CustomImageView
                         style="@style/Onboarding.Registration.FormHeaderImageStyle"
-                        app:srcCompat="@drawable/ic_ria" />
+                        app:srcCompat="@drawable/ic_ria_circle" />
 
                 </com.framework.views.customViews.CustomCardView>
 

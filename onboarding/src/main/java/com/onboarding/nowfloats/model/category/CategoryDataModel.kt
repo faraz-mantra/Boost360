@@ -17,7 +17,7 @@ class CategoryDataModel(
         val category_key: String? = null,
         val category_Name: String? = null,
         val icon: String? = null,
-        val channels: ArrayList<String>? = null,
+        val channels: ArrayList<ChannelModel>? = null,
         val sections: ArrayList<SectionsFeature>? = null
 ) : BaseResponse(), AppBaseRecyclerViewItem, Parcelable {
     val sectionType: Boolean = false
@@ -27,7 +27,7 @@ class CategoryDataModel(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.createStringArrayList(),
+            parcel.createTypedArrayList(ChannelModel.CREATOR),
             parcel.createTypedArrayList(SectionsFeature.CREATOR)
     ) {
         isSelected = parcel.readByte() != 0.toByte()
@@ -37,20 +37,12 @@ class CategoryDataModel(
         return if (sectionType) RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() else RecyclerViewItemType.CATEGORY_ITEM.getLayout()
     }
 
-    fun getChannelList(): ArrayList<ChannelModel> {
-        val list = ArrayList<ChannelModel>()
+    fun getChannelList(): ArrayList<ChannelModel>? {
         channels?.forEach {
-            list.add(when (ChannelType.from(it)) {
-                ChannelType.G_SEARCH -> ChannelModel("", "important", ChannelType.G_SEARCH.name, true)
-                ChannelType.FB_PAGE -> ChannelModel("", "recommended", ChannelType.FB_PAGE.name)
-                ChannelType.G_MAPS -> ChannelModel("", "recommended", ChannelType.G_MAPS.name)
-                ChannelType.FB_SHOP -> ChannelModel("", "learn_more", ChannelType.FB_SHOP.name)
-                ChannelType.WAB -> ChannelModel("", "learn_more", ChannelType.WAB.name)
-                ChannelType.T_FEED -> ChannelModel("", "learn_more", ChannelType.T_FEED.name)
-                ChannelType.G_BUSINESS -> ChannelModel("", "learn_more", ChannelType.G_BUSINESS.name)
-            })
+            val data = it.type?.let { it1 -> ChannelType.from(it1) }
+            if (data != null && data.name == ChannelType.G_SEARCH.name) ChannelModel(isSelected = true)
         }
-        return list
+        return channels
     }
 
     fun getImage(context: Context?): Drawable? {
@@ -104,7 +96,7 @@ class CategoryDataModel(
         parcel.writeString(category_key)
         parcel.writeString(category_Name)
         parcel.writeString(icon)
-        parcel.writeStringList(channels)
+        parcel.writeTypedList(channels)
         parcel.writeTypedList(sections)
         parcel.writeByte(if (isSelected) 1 else 0)
     }

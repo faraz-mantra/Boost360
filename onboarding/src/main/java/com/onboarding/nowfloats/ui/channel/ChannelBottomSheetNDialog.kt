@@ -2,6 +2,7 @@ package com.onboarding.nowfloats.ui.channel
 
 import android.view.View
 import com.framework.base.BaseDialogFragment
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
@@ -40,6 +41,7 @@ class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNew
 
     override fun onViewCreated() {
         setOnClickListener(binding?.done)
+        list.filter { it.isSelected!! }.takeIf { it.size > 1 }?.let { binding?.done?.visible() }
         val text = StringBuilder(resources.getString(R.string.recommended_on) + " " + list.size + " " + resources.getString(R.string.channel))
         if (channels.size > 1 || channels.size == 0) text.append(resources.getString(R.string.more_than_one_add_s))
         binding?.title?.text = text
@@ -73,15 +75,21 @@ class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNew
             RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal -> openWhyChannelDialog(item as? ChannelModel)
             RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal -> {
                 if (position != 0) {
-                    list[position].isSelected = !list[position].isSelected!!
+                    val isSelected = !list[position].isSelected!!
+                    list[position].isSelected = isSelected
                     if (list[position].isFacebookPage()) {
-                        val isShop = list.isFbPageOrShop(ChannelType.FB_SHOP)
-                        isShop?.isSelected = !isShop?.isSelected!!
+                        if (isSelected.not()) {
+                            val isShop = list.isFbPageOrShop(ChannelType.FB_SHOP)
+                            if (isShop != null && isShop.isSelected!!) isShop.isSelected = !isShop.isSelected!!
+                        }
                     } else if (list[position].isFacebookShop()) {
-                        val isPage = list.isFbPageOrShop(ChannelType.FB_PAGE)
-                        isPage?.isSelected = !isPage?.isSelected!!
+                        if (isSelected) {
+                            val isPage = list.isFbPageOrShop(ChannelType.FB_PAGE)
+                            if (isPage != null && isPage.isSelected!!.not()) isPage.isSelected = !isPage.isSelected!!
+                        }
                     }
                     adapter?.notifyDataSetChanged()
+                    if (binding?.done?.visibility == View.GONE) binding?.done?.visible()
                 }
             }
         }

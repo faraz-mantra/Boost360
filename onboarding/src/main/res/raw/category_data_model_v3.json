@@ -5,17 +5,42 @@
       "category_Name": "Spas\n& Salons",
       "icon": "/icons/spa.svg",
       "channels": [
-        "G_SEARCH",
-        "G_MAPS",
-        "FB_PAGE",
-        "FB_SHOP",
-        "WAB",
-        "T_FEED"
+        {
+          "type": "G_SEARCH",
+          "priority": "important",
+          "moreDesc": "Google search allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
+          "isSelected": true
+        },
+        {
+          "type": "G_MAPS",
+          "priority": "recommended",
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        },
+        {
+          "type": "FB_PAGE",
+          "priority": "recommended",
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        },
+        {
+          "type": "FB_SHOP",
+          "priority": "learn_more",
+          "moreDesc": "Facebook shop allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        },
+        {
+          "type": "WAB",
+          "priority": "learn_more",
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        },
+        {
+          "type": "T_FEED",
+          "priority": "learn_more",
+          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        }
       ],
       "sections": [
         {
           "title": "Digital appointments & Enquries",
-          "desc": "",
+          "desc": "Upto 50 Latest News/Updates\nUpto 10 Product/Service Items in your catalog\nUnlimited Images for Media Gallery\nBusiness contact information",
           "icon": "/icons/digital_appointment.svg",
           "boost_widget_key": "",
           "details": [
@@ -43,7 +68,7 @@
         },
         {
           "title": "Secure Digital Payments",
-          "desc": "",
+          "desc": "PCI/DSS compliant payment gateway\nAbsolutely Free Setup\nAll payment modes along with UPI, PayLater, EMI etc\nMinimal fee of 2% + ₹15 on each transaction\nZero Annual Maintainace Fee\nNo minimum commitment\nReceive money in your bank account in 10 working days",
           "icon": "/icons/digital_payment.svg",
           "boost_widget_key": "",
           "details": [
@@ -75,7 +100,7 @@
         },
         {
           "title": "Manage your latest offers, services and all your digital content",
-          "desc": "",
+          "desc": "Suggestions on digital growth strategies\nRegular Tips on Content for better discovery\nWeekly Performance Reporting\nFriendly support via Chat & Email\nSLA 72 hours",
           "icon": "/icons/digital_content.svg",
           "boost_widget_key": "",
           "details": [
@@ -99,7 +124,7 @@
         },
         {
           "title": "Ria - Your digital assistant",
-          "desc": "",
+          "desc": "Suggestions on digital growth strategies\nRegular Tips on Content for better discovery\nWeekly Performance Reporting\nFriendly support via Chat & Email\nSLA 72 hours",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "",
           "details": [
@@ -119,7 +144,7 @@
         },
         {
           "title": "Data Security & Privacy",
-          "desc": "",
+          "desc": "Secured with NowFloats SSL Certificate",
           "icon": "/icons/digital_security.svg",
           "boost_widget_key": "",
           "details": [
@@ -144,15 +169,32 @@
       "category_Name": "Doctors\n& Clinics",
       "icon": "/icons/healthcare.svg",
       "channels": [
-        "G_SEARCH",
-        "G_MAPS",
-        "FB_PAGE",
-        "WAB"
+        {
+          "type": "G_SEARCH",
+          "priority": "important",
+          "moreDesc": "Google search allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
+          "isSelected": true
+        },
+        {
+          "type": "G_MAPS",
+          "priority": "recommended",
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        },
+        {
+          "type": "FB_PAGE",
+          "priority": "recommended",
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        },
+        {
+          "type": "WAB",
+          "priority": "learn_more",
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
+        }
       ],
       "sections": [
         {
           "title": "Digital appointments & Enquiries",
-          "desc": "",
+          "desc": "Upto 50 Latest News/Updates\nUpto 10 Product/Service Items in your catalog\nUnlimited Images for Media Gallery\nBusiness contact information",
           "icon": "/icons/digital_appointment.svg",
           "boost_widget_key": "",
           "details": [
@@ -180,7 +222,7 @@
         },
         {
           "title": "Data compliance & privacy",
-          "desc": "",
+          "desc": "Secured with NowFloats SSL Certificate",
           "icon": "/icons/digital_compliance.svg",
           "boost_widget_key": "",
           "details": [
@@ -228,7 +270,7 @@
         },
         {
           "title": "Manage your latest health tips, service updates and all other digital content",
-          "desc": "",
+          "desc": "Suggestions on digital growth strategies\nRegular Tips on Content for better discovery\nWeekly Performance Reporting\nFriendly support via Chat & Email\nSLA 72 hours",
           "icon": "/icons/digital_content.svg",
           "boost_widget_key": "",
           "details": [
@@ -252,7 +294,7 @@
         },
         {
           "title": "Ria - Your digital assistant",
-          "desc": "",
+          "desc": "Suggestions on digital growth strategies\nRegular Tips on Content for better discovery\nWeekly Performance Reporting\nFriendly support via Chat & Email\nSLA 72 hours",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "",
           "details": [

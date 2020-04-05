@@ -15,15 +15,13 @@ import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentChannelPickerBinding
 import com.onboarding.nowfloats.extensions.addInt
-import com.onboarding.nowfloats.extensions.addParcelable
 import com.onboarding.nowfloats.extensions.fadeIn
-import com.onboarding.nowfloats.extensions.getParcelable
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.navigator.ScreenModel
-import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.*
+import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.CHANNEL_SELECT
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
@@ -92,7 +90,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         super.onClick(v)
         when (v) {
             binding?.next -> {
-                selectedChannels?.let { channels ->
+                selectedChannels.let { channels ->
                     if (channels.isEmpty()) {
                         showShortToast(resources.getString(R.string.at_least_one_channel_selected))
                         return
@@ -118,7 +116,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     private fun openChannelSelectionSheet() {
         channelList.let { channels ->
             channelBottomSheetNDialog = ChannelBottomSheetNDialog()
-            channelBottomSheetNDialog?.isCancelable = false
+            channelBottomSheetNDialog?.isCancelable = true
             channelBottomSheetNDialog?.onDoneClicked = { onChannelSelected(it) }
             channelBottomSheetNDialog?.setChannels(channels)
             channelBottomSheetNDialog?.show(this@ChannelPickerFragment.parentFragmentManager, ChannelBottomSheetNDialog::class.java.name)
@@ -177,7 +175,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     private fun onChannelConfirmed() {
         val bundle = Bundle()
         var totalPages = 2
-        selectedChannels?.let { channels ->
+        selectedChannels.let { channels ->
             if (channels.haveFacebookShop()) totalPages++
             if (channels.haveFacebookPage()) totalPages++
             if (channels.haveTwitterChannels()) totalPages++
@@ -196,10 +194,9 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         for (channel in requestFloatsModel?.channels ?: ArrayList()){
             channelList.firstOrNull { it.getName() == channel.getName() }?.isSelected = true
         }
-
         binding?.viewChannel?.post {
-            setChannelAdapter(selectedChannels ?: ArrayList(), animate = false)
-            binding?.viewChannel?.fadeIn(200L)?.doOnComplete {
+            setChannelAdapter(selectedChannels, animate = false)
+            binding?.viewChannel?.fadeIn(300L)?.doOnComplete {
                 setChannelFeaturesAdapter(responseFeatures)
             }?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
         }

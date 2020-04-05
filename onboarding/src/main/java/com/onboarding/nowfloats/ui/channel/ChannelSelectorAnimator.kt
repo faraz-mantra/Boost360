@@ -19,8 +19,8 @@ class ChannelSelectorAnimator {
     var listener: OnAnimationCompleteListener? = null
 
     fun setViews(
-        motionLayout: MotionLayout?, imageView: View?,
-        titleForeground: View?, subTitleForeground: View?
+            motionLayout: MotionLayout?, imageView: View?,
+            titleForeground: View?, subTitleForeground: View?
     ) {
         this.motionLayout = WeakReference(motionLayout)
         this.imageView = WeakReference(imageView)
@@ -29,7 +29,7 @@ class ChannelSelectorAnimator {
     }
 
     fun startAnimation() {
-        titleForeground?.get()?.fadeOut(800L)?.andThen(subTitleForeground?.get()?.fadeOut(200L))?.doOnComplete {
+        titleForeground?.get()?.fadeOut(900L)?.andThen(subTitleForeground?.get()?.fadeOut())?.doOnComplete {
             isAnimating = false
             listener?.onAnimationComplete()
         }?.subscribe()

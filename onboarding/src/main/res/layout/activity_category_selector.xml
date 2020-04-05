@@ -27,14 +27,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
 
-            <View
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar_image"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_200"
-                android:adjustViewBounds="true"
-                android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@null"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,10 +42,12 @@
                 android:id="@android:id/home"
                 android:layout_width="@dimen/size_50"
                 android:layout_height="@dimen/size_50"
+                android:layout_marginTop="@dimen/size_2"
                 android:padding="@dimen/size_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_toolbar_back" />
+
 
             <com.framework.views.customViews.CustomCardView
                 android:id="@+id/image_riya"
@@ -54,9 +56,10 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/riya_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_ria" />
+                    app:srcCompat="@drawable/ic_ria_circle" />
             </com.framework.views.customViews.CustomCardView>
 
             <com.framework.views.customViews.CustomTextView
@@ -93,6 +96,7 @@
             android:id="@+id/image_riya_large"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_30"
             android:alpha="0"
             app:cardBackgroundColor="@color/transparent"
             tools:alpha="1">

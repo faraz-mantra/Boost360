@@ -9,6 +9,7 @@ import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRe
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
 import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
+import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.rest.repositories.*
 
 class BusinessCreateViewModel : BaseViewModel() {
@@ -31,5 +32,9 @@ class BusinessCreateViewModel : BaseViewModel() {
 
     fun putUploadImageBusiness(request: UploadFileBusinessRequest): LiveData<BaseResponse> {
         return UploadImageRepository.putUploadImageBusiness(request).toLiveData()
+    }
+
+    fun putUploadImageProfile(request: UploadFileProfileRequest): LiveData<BaseResponse> {
+        return UploadImageRepository.putUploadImageProfile(request).toLiveData()
     }
 }

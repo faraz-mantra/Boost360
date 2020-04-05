@@ -16,6 +16,8 @@ class RequestFloatsModel(
         var channelActionDatas: ArrayList<ChannelActionData>? = ArrayList(),
         var floatingPointId: String? = null
 ) : Parcelable {
+    var profileUrl: String? = null
+    var businessUrl: String? = null
 
     constructor(source: Parcel) : this(
             source.readParcelable<CategoryDataModel>(CategoryDataModel::class.java.classLoader),

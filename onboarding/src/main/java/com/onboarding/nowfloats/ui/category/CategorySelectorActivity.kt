@@ -47,7 +47,7 @@ class CategorySelectorActivity : AppBaseActivity<ActivityCategorySelectorBinding
                 binding?.imageRiyaLarge?.alpha = 1f
                 animations.setViews(
                         imageRiyaLarge = binding?.imageRiyaLarge,
-                        imageRiya = binding?.imageRiya,
+                        imageRiyaCard = binding?.imageRiya,
                         motionLayout = binding?.motionLayout,
                         toolbarTitle = binding?.title,
                         subTitleForeground = binding?.subTitleForeground
