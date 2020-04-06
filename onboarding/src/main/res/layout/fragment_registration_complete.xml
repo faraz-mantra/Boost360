@@ -330,6 +330,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/size_10"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_more_vert"

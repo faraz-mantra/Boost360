@@ -143,7 +143,13 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
             binding?.businessClick -> openImagePicker(false)
             binding?.skip,
             binding?.done -> {
-                NavigatorManager.clearStackAndFormData()
+                try {
+                    val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+                    baseActivity.startActivity(intent)
+                    NavigatorManager.clearStackAndFormData()
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                }
             }
         }
     }
@@ -166,7 +172,10 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         popup.inflate(R.menu.menu_facebook_profile)
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
             when (item!!.itemId) {
-                R.id.menu_logout -> showShortToast("Logout...")
+                R.id.menu_logout -> {
+                    NavigatorManager.clearStackAndFormData()
+                    showShortToast("Logout...")
+                }
             }
             true
         })
@@ -195,11 +204,11 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
     private fun uploadImageBusinessLogo() {
         if (businessImage != null) {
-            showProgress("Uploading business image...")
+            showProgress(resources.getString(R.string.uploading_business_image))
             viewModel?.putUploadImageBusiness(getRequestBusinessDate(businessImage!!))?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()
                 if (it.status == 200 || it.status == 201 || it.status == 202) {
-                    showLongToast("Business Image uploaded.")
+                    showLongToast(resources.getString(R.string.business_image_uploaded))
                     requestFloatsModel?.businessUrl = it.stringResponse
                     updateInfo()
                 } else showLongToast(it.message)
@@ -215,11 +224,11 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
     private fun uploadImageProfileLogo() {
         if (profileImage != null) {
-            showProgress("Uploading profile image...")
+            showProgress(resources.getString(R.string.uploading_profile_image))
             viewModel?.putUploadImageProfile(getRequestProfileData(profileImage!!))?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()
                 if (it.status == 200 || it.status == 201 || it.status == 202) {
-                    showLongToast("Profile Image uploaded.")
+                    showLongToast(getString(R.string.profile_image_uploaded))
                     requestFloatsModel?.profileUrl = it.stringResponse
                     updateInfo()
                 } else showLongToast(it.message)

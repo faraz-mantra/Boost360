@@ -69,22 +69,6 @@
 
     <string name="business_digitally_desc">It’s time to start creating engaging and meaningfull content to make people aware about business. Content plays a vital role into giving strength to your business digitally.</string>
 
-    <string-array name="categories">
-        <item name="title">Doctors\n&amp; Clinics</item>
-        <item name="title">Education\n&amp; Coaching</item>
-        <item name="title">Hotels\n&amp; Motels</item>
-        <item name="title">Manufacturing\n&amp; Equipment</item>
-        <item name="title">Spas\n&amp; Salons</item>
-        <item name="title">Restaurant\n&amp; Cafes</item>
-        <item name="title">Other\nRetail Business</item>
-        <item name="title">Other\nServices Business</item>
-    </string-array>
-
-
-    <!--
-        new
-    -->
-
     <string name="enter_whatsapp_business_contact">Please enter your WhatsApp Business contact</string>
     <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, You can use regular WhatsApp contact number for your customers to reach you easily.</string>
     <string name="confirm_and_proceed">Confirm and Proceed</string>
@@ -107,7 +91,7 @@
     <string name="facebook_shop_connected">Facebook Shop Connected</string>
     <string name="facebook_page_connected">Facebook Page Connected</string>
     <string name="save_continue">Save and continue</string>
-  <string name="recommended_on_5_channels">Recommended on 5 channels</string>
+    <string name="recommended_on_5_channels">Recommended on 5 channels</string>
     <string name="when_you_press_confirm_i_ll_take_you_to_business_setup_form_to_fill_your_business_info">When you press confirm, I’ll take you to business setup form to fill your business info.</string>
     <string name="please_select_relevant_channels_or_remove_unwanted_channels_to_adjust_your_content_s_reach">Please select relevant channels or remove unwanted channels to adjust your content’s reach.</string>
     <string name="done">DONE</string>
@@ -121,5 +105,11 @@
     <string name="retry">Retry</string>
     <string name="for_your">for your</string>
     <string name="business">Business</string>
+    <string name="select_one_page">Select only one page</string>
+    <string name="canceled">Canceled</string>
+    <string name="uploading_business_image">Uploading business image...</string>
+    <string name="business_image_uploaded">Business Image uploaded.</string>
+    <string name="uploading_profile_image">Uploading profile image...</string>
+    <string name="profile_image_uploaded">Profile Image uploaded.</string>
 
 </resources>
