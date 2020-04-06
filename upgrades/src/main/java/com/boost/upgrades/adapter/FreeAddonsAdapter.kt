@@ -9,21 +9,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.WidgetModel
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.bumptech.glide.Glide
 
 
 class FreeAddonsAdapter(
         val activity: UpgradeActivity,
-        itemList: List<WidgetModel>?, var myAddonsListener: MyAddonsListener
+        itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
 ) : RecyclerView.Adapter<FreeAddonsAdapter.upgradeViewHolder>(), View.OnClickListener {
 
-    private var list = ArrayList<WidgetModel>()
+    private var list = ArrayList<FeaturesModel>()
     private lateinit var context: Context
 
     init {
-        this.list = itemList as ArrayList<WidgetModel>
+        this.list = itemList as ArrayList<FeaturesModel>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -61,7 +61,7 @@ class FreeAddonsAdapter(
         myAddonsListener.onFreeAddonsClicked(v)
     }
 
-    fun addupdates(upgradeModel: List<WidgetModel>) {
+    fun addupdates(upgradeModel: List<FeaturesModel>) {
         val initPosition = list.size
         list.clear()
         list.addAll(upgradeModel)
@@ -76,9 +76,9 @@ class FreeAddonsAdapter(
         private var context: Context = itemView.context
 
 
-        fun upgradeListItem(updateModel: WidgetModel) {
+        fun upgradeListItem(updateModel: FeaturesModel) {
             singleTitle.text = updateModel.name
-            Glide.with(context).load(updateModel.image).into(image)
+            Glide.with(context).load(updateModel.primary_image).into(image)
 
         }
     }

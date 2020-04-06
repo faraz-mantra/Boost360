@@ -42,9 +42,13 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         holder.title.setText(list.get(position).item_name)
         holder.price.setText("₹"+list.get(position).price+"/month")
         holder.MRPPrice.setText("₹"+list.get(position).MRPPrice+"/month")
-        holder.discount.setText("- "+list.get(position).discount+"%")
+        if(list.get(position).discount > 0) {
+            holder.discount.setText("- " + list.get(position).discount + "%")
+        }else{
+            holder.discount.visibility = View.GONE
+        }
         holder.remove_addons.setOnClickListener {
-            listener.deleteCartAddonsItem(list.get(position).id)
+            listener.deleteCartAddonsItem(list.get(position).boost_widget_key)
         }
         if(list.size - 1 == position) {
             holder.view.visibility = View.GONE

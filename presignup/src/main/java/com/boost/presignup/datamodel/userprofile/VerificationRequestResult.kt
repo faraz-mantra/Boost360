@@ -3,8 +3,8 @@ package com.boost.presignup.datamodel.userprofile
 import com.google.gson.annotations.SerializedName
 
 data class VerificationRequestResult(
-        @SerializedName("LoginId")
-        val LoginId: String,
+        @SerializedName("loginId")
+        val loginId: String,
         @SerializedName("ValidFPIds")
         val ValidFPIds: Array<String>,
         @SerializedName("isEnterprise")

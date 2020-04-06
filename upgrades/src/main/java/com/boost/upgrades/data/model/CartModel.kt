@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 data class CartModel (
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
-    var id: String,
+    @ColumnInfo(name = "boost_widget_key")
+    var boost_widget_key: String,
 
     @ColumnInfo(name = "item_name")
     var item_name: String? = null,
@@ -27,6 +27,6 @@ data class CartModel (
     var discount: Int = 0,
 
     @ColumnInfo(name = "quantity")
-    var quantity: Int = 0
+    var quantity: Int = 1
 
 )

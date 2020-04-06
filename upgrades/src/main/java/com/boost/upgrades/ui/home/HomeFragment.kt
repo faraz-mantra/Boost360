@@ -26,6 +26,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.PackageViewPagerAdapter
 import com.boost.upgrades.adapter.SimplePageTransformer
 import com.boost.upgrades.adapter.UpgradeAdapter
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.HomeListener
@@ -73,22 +74,22 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.home_fragment, container, false)
 
         homeViewModelFactory = HomeViewModelFactory(requireNotNull(requireActivity().application))
 
         viewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory)
-            .get(HomeViewModel::class.java)
+                .get(HomeViewModel::class.java)
 
         upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
 //        packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this)
 
         //request retrofit instance
         ApiService = getRetrofit()
-            .create(ApiInterface::class.java)
+                .create(ApiInterface::class.java)
 
         localStorage = LocalStorage.getInstance(context!!)!!
 
@@ -102,50 +103,15 @@ class HomeFragment : BaseFragment(), HomeListener {
 
         spannableString()
         loadData()
-
-        val data = arguments?.getString("data")
-
-
-        textView_free.text = data
-
+        initMvvm()
 
         shimmer_view_container.duration = 600
         shimmer_view_container.startShimmerAnimation()
 
-        viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
-            //            Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
-//            if (shimmer_view_container.isAnimationStarted) {
-//                shimmer_view_container.stopShimmerAnimation()
-//                shimmer_view_container.visibility = View.GONE
-//            }
-            longToast(requireContext(), "onFailure: " + it)
-        })
-
-        viewModel.upgradeResult().observe(this, androidx.lifecycle.Observer {
-            updateRecycler(it)
-        })
-
-        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
-            if (!it) {
-
-            }
-        })
-
-        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
-            if (it != null && it.size > 0) {
-                badge.visibility = View.VISIBLE
-                badgeNumber = it.size
-                badge.setText(badgeNumber.toString())
-                Constants.CART_VALUE = badgeNumber
-            }else{
-                badgeNumber = 0
-                badge.visibility = View.GONE
-            }
-        })
 
         Glide.with(this).load(R.drawable.back_beau)
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-            .into(back_image)
+                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
+                .into(back_image)
 
         imageView21.setOnClickListener {
             (activity as UpgradeActivity).finish()
@@ -164,10 +130,10 @@ class HomeFragment : BaseFragment(), HomeListener {
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent
-                .putExtra(
-                    Intent.EXTRA_TEXT,
-                    "<---YOUR TEXT HERE--->."
-                )
+                    .putExtra(
+                            Intent.EXTRA_TEXT,
+                            "<---YOUR TEXT HERE--->."
+                    )
             sendIntent.type = "text/plain"
             sendIntent.setPackage("com.facebook.orca")
             try {
@@ -175,10 +141,10 @@ class HomeFragment : BaseFragment(), HomeListener {
             } catch (ex: ActivityNotFoundException) {
 
                 Toasty.error(
-                    requireContext(),
-                    "Please Install Facebook Messenger",
-                    Toast.LENGTH_SHORT,
-                    true
+                        requireContext(),
+                        "Please Install Facebook Messenger",
+                        Toast.LENGTH_SHORT,
+                        true
                 ).show();
 
             }
@@ -188,17 +154,17 @@ class HomeFragment : BaseFragment(), HomeListener {
             whatsappIntent.type = "text/plain"
             whatsappIntent.setPackage("com.whatsapp")
             whatsappIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                "Application of social rating share with your friend"
+                    Intent.EXTRA_TEXT,
+                    "Application of social rating share with your friend"
             )
             try {
                 Objects.requireNonNull(this).startActivity(whatsappIntent)
             } catch (ex: ActivityNotFoundException) {
                 startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("http://play.google.com/store/apps/details?id=com.whatsapp")
-                    )
+                        Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("http://play.google.com/store/apps/details?id=com.whatsapp")
+                        )
                 )
             }
 
@@ -207,8 +173,8 @@ class HomeFragment : BaseFragment(), HomeListener {
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                "Referral Code : daidvadnvandvoiw121"
+                    Intent.EXTRA_TEXT,
+                    "Referral Code : daidvadnvandvoiw121"
             )
             sendIntent.type = "text/plain"
             startActivity(sendIntent)
@@ -224,17 +190,17 @@ class HomeFragment : BaseFragment(), HomeListener {
 //        }
 
 
-        verifybtn.setOnClickListener {
+        view_my_addons.setOnClickListener {
             (activity as UpgradeActivity).addFragment(
-                MyAddonsFragment.newInstance(),
-                VIEW_ALL_FEATURE
+                    MyAddonsFragment.newInstance(),
+                    MYADDONS_FRAGMENT
             )
         }
 
-        verifybtn1.setOnClickListener {
+        all_recommended_addons.setOnClickListener {
             (activity as UpgradeActivity).addFragment(
-                ViewAllFeaturesFragment.newInstance(),
-                MYADDONS_FRAGMENT
+                    ViewAllFeaturesFragment.newInstance(),
+                    VIEW_ALL_FEATURE
             )
         }
 
@@ -253,9 +219,9 @@ class HomeFragment : BaseFragment(), HomeListener {
             override fun onClick(textView: View) {
                 // navigate to sign up fragment
                 Toast.makeText(
-                    requireContext(),
-                    "Read Boost referral TnC is clicked...",
-                    Toast.LENGTH_LONG
+                        requireContext(),
+                        "Read Boost referral TnC is clicked...",
+                        Toast.LENGTH_LONG
                 ).show()
             }
 
@@ -267,24 +233,24 @@ class HomeFragment : BaseFragment(), HomeListener {
         //By creating Boost account, you agree to our Terms of use and Privacy Policy
         referralText.setSpan(termsOfUseClicked, 0, referralText.length, 0)
         referralText.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
-            0,
-            referralText.length,
-            0
+                ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
+                0,
+                referralText.length,
+                0
         )
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
         bottom_referral.setText(referralText)
 
         val refText =
-            SpannableString("and use SAM Chat Bot on your site for a month absolutely FREE")
+                SpannableString("and use SAM Chat Bot on your site for a month absolutely FREE")
 //        val boldSpan = StyleSpan(Typeface.BOLD);
         refText.setSpan(StyleSpan(Typeface.BOLD), 8, 20, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
-            0,
-            refText.length,
-            0
+                ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
+                0,
+                refText.length,
+                0
         )
         ref_txt.setText(refText)
     }
@@ -293,7 +259,49 @@ class HomeFragment : BaseFragment(), HomeListener {
         viewModel.loadUpdates()
     }
 
-    fun updateRecycler(list: List<WidgetModel>) {
+    fun initMvvm(){
+
+        viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
+            //            Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
+//            if (shimmer_view_container.isAnimationStarted) {
+//                shimmer_view_container.stopShimmerAnimation()
+//                shimmer_view_container.visibility = View.GONE
+//            }
+            longToast(requireContext(), "onFailure: " + it)
+        })
+
+//        viewModel.upgradeResult().observe(this, androidx.lifecycle.Observer {
+//            updateRecycler(it)
+//        })
+
+        viewModel.initialResult().observe(this, androidx.lifecycle.Observer {
+            updateRecycler(it)
+        })
+
+        viewModel.getFreeAddonsCount().observe(this, androidx.lifecycle.Observer {
+            free_accouns_count.setText(it.toString())
+        })
+
+        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
+            if (!it) {
+
+            }
+        })
+
+        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            if (it != null && it.size > 0) {
+                badge.visibility = View.VISIBLE
+                badgeNumber = it.size
+                badge.setText(badgeNumber.toString())
+                Constants.CART_VALUE = badgeNumber
+            } else {
+                badgeNumber = 0
+                badge.visibility = View.GONE
+            }
+        })
+    }
+
+    fun updateRecycler(list: List<FeaturesModel>) {
         if (shimmer_view_container.isAnimationStarted) {
             shimmer_view_container.stopShimmerAnimation()
             shimmer_view_container.visibility = View.GONE

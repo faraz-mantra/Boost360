@@ -284,7 +284,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
             override fun onResponse(call: Call<VerificationRequestResult>, responseObj: Response<VerificationRequestResult>) {
                 if(responseObj.body() != null){
-                    WebEngageController.initiateUserLogin(responseObj.body()?.LoginId)
+                    WebEngageController.initiateUserLogin(responseObj.body()?.loginId)
                     WebEngageController.setUserContactAttributes(responseObj.body()?.channelProfileProperties?.userEmail,
                             responseObj.body()?.channelProfileProperties?.userMobile,
                             responseObj.body()?.channelProfileProperties?.userName)

@@ -10,8 +10,8 @@ interface CartDao {
     @Query("SELECT * FROM Cart")
     fun getCartItems(): Single<List<CartModel>>
 
-    @Query("SELECT * FROM Cart WHERE id=:item_id")
-    fun getCartItemById(item_id: Int): Flowable<List<CartModel?>?>?
+    @Query("SELECT * FROM Cart WHERE boost_widget_key=:item_id")
+    fun getCartItemById(item_id: String): Flowable<List<CartModel?>?>?
 
     @Query("SELECT COUNT(*)from Cart")
     fun countCartItems(): Int
@@ -28,6 +28,6 @@ interface CartDao {
     @Update
     fun updateCart(vararg carts: CartModel?)
 
-    @Query("DELETE FROM Cart WHERE id=:itemId")
+    @Query("DELETE FROM Cart WHERE boost_widget_key=:itemId")
     fun deleteCartItem(vararg itemId: String)
 }

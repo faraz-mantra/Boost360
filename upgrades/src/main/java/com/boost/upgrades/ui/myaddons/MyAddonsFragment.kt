@@ -2,6 +2,7 @@ package com.boost.upgrades.ui.myaddons
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.FreeAddonsAdapter
 import com.boost.upgrades.adapter.PaidAddonsAdapter
-import com.boost.upgrades.data.model.WidgetModel
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.removeaddons.RemoveAddonsFragment
@@ -26,7 +27,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.home_fragment.back_image
-import kotlinx.android.synthetic.main.home_fragment.verifybtn1
 import kotlinx.android.synthetic.main.my_addons_fragment.*
 
 class MyAddonsFragment : BaseFragment(), MyAddonsListener {
@@ -40,7 +40,8 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     var freeaddonsSeeMoreStatus = false
     var paidaddonsSeeMoreStatus = false
 
-    var totalItemList: List<WidgetModel>? = null
+    var totalFreeItemList: List<FeaturesModel>? = null
+    var totalPaidItemList: List<FeaturesModel>? = null
 
     companion object {
         fun newInstance() = MyAddonsFragment()
@@ -61,10 +62,6 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         freeAddonsAdapter = FreeAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
         paidAddonsAdapter = PaidAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
 
-//        localStorage = LocalStorage.getInstance(context!!)!!
-
-//        totalItemList = localStorage.getInitialLoad()
-
         return root
     }
 
@@ -72,30 +69,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         super.onActivityCreated(savedInstanceState)
 
         loadData()
-
-        viewModel.upgradeResult().observe(this, Observer {
-            totalItemList = it
-            initializeFreeAddonsRecyclerView()
-            initializePaidAddonsRecyclerView()
-
-            if(totalItemList!=null){
-                if(totalItemList!!.size > 6){
-                    val lessList = totalItemList!!.subList(0,6)
-                    updateFreeAddonsRecycler(lessList)
-                }else {
-                    updateFreeAddonsRecycler(totalItemList!!)
-                }
-            }
-
-            if(totalItemList!=null){
-                if(totalItemList!!.size > 6){
-                    val lessList = totalItemList!!.subList(0,6)
-                    updatePaidAddonsRecycler(lessList)
-                }else {
-                    updatePaidAddonsRecycler(totalItemList!!)
-                }
-            }
-        })
+        initMVVM()
 
 
 
@@ -148,25 +122,25 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 add_remove_layout.visibility = View.GONE
                 return@setOnClickListener
             }
-            if(totalItemList!=null) {
+            if(totalFreeItemList!=null) {
                 if (freeaddonsSeeMoreStatus) {
-                    if(totalItemList!!.size > 6) {
-                        val lessList = totalItemList!!.subList(0, 6)
+                    if(totalFreeItemList!!.size > 6) {
+                        val lessList = totalFreeItemList!!.subList(0, 6)
                         updateFreeAddonsRecycler(lessList)
                         freeaddonsSeeMoreStatus = false
                         read_more_less_text_free_addons.setText("See more")
                         read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(
                             null,
                             null,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down),
+                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
                             null
                         )
                     }
                 } else {
-                    updateFreeAddonsRecycler(totalItemList!!)
+                    updateFreeAddonsRecycler(totalFreeItemList!!)
                     freeaddonsSeeMoreStatus = true
                     read_more_less_text_free_addons.setText("See less")
-                    read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(null,null, ContextCompat.getDrawable(requireContext(),R.drawable.ic_arrow_up),null)
+                    read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(null,null, ContextCompat.getDrawable(requireContext(),R.drawable.addons_arrow_up),null)
                 }
             }
         }
@@ -177,25 +151,25 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 add_remove_layout.visibility = View.GONE
                 return@setOnClickListener
             }
-            if(totalItemList!=null) {
+            if(totalPaidItemList!=null) {
                 if (paidaddonsSeeMoreStatus) {
-                    if(totalItemList!!.size > 6) {
-                        val lessList = totalItemList!!.subList(0, 6)
+                    if(totalPaidItemList!!.size > 6) {
+                        val lessList = totalPaidItemList!!.subList(0, 6)
                         updatePaidAddonsRecycler(lessList)
                         paidaddonsSeeMoreStatus = false
                         read_more_less_text_paid_addons.setText("See more")
                         read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(
                             null,
                             null,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down),
+                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
                             null
                         )
                     }
                 } else {
-                    updatePaidAddonsRecycler(totalItemList!!)
+                    updatePaidAddonsRecycler(totalPaidItemList!!)
                     paidaddonsSeeMoreStatus = true
                     read_more_less_text_paid_addons.setText("See less")
-                    read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(null,null, ContextCompat.getDrawable(requireContext(),R.drawable.ic_arrow_up),null)
+                    read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(null,null, ContextCompat.getDrawable(requireContext(),R.drawable.addons_arrow_up),null)
                 }
             }
         }
@@ -206,16 +180,55 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     }
 
     private fun loadData() {
-        viewModel.loadUpdates()
+        viewModel.loadUpdates((activity as UpgradeActivity).fpid!!,(activity as UpgradeActivity).clientid)
     }
 
-    private fun updateFreeAddonsRecycler(list: List<WidgetModel>) {
+    private fun initMVVM(){
+        viewModel.upgradeResult().observe(this, Observer {
+            totalFreeItemList = it
+
+            free_addons_name.setText("Currently using\n"+totalFreeItemList!!.size.toString()+" add-ons")
+            bottom_free_addons.setText(totalFreeItemList!!.size.toString()+" free")
+            free_addons_title.setText(totalFreeItemList!!.size.toString()+" Free Add-ons")
+
+            initializeFreeAddonsRecyclerView()
+            initializePaidAddonsRecyclerView()
+
+            if(totalFreeItemList!=null){
+                if(totalFreeItemList!!.size > 6){
+                    val lessList = totalFreeItemList!!.subList(0,6)
+                    updateFreeAddonsRecycler(lessList)
+                }else {
+                    updateFreeAddonsRecycler(totalFreeItemList!!)
+                }
+            }
+        })
+        viewModel.getActiveWidgets().observe(this, Observer {
+            Log.i("getActiveWidgets", it.toString())
+            totalPaidItemList = it
+
+            paid_title.setText(totalPaidItemList!!.size.toString()+" Premium add-ons")
+            paid_subtitle.setText(totalPaidItemList!!.size.toString()+" Activated, 0 Syncing and 0 needs Attention")
+
+            if(totalPaidItemList!=null){
+                if(totalPaidItemList!!.size > 6){
+                    val lessList = totalPaidItemList!!.subList(0,6)
+                    updatePaidAddonsRecycler(lessList)
+                }else {
+                    updatePaidAddonsRecycler(totalPaidItemList!!)
+                }
+            }
+        })
+    }
+
+    private fun updateFreeAddonsRecycler(list: List<FeaturesModel>) {
         freeAddonsAdapter.addupdates(list)
         recycler_freeaddons.adapter = freeAddonsAdapter
         freeAddonsAdapter.notifyDataSetChanged()
     }
 
-    private fun updatePaidAddonsRecycler(list: List<WidgetModel>) {
+    private fun updatePaidAddonsRecycler(list: List<FeaturesModel>) {
+        paidaddons_layout.visibility = View.VISIBLE
         paidAddonsAdapter.addupdates(list)
         recycler_paidaddons.adapter = paidAddonsAdapter
         paidAddonsAdapter.notifyDataSetChanged()

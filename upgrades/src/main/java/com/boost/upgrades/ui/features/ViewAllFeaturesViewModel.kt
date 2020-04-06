@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,13 +13,13 @@ import io.reactivex.schedulers.Schedulers
 
 class ViewAllFeaturesViewModel(application: Application) : BaseViewModel(application) {
 
-    var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
+    var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
 
-    fun addonsResult(): LiveData<List<WidgetModel>> {
+    fun addonsResult(): LiveData<List<FeaturesModel>> {
         return updatesResult
     }
 
@@ -33,20 +34,20 @@ class ViewAllFeaturesViewModel(application: Application) : BaseViewModel(applica
     fun loadAddonsFromDB() {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-            AppDatabase.getInstance(getApplication())!!
-                .widgetDao()
-                .queryUpdates()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess {
-                    updatesResult.postValue(it)
-                    updatesLoader.postValue(false)
-                }
-                .doOnError {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                .subscribe()
+                AppDatabase.getInstance(getApplication())!!
+                        .featuresDao()
+                        .getFeaturesItems(true)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess {
+                            updatesResult.postValue(it)
+                            updatesLoader.postValue(false)
+                        }
+                        .doOnError {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        .subscribe()
         )
     }
 

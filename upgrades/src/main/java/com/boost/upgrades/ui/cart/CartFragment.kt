@@ -95,11 +95,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         cart_continue_submit.setOnClickListener {
             customerId = viewModel.getCustomerId()
-            if (customerId != null) {
+            if (customerId != null && total > 1) {
                 viewModel.InitiatePurchaseOrder(
                         CreatePurchaseOrderRequest(
-                                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
-                                "58b97497120d4005385f2800",
+//                                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+//                                "58b97497120d4005385f2800",
+                                (activity as UpgradeActivity).clientid,
+                                (activity as UpgradeActivity).fpid!!,
                                 PaymentDetails(
                                         "INR",
                                         0,
@@ -131,7 +133,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 "COURSES",
                                                 1
                                         )
-                                )
+                                ),
+                                null
                         )
                 )
             } else {
@@ -181,17 +184,33 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     fun loadData() {
         viewModel.requestCustomerId(
-//                "5e6b572c959b7e77e0c5883e",
-//                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
                 CustomerIDRequest(
-                        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
-                        0,
-                        "tanmay.majumdar@nowfloats.com",
-                        "5e6b572c959b7e77e0c5883e",
+                        (activity as UpgradeActivity).clientid,
+                        "ANDROID",
+                        (activity as UpgradeActivity).email!!,
+                        (activity as UpgradeActivity).loginid!!,
                         "Tanmay",
-                        "9738084090",
-                        0
+                        (activity as UpgradeActivity).mobileNo!!,
+                        "RAZORPAY",
+                        com.boost.upgrades.data.api_model.customerId.create.TaxDetails(
+                                null,
+                                0,
+                                null,
+                                0
+                        )
                 )
+
+//                CustomerIDRequest(
+////                        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+//                        (activity as UpgradeActivity).clientid,
+//                        0,
+//                        "tanmay.majumdar@nowfloats.com",
+////                        "5e6b572c959b7e77e0c5883e",
+//                        (activity as UpgradeActivity).loginid!!,
+//                        "Tanmay",
+//                        "9738084090",
+//                        0
+//                )
         )
         viewModel.getCartItems()
     }

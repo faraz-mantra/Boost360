@@ -7,6 +7,7 @@ import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,9 +17,11 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.ReviewViewPagerAdapter
 import com.boost.upgrades.adapter.ZoomOutPageTransformer
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.LearnMoreLink
 import com.boost.upgrades.data.api_model.GetAllWidgets.FeatureDetails
 import com.boost.upgrades.data.api_model.GetAllWidgets.Review
 import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.ui.cart.CartFragment
@@ -49,7 +52,7 @@ class DetailsFragment : BaseFragment() {
     lateinit var localStorage: LocalStorage
     var singleItemId: String? = null
     var badgeNumber = 0
-    var addons_list: List<WidgetModel>? = null
+    var addons_list: List<FeaturesModel>? = null
     var cart_list: List<CartModel>? = null
     var itemInCartStatus = false
     var widgetLearnMoreLink: String? = null
@@ -97,30 +100,51 @@ class DetailsFragment : BaseFragment() {
             addons_list = it
             if (addons_list != null) {
                 for (item in addons_list!!) {
-                    if (item.id == singleItemId) {
-                        val featureType = object : TypeToken<FeatureDetails>() {}.type
-                        val featureDetails: FeatureDetails = Gson().fromJson(item.featureDetails, featureType)
-                        Glide.with(this).load(item.image)
+                    if (item.boost_widget_key == singleItemId) {
+                        val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
+                        val learnMoreLink: LearnMoreLink? = if(item.learn_more_link == null) null else Gson().fromJson(item.learn_more_link, learnMoreLinkType)
+                        Glide.with(this).load(item.primary_image)
                                 .into(image1222)
 
-                        Glide.with(this).load(item.image)
+                        Glide.with(this).load(item.primary_image)
                                 .into(title_image)
 
-                        Glide.with(this).load(featureDetails.backgroundImage)
+                        Glide.with(this).load(item.feature_banner)
                                 .into(details_image_bg)
 
-                        title_top_1.text = item.title
+                        if(item.target_business_usecase!=null) {
+                            title_top_1.visibility = View.VISIBLE
+                            title_top_1.text = item.target_business_usecase
+                        }else{
+                            title_top_1.visibility = View.INVISIBLE
+                        }
                         title_top.text = item.name
                         title_appbar.text = item.name
-                        details_discount.text = item.discount.toString()+"% OFF"
-                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
-                        money.text = "₹" + item.price + "/month"
-                        orig_cost.text = "Original cost ₹" + item.MRPPrice + "/month"
-                        widgetLearnMore.text = featureDetails.learnMore.title
-                        widgetLearnMoreLink = featureDetails.learnMore.link
-                        xheader.text = featureDetails.subTitle
-                        abcText.text = featureDetails.subDesc
-                        updateReview(featureDetails.review)
+                        if(item.discount_percent > 0) {
+                            details_discount.visibility = View.VISIBLE
+                            details_discount.text = item.discount_percent.toString() + "% OFF"
+                        }else{
+                            details_discount.visibility = View.GONE
+                        }
+//                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
+                        title_bottom2.text =   "0 businesses have added this"
+                        val discount = 100 - item.discount_percent
+                        val paymentPrice = (discount * item.price) / 100
+                        money.text = "₹" + paymentPrice + "/month"
+                        orig_cost.text = "Original cost ₹" + item.price + "/month"
+                        if(learnMoreLink!=null) {
+                            widgetLearnMore.text = learnMoreLink.link_description
+                            widgetLearnMoreLink = learnMoreLink.link
+                        }else{
+                            fb_layout.visibility = View.GONE
+                        }
+                        xheader.text = item.description_title
+                        abcText.text = item.description
+//                        if(item.review != null) {
+//                            updateReview(item.review)
+//                        }else{
+                            review_layout.visibility = View.GONE
+//                        }
                         break
                     }
                 }
@@ -133,7 +157,7 @@ class DetailsFragment : BaseFragment() {
             if (cart_list != null && cart_list!!.size > 0) {
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
-                    if (item.id == singleItemId) {
+                    if (item.boost_widget_key == singleItemId) {
                         add_item_to_cart.background = ContextCompat.getDrawable(
                                 requireContext(),
                                 R.drawable.added_to_cart_grey
@@ -218,7 +242,7 @@ class DetailsFragment : BaseFragment() {
             if (!itemInCartStatus) {
                 if (addons_list != null) {
                     for (item in addons_list!!) {
-                        if (item.id == singleItemId) {
+                        if (item.boost_widget_key == singleItemId) {
                             viewModel.addItemToCart(item)
                             break
                         }
@@ -254,14 +278,18 @@ class DetailsFragment : BaseFragment() {
         }
 
         fb_layout.setOnClickListener {
-            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-            val args = Bundle()
-            args.putString("link", widgetLearnMoreLink)
-            webViewFragment.arguments = args
-            (activity as UpgradeActivity).addFragment(
-                    webViewFragment,
-                    WEB_VIEW_FRAGMENT
-            )
+            if(widgetLearnMoreLink != null && widgetLearnMoreLink!!.length > 0) {
+                val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+                val args = Bundle()
+                args.putString("link", widgetLearnMoreLink)
+                webViewFragment.arguments = args
+                (activity as UpgradeActivity).addFragment(
+                        webViewFragment,
+                        WEB_VIEW_FRAGMENT
+                )
+            }else{
+                Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
+            }
         }
 
     }

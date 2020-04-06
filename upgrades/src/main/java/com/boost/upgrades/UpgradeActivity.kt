@@ -1,8 +1,10 @@
 package com.boost.upgrades
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,6 +17,7 @@ import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.Utils
 import com.razorpay.Razorpay
 
@@ -23,30 +26,43 @@ class UpgradeActivity : AppCompatActivity() {
 
     lateinit var razorpay: Razorpay
 
+    var fpid: String? = null
+    var loginid: String? = null
+    var email: String? = null
+    var mobileNo: String? = null
+    var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upgrade)
+
+        fpid = intent.getStringExtra("fpid")
+        loginid = intent.getStringExtra("loginid")
+        email = intent.getStringExtra("email")
+        mobileNo = intent.getStringExtra("mobileNo")
+
         initView()
         initRazorPay()
     }
 
     fun initView() {
-        val homeFragment: HomeFragment = HomeFragment.newInstance()
-        val args = Bundle()
-        args.putString("data", "21")
-        homeFragment.arguments = args
-        addFragment(homeFragment, HOME_FRAGMENT)
+        if(fpid !=null) {
+            addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
 
-        supportFragmentManager.addOnBackStackChangedListener {
-            val currentFragment =
-                supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-            if (currentFragment != null) {
-                val tag = currentFragment!!.tag
-                Log.e("tag", ">>>$tag")
-                tellFragments()
-            } else {
-                finish()
+            supportFragmentManager.addOnBackStackChangedListener {
+                val currentFragment =
+                        supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+                if (currentFragment != null) {
+                    val tag = currentFragment!!.tag
+                    Log.e("tag", ">>>$tag")
+                    tellFragments()
+                } else {
+                    finish()
+                }
             }
+        }else{
+            Toast.makeText(this,"Invalid User ID!!", Toast.LENGTH_LONG).show()
+            finish()
         }
     }
 
@@ -113,8 +129,11 @@ class UpgradeActivity : AppCompatActivity() {
     }
 
     fun goToHomeFragment() {
+        val viewAllFragment = fragmentManager!!.findFragmentByTag(VIEW_ALL_FEATURE)
         val detailsFragment = fragmentManager!!.findFragmentByTag(DETAILS_FRAGMENT)
-        if(detailsFragment != null){
+        if(viewAllFragment != null){
+            fragmentManager!!.popBackStack(VIEW_ALL_FEATURE, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }else if(detailsFragment != null){
             fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }else{
             fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)

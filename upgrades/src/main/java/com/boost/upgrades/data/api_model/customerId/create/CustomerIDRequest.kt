@@ -9,7 +9,7 @@ data class CustomerIDRequest(
     val ClientId: String,
     @SerializedName("DeviceType")
     @Expose
-    val DeviceType: Int,
+    val DeviceType: String,
     @SerializedName("Email")
     @Expose
     val Email: String,
@@ -24,5 +24,10 @@ data class CustomerIDRequest(
     val MobileNumber: String,
     @SerializedName("PaymentChannel")
     @Expose
-    val PaymentChannel: Int
+    val PaymentChannel: String,
+    @SerializedName("TaxDetails")
+    @Expose
+    val TaxDetails: TaxDetails
 )
+
+

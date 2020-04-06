@@ -20,4 +20,7 @@ interface WidgetDao {
         onConflict = OnConflictStrategy.REPLACE
     )
     fun insertAllUPdates(updates: List<WidgetModel>)
+
+    @Query("SELECT * FROM Widget WHERE id IN (:widgetKeys)")
+    fun getCartItemById(widgetKeys: List<String>): Single<List<WidgetModel>>
 }

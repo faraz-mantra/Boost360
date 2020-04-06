@@ -14,6 +14,7 @@ import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.AllFeatureAdaptor
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.utils.Utils
@@ -99,7 +100,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
         viewModel.loadAddonsFromDB()
     }
 
-    fun initialiseRecyclerView(upgradeList: List<WidgetModel>){
+    fun initialiseRecyclerView(upgradeList: List<FeaturesModel>){
         if(shimmer_view_container2.isAnimationStarted) {
             shimmer_view_container2.stopShimmerAnimation()
             shimmer_view_container2.visibility = View.GONE

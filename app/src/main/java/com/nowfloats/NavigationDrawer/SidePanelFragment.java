@@ -452,7 +452,18 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), UpgradeActivity.class);
-                intent.putExtra("data","21");
+                intent.putExtra("fpid",session.getFPID());
+                intent.putExtra("loginid",session.getUserProfileId());
+                if(session.getFPEmail()!=null){
+                    intent.putExtra("email",session.getFPEmail());
+                }else{
+                    intent.putExtra("email","ria@getboost360.com");
+                }
+                if(session.getUserProfileMobile() != null){
+                    intent.putExtra("mobileNo",session.getUserProfileMobile());
+                }else{
+                    intent.putExtra("mobileNo","9160004303");
+                }
                 startActivity(intent);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
                 onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);

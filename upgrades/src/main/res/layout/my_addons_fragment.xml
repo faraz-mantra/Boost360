@@ -197,7 +197,7 @@
 
 
                         <TextView
-                            android:id="@+id/details"
+                            android:id="@+id/free_addons_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
@@ -207,7 +207,7 @@
                             android:textSize="@dimen/_14sdp" />
 
                         <TextView
-                            android:id="@+id/price"
+                            android:id="@+id/bottom_free_addons"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
@@ -279,7 +279,7 @@
                         android:id="@+id/read_more_less_text_free_addons"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawableEnd="@drawable/addons_arrow_down"
                         android:text="See more"
                         android:textSize="@dimen/_11sdp"/>
                 </LinearLayout>
@@ -293,7 +293,8 @@
                 android:layout_below="@id/freeaddons_layout"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/all_side_curve_bg"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <RelativeLayout
                     android:id="@+id/paid_addons_title"
@@ -304,7 +305,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/paid_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dp"
@@ -315,10 +316,10 @@
                         android:layout_toStartOf="@id/paid_menu_layout" />
 
                     <TextView
-                        android:id="@+id/subtitle"
+                        android:id="@+id/paid_subtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/title"
+                        android:layout_below="@id/paid_title"
                         android:layout_marginStart="18dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="18dp"
@@ -462,7 +463,7 @@
                         android:id="@+id/read_more_less_text_paid_addons"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawableEnd="@drawable/addons_arrow_down"
                         android:text="See more" />
                 </LinearLayout>
 
