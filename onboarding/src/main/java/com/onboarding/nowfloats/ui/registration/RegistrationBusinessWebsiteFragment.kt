@@ -90,10 +90,10 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
             InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
             return
         }
-        if (response.status == 200 || response.status == 201 || response.status == 202) {
+        if (response.stringResponse.isNullOrEmpty().not()) {
             isDomain = true
             binding?.next?.alpha = 1f
-            domainValue = if (!response.stringResponse.isNullOrEmpty()) response.stringResponse else binding?.subdomain?.text.toString().toUpperCase()
+            domainValue = response.stringResponse
             binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
             onSuccess()
         } else {

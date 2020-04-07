@@ -39,7 +39,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     private val channelList: ArrayList<ChannelModel> = ArrayList()
     private val selectedChannels: ArrayList<ChannelModel>
         get() {
-            return ArrayList(channelList.let { it.filter { it1 -> it1.isSelected == true }})
+            return ArrayList(channelList.let { it.filter { it1 -> it1.isSelected == true } })
         }
     private val responseFeatures: ArrayList<SectionsFeature>?
         get() {
@@ -164,7 +164,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         binding?.channelList?.layoutManager = GridLayoutManager(baseActivity, spanCount)
         binding?.channelList?.adapter = channelAdapter
         binding?.channelList?.let {
-            if(animate) channelAdapter?.runLayoutAnimation(it)
+            if (animate) channelAdapter?.runLayoutAnimation(it)
             else channelAdapter?.notifyDataSetChanged()
         }
         val text = StringBuilder(resources.getString(R.string.presence_on) + " ${channels.size} " + resources.getString(R.string.channel))
@@ -185,20 +185,21 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         requestFloatsModel?.channels = ArrayList(selectedChannels)
         NavigatorManager.pushToStackAndSaveRequest(ScreenModel(CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
         bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages)
-            .addInt(IntentConstant.CURRENT_PAGES, 1)
+                .addInt(IntentConstant.CURRENT_PAGES, 1)
         startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS, bundle)
     }
 
 
     fun startAnimationChannelFragment() {
-        for (channel in requestFloatsModel?.channels ?: ArrayList()){
+        for (channel in requestFloatsModel?.channels ?: ArrayList()) {
             channelList.firstOrNull { it.getName() == channel.getName() }?.isSelected = true
         }
-        binding?.viewChannel?.post {
+        binding?.flipLayout?.post {
             setChannelAdapter(selectedChannels, animate = false)
-            binding?.viewChannel?.fadeIn(300L)?.doOnComplete {
-                setChannelFeaturesAdapter(responseFeatures)
-            }?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
+            binding?.flipLayout?.startFlipping()
+            binding?.flipLayout?.fadeIn(400L)?.doOnComplete { binding?.flipLayout?.stopFlipping() }
+                    ?.doOnComplete { setChannelFeaturesAdapter(responseFeatures) }
+                    ?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
         }
     }
 }

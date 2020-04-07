@@ -11,22 +11,17 @@ fun View.fadeIn(duration: Long = 500L, alpha: Float = 1F, color: Int? = null): C
     val animationSubject = CompletableSubject.create()
     return animationSubject.doOnSubscribe {
         ViewCompat.animate(this)
-            .setDuration(duration)
-            .alpha(alpha)
-            .withEndAction {
-                color?.let {
-                    this.setBackgroundColor(
-                        ResourcesCompat.getColor(
-                            instance.resources,
-                            color,
-                            instance.theme
-                        )
-                    )
+                .setDuration(duration)
+                .alpha(alpha)
+                .withEndAction {
+                    color?.let {
+                        this.setBackgroundColor(ResourcesCompat.getColor(instance.resources, color, instance.theme))
+                    }
+                    animationSubject.onComplete()
                 }
-                animationSubject.onComplete()
-            }
     }
 }
+
 
 fun View.fadeOut(duration: Long = 500L, alpha: Float = 0F, color: Int? = null): Completable {
     return this.fadeIn(duration, alpha, color)

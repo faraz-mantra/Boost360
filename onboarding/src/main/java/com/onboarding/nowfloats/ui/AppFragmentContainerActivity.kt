@@ -240,6 +240,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         super.onActivityResult(requestCode, resultCode, data)
         registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
         registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+        registrationBusinessContactInfoFragment?.onActivityResult(requestCode, resultCode, data)
     }
 
 }

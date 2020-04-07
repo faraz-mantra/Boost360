@@ -95,4 +95,7 @@ dependencies {
 
     // lottie animation
     api "com.airbnb.android:lottie:3.3.1"
+
+    //place google api
+    api 'com.google.android.libraries.places:places:2.2.0'
 }
