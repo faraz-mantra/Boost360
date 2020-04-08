@@ -11,6 +11,7 @@ import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import java.util.*
 
+@Deprecated("not use")
 class FeaturesBottomSheetDialog : BaseDialogFragment<DialogFeatureDetailsBottomSheetBinding, BaseViewModel>() {
 
     private var adapter: AppBaseRecyclerViewAdapter<DetailsFeature>? = null

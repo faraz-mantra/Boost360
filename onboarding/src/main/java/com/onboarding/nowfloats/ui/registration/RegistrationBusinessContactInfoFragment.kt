@@ -43,7 +43,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
                     ?.andThen(binding?.viewForm?.fadeIn())?.andThen(binding?.next?.fadeIn(150L))
                     ?.subscribe()
         }
-        setOnClickListener(binding?.next, binding?.address)
+        setOnClickListener(binding?.next)
         binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding?.countryCode?.visibility == GONE) {
                 binding?.countryCode?.visible()
@@ -95,7 +95,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
                     }
                 }
             }
-            binding?.address -> startAutocompleteActivity()
+//            binding?.address -> startAutocompleteActivity()
         }
     }
 

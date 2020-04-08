@@ -187,6 +187,15 @@
         <item name="android:paddingBottom">@dimen/footer_button_height</item>
     </style>
 
+    <style name="BottomDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="bd_bg_color">@color/color_dialog_bg</item>
+        <item name="android:textColorPrimary">#212121</item>
+    </style>
+
     <style name="ButtonStyle.Rounded.Outlined">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginStart">@dimen/size_32</item>
@@ -206,4 +215,5 @@
         <!--        <item name="android:windowAnimationStyle">@android:style/Animation</item>-->
     </style>
 
+    <attr name="bd_bg_color" format="color" />
 </resources>

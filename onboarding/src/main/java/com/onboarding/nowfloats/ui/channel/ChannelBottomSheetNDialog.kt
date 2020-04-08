@@ -14,6 +14,7 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 
+@Deprecated("not use")
 class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNewBinding, BaseViewModel>(), RecyclerItemClickListener {
 
     private var list = ArrayList<ChannelModel>()

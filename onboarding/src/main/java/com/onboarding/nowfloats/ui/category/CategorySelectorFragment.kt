@@ -17,7 +17,6 @@ import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel
-import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
@@ -111,7 +110,7 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
     private fun gotoChannelPicker() {
         category?.let { requestFloatsModel?.categoryDataModel = it }
         val bundle = Bundle()
-        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.CATEGORY_SELECT, getToolbarTitle()), requestFloatsModel)
+        NavigatorManager.pushToStackAndSaveRequest(ScreenModel(ScreenModel.Screen.CATEGORY_SELECT, getToolbarTitle()), requestFloatsModel)
         navigator?.startActivity(ChannelPickerActivity::class.java, bundle)
     }
 }

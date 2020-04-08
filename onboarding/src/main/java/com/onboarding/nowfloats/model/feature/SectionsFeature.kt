@@ -30,26 +30,12 @@ data class SectionsFeature(
     fun getDrawable(context: Context?): Drawable? {
         if (context == null) return null
         return when (icon?.let { FeatureTypeNew.from(it) }) {
-            FeatureTypeNew.DIGITAL_CONTENT -> ResourcesCompat.getDrawable(
-                    context.resources,
-                    R.drawable.ic_documentation_n,
-                    context.theme
-            )
-            FeatureTypeNew.DIGITAL_PAYMENT -> ResourcesCompat.getDrawable(
-                    context.resources,
-                    R.drawable.ic_rupee_n,
-                    context.theme
-            )
-            FeatureTypeNew.DIGITAL_SECURITY -> ResourcesCompat.getDrawable(
-                    context.resources,
-                    R.drawable.ic_security_n,
-                    context.theme
-            )
-            FeatureTypeNew.DIGITAL_ASSISTANT -> ResourcesCompat.getDrawable(
-                    context.resources,
-                    R.drawable.ic_review_support_n,
-                    context.theme
-            )
+            FeatureTypeNew.DIGITAL_CONTENT -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_documentation_n, context.theme)
+            FeatureTypeNew.DIGITAL_PAYMENT -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_rupee_n, context.theme)
+            FeatureTypeNew.DIGITAL_SECURITY -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_security_n, context.theme)
+            FeatureTypeNew.DIGITAL_ASSISTANT -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_review_support_n, context.theme)
+            FeatureTypeNew.DIGITAL_APPOINTMENT -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_documentation_n, context.theme)
+            FeatureTypeNew.DIGITAL_COMLIANCE -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_review_support_n, context.theme)
             else -> null
         }
     }

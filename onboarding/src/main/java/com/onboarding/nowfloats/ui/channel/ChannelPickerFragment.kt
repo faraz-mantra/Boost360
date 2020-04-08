@@ -9,6 +9,12 @@ import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
+import com.onboarding.nowfloats.bottomsheet.builder.BottomDialog
+import com.onboarding.nowfloats.bottomsheet.builder.channelMutableList
+import com.onboarding.nowfloats.bottomsheet.builder.featureMutableList
+import com.onboarding.nowfloats.bottomsheet.builder.oneButton
+import com.onboarding.nowfloats.bottomsheet.contentHeader
+import com.onboarding.nowfloats.bottomsheet.util.ObservableList
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
@@ -25,18 +31,19 @@ import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.CHANNEL_SELEC
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
-import com.onboarding.nowfloats.ui.features.FeaturesBottomSheetDialog
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
     private var requestFloatsModel: RequestFloatsModel? = null
-    private var featuresBottomSheetDialog: FeaturesBottomSheetDialog? = null
-    private var channelBottomSheetNDialog: ChannelBottomSheetNDialog? = null
     private var channelFeaturesAdapter: AppBaseRecyclerViewAdapter<SectionsFeature>? = null
     private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
     private val channelList: ArrayList<ChannelModel> = ArrayList()
+    private val dummySelectList: ArrayList<ChannelModel> = ArrayList()
     private val selectedChannels: ArrayList<ChannelModel>
         get() {
             return ArrayList(channelList.let { it.filter { it1 -> it1.isSelected == true } })
@@ -115,44 +122,84 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
 
     private fun openChannelSelectionSheet() {
         channelList.let { channels ->
-            channelBottomSheetNDialog = ChannelBottomSheetNDialog()
-            channelBottomSheetNDialog?.isCancelable = true
-            channelBottomSheetNDialog?.onDoneClicked = { onChannelSelected(it) }
-            channelBottomSheetNDialog?.setChannels(channels)
-            channelBottomSheetNDialog?.show(this@ChannelPickerFragment.parentFragmentManager, ChannelBottomSheetNDialog::class.java.name)
+            val list = ObservableList.build<ChannelModel> { channels.forEach { add(it) } }
+            BottomDialog.builder(baseActivity) {
+                expandable = false
+                peekHeightProportion = 1f
+                mCancelable = false
+                contentHeader("${resources.getString(R.string.recommended_on)} ${list.size} ${resources.getString(R.string.channel)}", true)
+                channelMutableList(list) { _, position, item, isType ->
+                    val action = if (isType) RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal else RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal
+                    onItemClickBottomSheet(list, position, item, action)
+                }
+                oneButton(resources.getString(R.string.done), fadDuration = 1500L, drwableId = R.drawable.bg_button_orange, autoDismiss = true) { onClick { onChannelSelected() } }
+            }
         }
     }
 
-    private fun onChannelSelected(channels: ArrayList<ChannelModel>?) {
-        channelBottomSheetNDialog?.dismiss()
-        channels?.let {
-            channelList.clear()
-            channelList.addAll(it)
+    private fun onItemClickBottomSheet(list: ObservableList<ChannelModel>, position: Int, item: ChannelModel, actionType: Int) {
+        when (actionType) {
+            RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal -> openWhyChannelDialog(item as? ChannelModel)
+            RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal -> {
+                if (position != 0) {
+                    val isSelected = !list[position].isSelected!!
+                    list[position].isSelected = isSelected
+                    if (list[position].isFacebookPage()) {
+                        if (isSelected.not()) {
+                            val isShop = list.isFbPageOrShop(ChannelType.FB_SHOP)
+                            if (isShop != null && isShop.isSelected!!) isShop.isSelected = !isShop.isSelected!!
+                        }
+                    } else if (list[position].isFacebookShop()) {
+                        if (isSelected) {
+                            val isPage = list.isFbPageOrShop(ChannelType.FB_PAGE)
+                            if (isPage != null && isPage.isSelected!!.not()) isPage.isSelected = !isPage.isSelected!!
+                        }
+                    }
+                    dummySelectList.clear()
+                    dummySelectList.addAll(list)
+                    list.clear()
+                    list.addAll(ObservableList.build { dummySelectList.forEach { add(it) } })
+                } else openWhyChannelDialog(item as? ChannelModel)
+            }
         }
+    }
+
+    private fun openWhyChannelDialog(channelModel: ChannelModel?) {
+        ChannelWhyDialog().apply {
+            setChannels(channelModel)
+            show(this@ChannelPickerFragment.parentFragmentManager, "")
+        }
+    }
+
+    private fun onChannelSelected() {
+        channelList.clear()
+        channelList.addAll(dummySelectList)
         val selectedChannels = channelList.map {
             it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM.getLayout(); it
         }.filter { it.isSelected!! }
         setChannelAdapter(ArrayList(selectedChannels))
-
     }
 
 
     private fun openFeatureDetailSheet(feature: SectionsFeature?) {
-        val featuresBottomSheetDialog = FeaturesBottomSheetDialog()
-        featuresBottomSheetDialog.isCancelable = true
-        featuresBottomSheetDialog.setFeature(feature)
-        featuresBottomSheetDialog.show(baseActivity.supportFragmentManager, featuresBottomSheetDialog::class.java.name)
-        this.featuresBottomSheetDialog = featuresBottomSheetDialog
+        feature?.let {
+            BottomDialog.builder(baseActivity) {
+                expandable = false
+                peekHeightProportion = 1f
+                contentHeader(it, true)
+                featureMutableList(it)
+                oneButton(resources.getString(R.string.okay), fadDuration = 1500L, drwableId = R.drawable.bg_button_orange, autoDismiss = true)
+            }
+        }
     }
 
-    private fun setChannelFeaturesAdapter(list: ArrayList<SectionsFeature>?) {
-        list?.let {
-            channelFeaturesAdapter = AppBaseRecyclerViewAdapter(baseActivity, it, this)
+    private fun setChannelFeaturesAdapter(list: ArrayList<SectionsFeature>) {
+        binding?.featureList?.post {
+            channelFeaturesAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
             binding?.featureList?.layoutManager = LinearLayoutManager(baseActivity)
             binding?.featureList?.adapter = channelFeaturesAdapter
             binding?.featureList?.let { channelFeaturesAdapter?.runLayoutAnimation(it) }
         }
-
     }
 
     private fun setChannelAdapter(channels: ArrayList<ChannelModel>, animate: Boolean = true) {
@@ -197,9 +244,10 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         binding?.flipLayout?.post {
             setChannelAdapter(selectedChannels, animate = false)
             binding?.flipLayout?.startFlipping()
-            binding?.flipLayout?.fadeIn(400L)?.doOnComplete { binding?.flipLayout?.stopFlipping() }
-                    ?.doOnComplete { setChannelFeaturesAdapter(responseFeatures) }
-                    ?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
+            binding?.flipLayout?.fadeIn(300L)?.doOnComplete {
+                binding?.flipLayout?.stopFlipping()
+                Timer().schedule(500) { responseFeatures?.let { setChannelFeaturesAdapter(it) } }
+            }?.andThen(binding?.next?.fadeIn(2000L))?.subscribe()
         }
     }
 }
