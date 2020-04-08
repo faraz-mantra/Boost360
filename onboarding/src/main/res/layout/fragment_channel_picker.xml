@@ -31,7 +31,7 @@
                         android:inAnimation="@anim/grow_from_middle_y_axis"
                         android:outAnimation="@anim/shrink_to_middle_y_axis"
                         app:animateDesignLayoutOnly="true"
-                        app:animationDuration="500"
+                        app:animationDuration="450"
                         tools:alpha="1">
 
                         <com.framework.views.customViews.CustomCardView

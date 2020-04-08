@@ -43,7 +43,6 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     private var channelFeaturesAdapter: AppBaseRecyclerViewAdapter<SectionsFeature>? = null
     private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
     private val channelList: ArrayList<ChannelModel> = ArrayList()
-    private val dummySelectList: ArrayList<ChannelModel> = ArrayList()
     private val selectedChannels: ArrayList<ChannelModel>
         get() {
             return ArrayList(channelList.let { it.filter { it1 -> it1.isSelected == true } })
@@ -155,10 +154,10 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
                             if (isPage != null && isPage.isSelected!!.not()) isPage.isSelected = !isPage.isSelected!!
                         }
                     }
-                    dummySelectList.clear()
-                    dummySelectList.addAll(list)
+                    channelList.clear()
+                    channelList.addAll(list)
                     list.clear()
-                    list.addAll(ObservableList.build { dummySelectList.forEach { add(it) } })
+                    list.addAll(ObservableList.build { channelList.forEach { add(it) } })
                 } else openWhyChannelDialog(item as? ChannelModel)
             }
         }
@@ -172,8 +171,6 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     }
 
     private fun onChannelSelected() {
-        channelList.clear()
-        channelList.addAll(dummySelectList)
         val selectedChannels = channelList.map {
             it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM.getLayout(); it
         }.filter { it.isSelected!! }
@@ -244,10 +241,10 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         binding?.flipLayout?.post {
             setChannelAdapter(selectedChannels, animate = false)
             binding?.flipLayout?.startFlipping()
-            binding?.flipLayout?.fadeIn(300L)?.doOnComplete {
+            binding?.flipLayout?.fadeIn(280L)?.doOnComplete {
                 binding?.flipLayout?.stopFlipping()
-                Timer().schedule(500) { responseFeatures?.let { setChannelFeaturesAdapter(it) } }
-            }?.andThen(binding?.next?.fadeIn(2000L))?.subscribe()
+                Timer().schedule(600) { responseFeatures?.let { setChannelFeaturesAdapter(it) } }
+            }?.andThen(binding?.next?.fadeIn(2500L))?.subscribe()
         }
     }
 }

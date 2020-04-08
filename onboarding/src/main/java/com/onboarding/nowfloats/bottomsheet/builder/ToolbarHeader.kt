@@ -62,7 +62,7 @@ class ToolbarHeader(
         if (type <= -1) {
             navIconId?.also {
                 toolbar.setNavigationIcon(it)
-            } ?: (toolbar.navigationIcon = null)
+            } ?: (toolbar.setNavigationIcon(null))
         }
 
         if (type == -1 || type == 3) {
