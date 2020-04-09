@@ -177,52 +177,6 @@
             android:background="#cccccc" />
 
         <LinearLayout
-            android:id="@+id/keyboard_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:background="@color/cell_background_color"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/keyboard_ImageView"
-                android:layout_width="@dimen/nav_icon_size"
-                android:layout_height="@dimen/nav_icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_nav_keyboard" />
-
-            <TextView
-                android:id="@+id/keyboard_TextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Boost Keyboard"
-                android:textColor="@color/cell_text_color"
-                android:textSize="@dimen/cell_text_size" />
-
-            <TextView
-                fontPath="Roboto-Regular.ttf"
-                android:layout_width="50dp"
-                android:layout_height="27dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/corner_white_backgrnd_yellow"
-                android:clickable="false"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:padding="3dp"
-                android:text="@string/get_in_capital"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="visible"
-                tools:ignore="MissingPrefix" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/layout_customer_calls"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"

@@ -71,13 +71,13 @@ class ViewAllFeaturesFragment : BaseFragment() {
         shimmer_view_container2.duration=600
         shimmer_view_container2.startShimmerAnimation()
 
-        viewModel.addonsResult().observe(this, Observer {
+        viewModel.addonsResult().observe(viewLifecycleOwner, Observer {
             if(it != null){
                 initialiseRecyclerView(it)
             }
         })
 
-        viewModel.addonsLoader().observe(this, Observer {
+        viewModel.addonsLoader().observe(viewLifecycleOwner, Observer {
             if(it){
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
@@ -92,7 +92,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
             }
         })
 
-        viewModel.addonsError().observe(this, Observer {
+        viewModel.addonsError().observe(viewLifecycleOwner, Observer {
             Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
             if (shimmer_view_container2.isAnimationStarted) {
                 shimmer_view_container2.stopShimmerAnimation()
