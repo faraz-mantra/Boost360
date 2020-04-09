@@ -61,7 +61,6 @@ class MyAddonsViewModel(application: Application) : BaseViewModel(application) {
                                                     {
 //                                                        activeWidgetList.postValue(it.Result)
                                                         Log.i("FloatingPointWebWidgets",">> "+it.Result)
-                                                        updatesLoader.postValue(false)
                                                         compositeDisposable.add(
                                                                 AppDatabase.getInstance(getApplication())!!
                                                                         .featuresDao()

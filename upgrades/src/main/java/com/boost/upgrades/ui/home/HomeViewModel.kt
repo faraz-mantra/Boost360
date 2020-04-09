@@ -147,6 +147,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                                                     .observeOn(AndroidSchedulers.mainThread())
                                                                                                     .doOnSuccess {
                                                                                                         _freeAddonsCount.postValue(it)
+                                                                                                        updatesLoader.postValue(false)
                                                                                                     }
                                                                                                     .doOnError {
                                                                                                         updatesError.postValue(it.message)
@@ -171,6 +172,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                 },
                                                 {
                                                     Log.e("GetAllFeatures", "error"+it.message)
+                                                    updatesLoader.postValue(false)
                                                 }
                                         )
                         )

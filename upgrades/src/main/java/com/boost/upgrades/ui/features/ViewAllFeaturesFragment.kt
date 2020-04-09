@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.features
 
+import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,6 +33,8 @@ class ViewAllFeaturesFragment : BaseFragment() {
     lateinit var allFeatureAdaptor: AllFeatureAdaptor
     lateinit var viewAllFeaturesViewModelFactory: ViewAllFeaturesViewModelFactory
 
+    lateinit var progressDialog: ProgressDialog
+
     companion object {
         fun newInstance() = ViewAllFeaturesFragment()
     }
@@ -47,6 +50,8 @@ class ViewAllFeaturesFragment : BaseFragment() {
         viewAllFeaturesViewModelFactory = ViewAllFeaturesViewModelFactory(requireNotNull(requireActivity().application))
 
         viewModel = ViewModelProviders.of(requireActivity(), viewAllFeaturesViewModelFactory).get(ViewAllFeaturesViewModel::class.java)
+
+        progressDialog = ProgressDialog(requireContext())
 
         allFeatureAdaptor = AllFeatureAdaptor(activity as UpgradeActivity, ArrayList())
 
@@ -73,7 +78,13 @@ class ViewAllFeaturesFragment : BaseFragment() {
         })
 
         viewModel.addonsLoader().observe(this, Observer {
-            if(!it){
+            if(it){
+                val status = "Loading. Please wait..."
+                progressDialog.setMessage(status)
+                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.show()
+            }else{
+                progressDialog.dismiss()
                 if (shimmer_view_container2.isAnimationStarted) {
                     shimmer_view_container2.stopShimmerAnimation()
                     shimmer_view_container2.visibility = View.GONE
@@ -117,11 +128,6 @@ class ViewAllFeaturesFragment : BaseFragment() {
             layoutManager=gridLayoutManager
 
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.disposeElements()
     }
 
 }

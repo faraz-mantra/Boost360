@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.details
 
+import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
@@ -57,6 +58,8 @@ class DetailsFragment : BaseFragment() {
     var itemInCartStatus = false
     var widgetLearnMoreLink: String? = null
 
+    lateinit var progressDialog: ProgressDialog
+
     lateinit var reviewAdaptor: ReviewViewPagerAdapter
 //    private var detailsAdapter = DetailsAdapter(ArrayList())
 
@@ -76,6 +79,8 @@ class DetailsFragment : BaseFragment() {
 
         viewModel = ViewModelProviders.of(requireActivity(), detailsViewModelFactory)
                 .get(DetailsViewModel::class.java)
+
+        progressDialog = ProgressDialog(requireContext())
 
         reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
         localStorage = LocalStorage.getInstance(context!!)!!
@@ -128,10 +133,12 @@ class DetailsFragment : BaseFragment() {
                         }
 //                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
                         title_bottom2.text =   "0 businesses have added this"
-                        val discount = 100 - item.discount_percent
-                        val paymentPrice = (discount * item.price) / 100
-                        money.text = "₹" + paymentPrice + "/month"
-                        orig_cost.text = "Original cost ₹" + item.price + "/month"
+                        loadCostToButtons()
+//                        val discount = 100 - item.discount_percent
+//                        val paymentPrice = (discount * item.price) / 100
+//                        money.text = "₹" + paymentPrice + "/month"
+//                        orig_cost.text = "Original cost ₹" + item.price + "/month"
+//                        add_item_to_cart.text = "Add for ₹"+paymentPrice+"/Month"
                         if(learnMoreLink!=null) {
                             widgetLearnMore.text = learnMoreLink.link_description
                             widgetLearnMoreLink = learnMoreLink.link
@@ -173,25 +180,13 @@ class DetailsFragment : BaseFragment() {
                 badge121.setText(badgeNumber.toString())
                 Constants.CART_VALUE = badgeNumber
                 if (!itemInCartStatus) {
-                    add_item_to_cart.background = ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.orange_button_click_effect
-                    )
-                    add_item_to_cart.setTextColor(Color.WHITE)
-                    add_item_to_cart.setText(getString(R.string.add_for_99_month))
-                    havent_bought_the_feature.visibility = View.VISIBLE
+                    loadCostToButtons()
                 }
             } else {
                 badgeNumber = 0
                 badge121.visibility = View.GONE
                 itemInCartStatus = false
-                add_item_to_cart.background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.orange_button_click_effect
-                )
-                add_item_to_cart.setTextColor(Color.WHITE)
-                add_item_to_cart.setText(getString(R.string.add_for_99_month))
-                havent_bought_the_feature.visibility = View.VISIBLE
+                loadCostToButtons()
             }
         })
 
@@ -200,8 +195,13 @@ class DetailsFragment : BaseFragment() {
         })
 
         viewModel.addonsLoader().observe(this, Observer {
-            if (!it) {
-
+            if (it) {
+                val status = "Loading. Please wait..."
+                progressDialog.setMessage(status)
+                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
             }
         })
 
@@ -298,6 +298,24 @@ class DetailsFragment : BaseFragment() {
         super.onResume()
         val pos = 2
         reviewViewpager.postDelayed(Runnable { reviewViewpager.setCurrentItem(pos) }, 100)
+    }
+
+    fun loadCostToButtons(){
+        for (item in addons_list!!) {
+            if (item.boost_widget_key == singleItemId) {
+                add_item_to_cart.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.orange_button_click_effect
+                )
+                add_item_to_cart.setTextColor(Color.WHITE)
+                val discount = 100 - item.discount_percent
+                val paymentPrice = (discount * item.price) / 100
+                money.text = "₹" + paymentPrice + "/month"
+                orig_cost.text = "Original cost ₹" + item.price + "/month"
+                add_item_to_cart.text = "Add for ₹" + paymentPrice + "/Month"
+                havent_bought_the_feature.visibility = View.VISIBLE
+            }
+        }
     }
 
     fun spannableString() {

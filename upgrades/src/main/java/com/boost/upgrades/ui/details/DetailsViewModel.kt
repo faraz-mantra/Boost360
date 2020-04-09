@@ -39,23 +39,6 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun loadAddonsFromDB() {
-//        updatesLoader.postValue(true)
-//        compositeDisposable.add(
-//            AppDatabase.getInstance(getApplication())!!
-//                .widgetDao()
-//                .queryUpdates()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSuccess {
-//                    updatesResult.postValue(it)
-//                    updatesLoader.postValue(false)
-//                }
-//                .doOnError {
-//                    updatesError.postValue(it.message)
-//                    updatesLoader.postValue(false)
-//                }
-//                .subscribe()
-//        )
         updatesLoader.postValue(true)
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
@@ -76,11 +59,13 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun addItemToCart(updatesModel: FeaturesModel) {
+        updatesLoader.postValue(true)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100
         val cartItem = CartModel(
                 updatesModel.boost_widget_key,
                 updatesModel.name,
+                updatesModel.description,
                 updatesModel.primary_image,
                 paymentPrice,
                 updatesModel.price,
@@ -106,6 +91,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getCartItems() {
+        updatesLoader.postValue(true)
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .cartDao()

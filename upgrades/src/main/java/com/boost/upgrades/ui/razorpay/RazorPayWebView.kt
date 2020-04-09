@@ -8,15 +8,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
+import com.boost.upgrades.data.api_model.Razorpay.PaymentErrorModule
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultListener
 import com.razorpay.PaymentResultWithDataListener
@@ -24,6 +29,7 @@ import com.razorpay.Razorpay
 import kotlinx.android.synthetic.main.payment_fragment.*
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
+import java.io.InputStream
 
 class RazorPayWebView : DialogFragment() {
 
@@ -83,6 +89,10 @@ class RazorPayWebView : DialogFragment() {
                 override fun onPaymentError(p0: Int, p1: String?) {
                     // Error code and description is passed here
                     Log.e("onPaymentError", "p1 >>>"+ p1)
+                    val gson = Gson()
+                    val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
+                    val errorBody: PaymentErrorModule = gson.fromJson(p1, listPersonType)
+                    Toast.makeText(requireContext(),errorBody.error.description, Toast.LENGTH_LONG).show()
                     redirectTransactionFailure()
                     dialog!!.dismiss()
                 }

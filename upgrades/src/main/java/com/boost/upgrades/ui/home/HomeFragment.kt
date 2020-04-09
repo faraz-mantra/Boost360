@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.home
 
+import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Typeface
@@ -63,6 +64,8 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     lateinit var upgradeAdapter: UpgradeAdapter
 
+    lateinit var progressDialog: ProgressDialog
+
 //    lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
 
     var cart_list: List<WidgetModel>? = null
@@ -90,6 +93,8 @@ class HomeFragment : BaseFragment(), HomeListener {
         //request retrofit instance
         ApiService = getRetrofit()
                 .create(ApiInterface::class.java)
+
+        progressDialog = ProgressDialog(requireContext())
 
         localStorage = LocalStorage.getInstance(context!!)!!
 
@@ -283,8 +288,13 @@ class HomeFragment : BaseFragment(), HomeListener {
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
-            if (!it) {
-
+            if (it) {
+                val status = "Loading. Please wait..."
+                progressDialog.setMessage(status)
+                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
             }
         })
 

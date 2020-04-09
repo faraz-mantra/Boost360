@@ -354,7 +354,7 @@
                                 android:gravity="center"
                                 android:textAllCaps="true"
                                 android:background="@drawable/orange_button_click_effect"
-                                android:text="@string/add_for_99_month"
+                                android:text="Add To Cart"
                                 android:textColor="@color/white"
                                 android:fontFamily="@font/open_sans_semibold" />
 

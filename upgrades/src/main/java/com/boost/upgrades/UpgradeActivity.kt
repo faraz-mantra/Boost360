@@ -30,6 +30,7 @@ class UpgradeActivity : AppCompatActivity() {
     var loginid: String? = null
     var email: String? = null
     var mobileNo: String? = null
+    var profileUrl: String? = null
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +41,7 @@ class UpgradeActivity : AppCompatActivity() {
         loginid = intent.getStringExtra("loginid")
         email = intent.getStringExtra("email")
         mobileNo = intent.getStringExtra("mobileNo")
+        profileUrl = intent.getStringExtra("profileUrl")
 
         initView()
         initRazorPay()
@@ -68,7 +70,8 @@ class UpgradeActivity : AppCompatActivity() {
 
     private fun initRazorPay() {
 //        razorpay = Razorpay(this, "rzp_test_IhjurgOAcEKqJU")
-        razorpay = Razorpay(this, "rzp_test_OlLpIGwhA7bATX")  //provided by tanmay
+//        razorpay = Razorpay(this, "rzp_test_OlLpIGwhA7bATX")  //provided by tanmay
+        razorpay = Razorpay(this, "rzp_live_o8qdD1DZ3PHBn0")  //provided by tanmay
     }
 
     override fun onBackPressed() {

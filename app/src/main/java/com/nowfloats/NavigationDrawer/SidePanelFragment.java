@@ -464,6 +464,8 @@ public class SidePanelFragment extends Fragment {
                 }else{
                     intent.putExtra("mobileNo","9160004303");
                 }
+                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+                intent.putExtra("profileUrl", iconUrl);
                 startActivity(intent);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
                 onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);

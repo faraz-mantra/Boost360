@@ -106,6 +106,7 @@
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_11sdp"
+                        android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
                         app:layout_constraintStart_toEndOf="@+id/imageView21"
@@ -167,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_15sdp"
-                    app:layout_constraintBottom_toTopOf="@+id/verifybtn"
+                    app:layout_constraintBottom_toTopOf="@+id/view_my_addons"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -184,7 +185,8 @@
 
                         <TextView
                             android:id="@+id/free_accouns_count"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:gravity="center"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:text="00"
@@ -328,9 +330,7 @@
                     android:layout_marginTop="18dp"
                     android:text="Only pay for what you need"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-
-                    />
+                    android:textSize="@dimen/_12ssp" />
 
                 <TextView
                     android:id="@+id/subtitle"
@@ -338,7 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/title"
                     android:layout_marginStart="18dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginBottom="18dp"
                     android:text="No stress, cancel anytime :)"
                     android:textColor="@color/transparent_black_dark"

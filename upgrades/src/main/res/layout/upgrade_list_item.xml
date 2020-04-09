@@ -4,9 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_80sdp"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/_8sdp"
+    android:paddingBottom="0dp"
     android:clickable="true"
     android:focusable="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
     <ImageView
@@ -41,7 +50,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
@@ -53,7 +62,7 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Marketing"
             android:textColor="#747474"
@@ -61,17 +70,16 @@
 
         <TextView
             android:id="@+id/details"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="1.3sp"
             tools:text="Facebook Ads (upto 75 leads)"
             android:textColor="#2a2a2a"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_12ssp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <TextView
                 android:id="@+id/upgrade_list_discount"
@@ -81,7 +89,8 @@
                 android:fontFamily="@font/open_sans_semibold"
                 tools:text="- 0%"
                 android:textColor="@color/common_text_color"
-                android:textSize="@dimen/_6sdp" />
+                android:textSize="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_10sdp"/>
 
             <TextView
                 android:id="@+id/upgrade_list_price"
@@ -90,7 +99,7 @@
                 tools:text="₹400/month"
                 android:textColor="#0068e0"
                 android:textSize="@dimen/_10sdp"
-                android:paddingStart="@dimen/_10sdp"/>
+                android:layout_marginEnd="@dimen/_10sdp"/>
 
 
             <TextView
@@ -101,21 +110,24 @@
                 android:textColor="#9b9b9b"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@+id/money"
-                app:layout_constraintTop_toBottomOf="@+id/money"
-                android:paddingStart="@dimen/_10sdp"/>
+                app:layout_constraintTop_toBottomOf="@+id/money" />
 
         </LinearLayout>
 
     </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_1sdp"
         android:background="@drawable/view_dot_lines_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_layout"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

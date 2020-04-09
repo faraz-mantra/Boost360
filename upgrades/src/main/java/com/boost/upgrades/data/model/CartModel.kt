@@ -14,6 +14,9 @@ data class CartModel (
     @ColumnInfo(name = "item_name")
     var item_name: String? = null,
 
+    @ColumnInfo(name = "description")
+    var description: String? = null,
+
     @ColumnInfo(name = "link")
     var link: String? = null,
 

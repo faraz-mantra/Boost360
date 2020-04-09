@@ -1,5 +1,6 @@
 package com.boost.upgrades.adapter
 
+import android.app.ActionBar
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
@@ -55,8 +59,15 @@ class AllFeatureAdaptor(
 //            intent.putExtra("position",position)
 //            ContextCompat.startActivity(this.context, intent, null)
         }
+        if(position == 0 ){
+            holder.upgradeLayout.setBackgroundResource(R.drawable.curve_top_bg)
+        }
+        if(position > 0 && (upgradeList.size - 1) != position) {
+            holder.upgradeLayout.setBackgroundColor(ContextCompat.getColor(context!!, R.color.white))
+        }
         if ((upgradeList.size - 1) == position) {
             holder.view.visibility = View.GONE
+            holder.upgradeLayout.setBackgroundResource(R.drawable.curve_bottom_bg)
         }
     }
 
@@ -69,6 +80,7 @@ class AllFeatureAdaptor(
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        var upgradeLayout = itemView.findViewById<ConstraintLayout>(R.id.cardView)!!
         private var upgradeTitle = itemView.findViewById<TextView>(R.id.title)!!
         private var upgradeDetails = itemView.findViewById<TextView>(R.id.details)!!
         private var upgradePrice = itemView.findViewById<TextView>(R.id.upgrade_list_price)!!

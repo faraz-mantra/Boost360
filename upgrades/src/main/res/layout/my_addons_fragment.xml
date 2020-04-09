@@ -249,6 +249,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toTopOf="@id/myaddons_view1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -308,8 +310,8 @@
                         android:id="@+id/paid_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:text="6 Premium add-ons"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
@@ -357,7 +359,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.3"/>
+                    app:layout_constraintGuide_percent="0.5" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/add_remove_layout"
@@ -392,7 +394,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Remove add-ons"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_9sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:fontFamily="@font/open_sans_semibold"/>
                     </LinearLayout>
@@ -410,7 +412,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Get more add-ons"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_9sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:fontFamily="@font/open_sans_semibold"/>
                     </LinearLayout>
@@ -454,7 +456,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_7sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -464,7 +466,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/addons_arrow_down"
-                        android:text="See more" />
+                        android:text="See more"
+                        android:textSize="@dimen/_11sdp"/>
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -486,7 +489,6 @@
         android:textAllCaps="true"
         android:background="@drawable/orange_button_click_effect"
         android:text="View all recommended add-ons"
-        android:foreground="?android:attr/selectableItemBackground"
         android:textColor="@color/white"
         android:fontFamily="@font/open_sans_semibold"
         app:layout_constraintBottom_toBottomOf="parent"

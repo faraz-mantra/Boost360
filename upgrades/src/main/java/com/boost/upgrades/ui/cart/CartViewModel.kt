@@ -119,7 +119,7 @@ class CartViewModel(application: Application) : BaseViewModel(application){
                                         val errorBody: CreateCustomerIDResponse = Gson().fromJson(
                                                 temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
                                         )
-                                        if (errorBody != null && errorBody.StatusCode == 400) {
+                                        if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
                                             compositeDisposable.add(
                                                     ApiService.createCustomerId(customerIDRequest)
                                                             .subscribeOn(Schedulers.io())

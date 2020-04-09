@@ -5,7 +5,7 @@
     <style name="AppTheme.Pre.Upgrade" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/transparent</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#1f1e1e</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@null</item>
 <!--        <item name="android:windowDisablePreview">true</item>-->

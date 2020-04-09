@@ -2,7 +2,7 @@ package com.boost.upgrades.data.api_model.PurchaseOrder.request
 
 data class Widget(
     val ConsumptionConstraint: ConsumptionConstraint,
-    val Desc: String,
+    val Desc: String?,
     val Discount: Int,
     val Expiry: Expiry,
     val Images: List<String>,

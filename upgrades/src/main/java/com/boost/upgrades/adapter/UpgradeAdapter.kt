@@ -81,7 +81,11 @@ class UpgradeAdapter(
         fun upgradeListItem(updateModel: FeaturesModel) {
             val discount = 100 - updateModel.discount_percent
             val price = (discount * updateModel.price) / 100
-            upgradeTitle.text = updateModel.target_business_usecase
+            if(updateModel.target_business_usecase !=null) {
+                upgradeTitle.text = updateModel.target_business_usecase
+            }else{
+                upgradeTitle.visibility = View.GONE
+            }
             upgradeDetails.text = updateModel.name
             upgradePrice.text = "₹" + price + "/month"
             if(updateModel.discount_percent>0){

@@ -34,6 +34,7 @@ import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import kotlinx.android.synthetic.main.cart_fragment.*
+import org.json.JSONObject
 
 class CartFragment : BaseFragment(), CartFragmentListener {
 
@@ -43,7 +44,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var customerId: String? = null
 
+    lateinit var cartList: List<CartModel>
+
     var total = 0.0
+
+    var grandTotal = 0.0
 
     var GSTINNumber: String? = null
     var TANNumber: String? = null
@@ -95,11 +100,32 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         cart_continue_submit.setOnClickListener {
             customerId = viewModel.getCustomerId()
-            if (customerId != null && total > 1) {
+            if (customerId != null && total > 1 && ::cartList.isInitialized) {
+                val widget = ArrayList<Widget>()
+                for (item in cartList) {
+                    widget.add(Widget(
+                            ConsumptionConstraint(
+                                    "DAYS",
+                                    30
+                            ),
+                            item.description,
+                            item.discount,
+                            Expiry(
+                                    "DAYS",
+                                    30
+                            ),
+                            listOf(),
+                            true,
+                            true,
+                            item.item_name!!,
+                            item.MRPPrice.toDouble(),
+                            "MONTHLY",
+                            item.boost_widget_key,
+                            1
+                    ))
+                }
                 viewModel.InitiatePurchaseOrder(
                         CreatePurchaseOrderRequest(
-//                                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
-//                                "58b97497120d4005385f2800",
                                 (activity as UpgradeActivity).clientid,
                                 (activity as UpgradeActivity).fpid!!,
                                 PaymentDetails(
@@ -111,37 +137,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 0,
                                                 null,
                                                 18),
-                                        total + taxValue),
-                                listOf(
-                                        Widget(
-                                                ConsumptionConstraint(
-                                                        "LIMIT",
-                                                        30
-                                                ),
-                                                "Display most popular courses.",
-                                                0,
-                                                Expiry(
-                                                        "DAYS",
-                                                        3
-                                                ),
-                                                listOf(),
-                                                true,
-                                                true,
-                                                "Product / Courses Catalogue",
-                                                total,
-                                                "MONTHLY",
-                                                "COURSES",
-                                                1
-                                        )
-                                ),
+                                        grandTotal),
+                                widget,
                                 null
                         )
                 )
             } else {
                 Toast.makeText(requireContext(), "CustomerID is NULL", Toast.LENGTH_SHORT).show()
             }
-//            val intent = Intent(this, Payment::class.java)
-//            startActivity(intent)
         }
 
         back_button12.setOnClickListener {
@@ -218,6 +221,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     fun initMvvM() {
         viewModel.cartResult().observe(this, Observer {
             if (it != null && it.size > 0) {
+                cartList = it
                 empty_cart.visibility = View.GONE
                 cart_main_layout.visibility = View.VISIBLE
                 cartAddonsAdaptor.addupdates(it)
@@ -235,7 +239,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 val args = Bundle()
                 args.putString("customerId", customerId)
                 args.putDouble("amount", it.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
-//                args.putString("order_id", "order_DgZ26rHjbzLLY2") //For testing dont send order Id
                 args.putString("order_id", it.Result.OrderId)
                 args.putString("email", "tanmay.majumdar@nowfloats.com")
                 args.putString("currency", "INR");
@@ -290,10 +293,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             coupon_discount_value.setText("0")
             val temp = (total * 18) / 100
             taxValue = Math.round(temp * 100) / 100.0
+            grandTotal = Math.round((total + taxValue) * 100) / 100.0
             igst_value.setText("₹" + taxValue)
-            order_total_value.setText("₹" + (total + taxValue).toString())
-            cart_grand_total.setText("₹" + (total + taxValue).toString())
-            footer_grand_total.setText("₹" + (total + taxValue).toString())
+            order_total_value.setText("₹" + grandTotal.toString())
+            cart_grand_total.setText("₹" + grandTotal.toString())
+            footer_grand_total.setText("₹" + grandTotal.toString())
         }
     }
 
