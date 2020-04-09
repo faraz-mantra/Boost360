@@ -62,6 +62,7 @@ import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.ShowVmnCallActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
@@ -124,6 +125,7 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 import com.webengage.sdk.android.WebEngage;
+import com.zopim.android.sdk.api.ZopimChat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -549,6 +551,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             Zendesk.INSTANCE.setIdentity(identity);
 
             Support.INSTANCE.init(Zendesk.INSTANCE);
+
+            ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5");
         } catch (Exception e){
 
         }
@@ -1163,11 +1167,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                    startActivity(intent);
 =======*/
                 if (nextScreen.equals(getString(R.string.keyboard))) {
+                    WebEngageController.trackEvent("NAV - BIZ_KEYBOARD","BIZ_KEYBOARD",session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
-
-//                    Intent i = new Intent(HomeActivity.this, SellerProfileActivity.class);
-//                    startActivity(i);
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)
@@ -1220,10 +1222,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     startActivity(i);
 
                 } else if (nextScreen.equals(getString(R.string.site__meter))) {
-                    // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
-                    // startActivity(imageGalleryIntent);
+                    WebEngageController.trackEvent("NAV - SITE_HEALTH","SITE_HEALTH",null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
-                    WebEngageController.trackEvent("SITE HEALTH","Site health",session.getFpTag());
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home)) || nextScreen.equals(getString(R.string.update))) {
@@ -1272,13 +1272,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     }
 
                 } else if (nextScreen.equals(getString(R.string.call)) || nextScreen.equals(getString(R.string.help_and_support))) {
-//                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-//                        Intent call = new Intent(Intent.ACTION_DIAL);
-//                        String callString = "tel:" + getString(R.string.contact_us_number);
-//                        call.setData(Uri.parse(callString));
-//                        startActivity(call);
-//                    } else {
 
+                    WebEngageController.trackEvent("NAV - SUPPORT", "SUPPORT", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
 
                 } else if (nextScreen.equals(getString(R.string.share))) {
@@ -1303,25 +1298,31 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.business__address))) {
                     Intent businessAddressIntent = new Intent(HomeActivity.this, Business_Address_Activity.class);
                     startActivity(businessAddressIntent);
-                } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_))) {
-                    MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
+                } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) ||
+                            nextScreen.equals(getString(R.string.content_sharing_settings))) {
+                    WebEngageController.trackEvent("NAV - CONTENT_SHARING_SETTINGS", "CONTENT_SHARING_SETTINGS", null);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
-
-
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
-                    MixPanelController.track(EventKeysWL.MANAGE_INVENTORY, null);
+                    WebEngageController.trackEvent("NAV - ORDERS", "ORDERS", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
                 }
                 else if (nextScreen.equals(getString(R.string.manage_inbox))) {
+                    WebEngageController.trackEvent("NAV - ENQUIRIES", "ENQUIRIES", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInboxFragment, "ManageInbox")
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
+                }
+                else if (nextScreen.equals(getString(R.string.manage_customer_calls))) {
+                    WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
+                    Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 else if (nextScreen.equals(getString(R.string.upgrades))) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
@@ -1332,15 +1333,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, addOnFragment, "addOnFragment")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.about))) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ABOUT, null);
+                    WebEngageController.trackEvent("NAV - ABOUT_BOOST", "ABOUT_BOOST", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, aboutFragment, "aboutFragment")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.manage_content))) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_CONTENT, null);
+                    WebEngageController.trackEvent("NAV - MANAGE_CONTENT", "MANAGE_CONTENT", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageContentFragment, "manageContentFragment")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.account_settings))) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
+                    WebEngageController.trackEvent("NAV - ACCOUNT_SETTINGS", "ACCOUNT_SETTINGS", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
                             .commit();
                 }
@@ -1472,20 +1473,19 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private boolean isCalled = false;
 
     private void navigateView() {
-
         isCalled = true;
 
         Bundle bundle = getIntent().getExtras();
 
-        if (bundle != null && bundle.containsKey("Username")) {
-
-            progressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading));
-            progressDialog.setCancelable(false);
-
-            API_Login apiLogin = new API_Login(HomeActivity.this, session, bus);
-            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Constants.clientId);
-
-        }
+//        if (bundle != null && bundle.containsKey("Username")) {
+//
+//            progressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading));
+//            progressDialog.setCancelable(false);
+//
+//            API_Login apiLogin = new API_Login(HomeActivity.this, session, bus);
+//            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Constants.clientId);
+//
+//        }
     }
 
 

@@ -11,6 +11,6 @@ data class VerificationRequestResult(
         val isEnterprise: Boolean,
         @SerializedName("sourceClientId")
         val sourceClientId: String,
-        @SerializedName("channelProfileProperties")
-        val channelProfileProperties: ProfileProperties
+        @SerializedName("profileProperties")
+        val profileProperties: ProfileProperties
 )

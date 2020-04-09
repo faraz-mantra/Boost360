@@ -7,6 +7,7 @@
 
     <color name="divider">#D6D6D6</color>
 
+    <color name="colorAccent">#ffb900</color>
     <color name="primaryColor">#ffb900</color>
     <color name="primaryColorDark">#F9A825</color>
     <color name="tabOnclickColor">#FFE5A0</color>

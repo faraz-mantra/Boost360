@@ -41,6 +41,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 import com.webengage.sdk.android.WebEngage;
+import com.zopim.android.sdk.api.ZopimChat;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -68,13 +69,17 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String token) {
         super.onNewToken(token);
 
+        Log.d(TAG, "Token: " + token);
+
         saveTokenToPreferenceAndUpload(token);
         if (token != null) {
-            AnaCore.saveFcmToken(this, token);
             WebEngage.get().setRegistrationID(token);
+            ZopimChat.setPushToken(token);
+
+            AnaCore.saveFcmToken(this, token);
         }
 
-        Log.d(TAG, "Token: " + token);
+
     }
 
     @Override
@@ -333,7 +338,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         SharedPreferences pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
         if (pref.getString("fpid", null) != null) {
             HomeActivity.registerChat(pref.getString("fpid", null));
-
         }
     }
 }

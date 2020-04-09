@@ -24,10 +24,13 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         initLottieAnimation()
         val pref: SharedPreferences = this.getSharedPreferences( "nowfloatsPrefs", 0)
-        if(pref.getBoolean("IsUserLoggedIn", false))
-            isUserLoggedIn = true
-        else
-            isUserLoggedIn = false
+        isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
+
+        if(isUserLoggedIn){
+            val profileId = pref.getString("user_profile_id", null)
+            isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
+        }
+
         if(BuildConfig.DEBUG){
             hashGeneration()
         }

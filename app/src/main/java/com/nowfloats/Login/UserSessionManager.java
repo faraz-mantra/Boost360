@@ -348,11 +348,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public String getFPName() {
 
-        return pref.getString(KEY_FP_NAME, null);
+        return pref.getString(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME, null);
     }
 
     public String getFpTag() {
         return pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null);
+    }
+
+    public String getFPPrimaryContactNumber(){
+        return pref.getString(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, null);
     }
 
     public String getRootAliasURI() {
@@ -500,7 +504,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     public String getFPEmail() {
-        return pref.getString(KEY_FP_EMAIL, null);
+        return pref.getString(Key_Preferences.GET_FP_DETAILS_EMAIL, null);
     }
 
     public void storeLogoURI(String fpLogoURI) {

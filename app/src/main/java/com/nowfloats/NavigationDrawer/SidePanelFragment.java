@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -78,7 +79,9 @@ public class SidePanelFragment extends Fragment {
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
     TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvSocialSharing, tvManageInventory, tvInbox, tvManageContent,
-            accountSettingsText, upgradeText, addOnText, keyboardTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText;
+            accountSettingsText, upgradeText, addOnText, keyboardTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText,
+            tvContentSharing, tvCalls,
+            tvAddonMarketplace;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -96,7 +99,8 @@ public class SidePanelFragment extends Fragment {
     private static final int CAMERA_PHOTO = 1;
 
     LinearLayout homeLayout, analyticsLayout, upgradeLayout, addOnLayout, accountSettingsLayout, keyboardLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
-            manageContentLayout, manageCustomersLayout, socialLayout, manageInventoryLayout, inboxLayout;
+            manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, socialLayout, manageInventoryLayout, inboxLayout;
+
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -108,8 +112,9 @@ public class SidePanelFragment extends Fragment {
     private final int gallery_req_id = 6;
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
+
     private ImageView shareImageView, keyboardImageView, marketplaceImageView, upgradeImageView, addOnImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
-            accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView,
+            accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView,cotnentSharingImageView, callsImageView,
             socialImageView, manageInventoryImageView, inboxImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
@@ -147,8 +152,7 @@ public class SidePanelFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
@@ -159,15 +163,11 @@ public class SidePanelFragment extends Fragment {
         containerImage = view.findViewById(R.id.backgroundImage);
         siteMeterCalculation();
 
-        try
-        {
+        try {
             String versionName = mainActivity.getPackageManager().getPackageInfo(mainActivity.getPackageName(), 0).versionName;
             TextView versionCode = view.findViewById(R.id.version_name_text);
             versionCode.setText(versionName);
-        }
-
-        catch (PackageManager.NameNotFoundException e)
-        {
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
@@ -187,8 +187,7 @@ public class SidePanelFragment extends Fragment {
         });
 
 
-        if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL()))
-        {
+        if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
             Picasso.get()
                     .load(session.getFacebookPageURL())
                     .rotate(90)
@@ -301,6 +300,8 @@ public class SidePanelFragment extends Fragment {
         analyticsLayout = card.findViewById(R.id.analytics_row_Layout);
         manageCustomersLayout = card.findViewById(R.id.tenth_Layout);
         manageContentLayout = card.findViewById(R.id.layout_manage_content);
+        manageContentSharing = card.findViewById(R.id.layout_content_sharing_settings);
+        manageCalls = card.findViewById(R.id.layout_customer_calls);
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
         socialLayout = card.findViewById(R.id.eleventh_Layout);
@@ -326,12 +327,15 @@ public class SidePanelFragment extends Fragment {
         analyticsTextView = (TextView) analyticsLayout.findViewById(R.id.analytics_row_TextView);
         tvManageCustomers = (TextView) manageCustomersLayout.findViewById(R.id.tvManageCustomers);
         tvManageContent = (TextView) manageContentLayout.findViewById(R.id.tvManageContent);
+        tvContentSharing = manageContentSharing.findViewById(R.id.tvContentSharing);
+        tvCalls = manageCalls.findViewById(R.id.tvCustomerCalls);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
         tvInbox = inboxLayout.findViewById(R.id.tvInbox);
         tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
         accountSettingsText = (TextView) accountSettingsLayout.findViewById(R.id.fifthRow_TextView);
         upgradeText = (TextView) upgradeLayout.findViewById(R.id.secondRow_TextView);
         addOnText = (TextView) addOnLayout.findViewById(R.id.thirdRow_TextView);
+        tvAddonMarketplace = card.findViewById(R.id.tvAddonMarketplace);
         helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
         aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
@@ -349,6 +353,8 @@ public class SidePanelFragment extends Fragment {
         analyticsImageView = analyticsLayout.findViewById(R.id.analytics_row_ImageView);
         manageCustomerImageView = manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
         manageContentImageView = manageContentLayout.findViewById(R.id.img_manage_content);
+        cotnentSharingImageView = manageContentSharing.findViewById(R.id.img_content_sharing);
+        callsImageView = manageCalls.findViewById(R.id.img_customer_calls);
         manageInventoryImageView = manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
         inboxImageView = inboxLayout.findViewById(R.id.thirteen_ImageView);
         socialImageView = socialLayout.findViewById(R.id.eleventh_ImageView);
@@ -406,12 +412,15 @@ public class SidePanelFragment extends Fragment {
         analyticsTextView.setTypeface(robotoMedium);
         tvManageCustomers.setTypeface(robotoMedium);
         tvManageContent.setTypeface(robotoMedium);
+        tvContentSharing.setTypeface(robotoMedium);
         tvManageInventory.setTypeface(robotoMedium);
         tvInbox.setTypeface(robotoMedium);
         tvSocialSharing.setTypeface(robotoMedium);
+        tvCalls.setTypeface(robotoMedium);
         accountSettingsText.setTypeface(robotoMedium);
         upgradeText.setTypeface(robotoMedium);
         addOnText.setTypeface(robotoMedium);
+        tvAddonMarketplace.setTypeface(robotoMedium);
         helpAndSupportText.setTypeface(robotoMedium);
         aboutText.setTypeface(robotoMedium);
         shareText.setTypeface(robotoMedium);
@@ -452,17 +461,17 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), UpgradeActivity.class);
-                intent.putExtra("fpid",session.getFPID());
-                intent.putExtra("loginid",session.getUserProfileId());
-                if(session.getFPEmail()!=null){
-                    intent.putExtra("email",session.getFPEmail());
-                }else{
-                    intent.putExtra("email","ria@getboost360.com");
+                intent.putExtra("fpid", session.getFPID());
+                intent.putExtra("loginid", session.getUserProfileId());
+                if (session.getFPEmail() != null) {
+                    intent.putExtra("email", session.getFPEmail());
+                } else {
+                    intent.putExtra("email", "ria@getboost360.com");
                 }
-                if(session.getUserProfileMobile() != null){
-                    intent.putExtra("mobileNo",session.getUserProfileMobile());
-                }else{
-                    intent.putExtra("mobileNo","9160004303");
+                if (session.getUserProfileMobile() != null) {
+                    intent.putExtra("mobileNo", session.getUserProfileMobile());
+                } else {
+                    intent.putExtra("mobileNo", "9160004303");
                 }
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
                 intent.putExtra("profileUrl", iconUrl);
@@ -485,6 +494,20 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(manageContentImageView, tvManageContent, manageContentLayout);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_content));
+            }
+        });
+        manageContentSharing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onclickColorChange(cotnentSharingImageView, tvContentSharing, manageContentSharing);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.content_sharing_settings));
+            }
+        });
+        manageCalls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onclickColorChange(callsImageView, tvCalls, manageCalls);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customer_calls));
             }
         });
         analyticsLayout.setOnClickListener(new View.OnClickListener() {
@@ -776,8 +799,7 @@ public class SidePanelFragment extends Fragment {
         }
     }
 
-    public String getRealPathFromURI(Uri contentUri)
-    {
+    public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
 
@@ -787,27 +809,21 @@ public class SidePanelFragment extends Fragment {
         return cursor.getString(column_index);
     }
 
-    public String getPath(Uri uri)
-    {
-        try
-        {
+    public String getPath(Uri uri) {
+        try {
             String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public void uploadPrimaryPicture(String path)
-    {
+    public void uploadPrimaryPicture(String path) {
         mDrawerLayout.openDrawer(Gravity.LEFT);
         Constants.isImgUploaded = false;
         UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
@@ -816,12 +832,10 @@ public class SidePanelFragment extends Fragment {
 
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
 
-        if (session.getISEnterprise().equals("true"))
-        {
+        if (session.getISEnterprise().equals("true")) {
             upgradeLayout.setVisibility(View.GONE);
             addOnLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
@@ -831,8 +845,7 @@ public class SidePanelFragment extends Fragment {
         setBackgroundImage();
     }
 
-    public void siteMeterCalculation()
-    {
+    public void siteMeterCalculation() {
         Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
         Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
@@ -869,55 +882,47 @@ public class SidePanelFragment extends Fragment {
         if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
                 !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE)) &&
                 !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE)) &&
-                !getResources().getString(R.string.address_percentage).equals("0"))
-        {
+                !getResources().getString(R.string.address_percentage).equals("0")) {
 
             siteMeterTotalWeight += businessAddressWeight;
         }
 
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0"))
-        {
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
             siteMeterTotalWeight += emailWeight;
         }
 
-        if (HomeActivity.StorebizFloats.size() < 5)
-        {
+        if (HomeActivity.StorebizFloats.size() < 5) {
             siteMeterTotalWeight += (HomeActivity.StorebizFloats.size() * onUpdate);
 
-        }
-
-        else
-        {
+        } else {
             siteMeterTotalWeight += 20;
         }
 
-        if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0"))
-        {
+        if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0")) {
             siteMeterTotalWeight += logoWeight;
         }
 
-        if (session.getBusinessHours())
-        {
+        if (session.getBusinessHours()) {
             siteMeterTotalWeight += businessTimingWeight;
         }
 
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight + "%");
 
-        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight)
-        {
+        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight) {
             session.setSiteHealth(siteMeterTotalWeight);
             OnBoardingApiCalls.updateData(session.getFpTag(), String.format("site_health:%s", siteMeterTotalWeight));
         }
     }
 
-    private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes)
-    {
+    private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         analyticsTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         keyboardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageContent.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvContentSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvCalls.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvInbox.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -933,6 +938,8 @@ public class SidePanelFragment extends Fragment {
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
         keyboardImageView.setColorFilter(defaultLabelFilter);
         manageContentImageView.setColorFilter(defaultLabelFilter);
+        cotnentSharingImageView.setColorFilter(defaultLabelFilter);
+        callsImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
         inboxImageView.setColorFilter(defaultLabelFilter);
         socialImageView.setColorFilter(defaultLabelFilter);
@@ -948,6 +955,8 @@ public class SidePanelFragment extends Fragment {
         manageCustomersLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         keyboardLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageContentLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        manageContentSharing.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        manageCalls.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageInventoryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         inboxLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         socialLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
@@ -959,71 +968,51 @@ public class SidePanelFragment extends Fragment {
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
-        if (tv != null)
-        {
+        if (tv != null) {
             tv.setTextColor(getResources().getColor(R.color.black));
         }
 
-        if (img != null)
-        {
+        if (img != null) {
             img.setColorFilter(whiteLabelFilter);
         }
 
-        if (llPaletes != null)
-        {
+        if (llPaletes != null) {
             llPaletes.setBackgroundColor(getResources().getColor(R.color.very_light_gray));
         }
     }
 
-    private void setBackgroundImage()
-    {
-        try
-        {
+    private void setBackgroundImage() {
+        try {
             String category = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY);
             int Imagedrawable = getCategoryBackgroundImage(category);
 
-            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0)
-            {
+            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
                 String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
 
-                if (!baseNameProfileImage.contains("http"))
-                {
+                if (!baseNameProfileImage.contains("http")) {
                     baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
                 }
 
-                if (baseNameProfileImage.length() > 0)
-                {
+                if (baseNameProfileImage.length() > 0) {
                     Picasso.get()
                             .load(baseNameProfileImage)
                             .resize(540, 0)
                             .placeholder(R.drawable.general_services_background_img)
                             .into(containerImage);
-                }
-
-                else
-                {
+                } else {
                     Picasso.get().load(R.drawable.general_services_background_img).into(containerImage);
                 }
-            }
-
-            else
-            {
+            } else {
                 containerImage.setImageDrawable(getResources().getDrawable(Imagedrawable));
             }
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void setThumbnail()
-    {
-        try
-        {
-            if (!Constants.IMAGEURIUPLOADED)
-            {
+    private void setThumbnail() {
+        try {
+            if (!Constants.IMAGEURIUPLOADED) {
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
 
                 if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != Constants.NOW_FLOATS_API_URL + "/FP/Actual/default.png")) {
@@ -1035,29 +1024,19 @@ public class SidePanelFragment extends Fragment {
                             .resize(200, 0)
                             .placeholder(R.drawable.business_edit_profile_icon)
                             .into(iconImage);
-                }
-
-                else
-                {
-                    if (iconUrl.length() > 0)
-                    {
+                } else {
+                    if (iconUrl.length() > 0) {
                         Picasso.get()
                                 .load(iconUrl)
                                 .resize(200, 0)
                                 .placeholder(R.drawable.business_edit_profile_icon)
                                 .into(iconImage);
-                    }
-
-                    else
-                    {
+                    } else {
                         Picasso.get().load(R.drawable.business_edit_profile_icon).into(iconImage);
                     }
                 }
             }
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

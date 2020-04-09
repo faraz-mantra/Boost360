@@ -1,6 +1,7 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,11 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+import com.webengage.sdk.android.WebEngage;
+import com.zopim.android.sdk.api.ZopimChat;
+import com.zopim.android.sdk.model.VisitorInfo;
+import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,7 +39,9 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
 
     private Context mContext;
     private RiaSupportModel riaSupportModel;
+    private UserSessionManager sessionManager;
     public static String RIA_MODEL_DATA = "ria_model_data";
+
     public static Fragment getInstance(Bundle b){
         HelpAndSupportCardItemFragment frag = new HelpAndSupportCardItemFragment();
         frag.setArguments(b);
@@ -47,6 +54,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         if (getArguments() != null){
             riaSupportModel = new Gson().fromJson(getArguments().getString(RIA_MODEL_DATA), RiaSupportModel.class);
         }
+        sessionManager = new UserSessionManager(mContext, getActivity());
     }
 
     @Override
@@ -80,7 +88,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         view.findViewById(R.id.btn_faqs).setOnClickListener(this);
         view.findViewById(R.id.btn_my_tickets).setOnClickListener(this);
 
-        WebEngageController.trackEvent("ACCOUNT MANAGER","Support Screen Loaded",null);
+        WebEngageController.trackEvent("SUPPORT - Viewed","Support Screen Loaded",null);
 
 
         switch (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType())){
@@ -128,39 +136,52 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 }*/
 
-                WebEngageController.trackEvent("ACCOUNT MANAGER","Chat option in Account",null);
+                WebEngageController.trackEvent("SUPPORT - CHAT","Chat option in Account",null);
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 Date dateobj = new Date();
-                RequestActivity.builder()
-                            .withRequestSubject("Support required: " + df.format(dateobj))
-                            .withTags("sdk", "android")
-                            .show(mContext);
+
+                if(sessionManager != null) {
+                    VisitorInfo visitorInfo = new VisitorInfo.Builder()
+                            .name(sessionManager.getFPName())
+                            .email(sessionManager.getFPEmail())
+                            .phoneNumber(sessionManager.getFPPrimaryContactNumber())
+                            .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
+                            .build();
+                    ZopimChat.setVisitorInfo(visitorInfo);
+                }
+
+                startActivity(new Intent(WebEngage.getApplicationContext(), ZopimChatActivity.class));
+
+//                RequestActivity.builder()
+//                            .withRequestSubject("Support required: " + df.format(dateobj))
+//                            .withTags("sdk", "android")
+//                            .show(mContext);
 
                 //Old Code - to trigger RIA chat sdk powered by ANA
 //                ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 break;
             case R.id.tv_person_email:
-                WebEngageController.trackEvent("ACCOUNT MANAGER","Email option in Account",null);
+                WebEngageController.trackEvent("SUPPORT - EMAIL","Email option in Account",null);
 //                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_EMAIL,null);
                 Methods.sendEmail(mContext,new String[]{riaSupportModel.getEmail()});
                 break;
             case R.id.tv_person_number:
-                WebEngageController.trackEvent("ACCOUNT MANAGER","Direct Agent Call option in Account",null);
+                WebEngageController.trackEvent("SUPPORT - DIRECT_AGENT_CALL","Direct Agent Call option in Account",null);
 //                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;
             case R.id.btn_request_callback:
-                WebEngageController.trackEvent("ACCOUNT MANAGER","Call Support option in Account",null);
+                WebEngageController.trackEvent("SUPPORT - CALL","Call Support option in Account",null);
 //                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
                 Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
                 break;
             case R.id.btn_my_tickets:
-                WebEngageController.trackEvent("ACCOUNT MANAGER","View My Support Tickets",null);
+                WebEngageController.trackEvent("SUPPORT - VIEW_TICKETS","View My Support Tickets",null);
                 RequestListActivity.builder()
                         .show(mContext);
                 break;
             case R.id.btn_faqs:
-                WebEngageController.trackEvent("ACCOUNT MANAGER","Learn How to use",null);
+                WebEngageController.trackEvent("SUPPORT - LEARN","Learn How to use",null);
                 HelpCenterActivity.builder()
                         .show(mContext);
                 break;
