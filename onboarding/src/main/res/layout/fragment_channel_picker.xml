@@ -129,6 +129,8 @@
               android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:gravity="center_horizontal"
+              android:layout_marginTop="@dimen/size_10"
+              android:layout_marginBottom="@dimen/size_10"
               android:orientation="vertical">
 
             <com.framework.views.customViews.CustomImageView
@@ -185,6 +187,8 @@
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:alpha="0"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:drawableEnd="@null"
         android:text="@string/get_started"
         app:layout_constraintBottom_toBottomOf="parent"

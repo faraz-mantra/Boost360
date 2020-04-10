@@ -1,4 +1,4 @@
-package com.framework.views.imageshaddow
+package com.framework.views.shadowview
 
 import android.content.Context
 import android.content.res.TypedArray

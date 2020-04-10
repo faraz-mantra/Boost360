@@ -6,7 +6,6 @@
     <Constraint
         android:id="@id/toolbar_image"
         android:layout_height="@dimen/size_220"
-        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,10 +18,10 @@
         android:layout_marginBottom="@dimen/size_10"
         app:layout_constraintBottom_toTopOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:shadowColor="@color/shadoow"
+        app:shadowColor="@color/shadow"
         app:shadowDx=".5dp"
         app:shadowDy=".5dp"
-        app:shadowRadius="1dp"
+        app:shadowRadius="2dp"
         app:shadowShape="oval"
         app:shadowSide="all"
         app:srcCompat="@drawable/ic_ria_circle" />
@@ -39,13 +38,21 @@
         android:text="Let me know, which of the following describes the business you are running?"
         app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
         app:layout_constraintStart_toStartOf="parent" />
+    <Constraint
+        android:id="@+id/view_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/down_shadoow"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
   </ConstraintSet>
 
   <ConstraintSet android:id="@+id/collapsed">
     <Constraint
         android:id="@id/toolbar_image"
         android:layout_height="?attr/actionBarSize"
-        android:elevation=".8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +66,7 @@
         app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/toolbar_image"
-        app:shadowColor="@color/shadoow"
+        app:shadowColor="@color/shadow"
         app:shadowDx=".2dp"
         app:shadowDy=".2dp"
         app:shadowRadius="2dp"
@@ -87,6 +94,15 @@
         app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
         app:layout_constraintLeft_toLeftOf="@+id/image_riya"
         app:layout_constraintTop_toTopOf="@id/toolbar_image" />
+    <Constraint
+        android:id="@+id/view_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/down_shadoow"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
 
   </ConstraintSet>
 

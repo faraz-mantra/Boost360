@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.framework.extensions.refreshLayout
 import com.framework.utils.ConversionUtils
 import com.framework.views.customViews.CustomTextView
-import com.framework.views.imageshaddow.ShadowLayout
+import com.framework.views.shadowview.ShadowLayout
 import com.onboarding.nowfloats.BaseBoardingApplication.Companion.instance
 import com.onboarding.nowfloats.R
 import io.reactivex.Observable
@@ -111,7 +111,7 @@ class CategorySelectorAnimator {
 
     private fun largeLogoPositionAnimators(imageRiyaLargeParams: FrameLayout.LayoutParams): Pair<ValueAnimator, ValueAnimator> {
         val marginTopAnimator = ValueAnimator.ofInt(imageRiyaLargeParams.topMargin,
-                ConversionUtils.dp2px(75f))
+                ConversionUtils.dp2px(74f))
         marginTopAnimator.addUpdateListener {
             imageRiyaLargeParams.topMargin = it.animatedValue as Int
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
@@ -119,7 +119,7 @@ class CategorySelectorAnimator {
         }
 
         val marginStartAnimator = ValueAnimator.ofInt(imageRiyaLargeParams.marginStart,
-                ConversionUtils.dp2px(26f))
+                ConversionUtils.dp2px(32f))
         marginStartAnimator.addUpdateListener {
             imageRiyaLargeParams.marginStart = it.animatedValue as Int
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams

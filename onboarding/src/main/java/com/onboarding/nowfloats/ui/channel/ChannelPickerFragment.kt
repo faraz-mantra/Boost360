@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.framework.extensions.visible
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
@@ -238,6 +239,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         binding?.viewChannel?.post {
             setChannelAdapter(selectedChannels, animate = false)
             binding?.viewChannel?.fadeIn(300L)?.doOnComplete {
+                binding?.next?.visible()
                 responseFeatures?.let { setChannelFeaturesAdapter(it) }
             }?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
         }

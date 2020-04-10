@@ -52,7 +52,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     override fun onCreateView() {
         super.onCreateView()
         setSetSelectedChannels(channels)
-        setOnClickListener(binding?.menuView, binding?.done, binding?.businessClick, binding?.profileView)
+        setOnClickListener(binding?.menuView, binding?.done, binding?.businessClick, binding?.profileImage)
         binding?.congratsText?.text = resources.getString(R.string.congratulations)
         requestFloatsModel?.contactInfo?.businessName?.let {
             binding?.businessName?.text = it
@@ -139,7 +139,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         super.onClick(v)
         when (v) {
             binding?.menuView -> showMenuLogout(v)
-            binding?.profileView -> openImagePicker(true)
+            binding?.profileImage -> openImagePicker(true)
             binding?.businessClick -> openImagePicker(false)
             binding?.skip,
             binding?.done -> {

@@ -84,19 +84,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.framework.views.customViews.CustomCardView
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/image_riya_large"
       android:layout_width="@dimen/size_0"
       android:layout_height="@dimen/size_0"
-      android:layout_gravity="center_horizontal"
-      app:cardBackgroundColor="@color/white">
+        android:layout_gravity="center_horizontal">
 
       <com.framework.views.customViews.CustomImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/ic_ria" />
 
-    </com.framework.views.customViews.CustomCardView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
   </FrameLayout>
 </layout>

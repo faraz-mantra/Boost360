@@ -31,7 +31,6 @@
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/title"
                         style="@style/Onboarding.Registration.HeaderTitleStyle"
-                        android:layout_marginTop="@dimen/size_10"
                         android:alpha="0"
                         android:text="@string/creating_business_website"
                         tools:alpha="1" />
@@ -46,7 +45,7 @@
                     <com.framework.views.customViews.CustomTextField
                         android:id="@+id/subdomain"
                         style="@style/Onboarding.TextFieldStyle"
-                        android:layout_marginTop="@dimen/size_60"
+                        android:layout_marginTop="@dimen/size_50"
                         android:layout_marginBottom="@dimen/size_0"
                         android:alpha="0"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
@@ -92,7 +91,7 @@
             style="@style/ButtonStyle.Rounded"
             android:layout_marginStart="@dimen/size_32"
             android:layout_marginEnd="@dimen/size_32"
-            android:layout_marginBottom="@dimen/size_24"
+            android:layout_marginBottom="@dimen/size_16"
             android:alpha="0"
             android:text="@string/confirm"
             app:layout_constraintBottom_toBottomOf="parent"
