@@ -65,7 +65,7 @@
           app:shadowColor="@color/shadoow"
           app:shadowDx="0dp"
           app:shadowDy="0dp"
-          app:shadowRadius="2dp"
+          app:shadowRadius="0dp"
           app:shadowShape="rectangle"
           app:shadowSide="bottom">
 
@@ -106,7 +106,7 @@
           android:id="@+id/image_riya"
           android:layout_width="@dimen/size_74"
           android:layout_height="@dimen/size_74"
-          android:layout_marginStart="@dimen/size_26"
+          android:layout_marginStart="@dimen/size_24"
           android:layout_marginTop="@dimen/size_40"
           android:layout_marginBottom="@dimen/size_10"
           app:layout_constraintBottom_toTopOf="@id/title"
