@@ -5,12 +5,13 @@ import android.animation.ValueAnimator
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.framework.extensions.refreshLayout
 import com.framework.utils.ConversionUtils
-import com.framework.views.customViews.CustomCardView
 import com.framework.views.customViews.CustomTextView
+import com.framework.views.imageshaddow.ShadowLayout
 import com.onboarding.nowfloats.BaseBoardingApplication.Companion.instance
 import com.onboarding.nowfloats.R
 import io.reactivex.Observable
@@ -28,8 +29,8 @@ class CategorySelectorAnimator {
         fun onSubTitleAnimationComplete() {}
     }
 
-    private var imageRiyaLarge: WeakReference<CustomCardView?>? = null
-    private var imageRiyaCard: WeakReference<CustomCardView?>? = null
+    private var imageRiyaLarge: WeakReference<LinearLayout?>? = null
+    private var imageRiyaCard: WeakReference<ShadowLayout?>? = null
     private var motionLayout: WeakReference<MotionLayout?>? = null
     private var toolbarTitle: WeakReference<CustomTextView?>? = null
     private var subTitleForeground: WeakReference<View?>? = null
@@ -47,7 +48,7 @@ class CategorySelectorAnimator {
 
     var listener: OnAnimationCompleteListener? = null
 
-    fun setViews(imageRiyaLarge: CustomCardView?, imageRiyaCard: CustomCardView?,
+    fun setViews(imageRiyaLarge: LinearLayout?, imageRiyaCard: ShadowLayout?,
                  motionLayout: MotionLayout?, toolbarTitle: CustomTextView?,
                  subTitleForeground: View?) {
         this.imageRiyaLarge = WeakReference(imageRiyaLarge)

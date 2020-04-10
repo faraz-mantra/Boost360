@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="toolbar_title_margin_end">72dp</dimen>
+    <integer name="radius">7</integer>
 
     <dimen name="title">123sp</dimen>
     <dimen name="subtitle">92sp</dimen>

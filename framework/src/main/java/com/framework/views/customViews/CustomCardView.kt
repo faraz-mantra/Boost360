@@ -22,15 +22,15 @@ open class CustomCardView : CardView {
   }
 
   constructor(context: Context) : super(context) {
-    setCustomAttrs(context, null)
+//    setCustomAttrs(context, null)
   }
 
   constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-    setCustomAttrs(context, attrs)
+//    setCustomAttrs(context, attrs)
   }
 
   constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-    setCustomAttrs(context, attrs)
+//    setCustomAttrs(context, attrs)
   }
 
   private fun setCustomAttrs(context: Context, attrs: AttributeSet?) {

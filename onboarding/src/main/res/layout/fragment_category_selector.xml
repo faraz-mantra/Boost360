@@ -47,12 +47,12 @@
             android:id="@+id/next"
             style="@style/FooterButtonStyle"
             android:text="@string/next"
-            android:visibility="gone"
-          app:textType="HEADING_6"
             android:textAllCaps="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:textType="HEADING_6"
             tools:visibility="visible" />
 
 

@@ -48,6 +48,7 @@
         <item name="android:layout_marginTop">@dimen/size_24</item>
         <item name="android:layout_marginBottom">@dimen/size_20</item>
         <item name="android:layout_width">@dimen/size_60</item>
+        <item name="cardBackgroundColor">@android:color/white</item>
         <item name="android:layout_height">@dimen/size_60</item>
     </style>
 
