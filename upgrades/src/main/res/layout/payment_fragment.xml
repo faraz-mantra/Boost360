@@ -140,7 +140,8 @@
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
+                    app:layout_constraintTop_toBottomOf="@id/payment_payment_title"
+                    android:visibility="gone"/>
 
                 <View
                     android:id="@+id/card_view_dummy2"
@@ -236,12 +237,12 @@
                         android:gravity="center">
 
                     <ImageView
+                        android:id="@+id/axis_bank_image"
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:background="@drawable/backgroundwhite"
                         android:padding="8dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/axis_bank" />
+                        android:scaleType="fitCenter" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -261,12 +262,12 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/icici_bank_image"
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="@dimen/_35sdp"
                             android:background="@drawable/backgroundwhite"
                             android:padding="8dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/icici_bank" />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -286,12 +287,12 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/hdfc_bank_image"
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="@dimen/_35sdp"
                             android:background="@drawable/backgroundwhite"
                             android:padding="8dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/hdfc_bank" />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -311,12 +312,12 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/citi_bank_image"
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="@dimen/_35sdp"
                             android:background="@drawable/backgroundwhite"
                             android:padding="8dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/citi_bank" />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -336,12 +337,12 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/sbi_bank_image"
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="@dimen/_35sdp"
                             android:background="@drawable/backgroundwhite"
                             android:padding="8dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/sbi_bank" />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -439,7 +440,8 @@
                     android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
+                    app:layout_constraintTop_toBottomOf="@id/upi_payment_title"
+                    android:visibility="gone"/>
 
                 <View
                     android:id="@+id/upi_view_dummy2"
@@ -664,7 +666,8 @@
                         android:textSize="@dimen/_12sdp"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <TextView
                         android:id="@+id/payment_total_value"

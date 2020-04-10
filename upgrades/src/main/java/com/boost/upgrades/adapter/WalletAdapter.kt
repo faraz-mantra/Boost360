@@ -4,20 +4,25 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.interfaces.PaymentListener
+import com.bumptech.glide.Glide
+import com.razorpay.Razorpay
 
 
-class WalletAdapter(itemList: ArrayList<String>, val listener: PaymentListener) :
+class WalletAdapter(razorpay: Razorpay, itemList: ArrayList<String>, val listener: PaymentListener) :
     RecyclerView.Adapter<WalletAdapter.upgradeViewHolder>() {
 
     private var list = ArrayList<String>()
     private lateinit var context: Context
+    private lateinit var razorpay: Razorpay
 
     init {
         this.list = itemList
+        this.razorpay = razorpay
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -39,6 +44,7 @@ class WalletAdapter(itemList: ArrayList<String>, val listener: PaymentListener) 
         holder.itemView.setOnClickListener {
             listener.walletSelected(list.get(position))
         }
+        Glide.with(context).load(razorpay.getWalletLogoUrl(list.get(position))).into(holder.image)
         if(list.size - 1 == position) {
             holder.view.visibility = View.GONE
         }
@@ -55,6 +61,7 @@ class WalletAdapter(itemList: ArrayList<String>, val listener: PaymentListener) 
 
         var view = itemView.findViewById<View>(R.id.wallet_view_dummy)!!
         var title = itemView.findViewById<TextView>(R.id.wallet_payment_title)!!
+        var image = itemView.findViewById<ImageView>(R.id.wallet_profile_image)!!
 
     }
 }

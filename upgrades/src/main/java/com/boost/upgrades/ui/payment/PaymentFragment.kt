@@ -26,6 +26,7 @@ import com.boost.upgrades.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
@@ -33,7 +34,7 @@ import kotlinx.android.synthetic.main.payment_fragment.*
 import org.json.JSONObject
 
 
-class PaymentFragment : BaseFragment(), PaymentListener  {
+class PaymentFragment : BaseFragment(), PaymentListener {
 
     lateinit var root: View
     private lateinit var viewModel: PaymentViewModel
@@ -62,8 +63,8 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.payment_fragment, container, false)
 
@@ -81,16 +82,16 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
         razorpay = (activity as UpgradeActivity).getRazorpayObject()
 
         netbankingList = ArrayList<SingleNetBankData>()
-        netbankingList.add(SingleNetBankData("UTIB", "Axis",R.drawable.axis_bank))
-        netbankingList.add(SingleNetBankData("ICIC", "ICICI",R.drawable.icici_bank))
-        netbankingList.add(SingleNetBankData("HDFC", "HDFC",R.drawable.hdfc_bank))
-        netbankingList.add(SingleNetBankData("CIUB", "City Union",R.drawable.citi_bank))
-        netbankingList.add(SingleNetBankData("SBIN", "SBI",R.drawable.sbi_bank))
+        netbankingList.add(SingleNetBankData("UTIB", "Axis", razorpay.getBankLogoUrl("UTIB")))
+        netbankingList.add(SingleNetBankData("ICIC", "ICICI", razorpay.getBankLogoUrl("ICIC")))
+        netbankingList.add(SingleNetBankData("HDFC", "HDFC", razorpay.getBankLogoUrl("HDFC")))
+        netbankingList.add(SingleNetBankData("CIUB", "City Union", razorpay.getBankLogoUrl("CIUB")))
+        netbankingList.add(SingleNetBankData("SBIN", "SBI", razorpay.getBankLogoUrl("SBIN")))
 
 
         cardPaymentAdapter = CardPaymentAdapter(requireActivity(), ArrayList())
         upiAdapter = UPIAdapter(ArrayList())
-        walletAdapter = WalletAdapter(ArrayList(), this)
+        walletAdapter = WalletAdapter(razorpay, ArrayList(), this)
 
         return root
     }
@@ -111,17 +112,17 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
         initializeUPIRecycler()
         initializeWalletRecycler()
 
-        payment_amount_value.setText("₹"+totalAmount)
-        order_total_value.setText("₹"+totalAmount)
-        payment_total_value.setText("₹"+totalAmount)
-        items_cost.setText("₹"+totalAmount)
+        payment_amount_value.setText("₹" + totalAmount)
+        order_total_value.setText("₹" + totalAmount)
+        payment_total_value.setText("₹" + totalAmount)
+        items_cost.setText("₹" + totalAmount)
 
         back_button.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
         }
 
         payment_submit.setOnClickListener {
-            if(paymentData.length() > 0) {
+            if (paymentData.length() > 0) {
                 payThroughRazorPay()
             }
         }
@@ -135,15 +136,15 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
 
         show_more_bank.setOnClickListener {
             netBankingPopUpFragement.show(
-                (activity as UpgradeActivity).supportFragmentManager,
-                NETBANKING_POPUP_FRAGMENT
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    NETBANKING_POPUP_FRAGMENT
             )
         }
 
         add_upi_layout.setOnClickListener {
             upiPopUpFragement.show(
-                (activity as UpgradeActivity).supportFragmentManager,
-                UPI_POPUP_FRAGMENT
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    UPI_POPUP_FRAGMENT
             )
         }
 
@@ -166,15 +167,15 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
 //        }
     }
 
-    fun loadData(){
+    fun loadData() {
         viewModel.loadpaymentMethods(razorpay)
         viewModel.getRazorPayToken(cartCheckoutData.getString("customerId"))
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    fun initMvvm(){
+    fun initMvvm() {
         viewModel.cardData().observe(this, Observer {
-                Log.i("cardObserver >>>>>", it.toString())
+            Log.i("cardObserver >>>>>", it.toString())
             paymentData = it
             payThroughRazorPay()
         })
@@ -196,10 +197,10 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
         })
     }
 
-    fun payThroughRazorPay(){
+    fun payThroughRazorPay() {
         try {
             for (key in cartCheckoutData.keys()) {
-                if(key != "customerId") {
+                if (key != "customerId") {
                     paymentData.put(key, cartCheckoutData.get(key))
                 }
             }
@@ -230,22 +231,27 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
 
     fun initializeNetBankingSelector() {
 
+        Glide.with(requireContext()).load(netbankingList.get(0).bankImage).into(axis_bank_image)
         axis_bank_layout.setOnClickListener {
             netbankingSelected(netbankingList.get(0).bankCode)
         }
 
+        Glide.with(requireContext()).load(netbankingList.get(1).bankImage).into(icici_bank_image)
         icici_bank_layout.setOnClickListener {
             netbankingSelected(netbankingList.get(1).bankCode)
         }
 
+        Glide.with(requireContext()).load(netbankingList.get(2).bankImage).into(hdfc_bank_image)
         hdfc_bank_layout.setOnClickListener {
             netbankingSelected(netbankingList.get(2).bankCode)
         }
 
+        Glide.with(requireContext()).load(netbankingList.get(3).bankImage).into(citi_bank_image)
         citi_bank_layout.setOnClickListener {
             netbankingSelected(netbankingList.get(3).bankCode)
         }
 
+        Glide.with(requireContext()).load(netbankingList.get(4).bankImage).into(sbi_bank_image)
         sbi_bank_layout.setOnClickListener {
             netbankingSelected(netbankingList.get(4).bankCode)
         }
@@ -292,11 +298,11 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
     private fun loadWallet(data: JSONObject) {
         val paymentMethods = data.get("wallet") as JSONObject
         val retMap: Map<String, Boolean> = Gson().fromJson(
-            paymentMethods.toString(), object : TypeToken<HashMap<String, Boolean>>() {}.type
+                paymentMethods.toString(), object : TypeToken<HashMap<String, Boolean>>() {}.type
         )
         val list = ArrayList<String>()
         retMap.map {
-            if(it.value){
+            if (it.value) {
                 list.add(it.key)
             }
         }

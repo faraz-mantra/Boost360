@@ -31,7 +31,7 @@ class UPIAdapter(itemList: List<WidgetModel>?) :
     }
 
     override fun getItemCount(): Int {
-        return 1 //list.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
