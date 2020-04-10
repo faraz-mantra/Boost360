@@ -10,10 +10,9 @@
 
     <ImageView
         android:id="@+id/wallet_profile_image"
-        android:layout_width="@dimen/_30sdp"
+        android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_margin="@dimen/_10sdp"
-        android:src="@drawable/paytm_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,18 +26,6 @@
         android:text="Paytm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/wallet_profile_image"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:text="LINK ACCOUNT"
-        android:textColor="#0068e0"
-        android:textSize="@dimen/_8sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View

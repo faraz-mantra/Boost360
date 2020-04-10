@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/upi_popup_outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -50,6 +51,22 @@
             app:layout_constraintTop_toBottomOf="@id/upi_popup_title" />
 
         <TextView
+            android:id="@+id/invalid_UPI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/upi_popup_value"
+            app:layout_constraintBottom_toBottomOf="@id/upi_popup_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Invalid UPI ID"
+            android:textColor="#f24747"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="@dimen/_8sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_error_status_icon"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <TextView
             android:id="@+id/upi_popup_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +88,8 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:theme="@style/SaveCardCheckBox"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/upi_popup_description" />
+            app:layout_constraintTop_toBottomOf="@id/upi_popup_description"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,7 +98,8 @@
             android:textColor="#747474"
             app:layout_constraintBottom_toBottomOf="@id/save_upi_info"
             app:layout_constraintStart_toEndOf="@id/save_upi_info"
-            app:layout_constraintTop_toTopOf="@id/save_upi_info" />
+            app:layout_constraintTop_toTopOf="@id/save_upi_info"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/upi_popup_submit"

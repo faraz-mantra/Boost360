@@ -35,7 +35,7 @@ class CardPaymentAdapter(val activity: FragmentActivity, itemList: List<WidgetMo
     }
 
     override fun getItemCount(): Int {
-        return 1 //list.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
