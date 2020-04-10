@@ -488,7 +488,7 @@
         android:gravity="center"
         android:textAllCaps="true"
         android:background="@drawable/orange_button_click_effect"
-        android:text="View all recommended add-ons"
+        android:text="View recommended add-ons"
         android:textColor="@color/white"
         android:fontFamily="@font/open_sans_semibold"
         app:layout_constraintBottom_toBottomOf="parent"

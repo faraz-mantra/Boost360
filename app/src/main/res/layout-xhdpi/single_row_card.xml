@@ -582,8 +582,6 @@
             android:visibility="visible"
             android:background="#cccccc" />
 
-
-
         <LinearLayout
             android:id="@+id/marketplace_layout"
             android:layout_width="match_parent"
@@ -606,7 +604,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Add-Ons Store"
+                android:text="@string/addon_marketplace"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 
@@ -638,6 +636,7 @@
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
             android:gravity="center_vertical"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <ImageView
@@ -676,6 +675,12 @@
                 tools:ignore="MissingPrefix" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="visible"
+            android:background="#cccccc" />
 
         <LinearLayout
             android:id="@+id/fifthRow_Layout"

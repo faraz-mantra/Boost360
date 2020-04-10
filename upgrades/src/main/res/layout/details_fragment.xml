@@ -286,10 +286,11 @@
                             android:text="@string/_262_businesses_have_added_this"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_11ssp"
+                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.315"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/title_top" />
+                            app:layout_constraintTop_toBottomOf="@+id/title_top"/>
 
                         <TextView
                             android:id="@+id/money"

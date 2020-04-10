@@ -6,12 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Utils
-import com.boost.upgrades.utils.Utils.readJSONFromAsset
+import com.boost.upgrades.utils.WebEngageController
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.Completable
@@ -57,6 +56,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun loadUpdates() {
         updatesLoader.postValue(true)
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
 
         if (Utils.isConnectedToInternet(getApplication())) {
 //            val data: List<GetAllWidgets>? = readJSONFromAsset(getApplication())
@@ -93,11 +93,11 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                         val primaryImage = if(item.primary_image==null) null else item.primary_image.url
                                                         val secondaryImage = arrayListOf<String>()
                                                         if (item.secondary_images != null){
-                                                        for(sec_images in item.secondary_images){
-                                                            if(sec_images.url !=null) {
-                                                                secondaryImage.add(sec_images.url)
+                                                            for(sec_images in item.secondary_images){
+                                                                if(sec_images.url !=null) {
+                                                                    secondaryImage.add(sec_images.url)
+                                                                }
                                                             }
-                                                        }
                                                         }
                                                         data.add(FeaturesModel(
                                                                 item.boost_widget_key,
@@ -121,6 +121,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                 Gson().toJson(item.learn_more_link)
 
                                                         ))
+                                                        WebEngageController.trackEvent("ADDONS_MARKETPLACE DataLoad Success", "ADDONS_MARKETPLACE", "")
                                                     }
                                                     Completable.fromAction {
                                                         AppDatabase.getInstance(getApplication())!!

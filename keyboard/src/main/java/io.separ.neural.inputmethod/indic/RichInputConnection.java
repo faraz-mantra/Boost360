@@ -181,15 +181,19 @@ public final class RichInputConnection {
     }
 
     public int getTextLenght() {
-        CharSequence selectedText = getSelectedText(0);
-        Log.i(RichInputConnection.class.getName(), "getTextAfterCursor(512, 0) " + getTextAfterCursor(512, 0) + " selectedText - > " +
-                selectedText);
-        if (getTextAfterCursor(512, 0) == null && getTextBeforeCursor(512, 0) == null) {
+        try {
+            CharSequence selectedText = getSelectedText(0);
+            Log.i(RichInputConnection.class.getName(), "getTextAfterCursor(512, 0) " + getTextAfterCursor(512, 0) + " selectedText - > " +
+                    selectedText);
+            if (getTextAfterCursor(512, 0) == null && getTextBeforeCursor(512, 0) == null) {
+                return 0;
+            }
+            return (getTextAfterCursor(512, 0) != null ? getTextAfterCursor(512, 0).length() : 0)
+                    + (getTextBeforeCursor(512, 0) != null ? getTextBeforeCursor(512, 0).length() : 0) + (selectedText == null ? 0
+                    : selectedText.length());
+        } catch (Exception e){
             return 0;
         }
-        return (getTextAfterCursor(512, 0) != null ? getTextAfterCursor(512, 0).length() : 0)
-                + (getTextBeforeCursor(512, 0) != null ? getTextBeforeCursor(512, 0).length() : 0) + (selectedText == null ? 0
-                : selectedText.length());
     }
 
     public void beginBatchEdit() {

@@ -50,6 +50,7 @@ import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.AnaCore;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.android.inputmethod.latin.utils.JniUtils;
+import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -528,6 +529,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITORS_TABLE);
                 startActivity(accountInfo);
+            } else if(url.contains(getResources().getString(R.string.addon_marketplace))){
+                Intent intent = new Intent(HomeActivity.this, UpgradeActivity.class);
+                intent.putExtra("fpid", session.getFPID());
+                intent.putExtra("loginid", session.getUserProfileId());
+                if (session.getFPEmail() != null) {
+                    intent.putExtra("email", session.getFPEmail());
+                } else {
+                    intent.putExtra("email", "ria@getboost360.com");
+                }
+                if (session.getUserProfileMobile() != null) {
+                    intent.putExtra("mobileNo", session.getUserProfileMobile());
+                } else {
+                    intent.putExtra("mobileNo", "9160004303");
+                }
+                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+                intent.putExtra("profileUrl", iconUrl);
+                startActivity(intent);
             }
 
         }
@@ -1344,7 +1362,27 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     WebEngageController.trackEvent("NAV - ACCOUNT_SETTINGS", "ACCOUNT_SETTINGS", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
                             .commit();
+                } else if (nextScreen.equals(getString(R.string.addon_marketplace))) {
+                    WebEngageController.trackEvent("NAV - ADDONS_MARKETPLACE", "ADDONS_MARKETPLACE", null);
+
+                    Intent intent = new Intent(HomeActivity.this, UpgradeActivity.class);
+                    intent.putExtra("fpid", session.getFPID());
+                    intent.putExtra("loginid", session.getUserProfileId());
+                    if (session.getFPEmail() != null) {
+                        intent.putExtra("email", session.getFPEmail());
+                    } else {
+                        intent.putExtra("email", "ria@getboost360.com");
+                    }
+                    if (session.getUserProfileMobile() != null) {
+                        intent.putExtra("mobileNo", session.getUserProfileMobile());
+                    } else {
+                        intent.putExtra("mobileNo", "9160004303");
+                    }
+                    String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+                    intent.putExtra("profileUrl", iconUrl);
+                    startActivity(intent);
                 }
+
             }
         }, 200);
 

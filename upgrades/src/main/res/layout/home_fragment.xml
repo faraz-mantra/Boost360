@@ -189,7 +189,7 @@
                             android:gravity="center"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
-                            android:text="00"
+                            android:text="--"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_50ssp" />
 
@@ -350,9 +350,7 @@
                     android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="4dp"
-                    android:background="@color/material_grey_400"
-
-                    />
+                    android:background="@color/material_grey_400"/>
 
             </RelativeLayout>
 

@@ -266,7 +266,7 @@ class DetailsFragment : BaseFragment() {
                             details_discount.visibility = View.GONE
                         }
 //                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
-                        title_bottom2.text =   "0 businesses have added this"
+
                         loadCostToButtons()
 //                        val discount = 100 - item.discount_percent
 //                        val paymentPrice = (discount * item.price) / 100

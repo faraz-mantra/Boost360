@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Utils
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +19,7 @@ class MyAddonsViewModel(application: Application) : BaseViewModel(application) {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
 
-    var activeWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
 
@@ -40,57 +39,58 @@ class MyAddonsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getActiveWidgets(): LiveData<List<FeaturesModel>>{
-        return activeWidgetList
+        return activePremiumWidgetList
     }
 
     fun loadUpdates(fpid: String, clientId: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-                AppDatabase.getInstance(getApplication())!!
-                        .featuresDao()
-                        .getFeaturesItems(false)
+                ApiService.GetFloatingPointWebWidgets(fpid, clientId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            updatesResult.postValue(it)
-                            compositeDisposable.add(
-                                    ApiService.GetFloatingPointWebWidgets(fpid, clientId)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(
-                                                    {
+                        .subscribe(
+                                {
 //                                                        activeWidgetList.postValue(it.Result)
-                                                        Log.i("FloatingPointWebWidgets",">> "+it.Result)
-                                                        compositeDisposable.add(
-                                                                AppDatabase.getInstance(getApplication())!!
-                                                                        .featuresDao()
-                                                                        .getallActiveFeatures(it.Result)
-                                                                        .subscribeOn(Schedulers.io())
-                                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                                        .doOnSuccess {
-                                                                            activeWidgetList.postValue(it)
-                                                                            updatesLoader.postValue(false)
-                                                                        }
-                                                                        .doOnError {
-                                                                            updatesError.postValue(it.message)
-                                                                            updatesLoader.postValue(false)
-                                                                        }
-                                                                        .subscribe()
-
-                                                        )
-                                                    },
-                                                    {
+                                    Log.i("FloatingPointWebWidgets",">> "+it.Result)
+                                    compositeDisposable.add(
+                                            AppDatabase.getInstance(getApplication())!!
+                                                    .featuresDao()
+                                                    .getallActiveFeatures(it.Result, true)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .doOnSuccess {
+                                                        activePremiumWidgetList.postValue(it)
+                                                        updatesLoader.postValue(false)
+                                                    }
+                                                    .doOnError {
                                                         updatesError.postValue(it.message)
                                                         updatesLoader.postValue(false)
                                                     }
-                                            )
-                            )
-                        }
-                        .doOnError {
-                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        }
-                        .subscribe()
+                                                    .subscribe()
+
+                                    )
+                                    compositeDisposable.add(
+                                            AppDatabase.getInstance(getApplication())!!
+                                                    .featuresDao()
+                                                    .getallActiveFeatures(it.Result, false)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .doOnSuccess {
+                                                        updatesResult.postValue(it)
+                                                    }
+                                                    .doOnError {
+                                                        updatesError.postValue(it.message)
+                                                        updatesLoader.postValue(false)
+                                                    }
+                                                    .subscribe()
+
+                                    )
+                                },
+                                {
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                        )
         )
     }
 

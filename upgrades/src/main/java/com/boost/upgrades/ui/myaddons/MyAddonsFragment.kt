@@ -25,6 +25,7 @@ import com.boost.upgrades.ui.removeaddons.RemoveAddonsFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.REMOVE_ADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
+import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -66,6 +67,8 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
         freeAddonsAdapter = FreeAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
         paidAddonsAdapter = PaidAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE My_Addons", "My_Addons", "")
 
         return root
     }
@@ -149,6 +152,8 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                     freeaddonsSeeMoreStatus = true
                     read_more_less_text_free_addons.setText("See less")
                     read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up), null)
+
+                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Free_Addons See_More", "Free_Addons", "")
                 }
             }
         }
@@ -214,8 +219,17 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
             Log.i("getActiveWidgets", it.toString())
             totalPaidItemList = it
 
-            paid_title.setText(totalPaidItemList!!.size.toString() + " Premium add-ons")
-            paid_subtitle.setText(totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention")
+            val paidItemsCount = totalPaidItemList!!.size
+
+            if(paidItemsCount != null && paidItemsCount > 0) {
+                paid_title.setText(totalPaidItemList!!.size.toString() + " Premium add-ons")
+                paid_subtitle.setText(totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention")
+                read_more_less_paid_addons.visibility = View.VISIBLE
+            } else{
+                paid_title.setText("No Premium add-ons active.")
+                paid_subtitle.setText("check out the recommended add-ons for your business")
+                read_more_less_paid_addons.visibility = View.GONE
+            }
 
             if (totalPaidItemList != null) {
                 if (totalPaidItemList!!.size > 6) {

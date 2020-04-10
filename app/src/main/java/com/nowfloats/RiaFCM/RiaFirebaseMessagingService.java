@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.apxor.androidsdk.core.ApxorSDK;
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -71,30 +72,40 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
         Log.d(TAG, "Token: " + token);
 
-        saveTokenToPreferenceAndUpload(token);
-        if (token != null) {
-            WebEngage.get().setRegistrationID(token);
-            ZopimChat.setPushToken(token);
+        try {
+            saveTokenToPreferenceAndUpload(token);
+            if (token != null) {
 
-            AnaCore.saveFcmToken(this, token);
+                WebEngage.get().setRegistrationID(token);
+
+                try {
+                    ZopimChat.setPushToken(token);
+                } catch (Exception e) {
+                }
+
+                AnaCore.saveFcmToken(this, token);
+            }
+        } catch (Exception e){
+            Crashlytics.log("Failed to process FCM Token by RiaFirebaseMessagingService" + e.getMessage());
         }
-
-
     }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        try {
+            pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        Map<String, String> mapResult = remoteMessage.getData();
-        BoostLog.d(TAG, "onMessageReceived");
-        if (mapResult.containsKey("payload")) {
-            AnaCore.handlePush(this, mapResult.get("payload"));
-        } else {
-            sendNotification(mapResult);
-            Constants.GCM_Msg = true;
+            Map<String, String> mapResult = remoteMessage.getData();
+            BoostLog.d(TAG, "onMessageReceived");
+            if (mapResult.containsKey("payload")) {
+                AnaCore.handlePush(this, mapResult.get("payload"));
+            } else {
+                sendNotification(mapResult);
+                Constants.GCM_Msg = true;
+            }
+        } catch (Exception e){
+            Crashlytics.log("Failed to process onMessageReceived in RiaFirebaseMessagingService" + e.getMessage());
         }
-//        ApxorSDK.logAppEvent("onMessageReceived", new HashMap<String, String>());
     }
 
     private static final String SAM_BUBBLE_MSG = "I have Got some data";
