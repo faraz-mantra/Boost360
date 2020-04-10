@@ -1,86 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+  <com.framework.views.customViews.CustomCardView
+      android:id="@+id/card"
+      style="@style/Onboarding.ChannelCardStyle"
+      android:layout_marginBottom="@dimen/size_8"
+      android:clickable="true"
+      android:focusable="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="@dimen/size_20"
+        android:weightSum="1">
 
-        <com.framework.views.customViews.CustomCardView
-            android:id="@+id/card"
-            style="@style/Onboarding.ChannelCardStyle"
-            android:layout_marginBottom="@dimen/size_8"
-            android:clickable="true"
-            android:focusable="true">
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_weight="1"
+          android:orientation="vertical">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/size_20"
-                android:weightSum="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
+          <com.framework.views.customViews.CustomImageView
+              android:id="@+id/image"
+              android:layout_width="@dimen/size_18"
+              android:layout_height="@dimen/size_18"
+              android:scaleType="fitStart"
+              app:srcCompat="@drawable/ic_documentation_n" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/title"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_8"
+              android:layout_marginBottom="@dimen/size_2"
+              android:ellipsize="end"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:textColor="@color/dodger_blue_two"
+              app:fontFamily="@font/semi_bold"
+              app:textType="SUBHEADING_1"
+              tools:text="Manage all your Digital Content" />
 
-                        <com.framework.views.customViews.CustomImageView
-                            android:id="@+id/image"
-                            android:layout_width="@dimen/size_18"
-                            android:layout_height="@dimen/size_18"
-                            android:scaleType="fitStart"
-                            app:srcCompat="@drawable/ic_documentation_n" />
+        </LinearLayout>
 
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/size_8"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            tools:text="Manage all your Digital Content"
-                            android:textColor="@color/dodger_blue_two"
-                            app:fontFamily="@font/semi_bold"
-                            android:layout_marginBottom="@dimen/size_2"
-                            android:includeFontPadding="false"
-                            app:textType="SUBHEADING_1" />
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_14"
+            android:ellipsize="end"
+            android:textColor="@color/greyish_brown"
+            android:visibility="gone"
+            app:fontFamily="@font/regular"
+            app:textType="SUBTITLE_1"
+            tools:text="Suggestions on digital growth strategies Regular Tips on Content for better discovery Weekly Performance Reporting"
+            tools:visibility="visible" />
 
-                    </LinearLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_14"
-                        android:ellipsize="end"
-                        tools:text="Suggestions on digital growth strategies Regular Tips on Content for better discovery Weekly Performance Reporting"
-                        android:textColor="@color/greyish_brown"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        app:fontFamily="@font/regular"
-                        app:textType="SUBTITLE_1" />
+      <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_24"
+          android:layout_height="@dimen/size_24"
+          android:layout_gravity="center_vertical"
+          app:srcCompat="@drawable/ic_next_pinkish_grey" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <com.framework.views.customViews.CustomImageView
-                    android:layout_width="@dimen/size_24"
-                    android:layout_height="@dimen/size_24"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_next_pinkish_grey" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </com.framework.views.customViews.CustomCardView>
-
-    </LinearLayout>
+  </com.framework.views.customViews.CustomCardView>
 </layout>

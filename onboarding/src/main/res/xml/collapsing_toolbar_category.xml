@@ -6,15 +6,10 @@
     <Constraint
         android:id="@id/toolbar_image"
         android:layout_height="@dimen/size_220"
+        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shadowColor="@color/transparent"
-        app:shadowDx="0dp"
-        app:shadowDy="0dp"
-        app:shadowRadius="2dp"
-        app:shadowShape="rectangle"
-        app:shadowSide="bottom" />
+        app:layout_constraintTop_toTopOf="parent" />
     <Constraint
         android:id="@id/image_riya"
         android:layout_width="@dimen/size_74"
@@ -50,15 +45,10 @@
     <Constraint
         android:id="@id/toolbar_image"
         android:layout_height="?attr/actionBarSize"
+        android:elevation=".8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shadowColor="@color/shadoow"
-        app:shadowDx="0.8dp"
-        app:shadowDy="0.8dp"
-        app:shadowRadius="3dp"
-        app:shadowShape="rectangle"
-        app:shadowSide="bottom" />
+        app:layout_constraintTop_toTopOf="parent" />
     <Constraint
         android:id="@+id/image_riya"
         android:layout_width="@dimen/size_45"

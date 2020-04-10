@@ -12,7 +12,7 @@
         android:id="@+id/image_riya_large"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/size_30"
+        android:layout_margin="@dimen/size_40"
         android:alpha="0"
         tools:alpha="1">
 
@@ -33,47 +33,16 @@
         tools:alpha="1"
         tools:showPaths="true">
 
-      <FrameLayout
-          android:id="@+id/fragmentContainer"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
-
-      <View
-          android:id="@+id/subTitleForeground"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:alpha="1"
-          android:background="@color/white"
-          app:layout_constraintBottom_toBottomOf="@id/sub_title"
-          app:layout_constraintEnd_toEndOf="@id/sub_title"
-          app:layout_constraintStart_toStartOf="@id/sub_title"
-          app:layout_constraintTop_toTopOf="@id/sub_title" />
-
-      <com.framework.views.imageshaddow.ShadowLayout
+      <com.google.android.material.appbar.MaterialToolbar
           android:id="@+id/toolbar_image"
           android:layout_width="0dp"
           android:layout_height="@dimen/size_200"
           android:adjustViewBounds="true"
+          android:contentDescription="@null"
           android:fitsSystemWindows="true"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:shadowColor="@color/shadoow"
-          app:shadowDx="0dp"
-          app:shadowDy="0dp"
-          app:shadowRadius="0dp"
-          app:shadowShape="rectangle"
-          app:shadowSide="bottom">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white" />
-      </com.framework.views.imageshaddow.ShadowLayout>
+          app:layout_constraintTop_toTopOf="parent" />
 
 
       <com.framework.views.customViews.CustomImageView
@@ -85,22 +54,6 @@
           app:layout_constraintTop_toTopOf="parent"
           app:srcCompat="@drawable/ic_toolbar_back" />
 
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/sub_title"
-          style="@style/Onboarding.HeaderDescriptionStyle"
-          android:alpha="1"
-          android:text="@string/let_me_know_describes_business"
-          android:visibility="gone"
-          app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-          app:layout_constraintStart_toStartOf="parent"
-          tools:alpha="0" />
-
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/title"
-          style="@style/Onboarding.HeaderTitleStyle"
-          app:layout_constraintBottom_toTopOf="@id/sub_title"
-          app:layout_constraintStart_toStartOf="parent"
-          tools:text="@string/what_your_business_like" />
 
       <com.framework.views.imageshaddow.ShadowLayout
           android:id="@+id/image_riya"
@@ -127,6 +80,44 @@
             app:srcCompat="@drawable/ic_ria_circle" />
       </com.framework.views.imageshaddow.ShadowLayout>
 
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title"
+          style="@style/Onboarding.HeaderTitleStyle"
+          app:layout_constraintBottom_toTopOf="@id/sub_title"
+          app:layout_constraintStart_toStartOf="parent"
+          tools:text="@string/what_your_business_like" />
+
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/sub_title"
+          style="@style/Onboarding.HeaderDescriptionStyle"
+          android:alpha="1"
+          android:text="@string/let_me_know_describes_business"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+          app:layout_constraintStart_toStartOf="parent"
+          tools:alpha="0" />
+
+      <View
+          android:id="@+id/subTitleForeground"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:alpha="1"
+          android:background="@color/white"
+          app:layout_constraintBottom_toBottomOf="@id/sub_title"
+          app:layout_constraintEnd_toEndOf="@id/sub_title"
+          app:layout_constraintStart_toStartOf="@id/sub_title"
+          app:layout_constraintTop_toTopOf="@id/sub_title"
+          tools:alpha="0" />
+
+
+      <FrameLayout
+          android:id="@+id/fragmentContainer"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 

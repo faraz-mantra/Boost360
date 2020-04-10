@@ -69,7 +69,7 @@
     <Constraint
         android:id="@id/toolbar_image"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="1dp"
+        android:elevation=".8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

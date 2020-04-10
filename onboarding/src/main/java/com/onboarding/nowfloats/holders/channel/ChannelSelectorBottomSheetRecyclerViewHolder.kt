@@ -13,7 +13,7 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
 class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChannelBottomSheetBinding) :
-    AppBaseRecyclerViewHolder<ItemChannelBottomSheetBinding>(binding) {
+        AppBaseRecyclerViewHolder<ItemChannelBottomSheetBinding>(binding) {
 
     private var model: ChannelModel? = null
 
