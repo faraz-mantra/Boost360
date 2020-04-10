@@ -9,8 +9,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/footer_button_height">
+        android:layout_height="match_parent">
 
       <FrameLayout
           android:layout_width="match_parent"
@@ -130,7 +129,7 @@
               android:layout_gravity="center"
               android:gravity="center_horizontal"
               android:layout_marginTop="@dimen/size_10"
-              android:layout_marginBottom="@dimen/size_10"
+              android:layout_marginBottom="@dimen/size_74"
               android:orientation="vertical">
 
             <com.framework.views.customViews.CustomImageView

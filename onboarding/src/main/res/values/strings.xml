@@ -113,5 +113,8 @@
     <string name="profile_image_uploaded">Profile Image uploaded.</string>
     <string name="contact_customer_support">Contact customer support</string>
     <string name="start_your_digital_journey">Start your digital journey!</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="close">Close</string>
 
 </resources>

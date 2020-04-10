@@ -107,6 +107,6 @@ class ImagePicker(builder: Builder) {
         // Optional
         imageConfig = builder.imageConfig
         val callingIntent: Intent = ImageActivity.getCallingIntent(context.get(), imageConfig)
-        context.get()!!.startActivityForResult(callingIntent, IMAGE_PICKER_REQUEST_CODE)
+        context.get()?.startActivityForResult(callingIntent, IMAGE_PICKER_REQUEST_CODE)
     }
 }

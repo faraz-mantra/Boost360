@@ -5,7 +5,8 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -23,8 +24,8 @@
 
         <FrameLayout
             android:id="@+id/image_View"
-            android:layout_width="@dimen/size_120"
-            android:layout_height="@dimen/size_120"
+            android:layout_width="@dimen/size_90"
+            android:layout_height="@dimen/size_90"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/size_50"
             android:alpha="0"
@@ -35,19 +36,18 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               app:civ_border_color="@color/white"
-              app:civ_border_width="@dimen/size_6"
+              app:civ_border_width="@dimen/size_4"
+              app:civ_shadow_color="@color/quantum_grey200"
+              app:civ_shadow_radius="@dimen/size_2"
               app:civ_shadow="true"
-              app:civ_shadow_color="@color/shadow"
               app:srcCompat="@drawable/ic_user3" />
 
-          <com.framework.views.CircularImageView
+          <androidx.appcompat.widget.AppCompatImageView
               android:layout_width="@dimen/size_24"
               android:layout_height="@dimen/size_24"
               android:layout_gravity="right|bottom"
-              android:layout_marginEnd="@dimen/size_20"
-              android:layout_marginBottom="@dimen/size_20"
-              app:civ_border_color="#FF53A0FD"
-              app:civ_border_width="@dimen/size_6"
+              android:layout_marginEnd="@dimen/size_6"
+              android:layout_marginBottom="@dimen/size_6"
               app:srcCompat="@drawable/ic_add" />
 
         </FrameLayout>
@@ -155,7 +155,7 @@
                   tools:alpha="1"
                   tools:itemCount="6"
                   tools:listitem="@layout/item_selected_channel_small"
-                  tools:spanCount="3">
+                  tools:spanCount="6">
 
               </com.framework.views.viewgroups.BaseRecyclerView>
 
@@ -181,6 +181,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:cardCornerRadius="@dimen/size_4"
+                app:cardElevation="@dimen/size_0"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true"
                 app:contentPadding="@dimen/size_4">
@@ -190,6 +191,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:clickable="true"
+                  app:cardElevation="@dimen/size_0"
                   android:focusable="true"
                   app:cardCornerRadius="@dimen/size_4">
 
@@ -226,8 +228,8 @@
                 android:layout_width="@dimen/size_24"
                 android:layout_height="@dimen/size_24"
                 android:layout_gravity="right|bottom"
-                android:layout_marginEnd="@dimen/size_6"
-                android:layout_marginBottom="@dimen/size_6"
+                android:layout_marginEnd="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
                 app:cardCornerRadius="@dimen/size_12">
 
               <com.framework.views.customViews.CustomImageView

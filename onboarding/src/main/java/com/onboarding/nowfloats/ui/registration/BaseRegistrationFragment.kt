@@ -137,7 +137,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   protected open fun gotoBusinessApiCallDetails() {
     NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.REGISTERING, getToolbarTitle()), requestFloatsModel)
-    startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle(), clearTop = true)
+    startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle())
   }
 
   protected fun gotoRegistrationComplete() {

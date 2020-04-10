@@ -14,10 +14,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import com.framework.base.BaseActivity
 import com.onboarding.nowfloats.R
-import com.onboarding.nowfloats.bottomsheet.ChannelContentBuilder
-import com.onboarding.nowfloats.bottomsheet.FeatureContentBuilder
-import com.onboarding.nowfloats.bottomsheet.MessageContentBuilder
-import com.onboarding.nowfloats.bottomsheet.OnItemClick
+import com.onboarding.nowfloats.bottomsheet.*
 import com.onboarding.nowfloats.bottomsheet.inerfaces.ContentBuilder
 import com.onboarding.nowfloats.bottomsheet.util.ObservableList
 import com.onboarding.nowfloats.bottomsheet.util.isDarkMode
@@ -150,6 +147,11 @@ class ClickListenerSetter {
 
 fun BottomDialogBuilder.message(text: String, selectable: Boolean = false): BottomDialogBuilder {
     contentBuilder = MessageContentBuilder(text, selectable)
+    return this
+}
+
+fun BottomDialogBuilder.imagePicker(text: String, onClick: onClickItem): BottomDialogBuilder {
+    contentBuilder = ImagePickerBuilder(text, onClick)
     return this
 }
 
