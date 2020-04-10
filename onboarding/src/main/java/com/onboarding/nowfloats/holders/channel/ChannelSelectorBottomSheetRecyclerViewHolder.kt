@@ -70,7 +70,7 @@ class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChan
                     ?: R.drawable.ic_check_blue)
         } else {
             getColor(R.color.white)?.let { binding.card.setCardBackgroundColor(it) }
-            binding.card.cardElevation = ConversionUtils.dp2px(2.0f).toFloat()
+            binding.card.cardElevation = ConversionUtils.dp2px(1.0f).toFloat()
             binding.check.setImageResource(R.drawable.ic_unselected)
         }
     }

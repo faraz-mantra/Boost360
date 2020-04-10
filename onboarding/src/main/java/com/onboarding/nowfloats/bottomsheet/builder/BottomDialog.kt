@@ -211,16 +211,16 @@ class BottomDialog internal constructor(
         }.invoke()
 
         findViewById<View>(R.id.fill_nav)?.also {
-            navColor?.also { c ->
-                it.setBackgroundColor(c)
-            }
+//            navColor?.also { c ->
+//                it.setBackgroundColor(c)
+//            }
             it.layoutParams = it.layoutParams.apply {
                 height = navHeight
             }
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         }
 
         onDismiss?.also {
@@ -236,7 +236,6 @@ class BottomDialog internal constructor(
         } else {
             sf.layoutParams = sf.layoutParams.also { it.height = stateBarHeight }
         }
-
         shadowListener()
     }
 
@@ -290,11 +289,12 @@ class BottomDialog internal constructor(
         }
 
     private fun getNavigationBarHeight(): Int {
-        val resources = context.resources
-        return if (checkNavigationBarShow(activity.window)) {//判断是否有导航栏
-            val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-            resources.getDimensionPixelSize(resourceId)
-        } else 0
+//        val resources = context.resources
+//        return if (checkNavigationBarShow(activity.window)) {
+//            val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+//            resources.getDimensionPixelSize(resourceId)
+//        } else 0
+        return 0
     }
 
     fun <T> get(action: BottomDialog.() -> T): T {
