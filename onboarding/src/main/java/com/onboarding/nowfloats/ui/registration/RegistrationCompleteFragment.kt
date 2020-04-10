@@ -161,12 +161,14 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     private fun openImagePicker(isProfileImage: Boolean) {
         this.isProfileImage = isProfileImage
         BottomDialog.builder(baseActivity) {
-            title("", round = true)
-            imagePicker("") { dialog, type, isLongClick ->
+            expandable = true
+            peekHeightProportion = .4f
+            title(resources.getString(R.string.choose_an_action), round = true)
+            imagePicker("") { dialog, type, _ ->
                 dialog.dismiss()
                 if (type == 1 || type == 2) {
                     ImagePicker.Builder(baseActivity)
-                            .mode(takeIf { type == 1 }?.let { ImagePicker.Mode.CAMERA } ?: ImagePicker.Mode.GALLERY)
+                            .mode(takeIf { type == 2 }?.let { ImagePicker.Mode.CAMERA } ?: ImagePicker.Mode.GALLERY)
                             .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
                             .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
                             .enableDebuggingMode(true).build()

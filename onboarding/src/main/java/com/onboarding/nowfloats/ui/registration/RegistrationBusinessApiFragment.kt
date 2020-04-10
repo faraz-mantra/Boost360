@@ -154,7 +154,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                     if (index != 0) {
                         apiSync.status = ProcessApiSyncModel.SyncStatus.ERROR.name
                         apiSync.channels?.map { it.status = ProcessApiSyncModel.SyncStatus.ERROR.name; it }
-                    }
+                    } else apiSync.status = ProcessApiSyncModel.SyncStatus.SUCCESS.name
                 }
             }
         }

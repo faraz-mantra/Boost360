@@ -45,8 +45,7 @@ open class BottomDialogBuilder(var context: BaseActivity<*, *>) {
     var peekHeight: Int = -1
 
     init {
-        val isLandscape =
-                context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         if (isLandscape) {
             peekHeightProportion = 0.6f
         }
@@ -167,9 +166,9 @@ fun BottomDialogBuilder.featureMutableList(data: SectionsFeature, autoDismiss: B
 }
 
 
-fun BottomDialogBuilder.title(title: CharSequence?, round: Boolean = false, centerTitle: Boolean = false): BottomDialogBuilder {
+fun BottomDialogBuilder.title(title: CharSequence?, round: Boolean = false, centerTitle: Boolean = false, height: Int = 45): BottomDialogBuilder {
     if (headerBuilder == null) {
-        headerBuilder = ToolbarHeader(title, round, centerTitle)
+        headerBuilder = ToolbarHeader(title, round, centerTitle, height)
     } else {
         (headerBuilder as ToolbarHeader).title = title
     }

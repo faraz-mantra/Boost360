@@ -41,7 +41,7 @@ fun Context.attr(@AttrRes attrId: Int): TypedValue = TypedValue().also {
 }
 
 val Context.primaryColor: Int?
-    get() = ContextCompat.getColor(this, android.R.color.transparent)
+    get() = ContextCompat.getColor(this, R.color.colorPrimary)
 
 val Context.accentColor: Int?
     get() = ContextCompat.getColor(this, R.color.colorAccent)

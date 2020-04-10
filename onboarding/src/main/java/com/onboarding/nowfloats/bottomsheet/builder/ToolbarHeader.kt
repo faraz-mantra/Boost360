@@ -23,7 +23,8 @@ fun BottomDialog.updateToolbar(f: ToolbarHeader.() -> Unit) {
 class ToolbarHeader(
         title: CharSequence? = null,
         var round: Boolean = false,
-        var centerTitle: Boolean = false
+        var centerTitle: Boolean = false,
+        var height: Int = 45
 ) : ContentBuilder() {
 
     var title by listenToUpdate(title, this, type = 1)
@@ -42,7 +43,7 @@ class ToolbarHeader(
 
     override fun init(view: View) {
         toolbar = view.tool_bar
-        if (round) toolbar.setBackgroundResource(R.drawable.toolbar_round_bg)
+        if (round) toolbar.setBackgroundResource(R.drawable.bg_rounded_top_white_five)
     }
 
     override fun updateContent(type: Int, data: Any?) {
@@ -62,7 +63,7 @@ class ToolbarHeader(
         if (type <= -1) {
             navIconId?.also {
                 toolbar.setNavigationIcon(it)
-            } ?: (toolbar.setNavigationIcon(null))
+            } ?: (toolbar.navigationIcon = null)
         }
 
         if (type == -1 || type == 3) {

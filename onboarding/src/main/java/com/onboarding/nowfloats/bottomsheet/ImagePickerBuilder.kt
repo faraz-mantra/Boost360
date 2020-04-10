@@ -17,7 +17,6 @@ class ImagePickerBuilder(text: String, val onClick: onClickItem) : ContentBuilde
     override val layoutRes: Int
         get() = R.layout.image_picker_content
 
-
     override fun init(view: View) {
         gallery = view.gallery
         camera = view.camera
