@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.home
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -264,6 +265,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         viewModel.loadUpdates()
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm(){
 
         viewModel.updatesError().observe(this, androidx.lifecycle.Observer {

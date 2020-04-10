@@ -4,8 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
+import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
+import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
+import com.boost.upgrades.utils.Utils
 import com.razorpay.BaseRazorpay
 import com.razorpay.Razorpay
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import okhttp3.Credentials
 import org.json.JSONObject
 
 class PaymentViewModel : ViewModel() {
@@ -13,6 +21,10 @@ class PaymentViewModel : ViewModel() {
     private var _upiPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
     private var _netBankingData: MutableLiveData<JSONObject> = MutableLiveData()
+
+
+    val compositeDisposable = CompositeDisposable()
+    var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
     fun getPaymentMethods(): JSONObject {
         return _paymentMethods.value!!
@@ -26,7 +38,7 @@ class PaymentViewModel : ViewModel() {
         return _upiPayment
     }
 
-    fun UpdateUPIPaymentData(data: JSONObject){
+    fun UpdateUPIPaymentData(data: JSONObject) {
         _upiPayment.postValue(data)
     }
 
@@ -50,15 +62,29 @@ class PaymentViewModel : ViewModel() {
         razorpay.getPaymentMethods(object : BaseRazorpay.PaymentMethodsCallback {
             override fun onPaymentMethodsReceived(result: String?) {
                 val paymentMethods = JSONObject(result!!);
-                Log.i("onPaymentMethods :",paymentMethods.toString())
+                Log.i("onPaymentMethods :", paymentMethods.toString())
                 _paymentMethods.postValue(paymentMethods)
             }
 
             override fun onError(e: String?) {
-                Log.e("onError :",e!!)
+                Log.e("onError :", e!!)
             }
 
         })
+    }
+
+    fun getRazorPayToken(customerId: String) {
+        val header = Credentials.basic(RAZORPAY_KEY, RAZORPAY_SECREAT)
+        compositeDisposable.add(
+                ApiService.getRazorPayTokens(header, customerId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                                Log.e("getRazorPayTokens",">> "+it.toString())
+                        }, {
+                                    it.printStackTrace()
+                        })
+        )
     }
 
 }

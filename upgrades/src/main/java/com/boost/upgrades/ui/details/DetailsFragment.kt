@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.details
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -99,111 +100,8 @@ class DetailsFragment : BaseFragment() {
         spannableString()
         loadData()
         initializeViewPager()
+        initMvvM()
 
-        viewModel.addonsResult().observe(this, Observer {
-            viewModel.getCartItems()
-            addons_list = it
-            if (addons_list != null) {
-                for (item in addons_list!!) {
-                    if (item.boost_widget_key == singleItemId) {
-                        val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
-                        val learnMoreLink: LearnMoreLink? = if(item.learn_more_link == null) null else Gson().fromJson(item.learn_more_link, learnMoreLinkType)
-                        Glide.with(this).load(item.primary_image)
-                                .into(image1222)
-
-                        Glide.with(this).load(item.primary_image)
-                                .into(title_image)
-
-                        Glide.with(this).load(item.feature_banner)
-                                .into(details_image_bg)
-
-                        if(item.target_business_usecase!=null) {
-                            title_top_1.visibility = View.VISIBLE
-                            title_top_1.text = item.target_business_usecase
-                        }else{
-                            title_top_1.visibility = View.INVISIBLE
-                        }
-                        title_top.text = item.name
-                        title_appbar.text = item.name
-                        if(item.discount_percent > 0) {
-                            details_discount.visibility = View.VISIBLE
-                            details_discount.text = item.discount_percent.toString() + "% OFF"
-                        }else{
-                            details_discount.visibility = View.GONE
-                        }
-//                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
-                        title_bottom2.text =   "0 businesses have added this"
-                        loadCostToButtons()
-//                        val discount = 100 - item.discount_percent
-//                        val paymentPrice = (discount * item.price) / 100
-//                        money.text = "₹" + paymentPrice + "/month"
-//                        orig_cost.text = "Original cost ₹" + item.price + "/month"
-//                        add_item_to_cart.text = "Add for ₹"+paymentPrice+"/Month"
-                        if(learnMoreLink!=null) {
-                            widgetLearnMore.text = learnMoreLink.link_description
-                            widgetLearnMoreLink = learnMoreLink.link
-                        }else{
-                            fb_layout.visibility = View.GONE
-                        }
-                        xheader.text = item.description_title
-                        abcText.text = item.description
-//                        if(item.review != null) {
-//                            updateReview(item.review)
-//                        }else{
-                            review_layout.visibility = View.GONE
-//                        }
-                        break
-                    }
-                }
-            }
-        })
-
-        viewModel.cartResult().observe(this, Observer {
-            cart_list = it
-            itemInCartStatus = false
-            if (cart_list != null && cart_list!!.size > 0) {
-                badge121.visibility = View.VISIBLE
-                for (item in cart_list!!) {
-                    if (item.boost_widget_key == singleItemId) {
-                        add_item_to_cart.background = ContextCompat.getDrawable(
-                                requireContext(),
-                                R.drawable.added_to_cart_grey
-                        )
-                        add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
-                        add_item_to_cart.setText(getString(R.string.added_to_cart))
-                        havent_bought_the_feature.visibility = View.INVISIBLE
-                        itemInCartStatus = true
-                        break
-                    }
-                }
-                badgeNumber = cart_list!!.size
-                badge121.setText(badgeNumber.toString())
-                Constants.CART_VALUE = badgeNumber
-                if (!itemInCartStatus) {
-                    loadCostToButtons()
-                }
-            } else {
-                badgeNumber = 0
-                badge121.visibility = View.GONE
-                itemInCartStatus = false
-                loadCostToButtons()
-            }
-        })
-
-        viewModel.addonsError().observe(this, Observer {
-            longToast(requireContext(), "onFailure: " + it)
-        })
-
-        viewModel.addonsLoader().observe(this, Observer {
-            if (it) {
-                val status = "Loading. Please wait..."
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
-            } else {
-                progressDialog.dismiss()
-            }
-        })
 
 
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -278,7 +176,7 @@ class DetailsFragment : BaseFragment() {
         }
 
         fb_layout.setOnClickListener {
-            if(widgetLearnMoreLink != null && widgetLearnMoreLink!!.length > 0) {
+            if (widgetLearnMoreLink != null && widgetLearnMoreLink!!.length > 0) {
                 val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
                 val args = Bundle()
                 args.putString("link", widgetLearnMoreLink)
@@ -287,7 +185,7 @@ class DetailsFragment : BaseFragment() {
                         webViewFragment,
                         WEB_VIEW_FRAGMENT
                 )
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
             }
         }
@@ -300,7 +198,7 @@ class DetailsFragment : BaseFragment() {
         reviewViewpager.postDelayed(Runnable { reviewViewpager.setCurrentItem(pos) }, 100)
     }
 
-    fun loadCostToButtons(){
+    fun loadCostToButtons() {
         for (item in addons_list!!) {
             if (item.boost_widget_key == singleItemId) {
                 add_item_to_cart.background = ContextCompat.getDrawable(
@@ -334,7 +232,115 @@ class DetailsFragment : BaseFragment() {
         viewModel.loadAddonsFromDB()
     }
 
-    fun updateReview(list: List<Review>){
+    @SuppressLint("FragmentLiveDataObserve")
+    fun initMvvM() {
+        viewModel.addonsResult().observe(this, Observer {
+            viewModel.getCartItems()
+            addons_list = it
+            if (addons_list != null) {
+                for (item in addons_list!!) {
+                    if (item.boost_widget_key == singleItemId) {
+                        val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
+                        val learnMoreLink: LearnMoreLink? = if(item.learn_more_link == null) null else Gson().fromJson(item.learn_more_link, learnMoreLinkType)
+                        Glide.with(this).load(item.primary_image)
+                                .into(image1222)
+
+                        Glide.with(this).load(item.primary_image)
+                                .into(title_image)
+
+                        Glide.with(this).load(item.feature_banner)
+                                .into(details_image_bg)
+
+                        if(item.target_business_usecase!=null) {
+                            title_top_1.visibility = View.VISIBLE
+                            title_top_1.text = item.target_business_usecase
+                        }else{
+                            title_top_1.visibility = View.INVISIBLE
+                        }
+                        title_top.text = item.name
+                        title_appbar.text = item.name
+                        if(item.discount_percent > 0) {
+                            details_discount.visibility = View.VISIBLE
+                            details_discount.text = item.discount_percent.toString() + "% OFF"
+                        }else{
+                            details_discount.visibility = View.GONE
+                        }
+//                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
+                        title_bottom2.text =   "0 businesses have added this"
+                        loadCostToButtons()
+//                        val discount = 100 - item.discount_percent
+//                        val paymentPrice = (discount * item.price) / 100
+//                        money.text = "₹" + paymentPrice + "/month"
+//                        orig_cost.text = "Original cost ₹" + item.price + "/month"
+//                        add_item_to_cart.text = "Add for ₹"+paymentPrice+"/Month"
+                        if(learnMoreLink!=null) {
+                            widgetLearnMore.text = learnMoreLink.link_description
+                            widgetLearnMoreLink = learnMoreLink.link
+                        }else{
+                            fb_layout.visibility = View.GONE
+                        }
+                        xheader.text = item.description_title
+                        abcText.text = item.description
+//                        if(item.review != null) {
+//                            updateReview(item.review)
+//                        }else{
+                        review_layout.visibility = View.GONE
+//                        }
+                        break
+                    }
+                }
+            }
+        })
+
+        viewModel.cartResult().observe(this, Observer {
+            cart_list = it
+            itemInCartStatus = false
+            if (cart_list != null && cart_list!!.size > 0) {
+                badge121.visibility = View.VISIBLE
+                for (item in cart_list!!) {
+                    if (item.boost_widget_key == singleItemId) {
+                        add_item_to_cart.background = ContextCompat.getDrawable(
+                                requireContext(),
+                                R.drawable.added_to_cart_grey
+                        )
+                        add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
+                        add_item_to_cart.setText(getString(R.string.added_to_cart))
+                        havent_bought_the_feature.visibility = View.INVISIBLE
+                        itemInCartStatus = true
+                        break
+                    }
+                }
+                badgeNumber = cart_list!!.size
+                badge121.setText(badgeNumber.toString())
+                Constants.CART_VALUE = badgeNumber
+                if (!itemInCartStatus) {
+                    loadCostToButtons()
+                }
+            } else {
+                badgeNumber = 0
+                badge121.visibility = View.GONE
+                itemInCartStatus = false
+                loadCostToButtons()
+            }
+        })
+
+        viewModel.addonsError().observe(this, Observer {
+            longToast(requireContext(), "onFailure: " + it)
+        })
+
+        viewModel.addonsLoader().observe(this, Observer {
+            if (it) {
+                val status = "Loading. Please wait..."
+                progressDialog.setMessage(status)
+                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
+            }
+        })
+    }
+
+    fun updateReview(list: List<Review>) {
         reviewAdaptor.addupdates(list)
     }
 

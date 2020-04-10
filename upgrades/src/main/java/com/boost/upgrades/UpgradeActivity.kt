@@ -17,6 +17,7 @@ import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.Utils
 import com.razorpay.Razorpay
@@ -69,9 +70,7 @@ class UpgradeActivity : AppCompatActivity() {
     }
 
     private fun initRazorPay() {
-//        razorpay = Razorpay(this, "rzp_test_IhjurgOAcEKqJU")
-//        razorpay = Razorpay(this, "rzp_test_OlLpIGwhA7bATX")  //provided by tanmay
-        razorpay = Razorpay(this, "rzp_live_o8qdD1DZ3PHBn0")  //provided by tanmay
+        razorpay = Razorpay(this, RAZORPAY_KEY)
     }
 
     override fun onBackPressed() {

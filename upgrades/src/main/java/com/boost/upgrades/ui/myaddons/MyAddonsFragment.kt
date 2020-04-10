@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.myaddons
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -188,6 +189,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     private fun initMVVM() {
         viewModel.upgradeResult().observe(this, Observer {
             totalFreeItemList = it

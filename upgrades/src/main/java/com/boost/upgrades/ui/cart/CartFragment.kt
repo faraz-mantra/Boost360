@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.cart
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Typeface
 import androidx.lifecycle.ViewModelProviders
@@ -218,6 +219,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.getCartItems()
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
         viewModel.cartResult().observe(this, Observer {
             if (it != null && it.size > 0) {

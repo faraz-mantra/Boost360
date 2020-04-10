@@ -22,14 +22,10 @@ import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.razorpay.PaymentData
 import com.razorpay.PaymentResultListener
-import com.razorpay.PaymentResultWithDataListener
 import com.razorpay.Razorpay
-import kotlinx.android.synthetic.main.payment_fragment.*
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
-import java.io.InputStream
 
 class RazorPayWebView : DialogFragment() {
 
@@ -93,7 +89,7 @@ class RazorPayWebView : DialogFragment() {
                     val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
                     val errorBody: PaymentErrorModule = gson.fromJson(p1, listPersonType)
                     Toast.makeText(requireContext(),errorBody.error.description, Toast.LENGTH_LONG).show()
-                    redirectTransactionFailure()
+                    redirectTransactionFailure(data.toString())
                     dialog!!.dismiss()
                 }
 
@@ -116,7 +112,10 @@ class RazorPayWebView : DialogFragment() {
         )
     }
 
-    fun redirectTransactionFailure(){
+    fun redirectTransactionFailure(data: String){
+        val args = Bundle()
+        args.putString("data", data)
+        failedTransactionPopUpFragment.arguments = args
         failedTransactionPopUpFragment.show((activity as UpgradeActivity).supportFragmentManager,
             Constants.FAILED_TRANSACTION_FRAGMENT
         )

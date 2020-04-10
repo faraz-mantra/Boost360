@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.payment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -102,6 +103,7 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
 
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
+        loadData()
         initMvvm()
 
         initializeCardRecycler()
@@ -164,8 +166,13 @@ class PaymentFragment : BaseFragment(), PaymentListener  {
 //        }
     }
 
-    fun initMvvm(){
+    fun loadData(){
         viewModel.loadpaymentMethods(razorpay)
+        viewModel.getRazorPayToken(cartCheckoutData.getString("customerId"))
+    }
+
+    @SuppressLint("FragmentLiveDataObserve")
+    fun initMvvm(){
         viewModel.cardData().observe(this, Observer {
                 Log.i("cardObserver >>>>>", it.toString())
             paymentData = it

@@ -4,6 +4,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.GetAllFeaturesR
 import com.boost.upgrades.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.upgrades.data.api_model.PurchaseOrder.request.CreatePurchaseOrderRequest
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.api_model.RazorpayToken.RazorpayTokenResponse
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
@@ -36,4 +37,8 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @GET("discover/v9/floatingPoint/FloatingPointWebWidgets/{floatingPointId}")
     fun GetFloatingPointWebWidgets(@Path("floatingPointId") floatingPointId: String,@Query("clientId") clientId: String ): Observable<GetFloatingPointWebWidgetsResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET("https://api.razorpay.com/v1/customers/{customer_id}/tokens")
+    fun getRazorPayTokens(@Header("Authorization")authHeader: String, @Path("customer_id") customerId: String): Observable<RazorpayTokenResponse>
 }

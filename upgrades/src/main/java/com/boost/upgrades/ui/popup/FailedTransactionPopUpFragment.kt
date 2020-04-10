@@ -7,11 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 
 import com.boost.upgrades.R
+import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.ui.razorpay.RazorPayWebView
+import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import kotlinx.android.synthetic.main.failed_transaction_fragment.*
 
 class FailedTransactionPopUpFragment : DialogFragment() {
 
     lateinit var root: View
+
+    lateinit var razorPayWebView: RazorPayWebView
+
+    var data: String? = null
 
     override fun onStart() {
         super.onStart()
@@ -22,12 +29,13 @@ class FailedTransactionPopUpFragment : DialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.failed_transaction_fragment, container, false)
-
+        razorPayWebView = RazorPayWebView.newInstance()
+        data = arguments?.getString("data")
         return root
 
     }
@@ -37,6 +45,21 @@ class FailedTransactionPopUpFragment : DialogFragment() {
 
         failed_outer_layout.setOnClickListener {
             dialog!!.dismiss()
+        }
+
+        transaction_failed_layout.setOnClickListener {}
+
+        check_activation_status.setOnClickListener {
+            dialog!!.dismiss()
+        }
+
+        transaction_failed_retry.setOnClickListener {
+            val args = Bundle()
+            args.putString("data", data)
+            razorPayWebView.arguments = args
+
+            //RazorPay web
+            razorPayWebView.show((activity as UpgradeActivity).supportFragmentManager, RAZORPAY_WEBVIEW_POPUP_FRAGMENT)
         }
     }
 

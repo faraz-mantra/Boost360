@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.features
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -66,18 +67,32 @@ class ViewAllFeaturesFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         loadData()
+        initMvvM()
         initializeRecycler()
 
         shimmer_view_container2.duration=600
         shimmer_view_container2.startShimmerAnimation()
 
-        viewModel.addonsResult().observe(viewLifecycleOwner, Observer {
+
+
+        back_button2.setOnClickListener{
+            (activity as UpgradeActivity).popFragmentFromBackStack()
+        }
+    }
+
+    fun loadData(){
+        viewModel.loadAddonsFromDB()
+    }
+
+    @SuppressLint("FragmentLiveDataObserve")
+    fun initMvvM(){
+        viewModel.addonsResult().observe(this, Observer {
             if(it != null){
                 initialiseRecyclerView(it)
             }
         })
 
-        viewModel.addonsLoader().observe(viewLifecycleOwner, Observer {
+        viewModel.addonsLoader().observe(this, Observer {
             if(it){
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
@@ -92,7 +107,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
             }
         })
 
-        viewModel.addonsError().observe(viewLifecycleOwner, Observer {
+        viewModel.addonsError().observe(this, Observer {
             Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
             if (shimmer_view_container2.isAnimationStarted) {
                 shimmer_view_container2.stopShimmerAnimation()
@@ -100,15 +115,6 @@ class ViewAllFeaturesFragment : BaseFragment() {
             }
             Utils.longToast(requireContext(), "onFailure: " + it)
         })
-
-
-        back_button2.setOnClickListener{
-            (activity as UpgradeActivity).popFragmentFromBackStack()
-        }
-    }
-
-    fun loadData(){
-        viewModel.loadAddonsFromDB()
     }
 
     fun initialiseRecyclerView(upgradeList: List<FeaturesModel>){
