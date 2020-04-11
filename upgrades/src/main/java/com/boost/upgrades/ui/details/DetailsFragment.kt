@@ -39,6 +39,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.details_fragment.*
 import retrofit2.Retrofit
 
@@ -186,7 +187,7 @@ class DetailsFragment : BaseFragment() {
                         WEB_VIEW_FRAGMENT
                 )
             } else {
-                Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
+                Toasty.warning(requireContext(), "Failed to load the article.", Toast.LENGTH_SHORT).show()
             }
         }
 

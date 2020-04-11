@@ -44,6 +44,7 @@ import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
+import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import es.dmoral.toasty.Toasty
@@ -110,6 +111,8 @@ class HomeFragment : BaseFragment(), HomeListener {
         spannableString()
         loadData()
         initMvvm()
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
 
         shimmer_view_container.duration = 600
         shimmer_view_container.startShimmerAnimation()

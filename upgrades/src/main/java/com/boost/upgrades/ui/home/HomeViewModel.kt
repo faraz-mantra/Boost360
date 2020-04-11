@@ -56,7 +56,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun loadUpdates() {
         updatesLoader.postValue(true)
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
 
         if (Utils.isConnectedToInternet(getApplication())) {
 //            val data: List<GetAllWidgets>? = readJSONFromAsset(getApplication())
@@ -121,7 +120,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                 Gson().toJson(item.learn_more_link)
 
                                                         ))
-                                                        WebEngageController.trackEvent("ADDONS_MARKETPLACE DataLoad Success", "ADDONS_MARKETPLACE", "")
                                                     }
                                                     Completable.fromAction {
                                                         AppDatabase.getInstance(getApplication())!!

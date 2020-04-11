@@ -16,6 +16,7 @@ import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
+import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -78,7 +79,7 @@ class CartViewModel(application: Application) : BaseViewModel(application){
     fun InitiatePurchaseOrder(createPurchaseOrderRequest: CreatePurchaseOrderRequest) {
         if (Utils.isConnectedToInternet(getApplication())) {
             updatesLoader.postValue(true)
-            APIRequestStatus = "InitiatePurchaseOrder"
+            APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
                     ApiService.CreatePurchaseOrder(createPurchaseOrderRequest)
                             .subscribeOn(Schedulers.io())
@@ -87,11 +88,10 @@ class CartViewModel(application: Application) : BaseViewModel(application){
                                     {
                                         Log.i("InitiatePurchaseOrder>>", it.toString())
                                         _initiatePurchaseOrder.postValue(it)
-//                        customerId = it.CustomerId
                                         updatesLoader.postValue(false)
                                     },
                                     {
-                                        Toast.makeText(getApplication(), it.message, Toast.LENGTH_SHORT).show()
+                                        Toasty.error(getApplication(), "Error occurred while registering your order - " + it.message, Toast.LENGTH_LONG).show()
                                         updatesError.postValue(it.message)
                                         updatesLoader.postValue(false)
                                     }
@@ -103,7 +103,7 @@ class CartViewModel(application: Application) : BaseViewModel(application){
     fun requestCustomerId(customerIDRequest: CustomerIDRequest) {
         if (Utils.isConnectedToInternet(getApplication())) {
             updatesLoader.postValue(true)
-            APIRequestStatus = "Get Customer Info"
+            APIRequestStatus = "Retrieving your payment profile..."
             compositeDisposable.add(
                     ApiService.getCustomerId(customerIDRequest.InternalSourceId, customerIDRequest.ClientId)
                             .subscribeOn(Schedulers.io())
@@ -120,6 +120,7 @@ class CartViewModel(application: Application) : BaseViewModel(application){
                                                 temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
                                         )
                                         if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
+                                            APIRequestStatus = "Creating a new payment profile..."
                                             compositeDisposable.add(
                                                     ApiService.createCustomerId(customerIDRequest)
                                                             .subscribeOn(Schedulers.io())
@@ -131,15 +132,13 @@ class CartViewModel(application: Application) : BaseViewModel(application){
                                                                         updatesLoader.postValue(false)
                                                                     },
                                                                     {
-                                                                        Toast.makeText(getApplication(), it.message, Toast.LENGTH_SHORT).show()
+                                                                        Toasty.error(getApplication(), "Failed to create new payment profile for your account - " + it.message, Toast.LENGTH_LONG).show()
                                                                         updatesError.postValue(it.message)
                                                                         updatesLoader.postValue(false)
                                                                     }
                                                             )
                                             )
                                         }
-//                        updatesError.postValue(it.message)
-//                        updatesLoader.postValue(false)
                                     }
                             )
             )

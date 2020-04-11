@@ -834,7 +834,6 @@
     <string name="tell_world">Tell the World!</string>
     <string name="empty_image_gallery">Hit on the + button\nto add pictures of your\nproducts and services. </string>
     <string name="empty_product_gallery">To make sure your best selling\nproducts gets discovered,\nPress + and list\nthem here.</string>
-    <string name="Message_empty">There are no messages on your website\nClick on the + button below\nto update your website.</string>
     <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
     <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
     <string name="presignup_login_text">Already have a NowFloats site?</string>
@@ -845,7 +844,8 @@
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>
     <string name="contact_us_number">18601231233</string>
-    <string name="message_soon">Start updating, now!</string>
+    <string name="message_soon">Start talking about your business, now!</string>
+    <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
     <string name="store">Pricing Plans</string>
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
     <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>

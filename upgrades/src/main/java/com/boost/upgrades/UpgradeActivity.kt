@@ -21,12 +21,14 @@ import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.Utils
 import com.razorpay.Razorpay
+import es.dmoral.toasty.Toasty
 
 
 class UpgradeActivity : AppCompatActivity() {
 
     lateinit var razorpay: Razorpay
 
+    var fpName: String? =null
     var fpid: String? = null
     var loginid: String? = null
     var email: String? = null
@@ -38,6 +40,7 @@ class UpgradeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upgrade)
 
+        fpName = intent.getStringExtra("fpName")
         fpid = intent.getStringExtra("fpid")
         loginid = intent.getStringExtra("loginid")
         email = intent.getStringExtra("email")
@@ -63,8 +66,8 @@ class UpgradeActivity : AppCompatActivity() {
                     finish()
                 }
             }
-        }else{
-            Toast.makeText(this,"Invalid User ID!!", Toast.LENGTH_LONG).show()
+        } else {
+            Toasty.error(this,"Invalid Business Profile ID. Please restart the marketplace.", Toast.LENGTH_LONG).show()
             finish()
         }
     }

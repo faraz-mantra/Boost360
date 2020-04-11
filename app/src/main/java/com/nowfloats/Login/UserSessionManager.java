@@ -744,11 +744,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     public String getFPLogo() {
-        return pref.getString(KEY_FP_LOGO, null);
+        return pref.getString(Key_Preferences.GET_FP_DETAILS_LogoUrl, null);
     }
 
     public void storeFPLogo(String logo) {
-        editor.putString(KEY_FP_LOGO, logo);
+        editor.putString(Key_Preferences.GET_FP_DETAILS_LogoUrl, logo);
         editor.apply();
     }
 

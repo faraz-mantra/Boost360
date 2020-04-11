@@ -34,8 +34,9 @@ import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
+import com.boost.upgrades.utils.WebEngageController
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
-import org.json.JSONObject
 
 class CartFragment : BaseFragment(), CartFragmentListener {
 
@@ -86,6 +87,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cartPackageAdaptor = CartPackageAdaptor(ArrayList())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
 
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Initialised", "ADDONS_MARKETPLACE Cart", "")
+
         return root
     }
 
@@ -100,11 +103,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         initializeAddonsRecycler()
 
         cart_continue_submit.setOnClickListener {
-            customerId = viewModel.getCustomerId()
-            if (customerId != null && total > 1 && ::cartList.isInitialized) {
-                val widget = ArrayList<Widget>()
+            //customerId = viewModel.getCustomerId()
+//            customerId != null &&
+            if (total > 1 && ::cartList.isInitialized) {
+                val widgetsToBeBought = ArrayList<Widget>()
                 for (item in cartList) {
-                    widget.add(Widget(
+                    widgetsToBeBought.add(Widget(
                             ConsumptionConstraint(
                                     "DAYS",
                                     30
@@ -139,12 +143,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 null,
                                                 18),
                                         grandTotal),
-                                widget,
+                                widgetsToBeBought,
                                 null
                         )
                 )
             } else {
-                Toast.makeText(requireContext(), "CustomerID is NULL", Toast.LENGTH_SHORT).show()
+                Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -187,35 +191,23 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     fun loadData() {
-        viewModel.requestCustomerId(
-                CustomerIDRequest(
-                        (activity as UpgradeActivity).clientid,
-                        "ANDROID",
-                        (activity as UpgradeActivity).email!!,
-                        (activity as UpgradeActivity).loginid!!,
-                        "Tanmay",
-                        (activity as UpgradeActivity).mobileNo!!,
-                        "RAZORPAY",
-                        com.boost.upgrades.data.api_model.customerId.create.TaxDetails(
-                                null,
-                                0,
-                                null,
-                                0
-                        )
-                )
-
+//        viewModel.requestCustomerId(
 //                CustomerIDRequest(
-////                        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
 //                        (activity as UpgradeActivity).clientid,
-//                        0,
-//                        "tanmay.majumdar@nowfloats.com",
-////                        "5e6b572c959b7e77e0c5883e",
+//                        "ANDROID",
+//                        (activity as UpgradeActivity).email!!,
 //                        (activity as UpgradeActivity).loginid!!,
-//                        "Tanmay",
-//                        "9738084090",
-//                        0
+//                        (activity as UpgradeActivity).fpName!!,
+//                        (activity as UpgradeActivity).mobileNo!!,
+//                        "RAZORPAY",
+//                        com.boost.upgrades.data.api_model.customerId.create.TaxDetails(
+//                                null,
+//                                0,
+//                                null,
+//                                0
+//                        )
 //                )
-        )
+//        )
         viewModel.getCartItems()
     }
 
@@ -224,12 +216,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.cartResult().observe(this, Observer {
             if (it != null && it.size > 0) {
                 cartList = it
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "Cart Size:"+it.size, "")
                 empty_cart.visibility = View.GONE
                 cart_main_layout.visibility = View.VISIBLE
                 cartAddonsAdaptor.addupdates(it)
                 cartAddonsAdaptor.notifyDataSetChanged()
                 totalCalculation(it)
             } else {
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
                 empty_cart.visibility = View.VISIBLE
                 cart_main_layout.visibility = View.GONE
             }
@@ -242,9 +236,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 args.putString("customerId", customerId)
                 args.putDouble("amount", it.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
                 args.putString("order_id", it.Result.OrderId)
-                args.putString("email", "tanmay.majumdar@nowfloats.com")
+                args.putString("email", (activity as UpgradeActivity).email)
                 args.putString("currency", "INR");
-                args.putString("contact", "9738084090")
+                args.putString("contact", (activity as UpgradeActivity).mobileNo)
                 paymentFragment.arguments = args
                 (activity as UpgradeActivity).addFragment(
                         paymentFragment,

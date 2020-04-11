@@ -12,6 +12,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.razorpay.Razorpay
 import com.razorpay.ValidateVpaCallback
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_upi_popup.*
 import org.json.JSONObject
 
@@ -69,17 +70,17 @@ class UPIPopUpFragement : DialogFragment() {
                 validatingStatus = false
                 upi_popup_submit.setText("VERIFY AND PAY")
                 invalid_UPI.visibility = View.GONE
-                Toast.makeText(requireContext(),"Cannot Validate!",Toast.LENGTH_LONG).show()
+                Toasty.error(requireContext(),"Failed to validate your UPI Id. Please try again.",Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(p0: Boolean) {
+            override fun onResponse(status: Boolean) {
                 validatingStatus = false
                 upi_popup_submit.setText("VERIFY AND PAY")
-                if(p0){
+                if(status) {
                     upiPaymentRazorpay()
                     invalid_UPI.visibility = View.GONE
-                }else{
-                    Toast.makeText(requireContext(),"Invalid UPI!",Toast.LENGTH_LONG).show()
+                } else {
+                    Toasty.warning(requireContext(),"Invalid UPI Id. Please try again.",Toast.LENGTH_LONG).show()
                     invalid_UPI.visibility = View.VISIBLE
                 }
             }

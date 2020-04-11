@@ -26,6 +26,7 @@ import com.boost.upgrades.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
+import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -112,6 +113,8 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         initializeUPIRecycler()
         initializeWalletRecycler()
 
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE PaymentScreen Initialised", "ADDONS_MARKETPLACE PaymentScreen", "")
+
         payment_amount_value.setText("₹" + totalAmount)
         order_total_value.setText("₹" + totalAmount)
         payment_total_value.setText("₹" + totalAmount)
@@ -128,6 +131,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         }
 
         add_new_card.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE ADD_NEW_CARD Click", "ADDONS_MARKETPLACE ADD_NEW_CARD", "")
             val args = Bundle()
             args.putString("customerId", cartCheckoutData.getString("customerId"))
             addCardPopUpFragement.arguments = args
@@ -135,6 +139,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         }
 
         show_more_bank.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE SHOW_MORE_BANK Click", "ADDONS_MARKETPLACE SHOW_MORE_BANK", "")
             netBankingPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     NETBANKING_POPUP_FRAGMENT
@@ -142,6 +147,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         }
 
         add_upi_layout.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE UPI Click", "ADDONS_MARKETPLACE UPI", "")
             upiPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     UPI_POPUP_FRAGMENT
@@ -283,11 +289,14 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         item.put("method", "netbanking");
         item.put("bank", bankCode)
         paymentData = item
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE NET_BANKING Selected", bankCode, "")
         payThroughRazorPay()
     }
 
     override fun walletSelected(data: String) {
         Log.i("walletSelected", data)
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE WALLET Selected", data, "")
         val item = JSONObject()
         item.put("method", "wallet");
         item.put("wallet", data);
