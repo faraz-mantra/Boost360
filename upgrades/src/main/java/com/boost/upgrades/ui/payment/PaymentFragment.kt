@@ -175,7 +175,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
 
     fun loadData() {
         viewModel.loadpaymentMethods(razorpay)
-        viewModel.getRazorPayToken(cartCheckoutData.getString("customerId"))
+//        viewModel.getRazorPayToken(cartCheckoutData.getString("customerId"))
     }
 
     @SuppressLint("FragmentLiveDataObserve")

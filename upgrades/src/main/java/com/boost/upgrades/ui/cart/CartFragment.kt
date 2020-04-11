@@ -44,7 +44,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     lateinit var localStorage: LocalStorage
 
-    var customerId: String? = null
+    var customerId: String = ""
 
     lateinit var cartList: List<CartModel>
 

@@ -69,33 +69,35 @@ class RazorPayWebView : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
+        if(savedInstanceState == null ) {
 
-        try {
-            // Make webview visible before submitting payment details
-            razorpay.setWebView(razorpay_webview);
-            razorpay.submit(data, object : PaymentResultListener {
+            try {
+                // Make webview visible before submitting payment details
+                razorpay.setWebView(razorpay_webview);
+                razorpay.submit(data, object : PaymentResultListener {
 
-                override fun onPaymentSuccess(razorpayPaymentId: String) {
-                    // Razorpay payment ID is passed here after a successful payment
-                    Log.i("onPaymentSuccess", razorpayPaymentId)
-                    redirectOrderConfirmation()
-                    dialog!!.dismiss()
-                }
+                    override fun onPaymentSuccess(razorpayPaymentId: String) {
+                        // Razorpay payment ID is passed here after a successful payment
+                        Log.i("onPaymentSuccess", razorpayPaymentId)
+                        redirectOrderConfirmation()
+                        dialog!!.dismiss()
+                    }
 
-                override fun onPaymentError(p0: Int, p1: String?) {
-                    // Error code and description is passed here
-                    Log.e("onPaymentError", "p1 >>>"+ p1)
-                    val gson = Gson()
-                    val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
-                    val errorBody: PaymentErrorModule = gson.fromJson(p1, listPersonType)
-                    Toast.makeText(requireContext(),errorBody.error.description, Toast.LENGTH_LONG).show()
-                    redirectTransactionFailure(data.toString())
-                    dialog!!.dismiss()
-                }
+                    override fun onPaymentError(p0: Int, p1: String?) {
+                        // Error code and description is passed here
+                        Log.e("onPaymentError", "p1 >>>" + p1)
+//                    val gson = Gson()
+//                    val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
+//                    val errorBody: PaymentErrorModule = gson.fromJson(p1, listPersonType)
+                        Toast.makeText(requireContext(), p1, Toast.LENGTH_LONG).show()
+                        redirectTransactionFailure(data.toString())
+                        dialog!!.dismiss()
+                    }
 
-            })
-        } catch (e: Exception) {
-            e.printStackTrace()
+                })
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
