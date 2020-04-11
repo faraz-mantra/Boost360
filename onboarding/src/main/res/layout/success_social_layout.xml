@@ -60,6 +60,7 @@
             android:layout_marginBottom="@dimen/size_4"
             android:paddingStart="@dimen/size_32"
             android:paddingEnd="@dimen/size_32"
+            app:textType="HEADING_4"
             tools:text="Sood hospital and Clinic"
             app:fontFamily="@font/regular" />
 
@@ -75,13 +76,13 @@
             style="@style/Onboarding.Registration.FormButtonStyle"
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/size_10"
-            android:layout_marginBottom="@dimen/size_2"
-            android:background="@drawable/line_bac"
-            android:padding="@dimen/size_2"
+            android:includeFontPadding="false"
+            android:padding="@dimen/size_5"
             android:text="@string/disconnect_this_account"
             android:textColor="@color/warm_grey_two"
             app:fontFamily="@font/regular"
             app:textType="SUBTITLE_1" />
+        <!--        android:background="@drawable/line_bac"-->
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
 

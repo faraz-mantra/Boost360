@@ -101,7 +101,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
                     }
                     ChannelConfirmDialog().apply {
                         setCount(channels.count())
-                        isCancelable = false
+                        isCancelable = true
                         setOnConfirmClick(this@ChannelPickerFragment::onChannelConfirmed)
                         show(this@ChannelPickerFragment.parentFragmentManager, "")
                     }
@@ -122,7 +122,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
             val list = ObservableList.build<ChannelModel> { channels.forEach { add(it) } }
             BottomDialog.builder(baseActivity) {
                 expandable = false
-                peekHeightProportion = .9f
+                peekHeightProportion = .8f
                 mCancelable = false
                 contentHeader("${resources.getString(R.string.recommended_on)} ${list.size} ${resources.getString(R.string.channel)}", true)
                 channelMutableList(list) { _, position, item, isType ->
@@ -180,7 +180,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         feature?.let {
             BottomDialog.builder(baseActivity) {
                 expandable = false
-                peekHeightProportion = .9f
+                peekHeightProportion = .8f
                 contentHeader(it, true)
                 featureMutableList(it)
                 oneButton(resources.getString(R.string.okay), fadDuration = 1500L, drwableId = R.drawable.bg_button_orange, autoDismiss = true)

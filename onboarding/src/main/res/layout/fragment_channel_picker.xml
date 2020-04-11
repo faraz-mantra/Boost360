@@ -34,9 +34,9 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/size_20"
-                android:paddingTop="@dimen/size_24"
-                android:paddingEnd="@dimen/size_24"
-                android:paddingBottom="@dimen/size_24">
+                android:paddingTop="@dimen/size_22"
+                android:paddingEnd="@dimen/size_22"
+                android:paddingBottom="@dimen/size_22">
 
               <androidx.appcompat.widget.LinearLayoutCompat
                   android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                   android:layout_marginTop="@dimen/size_12"
                   android:layout_marginEnd="@dimen/size_32"
                   android:overScrollMode="never"
-                  android:translationX="-2dp"
+                  android:translationX="-4dp"
                   app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                   tools:itemCount="4"
                   tools:listitem="@layout/item_channel"
@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
-                android:layout_marginBottom="-10dp"
+                android:layout_marginBottom="-8dp"
                 android:includeFontPadding="false"
                 android:text="@string/free_forever"
                 android:textColor="@color/pinkish_grey_two"
@@ -172,6 +172,7 @@
                 android:layout_width="@dimen/size_160"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
+                android:layout_marginTop="@dimen/size_4"
                 app:srcCompat="@drawable/ic_combined_shape_bottom" />
           </LinearLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>

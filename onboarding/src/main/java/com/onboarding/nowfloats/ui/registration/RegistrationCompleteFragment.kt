@@ -150,6 +150,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
                 try {
                     val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
                     baseActivity.startActivity(intent)
+                    baseActivity.finish()
                     NavigatorManager.clearStackAndFormData()
                 } catch (e: ClassNotFoundException) {
                     e.printStackTrace()

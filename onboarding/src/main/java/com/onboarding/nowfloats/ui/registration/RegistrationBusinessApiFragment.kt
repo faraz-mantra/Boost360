@@ -201,13 +201,11 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
-                gotoRegistrationComplete()
-            }
+            binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) gotoRegistrationComplete()
             binding?.supportCustomer -> {
                 try {
                     val intent = Intent(Intent.ACTION_CALL)
-                    intent.data = Uri.parse("tel:$18601231233")
+                    intent.data = Uri.parse("tel:18601231233")
                     if (ContextCompat.checkSelfPermission(baseActivity, CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                         baseActivity.startActivity(intent)
                     } else requestPermissions(arrayOf(CALL_PHONE), 1)
