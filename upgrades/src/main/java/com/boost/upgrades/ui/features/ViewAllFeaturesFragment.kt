@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.utils.Utils
 import com.google.android.material.snackbar.Snackbar
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.view_all_features_fragment.*
 import retrofit2.Retrofit
 
@@ -113,7 +115,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
                 shimmer_view_container2.stopShimmerAnimation()
                 shimmer_view_container2.visibility = View.GONE
             }
-            Utils.longToast(requireContext(), "onFailure: " + it)
+            Toasty.error(requireContext(), "onFailure: " + it, Toast.LENGTH_LONG).show();
         })
     }
 

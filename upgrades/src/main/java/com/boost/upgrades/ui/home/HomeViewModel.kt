@@ -117,8 +117,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                 primaryImage,
                                                                 if(item.feature_banner==null) null else item.feature_banner.url,
                                                                 if(secondaryImage.size==0) null else secondaryImage.toString(),
-                                                                Gson().toJson(item.learn_more_link)
-
+                                                                Gson().toJson(item.learn_more_link),
+                                                                item.total_installs
                                                         ))
                                                     }
                                                     Completable.fromAction {

@@ -24,6 +24,7 @@ data class Feature(
     val usecase_importance: String,
     val feature_importance: Int,
     val websiteid: String,
-    val feature_banner: FeatureBanner
+    val feature_banner: FeatureBanner,
+    val total_installs: String
 
 )

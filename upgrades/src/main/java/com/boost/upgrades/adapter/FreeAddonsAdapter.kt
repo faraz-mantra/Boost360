@@ -1,6 +1,7 @@
 package com.boost.upgrades.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.MyAddonsListener
+import com.boost.upgrades.ui.details.DetailsFragment
+import com.boost.upgrades.utils.Constants
 import com.bumptech.glide.Glide
 
 
@@ -45,16 +48,13 @@ class FreeAddonsAdapter(
         val cryptocurrencyItem = list[position]
         holder.upgradeListItem(cryptocurrencyItem)
 
-//        holder.itemView.setOnClickListener{
-//            val details = DetailsFragment.newInstance()
-//            val args = Bundle()
-//            args.putInt("pos", position)
-//            details.arguments = args
-//            activity.addFragment(details , Constants.DETAILS_FRAGMENT)
-////            val intent = Intent(this.context, Details::class.java)
-////            intent.putExtra("position",position)
-////            startActivity(this.context, intent, null)
-//        }
+        holder.itemView.setOnClickListener{
+            val details = DetailsFragment.newInstance()
+            val args = Bundle()
+            args.putString("itemId", list.get(position).boost_widget_key)
+            details.arguments = args
+            activity.addFragment(details , Constants.DETAILS_FRAGMENT)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -79,7 +79,6 @@ class FreeAddonsAdapter(
         fun upgradeListItem(updateModel: FeaturesModel) {
             singleTitle.text = updateModel.name
             Glide.with(context).load(updateModel.primary_image).into(image)
-
         }
     }
 }

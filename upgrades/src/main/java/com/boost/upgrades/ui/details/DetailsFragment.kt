@@ -55,7 +55,7 @@ class DetailsFragment : BaseFragment() {
     lateinit var localStorage: LocalStorage
     var singleItemId: String? = null
     var badgeNumber = 0
-    var addons_list: List<FeaturesModel>? = null
+    var addonDetails: FeaturesModel? = null
     var cart_list: List<CartModel>? = null
     var itemInCartStatus = false
     var widgetLearnMoreLink: String? = null
@@ -139,13 +139,8 @@ class DetailsFragment : BaseFragment() {
 
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
-                if (addons_list != null) {
-                    for (item in addons_list!!) {
-                        if (item.boost_widget_key == singleItemId) {
-                            viewModel.addItemToCart(item)
-                            break
-                        }
-                    }
+                if (addonDetails != null) {
+                    viewModel.addItemToCart(addonDetails!!)
                     badgeNumber = badgeNumber + 1
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
@@ -200,20 +195,24 @@ class DetailsFragment : BaseFragment() {
     }
 
     fun loadCostToButtons() {
-        for (item in addons_list!!) {
-            if (item.boost_widget_key == singleItemId) {
-                add_item_to_cart.background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.orange_button_click_effect
-                )
-                add_item_to_cart.setTextColor(Color.WHITE)
-                val discount = 100 - item.discount_percent
-                val paymentPrice = (discount * item.price) / 100
-                money.text = "₹" + paymentPrice + "/month"
-                orig_cost.text = "Original cost ₹" + item.price + "/month"
-                add_item_to_cart.text = "Add for ₹" + paymentPrice + "/Month"
-                havent_bought_the_feature.visibility = View.VISIBLE
-            }
+        if(addonDetails!!.is_premium) {
+            add_item_to_cart.visibility = View.VISIBLE
+            add_item_to_cart.background = ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.orange_button_click_effect
+            )
+            add_item_to_cart.setTextColor(Color.WHITE)
+            val discount = 100 - addonDetails!!.discount_percent
+            val paymentPrice = (discount * addonDetails!!.price) / 100
+            money.text = "₹" + paymentPrice + "/month"
+            orig_cost.visibility = View.VISIBLE
+            orig_cost.text = "Original cost ₹" + addonDetails!!.price + "/month"
+            add_item_to_cart.text = "Add for ₹" + paymentPrice + "/Month"
+            havent_bought_the_feature.visibility = View.VISIBLE
+        } else {
+            add_item_to_cart.visibility = View.GONE
+            orig_cost.visibility = View.GONE
+            money.text = "Free Forever"
         }
     }
 
@@ -230,66 +229,57 @@ class DetailsFragment : BaseFragment() {
     }
 
     fun loadData() {
-        viewModel.loadAddonsFromDB()
+        viewModel.loadAddonsFromDB(singleItemId!!)
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
         viewModel.addonsResult().observe(this, Observer {
             viewModel.getCartItems()
-            addons_list = it
-            if (addons_list != null) {
-                for (item in addons_list!!) {
-                    if (item.boost_widget_key == singleItemId) {
-                        val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
-                        val learnMoreLink: LearnMoreLink? = if(item.learn_more_link == null) null else Gson().fromJson(item.learn_more_link, learnMoreLinkType)
-                        Glide.with(this).load(item.primary_image)
-                                .into(image1222)
+            addonDetails = it
+            if (addonDetails != null) {
+                val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
+                val learnMoreLink: LearnMoreLink? = if(addonDetails!!.learn_more_link == null) null else Gson().fromJson(addonDetails!!.learn_more_link, learnMoreLinkType)
+                Glide.with(this).load(addonDetails!!.primary_image)
+                        .into(image1222)
 
-                        Glide.with(this).load(item.primary_image)
-                                .into(title_image)
+                Glide.with(this).load(addonDetails!!.primary_image)
+                        .into(title_image)
 
-                        Glide.with(this).load(item.feature_banner)
-                                .into(details_image_bg)
+                Glide.with(this).load(addonDetails!!.feature_banner)
+                        .into(details_image_bg)
 
-                        if(item.target_business_usecase!=null) {
-                            title_top_1.visibility = View.VISIBLE
-                            title_top_1.text = item.target_business_usecase
-                        }else{
-                            title_top_1.visibility = View.INVISIBLE
-                        }
-                        title_top.text = item.name
-                        title_appbar.text = item.name
-                        if(item.discount_percent > 0) {
-                            details_discount.visibility = View.VISIBLE
-                            details_discount.text = item.discount_percent.toString() + "% OFF"
-                        }else{
-                            details_discount.visibility = View.GONE
-                        }
-//                        title_bottom2.text = featureDetails.noOfbusinessUsed.toString() + " businesses have added this"
-
-                        loadCostToButtons()
-//                        val discount = 100 - item.discount_percent
-//                        val paymentPrice = (discount * item.price) / 100
-//                        money.text = "₹" + paymentPrice + "/month"
-//                        orig_cost.text = "Original cost ₹" + item.price + "/month"
-//                        add_item_to_cart.text = "Add for ₹"+paymentPrice+"/Month"
-                        if(learnMoreLink!=null) {
-                            widgetLearnMore.text = learnMoreLink.link_description
-                            widgetLearnMoreLink = learnMoreLink.link
-                        }else{
-                            fb_layout.visibility = View.GONE
-                        }
-                        xheader.text = item.description_title
-                        abcText.text = item.description
-//                        if(item.review != null) {
-//                            updateReview(item.review)
-//                        }else{
-                        review_layout.visibility = View.GONE
-//                        }
-                        break
-                    }
+                if(addonDetails!!.target_business_usecase!=null) {
+                    title_top_1.visibility = View.VISIBLE
+                    title_top_1.text = addonDetails!!.target_business_usecase
+                }else{
+                    title_top_1.visibility = View.INVISIBLE
                 }
+                title_top.text = addonDetails!!.name
+                title_appbar.text = addonDetails!!.name
+                if(addonDetails!!.discount_percent > 0) {
+                    details_discount.visibility = View.VISIBLE
+                    details_discount.text = addonDetails!!.discount_percent.toString() + "% OFF"
+                }else{
+                    details_discount.visibility = View.GONE
+                }
+                title_bottom2.text = addonDetails!!.total_installs + " businesses have added this"
+
+                loadCostToButtons()
+
+                if(learnMoreLink!=null) {
+                    widgetLearnMore.text = learnMoreLink.link_description
+                    widgetLearnMoreLink = learnMoreLink.link
+                }else{
+                    fb_layout.visibility = View.GONE
+                }
+                xheader.text = addonDetails!!.description_title
+                abcText.text = addonDetails!!.description
+    //                        if(item.review != null) {
+    //                            updateReview(item.review)
+    //                        }else{
+                review_layout.visibility = View.GONE
+
             }
         })
 
