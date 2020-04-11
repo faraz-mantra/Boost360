@@ -12,7 +12,7 @@ interface FeaturesDao {
     fun getFeaturesItems(premiumType: Boolean): Single<List<FeaturesModel>>
 
     @Query("SELECT * FROM Features WHERE boost_widget_key=:item_id")
-    fun getFeaturesItemById(item_id: Int): Flowable<List<FeaturesModel?>?>?
+    fun getFeaturesItemById(item_id: String): Single<FeaturesModel>
 
 
     //true for premium type

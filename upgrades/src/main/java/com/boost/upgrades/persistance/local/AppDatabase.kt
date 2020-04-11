@@ -14,7 +14,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Constants
 
-@Database(entities = [FeaturesModel::class, WidgetModel::class, CartModel::class], version = 2)
+@Database(entities = [FeaturesModel::class, WidgetModel::class, CartModel::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

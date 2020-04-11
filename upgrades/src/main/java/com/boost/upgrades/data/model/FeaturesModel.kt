@@ -63,7 +63,10 @@ data class FeaturesModel (
     var secondary_images: String? = null,
 
     @ColumnInfo(name = "learn_more_link")
-    var learn_more_link: String? = null
+    var learn_more_link: String? = null,
+
+    @ColumnInfo(name = "total_installs")
+    var total_installs: String? = "--"
 
 
 )

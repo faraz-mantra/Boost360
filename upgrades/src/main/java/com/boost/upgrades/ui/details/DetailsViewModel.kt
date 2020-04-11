@@ -15,14 +15,14 @@ import io.reactivex.schedulers.Schedulers
 
 class DetailsViewModel(application: Application) : BaseViewModel(application) {
 
-    var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
 
-    fun addonsResult(): LiveData<List<FeaturesModel>> {
+    fun addonsResult(): LiveData<FeaturesModel> {
         return updatesResult
     }
 
@@ -38,12 +38,12 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
         return updatesLoader
     }
 
-    fun loadAddonsFromDB() {
+    fun loadAddonsFromDB(boostKey: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .featuresDao()
-                        .getFeaturesItems(true)
+                        .getFeaturesItemById(boostKey)!!
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess {
