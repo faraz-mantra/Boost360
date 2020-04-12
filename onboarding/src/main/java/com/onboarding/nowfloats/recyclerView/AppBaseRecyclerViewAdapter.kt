@@ -5,7 +5,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.framework.base.BaseActivity
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType.*
+import com.onboarding.nowfloats.databinding.*
+import com.onboarding.nowfloats.holders.CityRecyclerViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessChannelRecyclerViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessRecyclerViewHolder
 import com.onboarding.nowfloats.holders.category.CategoryRecyclerViewHolder
@@ -16,8 +19,6 @@ import com.onboarding.nowfloats.holders.channel.ChannelSelectorBottomSheetRecycl
 import com.onboarding.nowfloats.holders.common.SectionHeaderRecyclerViewHolder
 import com.onboarding.nowfloats.holders.features.ChannelFeatureRecyclerViewHolder
 import com.onboarding.nowfloats.holders.features.FeatureDetailsRecyclerViewHolder
-import com.onboarding.nowfloats.R
-import com.onboarding.nowfloats.databinding.*
 
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
@@ -53,6 +54,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
             SMALL_SELECTED_CHANNEL_ITEM -> ChannelSelectedSmallRecyclerViewHolder(binding as ItemSelectedChannelSmallBinding)
             API_PROCESS_BUSINESS_ITEM -> ApiProcessRecyclerViewHolder(binding as ItemApiCallingProcessBinding)
             API_PROCESS_CHANNEL_ITEM -> ApiProcessChannelRecyclerViewHolder(binding as ItemChildApiCallingBinding)
+            CITY_DETAILS_ITEM -> CityRecyclerViewHolder(binding as CityItemDataBinding)
         }
     }
 

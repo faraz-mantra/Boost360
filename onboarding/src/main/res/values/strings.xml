@@ -117,5 +117,6 @@
     <string name="camera">Camera</string>
     <string name="close">Close</string>
   <string name="choose_an_action">Choose an action</string>
+  <string name="search_city_name">Search city name</string>
 
 </resources>

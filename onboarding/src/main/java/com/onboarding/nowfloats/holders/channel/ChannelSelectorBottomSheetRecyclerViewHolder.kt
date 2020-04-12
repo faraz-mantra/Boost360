@@ -12,8 +12,7 @@ import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChannelBottomSheetBinding) :
-        AppBaseRecyclerViewHolder<ItemChannelBottomSheetBinding>(binding) {
+class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChannelBottomSheetBinding) : AppBaseRecyclerViewHolder<ItemChannelBottomSheetBinding>(binding) {
 
     private var model: ChannelModel? = null
 
@@ -67,7 +66,7 @@ class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChan
             getColor(R.color.aliceblue)?.let { binding.card.setCardBackgroundColor(it) }
             binding.card.cardElevation = 0F
             binding.check.setImageResource(takeIf { adapterPosition == 0 }?.let { R.drawable.ic_check_permanent }
-                    ?: R.drawable.ic_check_blue)
+                ?: R.drawable.ic_check_blue)
         } else {
             getColor(R.color.white)?.let { binding.card.setCardBackgroundColor(it) }
             binding.card.cardElevation = ConversionUtils.dp2px(1.0f).toFloat()

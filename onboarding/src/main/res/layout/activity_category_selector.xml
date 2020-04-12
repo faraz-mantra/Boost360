@@ -119,13 +119,16 @@
         android:id="@+id/image_riya_large"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/size_40"
+        android:layout_margin="@dimen/size_20"
+        android:paddingEnd="@dimen/size_10"
         android:alpha="0"
-        tools:alpha="1">
+        tools:alpha="1"
+        tools:ignore="RtlSymmetry">
 
       <com.framework.views.customViews.CustomImageView
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:layout_margin="@dimen/size_6"
           app:srcCompat="@drawable/ic_ria" />
 
     </LinearLayout>

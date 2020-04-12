@@ -19,7 +19,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.ref.WeakReference
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.schedule
 
 class CategorySelectorAnimator {
 
@@ -59,10 +61,15 @@ class CategorySelectorAnimator {
     }
 
     fun startAnimation() {
-        isAnimating = animateLargeLogo()
-        if (!isAnimating) {
-            onLargeLogoAnimationCompleted()
+        Timer().schedule(400) {
+            imageRiyaLarge?.get()?.post {
+                isAnimating = animateLargeLogo()
+                if (!isAnimating) {
+                    onLargeLogoAnimationCompleted()
+                }
+            }
         }
+
     }
 
     /**
@@ -111,7 +118,7 @@ class CategorySelectorAnimator {
 
     private fun largeLogoPositionAnimators(imageRiyaLargeParams: FrameLayout.LayoutParams): Pair<ValueAnimator, ValueAnimator> {
         val marginTopAnimator = ValueAnimator.ofInt(imageRiyaLargeParams.topMargin,
-                ConversionUtils.dp2px(74f))
+            ConversionUtils.dp2px(68f))
         marginTopAnimator.addUpdateListener {
             imageRiyaLargeParams.topMargin = it.animatedValue as Int
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
@@ -119,7 +126,7 @@ class CategorySelectorAnimator {
         }
 
         val marginStartAnimator = ValueAnimator.ofInt(imageRiyaLargeParams.marginStart,
-                ConversionUtils.dp2px(32f))
+            ConversionUtils.dp2px(28f))
         marginStartAnimator.addUpdateListener {
             imageRiyaLargeParams.marginStart = it.animatedValue as Int
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
@@ -129,8 +136,8 @@ class CategorySelectorAnimator {
     }
 
     private fun largeLogoSizeAnimators(imageRiyaParams: ConstraintLayout.LayoutParams, imageRiyaLargeParams: FrameLayout.LayoutParams): Pair<ValueAnimator, ValueAnimator> {
-        val heightAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredHeight?.minus(45))
-                ?: 0, (imageRiyaParams.height - 45))
+        val heightAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredHeight?.minus(0))
+            ?: 0, (imageRiyaParams.height - 0))
 
         heightAnimator.addUpdateListener {
             imageRiyaLargeParams.height = it.animatedValue as Int
@@ -138,8 +145,8 @@ class CategorySelectorAnimator {
             imageRiyaLarge?.get()?.refreshLayout()
         }
 
-        val widthAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredWidth?.minus(45))
-                ?: 0, (imageRiyaParams.width - 45))
+        val widthAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredWidth?.minus(0))
+            ?: 0, (imageRiyaParams.width - 0))
         widthAnimator.addUpdateListener {
             imageRiyaLargeParams.width = it.animatedValue as Int
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
