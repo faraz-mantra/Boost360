@@ -120,15 +120,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/size_20"
-        android:paddingEnd="@dimen/size_10"
         android:alpha="0"
+        android:paddingEnd="@dimen/size_14"
         tools:alpha="1"
         tools:ignore="RtlSymmetry">
 
       <com.framework.views.customViews.CustomImageView
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_margin="@dimen/size_6"
+          android:layout_margin="@dimen/size_5"
           app:srcCompat="@drawable/ic_ria" />
 
     </LinearLayout>
