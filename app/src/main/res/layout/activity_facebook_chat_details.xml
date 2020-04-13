@@ -42,7 +42,6 @@
                 android:scrollbars="vertical"
                 android:hint="Type to reply"
                 android:textColor="@color/gray"
-                android:textCursorDrawable="@drawable/custom_edit_text_cursor"
                 android:background="@drawable/et_bg"
                 android:layout_height="wrap_content" />
             <ImageView
@@ -53,12 +52,11 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginStart="@dimen/margin_10"
-                android:background="@drawable/send_btn_bg"
                 android:paddingBottom="@dimen/margin_8"
                 android:paddingLeft="@dimen/margin_8"
                 android:paddingRight="@dimen/margin_12"
                 android:paddingTop="@dimen/margin_8"
-                android:src="@drawable/ic_send_message_btn"
+                android:src="@drawable/ic_send"
                 android:layout_marginLeft="@dimen/margin_10" />
         </LinearLayout>
 
@@ -70,9 +68,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="80dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/scroll_down_shape"
             android:paddingTop="5dp"
-            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_40dp"
+            app:srcCompat="@drawable/ic_arrow_down"
             android:tint="@color/white"
             android:visibility="gone" />
 

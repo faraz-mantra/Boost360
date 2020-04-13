@@ -90,7 +90,7 @@ class UpgradeAdapter(
             upgradePrice.text = "₹" + price + "/month"
             if(updateModel.discount_percent>0){
                 upgradeDiscount.visibility = View.VISIBLE
-                upgradeDiscount.text = "- "+ updateModel.discount_percent+"%"
+                upgradeDiscount.text = ""+updateModel.discount_percent+"%"
                 upgradeMRP.text = "₹" + updateModel.price + "/month"
             }else{
                 upgradeDiscount.visibility = View.GONE

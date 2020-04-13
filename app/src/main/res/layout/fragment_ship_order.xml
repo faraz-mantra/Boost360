@@ -36,8 +36,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/shipped_on"
-                        app:errorTextAppearance="@style/error_appearance">
+                        android:hint="@string/shipped_on">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etShippedOn"
@@ -139,7 +138,6 @@
             android:layout_height="40dp"
             android:layout_gravity="right"
             android:layout_weight="1"
-            android:background="@drawable/done_button_bg"
             android:text="confirm"
             android:textColor="@color/white"
             android:textSize="18sp" />

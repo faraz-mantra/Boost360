@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.payment.PaymentViewModel
+import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.razorpay.Razorpay
 import com.razorpay.ValidateVpaCallback
@@ -59,10 +60,12 @@ class UPIPopUpFragement : DialogFragment() {
         upi_popup_submit.setOnClickListener {
             if(!validatingStatus) {
                 validatingStatus = true
+                Utils.hideSoftKeyboard(requireActivity())
                 upi_popup_submit.setText("Validating...")
                 validateVPA()
             }
         }
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE ADD_UPI Loaded", "ADD_UPI", "")
     }
 
     fun validateVPA(){

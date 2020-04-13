@@ -28,6 +28,7 @@ class UpgradeActivity : AppCompatActivity() {
 
     lateinit var razorpay: Razorpay
 
+    var experienceCode: String? = null
     var fpName: String? =null
     var fpid: String? = null
     var loginid: String? = null
@@ -40,6 +41,7 @@ class UpgradeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upgrade)
 
+        experienceCode = intent.getStringExtra("expCode")
         fpName = intent.getStringExtra("fpName")
         fpid = intent.getStringExtra("fpid")
         loginid = intent.getStringExtra("loginid")

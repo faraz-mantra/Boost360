@@ -219,7 +219,7 @@ public class ManageCustomerFragmentV2 extends Fragment {
 //                        manageCustomerHolder.tvThree.setVisibility(View.VISIBLE);
                         manageCustomerHolder.tvTitle.setText("Website\nInteractions");
                         manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.enquiries_title));
-                        manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscribers));
+                        manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscriptions));
                         manageCustomerHolder.tvThree.setText("Call");
 
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_website_customers));

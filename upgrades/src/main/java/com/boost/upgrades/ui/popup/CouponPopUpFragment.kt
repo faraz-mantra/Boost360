@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.boost.upgrades.R
+import com.boost.upgrades.utils.Utils
+import com.boost.upgrades.utils.WebEngageController
 import kotlinx.android.synthetic.main.coupon_popup.*
 
 class CouponPopUpFragment : DialogFragment(){
@@ -34,10 +36,13 @@ class CouponPopUpFragment : DialogFragment(){
         super.onActivityCreated(savedInstanceState)
 
         coupon_popup_outer_layout.setOnClickListener {
+            Utils.hideSoftKeyboard(requireActivity())
             dialog!!.dismiss()
         }
 
         enter_coupon_layout.setOnClickListener {  }
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Discount_Coupon Loaded", "Discount_Coupon", "")
 
     }
 

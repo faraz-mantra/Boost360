@@ -113,7 +113,7 @@ class MainFragment : Fragment() {
                     setVideoURL(videoURLs.get(2), splashImageResources.get(2))
                 }
                 "ta" -> {
-                    setVideoURL(videoURLs.get(3), splashImageResources.get(4))
+                    setVideoURL(videoURLs.get(3), splashImageResources.get(3))
                 }
             }
         } else {

@@ -25,6 +25,7 @@ data class Feature(
     val feature_importance: Int,
     val websiteid: String,
     val feature_banner: FeatureBanner,
-    val total_installs: String
-
+    val total_installs: String,
+    val extended_properties: List<ExtendedProperty>?,
+    val exclusive_to_categories: List<String>?
 )

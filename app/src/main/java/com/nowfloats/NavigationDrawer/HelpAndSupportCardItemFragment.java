@@ -117,7 +117,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
 //                descriptionTv.setText("Customer Support");
             default:
                 descriptionTv.setText("Your Digital Assistant");
-                personImage.setImageResource(R.drawable.ria_circle_image);
+                personImage.setImageResource(R.drawable.ria);
                 break;
         }
         nameTv.setText(riaSupportModel.getName());

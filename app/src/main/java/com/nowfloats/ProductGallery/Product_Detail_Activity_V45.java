@@ -69,7 +69,6 @@ import com.nowfloats.helper.ui.BaseActivity;
 import com.nowfloats.manageinventory.models.WAAddDataModel;
 import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
-import com.nowfloats.riachatsdk.utils.Utils;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -78,6 +77,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.Utils;
 import com.nowfloats.webactions.WebAction;
 import com.nowfloats.webactions.WebActionsFilter;
 import com.nowfloats.webactions.models.ProductImage;
@@ -1482,6 +1482,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
     private ArrayList<ProductImageResponseModel> lsProductImages;
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mIsImagePicking = false;
         if (resultCode == RESULT_OK && (Constants.CHOSEN_PHOTO == requestCode)) {

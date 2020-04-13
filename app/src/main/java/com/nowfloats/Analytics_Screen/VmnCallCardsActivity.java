@@ -74,7 +74,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
             imageView.setImageResource(R.drawable.icon_no_calls);
             mMainText.setText("You have no call records yet.");
-            mDescriptionText.setText("Your website customers haven't contacted\nyou on your call tracking number yet.");
+            mDescriptionText.setText("Your customers haven't contacted\nyou on your call tracking number yet.");
         }else {
             findViewById(R.id.calls_details_layout).setVisibility(View.VISIBLE);
             viewCallLogCard.setVisibility(View.VISIBLE);

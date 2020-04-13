@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,13 +22,12 @@ import com.boost.upgrades.adapter.PaidAddonsAdapter
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
-import com.boost.upgrades.ui.removeaddons.RemoveAddonsFragment
 import com.boost.upgrades.utils.Constants
-import com.boost.upgrades.utils.Constants.Companion.REMOVE_ADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import es.dmoral.toasty.Toasty
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.my_addons_fragment.*
 
@@ -41,6 +41,10 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
     var freeaddonsSeeMoreStatus = false
     var paidaddonsSeeMoreStatus = false
+
+    var totalActiveWidgetCount = 0
+    var totalActiveFreeWidgetCount = 0
+    var totalActivePremiumWidgetCount = 0
 
     var totalFreeItemList: List<FeaturesModel>? = null
     var totalPaidItemList: List<FeaturesModel>? = null
@@ -68,8 +72,6 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         freeAddonsAdapter = FreeAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
         paidAddonsAdapter = PaidAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE My_Addons", "My_Addons", "")
-
         return root
     }
 
@@ -79,9 +81,18 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         loadData()
         initMVVM()
 
-        Glide.with(this)
-                .load((activity as UpgradeActivity).profileUrl)
-                .into(imageView2)
+        val profileURL = (activity as UpgradeActivity).profileUrl
+
+        if(profileURL.isNullOrEmpty() || profileURL.length < 2){
+            Glide.with(this)
+                    .load(R.drawable.group)
+                    .into(merchant_logo)
+        } else{
+            Glide.with(this)
+                    .load(profileURL)
+                    .into(merchant_logo)
+        }
+
 
 
         Glide.with(this).load(R.drawable.back_beau)
@@ -98,6 +109,10 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                         Constants.VIEW_ALL_FEATURE
                 )
             }
+        }
+
+        view_orders_history.setOnClickListener {
+            Toasty.info(requireContext(), R.string.feature_coming_soon).show()
         }
 
         addons_back.setOnClickListener {
@@ -125,7 +140,8 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
         remove_paid_addons.setOnClickListener {
             add_remove_layout.visibility = View.GONE
-            (activity as UpgradeActivity).addFragment(RemoveAddonsFragment.newInstance(), REMOVE_ADDONS_FRAGMENT)
+//            (activity as UpgradeActivity).addFragment(RemoveAddonsFragment.newInstance(), REMOVE_ADDONS_FRAGMENT)
+            Toasty.warning(requireContext(),R.string.feature_coming_soon).show()
         }
 
         read_more_less_free_addons.setOnClickListener {
@@ -152,6 +168,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                     freeaddonsSeeMoreStatus = true
                     read_more_less_text_free_addons.setText("See less")
                     read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up), null)
+
 
                     WebEngageController.trackEvent("ADDONS_MARKETPLACE Free_Addons See_More", "Free_Addons", "")
                 }
@@ -187,7 +204,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
             }
         }
 
-
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE My_Addons Loaded", "My_Addons", "")
     }
 
     private fun loadData() {
@@ -196,12 +213,13 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMVVM() {
-        viewModel.upgradeResult().observe(this, Observer {
+        viewModel.getActiveFreeWidgets().observe(this, Observer {
             totalFreeItemList = it
 
-            free_addons_name.setText("Currently using\n" + totalFreeItemList!!.size.toString() + " add-ons")
-            bottom_free_addons.setText(totalFreeItemList!!.size.toString() + " free")
-            free_addons_title.setText(totalFreeItemList!!.size.toString() + " Free Add-ons")
+            totalActiveFreeWidgetCount = totalFreeItemList!!.size
+            totalActiveWidgetCount = totalActiveFreeWidgetCount + totalActivePremiumWidgetCount
+
+            setHeadlineTexts()
 
             initializeFreeAddonsRecyclerView()
             initializePaidAddonsRecyclerView()
@@ -215,9 +233,14 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 }
             }
         })
-        viewModel.getActiveWidgets().observe(this, Observer {
+        viewModel.getActivePremiumWidgets().observe(this, Observer {
             Log.i("getActiveWidgets", it.toString())
             totalPaidItemList = it
+
+            totalActivePremiumWidgetCount = totalPaidItemList!!.size
+            totalActiveWidgetCount = totalActiveFreeWidgetCount + totalActivePremiumWidgetCount
+
+            setHeadlineTexts()
 
             val paidItemsCount = totalPaidItemList!!.size
 
@@ -225,6 +248,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 paid_title.setText(totalPaidItemList!!.size.toString() + " Premium add-ons")
                 paid_subtitle.setText(totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention")
                 read_more_less_paid_addons.visibility = View.VISIBLE
+                premium_account_flag.visibility = View.VISIBLE
             } else{
                 paid_title.setText("No Premium add-ons active.")
                 paid_subtitle.setText("check out the recommended add-ons for your business")
@@ -252,6 +276,12 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         })
     }
 
+    private fun setHeadlineTexts(){
+        free_addons_name.setText("Currently using\n" + totalActiveWidgetCount + " add-ons")
+        bottom_free_addons.setText(totalActiveFreeWidgetCount.toString() + " free, " + totalActivePremiumWidgetCount.toString() + " premium")
+        free_addons_title.setText(totalActiveFreeWidgetCount.toString() + " Free Add-ons")
+    }
+
     private fun updateFreeAddonsRecycler(list: List<FeaturesModel>) {
         freeAddonsAdapter.addupdates(list)
         recycler_freeaddons.adapter = freeAddonsAdapter
@@ -266,7 +296,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     }
 
     fun initializeFreeAddonsRecyclerView() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2,LinearLayoutManager.VERTICAL,true)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recycler_freeaddons.apply {
             layoutManager = gridLayoutManager

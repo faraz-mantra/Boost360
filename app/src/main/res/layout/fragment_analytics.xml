@@ -41,7 +41,7 @@
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ria_circle_image" />
+                            android:src="@drawable/ria" />
 
                         <TextView
                             android:id="@+id/tvRiaCardHeader"
@@ -914,7 +914,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="16dp"
-                        android:text="@string/subscribers" />
+                        android:text="@string/subscriptions" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

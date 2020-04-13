@@ -522,56 +522,56 @@ public class Edit_Profile_Activity extends BaseActivity {
                 }).show();
     }
 
-    private void showCountryDialog(ArrayList<String> countries) {
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(Edit_Profile_Activity.this,
-                R.layout.search_list_item_layout, countries);
-
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(Edit_Profile_Activity.this);
-        builderSingle.setTitle(R.string.select_category);
-
-        View view = LayoutInflater.from(Edit_Profile_Activity.this).inflate(R.layout.search_list_layout, null);
-        builderSingle.setView(view);
-
-        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
-        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
-
-        lvItems.setAdapter(adapter);
-
-
-        final Dialog dialog = builderSingle.show();
-
-        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String strVal = adapter.getItem(position);
-                dialog.dismiss();
-                category.setText(strVal);
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY, category.getText().toString());
-                //countryEditText.setText(strVal);
-                //updateCountry();
-            }
-        });
-
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s.toString().toLowerCase());
-            }
-        });
-
-        dialog.setCanceledOnTouchOutside(false);
-    }
+//    private void showCountryDialog(ArrayList<String> countries) {
+//
+//        final ArrayAdapter<String> adapter = new ArrayAdapter<>(Edit_Profile_Activity.this,
+//                R.layout.search_list_item_layout, countries);
+//
+//        AlertDialog.Builder builderSingle = new AlertDialog.Builder(Edit_Profile_Activity.this);
+//        builderSingle.setTitle(R.string.select_category);
+//
+//        View view = LayoutInflater.from(Edit_Profile_Activity.this).inflate(R.layout.search_list_layout, null);
+//        builderSingle.setView(view);
+//
+//        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+//        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
+//
+//        lvItems.setAdapter(adapter);
+//
+//
+//        final Dialog dialog = builderSingle.show();
+//
+//        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String strVal = adapter.getItem(position);
+//                dialog.dismiss();
+//                category.setText(strVal);
+//                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY, category.getText().toString());
+//                //countryEditText.setText(strVal);
+//                //updateCountry();
+//            }
+//        });
+//
+//        edtSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                adapter.getFilter().filter(s.toString().toLowerCase());
+//            }
+//        });
+//
+//        dialog.setCanceledOnTouchOutside(false);
+//    }
 
     public void uploadProfile() {
         int i = 0;
@@ -828,7 +828,10 @@ public class Edit_Profile_Activity extends BaseActivity {
         }
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         try {
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
 
@@ -885,8 +888,6 @@ public class Edit_Profile_Activity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 

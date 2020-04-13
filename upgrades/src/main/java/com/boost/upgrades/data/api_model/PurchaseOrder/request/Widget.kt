@@ -12,5 +12,6 @@ data class Widget(
     val Price: Double,
     val RecurringPaymentFrequency: String,
     val WidgetKey: String,
-    val Quantity: Int
+    val Quantity: Int,
+    val Properties: List<ExtendedProperties>?
 )

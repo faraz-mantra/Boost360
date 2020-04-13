@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.nowfloats.riachatsdk.ChatManager;
 import com.thinksity.R;
 
 public class RiaChatInitActivity extends AppCompatActivity
@@ -50,9 +49,8 @@ public class RiaChatInitActivity extends AppCompatActivity
             case "chatactivity":
                 signUpWithRiaFragment = null;
                 finish();
-//                overridePendingTransition(R.anim.ria_fade_in, R.anim.slide_out_up);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                ChatManager.getInstance(this).startChat(ChatManager.ChatType.CREATE_WEBSITE);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                ChatManager.getInstance(this).startChat(ChatManager.ChatType.CREATE_WEBSITE);
                 break;
         }
     }

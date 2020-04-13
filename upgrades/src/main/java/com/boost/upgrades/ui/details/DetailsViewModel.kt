@@ -70,7 +70,8 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
                 paymentPrice,
                 updatesModel.price,
                 updatesModel.discount_percent,
-                1
+                1,
+                updatesModel.extended_properties
         )
 
 

@@ -52,8 +52,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
-import com.nowfloats.riachatsdk.activities.ChatWebViewActivity;
-import com.nowfloats.riachatsdk.utils.NFGeoCoder;
 import com.nowfloats.signup.UI.API.API_Layer;
 import com.nowfloats.signup.UI.API.API_Layer_Signup;
 import com.nowfloats.signup.UI.API.Download_Facebook_Image;
@@ -120,7 +118,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     HeaderText title;
     ImageView ivPhoneStatus;
     Bus bus;
-    private static EditText businessNameEditText, businessCategoryEditText, emailEditText,
+    private static EditText businessNameEditText, emailEditText,
             phoneEditText, etStreetAddress, etOTP;
 
     private static TextView countryPhoneCode;
@@ -180,7 +178,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {
-                setTitle(getString(R.string.create_my_website));
+                setTitle("Create My Website");
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
             }
@@ -202,7 +200,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 .build();
         bus = BusProvider.getInstance().getBus();
         businessNameEditText = (EditText) findViewById(R.id.editText_businessName);
-        businessCategoryEditText = (EditText) findViewById(R.id.editText_businessCategory);
         emailEditText = (EditText) findViewById(R.id.editText_Email);
         phoneEditText = (EditText) findViewById(R.id.editText_Phone);
 
@@ -213,9 +210,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         verify_button = findViewById(R.id.verify_button);
         countryPhoneCode = findViewById(R.id.countrycode_signupscreen);
-
-        businessCategoryEditText.setFocusable(false);
-        businessCategoryEditText.setFocusableInTouchMode(false);
 
         CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY BUSINESS PROFILE' you agree to our " +
                 "<a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
@@ -287,46 +281,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 //            }
 //        });
 
-        businessCategoryEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                businessCategory_Selected = true;
-                country_Selected = false;
-
-                if (categories == null) {
-                    final ProgressDialog pd = ProgressDialog.show(PreSignUpActivityRia.this, "", getResources().getString(R.string.wait_while_loading_category));
-                    API_Layer api = Constants.restAdapter.create(API_Layer.class);
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("clientId", Constants.clientId);
-                    api.getCategories(map, new Callback<ArrayList<String>>() {
-                        @Override
-                        public void success(ArrayList<String> strings, Response response) {
-                            if (pd != null && pd.isShowing()) {
-                                pd.dismiss();
-                            }
-                            categories = strings;
-                            showCategoriesDialog(categories);
-                            //showCategoryDialog(categories);
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            if (pd != null && pd.isShowing()) {
-                                pd.dismiss();
-                            }
-                            showCategoriesDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
-                            //showCategoryDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
-                            Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    showCategoriesDialog(categories);
-                    //showCategoryDialog(categories);
-                }
-            }
-        });
-
-
 //        phoneEditText.setFocusable(false);
 //        phoneEditText.setFocusableInTouchMode(false);
 
@@ -353,56 +307,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     private MaterialDialog otpDialog, numberDialog;
 
-    private void showCategoriesDialog(ArrayList<String> categories) {
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(PreSignUpActivityRia.this,
-                R.layout.search_list_item_layout, categories);
-
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(PreSignUpActivityRia.this);
-        builderSingle.setTitle(getString(R.string.select_category));
-
-        View view = LayoutInflater.from(PreSignUpActivityRia.this).inflate(R.layout.search_list_layout, null);
-        builderSingle.setView(view);
-
-        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
-        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
-
-        lvItems.setAdapter(adapter);
-
-
-        final Dialog dialog = builderSingle.show();
-
-        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String strVal = adapter.getItem(position);
-                dialog.dismiss();
-                businessCategoryEditText.setText(strVal);
-                //countryEditText.setText(strVal);
-                //updateCountry();
-            }
-        });
-
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s.toString().toLowerCase());
-            }
-        });
-
-        dialog.setCanceledOnTouchOutside(false);
-    }
-
     protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
 
         URLSpan[] spans = sp.getSpans(0, charSequence.length(), URLSpan.class);
@@ -413,15 +317,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 public void onClick(View view) {
                     Log.e("urlSpan", urlSpan.getURL());
                     Intent intent;
-                    if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-                        intent = new Intent(PreSignUpActivityRia.this, ChatWebViewActivity.class);
-                        intent.putExtra(ChatWebViewActivity.KEY_URL, urlSpan.getURL());
-                    } else {
-                        intent = new Intent(PreSignUpActivityRia.this, Mobile_Site_Activity.class);
-                        intent.putExtra("WEBSITE_NAME", urlSpan.getURL());
-                    }
+                    intent = new Intent(PreSignUpActivityRia.this, Mobile_Site_Activity.class);
+                    intent.putExtra("WEBSITE_NAME", urlSpan.getURL());
                     startActivity(intent);
-
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             };
@@ -679,7 +577,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         try {
             MixPanelController.track("EnterDetailsNext", null);
             data_businessName = businessNameEditText.getText().toString().trim();
-            data_businessCategory = businessCategoryEditText.getText().toString().trim();
             data_email = emailEditText.getText().toString().trim();
             data_phone = phoneEditText.getText().toString().trim();
             fpTag = "";
@@ -689,10 +586,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(businessNameEditText);
                 Methods.showSnackBarNegative(activity, getString(R.string.enter_business_name));
-            } else if (data_businessCategory.trim().length() == 0) {
-                allFieldsValid = false;
-                YoYo.with(Techniques.Shake).playOn(businessCategoryEditText);
-                Methods.showSnackBarNegative(activity, getString(R.string.select_business_category));
             } else if (etStreetAddress.getText().toString().trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(etStreetAddress);
@@ -716,7 +609,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     @Override
     public void onItemClick(String itemName) {
         if (businessCategory_Selected) {
-            businessCategoryEditText.setText(itemName);
+//            businessCategoryEditText.setText(itemName);
             businessCategory_Selected = false;
         } else if (country_Selected) {
             country_Selected = false;
@@ -771,7 +664,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         if (value.equals("Success")) {
             pd.dismiss();
             phoneEditText.setText("+" + data_country_code + " - " + phoneNumber);
-            ivPhoneStatus.setImageResource(R.drawable.green_check);
+            ivPhoneStatus.setImageResource(R.drawable.checkmark_icon);
             data_phone = phoneNumber;
 
             numberDialog.dismiss();
@@ -864,13 +757,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 if (getEditTextData()) {
                     if (data_lat.equalsIgnoreCase("0")) {
 
-                        LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
-                                etStreetAddress.getText().toString(), "India",
-                                "");
-                        if (latLng != null) {
-                            data_lat = latLng.latitude + "";
-                            data_lng = latLng.longitude + "";
-                        }
+//                        LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
+//                                etStreetAddress.getText().toString(), "India",
+//                                "");
+//                        if (latLng != null) {
+//                            data_lat = latLng.latitude + "";
+//                            data_lng = latLng.longitude + "";
+//                        }
                     }
                     hideKeyBoard();
                     MixPanelController.track("CreateMyWebsite", null);
@@ -1155,7 +1048,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 if (model.isOTPValid()) {
                     otpDialogDismiss();
                     phoneEditText.setText("+" + data_country_code + " - " + number);
-                    ivPhoneStatus.setImageResource(R.drawable.green_check);
+                    ivPhoneStatus.setImageResource(R.drawable.checkmark_icon);
                     data_phone = number;
 
                 } else {

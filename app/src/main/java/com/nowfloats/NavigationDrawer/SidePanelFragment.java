@@ -77,10 +77,9 @@ public class SidePanelFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
-    TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvSocialSharing, tvManageInventory, tvInbox, tvManageContent,
-            accountSettingsText, upgradeText, addOnText, keyboardTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText,
-            tvContentSharing, tvCalls,
-            tvAddonMarketplace;
+    TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvManageInventory, tvInbox, tvManageContent,
+            accountSettingsText, tvSubscriptions, keyboardTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText,
+            tvContentSharing, tvCalls;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -97,8 +96,8 @@ public class SidePanelFragment extends Fragment {
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
-    LinearLayout homeLayout, analyticsLayout, upgradeLayout, addOnLayout, accountSettingsLayout, keyboardLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
-            manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, socialLayout, manageInventoryLayout, inboxLayout;
+    LinearLayout homeLayout, analyticsLayout, subscriptionsLayout, accountSettingsLayout, keyboardLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+            manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, manageInventoryLayout, inboxLayout;
 
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -112,9 +111,9 @@ public class SidePanelFragment extends Fragment {
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
 
-    private ImageView shareImageView, keyboardImageView, marketplaceImageView, upgradeImageView, addOnImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
+    private ImageView shareImageView, keyboardImageView, marketplaceImageView, subscriptionsImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView,cotnentSharingImageView, callsImageView,
-            socialImageView, manageInventoryImageView, inboxImageView;
+            manageInventoryImageView, inboxImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
 
@@ -161,6 +160,8 @@ public class SidePanelFragment extends Fragment {
         meterValue = view.findViewById(R.id.fragment_side_panel_progress_meter_value);
         containerImage = view.findViewById(R.id.backgroundImage);
         siteMeterCalculation();
+
+        String category_code = session.getFP_AppExperienceCode();
 
         try {
             String versionName = mainActivity.getPackageManager().getPackageInfo(mainActivity.getPackageName(), 0).versionName;
@@ -303,20 +304,22 @@ public class SidePanelFragment extends Fragment {
         manageCalls = card.findViewById(R.id.layout_customer_calls);
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
-        socialLayout = card.findViewById(R.id.eleventh_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
+        if(Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
+            keyboardLayout.setVisibility(View.VISIBLE);
+        else
+            keyboardLayout.setVisibility(View.GONE);
+
+
         marketplaceLayout = (LinearLayout) card.findViewById(R.id.marketplace_layout);
         accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
-        upgradeLayout = card.findViewById(R.id.secondRow_Layout);
-        addOnLayout = card.findViewById(R.id.thirdRow_Layout);
+        subscriptionsLayout = card.findViewById(R.id.subscriptions_Layout);
         helpAndSupportLayout = card.findViewById(R.id.seventhRow_Layout);
         aboutLayout = card.findViewById(R.id.layout_about);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
 
 
         if (session.getISEnterprise().equals("true")) {
-            upgradeLayout.setVisibility(View.GONE);
-            addOnLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
             helpAndSupportLayout.setVisibility(View.GONE);
             shareLayout.setVisibility(View.GONE);
@@ -329,22 +332,49 @@ public class SidePanelFragment extends Fragment {
         tvContentSharing = manageContentSharing.findViewById(R.id.tvContentSharing);
         tvCalls = manageCalls.findViewById(R.id.tvCustomerCalls);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
+
+        switch (category_code){
+            case "SVC":
+            case "DOC":
+            case "HOS":
+            case "SPA":
+            case "SAL":
+            case "EDU":
+                tvManageInventory.setText("Appointments");
+                break;
+            case "HOT":
+                tvManageInventory.setText("Room Bookings");
+                break;
+            case "RTL":
+            case "MFG":
+                tvManageInventory.setText("Orders");
+                break;
+            case "CAF":
+                tvManageInventory.setText("Food Orders");
+                break;
+            default:
+                tvManageInventory.setText("Orders");
+                break;
+        }
         tvInbox = inboxLayout.findViewById(R.id.tvInbox);
-        tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
+        switch (category_code){
+            case "MFG":
+                tvInbox.setText("Quotation Requests");
+                break;
+            default:
+                tvInbox.setText("Enquiries");
+                break;
+        }
         accountSettingsText = (TextView) accountSettingsLayout.findViewById(R.id.fifthRow_TextView);
-        upgradeText = (TextView) upgradeLayout.findViewById(R.id.secondRow_TextView);
-        addOnText = (TextView) addOnLayout.findViewById(R.id.thirdRow_TextView);
-        tvAddonMarketplace = card.findViewById(R.id.tvAddonMarketplace);
+        tvSubscriptions = (TextView) subscriptionsLayout.findViewById(R.id.tvSubscriptions);
         helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
         aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
         marketplaceTextView = (TextView) marketplaceLayout.findViewById(R.id.marketplace_TextView);
         if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
             keyboardTextView.setText("RedTim Keyboard");
-            addOnLayout.setVisibility(View.GONE);
         } else {
             keyboardTextView.setText("Boost Keyboard");
-            addOnLayout.setVisibility(View.GONE);
         }
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
 
@@ -357,10 +387,8 @@ public class SidePanelFragment extends Fragment {
         manageInventoryImageView = manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
         marketplaceImageView = marketplaceLayout.findViewById(R.id.marketplace_ImageView);
         inboxImageView = inboxLayout.findViewById(R.id.thirteen_ImageView);
-        socialImageView = socialLayout.findViewById(R.id.eleventh_ImageView);
         accountSettingsImageView = accountSettingsLayout.findViewById(R.id.fifthRow_ImageView);
-        upgradeImageView = upgradeLayout.findViewById(R.id.secondRow_ImageView);
-        addOnImageView = addOnLayout.findViewById(R.id.thirdRow_ImageView);
+        subscriptionsImageView = subscriptionsLayout.findViewById(R.id.subscriptions_imageView);
         helpAndSupportImageView = helpAndSupportLayout.findViewById(R.id.seventhRow_ImageView);
         aboutImageView = aboutLayout.findViewById(R.id.img_about);
         shareImageView = shareLayout.findViewById(R.id.eigthRow_ImageView);
@@ -401,7 +429,6 @@ public class SidePanelFragment extends Fragment {
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
         keyboardImageView = (ImageView) keyboardLayout.findViewById(R.id.keyboard_ImageView);
         manageCustomerImageView = (ImageView) manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
-        socialImageView = (ImageView) socialLayout.findViewById(R.id.eleventh_ImageView);
         manageInventoryImageView = (ImageView) manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
         inboxImageView = (ImageView) inboxLayout.findViewById(R.id.thirteen_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
@@ -415,12 +442,9 @@ public class SidePanelFragment extends Fragment {
         tvManageInventory.setTypeface(robotoMedium);
         marketplaceTextView.setTypeface(robotoMedium);
         tvInbox.setTypeface(robotoMedium);
-        tvSocialSharing.setTypeface(robotoMedium);
         tvCalls.setTypeface(robotoMedium);
         accountSettingsText.setTypeface(robotoMedium);
-        upgradeText.setTypeface(robotoMedium);
-        addOnText.setTypeface(robotoMedium);
-        tvAddonMarketplace.setTypeface(robotoMedium);
+        tvSubscriptions.setTypeface(robotoMedium);
         helpAndSupportText.setTypeface(robotoMedium);
         aboutText.setTypeface(robotoMedium);
         shareText.setTypeface(robotoMedium);
@@ -433,20 +457,14 @@ public class SidePanelFragment extends Fragment {
             }
         });
 
-        upgradeLayout.setOnClickListener(new View.OnClickListener() {
+        subscriptionsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.upgrades));
-                onclickColorChange(upgradeImageView, upgradeText, upgradeLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.subscriptions));
+                onclickColorChange(subscriptionsImageView, tvSubscriptions, subscriptionsLayout);
             }
         });
-        addOnLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.add_ons));
-                onclickColorChange(addOnImageView, addOnText, addOnLayout);
-            }
-        });
+
         keyboardTextView.setTypeface(robotoMedium);
         keyboardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -498,15 +516,6 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(analyticsImageView, analyticsTextView, analyticsLayout);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.deeplink_analytics));
-            }
-        });
-
-
-        socialLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onclickColorChange(socialImageView, tvSocialSharing, socialLayout);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.title_activity_social__sharing_));
             }
         });
 
@@ -819,8 +828,6 @@ public class SidePanelFragment extends Fragment {
         super.onResume();
 
         if (session.getISEnterprise().equals("true")) {
-            upgradeLayout.setVisibility(View.GONE);
-            addOnLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
         }
 
@@ -909,10 +916,8 @@ public class SidePanelFragment extends Fragment {
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
         marketplaceTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvInbox.setTextColor(getResources().getColor(R.color.cell_text_color));
-        tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
         accountSettingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        upgradeText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        addOnText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvSubscriptions.setTextColor(getResources().getColor(R.color.cell_text_color));
         helpAndSupportText.setTextColor(getResources().getColor(R.color.cell_text_color));
         aboutText.setTextColor(getResources().getColor(R.color.cell_text_color));
         shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -927,10 +932,8 @@ public class SidePanelFragment extends Fragment {
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
         marketplaceImageView.setColorFilter(defaultLabelFilter);
         inboxImageView.setColorFilter(defaultLabelFilter);
-        socialImageView.setColorFilter(defaultLabelFilter);
         accountSettingsImageView.setColorFilter(defaultLabelFilter);
-        upgradeImageView.setColorFilter(defaultLabelFilter);
-        addOnImageView.setColorFilter(defaultLabelFilter);
+        subscriptionsImageView.setColorFilter(defaultLabelFilter);
         helpAndSupportImageView.setColorFilter(defaultLabelFilter);
         aboutImageView.setColorFilter(defaultLabelFilter);
         shareImageView.setColorFilter(defaultLabelFilter);
@@ -945,10 +948,8 @@ public class SidePanelFragment extends Fragment {
         manageInventoryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         marketplaceLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         inboxLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        socialLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         accountSettingsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        upgradeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-        addOnLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        subscriptionsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         helpAndSupportLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         aboutLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));

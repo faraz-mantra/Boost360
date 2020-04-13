@@ -954,9 +954,9 @@
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
             android:authorities="${applicationId}.boost.provider" />
-        <provider
-            android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
-            android:authorities="${applicationId}.riachatsdk.provider" />
+<!--        <provider-->
+<!--            android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"-->
+<!--            android:authorities="${applicationId}.riachatsdk.provider" />-->
 
         <service android:name="com.nowfloats.ProductGallery.Service.MultipleImageUploadService" />
 

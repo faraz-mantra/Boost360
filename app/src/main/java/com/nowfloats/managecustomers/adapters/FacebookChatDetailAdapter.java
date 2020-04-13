@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
-import com.nowfloats.riachatsdk.utils.Utils;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.util.List;
@@ -64,20 +64,20 @@ public class FacebookChatDetailAdapter extends RecyclerView.Adapter<RecyclerView
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textHolder.parentLayout.getLayoutParams();
             if(!data.getSender().equals(USER)) {
                 if (chatList.get(position).isShowCornerBackground()) {
-                    textHolder.parentLayout.setBackgroundResource(com.nowfloats.riachatsdk.R.drawable.reply_main_bubble);
+                    textHolder.parentLayout.setBackgroundResource(R.drawable.ic_chat_reply);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
                 } else {
-                    textHolder.parentLayout.setBackgroundResource(com.nowfloats.riachatsdk.R.drawable.reply_followup_bubble);
+                    textHolder.parentLayout.setBackgroundResource(R.drawable.ic_chat_reply);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
                 }
                 textHolder.tvMessage.setTextColor(ContextCompat.getColor(mContext,R.color.white));
             }else{
                 mainViewHolder.itemView.setGravity(Gravity.START);
                 if (chatList.get(position).isShowCornerBackground()) {
-                    textHolder.parentLayout.setBackgroundResource(com.nowfloats.riachatsdk.R.drawable.ria_main_bubble);
+                    textHolder.parentLayout.setBackgroundResource(R.drawable.ic_chat_reply);
                     lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 60), 0);
                 } else {
-                    textHolder.parentLayout.setBackgroundResource(com.nowfloats.riachatsdk.R.drawable.ria_followup_bubble);
+                    textHolder.parentLayout.setBackgroundResource(R.drawable.ic_chat_reply);
                     lp.setMargins(Utils.dpToPx(mContext, 15), 0, Utils.dpToPx(mContext, 60), 0);
                 }
                 textHolder.tvMessage.setTextColor(ContextCompat.getColor(mContext,R.color.gray));

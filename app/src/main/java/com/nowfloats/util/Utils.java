@@ -61,4 +61,8 @@ public class Utils {
 		}
 	}
 
+	public static int dpToPx(Context context, int dp){
+		return (int)(dp * context.getResources().getDisplayMetrics().density);
+	}
+
 }

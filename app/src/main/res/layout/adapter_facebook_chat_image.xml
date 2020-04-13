@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/chat_layout_bg"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -20,7 +19,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@drawable/site_sc_default"
                 android:id="@+id/img_message"
                 android:layout_width="250dp"
                 android:adjustViewBounds="true"

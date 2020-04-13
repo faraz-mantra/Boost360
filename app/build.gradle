@@ -66,7 +66,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020028
+        versionCode 2020020029
 
 
         multiDexEnabled true
@@ -141,7 +141,7 @@ android {
         }
         partone {
 
-            versionName "5.3.6"
+            versionName "5.3.7"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -178,7 +178,7 @@ dependencies {
     implementation files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
-    implementation project(':riachatsdkMain')
+//    implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true
     }

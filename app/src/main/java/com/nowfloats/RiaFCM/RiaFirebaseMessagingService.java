@@ -78,10 +78,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
                 WebEngage.get().setRegistrationID(token);
 
-                try {
-                    ZopimChat.setPushToken(token);
-                } catch (Exception e) {
-                }
+//                try {
+//                    ZopimChat.setPushToken(token);
+//                } catch (Exception e) {
+//                }
 
                 AnaCore.saveFcmToken(this, token);
             }

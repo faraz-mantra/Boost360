@@ -58,7 +58,7 @@
             android:layout_marginTop="8dp">
 
             <LinearLayout
-                android:id="@+id/imageViewCart1"
+                android:id="@+id/view_orders_history"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:foreground="?android:attr/selectableItemBackground"
@@ -156,13 +156,13 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="@dimen/_50sdp"
-                            android:layout_height="@dimen/_50sdp"
+                            android:id="@+id/merchant_logo"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
                             android:layout_gravity="center"
-                            android:background="@drawable/backgroundwhite"
+                            android:background="@drawable/group"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/rectangle_copy_18" />
+                            android:src="@drawable/group" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -202,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:lineSpacingExtra="1.3sp"
-                            android:text="Currently using \n22 add-ons"
+                            android:text="Currently using \n-- add-ons"
                             android:textColor="@color/common_text_color"
                             android:textSize="@dimen/_14sdp" />
 
@@ -213,7 +213,7 @@
                             android:fontFamily="@font/open_sans"
                             android:gravity="left"
                             android:paddingTop="@dimen/_5sdp"
-                            android:text="22 free"
+                            android:text="-- free"
                             android:textColor="@color/common_text_color"
                             android:textSize="@dimen/_9sdp" />
 
@@ -237,7 +237,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
                     android:padding="@dimen/_10sdp"
-                    android:text="22 Free Add-ons"
+                    android:text="-- Free Add-ons"
                     android:textColor="#2a2a2a"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -312,7 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="6 Premium add-ons"
+                        android:text="-- Premium add-ons"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         android:layout_toStartOf="@id/paid_menu_layout" />
@@ -326,7 +326,7 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="18dp"
                         android:layout_toStartOf="@id/paid_menu_layout"
-                        android:text="3 Activated, 1 Syncing and 2 needs Attention"
+                        android:text="- Activated, - Syncing and - Needs attention"
                         android:textColor="@color/transparent_black_dark"
                         android:textSize="@dimen/_10ssp" />
 

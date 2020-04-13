@@ -25,8 +25,6 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.adapter.PackageViewPagerAdapter
-import com.boost.upgrades.adapter.SimplePageTransformer
 import com.boost.upgrades.adapter.UpgradeAdapter
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
@@ -36,12 +34,12 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
+import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
-import com.boost.upgrades.utils.HorizontalMarginItemDecoration
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
@@ -50,7 +48,6 @@ import com.bumptech.glide.request.RequestOptions
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.android.synthetic.main.home_fragment.dots_indicator
 import retrofit2.Retrofit
 import java.util.*
 
@@ -136,12 +133,13 @@ class HomeFragment : BaseFragment(), HomeListener {
         initializeRecycler()
 
         share_fb_1.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Facebook Messenger", "")
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent
                     .putExtra(
                             Intent.EXTRA_TEXT,
-                            "<---YOUR TEXT HERE--->."
+                            R.string.referral_text_2
                     )
             sendIntent.type = "text/plain"
             sendIntent.setPackage("com.facebook.orca")
@@ -159,12 +157,13 @@ class HomeFragment : BaseFragment(), HomeListener {
             }
         }
         share_whatsapp_1.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "WHATSAPP", "")
             val whatsappIntent = Intent(Intent.ACTION_SEND)
             whatsappIntent.type = "text/plain"
             whatsappIntent.setPackage("com.whatsapp")
             whatsappIntent.putExtra(
                     Intent.EXTRA_TEXT,
-                    "Application of social rating share with your friend"
+                    R.string.referral_text_1
             )
             try {
                 Objects.requireNonNull(this).startActivity(whatsappIntent)
@@ -179,11 +178,12 @@ class HomeFragment : BaseFragment(), HomeListener {
 
         }
         share_referal.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "CARD", "")
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(
                     Intent.EXTRA_TEXT,
-                    "Referral Code : daidvadnvandvoiw121"
+                    R.string.referral_text_2
             )
             sendIntent.type = "text/plain"
             startActivity(sendIntent)
@@ -248,7 +248,18 @@ class HomeFragment : BaseFragment(), HomeListener {
                 0
         )
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
-        bottom_referral.setText(referralText)
+        boost360_tnc.setText(referralText)
+        boost360_tnc.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE TnC Clicked", "ADDONS_MARKETPLACE", "")
+            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+            val args = Bundle()
+            args.putString("link", "https://www.getboost360.com/tnc")
+            webViewFragment.arguments = args
+            (activity as UpgradeActivity).addFragment(
+                    webViewFragment,
+                    Constants.WEB_VIEW_FRAGMENT
+            )
+        }
 
         val refText =
                 SpannableString("and use SAM Chat Bot on your site for a month absolutely FREE")
@@ -265,7 +276,12 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun loadData() {
-        viewModel.loadUpdates()
+        var code: String = (activity as UpgradeActivity).experienceCode!!;
+        if(!code.equals("null", true)) {
+            viewModel.setCurrentExperienceCode(code)
+        }
+
+        viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -284,12 +300,13 @@ class HomeFragment : BaseFragment(), HomeListener {
 //            updateRecycler(it)
 //        })
 
-        viewModel.initialResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
             updateRecycler(it)
+            recommended_features_section_subtitle.setText("Add these "+ it.count() +" add-ons, recommended for your business.")
         })
 
-        viewModel.getFreeAddonsCount().observe(this, androidx.lifecycle.Observer {
-            free_accouns_count.setText(it.toString())
+        viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
+            total_active_widget_count.setText(it.toString())
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {

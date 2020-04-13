@@ -14,8 +14,8 @@ data class CartModel (
     @ColumnInfo(name = "item_name")
     var item_name: String? = null,
 
-    @ColumnInfo(name = "description")
-    var description: String? = null,
+    @ColumnInfo(name = "description_title")
+    var description_title: String? = null,
 
     @ColumnInfo(name = "link")
     var link: String? = null,
@@ -30,6 +30,8 @@ data class CartModel (
     var discount: Int = 0,
 
     @ColumnInfo(name = "quantity")
-    var quantity: Int = 1
+    var quantity: Int = 1,
 
+    @ColumnInfo(name = "extended_properties")
+    var extended_properties: String? = null
 )

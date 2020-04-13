@@ -37,7 +37,7 @@
                     android:layout_height="230dp"
                     android:background="@color/transparent_black"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/saloon"
+                    android:src="@drawable/background_image_fade"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -437,36 +437,37 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
-                        android:id="@+id/imgrr"
+                        android:id="@+id/secondary_images_panel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:orientation="horizontal"
                         app:layout_constraintTop_toBottomOf="@+id/xheader">
 
 
-                        <ImageView
-                            android:id="@+id/img1"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/pacman" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/s1"-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/pacman" />-->
 
-                        <ImageView
-                            android:id="@+id/img2"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/plane" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/s2"-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/plane" />-->
 
-                        <ImageView
-                            android:id="@+id/img3"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/rectangle_copy_15" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/s3"-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/rectangle_copy_15" />-->
 
-                        <ImageView
-                            android:id="@+id/img4"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/arrow" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/s4"-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/arrow" />-->
 
 
                     </LinearLayout>
@@ -478,7 +479,7 @@
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imgrr">
+                        app:layout_constraintTop_toBottomOf="@+id/secondary_images_panel">
 
                         <TextView
                             android:id="@+id/abcText"

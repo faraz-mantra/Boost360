@@ -66,7 +66,11 @@ data class FeaturesModel (
     var learn_more_link: String? = null,
 
     @ColumnInfo(name = "total_installs")
-    var total_installs: String? = "--"
+    var total_installs: String? = "--",
 
+    @ColumnInfo(name = "extended_properties")
+    var extended_properties: String? = null,
 
+    @ColumnInfo(name = "exclusive_to_categories")
+    var exclusive_to_categories: String? = null
 )

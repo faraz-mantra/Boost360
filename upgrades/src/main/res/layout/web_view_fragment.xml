@@ -13,7 +13,7 @@
         android:layout_height="230dp"
         android:background="@color/transparent_black"
         android:scaleType="centerCrop"
-        android:src="@drawable/saloon"
+        android:src="@drawable/background_image_fade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
