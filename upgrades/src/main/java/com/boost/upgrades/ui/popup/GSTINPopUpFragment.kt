@@ -11,7 +11,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.ui.cart.CartViewModel
+import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.Utils.isValidGSTIN
+import com.boost.upgrades.utils.WebEngageController
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.gstin_popup.*
 
 class GSTINPopUpFragment : DialogFragment(){
@@ -52,12 +55,14 @@ class GSTINPopUpFragment : DialogFragment(){
         enter_gstin_layout.setOnClickListener {  }
 
         gstin_submit.setOnClickListener {
+            Utils.hideSoftKeyboard(requireActivity())
             if(validationGSTIN()){
                 viewModel.updateGSTIN(entered_gstin_value.text.toString())
                 entered_gstin_value.setText("")
                 dialog!!.dismiss()
             }
         }
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE GSTIN Loaded", "GSTIN", "")
 
     }
 
@@ -70,7 +75,7 @@ class GSTINPopUpFragment : DialogFragment(){
         if (isValidGSTIN(value)){
             return true
         }else{
-            Toast.makeText(requireContext(),"Invalid GSTIN Number!!",Toast.LENGTH_LONG).show()
+            Toasty.error(requireContext(),"Invalid GSTIN Number").show()
             return false
         }
 

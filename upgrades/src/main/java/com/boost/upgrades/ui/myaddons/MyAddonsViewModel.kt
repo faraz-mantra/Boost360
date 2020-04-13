@@ -25,7 +25,7 @@ class MyAddonsViewModel(application: Application) : BaseViewModel(application) {
 
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
-    fun upgradeResult(): LiveData<List<FeaturesModel>> {
+    fun getActiveFreeWidgets(): LiveData<List<FeaturesModel>> {
         return updatesResult
     }
 
@@ -38,7 +38,7 @@ class MyAddonsViewModel(application: Application) : BaseViewModel(application) {
         return updatesLoader
     }
 
-    fun getActiveWidgets(): LiveData<List<FeaturesModel>>{
+    fun getActivePremiumWidgets(): LiveData<List<FeaturesModel>>{
         return activePremiumWidgetList
     }
 

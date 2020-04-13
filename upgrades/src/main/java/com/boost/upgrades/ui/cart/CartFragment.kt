@@ -21,6 +21,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CartAddonsAdaptor
 import com.boost.upgrades.adapter.CartPackageAdaptor
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExtendedProperty
 import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
 import com.boost.upgrades.data.model.CartModel
@@ -34,9 +35,13 @@ import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
+import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
+import kotlin.reflect.typeOf
 
 class CartFragment : BaseFragment(), CartFragmentListener {
 
@@ -108,12 +113,34 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             if (total > 1 && ::cartList.isInitialized) {
                 val widgetsToBeBought = ArrayList<Widget>()
                 for (item in cartList) {
+                    var extendProps: List<ExtendedProperty>? = null
+                    var outputExtendedProps: List<ExtendedProperties>? = null
+
+                    if(item.extended_properties != null && item.extended_properties!!.length > 0){
+                        try {
+                            val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
+                            extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
+
+                            if(extendProps != null){
+                                outputExtendedProps = ArrayList<ExtendedProperties>()
+                                for(prop in extendProps) {
+                                    outputExtendedProps.add(ExtendedProperties(
+                                            Key = prop.key!!,
+                                            Value = prop.value!!
+                                    ))
+                                }
+
+                            }
+                        } catch (ex: Exception){
+                            Log.e("FAILED", ex.message)
+                        }
+                    }
                     widgetsToBeBought.add(Widget(
                             ConsumptionConstraint(
                                     "DAYS",
                                     30
                             ),
-                            item.description,
+                            item.description_title,
                             item.discount,
                             Expiry(
                                     "DAYS",
@@ -126,9 +153,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                             item.MRPPrice.toDouble(),
                             "MONTHLY",
                             item.boost_widget_key,
-                            1
+                            1,
+                            outputExtendedProps
                     ))
                 }
+
+                var prefs = SharedPrefs(activity as UpgradeActivity)
+                prefs.storeFeaturesCountInLastOrder(widgetsToBeBought.count())
+
                 viewModel.InitiatePurchaseOrder(
                         CreatePurchaseOrderRequest(
                                 (activity as UpgradeActivity).clientid,
@@ -188,6 +220,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     TAN_POPUP_FRAGEMENT
             )
         }
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Loaded", "ADDONS_MARKETPLACE", "")
     }
 
     fun loadData() {
@@ -231,6 +265,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         viewModel.getPurchaseOrderResponse().observe(this, Observer {
             if (it != null) {
+                var prefs = SharedPrefs(activity as UpgradeActivity)
+                prefs.storeLatestPurchaseOrderId(it.Result.OrderId)
+                prefs.storeLatestPurchaseOrderTotalPrice(it.Result.TotalPrice.toFloat())
                 val paymentFragment = PaymentFragment.newInstance()
                 val args = Bundle()
                 args.putString("customerId", customerId)

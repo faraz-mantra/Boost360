@@ -102,7 +102,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="add-ons store"
+                        android:text="add-ons marketplace"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_11sdp"
@@ -184,7 +184,7 @@
 
 
                         <TextView
-                            android:id="@+id/free_accouns_count"
+                            android:id="@+id/total_active_widget_count"
                             android:layout_width="match_parent"
                             android:gravity="center"
                             android:layout_height="wrap_content"
@@ -195,7 +195,8 @@
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -235,8 +236,8 @@
 
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="@dimen/_90sdp"
                         android:background="@drawable/group"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -313,7 +314,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/recyclerCard"
+                android:id="@+id/recommended_features_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/offer"
@@ -323,24 +324,24 @@
                 android:background="@drawable/round_upper_corner_button">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/recommended_features_section_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="18dp"
-                    android:text="Only pay for what you need"
+                    android:text="Be better than your competitors!"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
-                    android:id="@+id/subtitle"
+                    android:id="@+id/recommended_features_section_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/title"
+                    android:layout_below="@id/recommended_features_section_title"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="18dp"
-                    android:text="No stress, cancel anytime :)"
+                    android:text="loading premium digital add-ons for your business"
                     android:textColor="@color/transparent_black_dark"
                     android:textSize="@dimen/_10ssp" />
 
@@ -359,7 +360,7 @@
                 android:id="@+id/shimmer_view_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recyclerCard"
+                android:layout_below="@+id/recommended_features_section"
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -435,7 +436,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/recyclerBottomCard"
                 android:layout_gravity="center"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:visibility="gone">
 
 
                 <RelativeLayout
@@ -599,7 +601,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/_10sdp"
-                    android:text="Refer NOW via:"
+                    android:text="Refer Boost360 via:"
                     android:textColor="#4a4a4a"
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="bold"
@@ -642,13 +644,13 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/bottom_referral"
+                    android:id="@+id/boost360_tnc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_italic"
                     android:gravity="center_horizontal"
                     android:padding="@dimen/_15sdp"
-                    android:text="Read Boost referral TnC"
+                    android:text="Read Boost360 TnC"
                     android:textColor="#747474"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"

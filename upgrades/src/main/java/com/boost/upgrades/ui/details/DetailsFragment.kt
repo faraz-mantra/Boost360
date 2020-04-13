@@ -2,6 +2,7 @@ package com.boost.upgrades.ui.details
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
@@ -9,6 +10,8 @@ import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -19,9 +22,11 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.ReviewViewPagerAdapter
 import com.boost.upgrades.adapter.ZoomOutPageTransformer
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExtendedProperty
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.LearnMoreLink
 import com.boost.upgrades.data.api_model.GetAllWidgets.FeatureDetails
 import com.boost.upgrades.data.api_model.GetAllWidgets.Review
+import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
@@ -33,7 +38,10 @@ import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
 import com.boost.upgrades.utils.Utils.longToast
+import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestListener
 //import com.devs.readmoreoption.ReadMoreOption
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
@@ -42,6 +50,7 @@ import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.details_fragment.*
 import retrofit2.Retrofit
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 
 
 class DetailsFragment : BaseFragment() {
@@ -185,7 +194,6 @@ class DetailsFragment : BaseFragment() {
                 Toasty.warning(requireContext(), "Failed to load the article.", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     override fun onResume() {
@@ -244,10 +252,36 @@ class DetailsFragment : BaseFragment() {
                         .into(image1222)
 
                 Glide.with(this).load(addonDetails!!.primary_image)
+                        .fitCenter()
                         .into(title_image)
 
+
                 Glide.with(this).load(addonDetails!!.feature_banner)
+                        .transition(withCrossFade())
+                        .fitCenter()
                         .into(details_image_bg)
+
+                if(addonDetails!!.secondary_images.isNullOrEmpty())
+                    secondary_images_panel.visibility = View.GONE
+                else{
+                    val objectType = object : TypeToken<ArrayList<String>>() {}.type
+                    var secondaryImages = Gson().fromJson<ArrayList<String>>(addonDetails!!.secondary_images, objectType)
+                    if(secondaryImages != null && secondaryImages.count() > 0){
+                        val imgSize: Int = 70 * requireContext().getResources().getDisplayMetrics().density.toInt()
+                        val imgPadding: Int = 5 * requireContext().getResources().getDisplayMetrics().density.toInt()
+                        for(img in secondaryImages){
+                            val imageView = ImageView(requireContext())
+                            imageView.layoutParams = LinearLayout.LayoutParams(imgSize, imgSize, 1f)
+                            imageView.setPadding(imgPadding, imgPadding, imgPadding, imgPadding)
+                            imageView.setBackgroundResource(R.drawable.background_image_fade)
+
+                            secondary_images_panel?.addView(imageView)
+                            Glide.with(this).load(img)
+                                    .fitCenter()
+                                    .into(imageView)
+                        }
+                    }
+                }
 
                 if(addonDetails!!.target_business_usecase!=null) {
                     title_top_1.visibility = View.VISIBLE
@@ -263,7 +297,10 @@ class DetailsFragment : BaseFragment() {
                 }else{
                     details_discount.visibility = View.GONE
                 }
-                title_bottom2.text = addonDetails!!.total_installs + " businesses have added this"
+                if(addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals("--"))
+                    title_bottom2.text = "Less than 100 businesses have added this"
+                else
+                    title_bottom2.text = addonDetails!!.total_installs + " businesses have added this"
 
                 loadCostToButtons()
 
@@ -275,10 +312,10 @@ class DetailsFragment : BaseFragment() {
                 }
                 xheader.text = addonDetails!!.description_title
                 abcText.text = addonDetails!!.description
-    //                        if(item.review != null) {
-    //                            updateReview(item.review)
-    //                        }else{
                 review_layout.visibility = View.GONE
+
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details Loaded", "Feature_Details " + addonDetails!!.boost_widget_key, "")
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details - " + addonDetails!!.boost_widget_key+" Loaded", "Feature_Details" + addonDetails!!.boost_widget_key, "")
 
             }
         })

@@ -151,8 +151,6 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
             mGoogleSignInClient.signOut()
 
-            //TODO: [Ronak] Make webEngage user login here
-
             Log.d(TAG, "updateUI: photo = " + personPhoto);
 
             if(autoUserProfileCreateMode) {
@@ -252,7 +250,6 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
             ApiService.connectUserProfile(userInfo).enqueue(object : Callback<ConnectUserProfileResponse> {
                 override fun onResponse(call: Call<ConnectUserProfileResponse>, response: Response<ConnectUserProfileResponse>) {
-                    //TODO: Ronak - how to handle this login scenario? on webenagage
                     listener.onSuccess(response.body())
                 }
 

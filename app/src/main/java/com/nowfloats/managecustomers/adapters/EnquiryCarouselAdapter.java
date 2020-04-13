@@ -1,5 +1,6 @@
 package com.nowfloats.managecustomers.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -11,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nowfloats.riachatsdk.R;
+import com.thinksity.R;
 
 /**
  * Created by Admin on 02-08-2017.
@@ -40,11 +41,12 @@ public class EnquiryCarouselAdapter extends RecyclerView.Adapter<EnquiryCarousel
 
     @Override
     public CarouselItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.enquiry_carousel_item_layout, parent, false);
         CarouselItemHolder carouselItemHolder = new CarouselItemHolder(view);
         return carouselItemHolder;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(CarouselItemHolder carouselItemHolder, int position) {
         LinearLayout.LayoutParams linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 70 / 100,
@@ -58,7 +60,7 @@ public class EnquiryCarouselAdapter extends RecyclerView.Adapter<EnquiryCarousel
 
 
         carouselItemHolder.ivLogo.setImageResource(R.drawable.site_sc_default);
-        carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position ? R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);
+        carouselItemHolder.imgParentLayout.setBackgroundColor(visibleItemPos == position ? R.color.blue : R.color.gray);
     }
 
 

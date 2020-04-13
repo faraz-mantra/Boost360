@@ -355,6 +355,10 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null);
     }
 
+    public String getFP_AppExperienceCode(){
+        return pref.getString(Key_Preferences.GET_FP_EXPERIENCE_CODE, null);
+    }
+
     public String getFPPrimaryContactNumber(){
         return pref.getString(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, null);
     }

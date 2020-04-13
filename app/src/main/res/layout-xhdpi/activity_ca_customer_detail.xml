@@ -172,7 +172,7 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/lt_gray" />
+                android:background="@color/gray" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vwSAM"

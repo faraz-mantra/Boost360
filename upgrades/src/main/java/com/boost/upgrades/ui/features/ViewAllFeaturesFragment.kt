@@ -21,6 +21,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.utils.Utils
+import com.boost.upgrades.utils.WebEngageController
 import com.google.android.material.snackbar.Snackbar
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.view_all_features_fragment.*
@@ -80,6 +81,8 @@ class ViewAllFeaturesFragment : BaseFragment() {
         back_button2.setOnClickListener{
             (activity as UpgradeActivity).popFragmentFromBackStack()
         }
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE All_Features Loaded", "All_Features", "")
     }
 
     fun loadData(){

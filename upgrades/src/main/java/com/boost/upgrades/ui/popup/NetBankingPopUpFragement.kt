@@ -15,6 +15,7 @@ import com.boost.upgrades.adapter.NetBankingPopUpAdaptor
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.NetBankingListener
 import com.boost.upgrades.ui.payment.PaymentViewModel
+import com.boost.upgrades.utils.WebEngageController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.netbanking_popup.*
@@ -63,6 +64,8 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
         netbanking_outer_layout.setOnClickListener {
             dialog!!.dismiss()
         }
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE NET_BANKING Loaded", "NET_BANKING", "")
     }
 
     private fun loadBanks() {

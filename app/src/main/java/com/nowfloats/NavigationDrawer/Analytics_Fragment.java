@@ -68,7 +68,6 @@ import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
 import com.nowfloats.on_boarding.OnBoardingManager;
-import com.nowfloats.riachatsdk.helpers.DeviceDetails;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -609,7 +608,11 @@ public class Analytics_Fragment extends Fragment {
 
             }
         });
-        initRiaCard();
+
+        //Disabling the below function as RiaChatSDK has been disabled from v5.3.7 onwards
+        //initRiaCard();
+
+
         if (!session.getISEnterprise().equalsIgnoreCase("true")) {
             getMapVisitsCount();
         }
@@ -618,43 +621,43 @@ public class Analytics_Fragment extends Fragment {
         return rootView;
     }
 
-    private void initRiaCard() {
-        Map<String, String> query = new HashMap<>();
-        query.put("fpTag", session.getFpTag());
-        try {
-            query.put("appVersion", getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        query.put("deviceId", DeviceDetails.getDeviceId(getActivity()));
-        query.put("libVersion", DeviceDetails.getLibVersionName());
-        query.put("osVersion", DeviceDetails.getAndroidVersion());
-        query.put("osTimeZone", DeviceDetails.getTimeZone());
-        query.put("osCountry", DeviceDetails.getCountry());
-        query.put("osLanguage", DeviceDetails.getLanguage());
-        query.put("deviceBrand", DeviceDetails.getBrand());
-        query.put("deviceModel", DeviceDetails.getDeviceModel());
-        query.put("screenWidth", DeviceDetails.getScreenWidth(getActivity()) + "");
-        query.put("screenHeight", DeviceDetails.getScreenHeight(getActivity()) + "");
-
-
-        RiaNetworkInterface networkInterface = Constants.riaMemoryRestAdapter.create(RiaNetworkInterface.class);
-        networkInterface.getRiaCards(query, new Callback<ArrayList<RiaCardModel>>() {
-            @Override
-            public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
-                if (riaCardModels != null && getActivity() != null && riaCardModels.size() > 0) {
-                    cvRiaCard.setVisibility(View.VISIBLE);
-                    drawRiaCards(riaCardModels);
-                    bus.post(riaCardModels);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
-    }
+//    private void initRiaCard() {
+//        Map<String, String> query = new HashMap<>();
+//        query.put("fpTag", session.getFpTag());
+//        try {
+//            query.put("appVersion", getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        query.put("deviceId", DeviceDetails.getDeviceId(getActivity()));
+//        query.put("libVersion", DeviceDetails.getLibVersionName());
+//        query.put("osVersion", DeviceDetails.getAndroidVersion());
+//        query.put("osTimeZone", DeviceDetails.getTimeZone());
+//        query.put("osCountry", DeviceDetails.getCountry());
+//        query.put("osLanguage", DeviceDetails.getLanguage());
+//        query.put("deviceBrand", DeviceDetails.getBrand());
+//        query.put("deviceModel", DeviceDetails.getDeviceModel());
+//        query.put("screenWidth", DeviceDetails.getScreenWidth(getActivity()) + "");
+//        query.put("screenHeight", DeviceDetails.getScreenHeight(getActivity()) + "");
+//
+//
+//        RiaNetworkInterface networkInterface = Constants.riaMemoryRestAdapter.create(RiaNetworkInterface.class);
+//        networkInterface.getRiaCards(query, new Callback<ArrayList<RiaCardModel>>() {
+//            @Override
+//            public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
+//                if (riaCardModels != null && getActivity() != null && riaCardModels.size() > 0) {
+//                    cvRiaCard.setVisibility(View.VISIBLE);
+//                    drawRiaCards(riaCardModels);
+//                    bus.post(riaCardModels);
+//                }
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//    }
 
 
     private void drawRiaCards(final List<RiaCardModel> riaCardModels) {

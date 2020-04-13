@@ -14,6 +14,7 @@ public class Get_FP_Details_Model implements Serializable{
     public String ImageUri;
     public String Name;
     public String Tag;
+    public String AppExperienceCode;
     public String TileImageUri;
     public String _id;
     public String Address;

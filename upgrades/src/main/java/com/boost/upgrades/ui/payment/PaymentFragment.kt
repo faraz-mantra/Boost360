@@ -171,6 +171,8 @@ class PaymentFragment : BaseFragment(), PaymentListener {
 ////            startActivity(intent)
 //
 //        }
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment_Screen Loaded", "Payment_Screen", "")
     }
 
     fun loadData() {

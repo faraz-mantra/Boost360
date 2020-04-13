@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
-import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
@@ -75,10 +74,6 @@ public class AboutFragment extends Fragment {
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME",getString(R.string.setting_faq_url));
                         break;
-                    case "Feedback":
-                        MixPanelController.track("ChatFeedback", null);
-                        ChatManager.getInstance(getActivity()).startChat(ChatManager.ChatType.FEEDBACK);
-                        return;
                     case "Like us on Facebook":
                         MixPanelController.track(EventKeysWL.EVENT_RATE_US_ON_FACEBOOK,null);
                         Methods.likeUsFacebook(mContext, "");

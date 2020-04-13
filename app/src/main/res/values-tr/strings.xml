@@ -389,7 +389,6 @@
     <string name="week">hafta</string>
     <string name="visit_this_month">ziyaret Bu ay</string>
     <string name="search_queries">Arama Sorguları</string>
-    <string name="subscribers">aboneler</string>
     <string name="check_internet_connection">Ağ Bağlantısını Kontrol Edin</string>
     <string name="email">E-POSTA</string>
     <string name="call">ÇAĞRI</string>
@@ -879,7 +878,7 @@
     <string name="website_domain_name">.nowfloats.com</string>
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline"><u>PLAY</u></string>
-    <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
+<!--    <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>-->
     <string name="resend"><![CDATA[<b>Resend</b>]]></string>
 
 

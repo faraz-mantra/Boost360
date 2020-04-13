@@ -108,7 +108,6 @@ import com.nowfloats.manageinventory.ManageInboxFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.manageinventory.OrderDetailsActivity;
 import com.nowfloats.manageinventory.SellerAnalyticsActivity;
-import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -379,8 +378,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
                         .commit();
             } else if (url.contains(getString(R.string.feedback_chat))) {
-                MixPanelController.track("ChatFeedback", null);
-                ChatManager.getInstance(HomeActivity.this).startChat(ChatManager.ChatType.FEEDBACK);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
             } else if (url.contains("facebookpage")) {
                 Methods.likeUsFacebook(this, "/reviews/");
             } else if (url.contains(getResources().getString(R.string.deeplink_update))) {
@@ -882,7 +880,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //com.facebook.AppEventsLogger.activateApp(HomeActivity.this, getResources().getString(R.string.facebook_app_id));
 
         if (session != null) {
-
             if (session.getISEnterprise().equals("true"))
                 headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             else
@@ -1270,7 +1267,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                                 .setThemeColor(R.color.primary)
                                 .setToolBarDescription("Available")
                                 .setToolBarTittle(getString(R.string.support_name) + " Chat")
-                                .setToolBarLogo(R.drawable.ria_circle_image)
+                                .setToolBarLogo(R.drawable.ria)
                                 .start();
                     }
 
@@ -1350,6 +1347,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.addon_marketplace))) {
                     WebEngageController.trackEvent("NAV - ADDONS_MARKETPLACE", "ADDONS_MARKETPLACE", null);
                     initiateAddonMarketplace();
+                } else if(nextScreen.equals(getString(R.string.subscriptions))){
+                    WebEngageController.trackEvent("NAV - SUBSCRIPTIONS", "SUBSCRIPTIONS", null);
+                    Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
+                    startActivity(subscribers);
                 }
 
             }
@@ -1359,6 +1360,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     private void initiateAddonMarketplace(){
         Intent intent = new Intent(HomeActivity.this, UpgradeActivity.class);
+        intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());

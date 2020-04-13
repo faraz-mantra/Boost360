@@ -10,6 +10,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
+import com.boost.upgrades.utils.WebEngageController
 import kotlinx.android.synthetic.main.failed_transaction_fragment.*
 
 class FailedTransactionPopUpFragment : DialogFragment() {
@@ -61,6 +62,8 @@ class FailedTransactionPopUpFragment : DialogFragment() {
             //RazorPay web
             razorPayWebView.show((activity as UpgradeActivity).supportFragmentManager, RAZORPAY_WEBVIEW_POPUP_FRAGMENT)
         }
+
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Failed_Payment_Transaction Loaded", "Failed_Payment_Transaction", "")
     }
 
 }

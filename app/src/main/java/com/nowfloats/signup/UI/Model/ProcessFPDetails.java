@@ -41,6 +41,7 @@ public class ProcessFPDetails {
             }
 
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TAG, get_fp_details_model.Tag);
+            session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, get_fp_details_model.AppExperienceCode);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, get_fp_details_model.Address);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TILE_IMAGE_URI, get_fp_details_model.TileImageUri);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI, get_fp_details_model.ImageUri);

@@ -20,10 +20,13 @@ import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.WebEngageController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.PaymentResultListener
 import com.razorpay.Razorpay
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
 
@@ -79,7 +82,8 @@ class RazorPayWebView : DialogFragment() {
                     override fun onPaymentSuccess(razorpayPaymentId: String) {
                         // Razorpay payment ID is passed here after a successful payment
                         Log.i("onPaymentSuccess", razorpayPaymentId)
-                        redirectOrderConfirmation()
+
+                        redirectOrderConfirmation(razorpayPaymentId)
                         dialog!!.dismiss()
                     }
 
@@ -89,7 +93,7 @@ class RazorPayWebView : DialogFragment() {
 //                    val gson = Gson()
 //                    val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
 //                    val errorBody: PaymentErrorModule = gson.fromJson(p1, listPersonType)
-                        Toast.makeText(requireContext(), p1, Toast.LENGTH_LONG).show()
+                        Toasty.error(requireContext(), p1!!, Toast.LENGTH_LONG).show()
                         redirectTransactionFailure(data.toString())
                         dialog!!.dismiss()
                     }
@@ -98,16 +102,18 @@ class RazorPayWebView : DialogFragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE Razor_Pay_View Loaded", "Razor_Pay_View", "")
         }
     }
 
 
 
-    fun redirectOrderConfirmation() {
-//        (activity as UpgradeActivity).addFragment(
-//            OrderConfirmationFragment.newInstance(),
-//            Constants.ORDER_CONFIRMATION_FRAGMENT
-//        )
+    fun redirectOrderConfirmation(paymentTransactionId: String) {
+        var prefs = SharedPrefs(activity as UpgradeActivity)
+        prefs.storeLatestOrderStatus(1)
+        prefs.storeLatestPaymentIdFromPG(paymentTransactionId)
+        
         (activity as UpgradeActivity).replaceFragment(
             OrderConfirmationFragment.newInstance(),
             Constants.ORDER_CONFIRMATION_FRAGMENT

@@ -5,14 +5,13 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.ui.cart.CartViewModel
-import com.boost.upgrades.utils.Utils.isValidGSTIN
-import kotlinx.android.synthetic.main.gstin_popup.*
+import com.boost.upgrades.utils.Utils
+import com.boost.upgrades.utils.WebEngageController
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.tan_popup.*
 
 class TANPopUpFragment : DialogFragment(){
@@ -53,19 +52,22 @@ class TANPopUpFragment : DialogFragment(){
         enter_tan_layout.setOnClickListener {  }
 
         tan_submit.setOnClickListener {
-            if(validationGSTIN()){
+            Utils.hideSoftKeyboard(requireActivity())
+            if(validationTAN()){
                 viewModel.updateTAN(entered_tan_value.text.toString())
                 entered_tan_value.setText("")
                 dialog!!.dismiss()
             }
         }
 
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE TAN_Number Loaded", "TAN_Number", "")
+
     }
 
-    fun validationGSTIN(): Boolean{
+    fun validationTAN(): Boolean{
         val value = entered_tan_value.text.toString()
         if(value.isEmpty()){
-            Toast.makeText(requireContext(),"EmptyField",Toast.LENGTH_LONG).show()
+            Toasty.error(requireContext(),"Please enter a valid TAN").show()
             return false
         }
         return true

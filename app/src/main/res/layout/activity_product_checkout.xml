@@ -202,7 +202,6 @@
                     android:drawableRight="@drawable/dropselect"
                     android:hint="@string/select_salesman"
                     android:maxLines="1"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor"
                     tools:ignore="MissingPrefix" />
 
 

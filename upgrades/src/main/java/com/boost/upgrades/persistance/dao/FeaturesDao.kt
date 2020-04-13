@@ -17,7 +17,7 @@ interface FeaturesDao {
 
     //true for premium type
     //false for non-premium type
-    @Query("SELECT COUNT(*)from Features WHERE is_premium = :premiumType")
+    @Query("SELECT COUNT(*) from Features WHERE is_premium = :premiumType")
     fun countFeaturesItems(premiumType: Boolean): Single<Int>
 
     @Query("DELETE FROM Features")
@@ -38,4 +38,7 @@ interface FeaturesDao {
 
     @Query("DELETE FROM Features WHERE boost_widget_key=:itemId")
     fun deleteFeaturesItem(vararg itemId: String)
+
+    @Query("SELECT COUNT(*) FROM Features Where boost_widget_key IN (:list)")
+    fun getallActivefeatureCount(list: List<String>): Single<Int>
 }

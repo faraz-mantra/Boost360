@@ -104,7 +104,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         deleteImage.setOnClickListener(this);
         searchImage.setOnClickListener(this);
 
-        titleTextView.setText(getResources().getString(R.string.subscribers));
+        titleTextView.setText(getResources().getString(R.string.subscriptions));
         emptyLayout = (LinearLayout) findViewById(R.id.emplty_layout);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
