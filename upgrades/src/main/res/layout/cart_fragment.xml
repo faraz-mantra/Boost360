@@ -84,17 +84,17 @@
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="@dimen/_190sdp"
-            android:layout_height="@dimen/_190sdp"
+            android:layout_width="@dimen/_170sdp"
+            android:layout_height="@dimen/_170sdp"
             android:src="@drawable/empty_cart" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Ohh! it feels soo light"
+            android:text="Ohh! it feels so light"
             android:textColor="@color/common_text_color"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_13sdp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
             android:gravity="center"
             android:text="There's nothing in your bag, why don't \n you add something."
             android:textColor="#9b9b9b"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_11sdp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
