@@ -50,6 +50,11 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
       return pref?.getString(PreferenceConstant.CLIENT_ID, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
     }
 
+  protected val auth: String?
+    get() {
+      return pref?.getString(PreferenceConstant.AUTHORIZATION, "")
+    }
+
   protected var requestFloatsModel: RequestFloatsModel? = null
 
   protected var totalPages = 1
