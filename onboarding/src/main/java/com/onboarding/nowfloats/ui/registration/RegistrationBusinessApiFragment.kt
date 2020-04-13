@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.extensions.gone
@@ -52,6 +53,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         setOnClickListener(binding?.next, binding?.supportCustomer)
         setProcessApiSyncModel()
         setApiProcessAdapter(list)
+      binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
+      binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
         if (requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
             getDotProgress()?.let { apiBusinessComplete(it, requestFloatsModel?.floatingPointId!!) }
         } else {
