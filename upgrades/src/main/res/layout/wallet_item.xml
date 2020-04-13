@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/wallet_profile_image"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         android:layout_margin="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

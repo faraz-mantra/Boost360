@@ -44,7 +44,7 @@ class WalletAdapter(razorpay: Razorpay, itemList: ArrayList<String>, val listene
         holder.itemView.setOnClickListener {
             listener.walletSelected(list.get(position))
         }
-        Glide.with(context).load(razorpay.getWalletLogoUrl(list.get(position))).into(holder.image)
+        Glide.with(context).load(razorpay.getWalletSqLogoUrl(list.get(position))).into(holder.image)
         if(list.size - 1 == position) {
             holder.view.visibility = View.GONE
         }
