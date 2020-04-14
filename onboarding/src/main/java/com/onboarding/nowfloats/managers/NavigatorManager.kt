@@ -115,7 +115,7 @@ object NavigatorManager {
     if (stack.isEmpty()) {
       activity.startActivity(ScreenModel(ScreenModel.Screen.CATEGORY_SELECT).getIntent(activity))
       return
-    } else if (stack.lastOrNull { (it.type == ScreenModel.Screen.REGISTERING.name || it.type == ScreenModel.Screen.REGISTRATION_COMPLETE.name) } != null) {
+    } else if (stack.lastOrNull { (it.type == ScreenModel.Screen.REGISTRATION_COMPLETE.name) } != null) {
       val screen = stack[stack.size - 1]
       bundle.putString(IntentConstant.TOOLBAR_TITLE.name, screen.title)
       val intent = screen.getIntent(activity)

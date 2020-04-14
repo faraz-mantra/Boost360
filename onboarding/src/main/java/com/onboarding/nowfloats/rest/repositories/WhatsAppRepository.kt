@@ -12,20 +12,20 @@ import retrofit2.Retrofit
 
 object WhatsAppRepository : AppBaseRepository<WebActionRemoteDataSource, AppBaseLocalService>() {
 
-    override fun getRemoteDataSourceClass(): Class<WebActionRemoteDataSource> {
-        return WebActionRemoteDataSource::class.java
-    }
+  override fun getRemoteDataSourceClass(): Class<WebActionRemoteDataSource> {
+    return WebActionRemoteDataSource::class.java
+  }
 
 
-    fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.updateWhatsAppNumber(request = request), Taskcode.POST_CREATE_BUSINESS_WHATSAPP)
-    }
+  fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateWhatsAppNumber(request, auth), Taskcode.POST_CREATE_BUSINESS_WHATSAPP)
+  }
 
-    override fun getApiClient(): Retrofit {
-        return WebActionsApiClient.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return WebActionsApiClient.shared.retrofit
+  }
 
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 }

@@ -8,6 +8,7 @@ import com.onboarding.nowfloats.model.business.BusinessCreateRequest
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
 import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
+import com.onboarding.nowfloats.model.domain.BusinessDomainSuggestRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.rest.repositories.*
@@ -22,12 +23,16 @@ class BusinessCreateViewModel : BaseViewModel() {
         return ChannelRepository.updateChannelAccessTokens(request).toLiveData()
     }
 
-    fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest): LiveData<BaseResponse> {
-        return WhatsAppRepository.postUpdateWhatsappRequest(request).toLiveData()
+    fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): LiveData<BaseResponse> {
+        return WhatsAppRepository.postUpdateWhatsappRequest(request, auth).toLiveData()
     }
 
     fun postCheckBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
         return BusinessDomainRepository.postCheckBusinessDomain(request).toLiveData()
+    }
+
+    fun postCheckBusinessDomainSuggest(request: BusinessDomainSuggestRequest): LiveData<BaseResponse> {
+        return BusinessDomainRepository.postCheckBusinessDomainSuggest(request).toLiveData()
     }
 
     fun putUploadImageBusiness(request: UploadFileBusinessRequest): LiveData<BaseResponse> {

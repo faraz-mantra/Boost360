@@ -14,10 +14,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import com.framework.base.BaseActivity
 import com.onboarding.nowfloats.R
-import com.onboarding.nowfloats.bottomsheet.ChannelContentBuilder
-import com.onboarding.nowfloats.bottomsheet.FeatureContentBuilder
-import com.onboarding.nowfloats.bottomsheet.MessageContentBuilder
-import com.onboarding.nowfloats.bottomsheet.OnItemClick
+import com.onboarding.nowfloats.bottomsheet.*
 import com.onboarding.nowfloats.bottomsheet.inerfaces.ContentBuilder
 import com.onboarding.nowfloats.bottomsheet.util.ObservableList
 import com.onboarding.nowfloats.bottomsheet.util.isDarkMode
@@ -48,8 +45,7 @@ open class BottomDialogBuilder(var context: BaseActivity<*, *>) {
     var peekHeight: Int = -1
 
     init {
-        val isLandscape =
-                context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         if (isLandscape) {
             peekHeightProportion = 0.6f
         }
@@ -153,6 +149,11 @@ fun BottomDialogBuilder.message(text: String, selectable: Boolean = false): Bott
     return this
 }
 
+fun BottomDialogBuilder.imagePicker(text: String, onClick: onClickItem): BottomDialogBuilder {
+    contentBuilder = ImagePickerBuilder(text, onClick)
+    return this
+}
+
 fun BottomDialogBuilder.channelMutableList(items: ObservableList<ChannelModel>, autoDismiss: Boolean = true,
                                            onItemClick: OnItemClick<ChannelModel>): BottomDialogBuilder {
     contentBuilder = ChannelContentBuilder(context, items, autoDismiss, onItemClick)
@@ -165,9 +166,9 @@ fun BottomDialogBuilder.featureMutableList(data: SectionsFeature, autoDismiss: B
 }
 
 
-fun BottomDialogBuilder.title(title: CharSequence?, round: Boolean = false, centerTitle: Boolean = false): BottomDialogBuilder {
+fun BottomDialogBuilder.title(title: CharSequence?, round: Boolean = false, centerTitle: Boolean = false, height: Int = 45): BottomDialogBuilder {
     if (headerBuilder == null) {
-        headerBuilder = ToolbarHeader(title, round, centerTitle)
+        headerBuilder = ToolbarHeader(title, round, centerTitle, height)
     } else {
         (headerBuilder as ToolbarHeader).title = title
     }

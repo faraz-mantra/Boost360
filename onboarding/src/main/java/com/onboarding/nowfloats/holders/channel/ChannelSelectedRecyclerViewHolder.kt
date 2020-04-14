@@ -1,15 +1,14 @@
 package com.onboarding.nowfloats.holders.channel
 
+import com.onboarding.nowfloats.databinding.ItemSelectedChannelBinding
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.getDrawable
 import com.onboarding.nowfloats.model.channel.getType
-import com.onboarding.nowfloats.databinding.ItemSelectedChannelBinding
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
 
-class ChannelSelectedRecyclerViewHolder(binding: ItemSelectedChannelBinding) :
-        AppBaseRecyclerViewHolder<ItemSelectedChannelBinding>(binding) {
+class ChannelSelectedRecyclerViewHolder(binding: ItemSelectedChannelBinding) : AppBaseRecyclerViewHolder<ItemSelectedChannelBinding>(binding) {
 
   var model: ChannelModel? = null
 

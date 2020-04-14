@@ -9,7 +9,7 @@
     android:layout_marginStart="@dimen/size_4"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/size_20"
-    app:cardElevation="0.5dp">
+      app:cardElevation="2dp">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/image"

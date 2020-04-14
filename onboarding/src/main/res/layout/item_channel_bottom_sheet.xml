@@ -11,32 +11,24 @@
         android:layout_marginEnd="@dimen/size_10"
         android:layout_marginBottom="@dimen/size_20"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/size_26"
-        app:cardElevation="@dimen/size_2"
+        app:cardCornerRadius="@dimen/size_32"
+        app:cardElevation="@dimen/size_1"
         app:rippleColor="@color/dodger_blue_two_10">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_64"
+            android:layout_height="@dimen/size_62"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.framework.views.customViews.CustomCardView
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/size_36"
+                android:layout_height="@dimen/size_36"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/size_14"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="@dimen/size_20">
-
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:srcCompat="@drawable/ic_google_n" />
-
-            </com.framework.views.customViews.CustomCardView>
+                android:layout_marginStart="@dimen/size_12"
+                tools:srcCompat="@drawable/ic_google_n" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
@@ -106,7 +98,7 @@
                 android:layout_width="@dimen/size_32"
                 android:layout_height="@dimen/size_32"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/size_14"
+                android:layout_marginEnd="@dimen/size_12"
                 app:srcCompat="@drawable/ic_unselected" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

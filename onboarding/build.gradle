@@ -16,6 +16,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
         resValue "string", "places_api_key", (project.findProperty("PLACES_API_KEY") ?: "")
+        renderscriptTargetApi rootProject.targetSdkVersion
+//        renderscriptSupportModeEnabled true
     }
 
     buildTypes {

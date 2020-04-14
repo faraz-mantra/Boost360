@@ -15,7 +15,7 @@
             android:id="@+id/status_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_6"
+            android:layout_marginStart="@dimen/size_8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -39,7 +39,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_6"
+            android:layout_marginStart="@dimen/size_8"
             android:text="@string/creating_your_business_profile"
             android:textColor="@color/dodger_blue_two"
             app:fontFamily="@font/semi_bold"
@@ -71,12 +71,13 @@
             android:layout_height="0dp"
             android:overScrollMode="never"
             android:paddingTop="@dimen/size_14"
-            android:paddingBottom="@dimen/size_24"
+            android:paddingBottom="@dimen/size_14"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title"
             tools:itemCount="3"
+            tools:ignore="RtlSymmetry"
             tools:listitem="@layout/item_child_api_calling" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

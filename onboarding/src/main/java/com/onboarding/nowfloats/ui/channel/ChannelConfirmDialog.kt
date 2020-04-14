@@ -1,20 +1,24 @@
 package com.onboarding.nowfloats.ui.channel
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.View
-import android.widget.FrameLayout
 import com.framework.base.BaseDialogFragment
-import com.framework.extensions.refreshLayout
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogCategorySelectorConfirmBinding
+import com.onboarding.nowfloats.extensions.fadeIn
 
-class ChannelConfirmDialog : BaseDialogFragment<DialogCategorySelectorConfirmBinding, BaseViewModel>() {
+class ChannelConfirmDialog() : BaseDialogFragment<DialogCategorySelectorConfirmBinding, BaseViewModel>(), Parcelable {
 
     private var count: Int = 0
     private var onConfirmClicked: () -> Unit = { }
-    private var animator = ChannelConfirmDialogAnimator()
+
+    constructor(parcel: Parcel) : this() {
+        count = parcel.readInt()
+    }
 
     override fun getLayout(): Int {
         return R.layout.dialog_category_selector_confirm
@@ -22,35 +26,15 @@ class ChannelConfirmDialog : BaseDialogFragment<DialogCategorySelectorConfirmBin
 
     override fun onViewCreated() {
         if (count > 0) {
-            val title = StringBuilder(
-                resources.getString(R.string.you_selected) + "\n$count " + resources.getString(R.string.channel)
-            )
+            val title = StringBuilder(resources.getString(R.string.you_selected) + "\n$count " + resources.getString(R.string.channel))
             if (count > 1) title.append(resources.getString(R.string.more_than_one_add_s))
-
             binding?.title?.text = title.toString()
-        } else {
-            binding?.title?.text = ""
-        }
+        } else binding?.title?.text = ""
         setClickListeners(binding?.confirm)
-
         binding?.dialogRoot?.post {
-            val imageParams = binding?.imageRiyaLarge?.layoutParams as? FrameLayout.LayoutParams
-            imageParams?.height = binding?.dialogRoot?.measuredHeight?.div(2)?.toInt()
-            imageParams?.width = imageParams?.height
-            imageParams?.topMargin = imageParams?.height?.div(2)
-            binding?.imageRiyaLarge?.layoutParams = imageParams
-            binding?.imageRiyaLarge?.refreshLayout()
-
-            binding?.imageRiyaLarge?.post {
-                animator.setViews(
-                    imageRiyaLarge = binding?.imageRiyaLarge,
-                    imageRiya = binding?.imageRiya,
-                    title = binding?.title,
-                    desc = binding?.desc,
-                    confirm = binding?.confirm
-                )
-                animator.startAnimation()
-            }
+            (binding?.container?.fadeIn(500L)?.mergeWith(binding?.imageRiya?.fadeIn(500L)))
+                    ?.andThen(binding?.title?.fadeIn(200L)?.mergeWith(binding?.desc?.fadeIn(100L)))
+                    ?.andThen(binding?.confirm?.fadeIn(50L))?.subscribe()
         }
     }
 
@@ -82,5 +66,23 @@ class ChannelConfirmDialog : BaseDialogFragment<DialogCategorySelectorConfirmBin
 
     override fun getViewModelClass(): Class<BaseViewModel> {
         return BaseViewModel::class.java
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(count)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ChannelConfirmDialog> {
+        override fun createFromParcel(parcel: Parcel): ChannelConfirmDialog {
+            return ChannelConfirmDialog(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ChannelConfirmDialog?> {
+            return arrayOfNulls(size)
+        }
     }
 }

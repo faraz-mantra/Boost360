@@ -6,12 +6,9 @@ import androidx.core.content.res.ResourcesCompat
 import com.framework.utils.ConversionUtils
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
-import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivityChannelPickerBinding
-import com.onboarding.nowfloats.extensions.getParcelable
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
-import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
@@ -68,7 +65,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
     }
 
     override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
-        binding?.categoryView?.cardElevation = ConversionUtils.dp2px(4f) * (1 - progress)
+        binding?.categoryView?.setShadowRadius(ConversionUtils.dp2px(4f) * (1 - progress))
     }
 
     override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {

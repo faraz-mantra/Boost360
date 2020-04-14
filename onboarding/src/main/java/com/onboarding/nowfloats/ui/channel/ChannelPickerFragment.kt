@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.framework.extensions.visible
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
@@ -33,9 +34,6 @@ import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.concurrent.schedule
 
 class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
@@ -103,7 +101,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
                     }
                     ChannelConfirmDialog().apply {
                         setCount(channels.count())
-                        isCancelable = false
+                        isCancelable = true
                         setOnConfirmClick(this@ChannelPickerFragment::onChannelConfirmed)
                         show(this@ChannelPickerFragment.parentFragmentManager, "")
                     }
@@ -124,7 +122,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
             val list = ObservableList.build<ChannelModel> { channels.forEach { add(it) } }
             BottomDialog.builder(baseActivity) {
                 expandable = false
-                peekHeightProportion = 1f
+                peekHeightProportion = .8f
                 mCancelable = false
                 contentHeader("${resources.getString(R.string.recommended_on)} ${list.size} ${resources.getString(R.string.channel)}", true)
                 channelMutableList(list) { _, position, item, isType ->
@@ -182,7 +180,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         feature?.let {
             BottomDialog.builder(baseActivity) {
                 expandable = false
-                peekHeightProportion = 1f
+                peekHeightProportion = .8f
                 contentHeader(it, true)
                 featureMutableList(it)
                 oneButton(resources.getString(R.string.okay), fadDuration = 1500L, drwableId = R.drawable.bg_button_orange, autoDismiss = true)
@@ -238,13 +236,12 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         for (channel in requestFloatsModel?.channels ?: ArrayList()) {
             channelList.firstOrNull { it.getName() == channel.getName() }?.isSelected = true
         }
-        binding?.flipLayout?.post {
+        binding?.viewChannel?.post {
             setChannelAdapter(selectedChannels, animate = false)
-            binding?.flipLayout?.startFlipping()
-            binding?.flipLayout?.fadeIn(280L)?.doOnComplete {
-                binding?.flipLayout?.stopFlipping()
-                Timer().schedule(600) { responseFeatures?.let { setChannelFeaturesAdapter(it) } }
-            }?.andThen(binding?.next?.fadeIn(2500L))?.subscribe()
+            binding?.viewChannel?.fadeIn(300L)?.doOnComplete {
+                binding?.next?.visible()
+                responseFeatures?.let { setChannelFeaturesAdapter(it) }
+            }?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
         }
     }
 }

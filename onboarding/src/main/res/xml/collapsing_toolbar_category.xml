@@ -2,109 +2,117 @@
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Transition
-        app:constraintSetEnd="@id/collapsed"
-        app:constraintSetStart="@id/expanded">
+  <ConstraintSet android:id="@+id/expanded">
+    <Constraint
+        android:id="@id/toolbar_image"
+        android:layout_height="@dimen/size_220"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Constraint
+        android:id="@id/image_riya"
+        android:layout_width="@dimen/size_74"
+        android:layout_height="@dimen/size_74"
+        android:layout_marginStart="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_40"
+        android:layout_marginBottom="@dimen/size_10"
+        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shadowColor="@color/shadow"
+        app:shadowDx=".5dp"
+        app:shadowDy=".5dp"
+        app:shadowRadius="2dp"
+        app:shadowShape="oval"
+        app:shadowSide="all"
+        app:srcCompat="@drawable/ic_ria_circle" />
+    <Constraint
+        android:id="@+id/title"
+        style="@style/Onboarding.HeaderTitleStyle"
+        android:text="What is your business like?"
+        app:layout_constraintBottom_toTopOf="@id/sub_title"
+        app:layout_constraintEnd_toEndOf="@id/toolbar_image"
+        app:layout_constraintStart_toStartOf="parent" />
+    <Constraint
+        android:id="@+id/sub_title"
+        style="@style/Onboarding.HeaderDescriptionStyle"
+        android:text="Let me know, which of the following describes the business you are running?"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+        app:layout_constraintStart_toStartOf="parent" />
+    <Constraint
+        android:id="@+id/view_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/down_shadoow"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
+  </ConstraintSet>
 
-        <OnSwipe
-            app:dragDirection="dragUp"
-            app:touchAnchorId="@id/fragmentContainer"
-            app:touchAnchorSide="top" />
+  <ConstraintSet android:id="@+id/collapsed">
+    <Constraint
+        android:id="@id/toolbar_image"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Constraint
+        android:id="@+id/image_riya"
+        android:layout_width="@dimen/size_45"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginStart="@dimen/size_34"
+        android:layout_marginTop="@dimen/size_22"
+        android:layout_marginBottom="@dimen/size_24"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar_image"
+        app:shadowColor="@color/shadow"
+        app:shadowDx=".2dp"
+        app:shadowDy=".2dp"
+        app:shadowRadius="2dp"
+        app:shadowShape="oval"
+        app:shadowSide="all" />
+    <Constraint
+        android:id="@+id/title"
+        style="@style/Onboarding.HeaderTitleStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_4"
+        android:scaleX="0.725"
+        android:scaleY="0.725"
+        android:text="What is your business like?"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+        app:layout_constraintEnd_toEndOf="@id/toolbar_image"
+        app:layout_constraintStart_toStartOf="@id/image_riya"
+        app:layout_constraintTop_toTopOf="@id/toolbar_image" />
+    <Constraint
+        android:id="@+id/sub_title"
+        android:scaleX="0.50"
+        android:scaleY="0.50"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+        app:layout_constraintLeft_toLeftOf="@+id/image_riya"
+        app:layout_constraintTop_toTopOf="@id/toolbar_image" />
+    <Constraint
+        android:id="@+id/view_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/down_shadoow"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
 
-        <KeyFrameSet>
-            <!--            <KeyAttribute-->
-            <!--                app:framePosition="60"-->
-            <!--                app:target="@id/toolbar_image">-->
-            <!--                <CustomAttribute-->
-            <!--                    app:attributeName="imageAlpha"-->
-            <!--                    app:customIntegerValue="255" />-->
-            <!--            </KeyAttribute>-->
-            <!--            <KeyAttribute-->
-            <!--                app:framePosition="90"-->
-            <!--                app:target="@id/toolbar_image">-->
-            <!--                <CustomAttribute-->
-            <!--                    app:attributeName="imageAlpha"-->
-            <!--                    app:customIntegerValue="0" />-->
-            <!--            </KeyAttribute>-->
-            <!--            <KeyPosition-->
-            <!--                app:framePosition="50"-->
-            <!--                app:percentX="0.9"-->
-            <!--                app:target="@id/title"-->
-            <!--                app:type="pathRelative" />-->
-        </KeyFrameSet>
-    </Transition>
+  </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/expanded">
-        <Constraint
-            android:id="@id/toolbar_image"
-            android:layout_height="@dimen/size_220"
-            android:elevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <Constraint
-            android:id="@id/image_riya"
-            style="@style/Onboarding.HeaderImageContainerStyle"
-            app:layout_constraintBottom_toTopOf="@id/title"
-            app:layout_constraintStart_toStartOf="parent" />
-        <Constraint
-            android:id="@+id/title"
-            style="@style/Onboarding.HeaderTitleStyle"
-            android:text="What is your business like?"
-            app:layout_constraintBottom_toTopOf="@id/sub_title"
-            app:layout_constraintEnd_toEndOf="@id/toolbar_image"
-            app:layout_constraintStart_toStartOf="parent" />
-        <Constraint
-            android:id="@+id/sub_title"
-            style="@style/Onboarding.HeaderDescriptionStyle"
-            android:text="Let me know, which of the following describes the business you are running?"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-            app:layout_constraintStart_toStartOf="parent" />
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/collapsed">
-        <Constraint
-            android:id="@id/toolbar_image"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="0.5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <Constraint
-            android:id="@+id/image_riya"
-            style="@style/Onboarding.HeaderImageContainerStyle"
-            android:layout_width="@dimen/size_45"
-            android:layout_height="@dimen/size_45"
-            android:layout_marginStart="@dimen/size_45"
-            android:layout_marginBottom="@dimen/size_24"
-            android:scaleX="0.725"
-            android:scaleY="0.725"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/toolbar_image" />
-        <Constraint
-            android:id="@+id/title"
-            style="@style/Onboarding.HeaderTitleStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_6"
-            android:scaleX="0.725"
-            android:scaleY="0.725"
-            android:text="What is your business like?"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-            app:layout_constraintEnd_toEndOf="@id/toolbar_image"
-            app:layout_constraintStart_toStartOf="@id/image_riya"
-            app:layout_constraintTop_toTopOf="@id/toolbar_image" />
-        <Constraint
-            android:id="@+id/sub_title"
-            android:scaleX="0.50"
-            android:scaleY="0.50"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-            app:layout_constraintLeft_toLeftOf="@+id/image_riya"
-            app:layout_constraintTop_toTopOf="@id/toolbar_image" />
-
-    </ConstraintSet>
+  <Transition
+      app:constraintSetEnd="@id/collapsed"
+      app:constraintSetStart="@id/expanded">
+    <OnSwipe
+        app:dragDirection="dragUp"
+        app:touchAnchorId="@id/fragmentContainer"
+        app:touchAnchorSide="top" />
+  </Transition>
 
 </MotionScene>
