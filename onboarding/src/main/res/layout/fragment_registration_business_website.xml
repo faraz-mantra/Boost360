@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_two">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/view_business"
+                    style="@style/Onboarding.Registration.FormContainerStyle"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    tools:alpha="1">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/title"
+                        style="@style/Onboarding.Registration.HeaderTitleStyle"
+                        android:layout_marginTop="@dimen/size_10"
+                        android:alpha="0"
+                        android:text="@string/creating_business_website"
+                        tools:alpha="1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/sub_title"
+                        style="@style/Onboarding.Registration.HeaderDescriptionStyle"
+                        android:alpha="0"
+                        android:text="@string/select_subdomain_business_desc"
+                        tools:alpha="1" />
+
+                    <com.framework.views.customViews.CustomTextField
+                        android:id="@+id/subdomain"
+                        style="@style/Onboarding.TextFieldStyle"
+                        android:layout_marginTop="@dimen/size_60"
+                        android:layout_marginBottom="@dimen/size_0"
+                        android:alpha="0"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                        android:gravity="center_horizontal"
+                        android:hint="@string/subdomain"
+                        android:maxLength="25"
+                        app:textType="HEADING_4"
+                        android:inputType="textFilter"
+                        android:textAlignment="gravity"
+                        tools:alpha="1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/input_type"
+                        style="@style/Onboarding.Registration.HeaderDescriptionStyle"
+                        android:layout_marginTop="@dimen/size_0"
+                        android:alpha="0"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/greyish_brown"
+                        app:fontFamily="@font/regular"
+                        app:textType="SUBHEADING_1"
+                        android:text="@string/nowfloats_dot_com"
+                        tools:alpha="1" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.framework.views.viewgroups.BaseRecyclerView
+                    android:id="@+id/googleChannels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_selected_channel"
+                    tools:spanCount="3" />
+
+            </FrameLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <FrameLayout
+            android:id="@+id/next"
+            style="@style/ButtonStyle.Rounded"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginEnd="@dimen/size_32"
+            android:layout_marginBottom="@dimen/size_24"
+            android:alpha="0"
+            android:text="@string/confirm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:alpha="1">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/text_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/create_my_business_website"
+                android:textColor="@color/white"
+                app:fontFamily="@font/bold"
+                app:textType="HEADING_6" />
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

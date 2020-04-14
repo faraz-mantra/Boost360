@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorPrimary">#4c92fa</color>
+  <color name="colorPrimaryDark">#3E81E6</color>
+  <color name="colorAccent">#f89f18</color>
+  <color name="colorPrimaryVariant">#5092F5</color>
+  <color name="statusBarColor">@color/colorPrimaryVariant</color>
+  <color name="colorOnPrimary">#FFFFFF</color>
+  <color name="colorSecondary">#2962FF</color>
+  <color name="colorSecondaryVariant">#0039CB</color>
+  <color name="colorOnSecondary">#FFFFFF</color>
+  <color name="colorError">#F44336</color>
+  <color name="colorOnError">#FFFFFF</color>
+  <color name="colorSurface">#FFFFFF</color>
+  <color name="colorOnSurface">#212121</color>
+  <color name="colorBackground">#FAFAFA</color>
+  <color name="colorOnBackground">#212121</color>
+  <color name="primary_text">#4a4a4a</color>
+  <color name="secondary_text">#747474</color>
+
+  <color name="white">#FFFFFF</color>
+  <color name="white_0">#00ffffff</color>
+  <color name="black">#000000</color>
+  <color name="transparent">#00000000</color>
+    <color name="color_dialog_bg">#FDFDFE</color>
+
+</resources>

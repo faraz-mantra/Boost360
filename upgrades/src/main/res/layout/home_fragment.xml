@@ -19,24 +19,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:background="@drawable/background_image_fade"
-        app:layout_constraintBottom_toTopOf="@+id/back_image3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/_100sdp"-->
+<!--        android:background="@drawable/background_image_fade"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/back_image3"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <View
-        android:id="@+id/back_image3"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="#efefef"
-        android:scaleType="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/back_image" />
+<!--    <View-->
+<!--        android:id="@+id/back_image3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:background="#efefef"-->
+<!--        android:scaleType="center"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/back_image" />-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -58,7 +58,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="#33000000"
+                android:background="#FF9F00"
                 android:contentInsetStart="0dp"
                 android:contentInsetEnd="0dp"
                 app:contentInsetEnd="0dp"
@@ -77,6 +77,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:foreground="?android:attr/selectableItemBackground"
+                        android:background="@drawable/circle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -118,6 +119,7 @@
                         android:layout_height="match_parent"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:gravity="center"
+                        android:background="@drawable/circle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintStart_toStartOf="parent"
@@ -321,6 +323,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="16dp"
+                android:elevation="10dp"
                 android:background="@drawable/round_upper_corner_button">
 
                 <TextView
@@ -345,13 +348,13 @@
                     android:textColor="@color/transparent_black_dark"
                     android:textSize="@dimen/_10ssp" />
 
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/material_grey_400"/>
+<!--                <View-->
+<!--                    android:id="@+id/view"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:layout_marginBottom="4dp"-->
+<!--                    android:background="@color/material_grey_400"/>-->
 
             </RelativeLayout>
 
@@ -436,10 +439,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/recyclerBottomCard"
                 android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                android:visibility="gone">
-
-
+                android:layout_marginBottom="8dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

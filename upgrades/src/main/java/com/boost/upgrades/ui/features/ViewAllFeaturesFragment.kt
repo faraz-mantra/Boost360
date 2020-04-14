@@ -73,8 +73,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
         initMvvM()
         initializeRecycler()
 
-        shimmer_view_container2.duration=600
-        shimmer_view_container2.startShimmerAnimation()
+        shimmer_view_container2.startShimmer()
 
 
 
@@ -105,8 +104,8 @@ class ViewAllFeaturesFragment : BaseFragment() {
                 progressDialog.show()
             }else{
                 progressDialog.dismiss()
-                if (shimmer_view_container2.isAnimationStarted) {
-                    shimmer_view_container2.stopShimmerAnimation()
+                if (shimmer_view_container2.isShimmerStarted) {
+                    shimmer_view_container2.stopShimmer()
                     shimmer_view_container2.visibility = View.GONE
                 }
             }
@@ -114,8 +113,8 @@ class ViewAllFeaturesFragment : BaseFragment() {
 
         viewModel.addonsError().observe(this, Observer {
             Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
-            if (shimmer_view_container2.isAnimationStarted) {
-                shimmer_view_container2.stopShimmerAnimation()
+            if (shimmer_view_container2.isShimmerStarted) {
+                shimmer_view_container2.stopShimmer()
                 shimmer_view_container2.visibility = View.GONE
             }
             Toasty.error(requireContext(), "onFailure: " + it, Toast.LENGTH_LONG).show();
@@ -123,8 +122,8 @@ class ViewAllFeaturesFragment : BaseFragment() {
     }
 
     fun initialiseRecyclerView(upgradeList: List<FeaturesModel>){
-        if(shimmer_view_container2.isAnimationStarted) {
-            shimmer_view_container2.stopShimmerAnimation()
+        if(shimmer_view_container2.isShimmerStarted) {
+            shimmer_view_container2.stopShimmer()
             shimmer_view_container2.visibility = View.GONE
         }
         allFeatureAdaptor.addupdates(upgradeList)

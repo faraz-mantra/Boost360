@@ -111,13 +111,12 @@ class HomeFragment : BaseFragment(), HomeListener {
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
 
-        shimmer_view_container.duration = 600
-        shimmer_view_container.startShimmerAnimation()
+        shimmer_view_container.startShimmer()
 
 
-        Glide.with(this).load(R.drawable.back_beau)
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-                .into(back_image)
+//        Glide.with(this).load(R.drawable.back_beau)
+//                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
+//                .into(back_image)
 
         imageView21.setOnClickListener {
             (activity as UpgradeActivity).finish()
@@ -334,8 +333,8 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {
-        if (shimmer_view_container.isAnimationStarted) {
-            shimmer_view_container.stopShimmerAnimation()
+        if (shimmer_view_container.isShimmerStarted) {
+            shimmer_view_container.stopShimmer()
             shimmer_view_container.visibility = View.GONE
         }
         upgradeAdapter.addupdates(list)

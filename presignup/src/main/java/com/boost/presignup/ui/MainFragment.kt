@@ -1,6 +1,7 @@
 package com.boost.presignup.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
@@ -19,6 +20,7 @@ import com.boost.presignup.R
 import com.boost.presignup.datamodel.SharedViewModel
 import com.boost.presignup.locale.LocaleManager
 import com.boost.presignup.utils.WebEngageController
+import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
 

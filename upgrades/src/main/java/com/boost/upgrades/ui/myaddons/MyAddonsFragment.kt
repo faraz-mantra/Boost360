@@ -95,9 +95,9 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
 
 
-        Glide.with(this).load(R.drawable.back_beau)
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-                .into(back_image)
+//        Glide.with(this).load(R.drawable.back_beau)
+//                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
+//                .into(back_image)
 
 
         verifybtn1.setOnClickListener {

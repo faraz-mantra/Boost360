@@ -2,6 +2,7 @@ package com.boost.upgrades.adapter
 
 import android.app.ActionBar
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -102,6 +103,7 @@ class AllFeatureAdaptor(
                 upgradeDiscount.visibility = View.VISIBLE
                 upgradeDiscount.text = ""+ updateModel.discount_percent+"%"
                 upgradeMRP.text = "₹" + updateModel.price + "/month"
+                upgradeMRP.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             }else{
                 upgradeDiscount.visibility = View.GONE
                 upgradeMRP.visibility = View.GONE

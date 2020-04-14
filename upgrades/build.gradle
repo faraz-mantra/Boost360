@@ -79,7 +79,7 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
 
     //shimmer
-    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0@aar'
 
     //toasty
     implementation 'com.github.GrenderG:Toasty:1.4.2'
@@ -109,5 +109,4 @@ dependencies {
 
     //wenengage analytics
     implementation 'com.webengage:android-sdk:3.+'
-
 }

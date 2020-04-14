@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Boost</string>
+  <string name="facebook_app_id">539836972828386</string> <!--TODO-->
+  <string name="fb_login_protocol_scheme"></string> <!--TODO-->
+</resources>
