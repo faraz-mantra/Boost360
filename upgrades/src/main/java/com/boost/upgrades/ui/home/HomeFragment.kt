@@ -8,8 +8,6 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.TextPaint
-import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
@@ -43,10 +41,7 @@ import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import es.dmoral.toasty.Toasty
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.util.*
@@ -69,6 +64,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
+    var fpRefferalCode: String = ""
 //    val compositeDisposable = CompositeDisposable()
 
     companion object {
@@ -105,7 +101,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        spannableString()
+        setSpannableStrings()
         loadData()
         initMvvm()
 
@@ -131,6 +127,29 @@ class HomeFragment : BaseFragment(), HomeListener {
 //        initializeViewPager()
         initializeRecycler()
 
+        share_refferal_code_btn.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Generic", "")
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent
+                    .putExtra(
+                            Intent.EXTRA_TEXT,
+                            getString(R.string.referral_text_1)+fpRefferalCode
+                    )
+            sendIntent.type = "text/plain"
+            try {
+                startActivity(sendIntent)
+            } catch (ex: ActivityNotFoundException) {
+                Toasty.error(
+                        requireContext(),
+                        "Failed to share the referral code. Please try again.",
+                        Toast.LENGTH_SHORT,
+                        true
+                ).show();
+
+            }
+        }
+
         share_fb_1.setOnClickListener {
             WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Facebook Messenger", "")
             val sendIntent = Intent()
@@ -138,7 +157,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             sendIntent
                     .putExtra(
                             Intent.EXTRA_TEXT,
-                            R.string.referral_text_2
+                            getString(R.string.referral_text_2)+fpRefferalCode
                     )
             sendIntent.type = "text/plain"
             sendIntent.setPackage("com.facebook.orca")
@@ -162,7 +181,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             whatsappIntent.setPackage("com.whatsapp")
             whatsappIntent.putExtra(
                     Intent.EXTRA_TEXT,
-                    R.string.referral_text_1
+                    getString(R.string.referral_text_1)+fpRefferalCode
             )
             try {
                 Objects.requireNonNull(this).startActivity(whatsappIntent)
@@ -221,31 +240,30 @@ class HomeFragment : BaseFragment(), HomeListener {
 //        package_viewpager.postDelayed(Runnable { package_viewpager.setCurrentItem(pos) }, 100)
     }
 
-    fun spannableString() {
-        val referralText = SpannableString("Read Boost referral TnC")
-        val termsOfUseClicked: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                // navigate to sign up fragment
-                Toast.makeText(
-                        requireContext(),
-                        "Read Boost referral TnC is clicked...",
-                        Toast.LENGTH_LONG
-                ).show()
+    fun setSpannableStrings() {
+        var fpId = (activity as UpgradeActivity)!!.fpid
+        if(fpId != null){
+            val minLength = 5
+
+            fpRefferalCode = ""
+            for(c in fpId){
+                fpRefferalCode += (c + 1).toString().trim().toUpperCase()
+
+                if(fpRefferalCode.length >= minLength)
+                    break;
             }
 
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.isUnderlineText = false
+            var lengthDiff = minLength - (fpRefferalCode.length%5)
+
+            while(lengthDiff-- > 0){
+                fpRefferalCode += lengthDiff.toString()
             }
         }
-        //By creating Boost account, you agree to our Terms of use and Privacy Policy
-        referralText.setSpan(termsOfUseClicked, 0, referralText.length, 0)
-        referralText.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
-                0,
-                referralText.length,
-                0
-        )
+        fpRefferalCode = (activity as UpgradeActivity)!!.experienceCode + fpRefferalCode
+        referral_code.setText(fpRefferalCode)
+
+
+        val referralText = SpannableString(getString(R.string.upgrade_boost_tnc_link))
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
         boost360_tnc.setText(referralText)
         boost360_tnc.setOnClickListener {
@@ -260,10 +278,8 @@ class HomeFragment : BaseFragment(), HomeListener {
             )
         }
 
-        val refText =
-                SpannableString("and use SAM Chat Bot on your site for a month absolutely FREE")
-//        val boldSpan = StyleSpan(Typeface.BOLD);
-        refText.setSpan(StyleSpan(Typeface.BOLD), 8, 20, 0)
+        val refText = SpannableString(getString(R.string.referral_card_explainer_text))
+        refText.setSpan(StyleSpan(Typeface.BOLD), 19, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),

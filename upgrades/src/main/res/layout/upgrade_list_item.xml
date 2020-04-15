@@ -6,7 +6,6 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/_8sdp"
     android:paddingBottom="0dp"
     android:clickable="true"
     android:background="@drawable/feature_list_card_holder"
@@ -16,6 +15,7 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <ImageView

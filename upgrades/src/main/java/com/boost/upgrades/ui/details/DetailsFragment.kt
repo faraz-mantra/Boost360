@@ -213,8 +213,12 @@ class DetailsFragment : BaseFragment() {
             val discount = 100 - addonDetails!!.discount_percent
             val paymentPrice = (discount * addonDetails!!.price) / 100
             money.text = "₹" + paymentPrice + "/month"
-            orig_cost.visibility = View.VISIBLE
-            orig_cost.text = "Original cost ₹" + addonDetails!!.price + "/month"
+            if(discount > 0) {
+                orig_cost.visibility = View.VISIBLE
+                orig_cost.text = "Original cost ₹" + addonDetails!!.price + "/month"
+            } else {
+                orig_cost.visibility = View.INVISIBLE
+            }
             add_item_to_cart.text = "Add for ₹" + paymentPrice + "/Month"
             havent_bought_the_feature.visibility = View.VISIBLE
         } else {

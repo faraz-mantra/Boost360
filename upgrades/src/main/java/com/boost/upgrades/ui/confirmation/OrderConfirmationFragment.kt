@@ -68,7 +68,7 @@ class OrderConfirmationFragment : BaseFragment() {
         }
 
         order_needs_help.setOnClickListener {
-            Toasty.info(requireContext(),"In case of any concerns, you can write to ria@getboost360.com. Boost Care Team is available during business hours.").show()
+            Toasty.info(requireContext(),"In case of any concerns, you can write to ria@nowfloats.com. Boost Care Team is available during business hours.").show()
         }
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Order_Confirmation Loaded", "Order_Confirmation", "")

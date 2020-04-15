@@ -50,7 +50,12 @@ class CategoryDataModel(
     fun getImage(context: Context?): Drawable? {
         if (context == null) return null
         return when (icon?.let { CategoryTypeNew.from(it) }) {
-            CategoryTypeNew.DOCTORS_CLINICS -> ResourcesCompat.getDrawable(
+            CategoryTypeNew.DOCTORS -> ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_doctors_pro,
+                    context.theme
+            )
+            CategoryTypeNew.CLINICS_HOSPITALS -> ResourcesCompat.getDrawable(
                     context.resources,
                     R.drawable.ic_doctor,
                     context.theme
@@ -70,9 +75,14 @@ class CategoryDataModel(
                     R.drawable.ic_group_industry,
                     context.theme
             )
-            CategoryTypeNew.SPAS_SALONS -> ResourcesCompat.getDrawable(
+            CategoryTypeNew.SPAS_WELLNESS -> ResourcesCompat.getDrawable(
                     context.resources,
                     R.drawable.ic_group_spas,
+                    context.theme
+            )
+            CategoryTypeNew.SALON -> ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_other_retails,
                     context.theme
             )
             CategoryTypeNew.RESTAURANT_CAFES -> ResourcesCompat.getDrawable(
