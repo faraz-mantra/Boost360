@@ -22,9 +22,11 @@
     <string name="marketing">Marketing</string>
     <string name="view_my_add_ons">View my add-ons</string>
     <string name="added_to_cart">ADDED TO CART</string>
-    <string name="feature_coming_soon">Coming Soon: View all your previous orders. In case of a concern please write to ria@getboost360.com.</string>
-    <string name="referral_text_1">Hey, Check out Boost360. I have been using to run my business online. http://bit.ly/ApporWeb</string>
-    <string name="referral_text_2">Hey, Check out Boost360, I use it to run my business online. http://bit.ly/ApporWeb</string>
+    <string name="feature_coming_soon">Coming Soon: View all your previous orders. In case of a concern please write to ria@nowfloats.com</string>
+    <string name="referral_text_1">Hey, Check out Boost360. I have been using to run my business online. http://bit.ly/ApporWeb?ref=</string>
+    <string name="referral_text_2">Hey, Check out Boost360, I use it to run my business online. http://bit.ly/ApporWeb?ref=</string>
+    <string name="upgrade_boost_tnc_link">Read Boost360 TnC</string>
+    <string name="referral_card_explainer_text">and get a Premium Chatbot on your website \nfor a month absolutely FREE</string>
 
     <string-array name="order_status">
         <item>Cart</item>

@@ -60,8 +60,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#33000000"
-                    android:layout_marginTop="8dp">
+                    android:background="#33000000">
                     <LinearLayout
                         android:id="@+id/details_title_image_layout"
                         android:layout_width="0dp"
@@ -82,12 +81,12 @@
                     <RelativeLayout
                         android:id="@+id/imageViewCart121"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
-                        android:background="@drawable/circle"
-                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/upgrade_nav_icon_background"
+                        android:layout_marginEnd="@dimen/_13sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -123,10 +122,11 @@
                     <LinearLayout
                         android:id="@+id/imageView121"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:gravity="center"
-                        android:background="@drawable/circle"
+                        android:background="@drawable/upgrade_nav_icon_background"
+                        android:layout_marginLeft="@dimen/_3sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintStart_toStartOf="parent"

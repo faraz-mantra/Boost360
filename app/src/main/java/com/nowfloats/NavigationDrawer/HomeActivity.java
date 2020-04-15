@@ -1367,7 +1367,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
-            intent.putExtra("email", "ria@getboost360.com");
+            intent.putExtra("email", "ria@nowfloats.com");
         }
         if (session.getFPPrimaryContactNumber() != null) {
             intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
