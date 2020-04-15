@@ -13,7 +13,8 @@ enum class RecyclerViewItemType {
     API_PROCESS_BUSINESS_ITEM,
     API_PROCESS_CHANNEL_ITEM,
     CHANNEL_BOTTOM_SHEET_ITEM,
-    SECTION_HEADER_ITEM;
+    SECTION_HEADER_ITEM,
+    CITY_DETAILS_ITEM;
 
     @LayoutRes
     fun getLayout(): Int {
@@ -28,6 +29,7 @@ enum class RecyclerViewItemType {
             FEATURE_DETAILS_BOTTOM_SHEET_ITEM -> R.layout.item_feature_details_bottom_sheet
             API_PROCESS_BUSINESS_ITEM -> R.layout.item_api_calling_process
             API_PROCESS_CHANNEL_ITEM -> R.layout.item_child_api_calling
+            CITY_DETAILS_ITEM -> R.layout.city_item_data
         }
     }
 }

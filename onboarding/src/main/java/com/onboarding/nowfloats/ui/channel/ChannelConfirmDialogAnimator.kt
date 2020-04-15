@@ -4,6 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.framework.extensions.refreshLayout
 import com.framework.views.customViews.CustomButton
@@ -21,7 +22,7 @@ class ChannelConfirmDialogAnimator {
     private val confirmFadeInDuration = 120L
     private val accelerateInterpolator = AccelerateInterpolator()
 
-    private var imageRiyaLarge: WeakReference<CustomCardView?>? = null
+    private var imageRiyaLarge: WeakReference<LinearLayoutCompat?>? = null
     private var imageRiya: WeakReference<CustomCardView?>? = null
 
     private var title: WeakReference<CustomTextView?>? = null
@@ -29,7 +30,7 @@ class ChannelConfirmDialogAnimator {
     private var confirm: WeakReference<CustomButton?>? = null
 
     fun setViews(
-            imageRiyaLarge: CustomCardView?, imageRiya: CustomCardView?,
+            imageRiyaLarge: LinearLayoutCompat?, imageRiya: CustomCardView?,
             title: CustomTextView?, desc: CustomTextView?, confirm: CustomButton?
     ) {
         this.imageRiyaLarge = WeakReference(imageRiyaLarge)
@@ -86,18 +87,20 @@ class ChannelConfirmDialogAnimator {
 
     private fun largeLogoSizeAnimators(imageRiyaParams: ConstraintLayout.LayoutParams, imageRiyaLargeParams: FrameLayout.LayoutParams
     ): Pair<ValueAnimator, ValueAnimator> {
-        val heightAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredHeight?.minus(5)) ?: 0,
-                imageRiyaParams.height - 10)
+        val heightAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredHeight?.minus(20))
+                ?: 0,
+                imageRiyaParams.height - 20)
 
         heightAnimator.addUpdateListener {
             imageRiyaLargeParams.height = it.animatedValue as Int
-            imageRiyaLarge?.get()?.radius = imageRiyaLargeParams.height.div(2).toFloat()
+//            imageRiyaLarge?.get()?.radius = imageRiyaLargeParams.height.div(2).toFloat()
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
             imageRiyaLarge?.get()?.refreshLayout()
         }
 
-        val widthAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredWidth?.minus(10)) ?: 0,
-                imageRiyaParams.width - 10)
+        val widthAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredWidth?.minus(20))
+                ?: 0,
+                imageRiyaParams.width - 20)
         widthAnimator.addUpdateListener {
             imageRiyaLargeParams.width = it.animatedValue as Int
             imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams

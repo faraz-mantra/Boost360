@@ -175,7 +175,7 @@ open class ImageActivity : AppCompatActivity() {
             if (permissionsList.size > 0) {
                 if (permissionsNeeded.size > 0) {
                     // Need Rationale
-                    var message: String = getString(R.string.media_picker_you_need_to_grant_access_to) + permissionsNeeded[0]
+                    var message: String = getString(R.string.media_picker_you_need_to_grant_access_to) + " " + permissionsNeeded[0]
                     for (i in 1 until permissionsNeeded.size) message = message + ", " + permissionsNeeded[i]
                     showMessageOKCancel(message,
                             DialogInterface.OnClickListener { _, _ ->
@@ -196,11 +196,13 @@ open class ImageActivity : AppCompatActivity() {
 
     private fun showMessageOKCancel(message: String, okListener: DialogInterface.OnClickListener) {
         AlertDialog.Builder(this@ImageActivity)
-                .setMessage(message)
-                .setPositiveButton(getString(R.string.media_picker_ok), okListener)
-                .setNegativeButton(getString(R.string.media_picker_cancel), null)
-                .create()
-                .show()
+                .setMessage(message).setPositiveButton(getString(R.string.media_picker_ok), okListener)
+                .setNegativeButton(getString(R.string.media_picker_cancel)) { dialog, _ ->
+                    run {
+                        dialog.cancel()
+                        this.onBackPressed()
+                    }
+                }.create().show()
     }
 
     private fun addPermission(permissionsList: MutableList<String>, permission: String): Boolean {

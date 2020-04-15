@@ -4,15 +4,14 @@ import android.view.Gravity
 import androidx.core.content.res.ResourcesCompat.getFont
 import com.framework.enums.TextType
 import com.framework.enums.setTextStyle
-import com.onboarding.nowfloats.model.common.SectionHeaderModel
-import com.onboarding.nowfloats.model.common.getInstance
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.ItemSectionHeaderBinding
+import com.onboarding.nowfloats.model.common.SectionHeaderModel
+import com.onboarding.nowfloats.model.common.getInstance
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class SectionHeaderRecyclerViewHolder constructor(binding: ItemSectionHeaderBinding) :
-        AppBaseRecyclerViewHolder<ItemSectionHeaderBinding>(binding) {
+class SectionHeaderRecyclerViewHolder constructor(binding: ItemSectionHeaderBinding) : AppBaseRecyclerViewHolder<ItemSectionHeaderBinding>(binding) {
 
   private var model: SectionHeaderModel? = null
 
@@ -20,10 +19,10 @@ class SectionHeaderRecyclerViewHolder constructor(binding: ItemSectionHeaderBind
     super.bind(position, item)
     model = SectionHeaderModel.getInstance(
         text = getResources()?.getString(R.string._or_),
-            textColor = getColor(R.color.warm_grey),
-            typeface = activity?.let { getFont(it, R.font.italic) },
-            textType = TextType.SUBTITLE_2,
-            gravity = Gravity.CENTER
+        textColor = getColor(R.color.warm_grey),
+        typeface = activity?.let { getFont(it, R.font.italic) },
+        textType = TextType.SUBTITLE_2,
+        gravity = Gravity.CENTER
     )
     setViews(model)
   }

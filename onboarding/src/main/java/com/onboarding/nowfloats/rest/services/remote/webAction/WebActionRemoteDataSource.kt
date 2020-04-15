@@ -6,12 +6,13 @@ import com.onboarding.nowfloats.rest.EndPoints
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface WebActionRemoteDataSource {
 
   @POST(EndPoints.POST_UPDATE_WHATSAPP_URL)
-  fun updateWhatsAppNumber(@Body request: UpdateChannelActionDataRequest):
-          Observable<Response<UpdateChannelAccessTokenResponse>>
+  fun updateWhatsAppNumber(@Body request: UpdateChannelActionDataRequest, @Header("Authorization") auth: String):
+      Observable<Response<UpdateChannelAccessTokenResponse>>
 
 }

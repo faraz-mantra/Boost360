@@ -22,9 +22,9 @@ class ChannelWhyDialog : BaseDialogFragment<DialogChannelWhyConfirmBinding, Base
 
     override fun onViewCreated() {
         binding?.container?.post {
-            (binding?.container?.fadeIn(100L)?.mergeWith(binding?.imageCard?.fadeIn(100L)))
-                    ?.andThen(binding?.title?.fadeIn(50L)?.mergeWith(binding?.desc?.fadeIn(50L)))
-                    ?.andThen(binding?.confirm?.fadeIn(0L))?.subscribe()
+            (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
+                    ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))
+                    ?.andThen(binding?.confirm?.fadeIn(50L))?.subscribe()
             binding?.title?.text = channelModel?.getName()
             binding?.desc?.text = channelModel?.moreDesc
             binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))

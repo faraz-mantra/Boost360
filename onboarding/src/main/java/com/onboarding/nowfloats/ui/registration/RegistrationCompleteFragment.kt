@@ -18,6 +18,9 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.bottomsheet.builder.BottomDialog
+import com.onboarding.nowfloats.bottomsheet.builder.imagePicker
+import com.onboarding.nowfloats.bottomsheet.builder.title
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
 import com.onboarding.nowfloats.extensions.fadeIn
@@ -52,7 +55,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     override fun onCreateView() {
         super.onCreateView()
         setSetSelectedChannels(channels)
-        setOnClickListener(binding?.menuView, binding?.done, binding?.businessClick, binding?.profileView)
+        setOnClickListener(binding?.menuView, binding?.done, binding?.businessClick, binding?.profileImage)
         binding?.congratsText?.text = resources.getString(R.string.congratulations)
         requestFloatsModel?.contactInfo?.businessName?.let {
             binding?.businessName?.text = it
@@ -73,7 +76,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
     private fun setBusinessImage() {
         val imageUrl = takeIf { requestFloatsModel?.businessUrl.isNullOrEmpty() }?.let {
-            requestFloatsModel?.channelAccessTokens?.map { it.profilePicture }?.firstOrNull { it?.isNotEmpty() == true } ?: return
+            requestFloatsModel?.channelAccessTokens?.map { it.profilePicture }?.firstOrNull { it?.isNotEmpty() == true }
+                    ?: return
         } ?: requestFloatsModel?.businessUrl
         binding?.businessNameInitial?.gone()
         binding?.businessImage?.visible()
@@ -139,13 +143,14 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         super.onClick(v)
         when (v) {
             binding?.menuView -> showMenuLogout(v)
-            binding?.profileView -> openImagePicker(true)
+            binding?.profileImage -> openImagePicker(true)
             binding?.businessClick -> openImagePicker(false)
             binding?.skip,
             binding?.done -> {
                 try {
                     val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
                     baseActivity.startActivity(intent)
+                    baseActivity.finish()
                     NavigatorManager.clearStackAndFormData()
                 } catch (e: ClassNotFoundException) {
                     e.printStackTrace()
@@ -156,14 +161,22 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
     private fun openImagePicker(isProfileImage: Boolean) {
         this.isProfileImage = isProfileImage
-        ImagePicker.Builder(baseActivity)
-                .mode(ImagePicker.Mode.CAMERA_AND_GALLERY)
-                .compressLevel(ImagePicker.ComperesLevel.SOFT)
-                .directory(ImagePicker.Directory.DEFAULT)
-                .extension(ImagePicker.Extension.PNG) //       .scale(600, 600)
-                .allowMultipleImages(false)
-                .enableDebuggingMode(true)
-                .build()
+        BottomDialog.builder(baseActivity) {
+            expandable = true
+            peekHeightProportion = .4f
+            title(resources.getString(R.string.choose_an_action), round = true)
+            imagePicker("") { dialog, type, _ ->
+                dialog.dismiss()
+                if (type == 1 || type == 2) {
+                    ImagePicker.Builder(baseActivity)
+                            .mode(takeIf { type == 2 }?.let { ImagePicker.Mode.CAMERA } ?: ImagePicker.Mode.GALLERY)
+                            .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+                            .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+                            .enableDebuggingMode(true).build()
+                }
+            }
+        }
+
     }
 
     private fun showMenuLogout(view: View) {
@@ -218,7 +231,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
     private fun getRequestBusinessDate(businessImage: File): UploadFileBusinessRequest {
         val responseBody = RequestBody.create(MediaType.parse("image/png"), businessImage.readBytes())
-        val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
+        val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
+                ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
         return UploadFileBusinessRequest(clientId, requestFloatsModel?.floatingPointId, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
     }
 
@@ -238,7 +252,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
     private fun getRequestProfileData(profileImage: File): UploadFileProfileRequest {
         val responseBody = RequestBody.create(MediaType.parse("image/png"), profileImage.readBytes())
-        val fileName = takeIf { profileImage.name.isNullOrEmpty().not() }?.let { profileImage.name } ?: "PROFILE_${requestFloatsModel?.contactInfo?.domainName}.png"
+        val fileName = takeIf { profileImage.name.isNullOrEmpty().not() }?.let { profileImage.name }
+                ?: "PROFILE_${requestFloatsModel?.contactInfo?.domainName}.png"
         return UploadFileProfileRequest(clientId, userProfileId, fileName, responseBody)
     }
 }

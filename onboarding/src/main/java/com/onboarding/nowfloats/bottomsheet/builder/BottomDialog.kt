@@ -3,7 +3,6 @@ package com.onboarding.nowfloats.bottomsheet.builder
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
-import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Build
@@ -11,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.*
 import android.view.View.NO_ID
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
 import com.framework.base.BaseActivity
 import com.onboarding.nowfloats.R
@@ -83,8 +83,7 @@ class BottomDialog internal constructor(
     val stateBarHeight: Int
         get() {
             var result = 0
-            val resourceId =
-                    context.resources.getIdentifier("status_bar_height", "dimen", "android")
+            val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
             if (resourceId > 0) {
                 result = context.resources.getDimensionPixelSize(resourceId)
             }
@@ -220,7 +219,7 @@ class BottomDialog internal constructor(
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         }
 
         onDismiss?.also {
@@ -236,7 +235,6 @@ class BottomDialog internal constructor(
         } else {
             sf.layoutParams = sf.layoutParams.also { it.height = stateBarHeight }
         }
-
         shadowListener()
     }
 
@@ -270,10 +268,9 @@ class BottomDialog internal constructor(
     private val container get() = this.findViewById<NestedScrollView>(R.id.container)
 
     private fun setContentMarginBottom(value: Int) {
-        container.layoutParams =
-                (container.layoutParams as ViewGroup.MarginLayoutParams).also { p ->
-                    p.setMargins(0, 0, 0, value)
-                }
+        container.layoutParams = (container.layoutParams as ViewGroup.MarginLayoutParams).also { p ->
+            p.setMargins(0, 0, 0, value)
+        }
 
     }
 
@@ -290,11 +287,12 @@ class BottomDialog internal constructor(
         }
 
     private fun getNavigationBarHeight(): Int {
-        val resources = context.resources
-        return if (checkNavigationBarShow(activity.window)) {//判断是否有导航栏
-            val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-            resources.getDimensionPixelSize(resourceId)
-        } else 0
+//        val resources = context.resources
+//        return if (checkNavigationBarShow(activity.window)) {
+//            val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+//            resources.getDimensionPixelSize(resourceId)
+//        } else 0
+        return 0
     }
 
     fun <T> get(action: BottomDialog.() -> T): T {
@@ -334,7 +332,7 @@ class BottomDialog internal constructor(
             setPadding(0, 0, 0, 0)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window?.navigationBarColor = Color.parseColor("#000000")
+            window?.navigationBarColor = ResourcesCompat.getColor(context.resources, R.color.colorAccent, context.theme)
         }
 
         Handler().postDelayed({ showInternal() }, 1)
