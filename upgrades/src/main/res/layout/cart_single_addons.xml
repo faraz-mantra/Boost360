@@ -88,7 +88,7 @@
     <View
         android:id="@+id/cart_single_addons_bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/_2sdp"
         android:background="@drawable/view_dot_lines_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

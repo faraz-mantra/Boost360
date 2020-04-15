@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.upgrades.data.model.WidgetModel
-import com.boost.upgrades.interfaces.HistoryFragmentListener
+import com.boost.upgrades.data.api_model.GetPurchaseOrder.WidgetPack
 
 
-class HistoryDetailsAdapter(itemList: List<WidgetModel>?) :
+class HistoryDetailsAdapter(itemList: List<WidgetPack>?) :
         RecyclerView.Adapter<HistoryDetailsAdapter.upgradeViewHolder>(){
 
-    private var list = ArrayList<WidgetModel>()
+    private var list = ArrayList<WidgetPack>()
     private lateinit var context: Context
 
     init {
-        this.list = itemList as ArrayList<WidgetModel>
+        this.list = itemList as ArrayList<WidgetPack>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -31,15 +30,16 @@ class HistoryDetailsAdapter(itemList: List<WidgetModel>?) :
     }
 
     override fun getItemCount(): Int {
-        return 2 //list.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
+        holder.widgetName.setText(list.get(position).Name)
     }
 
 
-    fun addupdates(upgradeModel: List<WidgetModel>) {
+    fun addupdates(upgradeModel: List<WidgetPack>) {
         val initPosition = list.size
         list.clear()
         list.addAll(upgradeModel)
@@ -47,6 +47,8 @@ class HistoryDetailsAdapter(itemList: List<WidgetModel>?) :
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val widgetName = itemView.findViewById<TextView>(R.id.widget_name)
 
         var context: Context = itemView.context
 //

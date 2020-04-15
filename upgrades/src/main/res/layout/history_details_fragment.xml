@@ -45,14 +45,14 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/paymentBanner"
+                android:id="@+id/history_details_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:gravity="center"
-                android:text="id #609764345"
+                tools:text="id #609764345"
                 android:textAllCaps="true"
                 android:textColor="@color/common_text_color"
                 android:textStyle="bold"
@@ -134,10 +134,11 @@
                         android:text="Order date" />
 
                     <TextView
+                        android:id="@+id/layout1_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="24-Dec-2019" />
+                        tools:text="24-Dec-2019" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -152,13 +153,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Order date" />
+                        android:text="Order Time" />
 
                     <TextView
+                        android:id="@+id/layout1_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="24-Dec-2019" />
+                        tools:text="10:30 AM" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -171,13 +173,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Order date" />
+                        android:text="Order Total" />
 
                     <TextView
+                        android:id="@+id/layout1_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="24-Dec-2019" />
+                        tools:text="₹900 (3  items)" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -291,13 +294,13 @@
                         android:textColor="@color/common_text_color" />
 
                     <TextView
-                        android:id="@+id/cart_amount_value"
+                        android:id="@+id/history_details_MRPPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="₹2097"
+                        tools:text="₹2097"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
@@ -311,27 +314,27 @@
                         android:textColor="@color/common_text_color" />
 
                     <TextView
-                        android:id="@+id/coupon_discount_value"
+                        android:id="@+id/history_details_selling_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/cart_amount_value"
+                        android:layout_below="@id/history_details_MRPPrice"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="₹900" />
+                        tools:text="₹900" />
 
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/_2sdp"
                     android:background="@drawable/view_dot_lines_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cart_subscription_full_amount_layout" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/history_total_layout"
+                <RelativeLayout
+                    android:id="@+id/history_detail_total_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
@@ -342,31 +345,25 @@
                     app:layout_constraintTop_toBottomOf="@id/cart_subscription_full_amount_layout">
 
                     <TextView
-                        android:id="@+id/cart_total_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:padding="@dimen/_5sdp"
                         android:text="Total"
                         android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:textSize="@dimen/_12sdp"/>
 
                     <TextView
-                        android:id="@+id/cart_grand_total"
+                        android:id="@+id/history_details_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:padding="@dimen/_5sdp"
-                        android:text="₹936"
+                        tools:text="₹936"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/_12sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
 
                 <View
                     android:id="@+id/bottom_view_line"
@@ -375,26 +372,22 @@
                     android:background="@drawable/edittext_bottom_line_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/history_total_layout" />
+                    app:layout_constraintTop_toBottomOf="@id/history_detail_total_layout" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/bottom_view_line">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/history_details_payment_type"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bottom_view_line"
                         android:text="Net Banking: ₹900"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:paddingTop="@dimen/_10sdp"
                         />
-
-                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

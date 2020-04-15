@@ -116,7 +116,7 @@
         <View
             android:id="@+id/paid_single_dummy_view"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/_2sdp"
             android:background="@color/material_grey_400"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

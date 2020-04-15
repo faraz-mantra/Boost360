@@ -2,6 +2,7 @@ package com.biz2.nowfloats.boost.updates.data.remote
 
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.upgrades.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
+import com.boost.upgrades.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.upgrades.data.api_model.PurchaseOrder.request.CreatePurchaseOrderRequest
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.RazorpayToken.RazorpayTokenResponse
@@ -41,4 +42,10 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @GET("https://api.razorpay.com/v1/customers/{customer_id}/tokens")
     fun getRazorPayTokens(@Header("Authorization")authHeader: String, @Path("customer_id") customerId: String): Observable<RazorpayTokenResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")
+    fun getPurchasedOrders(@Path("floatingPointId") floatingPointId: String, @Query("clientId") clientId: String ): Observable<GetPurchaseOrderResponse>
+
+
 }
