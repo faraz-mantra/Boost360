@@ -22,7 +22,9 @@ import com.boost.upgrades.adapter.PaidAddonsAdapter
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.history.HistoryFragment
 import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.Constants.Companion.HISTORY_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
@@ -113,6 +115,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
         view_orders_history.setOnClickListener {
             Toasty.info(requireContext(), R.string.feature_coming_soon).show()
+            (activity as UpgradeActivity).addFragment(HistoryFragment.newInstance(), HISTORY_FRAGMENT)
         }
 
         addons_back.setOnClickListener {

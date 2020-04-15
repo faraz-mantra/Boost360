@@ -351,7 +351,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_addons_recycler.apply {
             layoutManager = gridLayoutManager
             cart_addons_recycler.adapter = cartAddonsAdaptor
-
         }
     }
 

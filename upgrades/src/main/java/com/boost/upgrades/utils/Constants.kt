@@ -4,6 +4,8 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.history.HistoryFragment
+import com.boost.upgrades.ui.historydetails.HistoryDetailsFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
@@ -38,6 +40,8 @@ class Constants {
         var PACKAGE_FRAGMENT: String = PackageFragment::class.java.getName()
         var CART_FRAGMENT: String = CartFragment::class.java.getName()
         var VIEW_ALL_FEATURE: String = ViewAllFeaturesFragment::class.java.getName()
+        var HISTORY_FRAGMENT: String = HistoryFragment::class.java.getName()
+        var HISTORY_DETAILS_FRAGMENT: String = HistoryDetailsFragment::class.java.getName()
         var DETAILS_FRAGMENT: String = DetailsFragment::class.java.getName()
         var PAYMENT_FRAGMENT: String = PaymentFragment::class.java.getName()
         var MYADDONS_FRAGMENT: String = MyAddonsFragment::class.java.getName()

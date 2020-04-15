@@ -134,6 +134,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_10sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
                 android:background="@drawable/all_side_curve_bg">
 
                 <RelativeLayout
@@ -293,6 +295,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/freeaddons_layout"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
                 android:background="@drawable/all_side_curve_bg"
                 android:visibility="gone"
                 tools:visibility="visible">
