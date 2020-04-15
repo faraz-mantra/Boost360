@@ -20,6 +20,7 @@ import com.boost.presignup.locale.LocaleManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.nowfloats.util.Constants;
+import com.onboarding.nowfloats.BaseBoardingApplication;
 import com.thinksity.BuildConfig;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
@@ -39,7 +40,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     @Override
     public void onCreate() {
         super.onCreate();
-
+        BaseBoardingApplication.instance = this;
+        BaseBoardingApplication.initModule(this);
         initWebEngage();
 //        ContextApplication.initSdk(this, this);
 

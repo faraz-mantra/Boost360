@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.WebEngageController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.activity_sign_up_confirmation.*
 import java.net.URL
 
@@ -42,9 +43,8 @@ class SignUpConfirmation : AppCompatActivity() {
 
         set_up_business_profile.setOnClickListener {
             WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
-            val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
-            intent.putExtra("profile_id", profile_id)
-            startActivity(intent)
+            NavigatorManager.startActivities(this@SignUpConfirmation)
+            finish()
         }
     }
 }

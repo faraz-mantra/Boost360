@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/image_View"
+            android:layout_width="@dimen/size_90"
+            android:layout_height="@dimen/size_90"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size_50"
+            android:alpha="0"
+            tools:alpha="1">
+
+          <com.framework.views.CircularImageView
+              android:id="@+id/profile_image"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:civ_border_color="@color/white"
+              app:civ_border_width="@dimen/size_4"
+              app:civ_shadow_color="@color/quantum_grey200"
+              app:civ_shadow_radius="@dimen/size_2"
+              app:civ_shadow="true"
+              app:srcCompat="@drawable/ic_user3" />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:layout_width="@dimen/size_24"
+              android:layout_height="@dimen/size_24"
+              android:layout_gravity="right|bottom"
+              android:layout_marginEnd="@dimen/size_6"
+              android:layout_marginBottom="@dimen/size_6"
+              app:srcCompat="@drawable/ic_add" />
+
+        </FrameLayout>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/congratsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginEnd="@dimen/size_32"
+            android:alpha="0"
+            android:gravity="center_horizontal"
+            android:textAlignment="gravity"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/semi_bold"
+            app:textType="HEADING_2"
+            tools:alpha="1"
+            tools:text="Congratulations\nBraj Madhav" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/businessText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginEnd="@dimen/size_32"
+            android:alpha="0"
+            android:gravity="center_horizontal"
+            android:textAlignment="gravity"
+            android:textColor="@color/greyish_brown_80"
+            app:fontFamily="@font/regular"
+            app:textType="SUBHEADING_1"
+            tools:alpha="1"
+            tools:text="Your Doctors &amp; Clinic business is successfully setup on Boost." />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/size_32">
+
+          <com.framework.views.customViews.CustomCardView
+              android:id="@+id/cardView"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_32"
+              android:layout_marginTop="@dimen/size_60"
+              android:layout_marginEnd="@dimen/size_32"
+              android:layout_marginBottom="@dimen/size_32"
+              android:alpha="0"
+              app:cardBackgroundColor="@color/white"
+              app:cardCornerRadius="@dimen/size_16"
+              app:cardElevation="@dimen/size_2"
+              tools:alpha="1">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_grey_to_white_vertical"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/size_16"
+                android:paddingTop="@dimen/size_80"
+                android:paddingEnd="@dimen/size_16"
+                android:paddingBottom="@dimen/size_20">
+
+              <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/businessName"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:alpha="0"
+                  android:gravity="center_horizontal"
+                  android:textAlignment="gravity"
+                  android:textColor="@color/cerulean_blue"
+                  app:fontFamily="@font/light"
+                  app:textType="HEADING_2"
+                  tools:alpha="1"
+                  tools:text="Sood Child hospital &amp; Clinic" />
+
+              <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/settingUpChannels"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:alpha="0"
+                  android:gravity="center_horizontal"
+                  android:padding="@dimen/size_16"
+                  android:textAlignment="gravity"
+                  android:textColor="@color/warm_grey_two"
+                  android:visibility="gone"
+                  app:fontFamily="@font/regular"
+                  app:textType="SUBHEADING_2"
+                  tools:alpha="1"
+                  tools:text="Setting up on total 6 channels…"
+                  tools:visibility="visible" />
+
+              <com.framework.views.viewgroups.BaseRecyclerView
+                  android:id="@+id/selectedChannels"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_horizontal"
+                  android:alpha="0"
+                  android:gravity="center_horizontal"
+                  android:overScrollMode="never"
+                  android:paddingTop="@dimen/size_4"
+                  app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                  tools:alpha="1"
+                  tools:itemCount="6"
+                  tools:listitem="@layout/item_selected_channel_small"
+                  tools:spanCount="6">
+
+              </com.framework.views.viewgroups.BaseRecyclerView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+          </com.framework.views.customViews.CustomCardView>
+
+          <FrameLayout
+              android:id="@+id/tagImage"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:alpha="0"
+              android:elevation="@dimen/size_8"
+              android:outlineAmbientShadowColor="@color/transparent"
+              android:outlineSpotShadowColor="@color/transparent"
+              tools:alpha="1"
+              tools:ignore="UnusedAttribute">
+
+            <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_120"
+                android:layout_height="@dimen/size_120"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="@dimen/size_4"
+                app:cardElevation="@dimen/size_0"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="@dimen/size_4">
+
+              <com.framework.views.customViews.CustomCardView
+                  android:id="@+id/business_click"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:clickable="true"
+                  app:cardElevation="@dimen/size_0"
+                  android:focusable="true"
+                  app:cardCornerRadius="@dimen/size_4">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                  <com.framework.views.customViews.CustomImageView
+                      android:id="@+id/business_image"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:scaleType="centerCrop"
+                      android:visibility="gone"
+                      app:srcCompat="@drawable/ic_user3" />
+
+
+                  <com.framework.views.customViews.CustomTextView
+                      android:id="@+id/businessNameInitial"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:background="@color/white_two"
+                      android:gravity="center"
+                      android:includeFontPadding="false"
+                      android:textAlignment="gravity"
+                      android:textColor="@color/black_15"
+                      app:textAllCaps="true"
+                      app:textType="TITLE"
+                      tools:text="M" />
+                </FrameLayout>
+              </com.framework.views.customViews.CustomCardView>
+            </com.framework.views.customViews.CustomCardView>
+
+            <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_24"
+                android:layout_height="@dimen/size_24"
+                android:layout_gravity="right|bottom"
+                android:layout_marginEnd="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
+                app:cardCornerRadius="@dimen/size_12">
+
+              <com.framework.views.customViews.CustomImageView
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  app:srcCompat="@drawable/ic_add" />
+
+            </com.framework.views.customViews.CustomCardView>
+          </FrameLayout>
+
+        </FrameLayout>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginEnd="@dimen/size_32"
+            android:layout_marginBottom="@dimen/size_32"
+            android:alpha="0"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="@dimen/size_4"
+            android:text="@string/business_digitally_desc"
+            android:textAlignment="gravity"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="SUBHEADING_2"
+            tools:alpha="1" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/done"
+            style="@style/Onboarding.Registration.FormButtonStyle"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginEnd="@dimen/size_32"
+            android:layout_marginBottom="@dimen/size_16"
+            android:alpha="0"
+            android:background="@drawable/bg_button_rounded_orange"
+            android:text="@string/add_your_first_business_update"
+            android:textAllCaps="false"
+            app:textType="HEADING_6"
+            tools:alpha="1" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/skip"
+            style="@style/Onboarding.Registration.FormButtonStyle"
+            android:layout_marginStart="@dimen/size_32"
+            android:layout_marginEnd="@dimen/size_32"
+            android:alpha="0"
+            android:background="@color/transparent"
+            android:fontFamily="@font/regular"
+            android:shadowColor="@color/transparent"
+            android:text="@string/skip_to_dashboard"
+            android:textAllCaps="false"
+            android:textColor="@color/warm_grey"
+            app:textType="HEADING_6"
+            tools:alpha="1" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nestedScrollView" />
+
+    <com.framework.views.customViews.CustomImageView
+        android:id="@+id/menu_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/size_10"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_more_vert"
+        tools:ignore="NewApi" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_animation"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

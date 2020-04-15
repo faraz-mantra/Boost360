@@ -283,6 +283,11 @@ class DetailsFragment : BaseFragment() {
                     }
                 }
 
+                if(addonDetails!!.is_premium)
+                    havent_bought_the_feature.visibility = View.VISIBLE
+                else
+                    havent_bought_the_feature.visibility = View.GONE
+
                 if(addonDetails!!.target_business_usecase!=null) {
                     title_top_1.visibility = View.VISIBLE
                     title_top_1.text = addonDetails!!.target_business_usecase
