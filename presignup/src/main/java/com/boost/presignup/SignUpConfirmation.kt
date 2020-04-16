@@ -43,8 +43,12 @@ class SignUpConfirmation : AppCompatActivity() {
 
         set_up_business_profile.setOnClickListener {
             WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
-            NavigatorManager.startActivities(this@SignUpConfirmation)
-            finish()
+            val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
+            intent.putExtra("profile_id", profile_id)
+            startActivity(intent)
+
+//            NavigatorManager.startActivities(this@SignUpConfirmation)
+//            finish()
         }
     }
 }
