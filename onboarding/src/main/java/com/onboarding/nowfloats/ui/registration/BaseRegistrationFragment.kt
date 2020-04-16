@@ -192,4 +192,14 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
   override fun getViewModelClass(): Class<BusinessCreateViewModel> {
     return BusinessCreateViewModel::class.java
   }
+
+  protected fun setDataLogin() {
+    val editor = pref?.edit()
+    editor?.putString(PreferenceConstant.KEY_FP_ID, requestFloatsModel?.floatingPointId)
+    editor?.putString(PreferenceConstant.KEY_sourceClientId, clientId)
+    editor?.putString(PreferenceConstant.GET_FP_EXPERIENCE_CODE, requestFloatsModel?.categoryDataModel?.experience_code)
+    editor?.putBoolean(PreferenceConstant.IS_USER_LOGIN, true)
+    editor?.putBoolean(PreferenceConstant.IS_USER_SIGN_UP, false)
+    editor?.apply()
+  }
 }

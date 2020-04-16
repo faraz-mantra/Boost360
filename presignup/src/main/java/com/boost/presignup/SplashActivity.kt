@@ -18,22 +18,24 @@ import java.security.NoSuchAlgorithmException
 
 class SplashActivity : AppCompatActivity() {
 
-    var isUserLoggedIn = false;
+    var isUserLoggedIn = false
+    var isSignUpComplete = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         initLottieAnimation()
-        val pref: SharedPreferences = this.getSharedPreferences( "nowfloatsPrefs", 0)
+        val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", 0)
         isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
+        isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
 
-        if(isUserLoggedIn){
+        if (isUserLoggedIn) {
             val profileId = pref.getString("user_profile_id", null)
             isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
         }
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             hashGeneration()
         }
     }
@@ -46,9 +48,12 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                if(isUserLoggedIn){
+                if (isUserLoggedIn) {
                     val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
                     startActivity(intent)
+                    finish()
+                } else if (isSignUpComplete) {
+                    NavigatorManager.startActivities(this@SplashActivity)
                     finish()
                 } else {
                     val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
@@ -72,8 +77,8 @@ class SplashActivity : AppCompatActivity() {
     private fun hashGeneration() { // Add code to print out the key hash
         try {
             val info: PackageInfo = packageManager.getPackageInfo(
-                    packageName,
-                    PackageManager.GET_SIGNATURES)
+                packageName,
+                PackageManager.GET_SIGNATURES)
             for (signature in info.signatures) {
                 val md: MessageDigest = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
