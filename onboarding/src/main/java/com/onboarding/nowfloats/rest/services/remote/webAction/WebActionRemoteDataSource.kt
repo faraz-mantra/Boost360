@@ -12,7 +12,7 @@ import retrofit2.http.POST
 interface WebActionRemoteDataSource {
 
   @POST(EndPoints.POST_UPDATE_WHATSAPP_URL)
-  fun updateWhatsAppNumber(@Body request: UpdateChannelActionDataRequest, @Header("Authorization") auth: String):
+  fun updateWhatsAppNumber(@Header("Authorization") auth: String, @Body request: UpdateChannelActionDataRequest):
       Observable<Response<UpdateChannelAccessTokenResponse>>
 
 }
