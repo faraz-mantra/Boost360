@@ -30,7 +30,7 @@ open class BaseApiClient protected constructor() {
       httpClient.addInterceptor(interceptor)
     }
 
-    gson = GsonBuilder().create()
+    gson = GsonBuilder().setLenient().create()
 
   }
 
