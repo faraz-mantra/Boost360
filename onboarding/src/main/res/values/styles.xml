@@ -94,6 +94,7 @@
         <item name="android:layout_marginBottom">@dimen/size_10</item>
         <item name="textType">HEADING_7</item>
         <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
         <item name="android:inputType">text</item>
         <item name="android:drawablePadding">@dimen/size_8</item>
         <item name="android:importantForAutofill" tools:ignore="NewApi">no</item>

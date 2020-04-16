@@ -51,7 +51,7 @@
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                         android:gravity="center_horizontal"
                         android:hint="@string/subdomain"
-                        android:maxLength="30"
+                        android:maxLength="50"
                         app:textType="HEADING_4"
                         android:inputType="textFilter"
                         android:textAlignment="gravity"

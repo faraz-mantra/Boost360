@@ -18,7 +18,7 @@ open class BaseBoardingApplication : BaseApplication() {
         lateinit var instance: MultiDexApplication
 
         @JvmStatic
-        public fun initModule(application: MultiDexApplication){
+        fun initModule(application: MultiDexApplication) {
             PreferencesUtils.initSharedPreferences(application)
             NfxApiClient.shared.init(EndPoints.NFX_BASE_URL)
             WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE_URL)

@@ -46,7 +46,7 @@ class SignUpActivity : AppCompatActivity() {
 
         WebEngageController.trackEvent("PS_Signup Form Loaded", "Signup Form Loaded", "")
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance()
 
         if (intent != null && intent.hasExtra("provider")) {
             val intentProvider = intent.getStringExtra("provider") as String
@@ -60,7 +60,7 @@ class SignUpActivity : AppCompatActivity() {
                 provider = intentProvider
 
                 if (!email.contains('@'))
-                    email = "";
+                    email = ""
 
                 user_email.setText(email)
 
@@ -74,7 +74,7 @@ class SignUpActivity : AppCompatActivity() {
                 provider = intentProvider
 
                 if (!email.contains('@'))
-                    email = "";
+                    email = ""
 
                 user_email.setText(email)
 
@@ -92,9 +92,9 @@ class SignUpActivity : AppCompatActivity() {
         create_account_button.isVisible = true
 
         retrofit = Retrofit.Builder()
-                .baseUrl("https://api2.withfloats.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .baseUrl("https://api2.withfloats.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
         ApiService = retrofit.create(Apis::class.java)
 
 
@@ -124,19 +124,19 @@ class SignUpActivity : AppCompatActivity() {
             if (validateInput()) {
                 Toast.makeText(applicationContext, "Processing...", Toast.LENGTH_SHORT).show()
                 create_account_button.isVisible = false
-                if(registerWithFirebaseEmailProvider) {
+                if (registerWithFirebaseEmailProvider) {
                     mAuth.createUserWithEmailAndPassword(email, userPassword)
-                            .addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    Log.d("createUserProfile", ">>>> Successfull")
-                                    registerUserProfileAPI()
-                                } else {
-                                    Log.d("createUserProfile", ">>>> Failure")
-                                    create_account_button.isVisible = true
-                                    Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
-                                    WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
-                                }
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Log.d("createUserProfile", ">>>> Successfull")
+                                registerUserProfileAPI()
+                            } else {
+                                Log.d("createUserProfile", ">>>> Failure")
+                                create_account_button.isVisible = true
+                                Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
+                                WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
                             }
+                        }
                 } else {
                     registerUserProfileAPI()
                 }
@@ -163,29 +163,29 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun isValidMail(email: String): Boolean {
         return Pattern.compile(
-                "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                        "\\@" +
-                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                        "(" +
-                        "\\." +
-                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                        ")+"
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"
         ).matcher(email).matches()
     }
 
     private fun isValidMobile(phone: String): Boolean {
         return Pattern.compile(
-                "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
-                .matcher(phone).matches()
+            "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
+            .matcher(phone).matches()
     }
 
     fun registerUserProfileAPI() {
         val userInfo = UserProfileRequest(
-                personIdToken,
-                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
-                email,
-                userPassword,
-                ProfileProperties(email, userMobile, personName, userPassword), provider, null)
+            personIdToken,
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+            email,
+            userPassword,
+            ProfileProperties(email, userMobile, personName, userPassword), provider, null)
 
         ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
             override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
@@ -202,11 +202,12 @@ class SignUpActivity : AppCompatActivity() {
                 WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
 
                 val intent = Intent(applicationContext, SignUpConfirmation::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.putExtra("profileUrl", profileUrl)
                 intent.putExtra("person_name", personName)
                 intent.putExtra("profile_id", responseResult?.Result?.LoginId)
-
                 startActivity(intent)
+                finish()
             }
         })
     }
