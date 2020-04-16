@@ -5,12 +5,11 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class ChannelActionData(
-        @SerializedName("active_whatsapp_number")
-        var active_whatsapp_number: String? = null
+    var active_whatsapp_number: String? = null
 ) : Parcelable {
   constructor(parcel: Parcel) : this(parcel.readString())
 
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeString(active_whatsapp_number)
   }
 

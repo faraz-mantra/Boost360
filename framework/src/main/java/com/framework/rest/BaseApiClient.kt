@@ -1,6 +1,5 @@
 package com.framework.rest
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -12,8 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 open class BaseApiClient protected constructor() {
 
   lateinit var retrofit: Retrofit
-  private var gson: Gson
   private var httpClient: OkHttpClient.Builder
+  private var gson = GsonBuilder().setLenient().create()
 
   companion object {
     val shared = BaseApiClient()
