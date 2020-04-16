@@ -52,7 +52,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   protected val auth: String?
     get() {
-      return pref?.getString(PreferenceConstant.AUTHORIZATION, "")
+//      return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
+      return "58ede4d4ee786c1604f6c535"
     }
 
   protected var requestFloatsModel: RequestFloatsModel? = null
@@ -111,8 +112,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   fun getDotProgress(): DotProgressBar? {
     return DotProgressBar.Builder().setMargin(0).setAnimationDuration(800)
-            .setDotBackground(R.drawable.ic_dot).setMaxScale(.7f).setMinScale(0.3f)
-            .setNumberOfDots(3).setdotRadius(8).build(baseActivity)
+        .setDotBackground(R.drawable.ic_dot).setMaxScale(.7f).setMinScale(0.3f)
+        .setNumberOfDots(3).setdotRadius(8).build(baseActivity)
   }
 
   protected fun gotoBusinessWebsite() {
@@ -161,8 +162,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
   private fun getBundle(): Bundle {
     val bundle = Bundle()
     bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages)
-            .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
-            .addString(IntentConstant.PREVIOUS_SCREEN, getCurrentScreenType()?.name)
+        .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
+        .addString(IntentConstant.PREVIOUS_SCREEN, getCurrentScreenType()?.name)
     return bundle
   }
 
