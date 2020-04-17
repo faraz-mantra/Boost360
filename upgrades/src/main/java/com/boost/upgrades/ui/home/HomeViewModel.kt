@@ -71,125 +71,115 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     {
+                                        Log.e("GetAllFeatures",it.toString())
+                                        var data = arrayListOf<FeaturesModel>()
+                                        for (item in it.Data[0].features){
+                                            if(item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0){
+                                                var applicableToCurrentExpCode = false
+                                                for(code in item.exclusive_to_categories){
+                                                    if(code.equals(experienceCode, true))
+                                                        applicableToCurrentExpCode = true
+                                                }
+                                                if(!applicableToCurrentExpCode)
+                                                    continue;
+                                            }
+
+                                            val primaryImage = if(item.primary_image==null) null else item.primary_image.url
+                                            val secondaryImages = ArrayList<String>()
+                                            if (item.secondary_images != null){
+                                                for(sec_images in item.secondary_images){
+                                                    if(sec_images.url !=null) {
+                                                        secondaryImages.add(sec_images.url)
+                                                    }
+                                                }
+                                            }
+                                            data.add(FeaturesModel(
+                                                    item.boost_widget_key,
+                                                    item.name,
+                                                    item.feature_code,
+                                                    item.description,
+                                                    item.description_title,
+                                                    item.createdon,
+                                                    item.updatedon,
+                                                    item.websiteid,
+                                                    item.isarchived,
+                                                    item.is_premium,
+                                                    item.target_business_usecase,
+                                                    item.feature_importance,
+                                                    item.discount_percent,
+                                                    item.price,
+                                                    item.time_to_activation,
+                                                    primaryImage,
+                                                    if(item.feature_banner==null) null else item.feature_banner.url,
+                                                    if(secondaryImages.size==0) null else Gson().toJson(secondaryImages),
+                                                    Gson().toJson(item.learn_more_link),
+                                                    if(item.total_installs==null) "--" else item.total_installs,
+                                                    if(item.extended_properties!=null && item.extended_properties.size > 0) Gson().toJson(item.extended_properties) else null,
+                                                    if(item.exclusive_to_categories!=null && item.exclusive_to_categories.size > 0) Gson().toJson(item.exclusive_to_categories) else null
+                                            ))
+                                        }
                                         Completable.fromAction {
-                                            AppDatabase.getInstance(getApplication())!!.featuresDao().emptyFeatures()
+                                            AppDatabase.getInstance(getApplication())!!
+                                                    .featuresDao()
+                                                    .insertAllFeatures(data)
                                         }
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
+                                                .doOnComplete {
+                                                    Log.i("insertAllFeatures","Successfully")
+                                                    compositeDisposable.add(
+                                                            AppDatabase.getInstance(getApplication())!!
+                                                                    .featuresDao()
+                                                                    .getFeaturesItems(true)
+                                                                    .subscribeOn(Schedulers.io())
+                                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                                    .doOnSuccess {
+                                                                        allAvailableFeaturesDownloadResult.postValue(it)
+                                                                        updatesLoader.postValue(false)
+
+                                                                        compositeDisposable.add(
+                                                                                ApiService.GetFloatingPointWebWidgets(fpid, clientId)
+                                                                                        .subscribeOn(Schedulers.io())
+                                                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                                                        .subscribe(
+                                                                                                {
+                                                                                                    compositeDisposable.add(
+                                                                                                            AppDatabase.getInstance(getApplication())!!
+                                                                                                                    .featuresDao()
+                                                                                                                    .getallActivefeatureCount(it.Result)
+                                                                                                                    .subscribeOn(Schedulers.io())
+                                                                                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                                                                                    .doOnSuccess {
+                                                                                                                        _totalActiveAddonsCount.postValue(it)
+                                                                                                                    }
+                                                                                                                    .doOnError {
+                                                                                                                        updatesError.postValue(it.message)
+                                                                                                                    }
+                                                                                                                    .subscribe()
+                                                                                                    )
+                                                                                                },
+                                                                                                {
+                                                                                                    updatesError.postValue(it.message)
+                                                                                                    updatesLoader.postValue(false)
+                                                                                                }
+                                                                                        )
+
+                                                                        )
+
+                                                                    }
+                                                                    .doOnError {
+                                                                        updatesError.postValue(it.message)
+                                                                        updatesLoader.postValue(false)
+                                                                    }
+                                                                    .subscribe()
+                                                    )
+                                                }
                                                 .doOnError {
-                                                    Toasty.warning(getApplication(), com.boost.upgrades.R.string.failed_local_storage_message, Toast.LENGTH_LONG).show()
+                                                    updatesError.postValue(it.message)
                                                     updatesLoader.postValue(false)
                                                 }
-                                                .doOnComplete {
-                                                    var data = arrayListOf<FeaturesModel>()
-                                                    for (item in it.Data[0].features){
-                                                        if(item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0){
-                                                            var applicableToCurrentExpCode = false
-                                                            for(code in item.exclusive_to_categories){
-                                                                if(code.equals(experienceCode, true))
-                                                                    applicableToCurrentExpCode = true
-                                                            }
-                                                            if(!applicableToCurrentExpCode)
-                                                                continue;
-                                                        }
-
-                                                        val primaryImage = if(item.primary_image==null) null else item.primary_image.url
-                                                        val secondaryImages = ArrayList<String>()
-                                                        if (item.secondary_images != null){
-                                                            for(sec_images in item.secondary_images){
-                                                                if(sec_images.url !=null) {
-                                                                    secondaryImages.add(sec_images.url)
-                                                                }
-                                                            }
-                                                        }
-                                                        data.add(FeaturesModel(
-                                                                item.boost_widget_key,
-                                                                item.name,
-                                                                item.feature_code,
-                                                                item.description,
-                                                                item.description_title,
-                                                                item.createdon,
-                                                                item.updatedon,
-                                                                item.websiteid,
-                                                                item.isarchived,
-                                                                item.is_premium,
-                                                                item.target_business_usecase,
-                                                                item.feature_importance,
-                                                                item.discount_percent,
-                                                                item.price,
-                                                                item.time_to_activation,
-                                                                primaryImage,
-                                                                if(item.feature_banner==null) null else item.feature_banner.url,
-                                                                if(secondaryImages.size==0) null else Gson().toJson(secondaryImages),
-                                                                Gson().toJson(item.learn_more_link),
-                                                                if(item.total_installs==null) "--" else item.total_installs,
-                                                                if(item.extended_properties!=null && item.extended_properties.size > 0) Gson().toJson(item.extended_properties) else null,
-                                                                if(item.exclusive_to_categories!=null && item.exclusive_to_categories.size > 0) Gson().toJson(item.exclusive_to_categories) else null
-                                                        ))
-                                                    }
-                                                    Completable.fromAction {
-                                                        AppDatabase.getInstance(getApplication())!!
-                                                                .featuresDao()
-                                                                .insertAllFeatures(data)
-                                                    }
-                                                            .subscribeOn(Schedulers.io())
-                                                            .observeOn(AndroidSchedulers.mainThread())
-                                                            .doOnComplete {
-                                                                Log.i("insertAllFeatures","Successfully")
-                                                                compositeDisposable.add(
-                                                                        AppDatabase.getInstance(getApplication())!!
-                                                                                .featuresDao()
-                                                                                .getFeaturesItems(true)
-                                                                                .subscribeOn(Schedulers.io())
-                                                                                .observeOn(AndroidSchedulers.mainThread())
-                                                                                .doOnSuccess {
-                                                                                    allAvailableFeaturesDownloadResult.postValue(it)
-                                                                                    updatesLoader.postValue(false)
-
-                                                                                    compositeDisposable.add(
-                                                                                            ApiService.GetFloatingPointWebWidgets(fpid, clientId)
-                                                                                                    .subscribeOn(Schedulers.io())
-                                                                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                                                                    .subscribe(
-                                                                                                            {
-                                                                                                                compositeDisposable.add(
-                                                                                                                        AppDatabase.getInstance(getApplication())!!
-                                                                                                                                .featuresDao()
-                                                                                                                                .getallActivefeatureCount(it.Result)
-                                                                                                                                .subscribeOn(Schedulers.io())
-                                                                                                                                .observeOn(AndroidSchedulers.mainThread())
-                                                                                                                                .doOnSuccess {
-                                                                                                                                    _totalActiveAddonsCount.postValue(it)
-                                                                                                                                }
-                                                                                                                                .doOnError {
-                                                                                                                                    updatesError.postValue(it.message)
-                                                                                                                                }
-                                                                                                                                .subscribe()
-                                                                                                                )
-                                                                                                            },
-                                                                                                            {
-                                                                                                                updatesError.postValue(it.message)
-                                                                                                                updatesLoader.postValue(false)
-                                                                                                            }
-                                                                                                    )
-
-                                                                                    )
-
-                                                                                }
-                                                                                .doOnError {
-                                                                                    updatesError.postValue(it.message)
-                                                                                    updatesLoader.postValue(false)
-                                                                                }
-                                                                                .subscribe()
-                                                                )
-                                                            }
-                                                            .doOnError {
-                                                                updatesError.postValue(it.message)
-                                                                updatesLoader.postValue(false)
-                                                            }
-                                                            .subscribe()
-                                                }
                                                 .subscribe()
+
                                     },
                                     {
                                         Log.e("GetAllFeatures", "error"+it.message)
