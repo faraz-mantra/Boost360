@@ -23,8 +23,8 @@
         <item name="android:fontFamily">@font/semi_bold</item>
         <item name="fontFamily">@font/semi_bold</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:paddingRight">@dimen/size_14</item>
-        <item name="android:paddingLeft">@dimen/size_14</item>
+      <item name="android:paddingRight">@dimen/size_6</item>
+      <item name="android:paddingLeft">@dimen/size_6</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:drawableEnd">@null</item>
         <item name="android:layout_height">@dimen/size_48</item>
@@ -44,20 +44,20 @@
         <item name="cardElevation">@dimen/size_4</item>
         <item name="cardCornerRadius">@dimen/size_30</item>
         <item name="contentPadding">@dimen/size_0</item>
-        <item name="android:layout_marginStart">@dimen/size_32</item>
+      <item name="android:layout_marginStart">@dimen/size_28</item>
         <item name="android:layout_marginTop">@dimen/size_24</item>
         <item name="android:layout_marginBottom">@dimen/size_20</item>
-        <item name="android:layout_width">@dimen/size_60</item>
+      <item name="android:layout_width">@dimen/size_52</item>
         <item name="cardBackgroundColor">@android:color/white</item>
-        <item name="android:layout_height">@dimen/size_60</item>
+      <item name="android:layout_height">@dimen/size_52</item>
     </style>
 
     <style name="Onboarding.HeaderTitleStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/size_30</item>
-        <item name="android:layout_marginEnd">@dimen/size_32</item>
-        <item name="android:layout_marginBottom">@dimen/size_4</item>
+      <item name="android:layout_marginStart">@dimen/size_24</item>
+      <item name="android:layout_marginEnd">@dimen/size_26</item>
+      <item name="android:layout_marginBottom">@dimen/size_3</item>
         <item name="android:textColor">@color/greyish_brown</item>
         <item name="textType">HEADING_5</item>
         <item name="android:includeFontPadding">false</item>
@@ -67,8 +67,8 @@
     <style name="Onboarding.HeaderDescriptionStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/size_30</item>
-        <item name="android:layout_marginEnd">@dimen/size_32</item>
+      <item name="android:layout_marginStart">@dimen/size_26</item>
+      <item name="android:layout_marginEnd">@dimen/size_26</item>
         <item name="android:textColor">@color/greyish_brown</item>
         <item name="textType">SUBHEADING_1</item>
         <item name="fontFamily">@font/regular</item>
@@ -108,9 +108,9 @@
         <item name="android:gravity">center</item>
         <item name="textType">HEADING_4</item>
         <item name="fontFamily">@font/regular</item>
-        <item name="android:layout_marginStart">@dimen/size_28</item>
-        <item name="android:layout_marginEnd">@dimen/size_28</item>
-        <item name="android:layout_marginBottom">@dimen/size_10</item>
+      <item name="android:layout_marginStart">@dimen/size_20</item>
+      <item name="android:layout_marginEnd">@dimen/size_20</item>
+      <item name="android:layout_marginBottom">@dimen/size_6</item>
     </style>
 
     <style name="Onboarding.Registration.HeaderDescriptionStyle">

@@ -32,7 +32,7 @@ class ChannelConfirmDialog() : BaseDialogFragment<DialogCategorySelectorConfirmB
         } else binding?.title?.text = ""
         setClickListeners(binding?.confirm)
         binding?.dialogRoot?.post {
-            (binding?.container?.fadeIn(500L)?.mergeWith(binding?.imageRiya?.fadeIn(500L)))
+          (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageRiya?.fadeIn(300L)))
                     ?.andThen(binding?.title?.fadeIn(200L)?.mergeWith(binding?.desc?.fadeIn(100L)))
                     ?.andThen(binding?.confirm?.fadeIn(50L))?.subscribe()
         }

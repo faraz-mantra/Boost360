@@ -57,8 +57,8 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
         binding?.facebookChannels?.post {
             (binding?.facebookChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
                     ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-                    ?.andThen(binding?.linkFacebook?.fadeIn(50L))
-                    ?.andThen(binding?.skip?.fadeIn(0L))?.subscribe()
+                ?.andThen(binding?.linkFacebook?.fadeIn(100L))
+                ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
         }
         setOnClickListener(binding?.skip, binding?.linkFacebook)
         setSetSelectedFacebookChannels(channels)

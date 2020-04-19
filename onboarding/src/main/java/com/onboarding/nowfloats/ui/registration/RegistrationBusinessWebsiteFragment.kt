@@ -48,7 +48,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
           ?.doOnComplete { setSetSelectedGoogleChannels(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
           ?.andThen(binding?.subdomain?.fadeIn(100)?.mergeWith(binding?.inputType?.fadeIn(50L)))
-          ?.andThen(binding?.next?.fadeIn(0L))?.doOnComplete {
+          ?.andThen(binding?.next?.fadeIn())?.doOnComplete {
             setDataView()
           }?.subscribe()
     }

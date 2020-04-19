@@ -21,7 +21,7 @@
       <View
           android:id="@+id/toolbar_image"
           android:layout_width="0dp"
-          android:layout_height="@dimen/size_200"
+          android:layout_height="@dimen/size_220"
           android:adjustViewBounds="true"
           android:contentDescription="@null"
           android:fitsSystemWindows="true"
@@ -42,11 +42,11 @@
 
       <com.framework.views.shadowview.ShadowLayout
           android:id="@+id/image_riya"
-          android:layout_width="@dimen/size_74"
-          android:layout_height="@dimen/size_74"
-          android:layout_marginStart="@dimen/size_22"
-          android:layout_marginTop="@dimen/size_40"
-          android:layout_marginBottom="@dimen/size_10"
+          android:layout_width="@dimen/size_70"
+          android:layout_height="@dimen/size_70"
+          android:layout_marginStart="@dimen/size_18"
+          android:layout_marginTop="@dimen/size_26"
+          android:layout_marginBottom="@dimen/size_6"
           app:layout_constraintBottom_toTopOf="@id/title"
           app:layout_constraintStart_toStartOf="parent"
           app:shadowColor="@color/shadow"

@@ -26,8 +26,6 @@ import com.boost.presignup.ui.PopUpDialogFragment
 import com.boost.presignup.utils.AppConstants.Companion.ENABLE_BOTTOM_VIEW
 import com.boost.presignup.utils.AppConstants.Companion.SINGLE_LANGUAGE_BUTTON_VIEW
 import com.boost.presignup.utils.WebEngageController
-import com.framework.extensions.visible
-import com.onboarding.nowfloats.managers.NavigatorManager
 
 
 class PreSignUpActivity : AppCompatActivity() {
@@ -92,7 +90,7 @@ class PreSignUpActivity : AppCompatActivity() {
 
     binding.createAccountButton.setOnClickListener {
       //      NavigatorManager.startActivities(this@PreSignUpActivity)
-      //      finish()
+//      finish()
       WebEngageController.trackEvent("PS_Clicked Create account", "create account clicked", "")
       popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
     }

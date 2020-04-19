@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:overScrollMode="never"
-                    android:padding="@dimen/size_16"
+                    android:padding="@dimen/size_12"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toTopOf="@+id/next"
                     app:layout_constraintEnd_toEndOf="parent"

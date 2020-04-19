@@ -10,8 +10,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:paddingBottom="@dimen/size_4">
+      android:orientation="horizontal">
 
     <com.framework.views.shadowview.ShadowLayout
         android:layout_width="@dimen/size_36"

@@ -38,8 +38,8 @@
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/image"
-                    android:layout_width="@dimen/size_60"
-                    android:layout_height="@dimen/size_60"
+                    android:layout_width="@dimen/size_56"
+                    android:layout_height="@dimen/size_56"
                     android:padding="@dimen/size_4"
                     app:tint="@color/dodger_blue_two"
                     tools:srcCompat="@drawable/ic_doctors_pro" />
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/icon"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/size_4"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textAlignment="center"

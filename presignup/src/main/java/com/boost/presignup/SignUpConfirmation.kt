@@ -1,9 +1,7 @@
 package com.boost.presignup
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.WebEngageController
@@ -43,16 +41,16 @@ class SignUpConfirmation : AppCompatActivity() {
     set_up_business_profile.setOnClickListener {
       WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
 
-      val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
-      intent.putExtra("profile_id", profile_id)
-      startActivity(intent)
+//      val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
+//      intent.putExtra("profile_id", profile_id)
+//      startActivity(intent)
 
-//      val editor = this.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0).edit()
-//      editor?.putString("user_profile_id", profile_id)
-//      editor?.putBoolean("IsSignUpComplete", true)
-//      editor?.apply()
-//      NavigatorManager.startActivities(this@SignUpConfirmation)
-//      finish()
+      val editor = this.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0).edit()
+      editor?.putString("user_profile_id", profile_id)
+      editor?.putBoolean("IsSignUpComplete", true)
+      editor?.apply()
+      NavigatorManager.startActivities(this@SignUpConfirmation)
+      finish()
     }
   }
 }
