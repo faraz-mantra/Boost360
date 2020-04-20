@@ -16,8 +16,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class HistoryAdapter(itemList: List<Result>?,val listener: HistoryFragmentListener) :
-        RecyclerView.Adapter<HistoryAdapter.upgradeViewHolder>(), View.OnClickListener {
+class HistoryAdapter(itemList: List<Result>?, val listener: HistoryFragmentListener) :
+        RecyclerView.Adapter<HistoryAdapter.upgradeViewHolder>() {
 
     private var list = ArrayList<Result>()
     private lateinit var context: Context
@@ -31,9 +31,6 @@ class HistoryAdapter(itemList: List<Result>?,val listener: HistoryFragmentListen
                 R.layout.history_item, parent, false
         )
         context = itemView.context
-
-
-        itemView.setOnClickListener(this)
         return upgradeViewHolder(itemView)
     }
 
@@ -43,28 +40,35 @@ class HistoryAdapter(itemList: List<Result>?,val listener: HistoryFragmentListen
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        if(list.get(position).orderId != null) {
-            holder.itemOrderId.setText("Order id #" + list.get(position).orderId!!.replace("order_", ""))
-        }
         val itemLists = StringBuilder()
-        itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
-        if(list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
-            itemLists.append("+" + list.get(position).purchasedPackageDetails.WidgetPacks.size + "more")
+        if (list.get(position).orderId != null) {
+            holder.orderId.setText("Order id #"+list.get(position).orderId!!.replace("order_", ""))
+        }
+        if (list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
+            for (item in 0 until list.get(position).purchasedPackageDetails.WidgetPacks.size) {
+                itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(item).Name)
+                if (item != list.get(position).purchasedPackageDetails.WidgetPacks.size - 1) {
+                    itemLists.append(", ")
+                }
+            }
+            holder.itemCount.setText("+"+(list.size-1)+" more")
+            holder.itemCount.visibility = View.VISIBLE
+        } else {
+            itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
+            holder.itemCount.visibility = View.GONE
         }
         holder.itemLists.setText(itemLists)
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
-        val dateFormat = SimpleDateFormat("dd-MMM-yyyy (hh:mm a)")
+        val dateFormat = SimpleDateFormat("dd-MMM-yyyy (HH:mm)")
         holder.itemDate.setText(dateFormat.format(date))
-        holder.viewButton.setOnClickListener {
-                listener.viewHistoryItem(list.get(position))
+        holder.amount.setText("₹"+list.get(position).paidAmount)
+        holder.itemView.setOnClickListener {
+            listener.viewHistoryItem(list.get(position))
         }
     }
 
-    override fun onClick(v: View?) {
-
-    }
 
     fun addupdates(purchaseResult: List<Result>) {
         val initPosition = list.size
@@ -75,9 +79,10 @@ class HistoryAdapter(itemList: List<Result>?,val listener: HistoryFragmentListen
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var viewButton = itemView.findViewById<TextView>(R.id.history_viewButton)!!
-        var itemOrderId = itemView.findViewById<TextView>(R.id.item_orderId)!!
+        var orderId = itemView.findViewById<TextView>(R.id.item_orderId)!!
+        var amount = itemView.findViewById<TextView>(R.id.history_item_amount)!!
         var itemLists = itemView.findViewById<TextView>(R.id.item_lists)!!
+        var itemCount = itemView.findViewById<TextView>(R.id.item_count)!!
         var itemDate = itemView.findViewById<TextView>(R.id.item_date)!!
 
         var context: Context = itemView.context

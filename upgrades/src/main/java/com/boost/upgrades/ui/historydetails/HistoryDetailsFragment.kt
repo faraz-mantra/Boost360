@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.historydetails
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.HistoryDetailsAdapter
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
+import com.boost.upgrades.data.model.FeaturesModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.history_details_fragment.*
 import java.lang.Long
@@ -48,11 +50,14 @@ class HistoryDetailsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(HistoryDetailsViewModel::class.java)
 
+        loadData()
+        initMvvm()
         initRecyclerView()
-        updateRecyclerView()
 
         if (data.orderId != null) {
-            history_details_header.setText("ID #" + data.orderId!!.replace("order_", ""))
+            layout1_order_id.setText("#" + data.orderId!!.replace("order_", ""))
+        }else{
+            layout1_order_id.setText("####")
         }
         val dataString = data.CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
@@ -68,9 +73,16 @@ class HistoryDetailsFragment : BaseFragment() {
         layout1_total.setText(amountLayout1)
         history_details_MRPPrice.setText("NULL")
         history_details_selling_price.setText("₹" + data.paidAmount)
-        history_details_total.setText("₹" + data.paidAmount)
         if (data.PaymentMethod != null) {
             history_details_payment_type.setText(data.PaymentMethod + " ₹" + data.paidAmount)
+        }else{
+            history_details_payment_type.visibility = View.GONE
+        }
+
+        if(data.paymentTransactionId !=null){
+            history_details_transaction_id.setText("Transaction ID: #"+data.paymentTransactionId.replace("pay_",""))
+        }else{
+            history_details_transaction_id.visibility = View.GONE
         }
 
         history_details_back.setOnClickListener {
@@ -80,8 +92,40 @@ class HistoryDetailsFragment : BaseFragment() {
 
     }
 
-    private fun updateRecyclerView() {
-        historyDetailsAdapter.addupdates(data.purchasedPackageDetails.WidgetPacks)
+    @SuppressLint("FragmentLiveDataObserve")
+    private fun initMvvm() {
+        viewModel.getResult().observe(this, androidx.lifecycle.Observer {
+            val list = ArrayList<FeaturesModel>()
+            list.addAll(it)
+            for(item in data.purchasedPackageDetails.WidgetPacks){
+                var status = true
+                for(singleItem in list){
+                    if(singleItem.boost_widget_key == item.WidgetKey){
+                        status = false
+                    }
+                }
+                if(status){
+                list.add(FeaturesModel(
+                        boost_widget_key =  item.WidgetKey,
+                        name = item.Name,
+                        discount_percent = item.Discount,
+                        price = item.Price))
+                }
+            }
+            updateRecyclerView(list)
+        })
+    }
+
+    private fun loadData() {
+        val list = ArrayList<String>()
+        for(item in data.purchasedPackageDetails.WidgetPacks){
+            list.add(item.WidgetKey)
+        }
+        viewModel.getDetailsOfWidgets(list)
+    }
+
+    private fun updateRecyclerView(list: List<FeaturesModel>) {
+        historyDetailsAdapter.addupdates(list)
         history_single_item_recycler.adapter = historyDetailsAdapter
         historyDetailsAdapter.notifyDataSetChanged()
     }

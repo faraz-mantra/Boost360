@@ -197,8 +197,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/txt_16sp"
-                    android:layout_marginEnd="@dimen/txt_16sp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:background="@color/transparent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -220,7 +220,7 @@
                         android:layout_below="@+id/imagexx"
                         android:layout_marginStart="22dp"
                         android:layout_marginTop="-39dp"
-                        android:elevation="3dp"
+                        app:cardElevation="@dimen/_3sdp"
                         app:cardCornerRadius="15dp">
 
                         <ImageView
@@ -240,9 +240,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/imagexx"
                         android:layout_alignParentStart="true"
-                        android:layout_marginStart="0dp"
+                        android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="0dp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:elevation="@dimen/_2sdp"
                         android:layout_marginBottom="8dp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingBottom="@dimen/_8sdp"
@@ -418,9 +419,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/fb_layout"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:elevation="@dimen/_2sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -433,7 +436,10 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:gravity="start"
                         android:lineSpacingExtra="1.3sp"
-                        android:padding="22dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:text="@string/the_luxury_of_traveling_with_yacht_charter_companies"
                         android:textColor="#4a4a4a"
                         android:textSize="@dimen/_13ssp"
@@ -445,39 +451,19 @@
                         android:id="@+id/secondary_images_panel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/xheader">
-
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/s1"-->
-<!--                            android:layout_width="70dp"-->
-<!--                            android:layout_height="70dp"-->
-<!--                            android:src="@drawable/pacman" />-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/s2"-->
-<!--                            android:layout_width="70dp"-->
-<!--                            android:layout_height="70dp"-->
-<!--                            android:src="@drawable/plane" />-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/s3"-->
-<!--                            android:layout_width="70dp"-->
-<!--                            android:layout_height="70dp"-->
-<!--                            android:src="@drawable/rectangle_copy_15" />-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/s4"-->
-<!--                            android:layout_width="70dp"-->
-<!--                            android:layout_height="70dp"-->
-<!--                            android:src="@drawable/arrow" />-->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/secondary_image_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"/>
 
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/description_fade_bg"
@@ -492,10 +478,26 @@
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="1.3sp"
                             android:maxLines="10"
-                            android:padding="22dp"
+                            android:paddingStart="22dp"
+                            android:paddingEnd="22dp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="22dp"
                             android:text="@string/information"
                             android:textColor="@color/common_text_color"
-                            android:textSize="@dimen/_11ssp" />
+                            android:textSize="@dimen/_11ssp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+                        <View
+                            android:id="@+id/description_gradient"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:elevation="@dimen/_2sdp"
+                            android:outlineProvider="none"
+                            app:layout_constraintTop_toTopOf="@id/abcText"
+                            app:layout_constraintBottom_toBottomOf="@id/abcText"/>
 
                         <TextView
                             android:id="@+id/readmore"
@@ -507,8 +509,11 @@
                             android:text="@string/read_more"
                             android:textAllCaps="true"
                             android:textColor="@color/common_text_color"
-                            android:textSize="@dimen/_11sdp" />
-                    </LinearLayout>
+                            android:textSize="@dimen/_11sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/abcText"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

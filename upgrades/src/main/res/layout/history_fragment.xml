@@ -52,7 +52,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:gravity="center"
-                android:text="Order History"
+                android:text="Renewals History"
                 android:textAllCaps="true"
                 android:textColor="@color/common_text_color"
                 android:textStyle="bold"

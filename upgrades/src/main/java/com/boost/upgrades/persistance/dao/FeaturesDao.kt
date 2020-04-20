@@ -41,4 +41,9 @@ interface FeaturesDao {
 
     @Query("SELECT COUNT(*) FROM Features Where boost_widget_key IN (:list)")
     fun getallActivefeatureCount(list: List<String>): Single<Int>
+
+    @Query("SELECT * FROM Features Where boost_widget_key IN (:list)")
+    fun getallFeaturesInList(list: List<String>): Single<List<FeaturesModel>>
+
+
 }

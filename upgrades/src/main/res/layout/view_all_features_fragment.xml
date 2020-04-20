@@ -68,9 +68,11 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,13 +82,13 @@
                 android:id="@+id/recyclerDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_15sdp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:paddingTop="@dimen/_15sdp"
-                android:elevation="@dimen/cardview_default_elevation"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
                 android:overScrollMode="never"
+                android:padding="@dimen/_15sdp"
+                android:elevation="@dimen/cardview_default_elevation"
                 tools:listitem="@layout/upgrade_list_item" />
-        </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container2"

@@ -51,6 +51,7 @@ class Constants {
         var ADD_CARD_POPUP_FRAGMENT: String = AddCardPopUpFragement::class.java.getName()
         var NETBANKING_POPUP_FRAGMENT: String = NetBankingPopUpFragement::class.java.getName()
         var UPI_POPUP_FRAGMENT: String = UPIPopUpFragement::class.java.getName()
+        var IMAGE_PREVIEW_POPUP_FRAGMENT: String = ImagePreviewPopUpFragement::class.java.getName()
         var ORDER_CONFIRMATION_FRAGMENT: String = OrderConfirmationFragment::class.java.getName()
         var FAILED_TRANSACTION_FRAGMENT: String = FailedTransactionPopUpFragment::class.java.getName()
         var COUPON_POPUP_FRAGEMENT: String = CouponPopUpFragment::class.java.getName()

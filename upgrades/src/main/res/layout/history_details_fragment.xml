@@ -8,14 +8,21 @@
     android:clickable="true"
     android:focusable="true">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:background="@color/globalLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/white"
+        android:background="@color/globalLight"
         android:contentInsetStart="0dp"
         android:contentInsetEnd="0dp"
-        android:elevation="@dimen/cardview_default_elevation"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,20 +48,18 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_back_arrow_black" />
+                    android:background="@drawable/ic_back_arrow_white" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/history_details_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:gravity="center"
-                tools:text="id #609764345"
-                android:textAllCaps="true"
-                android:textColor="@color/common_text_color"
+                android:text="Order Details"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/history_dummyview"
@@ -92,46 +97,66 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <LinearLayout
-                android:id="@+id/history_layout1"
+                android:id="@+id/history_details_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/all_side_curve_bg"
+                android:background="@drawable/curve_top_bg"
+                android:adjustViewBounds="true"
                 android:orientation="vertical"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:padding="@dimen/_10sdp"
-                    android:text="order details"
-                    android:textAllCaps="true"
-                    android:textColor="#4a4a4a" />
-
-                <View
-                    android:id="@+id/cart_single_addons_bottom_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@drawable/edittext_bottom_line_bg"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp">
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_15sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Order date" />
+                        android:text="Order ID"
+                        android:textColor="#0A68E0" />
+
+                    <TextView
+                        android:id="@+id/layout1_order_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        tools:text="#" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/edittext_bottom_line_bg" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/layout1_line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Payment Date" />
 
                     <TextView
                         android:id="@+id/layout1_date"
@@ -139,157 +164,57 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         tools:text="24-Dec-2019" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout1_line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout1_line1"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Order Time" />
+
+                        <TextView
+                            android:id="@+id/layout1_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            tools:text="10:30 AM" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_below="@id/layout1_line2"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:background="@drawable/view_dot_lines_bg" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Order Time" />
-
-                    <TextView
-                        android:id="@+id/layout1_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        tools:text="10:30 AM" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:padding="@dimen/_10sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Order Total" />
-
-                    <TextView
-                        android:id="@+id/layout1_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        tools:text="₹900 (3  items)" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/history_layout2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/all_side_curve_bg"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/history_layout1">
-
-                <TextView
-                    android:id="@+id/cart_addons_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_3sdp"
-                    android:paddingEnd="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="My orders"
-                    android:textAllCaps="true"
-                    android:textColor="@color/common_text_color"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/material_grey_400"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cart_addons_title" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/history_single_item_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cart_addons_title"
-                    tools:listitem="@layout/history_single_item" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/history_layout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/all_side_curve_bg"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/history_layout2">
-
-                <TextView
-                    android:id="@+id/history_details_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_3sdp"
-                    android:paddingEnd="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="Order summary"
-                    android:textAllCaps="true"
-                    android:textColor="@color/common_text_color"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:background="@color/material_grey_400"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/history_details_title" />
-
-                <RelativeLayout
-                    android:id="@+id/cart_subscription_full_amount_layout"
+                    android:id="@+id/payment_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_15sdp"
-                    android:paddingBottom="@dimen/_15sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/history_details_title">
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
 
                     <TextView
                         android:id="@+id/total_list_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:text="Total List Price"
                         android:textColor="@color/common_text_color" />
 
@@ -299,9 +224,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
-                        tools:text="₹2097"
-                        android:textColor="@color/common_text_color" />
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:textColor="@color/common_text_color"
+                        tools:text="₹2097" />
 
                     <TextView
                         android:id="@+id/coupon_discount_title"
@@ -309,7 +235,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/total_list_price"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:text="Total Selling Price"
                         android:textColor="@color/common_text_color" />
 
@@ -320,75 +247,195 @@
                         android:layout_below="@id/history_details_MRPPrice"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         tools:text="₹900" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_below="@id/coupon_discount_title"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:background="@drawable/view_dot_lines_bg" />
 
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:background="@drawable/view_dot_lines_bg"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cart_subscription_full_amount_layout" />
+
 
                 <RelativeLayout
-                    android:id="@+id/history_detail_total_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cart_subscription_full_amount_layout">
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Total"
-                        android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/_12sdp"/>
+                        android:text="Total Paid"
+                        android:textColor="#0A68E0"
+                        android:fontFamily="@font/open_sans_semibold"/>
 
                     <TextView
-                        android:id="@+id/history_details_total"
+                        android:id="@+id/layout1_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="#0A68E0"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:padding="@dimen/_5sdp"
-                        tools:text="₹936"
-                        android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/_12sdp"
-                        android:layout_alignParentEnd="true"/>
+                        tools:text="₹900" />
                 </RelativeLayout>
 
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/history_details_layout3"
+                app:layout_constraintEnd_toEndOf="@id/history_details_layout3"
+                app:layout_constraintTop_toTopOf="@id/history_details_layout2"
+                android:orientation="vertical">
                 <View
-                    android:id="@+id/bottom_view_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
+                    android:background="@color/white"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_11sdp"
+                android:src="@drawable/ic_top_design"
+                android:paddingTop="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:adjustViewBounds="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/history_details_layout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_20sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/history_details_layout1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/history_details_payment_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Payment via Net Banking"
+                    android:textColor="@color/common_text_color" />
+
+                <TextView
+                    android:id="@+id/history_details_transaction_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transaction ID #BFDVNDN2434DR"
+                    android:fontFamily="@font/open_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/history_details_payment_type"
+                    app:layout_constraintTop_toBottomOf="@id/history_details_payment_type" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/history_details_layout3"
+                app:layout_constraintEnd_toEndOf="@id/history_details_layout3"
+                app:layout_constraintBottom_toBottomOf="@id/history_details_layout2"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/white"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_12sdp"
+                    android:src="@drawable/ic_bottom_design"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:adjustViewBounds="true" />
+            </RelativeLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/history_details_layout3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/curve_bottom_bg"
+                android:paddingTop="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/history_details_layout2">
+
+                <TextView
+                    android:id="@+id/history_title_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Items Included ()"
+                    android:textAllCaps="true"
+                    android:textColor="@color/common_text_color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/edittext_bottom_line_bg"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@color/material_grey_400"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/history_detail_total_layout" />
+                    app:layout_constraintTop_toBottomOf="@id/history_title_count" />
 
 
-                    <TextView
-                        android:id="@+id/history_details_payment_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/bottom_view_line"
-                        android:text="Net Banking: ₹900"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/history_single_item_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/history_title_count"
+                    tools:listitem="@layout/history_single_item" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/history_detials_print_invoice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/history_details_layout3">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Print Invoice"
+                    android:textColor="#9B9B9B"
+                    android:paddingTop="@dimen/_30sdp"
+                    android:paddingBottom="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableStart="@drawable/printer"/>
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

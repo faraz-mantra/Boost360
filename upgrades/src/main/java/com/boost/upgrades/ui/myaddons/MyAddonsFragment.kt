@@ -114,7 +114,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         }
 
         view_orders_history.setOnClickListener {
-            Toasty.info(requireContext(), R.string.feature_coming_soon).show()
+//            Toasty.info(requireContext(), R.string.feature_coming_soon).show()
             (activity as UpgradeActivity).addFragment(HistoryFragment.newInstance(), HISTORY_FRAGMENT)
         }
 

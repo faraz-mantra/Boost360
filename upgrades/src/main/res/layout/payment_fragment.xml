@@ -86,7 +86,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
+            android:padding="@dimen/_8sdp">
 
             <ImageView
                 android:id="@+id/payment_status_image"
@@ -104,6 +104,9 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/all_side_curve_bg"
                 tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -191,6 +194,9 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/all_side_curve_bg"
                 tools:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
@@ -407,6 +413,9 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/all_side_curve_bg"
                 tools:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
@@ -495,6 +504,9 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/all_side_curve_bg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -541,25 +553,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/all_side_curve_bg"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
-                android:background="@drawable/all_side_curve_bg"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wallet_layout">
 
                 <TextView
                     android:id="@+id/payment_subscription_details_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:paddingStart="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_5sdp"
                     android:paddingTop="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:text="Monthly subscription details"
+                    android:text="Subscription details"
                     android:textAllCaps="true"
                     android:textColor="@color/common_text_color"
                     app:layout_constraintStart_toStartOf="parent"
@@ -590,8 +606,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:text="Cart amount"
                         android:padding="@dimen/_5sdp"
+                        android:text="Cart amount"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
@@ -659,8 +675,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -673,21 +689,21 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="Total"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/payment_total_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="₹900"
                         android:padding="@dimen/_5sdp"
-                        android:textSize="@dimen/_15sdp"
+                        android:text="₹900"
                         android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/_15sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -719,6 +735,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
 
@@ -753,6 +770,8 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_30sdp"
             android:paddingBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_2sdp"
+            android:layout_margin="@dimen/_5sdp"
             android:text="PAY NOW"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
