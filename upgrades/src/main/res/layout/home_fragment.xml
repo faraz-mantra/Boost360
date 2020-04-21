@@ -19,24 +19,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/_100sdp"-->
-<!--        android:background="@drawable/background_image_fade"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/back_image3"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <!--    <View-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/_100sdp"-->
+    <!--        android:background="@drawable/background_image_fade"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/back_image3"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-<!--    <View-->
-<!--        android:id="@+id/back_image3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="300dp"-->
-<!--        android:background="#efefef"-->
-<!--        android:scaleType="center"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/back_image" />-->
+    <!--    <View-->
+    <!--        android:id="@+id/back_image3"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="300dp"-->
+    <!--        android:background="#efefef"-->
+    <!--        android:scaleType="center"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/back_image" />-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -101,11 +101,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center"
                         android:text="add-ons marketplace"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_11sdp"
-                        android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
                         app:layout_constraintStart_toEndOf="@+id/imageView21"
@@ -185,8 +185,8 @@
                         <TextView
                             android:id="@+id/total_active_widget_count"
                             android:layout_width="match_parent"
-                            android:gravity="center"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:includeFontPadding="false"
                             android:text="--"
                             android:textColor="@color/white"
@@ -252,11 +252,12 @@
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
                     android:background="@drawable/button_spherical_click_effect"
+                    android:elevation="@dimen/_2sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
                     android:text="@string/view_my_add_ons"
                     android:textAllCaps="true"
                     android:textColor="#ffb900"
@@ -303,10 +304,10 @@
                     app:dotsSize="6dp"
                     app:dotsSpacing="4dp"
                     app:dotsWidthFactor="2.5"
-                    app:layout_constraintTop_toBottomOf="@id/package_viewpager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/package_viewpager"
                     app:progressMode="true"
                     app:selectedDotColor="@color/white" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -317,11 +318,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/offer"
-                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginRight="@dimen/_16sdp"
-                android:elevation="@dimen/_2sdp"
-                android:background="@drawable/round_upper_corner_button">
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/feature_curve_top_bg"
+                android:elevation="@dimen/_2sdp">
 
                 <TextView
                     android:id="@+id/recommended_features_section_title"
@@ -345,13 +346,13 @@
                     android:textColor="@color/transparent_black_dark"
                     android:textSize="@dimen/_10ssp" />
 
-<!--                <View-->
-<!--                    android:id="@+id/view"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="1dp"-->
-<!--                    android:layout_alignParentBottom="true"-->
-<!--                    android:layout_marginBottom="4dp"-->
-<!--                    android:background="@color/material_grey_400"/>-->
+                <!--                <View-->
+                <!--                    android:id="@+id/view"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="1dp"-->
+                <!--                    android:layout_alignParentBottom="true"-->
+                <!--                    android:layout_marginBottom="4dp"-->
+                <!--                    android:background="@color/material_grey_400"/>-->
 
             </RelativeLayout>
 
@@ -362,8 +363,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/recommended_features_section"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_16sdp"
-                android:layout_marginRight="@dimen/_16sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -390,8 +391,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/shimmer_view_container"
-                android:layout_marginLeft="@dimen/_16sdp"
-                android:layout_marginRight="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@color/transparent"
                 android:overScrollMode="never" />
 
@@ -400,11 +401,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recycler"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/feature_curve_bottom_bg"
                 android:elevation="@dimen/_2sdp"
-                android:gravity="center"
-                android:background="@drawable/round_lower_corner_button">
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/all_recommended_addons"
@@ -412,15 +413,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:paddingStart="@dimen/_20sdp"
-                    android:paddingEnd="@dimen/_20sdp"
                     android:background="@drawable/orange_button_click_effect"
                     android:clickable="true"
+                    android:elevation="@dimen/_2sdp"
                     android:focusable="true"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
+                    android:paddingStart="@dimen/_20sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_10sdp"
                     android:text="View all recommended add-ons"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
@@ -438,6 +440,7 @@
                 android:layout_below="@+id/recyclerBottomCard"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -466,9 +469,9 @@
                         android:layout_below="@+id/imagexx"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="-40dp"
-                        android:gravity="center"
                         android:background="@drawable/all_side_curve_bg"
-                        android:elevation="@dimen/_4sdp">
+                        android:elevation="@dimen/_4sdp"
+                        android:gravity="center">
 
                         <ImageView
                             android:id="@+id/image122"
@@ -487,10 +490,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/imagexx"
+                        android:layout_margin="@dimen/_5sdp"
                         android:background="@drawable/referal_spherical"
-                        android:paddingTop="@dimen/_15sdp"
                         android:elevation="@dimen/_2sdp"
-                        android:layout_margin="@dimen/_5sdp">
+                        android:paddingTop="@dimen/_15sdp">
 
                         <TextView
                             android:id="@+id/textView6"
@@ -620,10 +623,10 @@
                     app:layout_constraintStart_toStartOf="@id/start_guideline"
                     app:layout_constraintTop_toTopOf="@id/start_guideline_vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/facebook" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/facebook" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -637,10 +640,10 @@
                     app:layout_constraintStart_toStartOf="@id/middle_guideline"
                     app:layout_constraintTop_toTopOf="@id/start_guideline_vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/whatsapp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/whatsapp" />
                 </LinearLayout>
 
                 <TextView

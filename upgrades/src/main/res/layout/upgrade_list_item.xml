@@ -6,9 +6,12 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:elevation="@dimen/_2sdp"
     android:paddingBottom="0dp"
     android:clickable="true"
-    android:background="@drawable/feature_list_card_holder"
+    android:background="@color/white"
     android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,10 +127,8 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_2sdp"
+        android:layout_height="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:layout_marginLeft="@dimen/_16sdp"
         android:background="@drawable/view_dot_lines_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
