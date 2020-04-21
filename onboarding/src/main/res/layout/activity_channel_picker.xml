@@ -34,11 +34,11 @@
 
     <com.framework.views.shadowview.ShadowLayout
         android:id="@+id/category_View"
-        android:layout_width="@dimen/size_76"
-        android:layout_height="@dimen/size_76"
-        android:layout_marginStart="@dimen/size_70"
-        android:layout_marginTop="@dimen/size_40"
-        android:layout_marginBottom="@dimen/size_10"
+        android:layout_width="@dimen/size_70"
+        android:layout_height="@dimen/size_70"
+        android:layout_marginStart="@dimen/size_68"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_6"
         app:layout_constraintBottom_toTopOf="@id/title"
         app:layout_constraintLeft_toLeftOf="@+id/image_riya"
         app:shadowColor="@color/shadow"
@@ -65,11 +65,11 @@
 
     <com.framework.views.shadowview.ShadowLayout
         android:id="@+id/image_riya"
-        android:layout_width="@dimen/size_74"
-        android:layout_height="@dimen/size_74"
-        android:layout_marginStart="@dimen/size_22"
-        android:layout_marginTop="@dimen/size_40"
-        android:layout_marginBottom="@dimen/size_10"
+        android:layout_width="@dimen/size_70"
+        android:layout_height="@dimen/size_70"
+        android:layout_marginStart="@dimen/size_18"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_6"
         app:layout_constraintBottom_toTopOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
         app:shadowColor="@color/shadow"

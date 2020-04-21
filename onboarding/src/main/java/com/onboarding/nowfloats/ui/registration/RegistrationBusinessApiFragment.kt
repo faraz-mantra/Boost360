@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -183,7 +184,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.next?.alpha = 1F
       binding?.textBtn?.visibility = View.VISIBLE
       binding?.container?.setBackgroundResource(R.drawable.bg_card_blue)
-      binding?.categoryCard?.setBackgroundColor(getColor(R.color.white))
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        binding?.category?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.white)
       binding?.title?.setTextColor(getColor(R.color.white))
       binding?.title?.text = resources.getString(R.string.business_information_completed)
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))

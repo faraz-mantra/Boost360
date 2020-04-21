@@ -40,15 +40,23 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
       confirmButtonAlpha = 1f
     }
     binding?.whatsappChannels?.post {
-      (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(0L)))
+      //      (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(0L)))
+//          ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+//          ?.andThen(binding?.edtView?.fadeIn(100L)?.mergeWith(binding?.confirmBtn?.fadeIn(50L, confirmButtonAlpha))
+//          )?.andThen(binding?.skip?.fadeIn(0L))?.doOnComplete {
+//            baseActivity.showKeyBoard(binding?.number)
+//          }?.subscribe()
+
+      (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
+          ?.doOnComplete { setSetSelectedWhatsAppChannel(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.edtView?.fadeIn(100L)?.mergeWith(binding?.confirmBtn?.fadeIn(50L, confirmButtonAlpha))
-          )?.andThen(binding?.skip?.fadeIn(0L))?.doOnComplete {
+          ?.andThen(binding?.edtView?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(50L, confirmButtonAlpha)))
+          ?.andThen(binding?.skip?.fadeIn())?.doOnComplete {
             baseActivity.showKeyBoard(binding?.number)
           }?.subscribe()
     }
     setOnClickListener(binding?.confirmBtn, binding?.skip)
-    setSetSelectedWhatsAppChannel(channels)
+
     binding?.number?.afterTextChanged { checkValidNumber(it) }
   }
 

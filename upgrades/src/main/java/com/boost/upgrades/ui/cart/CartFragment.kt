@@ -3,7 +3,6 @@ package com.boost.upgrades.ui.cart
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Typeface
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -13,17 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CartAddonsAdaptor
 import com.boost.upgrades.adapter.CartPackageAdaptor
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExtendedProperty
 import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
-import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
@@ -36,12 +34,16 @@ import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
-import kotlin.reflect.typeOf
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CartFragment : BaseFragment(), CartFragmentListener {
 
@@ -220,8 +222,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     TAN_POPUP_FRAGEMENT
             )
         }
-
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Loaded", "ADDONS_MARKETPLACE", "")
     }
 
     fun loadData() {
@@ -355,7 +355,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     fun spannableString() {
-        val origCost = SpannableString("billed on 5th day of every month")
+        val billingDay = Utils.getDayOfMonthSuffix(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))
+
+        val origCost = SpannableString("billed on " + billingDay + " day of every month")
 
         origCost.setSpan(StyleSpan(Typeface.BOLD), 10, 17, 0)
         billing_date.setText(origCost)

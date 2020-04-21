@@ -7,11 +7,9 @@ import android.net.NetworkInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
-import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -141,5 +139,16 @@ object Utils {
             list.add(cur++.toString())
         }
         return list
+    }
+
+    fun getDayOfMonthSuffix(n: Int): String? {
+        return if (n >= 11 && n <= 13) {
+            "th"
+        } else when (n % 10) {
+            1 -> "st"
+            2 -> "nd"
+            3 -> "rd"
+            else -> "th"
+        }
     }
 }

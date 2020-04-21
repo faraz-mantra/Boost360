@@ -2,6 +2,7 @@ package com.boost.upgrades.ui.home
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
@@ -12,6 +13,7 @@ import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
+import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -185,8 +187,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                     }
                             )
             )
-
-
         } else {
             compositeDisposable.add(
                     AppDatabase.getInstance(getApplication())!!

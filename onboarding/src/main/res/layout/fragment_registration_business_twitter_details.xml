@@ -9,66 +9,73 @@
       android:layout_height="match_parent"
       android:background="@color/white_two">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-      <FrameLayout
+      <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="match_parent"
+          android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/view_business"
-            style="@style/Onboarding.Registration.FormContainerStyle"
-            android:layout_height="match_parent"
-            android:alpha="0"
-            android:paddingStart="@dimen/size_0"
-            android:paddingEnd="@dimen/size_0"
-            tools:alpha="1">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-          <com.framework.views.customViews.CustomTextView
-              android:id="@+id/title"
-              style="@style/Onboarding.Registration.HeaderTitleStyle"
+          <androidx.appcompat.widget.LinearLayoutCompat
+              android:id="@+id/view_business"
+              style="@style/Onboarding.Registration.FormContainerStyle"
+              android:layout_height="match_parent"
               android:alpha="0"
-              android:paddingStart="@dimen/size_32"
-              android:paddingEnd="@dimen/size_32"
-              android:text="@string/do_you_already_have_a_twitter_profile"
-              tools:alpha="1" />
+              android:paddingStart="@dimen/size_0"
+              android:paddingEnd="@dimen/size_0"
+              tools:alpha="1">
 
-          <com.framework.views.customViews.CustomTextView
-              android:id="@+id/sub_title"
-              style="@style/Onboarding.Registration.HeaderDescriptionStyle"
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/title"
+                style="@style/Onboarding.Registration.HeaderTitleStyle"
+                android:alpha="0"
+                android:paddingStart="@dimen/size_32"
+                android:paddingEnd="@dimen/size_32"
+                android:text="@string/do_you_already_have_a_twitter_profile"
+                tools:alpha="1" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/sub_title"
+                style="@style/Onboarding.Registration.HeaderDescriptionStyle"
+                android:alpha="0"
+                android:paddingStart="@dimen/size_32"
+                android:paddingEnd="@dimen/size_32"
+                android:text="@string/twitter_account_business_Skip"
+                tools:alpha="1" />
+
+            <include
+                android:id="@+id/twitter_success"
+                layout="@layout/success_social_layout" />
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <com.framework.views.viewgroups.BaseRecyclerView
+              android:id="@+id/twitterChannels"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
               android:alpha="0"
-              android:paddingStart="@dimen/size_32"
-              android:paddingEnd="@dimen/size_32"
-              android:text="@string/twitter_account_business_Skip"
-              tools:alpha="1" />
+              app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+              tools:alpha="1"
+              tools:itemCount="3"
+              tools:listitem="@layout/item_selected_channel"
+              tools:spanCount="3" />
 
-          <include
-              android:id="@+id/twitter_success"
-              layout="@layout/success_social_layout" />
+        </FrameLayout>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
-        <com.framework.views.viewgroups.BaseRecyclerView
-            android:id="@+id/twitterChannels"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:alpha="0"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:alpha="1"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_selected_channel"
-            tools:spanCount="3" />
-
-      </FrameLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <LinearLayout
         android:layout_width="0dp"

@@ -148,7 +148,13 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
             binding?.skip,
             binding?.done -> {
                 try {
-                    val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+                    setDataLogin()
+//                    val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+                    val intent = Intent(baseActivity, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val loginBundle = Bundle()
+                    loginBundle.putBoolean("fromLogin", true)
+                    intent.putExtras(loginBundle)
                     baseActivity.startActivity(intent)
                     baseActivity.finish()
                     NavigatorManager.clearStackAndFormData()

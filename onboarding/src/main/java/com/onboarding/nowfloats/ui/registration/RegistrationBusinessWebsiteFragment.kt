@@ -48,12 +48,12 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
           ?.doOnComplete { setSetSelectedGoogleChannels(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
           ?.andThen(binding?.subdomain?.fadeIn(100)?.mergeWith(binding?.inputType?.fadeIn(50L)))
-          ?.andThen(binding?.next?.fadeIn(0L))?.doOnComplete {
+          ?.andThen(binding?.next?.fadeIn())?.doOnComplete {
             setDataView()
           }?.subscribe()
     }
     setOnClickListener(binding?.next)
-    binding?.subdomain?.afterTextChanged { setSubDomain(it) }
+    binding?.subdomain?.afterTextChanged { setSubDomain(binding?.subdomain?.text.toString()) }
   }
 
   private fun getRequestData(): BusinessDomainSuggestRequest {
@@ -84,15 +84,15 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
   }
 
 
-  private fun setSubDomain(storeName: String?, isInitial: Boolean = false) {
-    val subDomain = storeName?.filter { it.isLetterOrDigit() } ?: return
+  private fun setSubDomain(storeName: String, isInitial: Boolean = false) {
+    val subDomain = storeName.filter { it.isLetterOrDigit() }
     val lengthDifference = storeName.length - subDomain.length
     if (subDomain != storeName || isInitial) {
       val selection = binding?.subdomain?.selectionEnd?.minus(lengthDifference) ?: return
       binding?.subdomain?.setText(subDomain.toLowerCase(Locale.ROOT))
       if (selection > 1) binding?.subdomain?.setSelection(selection)
     }
-    apiCheckDomain(subDomain.toLowerCase(Locale.ROOT))
+    apiCheckDomain(storeName.toLowerCase(Locale.ROOT))
   }
 
   private fun apiCheckDomain(subDomain: String, onSuccess: () -> Unit = {}) {

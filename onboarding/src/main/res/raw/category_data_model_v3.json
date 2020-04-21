@@ -20,20 +20,17 @@
         {
           "type": "FB_PAGE",
           "priority": "recommended",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "WAB",
           "priority": "important",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         }
       ],
       "sections": [
@@ -44,23 +41,23 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● End-to-End Appointment Management",
+              "title": "End-to-End Appointment Management",
               "desc": "At Boost, we try to help doctors and healthcare specialists grow their business using the latest digital technologies. With this in mind, we have created a completely automated system to help your patients book their medical appointments online. Our system takes care of the entire booking process including scheduling appointments and making online payments."
             },
             {
-              "title": "● Two-Way Appointment Reminders",
+              "title": "Two-Way Appointment Reminders",
               "desc": "Patients who miss their appointments cause financial loss to your business. That’s why we have built an appointment reminder feature. It makes sure your patients never forget about an upcoming appointment. You can cut down your losses due to patient absence and no-shows."
             },
             {
-              "title": "● Online Service Enquiry",
+              "title": "Online Service Enquiry",
               "desc": "Your Boost website has an Enquiry button through which patients can contact you. They can use the button to drop a question about your services, facilities, timings etc. This makes it easier for visitors to reach out to you."
             },
             {
-              "title": "● Reply to Patients Enquiries Instantly",
+              "title": "Reply to Patients Enquiries Instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to queries increases the chance of the patient choosing you over other healthcare providers. It provides you with a golden opportunity to increase market share."
             },
             {
-              "title": "● Manage Unlimited Enquiries & Appointments",
+              "title": "Manage Unlimited Enquiries & Appointments",
               "desc": "There is no limit to the number of appointments and enquiries that can be created. The system is also designed to prevent double bookings. Patients can make an appointment only as per available time slots. This helps avoid clashes over timing."
             }
           ]
@@ -72,27 +69,27 @@
           "boost_widget_key": "STOREFRONT",
           "details": [
             {
-              "title": "● Website optimised for best experience of your patients",
+              "title": "Website optimised for best experience of your patients",
               "desc": "The internet is the first place that people go to when they want to explore treatment options. A detailed and well-structured website helps in establishing trust in your practice. Boost can help you create an attractive and well-designed website to impress patients and visitors. The site is mobile responsive, which means that people can read it both on their smartphones as well as laptops."
             },
             {
-              "title": "● Appointment Bookings, Enquiries & Video Consulting",
+              "title": "Appointment Bookings, Enquiries & Video Consulting",
               "desc": "Boost has many useful features such as end-to-end appointment bookings, enquiry facility, video consulting etc. to assist your business. Doctors and healthcare specialists can use these features to see more patients and increase their efficiency."
             },
             {
-              "title": "● Pre-Installed Payment Gateway",
+              "title": "Pre-Installed Payment Gateway",
               "desc": "Now your patients can book appointments and pay the fees online using whatever method they choose. We offer a safe and reliable payments gateway which is well-equipped handle all popular modes of transaction. The system is fast, easy to operate, and provides a pleasant user experience."
             },
             {
-              "title": "● A High-Speed Website",
+              "title": "A High-Speed Website",
               "desc": "If you have a slow website, visitors will leave it and switch to faster ones. That’s why we ensure a high-speed website for all members. We provide unlimited storage/bandwidth so that visitors do not leave your site due to speed issues. That way, they can spend more time browsing to read about your services."
             },
             {
-              "title": "● Upgrade to a Custom Domain",
+              "title": "Upgrade to a Custom Domain",
               "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
-              "title": "● A Secure website",
+              "title": "A Secure website",
               "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to support your healthcare business."
             }
           ]
@@ -104,11 +101,11 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● HIPAA-Compliant Data Centres",
+              "title": "HIPAA-Compliant Data Centres",
               "desc": "At Boost, we take issues like patient confidentiality and data security very seriously. That is why we ensure that our security standards match up to global norms. Our data centres are fully compliant with the US Health Insurance Portability and Accountability Act of 1996 (HIPAA) which sets the standards for patient-doctor confidentiality. This ensures that all patient details remain secure with us."
             },
             {
-              "title": "● Modern Encryption Technology",
+              "title": "Modern Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your patients. No need to worry about data security!"
             }
           ]
@@ -120,27 +117,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready to use Payment Gateway",
+              "title": "Ready to use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your patients from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Account Within 10 Working Days",
+              "title": "Payment Reaches Your Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the patient in case of cancelled appointments. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the patient has made the payment. Your money is totally safe with us and will be transferred to your bank account after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the patient."
             }
           ]
@@ -152,19 +149,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             }
           ]
@@ -176,15 +173,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -206,14 +203,12 @@
         {
           "type": "G_MAPS",
           "priority": "important",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_SHOP",
@@ -223,14 +218,12 @@
         {
           "type": "WAB",
           "priority": "recommended",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         }
       ],
       "sections": [
@@ -241,15 +234,15 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● Online Booking & Payment",
+              "title": "Online Booking & Payment",
               "desc": "Boost makes running an education institution or an e-coaching business much simpler through the use of advanced digital technology. With Boost, your students can browse courses, register, and pay directly from the website. No need to call up the centre or make physical visits! Grow your business and improve efficiency using our unique digital platform."
             },
             {
-              "title": "● Online Enquiries",
+              "title": "Online Enquiries",
               "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding classes, faculty etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase your admissions."
             },
             {
-              "title": "● Reply to Customer Enquiries Instantly",
+              "title": "Reply to Customer Enquiries Instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to customer queries increases their chance of choosing you over your competitors. It provides you with a golden opportunity to increase market share."
             },
             {
@@ -265,11 +258,11 @@
           "boost_widget_key": "FACULTY",
           "details": [
             {
-              "title": "● Listing Lecturer Profiles",
+              "title": "Listing Lecturer Profiles",
               "desc": "Tell people why they should rely on your faculty. Share details such as lecturers’ qualifications, experience, papers written, awards received etc. It is important to convince your students that the lecturers who will be teaching them are competent in their field and come with a proven track record."
             },
             {
-              "title": "● Online Lectures",
+              "title": "Online Lectures",
               "desc": "Our online classrooms are the next best thing to physical coaching. Ensure that classes don’t come to a standstill due to pandemics, public health emergencies, natural disasters etc. Share notes, assign homework, perform corrections and do much more in the safety of our secure and modern digital classrooms."
             }
           ]
@@ -281,27 +274,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -313,19 +306,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -337,15 +330,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -357,15 +350,15 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             },
             {
-              "title": "● No Public IP/Port Exposed",
+              "title": "No Public IP/Port Exposed",
               "desc": "To help mitigate no shows and cancellations"
             }
           ]
@@ -387,26 +380,22 @@
         {
           "type": "G_MAPS",
           "priority": "recommended",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
           "priority": "recommended",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "WAB",
           "priority": "important",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
           "priority": "important",
-          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         }
       ],
       "sections": [
@@ -417,23 +406,23 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● End-to-End Appointment Management",
+              "title": "End-to-End Appointment Management",
               "desc": "At Boost, we try to help clinics and hospitals grow their business using the latest digital technologies. With this in mind, we have created a completely automated system to help your patients book their medical appointments online. Our system takes care of the entire booking process from finding the right doctors, to scheduling appointments, and making online payments."
             },
             {
-              "title": "● Two-Way Appointment Reminders",
+              "title": "Two-Way Appointment Reminders",
               "desc": "Patients who miss their appointments cause financial loss to your business. That’s why we have built an appointment reminder feature. It makes sure your patients never forget about an upcoming appointment. You can cut down your losses due to patient absence and no-shows."
             },
             {
-              "title": "● Online Service Enquiry",
+              "title": "Online Service Enquiry",
               "desc": "Your Boost website has an Enquiry button through which patients can contact you. They can use the button to drop a question about your services, facilities, timings etc. This makes it easier for visitors to reach out to you."
             },
             {
-              "title": "● Reply to Patients Enquiries Instantly",
+              "title": "Reply to Patients Enquiries Instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to queries increases the chance of the patient choosing you over other clinics and hospitals. It provides you with a golden opportunity to increase market share."
             },
             {
-              "title": "● Manage Unlimited Enquiries & Appointments",
+              "title": "Manage Unlimited Enquiries & Appointments",
               "desc": "There is no limit to the number of appointments and enquiries that can be created. The system is also designed to prevent double bookings. Patients can make an appointment only as per available time slots. This helps avoid clashes over timing."
             }
           ]
@@ -445,27 +434,27 @@
           "boost_widget_key": "STOREFRONT",
           "details": [
             {
-              "title": "● Best experience of your patients",
+              "title": "Best experience of your patients",
               "desc": "The internet is the first place that people go to when they want to explore treatment options. A detailed and well-structured website helps in establishing trust in your hospital. Boost can help you create an attractive and well-designed website to impress patients and visitors. The website is mobile responsive, which means that people can read it both on their smartphones as well as laptops."
             },
             {
-              "title": "● Appointment Bookings, Enquiries & Video Consulting",
+              "title": "Appointment Bookings, Enquiries & Video Consulting",
               "desc": "Boost has many useful features such as end-to-end appointment bookings, enquiry facility, video consulting etc. to assist your business. Doctors and healthcare specialists of your medical institution can use these features to see more patients and increase their productivity."
             },
             {
-              "title": "● Pre-Installed Payment Gateway",
+              "title": "Pre-Installed Payment Gateway",
               "desc": "Now your patients can book appointments and pay the fees online using whatever method they choose. We offer a safe and reliable payments gateway which is well-equipped handle all popular modes of transaction. The system is fast, easy to operate, and provides a pleasant user experience."
             },
             {
-              "title": "● A High-Speed Website",
+              "title": "A High-Speed Website",
               "desc": "If you have a slow website, visitors will leave it and switch to faster ones. That’s why we ensure a high-speed website for all members. We provide unlimited storage/bandwidth so that visitors do not leave your site due to speed issues. That way, they can spend more time browsing to read about your services."
             },
             {
-              "title": "● Upgrade to a Custom Domain",
+              "title": "Upgrade to a Custom Domain",
               "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
-              "title": "● A Secure website",
+              "title": "A Secure website",
               "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to support your healthcare business."
             }
           ]
@@ -477,11 +466,11 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● HIPAA-Compliant Data Centres",
+              "title": "HIPAA-Compliant Data Centres",
               "desc": "At Boost, we take issues like patient confidentiality and data security very seriously. That is why we ensure that our security standards match up to global norms. Our data centres are fully compliant with the US Health Insurance Portability and Accountability Act of 1996 (HIPAA) which sets the standards for patient-doctor confidentiality. This ensures that all patient details remain secure with us."
             },
             {
-              "title": "● Modern Encryption Technology",
+              "title": "Modern Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your patients. No need to worry about data security!"
             }
           ]
@@ -493,27 +482,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready to use Payment Gateway",
+              "title": "Ready to use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your patients from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Account Within 10 Working Days",
+              "title": "Payment Reaches Your Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the patient in case of cancelled appointments. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the patient has made the payment. Your money is totally safe with us and will be transferred to your bank account after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the patient."
             }
           ]
@@ -525,19 +514,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             }
           ]
@@ -549,15 +538,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -579,14 +568,12 @@
         {
           "type": "G_MAPS",
           "priority": "important",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_SHOP",
@@ -596,14 +583,12 @@
         {
           "type": "WAB",
           "priority": "recommended",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         }
       ],
       "sections": [
@@ -614,23 +599,23 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● Online Booking & Payment",
+              "title": "Online Booking & Payment",
               "desc": "Boost makes running a spa or wellness centre much simpler through the use of advanced digital technology. With Boost, your customers can browse your services, book appointments, and pay directly from the website. No need to call you up! Grow your business and improve efficiency using our unique digital platform."
             },
             {
-              "title": "● Two-Way Appointment Reminders",
+              "title": "Two-Way Appointment Reminders",
               "desc": "No-shows and missed appointments mean losses for your business. That’s why we have built a fully-automated appointment reminder feature. It makes sure your clients never forget about an upcoming appointment by giving timely reminders. Cut down your losses due to cancellations and no-shows."
             },
             {
-              "title": "● Online Enquiries",
+              "title": "Online Enquiries",
               "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding services, timing etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase your bookings."
             },
             {
-              "title": "● Reply to Customer Enquiries Instantly",
+              "title": "Reply to Customer Enquiries Instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to customer queries increases their chance of choosing you over your competitors. It provides you with a golden opportunity to increase market share."
             },
             {
-              "title": "● Manage Unlimited Bookings & Appointments",
+              "title": "Manage Unlimited Bookings & Appointments",
               "desc": "There is no limit to the number of bookings and enquiries that visitors can make. Each enquiry is a potential lead with the chance of being converted into a deal. What’s more, our booking interface comes with specific safeguards to prevent scheduling conflicts. A customer cannot make an appointment that clashes with another one. They may only book an available time slot."
             }
           ]
@@ -642,27 +627,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -674,19 +659,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -698,15 +683,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -718,15 +703,15 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             },
             {
-              "title": "● No Public IP/Port Exposed",
+              "title": "No Public IP/Port Exposed",
               "desc": "To help mitigate no shows and cancellations"
             }
           ]
@@ -748,26 +733,22 @@
         {
           "type": "G_MAPS",
           "priority": "important",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "WAB",
           "priority": "recommended",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         }
       ],
       "sections": [
@@ -778,27 +759,27 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● Booking Management",
+              "title": "Booking Management",
               "desc": "These days, hotels and motels need online booking facility to compete strongly with their rivals. That is why Boost for hotels comes with a readymade booking engine. Now your guests can make reservations from the website itself. No need to call the hotel! Our booking system provides end-to-end inventory management to help you with your business."
             },
             {
-              "title": "● Online Enquiries",
+              "title": "Online Enquiries",
               "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding food, services, accommodation etc. This makes it easier for your customers to contact you. It brings business leads and gives you the chance to increase your occupancy rates."
             },
             {
-              "title": "● Reply to Customer Enquiries Instantly",
+              "title": "Reply to Customer Enquiries Instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to customer queries increases their chance of choosing you over your competitors. It provides you with a golden opportunity to increase market share."
             },
             {
-              "title": "● Manage Unlimited Enquiries & Reservations",
+              "title": "Manage Unlimited Enquiries & Reservations",
               "desc": "There is no limit to the number of enquiries and reservations that can be created. The system also comes with inbuilt protection against double bookings. Customers can only choose from available days/slots. This helps avoid clashes over scheduling."
             },
             {
-              "title": "● Automated Inventory Management with One Point of Control",
+              "title": "Automated Inventory Management with One Point of Control",
               "desc": "Hotels need to list themselves on travel portals like TripAdvisor, MakeMyTrip etc. to increase bookings and reservations. This brings the problem of managing multiple channels. We provide our members with a dedicated channel manager to help them tackle the problem. If you’ve listed your hotel across multiple booking sites, this facility can definitely make life easier for you."
             },
             {
-              "title": "● Location & Places of Interest",
+              "title": "Location & Places of Interest",
               "desc": "Customers want to be near the city’s main attractions and also close to transportation. This feature helps your customers find attractions around your hotel and explore the area. It can be an important tool to highlight your locational advantages and draw in more customers."
             }
           ]
@@ -810,11 +791,11 @@
           "boost_widget_key": "TESTIMONIALS",
           "details": [
             {
-              "title": "● Post Customer Testimonials Within Minutes",
+              "title": "Post Customer Testimonials Within Minutes",
               "desc": "Your customers are your best salespeople. Use their testimonials to clinch the next booking. With Boost, you can upload customer reviews to the website within minutes. Showcase your excellence through credible testimonials to enhance your brand image and reputation."
             },
             {
-              "title": "● Display TripAdvisor Reviews",
+              "title": "Display TripAdvisor Reviews",
               "desc": "Boost allows you to integrate your website with TripAdvisor to display their reviews. TripAdvisor’s reputation as a leading travel portal hosting genuine reviews brings credibility to your business. Reviews from a trustworthy site are a great way to advertise your business and improve your brand image."
             }
           ]
@@ -826,27 +807,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -858,19 +839,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -882,15 +863,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -902,15 +883,15 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             },
             {
-              "title": "● No Public IP/Port Exposed",
+              "title": "No Public IP/Port Exposed",
               "desc": "To help mitigate no shows and cancellations"
             }
           ]
@@ -932,14 +913,12 @@
         {
           "type": "G_MAPS",
           "priority": "important",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_SHOP",
@@ -949,8 +928,7 @@
         {
           "type": "WAB",
           "priority": "recommended",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
@@ -966,23 +944,23 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● Online Reservations",
+              "title": "Online Reservations",
               "desc": "Boost helps you grow your restaurant business through the power of digital technology. Many guests prefer to book a table in advance and don’t like to wait for seating. Boost helps them make a reservation online without the need to call the restaurant. It makes bookings much simpler and helps you keep your seats filled."
             },
             {
-              "title": "● Takeaways & Deliveries",
+              "title": "Takeaways & Deliveries",
               "desc": "Accepting online orders can help you grow your revenue and attract new customers. It also encourages larger orders by giving your customers more time to look through the menu and discover new items they would like to try. Boost has a pre-integrated online ordering system that helps restaurants and cafes cater to takeaways and deliveries."
             },
             {
-              "title": "● Get Discovered",
+              "title": "Get Discovered",
               "desc": "Sharing your menu with the world was never easier! Boost puts your menu online for everyone to see so that you can get discovered. Going online gives your business potentially unlimited exposure and helps you reach new customers."
             },
             {
-              "title": "● Online Enquiries",
+              "title": "Online Enquiries",
               "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding menu, services, timing etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase customer footfalls."
             },
             {
-              "title": "● Reply to Customer Enquiries Instantly",
+              "title": "Reply to Customer Enquiries Instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to customer queries increases their chance of choosing you over your competitors. It provides you with a golden opportunity to increase market share."
             }
           ]
@@ -994,27 +972,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -1026,19 +1004,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -1050,15 +1028,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -1070,15 +1048,15 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             },
             {
-              "title": "● No Public IP/Port Exposed",
+              "title": "No Public IP/Port Exposed",
               "desc": "To help mitigate no shows and cancellations"
             }
           ]
@@ -1100,14 +1078,12 @@
         {
           "type": "G_MAPS",
           "priority": "important",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_SHOP",
@@ -1117,14 +1093,12 @@
         {
           "type": "WAB",
           "priority": "recommended",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         }
       ],
       "sections": [
@@ -1135,23 +1109,23 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● Online Booking & Payment",
+              "title": "Online Booking & Payment",
               "desc": "Boost makes running a beauty salon much simpler through the use of advanced digital technology. With Boost, your customers can browse your services, book appointments, and pay directly from the website. No need to call you up! Grow your business and improve efficiency using our unique digital platform."
             },
             {
-              "title": "● Two-Way Appointment Reminders",
+              "title": "Two-Way Appointment Reminders",
               "desc": "No-shows and missed appointments mean losses for your business. That’s why we have built a fully-automated appointment reminder feature. It makes sure your clients never forget about an upcoming appointment by giving timely reminders. Cut down your losses due to cancellations and no-shows."
             },
             {
-              "title": "● Online Enquiries",
+              "title": "Online Enquiries",
               "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding services, timing etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase your bookings."
             },
             {
-              "title": "● Reply to Customer Enquiries Instantly",
+              "title": "Reply to Customer Enquiries Instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to customer queries increases their chance of choosing you over your competitors. It provides you with a golden opportunity to increase market share."
             },
             {
-              "title": "● Manage Unlimited Bookings & Appointments",
+              "title": "Manage Unlimited Bookings & Appointments",
               "desc": "There is no limit to the number of bookings and enquiries that visitors can make. Each enquiry is a potential lead with the chance of being converted into a deal. What’s more, our booking interface comes with specific safeguards to prevent scheduling conflicts. A customer cannot make an appointment that clashes with another one. They may only book an available time slot."
             }
           ]
@@ -1163,27 +1137,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -1195,19 +1169,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -1219,15 +1193,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -1239,15 +1213,15 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             },
             {
-              "title": "● No Public IP/Port Exposed",
+              "title": "No Public IP/Port Exposed",
               "desc": "To help mitigate no shows and cancellations"
             }
           ]
@@ -1269,8 +1243,7 @@
         {
           "type": "G_MAPS",
           "priority": "recommended",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
@@ -1285,8 +1258,7 @@
         {
           "type": "WAB",
           "priority": "recommended",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
@@ -1302,23 +1274,23 @@
           "boost_widget_key": "TOB",
           "details": [
             {
-              "title": "● List Major Projects",
+              "title": "List Major Projects",
               "desc": "Boost can help you take your manufacturing business to the next level with the help of advanced digital technology. Showcase your capabilities as a manufacturer by listing the major projects you have worked for. Share these details on your website and social media handles. A successfully completed project is proof of your skills and abilities. Impress your customers by highlighting important ones."
             },
             {
-              "title": "● Management Profiles",
+              "title": "Management Profiles",
               "desc": "Use this feature to introduce the key people in your team. Carrying a profile section enables your clients to put faces to the business and increases trust in the organisation. It also allows you to highlight the expertise of your core team members."
             },
             {
-              "title": "● Showcase Your Products",
+              "title": "Showcase Your Products",
               "desc": "Potential clients want to see evidence of work before they do business with a company. Online brochures send the subtle message that your business is professional, reliable, and committed to quality. Boost allows you to build an active product portfolio that showcases your best creations complete with detailed information on each item."
             },
             {
-              "title": "● Customer Testimonials",
+              "title": "Customer Testimonials",
               "desc": "Your customers are your best salespeople. Use their testimonials to clinch the next order. With Boost, you can upload customer reviews to the website within minutes. Showcase your excellence and reliability through credible testimonials to enhance your brand image."
             },
             {
-              "title": "● Online Enquiries",
+              "title": "Online Enquiries",
               "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding your products, expertise etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to cater to more customers."
             },
             {
@@ -1334,27 +1306,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -1366,19 +1338,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -1390,15 +1362,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -1410,20 +1382,23 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             },
             {
-              "title": "● No Public IP/Port Exposed",
+              "title": "No Public IP/Port Exposed",
               "desc": "To help mitigate no shows and cancellations"
             }
           ]
         }
       ]
+    },
+    {
+      "sectionType": true
     },
     {
       "category_key": "OTHER RETAIL",
@@ -1476,19 +1451,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up information regarding offers/discounts, product updates, events etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Put Up Unlimited Images",
+              "title": "Put Up Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase your sales and income by uploading attractive pictures of your products. Use the power of images to get more customers to buy from you."
             },
             {
-              "title": "● Showcase Up To 10 Different Products",
+              "title": "Showcase Up To 10 Different Products",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -1500,19 +1475,19 @@
           "boost_widget_key": "STOREFRONT",
           "details": [
             {
-              "title": "● Pre-Installed Payment Gateway for Online Orders",
+              "title": "Pre-Installed Payment Gateway for Online Orders",
               "desc": "Thinking of setting up an online store/e-commerce facility? Go right ahead! Now your customers can make online payments using any method they choose through a pre-installed payment system. Sell your products online and receive cash digitally via a fast and reliable payments gateway."
             },
             {
-              "title": "● High-Speed Website",
+              "title": "High-Speed Website",
               "desc": "If you have a slow website, visitors will leave it and switch to faster ones. That’s why we ensure a high-speed website for all members. We provide unlimited storage/bandwidth so that visitors do not leave your site due to speed issues. That way, your customers can enjoy surfing and keep coming back for more."
             },
             {
-              "title": "● Upgrade to a Custom Domain",
+              "title": "Upgrade to a Custom Domain",
               "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
-              "title": "● Secure Website",
+              "title": "Secure Website",
               "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
@@ -1524,15 +1499,15 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             },
             {
-              "title": "● No Public IP/Port Exposed",
+              "title": "No Public IP/Port Exposed",
               "desc": "To help mitigate no shows and cancellations"
             }
           ]
@@ -1544,27 +1519,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -1576,15 +1551,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
@@ -1606,14 +1581,12 @@
         {
           "type": "G_MAPS",
           "priority": "important",
-          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Google map allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
-          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "FB_SHOP",
@@ -1623,8 +1596,7 @@
         {
           "type": "WAB",
           "priority": "recommended",
-          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.",
-          "isSelected": true
+          "moreDesc": "Whatsapp allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost."
         },
         {
           "type": "T_FEED",
@@ -1640,19 +1612,19 @@
           "boost_widget_key": "LATESTUPDATES",
           "details": [
             {
-              "title": "● Update Your Website & Social Media from Any Location",
+              "title": "Update Your Website & Social Media from Any Location",
               "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post information from any location simply using your smartphone! Put up information regarding offers/discounts, updates, events etc. even while outdoors or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
-              "title": "● Upload Unlimited Images",
+              "title": "Upload Unlimited Images",
               "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase your sales and income by uploading attractive pictures of your service/products. Use the power of images to attract more customers to your business."
             },
             {
-              "title": "● Showcase Up To 10 Different Services",
+              "title": "Showcase Up To 10 Different Services",
               "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
-              "title": "● Display Up To 50 Updates/Offers/Blogs",
+              "title": "Display Up To 50 Updates/Offers/Blogs",
               "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
@@ -1664,19 +1636,19 @@
           "boost_widget_key": "STOREFRONT",
           "details": [
             {
-              "title": "● Pre-Installed Payment Gateway for Online Orders",
+              "title": "Pre-Installed Payment Gateway for Online Orders",
               "desc": "Thinking of offering your services online? Go right ahead! Now your customers can make online payments using any method they choose through a pre-installed payment system. Offer your services online and receive cash digitally via a fast and reliable payments gateway."
             },
             {
-              "title": "● High-Speed Website",
+              "title": "High-Speed Website",
               "desc": "If you have a slow website, visitors will leave it and switch to faster ones. That’s why we ensure a high-speed website for all members. We provide unlimited storage/bandwidth so that visitors do not leave your site due to speed issues. That way, your customers can enjoy surfing and keep coming back for more."
             },
             {
-              "title": "● Upgrade to a Custom Domain",
+              "title": "Upgrade to a Custom Domain",
               "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
-              "title": "● Secure Website",
+              "title": "Secure Website",
               "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
@@ -1688,11 +1660,11 @@
           "boost_widget_key": "DEFAULTSSL",
           "details": [
             {
-              "title": "● Powered by Secure Cloud Native Services",
+              "title": "Powered by Secure Cloud Native Services",
               "desc": "-- -- -- -- "
             },
             {
-              "title": "● State-of-the-Art Encryption Technology",
+              "title": "State-of-the-Art Encryption Technology",
               "desc": "We keep your data safe using the latest and most advanced encryption technology. Our high encryption levels of up to 256-bit are designed protect sensitive information belonging to you and your customers. No need to worry about data security!"
             }
           ]
@@ -1704,27 +1676,27 @@
           "boost_widget_key": "PAYMENTGATEWAY",
           "details": [
             {
-              "title": "● Ready-to-Use Payment Gateway",
+              "title": "Ready-to-Use Payment Gateway",
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointments. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your customers."
             },
             {
-              "title": "● Secure PCI DSS-compliant Payment Gateway",
+              "title": "Secure PCI DSS-compliant Payment Gateway",
               "desc": "We try very hard to ensure that money is safe and no sensitive data like bank account number, OTP etc. is leaked during a transaction. We follow the Payment Card Industry Data Security Standard (PCI DSS) which is a set of international guidelines to ensure the safety of card payments. In this way, we use advanced technology to protect you and your customers from data theft and fraud."
             },
             {
-              "title": "● Zero Setup Fees",
+              "title": "Zero Setup Fees",
               "desc": "Most platforms charge money to set up a digital payment gateway, except us! We do it absolutely free! With Boost, you can set up a totally safe and secure payment system at no extra cost. This brings down your business expenses."
             },
             {
-              "title": "● Supports All Payment Modes",
+              "title": "Supports All Payment Modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
-              "title": "● Zero Annual Maintenance Fees",
+              "title": "Zero Annual Maintenance Fees",
               "desc": "We offer a simple and transparent pricing plan which has zero annual maintenance charges and no hidden fees. This makes our payment system highly affordable. At the same time, we never compromise on quality of service. Avail the benefits of a cost-effective payment system that is safe, fast and simple."
             },
             {
-              "title": "● Payment Reaches Your Bank Account Within 10 Working Days",
+              "title": "Payment Reaches Your Bank Account Within 10 Working Days",
               "desc": "We refund the amount immediately to the customer in case of cancelled bookings. To enable this process to function smoothly, we hold the money in an escrow account for 10 working days after the customer has paid. Your money is totally safe with us and will be transferred to your bank after the expiry of this period. This is done to create a fair, safe and transparent experience for both you and the customer."
             }
           ]
@@ -1736,15 +1708,15 @@
           "boost_widget_key": "RIASUPPORTTEAM",
           "details": [
             {
-              "title": "● Advice on Digital Growth Strategy",
+              "title": "Advice on Digital Growth Strategy",
               "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
-              "title": "● Content Tips",
+              "title": "Content Tips",
               "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             },
             {
-              "title": "● Weekly Performance Reporting",
+              "title": "Weekly Performance Reporting",
               "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             }
           ]
