@@ -118,5 +118,8 @@
     <string name="close">Close</string>
   <string name="choose_an_action">Choose an action</string>
   <string name="search_city_name">Search city name</string>
+  <string name="business_information_synce_channels">Your business information is getting synced on below channels.</string>
+  <string name="go_to_business_dashbaord">Go to business dashbaord</string>
+  <string name="check_business_website">Check your business website</string>
 
 </resources>
