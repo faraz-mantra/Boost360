@@ -3,8 +3,6 @@ package com.boost.presignup
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -202,12 +200,12 @@ class SignUpActivity : AppCompatActivity() {
                 WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
 
                 val intent = Intent(applicationContext, SignUpConfirmation::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.putExtra("profileUrl", profileUrl)
                 intent.putExtra("person_name", personName)
                 intent.putExtra("profile_id", responseResult?.Result?.LoginId)
                 startActivity(intent)
-                finish()
+//                finish()
             }
         })
     }

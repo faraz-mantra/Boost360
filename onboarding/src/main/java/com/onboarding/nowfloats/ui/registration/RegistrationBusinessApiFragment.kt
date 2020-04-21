@@ -36,7 +36,8 @@ import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
 class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
 
-  private var list: ArrayList<ProcessApiSyncModel>? = null
+  private var list = ArrayList<ProcessApiSyncModel>()
+  val connectedChannels = ArrayList<ChannelModel>()
   private var apiProcessAdapter: AppBaseRecyclerViewAdapter<ProcessApiSyncModel>? = null
 
   companion object {
@@ -56,23 +57,19 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     setApiProcessAdapter(list)
     binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
     binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
-    if (requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
-      getDotProgress()?.let { apiBusinessComplete(it, requestFloatsModel?.floatingPointId!!) }
-    } else {
-      getDotProgress()?.let {
-        binding?.textBtn?.visibility = View.GONE
-        binding?.next?.addView(it)
-        if (NetworkUtils.isNetworkConnected()) {
+    getDotProgress()?.let {
+      binding?.textBtn?.visibility = View.GONE
+      binding?.next?.addView(it)
+      if (NetworkUtils.isNetworkConnected()) {
+        it.startAnimation()
+        putCreateBusinessOnboarding(it)
+      } else {
+        val dialog = InternetErrorDialog()
+        dialog.onRetryTapped = {
           it.startAnimation()
           putCreateBusinessOnboarding(it)
-        } else {
-          val dialog = InternetErrorDialog()
-          dialog.onRetryTapped = {
-            it.startAnimation()
-            putCreateBusinessOnboarding(it)
-          }
-          dialog.show(parentFragmentManager, dialog.javaClass.name)
         }
+        dialog.show(parentFragmentManager, dialog.javaClass.name)
       }
     }
   }
@@ -82,7 +79,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     val connectedChannelsAccessTokens = requestFloatsModel?.channelAccessTokens?.map { it.getType() }
     val connectedWhatsApp = requestFloatsModel?.channelActionDatas?.firstOrNull()
 
-    val connectedChannels = ArrayList<ChannelModel>()
     for (channel in channels) {
       val isSelected = when (channel.getType()) {
         ChannelType.G_SEARCH -> true
@@ -98,7 +94,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         connectedChannels.add(channel)
       }
     }
-    list = ProcessApiSyncModel().getData(connectedChannels)
+    list.clear()
+    list.addAll(ProcessApiSyncModel().getDataStart(connectedChannels))
   }
 
   private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
@@ -106,6 +103,9 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         if (it.stringResponse.isNullOrEmpty().not()) {
+          connectedChannels.forEach { it1 ->
+            it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
+          }
           apiProcessChannelWhatsApp(dotProgressBar, it.stringResponse ?: "")
         } else updateError("Floating point return null", it.status, "CREATE")
       } else updateError(it.error?.localizedMessage, it.status, "CREATE")
@@ -119,8 +119,16 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
           ?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
+              connectedChannels.forEach { it1 ->
+                it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
+              }
               apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
-            } else updateError(it.error?.localizedMessage, it.status, "CHANNELS")
+            } else {
+              connectedChannels.forEach { it1 ->
+                it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
+              }
+              updateError(it.error?.localizedMessage, it.status, "CHANNELS")
+            }
           })
     } else apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
   }
@@ -138,6 +146,9 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
               if (requestFloatsModel?.channelAccessTokens?.size == index) apiBusinessComplete(dotProgressBar, floatingPointId)
             } else {
               isBreak = true
+              connectedChannels.forEach { it1 ->
+                it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType() || ChannelType.WAB == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
+              }
               updateError(it.error?.localizedMessage, it.status, "CHANNELS")
             }
           })
@@ -148,21 +159,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   }
 
   private fun updateError(message: String?, status: Int?, type: String) {
+    list.clear()
     when (type) {
-      "CREATE" -> {
-        list?.forEach { apiSync ->
-          apiSync.status = ProcessApiSyncModel.SyncStatus.ERROR.name
-          apiSync.channels?.map { it.status = ProcessApiSyncModel.SyncStatus.ERROR.name; it }
-        }
-      }
-      "CHANNELS" -> {
-        list?.forEachIndexed { index, apiSync ->
-          if (index != 0) {
-            apiSync.status = ProcessApiSyncModel.SyncStatus.ERROR.name
-            apiSync.channels?.map { it.status = ProcessApiSyncModel.SyncStatus.ERROR.name; it }
-          } else apiSync.status = ProcessApiSyncModel.SyncStatus.SUCCESS.name
-        }
-      }
+      "CREATE" -> list.addAll(ProcessApiSyncModel().getDataErrorFP(connectedChannels))
+      "CHANNELS" -> list.addAll(ProcessApiSyncModel().getDataErrorChannels(connectedChannels))
     }
     apiProcessAdapter?.notify(list)
     binding?.errorView?.visible()
@@ -174,11 +174,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     binding?.apiRecycler?.post {
       requestFloatsModel?.floatingPointId = floatingPointId
       updateInfo()
-      list?.map { it1 ->
-        it1.status = ProcessApiSyncModel.SyncStatus.SUCCESS.name
-        it1.channels?.map { it2 -> it2.status = ProcessApiSyncModel.SyncStatus.SUCCESS.name; }
-        it1
-      }
+      list.clear()
+      list.addAll(ProcessApiSyncModel().getDataSuccess(connectedChannels))
       dotProgressBar.stopAnimation()
       dotProgressBar.removeAllViews()
       binding?.next?.alpha = 1F
@@ -217,7 +214,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
             baseActivity.startActivity(intent)
           } else requestPermissions(arrayOf(CALL_PHONE), 1)
         } catch (e: ActivityNotFoundException) {
-          showLongToast("Error in your phone call")
+          showLongToast("Error in your phone call!")
         }
       }
     }

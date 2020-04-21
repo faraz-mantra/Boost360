@@ -5,7 +5,7 @@
   <ConstraintSet android:id="@+id/expanded">
     <Constraint
         android:id="@id/toolbar_image"
-        android:layout_height="@dimen/size_220"
+        android:layout_height="@dimen/size_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

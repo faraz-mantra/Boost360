@@ -15,7 +15,7 @@
     <View
         android:id="@+id/toolbar_image"
         android:layout_width="0dp"
-        android:layout_height="@dimen/size_200"
+        android:layout_height="@dimen/size_180"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:fitsSystemWindows="true"
