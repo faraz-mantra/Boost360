@@ -56,6 +56,8 @@ class CategorySelectorActivity : AppBaseActivity<ActivityCategorySelectorBinding
                 animations.startAnimation()
             }
         }
+
+//        this.Get_hash_key()
     }
 
     private fun resizeLargeLogo() {

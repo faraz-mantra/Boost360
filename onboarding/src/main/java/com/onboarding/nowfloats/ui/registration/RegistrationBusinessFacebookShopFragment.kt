@@ -170,6 +170,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
 
     private fun disconnectFacebookPage() {
+      logoutFacebook()
         binding?.skip?.visible()
         binding?.facebookPageSuccess?.maimView?.gone()
         binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)

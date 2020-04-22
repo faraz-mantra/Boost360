@@ -2,12 +2,11 @@ package com.nowfloats.facebook
 
 import android.app.Activity
 import androidx.fragment.app.Fragment
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.nowfloats.facebook.constants.FacebookPermissions
+
 
 interface FacebookLoginHelper {
 
@@ -19,21 +18,21 @@ interface FacebookLoginHelper {
 
   fun registerFacebookLoginCallback(fragment: Fragment, callbackManager: CallbackManager) {
     LoginManager.getInstance().registerCallback(
-            callbackManager,
-            object : FacebookCallback<LoginResult> {
-              override fun onSuccess(result: LoginResult?) {
-                onFacebookLoginSuccess(result)
-              }
+        callbackManager,
+        object : FacebookCallback<LoginResult> {
+          override fun onSuccess(result: LoginResult?) {
+            onFacebookLoginSuccess(result)
+          }
 
-              override fun onCancel() {
-                onFacebookLoginCancel()
-              }
+          override fun onCancel() {
+            onFacebookLoginCancel()
+          }
 
-              override fun onError(error: FacebookException?) {
-                onFacebookLoginError(error)
-              }
+          override fun onError(error: FacebookException?) {
+            onFacebookLoginError(error)
+          }
 
-            })
+        })
 
   }
 
@@ -55,5 +54,12 @@ interface FacebookLoginHelper {
   fun loginWithFacebook(activity: Activity, permissions: List<FacebookPermissions>, arePublishPermissions: Boolean = false) {
     if (arePublishPermissions) LoginManager.getInstance().logInWithPublishPermissions(activity, permissions.map { it.name })
     else LoginManager.getInstance().logInWithReadPermissions(activity, permissions.map { it.name })
+  }
+
+  fun logoutFacebook() {
+    if (AccessToken.getCurrentAccessToken() == null) return
+    GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback {
+      LoginManager.getInstance().logOut()
+    }).executeAsync()
   }
 }
