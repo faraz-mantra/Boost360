@@ -24,7 +24,7 @@
             <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_60"
                 android:layout_height="@dimen/size_60"
-                app:cardCornerRadius="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_6"
                 app:cardElevation="0.5dp">
 
                 <com.framework.views.customViews.CustomImageView
