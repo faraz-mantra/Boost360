@@ -39,7 +39,7 @@
         android:layout_marginStart="@dimen/size_68"
         android:layout_marginTop="@dimen/size_20"
         android:layout_marginBottom="@dimen/size_6"
-        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/digital_plan_welcome_message"
         app:layout_constraintLeft_toLeftOf="@+id/image_riya"
         app:shadowColor="@color/shadow"
         app:shadowDx=".5dp"
@@ -70,7 +70,7 @@
         android:layout_marginStart="@dimen/size_18"
         android:layout_marginTop="@dimen/size_20"
         android:layout_marginBottom="@dimen/size_6"
-        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/digital_plan_welcome_message"
         app:layout_constraintStart_toStartOf="parent"
         app:shadowColor="@color/shadow"
         app:shadowDx=".5dp"
@@ -99,7 +99,7 @@
         app:layout_constraintTop_toTopOf="@id/image_riya" />
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/title"
+        android:id="@+id/digital_plan_welcome_message"
         style="@style/Onboarding.HeaderTitleStyle"
         android:text="@string/business_boost_success"
         app:layout_constraintBottom_toTopOf="@id/sub_title"
@@ -111,10 +111,10 @@
         android:layout_height="0dp"
         android:alpha="1"
         android:background="@color/white_two"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        app:layout_constraintEnd_toEndOf="@id/title"
-        app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="@id/digital_plan_welcome_message"
+        app:layout_constraintEnd_toEndOf="@id/digital_plan_welcome_message"
+        app:layout_constraintStart_toStartOf="@id/digital_plan_welcome_message"
+        app:layout_constraintTop_toTopOf="@id/digital_plan_welcome_message"
         tools:alpha="0" />
 
     <com.framework.views.customViews.CustomTextView

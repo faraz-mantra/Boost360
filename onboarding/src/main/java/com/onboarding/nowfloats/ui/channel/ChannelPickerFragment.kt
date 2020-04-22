@@ -77,11 +77,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         this.arguments = arguments
         requestFloatsModel = NavigatorManager.getRequest()
         requestFloatsModel?.categoryDataModel?.getChannelList()?.let { channelList.addAll(it) }
-
-        val business = getString(R.string.business)
-        val forYour = getString(R.string.for_your)
-        val name = categoryDataModel?.category_Name?.replace("\n", " ") ?: return
-        binding?.categorySelectedDesc?.text = "$forYour $name $business"
+        binding?.categorySelectedDesc?.text = "for " + categoryDataModel?.category_descriptor
     }
 
     override fun onCreateView() {
@@ -99,12 +95,13 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
                         showShortToast(resources.getString(R.string.at_least_one_channel_selected))
                         return
                     }
-                    ChannelConfirmDialog().apply {
-                        setCount(channels.count())
-                        isCancelable = true
-                        setOnConfirmClick(this@ChannelPickerFragment::onChannelConfirmed)
-                        show(this@ChannelPickerFragment.parentFragmentManager, "")
-                    }
+                    onChannelConfirmed()
+//                    ChannelConfirmDialog().apply {
+//                        setCount(channels.count())
+//                        isCancelable = true
+//                        setOnConfirmClick(this@ChannelPickerFragment::onChannelConfirmed)
+//                        show(this@ChannelPickerFragment.parentFragmentManager, "")
+//                    }
                 }
             }
             binding?.editContainer -> openChannelSelectionSheet()

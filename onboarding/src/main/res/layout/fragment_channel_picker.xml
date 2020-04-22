@@ -60,7 +60,7 @@
                     android:textColor="@color/dodger_blue_two"
                     app:fontFamily="@font/semi_bold"
                     app:textType="SUBHEADING_1"
-                    tools:text="Presence on 0 channels" />
+                    tools:text="@string/presence_on" />
 
               </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -190,7 +190,7 @@
         android:visibility="gone"
         tools:visibility="visible"
         android:drawableEnd="@null"
-        android:text="@string/get_started"
+        android:text="@string/confirm_caps"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

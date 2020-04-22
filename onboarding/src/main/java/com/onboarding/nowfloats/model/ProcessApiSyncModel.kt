@@ -17,26 +17,26 @@ class ProcessApiSyncModel(
   }
 
   fun getDataStart(channels: ArrayList<ChannelModel>?): ArrayList<ProcessApiSyncModel> {
-    val businessProfile = "•     Registering business name...\n•     Adding business location...\n•     Adding Contact number...\n•     Adding Business Email address..."
+    val businessProfile = "•     Registering business name...\n•     Adding business contact...\n•     Hosting the new business website..."
     val list = ArrayList<ProcessApiSyncModel>()
     val selectedItems = channels?.map { it.recyclerViewType = RecyclerViewItemType.API_PROCESS_CHANNEL_ITEM.getLayout(); it }
-    list.add(ProcessApiSyncModel("Creating your business profile...", null, businessProfile))
-    list.add(ProcessApiSyncModel("Connecting business to " + getChannelTxt(channels?.size), selectedItems, null))
-    list.add(ProcessApiSyncModel("Activating your free forever plan...", null, "•     Activating plan features..."))
+    list.add(ProcessApiSyncModel("Setting up your new business website...", null, businessProfile))
+    list.add(ProcessApiSyncModel("Connecting your business to " + getChannelTxt(channels?.size), selectedItems, null))
+    list.add(ProcessApiSyncModel("Activating the free digital plan...", null, ""))
     return list
   }
 
   fun getDataSuccess(channels: ArrayList<ChannelModel>?): ArrayList<ProcessApiSyncModel> {
-    val businessProfile = "•     Business name Registered\n•     Business location added\n•     Contact number added\n•     Business Email address Added"
+    val businessProfile = "•     Business name Registered\n•     Contact details configured\n•     Business website live"
     val list = ArrayList<ProcessApiSyncModel>()
     val selectedItems = channels?.map {
       it.recyclerViewType = RecyclerViewItemType.API_PROCESS_CHANNEL_ITEM.getLayout()
       it.status = SyncStatus.SUCCESS.name
       it
     }
-    list.add(ProcessApiSyncModel("Business profile Created", null, businessProfile, status = SyncStatus.SUCCESS.name))
+    list.add(ProcessApiSyncModel("Business website Created", null, businessProfile, status = SyncStatus.SUCCESS.name))
     list.add(ProcessApiSyncModel("Business connected to " + getChannelTxt(channels?.size), selectedItems, null, status = SyncStatus.SUCCESS.name))
-    list.add(ProcessApiSyncModel("Your free forever plan activated", null, "•     Plan features activated", status = SyncStatus.SUCCESS.name))
+    list.add(ProcessApiSyncModel("Your free digital plan activated", null, "•     Plan features activated", status = SyncStatus.SUCCESS.name))
     return list
   }
 
@@ -48,7 +48,7 @@ class ProcessApiSyncModel(
       it.status = SyncStatus.ERROR.name
       it
     }
-    list.add(ProcessApiSyncModel("Error in creating Business profile", null, businessProfile, status = SyncStatus.ERROR.name))
+    list.add(ProcessApiSyncModel("Error in creating business website", null, businessProfile, status = SyncStatus.ERROR.name))
     list.add(ProcessApiSyncModel("Error in connecting to " + getChannelTxt(channels?.size), selectedItems, null, status = SyncStatus.ERROR.name))
     list.add(ProcessApiSyncModel("Error in activating your plan", null, "•     Activating plan features...", status = SyncStatus.ERROR.name))
     return list

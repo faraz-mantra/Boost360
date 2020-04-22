@@ -408,3 +408,7 @@
 
 #-dontwarn com.google.android.libraries.places.internal.iz
 #-dontwarn com.google.android.libraries.places.internal.jb
+
+##------Upgrades---------##
+-keep class com.boost.upgrades.** {*;}
+-dontwarn com.boost.upgrades.**

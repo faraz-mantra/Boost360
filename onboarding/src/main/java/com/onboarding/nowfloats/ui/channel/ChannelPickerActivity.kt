@@ -39,9 +39,15 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
         }
         requestFloatsModel = NavigatorManager.getRequest()
         fragment?.updateBundleArguments(intent.extras)
+        setHeaderWelcomeText()
         setCategoryImage()
         setOnClickListener(binding?.home)
         binding?.motionLayout?.setTransitionListener(this)
+    }
+
+    private fun setHeaderWelcomeText(){
+        binding?.digitalPlanWelcomeMessage?.setText(getString(R.string.business_boost_success) + " " +
+                                                requestFloatsModel?.categoryDataModel?.category_descriptor)
     }
 
     private fun setCategoryImage() {
