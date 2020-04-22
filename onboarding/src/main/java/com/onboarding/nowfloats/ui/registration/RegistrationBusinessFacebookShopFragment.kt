@@ -144,7 +144,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
     private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
         val pages = response?.data ?: return
-        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
+//        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
         val page = pages.firstOrNull() ?: return
         channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
         channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
