@@ -299,7 +299,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     }
 
     fun initializeFreeAddonsRecyclerView() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2,LinearLayoutManager.VERTICAL,true)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recycler_freeaddons.apply {
             layoutManager = gridLayoutManager

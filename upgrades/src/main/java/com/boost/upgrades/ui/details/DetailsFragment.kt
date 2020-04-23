@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -122,7 +123,6 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         initMvvM()
 
 
-
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (Math.abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
                 title_appbar.visibility = View.VISIBLE
@@ -141,19 +141,19 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         )
 
         abcText.setText(getString(R.string.addons_description))
-        description_gradient.visibility = View.VISIBLE
+        description_gradient1.visibility = View.VISIBLE
         var readmoreState = false
         readmore.setOnClickListener {
             if (readmoreState) {
                 abcText.maxLines = 10
                 readmoreState = false
                 readmore.setText(getString(R.string.read_more))
-                description_gradient.visibility = View.VISIBLE
+                description_gradient1.visibility = View.VISIBLE
             } else {
                 abcText.maxLines = 50
                 readmoreState = true
                 readmore.setText(getString(R.string.read_less))
-                description_gradient.visibility = View.GONE
+                description_gradient1.visibility = View.GONE
             }
         }
 
@@ -212,6 +212,18 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         super.onResume()
         val pos = 2
         reviewViewpager.postDelayed(Runnable { reviewViewpager.setCurrentItem(pos) }, 100)
+        getLineCount()
+    }
+
+    fun getLineCount(){
+
+        abcText.postDelayed({
+            val count = abcText.lineCount
+            if(count < 11){
+                readmore.visibility = View.INVISIBLE
+                description_gradient1.visibility = View.GONE
+            }
+        }, 300)
     }
 
     fun loadCostToButtons() {
@@ -319,10 +331,19 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 } else {
                     details_discount.visibility = View.GONE
                 }
-                if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals("--"))
+                if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals("--")) {
                     title_bottom2.text = "Less than 100 businesses have added this"
-                else
-                    title_bottom2.text = addonDetails!!.total_installs + " businesses have added this"
+                }else {
+                    val totalInstall = addonDetails!!.total_installs + " businesses have added this"
+                    val businessUses = SpannableString(totalInstall)
+                    businessUses.setSpan(
+                            ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.light_blue)),
+                            0,
+                            addonDetails!!.total_installs!!.length,
+                            0
+                    )
+                    title_bottom2.text = businessUses
+                }
 
                 loadCostToButtons()
 

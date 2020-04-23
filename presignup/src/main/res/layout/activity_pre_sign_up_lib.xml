@@ -259,7 +259,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
-            android:elevation="@dimen/_5sdp"
+            android:elevation="@dimen/_2sdp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/login"
             android:visibility="gone"

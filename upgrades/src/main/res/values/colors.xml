@@ -338,5 +338,6 @@
     <color name="background2">#dddddd</color>
 
     <color name="fullscreen_color">#a5000000</color>
+    <color name="light_blue">#0068e0</color>
 
 </resources>

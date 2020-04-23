@@ -58,9 +58,10 @@
                 app:layout_collapseMode="pin">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/details_header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#33000000">
+                    android:background="@color/transparent">
                     <LinearLayout
                         android:id="@+id/details_title_image_layout"
                         android:layout_width="0dp"
@@ -288,10 +289,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="16dp"
                             android:text="@string/_262_businesses_have_added_this"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/_10ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.315"
                             app:layout_constraintStart_toStartOf="parent"
@@ -464,6 +464,7 @@
                     </LinearLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/description_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/description_fade_bg"
@@ -488,41 +489,53 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"/>
-                        <View
-                            android:id="@+id/description_gradient"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:elevation="@dimen/_2sdp"
-                            android:outlineProvider="none"
-                            app:layout_constraintTop_toTopOf="@id/abcText"
-                            app:layout_constraintBottom_toBottomOf="@id/abcText"/>
 
-                        <TextView
-                            android:id="@+id/readmore"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="@dimen/_10sdp"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:text="@string/read_more"
-                            android:textAllCaps="true"
-                            android:textColor="@color/common_text_color"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/abcText"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <View
+                        android:id="@+id/description_gradient1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_alignBottom="@+id/offer"
+                        android:elevation="@dimen/_2sdp"
+                        android:outlineProvider="none"
+                        android:background="@drawable/description_fade_bg"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/description_layout"
+                        app:layout_constraintBottom_toBottomOf="@id/description_layout"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                android:id="@+id/description_gradient2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_above="@+id/readmore"
+                android:elevation="@dimen/_2sdp"
+                android:outlineProvider="none"
+                android:background="#efefef"/>
+
+            <TextView
+                android:id="@+id/readmore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:background="#efefef"
+                android:text="@string/read_more"
+                android:textAllCaps="true"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_11sdp"
+                android:layout_below="@id/offer"/>
 
             <LinearLayout
                 android:id="@+id/review_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/offer"
+                android:layout_below="@id/readmore"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:visibility="visible"
@@ -557,7 +570,7 @@
                 android:fontFamily="@font/open_sans"
                 android:textColor="#9b9b9b"
                 android:gravity="center_horizontal"
-                android:text="You Haven't bought the feature"
+                android:text="You Haven't bought this addon"
                 android:layout_below="@id/review_layout"
                 android:paddingTop="@dimen/_20sdp"
                 android:paddingBottom="@dimen/_20sdp"/>

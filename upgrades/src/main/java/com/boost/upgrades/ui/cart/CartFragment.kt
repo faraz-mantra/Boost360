@@ -112,7 +112,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_continue_submit.setOnClickListener {
             //customerId = viewModel.getCustomerId()
 //            customerId != null &&
-            if (total > 1 && ::cartList.isInitialized) {
+            if (total > 0 && ::cartList.isInitialized) {
                 val widgetsToBeBought = ArrayList<Widget>()
                 for (item in cartList) {
                     var extendProps: List<ExtendedProperty>? = null
@@ -222,6 +222,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     TAN_POPUP_FRAGEMENT
             )
         }
+
+        all_recommended_addons.setOnClickListener {
+            (activity as UpgradeActivity).goBackToRecommentedScreen()
+        }
+
     }
 
     fun loadData() {

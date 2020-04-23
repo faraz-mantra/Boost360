@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -85,6 +86,7 @@ public class Login_MainActivity extends AppCompatActivity implements
     Bus bus;
     EditText userName, password;
     CardView loginButton;
+    View line1,line2;
 
     UserSessionManager session;
     String userNameText, passwordText;
@@ -138,6 +140,13 @@ public class Login_MainActivity extends AppCompatActivity implements
         cvGoogleLogin = findViewById(R.id.cv_google_login);
         cvOtpVerification = findViewById(R.id.cv_otp);
 
+        line1 = findViewById(R.id.fl_line_1);
+        line2 = findViewById(R.id.fl_line_2);
+
+
+
+
+
         //toolbar = (Toolbar) findViewById(R.id.app_bar);
         // headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         //headerText.setText(getString(R.string.welcome_back));
@@ -152,6 +161,34 @@ public class Login_MainActivity extends AppCompatActivity implements
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.showSoftInput(userName, InputMethodManager.SHOW_IMPLICIT);
         }, 500);
+
+        userName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                ViewGroup.LayoutParams lp = line1.getLayoutParams();
+                if (hasFocus) {
+                    lp.height = 5;
+                } else {
+                    lp.height = 2;
+                }
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                line1.setLayoutParams(lp);
+            }
+        });
+
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                ViewGroup.LayoutParams lp = line2.getLayoutParams();
+                if (hasFocus) {
+                    lp.height = 5;
+                } else {
+                    lp.height = 2;
+                }
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                line2.setLayoutParams(lp);
+            }
+        });
 
         password.setOnTouchListener(new View.OnTouchListener() {
             @Override

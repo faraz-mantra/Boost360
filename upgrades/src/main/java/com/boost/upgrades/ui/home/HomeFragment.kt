@@ -279,7 +279,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         }
 
         val refText = SpannableString(getString(R.string.referral_card_explainer_text))
-        refText.setSpan(StyleSpan(Typeface.BOLD), 19, 26, 0)
+        refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),

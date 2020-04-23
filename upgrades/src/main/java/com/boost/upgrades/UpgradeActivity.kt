@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
+import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
@@ -151,6 +152,13 @@ class UpgradeActivity : AppCompatActivity() {
         goToHomeFragment()
         addFragment(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT)
     }
+
+    fun goBackToRecommentedScreen(){
+        goToHomeFragment()
+        addFragment(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE)
+    }
+
+
 
     private fun tellFragments() {
         val fragments =

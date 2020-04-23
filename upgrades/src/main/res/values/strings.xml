@@ -26,7 +26,7 @@
     <string name="referral_text_1">Hey, Check out Boost360. I have been using to run my business online. http://bit.ly/ApporWeb?ref=</string>
     <string name="referral_text_2">Hey, Check out Boost360, I use it to run my business online. http://bit.ly/ApporWeb?ref=</string>
     <string name="upgrade_boost_tnc_link">Read Boost360 TnC</string>
-    <string name="referral_card_explainer_text">and get a Premium Chatbot on your website \nfor a month absolutely FREE</string>
+    <string name="referral_card_explainer_text">and get a Premium Chatbot on your website for a month absolutely FREE</string>
     <string name="failed_local_storage_message">Failed to download all premium add-ons to your local storage. We recommend you to un-install &amp; re-install the Boost App.\n\nIf the issue persists, please do write to ria@nowflaots.com</string>
 
     <string-array name="order_status">
