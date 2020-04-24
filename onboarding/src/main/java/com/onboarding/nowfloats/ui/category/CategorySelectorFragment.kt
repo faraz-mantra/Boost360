@@ -1,7 +1,6 @@
 package com.onboarding.nowfloats.ui.category
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.google.gson.Gson
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
@@ -58,7 +56,6 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
   }
 
   private fun onGetCategories(response: BaseResponse) {
-    Log.d("sheh1", "response1:  ${Gson().toJson(response)}")
     if (response.error != null) {
       showLongToast(response.error?.localizedMessage); return
     }

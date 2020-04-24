@@ -9,11 +9,11 @@ import com.onboarding.nowfloats.model.feature.FeatureTypeNew
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 data class SectionsFeature(
-        val title: String? = null,
-        val desc: String? = null,
-        val icon: String? = null,
-        val boost_widget_boost_widget_key: String? = null,
-        val details: ArrayList<DetailsFeature>? = null
+    val title: String? = null,
+    val desc: String? = "",
+    val icon: String? = null,
+    val boost_widget_key: String? = null,
+    val details: ArrayList<DetailsFeature>? = null
 ) : AppBaseRecyclerViewItem, Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -51,7 +51,7 @@ data class SectionsFeature(
         parcel.writeString(title)
         parcel.writeString(desc)
         parcel.writeString(icon)
-        parcel.writeString(boost_widget_boost_widget_key)
+      parcel.writeString(boost_widget_key)
         parcel.writeTypedList(details)
     }
 

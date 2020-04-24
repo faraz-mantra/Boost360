@@ -34,7 +34,7 @@
               android:layout_width="@dimen/size_18"
               android:layout_height="@dimen/size_18"
               android:scaleType="fitStart"
-              app:srcCompat="@drawable/ic_documentation_n" />
+              tools:srcCompat="@drawable/ic_documentation_n" />
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/title"
