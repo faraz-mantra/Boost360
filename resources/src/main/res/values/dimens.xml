@@ -63,6 +63,7 @@
   <dimen name="size_160">160dp</dimen>
   <dimen name="size_180">180dp</dimen>
   <dimen name="size_200">200dp</dimen>
+  <dimen name="size_210">210dp</dimen>
   <dimen name="size_220">220dp</dimen>
   <dimen name="size_240">240dp</dimen>
   <dimen name="size_250">250dp</dimen>

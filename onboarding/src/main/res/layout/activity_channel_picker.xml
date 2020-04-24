@@ -15,7 +15,7 @@
     <View
         android:id="@+id/toolbar_image"
         android:layout_width="0dp"
-        android:layout_height="@dimen/size_180"
+        android:layout_height="@dimen/size_210"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:fitsSystemWindows="true"
@@ -37,7 +37,7 @@
         android:layout_width="@dimen/size_70"
         android:layout_height="@dimen/size_70"
         android:layout_marginStart="@dimen/size_68"
-        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_26"
         android:layout_marginBottom="@dimen/size_6"
         app:layout_constraintBottom_toTopOf="@id/digital_plan_welcome_message"
         app:layout_constraintLeft_toLeftOf="@+id/image_riya"
@@ -67,8 +67,8 @@
         android:id="@+id/image_riya"
         android:layout_width="@dimen/size_70"
         android:layout_height="@dimen/size_70"
-        android:layout_marginStart="@dimen/size_18"
-        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginStart="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_26"
         android:layout_marginBottom="@dimen/size_6"
         app:layout_constraintBottom_toTopOf="@id/digital_plan_welcome_message"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,6 +103,8 @@
         style="@style/Onboarding.HeaderTitleStyle"
         android:text="@string/business_boost_success"
         app:layout_constraintBottom_toTopOf="@id/sub_title"
+        android:ellipsize="end"
+        android:maxLines="4"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View

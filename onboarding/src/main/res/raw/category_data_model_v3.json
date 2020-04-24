@@ -1240,6 +1240,9 @@
       ]
     },
     {
+      "sectionType": true
+    },
+    {
       "category_key": "OTHER RETAIL",
       "experience_code": "RTL",
       "category_Name": "Other\n& Retail Business",
