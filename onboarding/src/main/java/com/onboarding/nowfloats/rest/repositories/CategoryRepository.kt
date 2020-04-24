@@ -8,7 +8,6 @@ import com.onboarding.nowfloats.rest.services.local.category.CategoryLocalDataSo
 import com.onboarding.nowfloats.rest.services.remote.category.CategoryRemoteDataSource
 import io.reactivex.Observable
 
-@Deprecated("old")
 object CategoryRepository : AppBaseRepository<CategoryRemoteDataSource, CategoryLocalDataSource>() {
 
     fun getCategories(context: Context): Observable<BaseResponse> {

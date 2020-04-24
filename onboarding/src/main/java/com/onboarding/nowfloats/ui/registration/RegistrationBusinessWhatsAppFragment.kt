@@ -3,6 +3,7 @@ package com.onboarding.nowfloats.ui.registration
 import android.os.Bundle
 import android.view.View
 import com.framework.extensions.getDrawable
+import com.framework.utils.ValidationUtils
 import com.framework.utils.showKeyBoard
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
@@ -16,7 +17,6 @@ import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
-import com.thedevelopercat.sonic.utils.ValidationUtils
 
 class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
 

@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.thedevelopercat.sonic.utils.ValidationUtils
+import com.framework.utils.ValidationUtils
 import java.net.HttpURLConnection
 import java.net.URL
 

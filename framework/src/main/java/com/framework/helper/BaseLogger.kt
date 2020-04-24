@@ -9,27 +9,15 @@ object BaseLogger {
   }
 
   fun debug(ob: Any, message: String) {
-    log(
-            LogType.DEBUG,
-            ob,
-            message
-    )
+    log(LogType.DEBUG, ob, message)
   }
 
   fun verbose(ob: Any, e: Throwable?) {
-    log(
-            LogType.VERBOSE,
-            ob,
-            e
-    )
+    log(LogType.VERBOSE, ob, e)
   }
 
   fun verbose(ob: Any, message: String) {
-    log(
-            LogType.VERBOSE,
-            ob,
-            message
-    )
+    log(LogType.VERBOSE, ob, message)
   }
 
   fun error(ob: Any, e: Throwable) {
@@ -37,27 +25,15 @@ object BaseLogger {
   }
 
   fun error(ob: Any, message: String) {
-    log(
-            LogType.ERROR,
-            ob,
-            message
-    )
+    log(LogType.ERROR, ob, message)
   }
 
   fun warning(ob: Any, e: Throwable?) {
-    log(
-            LogType.WARNING,
-            ob,
-            e
-    )
+    log(LogType.WARNING, ob, e)
   }
 
   fun warning(ob: Any, message: String) {
-    log(
-            LogType.WARNING,
-            ob,
-            message
-    )
+    log(LogType.WARNING, ob, message)
   }
 
   private fun log(type: LogType, tagObject: Any, e: Throwable?) {

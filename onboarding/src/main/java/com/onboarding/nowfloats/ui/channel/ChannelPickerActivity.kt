@@ -4,7 +4,6 @@ import android.text.TextUtils
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
-import com.framework.utils.ConversionUtils
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.databinding.ActivityChannelPickerBinding
@@ -19,7 +18,6 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
   private val animations = ChannelSelectorAnimator()
   val fragment: ChannelPickerFragment?
     get() = supportFragmentManager.findFragmentById(R.id.channelPickerFragment) as? ChannelPickerFragment
-  var expanded = false
 
   override fun getLayout(): Int {
     return R.layout.activity_channel_picker
@@ -48,8 +46,8 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
   }
 
   private fun setHeaderWelcomeText() {
-    binding?.digitalPlanWelcomeMessage?.setText(getString(R.string.business_boost_success) + " " +
-        requestFloatsModel?.categoryDataModel?.category_descriptor)
+    binding?.digitalPlanWelcomeMessage?.text = getString(R.string.business_boost_success) + " " +
+        requestFloatsModel?.categoryDataModel?.category_descriptor
   }
 
   private fun setCategoryImage() {
@@ -65,7 +63,6 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
   }
 
   override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {
-
   }
 
   override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int) {
@@ -73,12 +70,11 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Chan
   }
 
   override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
-    binding?.digitalPlanWelcomeMessage?.ellipsize = if (expanded) TextUtils.TruncateAt.START else TextUtils.TruncateAt.END
-    binding?.digitalPlanWelcomeMessage?.maxLines = if (expanded) 4 else 1
   }
 
   override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-    expanded = !expanded
+    binding?.digitalPlanWelcomeMessage?.ellipsize = TextUtils.TruncateAt.END
+    binding?.digitalPlanWelcomeMessage?.maxLines = if (currentId == R.id.expanded) 3 else 1
   }
 
   override fun onAnimationComplete() {

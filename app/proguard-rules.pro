@@ -15,6 +15,15 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-optimizationpasses 5
+#-allowaccessmodification
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-dontpreverify
+-verbose
+
 -keep class twitter4j.** { *; }
 -dontwarn com.darsh.multipleimageselect.adapters.**
 -dontwarn twitter4j.**
@@ -280,9 +289,6 @@
 # Apache HttpClient
 -dontwarn org.apache.http.**
 
-
--dontskipnonpubliclibraryclassmembers
-
 -keepattributes *Annotation*,EnclosingMethod
 
 -keepnames class org.codehaus.jackson.** { *; }
@@ -336,6 +342,15 @@
   public *;
 }
 
+##onboarding progard rule
+-keeppackagenames com.onboarding
+-keeppackagenames com.framework
+-keeppackagenames com.resources
+
+-keep class com.onboarding.** { *; }
+-keep class com.framework.** { *; }
+-keep class com.resources.** { *; }
+##onboarding progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
