@@ -42,7 +42,10 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+
+import zendesk.support.guide.HelpCenterActivity;
 
 import static android.view.Window.FEATURE_NO_TITLE;
 
@@ -132,9 +135,6 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
         Intent intent = null;
         switch (position) {
             case 0:
-                MixPanelController.track(MixPanelController.ON_BOARDING_WELCOME_ABOARD, null);
-                intent = new Intent(this, Mobile_Site_Activity.class);
-                intent.putExtra("WEBSITE_NAME", getString(R.string.onboarding_about_product_url));
                 // step complete
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
@@ -142,26 +142,29 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                     OnBoardingApiCalls.updateData(session.getFpTag(), "welcome_aboard:true");
                 }
                 isSomethingChanged = true;
+                WebEngageController.trackEvent("DASHBOARD - LEARN", "Learn How to use",null);
+                HelpCenterActivity.builder()
+                        .show(this);
                 break;
             case 1:
-                MixPanelController.track(MixPanelController.ON_BOARDING_SITE_HEALTH, null);
+                WebEngageController.trackEvent("DASHBOARD - SITE_HEALTH", "Site Health from Onboarding Cards",null);
                 intent = new Intent(this, FragmentsFactoryActivity.class);
                 intent.putExtra("fragmentName", "SiteMeterFragment");
                 isSomethingChanged = true;
                 break;
             case 2:
-                MixPanelController.track(MixPanelController.ON_BOARDING_CUSTOM_PAGE, null);
+                WebEngageController.trackEvent("DASHBOARD - CUSTOM_PAGE", "Site Health from Onboarding Cards",null);
                 intent = new Intent(this, CustomPageActivity.class);
                 isSomethingChanged = true;
                 break;
             case 3:
-                MixPanelController.track(MixPanelController.ON_BOARDING_ADD_PRODUCT, null);
+                WebEngageController.trackEvent("DASHBOARD - ADD_PRODUCT", "Site Health from Onboarding Cards",null);
                 intent = new Intent(this, ProductGalleryActivity.class);
                 isSomethingChanged = true;
                 break;
             case 4:
                 isSomethingChanged = true;
-                MixPanelController.track(MixPanelController.ON_BOARDING_BOOST_APP, null);
+                WebEngageController.trackEvent("DASHBOARD - ONBOARDING_CARDS_COMPLETE", "",null);
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
@@ -170,7 +173,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 return;
             case 5:
                 isSomethingChanged = true;
-                MixPanelController.track(MixPanelController.ON_BOARDING_SHARE_WEBSITE, null);
+                WebEngageController.trackEvent("DASHBOARD - SHARE_WEBSITE", "Share website from Onboarding Cards",null);
                 shareWebsite();
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
@@ -182,7 +185,8 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             default:
                 return;
         }
-        startActivity(intent);
+        if(intent != null)
+            startActivity(intent);
     }
 
     @Override

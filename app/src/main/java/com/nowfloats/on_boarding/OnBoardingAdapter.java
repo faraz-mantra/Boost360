@@ -57,7 +57,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         titles = mContext.getResources().getStringArray(R.array.on_boarding_titles);
         buttonText = mContext.getResources().getStringArray(R.array.on_boarding_btnTexts);
 
-        addAuthScreens();
+        //addAuthScreens();
     }
     @NonNull
     @Override
@@ -116,21 +116,23 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         for (OnBoardingModel.ScreenData data : mOnBoardingModel.getScreenDataArrayList()){
             i++;
             switch (i){
-                case 3:
+                case 0:
+                    break;
+                case 1:
                     data.setIsComplete(sharedPreferences.getInt(Key_Preferences.SITE_HEALTH,0)>=80);
                     data.setValue(String.valueOf(sharedPreferences.getInt(Key_Preferences.SITE_HEALTH,0)));
                     break;
-                case 4:
+                case 2:
                     data.setIsComplete(sharedPreferences.getInt(Key_Preferences.CUSTOM_PAGE,0)>0);
+                    break;
+                case 3:
+                    data.setIsComplete(sharedPreferences.getInt(Key_Preferences.PRODUCTS_COUNT,0)>0);
+                    break;
+                case 4:
+                    data.setIsComplete(true);
                     break;
                 case 5:
                     data.setIsComplete(sharedPreferences.getInt(Key_Preferences.PRODUCTS_COUNT,0)>0);
-                    break;
-                case 6:
-                    data.setIsComplete(true);
-                    break;
-                case 7:
-                    data.setIsComplete(sharedPreferences.getBoolean(Key_Preferences.WEBSITE_SHARE,false));
                     break;
                 default:
                     data.setIsComplete(sharedPreferences.getBoolean(data.getKey(), false));
@@ -173,7 +175,9 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             btnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(titles[getAdapterPosition()].contains("via Google") || titles[getAdapterPosition()].contains("via Facebook") || titles[getAdapterPosition()].contains("via mobile number")) {
+                    if(titles[getAdapterPosition()].contains("via Google") ||
+                            titles[getAdapterPosition()].contains("via Facebook") ||
+                            titles[getAdapterPosition()].contains("via mobile number")) {
 
                         if(titles[getAdapterPosition()].contains("via Google")) {
                             LoginManager.getInstance().getListener().onGoogleLogin();
@@ -189,7 +193,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         ((ItemClickListener)mContext).onItemClick(getAdapterPosition(), mOnBoardingModel.getScreenDataArrayList().get(getAdapterPosition()));
 
                     }else if(mRecyclerView != null){
-                        Toast.makeText(mContext, "Finish Previous Step!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "You need to finish the previous step before you proceed further", Toast.LENGTH_SHORT).show();
                         mRecyclerView.scrollToPosition(mOnBoardingModel.getToBeCompletePos());
                     }
                 }
@@ -198,7 +202,9 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         void setData(int position){
 
-            boolean authInfoDisplay = titles[getAdapterPosition()].contains("via Google") || titles[getAdapterPosition()].contains("via Facebook") || titles[getAdapterPosition()].contains("via mobile number");
+//            boolean authInfoDisplay = titles[getAdapterPosition()].contains("via Google") ||
+//                    titles[getAdapterPosition()].contains("via Facebook") ||
+//                    titles[getAdapterPosition()].contains("via mobile number");
 
             titleTv.setText(String.format(titles[position],mOnBoardingModel.getScreenDataArrayList().get(position).getValue()+"%"));
             cardNumberTv.setText(String.valueOf(position+1));
@@ -210,7 +216,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 layout.setAlpha(1f);
                 itemView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
                 btnTv.setBackgroundResource(R.drawable.btn_bg);
-            }else if(position != mOnBoardingModel.getToBeCompletePos() && !authInfoDisplay){
+            } else if(position != mOnBoardingModel.getToBeCompletePos()){
                 layout.setAlpha(.4f);
                 completeImg.setVisibility(View.GONE);
                 itemView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.light_gray));
