@@ -2,7 +2,9 @@ package com.nowfloats.Login;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +79,11 @@ public class MobileOtpVerificationFragment extends Fragment {
         tvResendUnderline.setVisibility(View.GONE);
 
         new Handler().postDelayed(() -> {
-            tvResendUnderline.setVisibility(View.VISIBLE);
+            String resendValue = "Didn’t get the code? Resend";
+            SpannableString resendString = new SpannableString(resendValue);
+            resendString.setSpan(new UnderlineSpan(),resendValue.length() - 6, resendValue.length(),0);
+            tvResend.setText(resendString);
+//            tvResendUnderline.setVisibility(View.VISIBLE);
         }, 30000);
 
 
@@ -87,5 +93,4 @@ public class MobileOtpVerificationFragment extends Fragment {
 
 
     }
-
 }

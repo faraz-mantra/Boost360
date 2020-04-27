@@ -56,7 +56,6 @@ public class MobileOtpFragment extends Fragment {
             onMobileProvidedListener.onMobileProvided(phoneNumber);
         });
 
-//        etPhoneNumber.requestFocus();
         etPhoneNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -70,6 +69,8 @@ public class MobileOtpFragment extends Fragment {
                 mobileOtpBottomView.setLayoutParams(lp);
             }
         });
+
+        etPhoneNumber.requestFocus();
 
         return v;
     }
