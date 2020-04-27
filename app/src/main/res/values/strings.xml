@@ -466,7 +466,7 @@
     <string name="deeplink_gplaces">gplaces</string>
     <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
     <string name="deeplink_ProductGallery">productGallery</string>
-    <string name="setting_faq_url">https://boost360.nowfloats.com/faqs/</string>
+    <string name="setting_faq_url">https://www.getboost360.com/faqs/</string>
 
     <!-- Deep Linking URLs  -->
 
@@ -743,10 +743,7 @@
         <item>used cars</item>
     </string-array>
     <string-array name="on_boarding_description">
-        <item>To ensure your existing Boost account and your Google account work well together for a secure and faster log in, authenticate your Google account.</item>
-        <item>To ensure your existing Boost account and your Facebook account work well together for a secure and faster log in, authenticate your Facebook account.</item>
-        <item>To ensure your existing Boost account and your Mobile Number work well together for a secure and faster log in, authenticate your Number via OTP.</item>
-        <item>Hey, this is your website management dashboard. Let us tell you more about the product and how to use it to get discovered online. Visit our <a href="https://nowfloats.com/FAQ">FAQ</a> section for more information.</item>
+        <item>Hey, this is your Boost360 dashboard. Let us tell you more about the product and how to use it to run your business. Visit our <a href="https://www.getboost360.com/FAQ">FAQ</a> section for more information.</item>
         <item>Site health indicates readiness of your website for online discovery. These basic factors ensure that search engines take notice of your new website.</item>
         <item>Now you are ready for getting discovered online, but your site is not optimized for website visitors. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us" Page.</item>
         <item>Your potential customers are looking for products or services. Showcase it to them to increase your revenues.</item>
@@ -754,9 +751,6 @@
         <item>Now your website experience is complete for website visitors to discover. Now, let us help you get 20 unique visitors. Why don\'t you broadcast your website on WhatsApp or share it with your Family and Friends group?</item>
     </string-array>
     <string-array name="on_boarding_titles">
-        <item>Enable faster login via Google</item>
-        <item>Enable faster login via Facebook</item>
-        <item>Enable faster login via mobile number</item>
         <item>Welcome Aboard!</item>
         <item>Your Site Health Score is %s!</item>
         <item>Tell more about your Business!</item>
@@ -765,10 +759,7 @@
         <item>Let\'s get some of your friends to see your site!</item>
     </string-array>
     <string-array name="on_boarding_btnTexts">
-        <item>Continue with Google</item>
-        <item>Authorize Facebook Profile</item>
-        <item>Authorize Mobile Number</item>
-        <item>Learn How This Product Works</item>
+        <item>Learn How Boost360 Works</item>
         <item>Take Your Site Health To Minimum 80%</item>
         <item>Add An \"About Us\" Page</item>
         <item>Add Products</item>
@@ -839,7 +830,7 @@
     <string name="presignup_login_text">Already have a NowFloats site?</string>
     <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
-    <string name="settings_about_us_link">https://boost360.nowfloats.com/about-us/</string>
+    <string name="settings_about_us_link">https://www.getboost360.com/about-us/</string>
     <string name="assured_purchase_link">http://www.assuredpurchase.com/</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>

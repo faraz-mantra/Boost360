@@ -32,7 +32,7 @@ object FacebookGraphManager {
 
       val response = try {
         Gson().fromJson(graphResponse.rawResponse, FacebookGraphUserPagesResponse::class.java)
-      } catch (e: JsonSyntaxException) {
+      } catch (e: Exception) {
         val error = FacebookGraphUserPagesErrorModel(error = e.localizedMessage)
         FacebookGraphUserPagesResponse(error = error)
       }

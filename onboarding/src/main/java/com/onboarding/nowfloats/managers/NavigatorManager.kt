@@ -46,8 +46,7 @@ object NavigatorManager {
 
   fun getRequest(): RequestFloatsModel? {
     return try {
-      Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT)
-              ?: "", RequestFloatsModel::class.java)
+      Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT) ?: "", RequestFloatsModel::class.java)
     } catch (e: JsonSyntaxException) {
       e.printStackTrace()
       null

@@ -144,7 +144,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
     private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
         val pages = response?.data ?: return
-        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
+//        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
         val page = pages.firstOrNull() ?: return
         channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
         channelAccessToken.userAccountId = AccessToken.getCurrentAccessToken().userId
@@ -170,6 +170,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
 
     private fun disconnectFacebookPage() {
+      logoutFacebook()
         binding?.skip?.visible()
         binding?.facebookPageSuccess?.maimView?.gone()
         binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)

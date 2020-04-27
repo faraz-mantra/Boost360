@@ -55,7 +55,7 @@
         android:includeFontPadding="true"
         android:lineSpacingExtra="@dimen/size_8"
         android:paddingTop="@dimen/size_14"
-        android:paddingBottom="@dimen/size_24"
+        android:paddingBottom="@dimen/size_22"
         android:text="@string/registering_business_name_n_adding_business_location_n_adding_contact_number_n_adding_business_email_address"
         android:textColor="@color/greyish_brown_40"
         android:visibility="gone"
@@ -76,6 +76,8 @@
       <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:paddingTop="@dimen/size_6"
+          android:paddingBottom="@dimen/size_10"
           android:orientation="vertical">
 
         <com.framework.views.viewgroups.BaseRecyclerView
@@ -83,8 +85,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
-            android:paddingTop="@dimen/size_6"
-            android:paddingBottom="@dimen/size_6"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:ignore="RtlSymmetry"
             tools:itemCount="3"

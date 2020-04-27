@@ -17,6 +17,7 @@ class CategoryDataModel(
         val experience_code: String? = null,
         val category_key: String? = null,
         val category_Name: String? = null,
+        val category_descriptor: String? = null,
         val icon: String? = null,
         val channels: ArrayList<ChannelModel>? = null,
         val sections: ArrayList<SectionsFeature>? = null
@@ -25,6 +26,7 @@ class CategoryDataModel(
     var isSelected = false
 
     constructor(parcel: Parcel) : this(
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -57,37 +59,37 @@ class CategoryDataModel(
             )
             CategoryTypeNew.CLINICS_HOSPITALS -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_doctor,
+                    R.drawable.ic_hospital,
                     context.theme
             )
             CategoryTypeNew.EDUCATION_COACHING -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_education_pro,
+                    R.drawable.ic_edu,
                     context.theme
             )
             CategoryTypeNew.HOTELS_MOTELS -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_mall,
+                    R.drawable.ic_hotel,
                     context.theme
             )
             CategoryTypeNew.MANUFACTURING_EQUIPMENT -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_industry,
+                    R.drawable.ic_mfg,
                     context.theme
             )
             CategoryTypeNew.SPAS_WELLNESS -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_spas,
+                    R.drawable.ic_spa,
                     context.theme
             )
             CategoryTypeNew.SALON -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_other_retails,
+                    R.drawable.ic_salon,
                     context.theme
             )
             CategoryTypeNew.RESTAURANT_CAFES -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_food,
+                    R.drawable.ic_cafe,
                     context.theme
             )
             CategoryTypeNew.RETAIL_BUSINESS -> ResourcesCompat.getDrawable(

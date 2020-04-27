@@ -1,4 +1,4 @@
-package com.thedevelopercat.sonic.utils
+package com.framework.utils
 
 import java.util.regex.Pattern
 

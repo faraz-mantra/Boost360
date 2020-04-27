@@ -48,7 +48,7 @@
               android:layout_gravity="right|bottom"
               android:layout_marginEnd="@dimen/size_6"
               android:layout_marginBottom="@dimen/size_6"
-              app:srcCompat="@drawable/ic_add" />
+              app:srcCompat="@drawable/ic_add_new" />
 
         </FrameLayout>
 
@@ -235,7 +235,7 @@
               <com.framework.views.customViews.CustomImageView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  app:srcCompat="@drawable/ic_add" />
+                  app:srcCompat="@drawable/ic_add_new" />
 
             </com.framework.views.customViews.CustomCardView>
           </FrameLayout>
@@ -278,6 +278,8 @@
             android:layout_marginStart="@dimen/size_32"
             android:layout_marginEnd="@dimen/size_32"
             android:alpha="0"
+            android:clickable="true"
+            android:focusable="true"
             android:background="@color/transparent"
             android:fontFamily="@font/regular"
             android:shadowColor="@color/transparent"

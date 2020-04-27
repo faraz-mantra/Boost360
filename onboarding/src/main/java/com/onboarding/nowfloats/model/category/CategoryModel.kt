@@ -38,27 +38,27 @@ data class CategoryModel(
             )
             CategoryType.EDUCATION_COACHING -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_education_pro,
+                    R.drawable.ic_edu,
                     context.theme
             )
             CategoryType.HOTELS_MOTELS -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_mall,
+                    R.drawable.ic_hotel,
                     context.theme
             )
             CategoryType.MANUFACTURING_EQUIPMENT -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_industry,
+                    R.drawable.ic_mfg,
                     context.theme
             )
             CategoryType.SPAS_SALONS -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_spas,
+                    R.drawable.ic_spa,
                     context.theme
             )
             CategoryType.RESTAURANT_CAFES -> ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ic_group_food,
+                    R.drawable.ic_cafe,
                     context.theme
             )
             CategoryType.RETAIL_BUSINESS -> ResourcesCompat.getDrawable(

@@ -50,7 +50,6 @@ class SignUpConfirmation : AppCompatActivity() {
       editor?.putBoolean("IsSignUpComplete", true)
       editor?.apply()
       NavigatorManager.startActivities(this@SignUpConfirmation)
-      finish()
     }
   }
 }

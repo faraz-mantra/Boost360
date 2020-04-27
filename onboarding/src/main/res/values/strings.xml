@@ -1,20 +1,21 @@
 <resources>
-    <string name="what_your_business_like">What is your business like?</string>
-    <string name="let_me_know_describes_business">Let me know, which of the following describes the business you are running?</string>
+    <string name="what_your_business_like">What\'s your business like?</string>
+    <string name="let_me_know_describes_business">Choose a category that best matches the nature of your business.</string>
     <string name="skip">Skip</string>
     <string name="next">NEXT</string>
     <string name="_or_">-- or --</string>
-    <string name="business_boost_success">Your Business + Boost = Success</string>
-    <string name="free_forever_features">FREE forever features curated for you.</string>
-    <string name="presence_on">Presence on</string>
+    <string name="business_boost_success">I have curated this digital plan for </string>
+    <string name="free_forever_features">All features included in this plan are absolutely FREE.</string>
+    <string name="presence_on">Connect &amp; manage your business across </string>
     <string name="channel">channel</string>
     <string name="edit">Edit</string>
     <string name="get_started">GET STARTED</string>
+    <string name="confirm_caps">CONFIRM</string>
     <string name="boost_features_mentioned_above">Enjoy all Boost features mentioned above</string>
     <string name="free_forever">Free Forever</string>
     <string name="doctors_amp_clinic_business"><![CDATA[for your Doctors & Clinic Business]]></string>
-    <string name="recommended_on">Recommended on</string>
-    <string name="select_relevant_channels_or_remove_unwanted_channels">Please select relevant channels or remove unwanted channels to adjust your content’s reach.</string>
+    <string name="recommended_on">We recommend you to connect your business on these </string>
+    <string name="select_relevant_channels_or_remove_unwanted_channels">Please select relevant channels or remove unwanted channels, to adjust the digital reach of your business.</string>
 
     <string name="at_least_one_channel_selected">At least 1 channel must be selected</string>
     <string name="you_selected">You\'ve selected</string>
@@ -37,22 +38,22 @@
 
     <string name="step">Step</string>
     <string name="building_your_business_ncontact_info">Building your business\ncontact info</string>
-    <string name="this_info_will_be_used_to_onboard_sync_across_all_channels">This info will be used to onboard/sync across all\nchannels</string>
+    <string name="this_info_will_be_used_to_onboard_sync_across_all_channels">This information will be used to set up\nyour business profile across all channels.</string>
     <string name="enter_your_business_name">Enter your business name</string>
     <string name="your_business_address">Your business address</string>
     <string name="enter_your_business_email">Enter your business email</string>
     <string name="business_contact_number">Business contact number</string>
-    <string name="creating_business_website">Creating business website</string>
-    <string name="select_subdomain_business_desc">Please select a subdomain for this business site. This website will be help your information get discovered on Google Search and maps. If you want, you can replace below URL later with you own domain as well.</string>
+    <string name="creating_business_website">Creating a business website for you</string>
+    <string name="select_subdomain_business_desc">Select an appropriate address for your new business website. You can always map an existing domain or a new domain at a later point.</string>
     <string name="subdomain">subdomain</string>
     <string name="nowfloats_dot_com">.nowfloats.com</string>
 
     <string name="create_my_business_website">Create my business website</string>
-    <string name="do_you_already_have_a_facebook_page">Do you already have a Facebook page?</string>
+    <string name="do_you_already_have_a_facebook_page">Does your business already have a Facebook page?</string>
     <string name="setting_up_your_business_facebook_page_amp_setup_sync_your_facebook_shop"><![CDATA[Setting up your business Facebook Page & setup/sync your Facebook Shop]]></string>
     <string name="yes_link_my_existing_facebook_page">Yes, link my existing Facebook page</string>
     <string name="i_don_t_have_one_will_do_later">I don’t have one, Will do later</string>
-    <string name="do_you_already_have_a_twitter_profile">Do you already have a Twitter profile?</string>
+    <string name="do_you_already_have_a_twitter_profile">Does your business already have a Twitter profile?</string>
     <string name="setting_up_or_syncing_your_twitter_business_profile">Setting up or Syncing your Twitter business profile</string>
     <string name="yes_link_my_existing_twitter_profile">Yes, link my existing Twitter profile</string>
 
@@ -69,24 +70,24 @@
 
     <string name="business_digitally_desc">It’s time to start creating engaging and meaningfull content to make people aware about business. Content plays a vital role into giving strength to your business digitally.</string>
 
-    <string name="enter_whatsapp_business_contact">Please enter your WhatsApp Business contact</string>
-    <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, You can use regular WhatsApp contact number for your customers to reach you easily.</string>
+    <string name="enter_whatsapp_business_contact">Is there a WhatsApp number for your business?</string>
+    <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, you can use your personal WhatsApp contact number to allow customers to start chatting with you right away.</string>
     <string name="confirm_and_proceed">Confirm and Proceed</string>
-    <string name="processing_your_business_information">Processing your business\ninformation…</string>
+    <string name="processing_your_business_information">Setting up your business\non Boost...</string>
     <string name="business_information_completed">Your business information\nsetup is completed!</string>
     <string name="city_name">City name</string>
     <string name="logout">Logout</string>
     <string name="ok">OK</string>
     <string name="press_again_exit">Press again to exit!</string>
-    <string name="facebook_page_connect_later_Skip">If you don’t have a Facebook Page, or if you want to connect it later; please tap ‘Skip’</string>
-    <string name="sync_facebook_page">Yes, Sync my Facebook Page</string>
-    <string name="shop_section_on_your_fb_page">Do you have shop section on your Fb page?</string>
-    <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later; please tap ‘Skip’.</string>
+    <string name="facebook_page_connect_later_Skip">If you don\'t have a Facebook page for your business, or if you want to connect it later, please tap \'Skip\'</string>
+    <string name="sync_facebook_page">Connect my Facebook page</string>
+    <string name="shop_section_on_your_fb_page">Have you already enabled the shop section on your Facebook page?</string>
+    <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later, please tap ‘Skip’.</string>
     <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
-    <string name="twitter_account_business_Skip">If you don’t have a twitter account for your business, or if you want to connect it later; please tap ‘Skip’.</string>
-    <string name="twitter_allows_digital_business_boost">Twitter allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.</string>
-    <string name="facebook_page_allows_digital_business_boost">Facebook page allows your to have a digital identity of your business and extend your reach to many potential customers right from Boost.</string>
-    <string name="facebook_shop_allows_digital_business_boost">It allows you to list your offerings on your business’s facebook page which can be accessed by your potential customers across facebook.</string>
+    <string name="twitter_account_business_Skip">If you don’t have a Twitter account for your business, or if you want to connect it later, please tap \'Skip\'.</string>
+    <string name="twitter_allows_digital_business_boost">Using Boost, you can now communicate with your followers on Twitter to build brand awareness and reach out to new customers.</string>
+    <string name="facebook_page_allows_digital_business_boost">Using Boost, you can now directly communicate with your customers on Facebook and reach out to more potential users.</string>
+    <string name="facebook_shop_allows_digital_business_boost">Using Boost, all your products and services will start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.</string>
     <string name="twitter_connected">Twitter Connected</string>
     <string name="facebook_shop_connected">Facebook Shop Connected</string>
     <string name="facebook_page_connected">Facebook Page Connected</string>
@@ -96,8 +97,8 @@
     <string name="please_select_relevant_channels_or_remove_unwanted_channels_to_adjust_your_content_s_reach">Please select relevant channels or remove unwanted channels to adjust your content’s reach.</string>
     <string name="done">DONE</string>
     <string name="confirm">CONFIRM</string>
-    <string name="creating_your_business_profile">Creating your business profile...</string>
-    <string name="registering_business_name_n_adding_business_location_n_adding_contact_number_n_adding_business_email_address">• Registering business name…\n• Adding business location…\n• Adding Contact number…\n• Adding Business Email address…</string>
+    <string name="creating_your_business_profile">Setting up your new business website...</string>
+    <string name="registering_business_name_n_adding_business_location_n_adding_contact_number_n_adding_business_email_address">• Registering business name…\n• Adding business contact…\n• Setting up a new business website…</string>
     <string name="connecting_google_account">Connecting Google account…</string>
     <string name="disconnect_this_account">Disconnect this account</string>
     <string name="internet_connection_not_available">Internet connection not available.</string>
