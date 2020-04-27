@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
@@ -15,7 +14,6 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-        resValue "string", "places_api_key", (project.findProperty("PLACES_API_KEY") ?: "")
         renderscriptTargetApi rootProject.targetSdkVersion
     }
 
@@ -36,6 +34,4 @@ android {
 
 dependencies {
     api project(path: ':resources')
-    api project(path: ':facebook')
-    api project(path: ':twitter')
 }
