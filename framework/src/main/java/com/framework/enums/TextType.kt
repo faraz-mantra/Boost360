@@ -25,7 +25,8 @@ enum class TextType(val type: Int) {
     HEADING_TEXT_1(17),
     HEADING_TEXT_2(18),
     HEADING_TEXT_3(19),
-    HEADING_7(20)
+    HEADING_7(20),
+    OVERLINE_2(21)
 }
 
 fun TextView.setTextStyle(textType: TextType?) {
@@ -52,6 +53,7 @@ fun TextView.setTextStyle(textType: TextType?) {
         TextType.HEADING_TEXT_2 -> R.dimen.heading_text_2
         TextType.HEADING_TEXT_3 -> R.dimen.heading_text_3
         TextType.HEADING_7 -> R.dimen.heading_7
+        TextType.OVERLINE_2 -> R.dimen.overline_2
     }
     this.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(size))
 }
