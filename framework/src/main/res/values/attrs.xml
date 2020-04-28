@@ -20,6 +20,7 @@
             <enum name="RADIUS_0" value="0" />
             <enum name="RADIUS_2" value="2" />
             <enum name="RADIUS_4" value="4" />
+            <enum name="RADIUS_6" value="6" />
             <enum name="RADIUS_8" value="8" />
             <enum name="RADIUS_12" value="12" />
             <enum name="RADIUS_16" value="16" />

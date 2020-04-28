@@ -10,11 +10,18 @@
         android:paddingTop="@dimen/size_16"
         android:paddingEnd="@dimen/size_16">
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/ivDishItem"
-            android:layout_width="@dimen/size_42"
-            android:layout_height="@dimen/size_42"
-            android:src="@drawable/ic_mutton_rogan_josh" />
+        <com.framework.views.customViews.CustomCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:corner_radius="RADIUS_4">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/ivDishItem"
+                android:layout_width="@dimen/size_42"
+                android:layout_height="@dimen/size_42"
+                android:src="@drawable/ic_mutton_rogan_josh" />
+
+        </com.framework.views.customViews.CustomCardView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -53,8 +60,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="end"
+            android:orientation="vertical"
             android:paddingTop="@dimen/size_2"
             android:paddingBottom="@dimen/size_2">
 
@@ -62,11 +69,11 @@
                 android:id="@+id/tvDishAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:text="₹297"
                 android:textColor="@color/greyish_brown"
-                app:textType="CAPTION"
                 app:fontFamily="@font/regular"
-                android:includeFontPadding="false"
+                app:textType="CAPTION"
 
 
                 />
@@ -75,15 +82,12 @@
                 android:id="@+id/tvDishAmountDiscountedPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:text="₹297"
                 android:textColor="@color/color_light_brown"
-                app:textType="CAPTION"
                 app:fontFamily="@font/regular"
-                android:includeFontPadding="false"
-                />
+                app:textType="CAPTION" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -8,7 +8,9 @@ import com.framework.base.BaseActivity
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType.*
 import com.inventoryorder.databinding.ItemOrderBinding
+import com.inventoryorder.databinding.ItemOrderDetailsBinding
 import com.inventoryorder.databinding.ItemOrderTypeBinding
+import com.inventoryorder.holders.OrderItemDetailsViewHolder
 import com.inventoryorder.holders.OrderItemViewHolder
 import com.inventoryorder.holders.OrderTypeViewHolder
 
@@ -25,6 +27,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     return when (recyclerViewItemType) {
       ORDER_ITEM_TYPE -> OrderTypeViewHolder(binding as ItemOrderTypeBinding)
       INVENTORY_ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
+      ITEM_ORDER_DETAILs -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding )
     }
   }
 
