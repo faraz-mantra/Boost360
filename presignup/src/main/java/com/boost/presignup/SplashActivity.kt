@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.library.BuildConfig
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.ui.startFragmentActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -47,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
       }
 
       override fun onAnimationEnd(animation: Animator?) {
-        startFragmentActivity(FragmentType.ALL_ORDER_VIEW, Bundle())
+        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, Bundle())
         finish()
 //                if (isUserLoggedIn) {
 //                    val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
