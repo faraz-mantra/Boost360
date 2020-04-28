@@ -333,37 +333,39 @@ public class SidePanelFragment extends Fragment {
         tvCalls = manageCalls.findViewById(R.id.tvCustomerCalls);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
 
-        switch (category_code){
-            case "SVC":
-            case "DOC":
-            case "HOS":
-            case "SPA":
-            case "SAL":
-            case "EDU":
-                tvManageInventory.setText("Appointments");
-                break;
-            case "HOT":
-                tvManageInventory.setText("Room Bookings");
-                break;
-            case "RTL":
-            case "MFG":
-                tvManageInventory.setText("Orders");
-                break;
-            case "CAF":
-                tvManageInventory.setText("Food Orders");
-                break;
-            default:
-                tvManageInventory.setText("Orders");
-                break;
-        }
-        tvInbox = inboxLayout.findViewById(R.id.tvInbox);
-        switch (category_code){
-            case "MFG":
-                tvInbox.setText("Quotation Requests");
-                break;
-            default:
-                tvInbox.setText("Enquiries");
-                break;
+        if(category_code!=null) {
+            switch (category_code) {
+                case "SVC":
+                case "DOC":
+                case "HOS":
+                case "SPA":
+                case "SAL":
+                case "EDU":
+                    tvManageInventory.setText("Appointments");
+                    break;
+                case "HOT":
+                    tvManageInventory.setText("Room Bookings");
+                    break;
+                case "RTL":
+                case "MFG":
+                    tvManageInventory.setText("Orders");
+                    break;
+                case "CAF":
+                    tvManageInventory.setText("Food Orders");
+                    break;
+                default:
+                    tvManageInventory.setText("Orders");
+                    break;
+            }
+            tvInbox = inboxLayout.findViewById(R.id.tvInbox);
+            switch (category_code) {
+                case "MFG":
+                    tvInbox.setText("Quotation Requests");
+                    break;
+                default:
+                    tvInbox.setText("Enquiries");
+                    break;
+            }
         }
         accountSettingsText = (TextView) accountSettingsLayout.findViewById(R.id.fifthRow_TextView);
         tvSubscriptions = (TextView) subscriptionsLayout.findViewById(R.id.tvSubscriptions);
