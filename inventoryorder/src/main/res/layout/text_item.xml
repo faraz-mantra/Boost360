@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order ID:"
+        android:textColor="@color/primary_grey"
+        app:textType="SUBTITLE_2" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_6"
+        android:text="GK7C4FM"
+        android:textColor="@color/black"
+        app:textType="BODY_1" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

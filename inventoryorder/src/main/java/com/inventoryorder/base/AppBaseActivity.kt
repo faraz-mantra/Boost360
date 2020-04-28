@@ -32,7 +32,7 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
+    return resources.getDimension(R.dimen.heading_7)
   }
 
   override fun getNavIconScale(): Float {

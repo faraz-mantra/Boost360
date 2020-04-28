@@ -6,10 +6,11 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.framework.base.BaseActivity
 import com.inventoryorder.R
-import com.inventoryorder.constant.RecyclerViewItemType.ORDER_ITEM
-import com.inventoryorder.constant.RecyclerViewItemType.values
+import com.inventoryorder.constant.RecyclerViewItemType.*
 import com.inventoryorder.databinding.ItemOrderBinding
+import com.inventoryorder.databinding.ItemOrderTypeBinding
 import com.inventoryorder.holders.OrderItemViewHolder
+import com.inventoryorder.holders.OrderTypeViewHolder
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     activity: BaseActivity<*, *>,
@@ -22,14 +23,12 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val recyclerViewItemType = values().first { it.getLayout() == viewType }
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
-      ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
+      ORDER_ITEM_TYPE -> OrderTypeViewHolder(binding as ItemOrderTypeBinding)
+      INVENTORY_ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
     }
   }
 
-  fun runLayoutAnimation(
-      recyclerView: RecyclerView?,
-      anim: Int = R.anim.layout_animation_fall_down
-  ) = recyclerView?.apply {
+  fun runLayoutAnimation(recyclerView: RecyclerView?, anim: Int = R.anim.layout_animation_fall_down) = recyclerView?.apply {
     layoutAnimation = AnimationUtils.loadLayoutAnimation(context, anim)
     notifyDataSetChanged()
     scheduleLayoutAnimation()

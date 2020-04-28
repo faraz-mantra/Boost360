@@ -1,6 +1,8 @@
 package com.inventoryorder.ui.order
 
 import android.content.SharedPreferences
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.databinding.ViewDataBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
@@ -33,6 +35,13 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
 
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    when (this) {
+      is InventoryAllOrderFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
+    }
   }
 
 }
