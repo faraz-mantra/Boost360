@@ -578,7 +578,6 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:foreground="?android:attr/selectableItemBackground"
                                     android:padding="8dp"
                                     android:src="@drawable/xmlid_2074"
                                     app:layout_constraintBottom_toBottomOf="parent"

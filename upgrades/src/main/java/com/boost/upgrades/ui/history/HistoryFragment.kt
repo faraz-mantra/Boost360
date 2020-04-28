@@ -73,6 +73,11 @@ class HistoryFragment : BaseFragment(), HistoryFragmentListener {
             historyAdapter.addupdates(result.Result)
             historyAdapter.notifyDataSetChanged()
             order_history_recycler.setFocusable(false)
+            order_history_recycler.visibility = View.VISIBLE
+            empty_history.visibility = View.GONE
+        }else{
+            order_history_recycler.visibility = View.GONE
+            empty_history.visibility = View.VISIBLE
         }
     }
 
