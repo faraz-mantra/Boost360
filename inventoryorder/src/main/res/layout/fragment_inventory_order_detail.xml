@@ -585,6 +585,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_confirm_order"
                         android:text="Confirm ORDER"
+                        app:fontFamily="@font/semi_bold"
                         android:textAllCaps="true"
                         android:textColor="@color/white" />
 
