@@ -8,31 +8,33 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 
 class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDetailBinding>() {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): InventoryOrderDetailFragment {
-            val fragment = InventoryOrderDetailFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): InventoryOrderDetailFragment {
+      val fragment = InventoryOrderDetailFragment()
+      fragment.arguments = bundle
+      return fragment
     }
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        setAdapter()
-        setOnClickListener(binding?.ivClose)
-    }
+  override fun onCreateView() {
+    super.onCreateView()
+    setAdapter()
+    setOnClickListener(binding?.ivClose)
+  }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v) {
-            binding?.ivClose -> baseActivity.onBackPressed()
-        }
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.ivClose -> baseActivity.onBackPressed()
     }
+  }
 
-    private fun setAdapter() {
-        val list = InventoryOrderDetailsModel().getOrderDetails()
-        val adapter = AppBaseRecyclerViewAdapter(baseActivity, list)
-        binding?.recyclerViewOrderDetails?.adapter = adapter
+  private fun setAdapter() {
+    binding?.recyclerViewOrderDetails?.post {
+      val list = InventoryOrderDetailsModel().getOrderDetails()
+      val adapter = AppBaseRecyclerViewAdapter(baseActivity, list)
+      binding?.recyclerViewOrderDetails?.adapter = adapter
     }
+  }
 }
