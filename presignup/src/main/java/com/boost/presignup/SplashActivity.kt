@@ -48,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
       }
 
       override fun onAnimationEnd(animation: Animator?) {
-        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, Bundle())
+        startFragmentActivity(FragmentType.ALL_ORDER_VIEW, Bundle())
         finish()
 //                if (isUserLoggedIn) {
 //                    val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))

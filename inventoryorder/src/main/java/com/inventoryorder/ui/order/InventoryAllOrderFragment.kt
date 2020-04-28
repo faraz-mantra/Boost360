@@ -2,6 +2,7 @@ package com.inventoryorder.ui.order
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentInventoryAllOrderBinding
 import com.inventoryorder.model.InventoryOrderModel
@@ -9,6 +10,7 @@ import com.inventoryorder.model.OrderTypeModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
+import com.inventoryorder.ui.startFragmentActivity
 
 class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBinding>(), RecyclerItemClickListener {
 
@@ -46,7 +48,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal -> {
-
+        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, Bundle())
       }
     }
   }
