@@ -44,7 +44,7 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
           binding.itemDesc.setTextColor(ContextCompat.getColor(it, R.color.warm_grey_10))
           binding.itemMore.setTextColor(ContextCompat.getColor(it, R.color.warm_grey_10))
           binding.itemMore.background = ContextCompat.getDrawable(it, R.drawable.line_bac)
-          binding.btnClick.background = ContextCompat.getDrawable(it, R.drawable.btn_rounded_blue_6)
+          binding.btnClick.background = ContextCompat.getDrawable(it, R.drawable.btn_rounded_blue_4)
           binding.btnClick.setTextColor(ContextCompat.getColor(it, R.color.light_blue))
 
           binding.timeElapsed.setTextColor(ContextCompat.getColor(it, R.color.black))

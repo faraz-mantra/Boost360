@@ -17,26 +17,17 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
         }
     }
 
-
     override fun onCreateView() {
         super.onCreateView()
-
         setAdapter()
-
         setOnClickListener(binding?.ivClose)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
-
         when (v) {
-
-            binding?.ivClose -> {
-                baseActivity.finish()
-            }
+            binding?.ivClose -> baseActivity.onBackPressed()
         }
-
-
     }
 
     private fun setAdapter() {
@@ -44,6 +35,4 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
         val adapter = AppBaseRecyclerViewAdapter(baseActivity, list)
         binding?.recyclerViewOrderDetails?.adapter = adapter
     }
-
-
 }

@@ -104,7 +104,6 @@
         android:clickable="true"
         android:focusable="true"
         android:paddingTop="@dimen/size_2"
-        android:paddingBottom="@dimen/size_2"
         android:text="+5 more"
         android:textColor="@color/black"
         android:visibility="gone"
@@ -130,7 +129,7 @@
             android:layout_width="@dimen/size_110"
             android:layout_height="@dimen/size_38"
             android:layout_marginStart="0dp"
-            android:background="@drawable/btn_rounded_6"
+            android:background="@drawable/btn_rounded_4"
             android:text="CONFIRM"
             android:textColor="@color/watermelon_light_10"
             app:textType="HEADING_6" />

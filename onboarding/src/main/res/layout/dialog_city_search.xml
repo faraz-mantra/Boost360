@@ -66,7 +66,7 @@
         android:id="@+id/view_shadow"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@drawable/down_shadoow" />
+        android:background="@drawable/down_shadow" />
 
     <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/recycler_view"
