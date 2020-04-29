@@ -114,7 +114,7 @@
             android:orientation="vertical">
 
           <include
-              android:id="@+id/order"
+              android:id="@+id/order_date"
               layout="@layout/text_item" />
 
           <include

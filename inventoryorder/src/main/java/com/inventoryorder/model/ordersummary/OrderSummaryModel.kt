@@ -38,12 +38,14 @@ class OrderSummaryModel(
     return list
   }
 
-  enum class OrderType(val type: String) {
-    TOTAL("All"), RECEIVED("Received"), SUCCESSFUL("Successful"), CANCELLED("Cancelled"),
-    RETURNED("Returned"), ABANDONED("Abandoned"), ESCALATED("Escalated");
+  enum class OrderType(val type: String, val value: String) {
+    TOTAL("All", ""), RECEIVED("Received", "PLACED"), SUCCESSFUL("Successful", "COMPLETED"),
+    CANCELLED("Cancelled", "CANCELLED"), RETURNED("Returned", "ESCALATED"),
+    ABANDONED("Abandoned", "CANCELLED"), ESCALATED("Escalated", "ESCALATED");
 
     companion object {
-      fun from(findValue: String): OrderType = values().first { it.type == findValue }
+      fun fromType(type: String): OrderType = values().first { it.type == type }
+      fun fromValue(value: String): OrderType = values().first { it.value == value }
     }
   }
 }

@@ -27,4 +27,14 @@ data class OrderItem(
   override fun getViewType(): Int {
     return RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()
   }
+
+  fun status(): String {
+    return Status?.toLowerCase() ?: ""
+  }
+
+  fun getTitles(): String {
+    //Items
+    return ""
+  }
+
 }

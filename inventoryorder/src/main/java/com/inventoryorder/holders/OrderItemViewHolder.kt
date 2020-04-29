@@ -1,7 +1,11 @@
 package com.inventoryorder.holders
 
+import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
+import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
+import com.framework.utils.DateUtils.parseDate
 import com.inventoryorder.databinding.ItemOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
@@ -10,12 +14,12 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? OrderItem
-    binding.order.title.text = "Date:   "
-    binding.payment.title.text = "Payment:"
-    binding.delivery.title.text = "Delivery:  "
-    binding.order.value.text = "25-12-2020, 2:00PM"
-    binding.payment.value.text = "COD, Pending"
-
+    data?.let {
+      binding.orderDate.title.text = "Date:       "
+      binding.payment.title.text = "Payment:"
+      binding.delivery.title.text = "Delivery:  "
+//      setDataResponse(it)
+    }
 //    when (data?.orderType) {
 //      InventoryOrderModel.TYPE.NEW_ORDER.name -> {
 //        binding.delivery.value.text = "Pickup"
@@ -53,5 +57,35 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
 //    binding.mainView.setOnClickListener {
 //      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal)
 //    }
+  }
+
+  private fun setDataResponse(order: OrderItem) {
+    binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status()).type
+    binding.orderType.text = "# ${order.ReferenceNumber}"
+    order.BillingDetails?.let { bill ->
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
+      binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
+    }
+    binding.orderDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
+    binding.payment.value.text = order.PaymentDetails?.Method
+    binding.delivery.value.text = order.LogisticsDetails?.DeliveryMode
+    val sizeItem = order.Items?.size ?: 0
+    binding.itemCount.text = "$sizeItem ${takeIf { sizeItem > 1 }?.let { "Items" } ?: "Item"}"
+//    binding.itemDesc.text = order.getTitles()
+
+    when (OrderSummaryModel.OrderType.fromValue(order.status())) {
+      OrderSummaryModel.OrderType.RECEIVED -> {
+      }
+      OrderSummaryModel.OrderType.SUCCESSFUL -> {
+      }
+      OrderSummaryModel.OrderType.CANCELLED -> {
+      }
+      OrderSummaryModel.OrderType.RETURNED -> {
+      }
+      OrderSummaryModel.OrderType.ABANDONED -> {
+      }
+      OrderSummaryModel.OrderType.ESCALATED -> {
+      }
+    }
   }
 }
