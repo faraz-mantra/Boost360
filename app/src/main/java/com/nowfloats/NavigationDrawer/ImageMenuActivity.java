@@ -53,15 +53,15 @@ public class ImageMenuActivity extends AppCompatActivity
     private void initMenuRecyclerView(RecyclerView mRecyclerView)
     {
         final String[] adapterTexts = getResources().getStringArray(R.array.images_content_list_items);
-        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.image_list_icons);
+//        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.images_content_list_items);
         int[] adapterImages = new int[adapterTexts.length];
 
-        for (int i = 0; i<adapterTexts.length;i++)
-        {
-            adapterImages[i] = imagesArray.getResourceId(i,-1);
-        }
-
-        imagesArray.recycle();
+//        for (int i = 0; i<adapterTexts.length;i++)
+//        {
+//            adapterImages[i] = imagesArray.getResourceId(i,-1);
+//        }
+//
+//        imagesArray.recycle();
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
