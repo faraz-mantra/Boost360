@@ -2,13 +2,14 @@ package com.nowfloats.NavigationDrawer;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import androidx.databinding.DataBindingUtil;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.MenuItem;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
@@ -53,15 +54,14 @@ public class ImageMenuActivity extends AppCompatActivity
     private void initMenuRecyclerView(RecyclerView mRecyclerView)
     {
         final String[] adapterTexts = getResources().getStringArray(R.array.images_content_list_items);
-//        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.images_content_list_items);
+        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.image_list_icons);
         int[] adapterImages = new int[adapterTexts.length];
 
-//        for (int i = 0; i<adapterTexts.length;i++)
-//        {
-//            adapterImages[i] = imagesArray.getResourceId(i,-1);
-//        }
-//
-//        imagesArray.recycle();
+        for (int i = 0; i < adapterTexts.length; i++) {
+            adapterImages[i] = imagesArray.getResourceId(i, -1);
+        }
+
+        imagesArray.recycle();
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
