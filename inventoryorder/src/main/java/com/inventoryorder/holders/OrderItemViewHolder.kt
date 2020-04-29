@@ -15,10 +15,10 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? InventoryOrderModel
-    binding.order.title.text = "Order ID: "
+    binding.order.title.text = "Date: "
     binding.payment.title.text = "Payment:"
     binding.delivery.title.text = "Delivery:  "
-    binding.order.value.text = "GK7C4FM"
+    binding.order.value.text = "      25-12-2020, 2:00PM" // leave the space as it is
     binding.payment.value.text = "COD, Pending"
 
     when (data?.orderType) {

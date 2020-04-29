@@ -236,11 +236,11 @@
                   android:layout_height="@dimen/size_38"
                   android:layout_marginStart="0dp"
                   android:layout_marginTop="@dimen/size_4"
-                  android:background="@drawable/btn_rounded_blue_4"
+                  android:background="@drawable/btn_rounded_black_border"
                   android:drawableEnd="@drawable/ic_arrow_drop_down_blue"
                   android:paddingEnd="@dimen/size_10"
                   android:text="PICK UP"
-                  android:textColor="@color/light_blue"
+                  android:textColor="@color/warm_grey_10"
                   app:textType="HEADING_6" />
             </LinearLayout>
 
@@ -381,18 +381,13 @@
             android:paddingStart="@dimen/size_16"
             android:paddingEnd="@dimen/size_16">
 
-          <com.framework.views.customViews.CustomButton
+          <com.framework.views.customViews.CustomTextView
               android:id="@+id/buttonShare"
               android:layout_width="wrap_content"
-              android:layout_height="@dimen/size_38"
-              android:background="@drawable/btn_rounded_blue_4"
-              android:drawableStart="@drawable/ic_download_blue"
-              android:drawablePadding="@dimen/size_10"
-              android:paddingStart="@dimen/size_16"
-              android:paddingEnd="@dimen/size_16"
-              android:text="SHARE"
-              android:textColor="@color/light_blue"
-              app:textType="HEADING_6" />
+              android:layout_height="wrap_content"
+              android:text="@string/cancel_order"
+              android:textColor="@color/greyish_brown"
+              app:textType="CAPTION" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"

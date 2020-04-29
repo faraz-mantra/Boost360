@@ -75,7 +75,9 @@
           android:text="₹297"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/regular"
-          app:textType="CAPTION" />
+          app:textType="CAPTION"
+          android:gravity="end"
+          />
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/tvDishAmountDiscountedPrice"
@@ -85,7 +87,9 @@
           android:text="₹297"
           android:textColor="@color/primary_grey"
           app:fontFamily="@font/regular"
-          app:textType="CAPTION" />
+          android:textSize="10sp"
+          android:gravity="end"
+          />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
