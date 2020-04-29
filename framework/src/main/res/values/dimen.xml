@@ -11,8 +11,8 @@
   <dimen name="fab_background_padding">15dp</dimen>
   <dimen name="fab_rounded_square_shadow_translation">7dp</dimen>
   <dimen name="fab_icon_size">24dp</dimen>
-  <dimen name="fab_text_horizontal_margin_normal">16dp</dimen>
-  <dimen name="fab_text_horizontal_margin_mini">8dp</dimen>
+  <dimen name="fab_text_horizontal_margin_normal">12dp</dimen>
+  <dimen name="fab_text_horizontal_margin_mini">6dp</dimen>
   <dimen name="fab_step_size">2dp</dimen>
   <dimen name="fab_menu_item_margin">8dp</dimen>
 </resources>

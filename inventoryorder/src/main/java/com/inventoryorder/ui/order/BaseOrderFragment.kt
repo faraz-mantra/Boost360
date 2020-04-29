@@ -41,7 +41,7 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
     super.onCreateOptionsMenu(menu, inflater)
     when (this) {
       is InventoryAllOrderFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
+      is InventoryOrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
     }
   }
-
 }

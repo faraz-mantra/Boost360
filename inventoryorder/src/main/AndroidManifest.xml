@@ -6,6 +6,7 @@
     <activity
         android:name=".ui.FragmentContainerOrderActivity"
         android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.Order"
         android:windowSoftInputMode="adjustPan" />
   </application>
 

@@ -16,7 +16,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_50"
+        android:layout_height="@dimen/size_46"
         android:background="@color/white"
         android:gravity="center_vertical">
 
@@ -69,14 +69,16 @@
           android:layout_height="wrap_content"
           android:layout_gravity="bottom|center_horizontal"
           android:layout_margin="16dp"
+          android:clickable="true"
+          android:focusable="true"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
-          android:text="CREATE"
+          android:text="CREATE   "
           android:textColor="@color/white"
+          app:fabBackground="@drawable/bg_button_rounded_orange"
           app:fabIcon="@drawable/ic_add_white"
           app:fabIconPosition="start"
-          app:fabSize="normal"
-          app:fabType="roundedSquare" />
+          app:fabSize="normal" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

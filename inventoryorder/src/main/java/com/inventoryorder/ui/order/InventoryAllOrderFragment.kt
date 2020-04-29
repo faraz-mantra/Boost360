@@ -1,8 +1,11 @@
 package com.inventoryorder.ui.order
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentInventoryAllOrderBinding
@@ -15,7 +18,7 @@ import com.inventoryorder.ui.startFragmentActivity
 
 class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBinding>(), RecyclerItemClickListener {
 
-  var previousScrollY: Int = 0
+  private var previousScrollY: Int = 0
 
   companion object {
     @JvmStatic
@@ -65,5 +68,10 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
         previousScrollY = it
       }
     }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    val item = menu.findItem(R.id.menu_item_search)
   }
 }

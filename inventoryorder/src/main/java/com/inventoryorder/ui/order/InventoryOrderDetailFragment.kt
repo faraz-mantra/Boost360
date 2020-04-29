@@ -1,7 +1,11 @@
 package com.inventoryorder.ui.order
 
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import com.framework.views.customViews.CustomButton
+import com.inventoryorder.R
 import com.inventoryorder.databinding.FragmentInventoryOrderDetailBinding
 import com.inventoryorder.model.InventoryOrderDetailsModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
@@ -20,14 +24,6 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
   override fun onCreateView() {
     super.onCreateView()
     setAdapter()
-    setOnClickListener(binding?.ivClose)
-  }
-
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding?.ivClose -> baseActivity.onBackPressed()
-    }
   }
 
   private fun setAdapter() {
@@ -35,6 +31,14 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
       val list = InventoryOrderDetailsModel().getOrderDetails()
       val adapter = AppBaseRecyclerViewAdapter(baseActivity, list)
       binding?.recyclerViewOrderDetails?.adapter = adapter
+    }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    val item: MenuItem = menu.findItem(R.id.menu_item_share)
+    item.actionView.findViewById<CustomButton>(R.id.button_share).setOnClickListener {
+      showLongToast("Share")
     }
   }
 }
