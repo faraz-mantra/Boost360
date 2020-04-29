@@ -52,8 +52,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   protected val auth: String?
     get() {
-//      return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
-      return "58ede4d4ee786c1604f6c535"
+      return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
     }
 
   protected var requestFloatsModel: RequestFloatsModel? = null

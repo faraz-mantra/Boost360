@@ -7,7 +7,4 @@ object PreferenceConstant {
   const val AUTHORIZATION = "Authorization"
   const val KEY_FP_ID = "fpid"
   const val KEY_sourceClientId = "source_clientid"
-  const val GET_FP_EXPERIENCE_CODE = "GET_FP_EXPERIENCE_CODE"
-  const val IS_USER_LOGIN = "IsUserLoggedIn"
-  const val IS_USER_SIGN_UP = "IsSignUpComplete"
 }

@@ -1,0 +1,3 @@
+package com.inventoryorder.model.ordersdetails
+
+class ExtraDeliveryInformation

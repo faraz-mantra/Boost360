@@ -3,7 +3,7 @@ package com.inventoryorder.base.rest
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
 import com.inventoryorder.rest.Taskcode
-import com.inventoryorder.rest.apiClients.NfxApiClient
+import com.inventoryorder.rest.apiClients.WithFloatsApiClient
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -16,7 +16,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
   }
 
   override fun getApiClient(): Retrofit {
-    return NfxApiClient.shared.retrofit
+    return WithFloatsApiClient.shared.retrofit
   }
 
   fun makeLocalRequest(observable: Observable<BaseResponse>, taskCode: Taskcode): Observable<BaseResponse> {

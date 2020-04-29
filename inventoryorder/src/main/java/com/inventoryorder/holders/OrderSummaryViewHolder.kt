@@ -4,16 +4,16 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemOrderTypeBinding
-import com.inventoryorder.model.OrderTypeModel
+import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class OrderTypeViewHolder(binding: ItemOrderTypeBinding) : AppBaseRecyclerViewHolder<ItemOrderTypeBinding>(binding) {
+class OrderSummaryViewHolder(binding: ItemOrderTypeBinding) : AppBaseRecyclerViewHolder<ItemOrderTypeBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? OrderTypeModel
-    binding.title.text = data?.title
+    val data = item as? OrderSummaryModel
+    binding.title.text = data?.type
     binding.count.text = data?.count?.toString()
     if (adapterPosition == 1) {
       activity?.let {

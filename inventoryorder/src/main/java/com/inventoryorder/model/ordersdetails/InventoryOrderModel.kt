@@ -1,13 +1,18 @@
-package com.inventoryorder.model
+package com.inventoryorder.model.ordersdetails
 
-import com.framework.base.BaseResponse
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
 class InventoryOrderModel(
     val delivery: String? = null,
-    val orderType: String? = null
-) : BaseResponse(), AppBaseRecyclerViewItem {
+    val orderType: String? = null,
+
+    val Count: Int? = null,
+    val Items: ArrayList<OrderItem>? = null,
+    val Limit: Int? = null,
+    val Skip: Int? = null,
+    val Total: Int? = null
+) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()

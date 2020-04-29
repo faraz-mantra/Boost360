@@ -12,7 +12,7 @@ import com.inventoryorder.databinding.ItemOrderDetailsBinding
 import com.inventoryorder.databinding.ItemOrderTypeBinding
 import com.inventoryorder.holders.OrderItemDetailsViewHolder
 import com.inventoryorder.holders.OrderItemViewHolder
-import com.inventoryorder.holders.OrderTypeViewHolder
+import com.inventoryorder.holders.OrderSummaryViewHolder
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     activity: BaseActivity<*, *>,
@@ -25,7 +25,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val recyclerViewItemType = values().first { it.getLayout() == viewType }
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
-      ORDER_ITEM_TYPE -> OrderTypeViewHolder(binding as ItemOrderTypeBinding)
+      ORDER_ITEM_TYPE -> OrderSummaryViewHolder(binding as ItemOrderTypeBinding)
       INVENTORY_ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
       ITEM_ORDER_DETAILs -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding )
     }

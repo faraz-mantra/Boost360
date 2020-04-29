@@ -1,6 +1,7 @@
 package com.inventoryorder.rest
 
 enum class Taskcode {
-  GET_CHANNELS,
+  GET_SELLER_SUMMARY,
+  GET_LIST_ORDER
 
 }
