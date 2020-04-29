@@ -3,6 +3,7 @@ package com.inventoryorder.holders
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
 import com.framework.utils.DateUtils.parseDate
+import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -15,7 +16,7 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
     super.bind(position, item)
     val data = item as? OrderItem
     data?.let {
-      binding.orderDate.title.text = "Date:       "
+      binding.orderDate.title.text = "Date:        "
       binding.payment.title.text = "Payment:"
       binding.delivery.title.text = "Delivery:  "
 //      setDataResponse(it)
@@ -54,9 +55,9 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
 //        binding.orderType.text = "Delayed"
 //      }
 //    }
-//    binding.mainView.setOnClickListener {
-//      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal)
-//    }
+    binding.mainView.setOnClickListener {
+      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal)
+    }
   }
 
   private fun setDataResponse(order: OrderItem) {
