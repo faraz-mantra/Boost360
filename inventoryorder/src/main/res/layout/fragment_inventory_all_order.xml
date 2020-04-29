@@ -38,23 +38,49 @@
         android:layout_height="@dimen/size_3"
         android:background="@drawable/down_shadow" />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-      <com.framework.views.viewgroups.BaseRecyclerView
-          android:id="@+id/order_recycler"
+      <androidx.core.widget.NestedScrollView
+          android:id="@+id/nested_scroll"
           android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:fillViewport="true"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/order_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/size_20"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_order" />
+      </androidx.core.widget.NestedScrollView>
+
+      <com.framework.views.fabButton.FloatingActionButton
+          android:id="@+id/btn_add"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:overScrollMode="never"
-          android:paddingBottom="@dimen/size_20"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          tools:itemCount="10"
-          tools:listitem="@layout/item_order" />
-    </androidx.core.widget.NestedScrollView>
+          android:layout_gravity="bottom|center_horizontal"
+          android:layout_margin="16dp"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:text="CREATE"
+          android:textColor="@color/white"
+          app:fabIcon="@drawable/ic_add_white"
+          app:fabIconPosition="start"
+          app:fabSize="normal"
+          app:fabType="roundedSquare" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
   </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 </layout>
