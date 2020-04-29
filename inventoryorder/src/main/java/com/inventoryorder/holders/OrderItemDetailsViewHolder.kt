@@ -18,18 +18,10 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecy
 
         val data = item as InventoryOrderDetailsModel
 
-//        var string = data.itemDiscountedPrice
-        var spannableString = SpannableString(data.itemDiscountedPrice)
-
-        val strikeThroughSpan = StrikethroughSpan()
-
         if (adapterPosition == 0) {
             binding.tvDishAmountDiscountedPrice.paintFlags = binding.tvDishAmountDiscountedPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             binding.tvDishAmountDiscountedPrice.text = data.itemDiscountedPrice
 
-//            activity?.let {
-//                spannableString.setSpan(strikeThroughSpan, 0, spannableString.length, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
-//            }
         }else{
             binding.tvDishAmountDiscountedPrice.invisible()
         }
@@ -39,8 +31,6 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecy
         binding.tvDishAmount.text = data.itemPrice.toString()
         binding.tvDishQuantity.text = data.itemQuantity
 //        binding.tvDishAmountDiscountedPrice.text = data.itemDiscountedPrice
-
-
 
     }
 
