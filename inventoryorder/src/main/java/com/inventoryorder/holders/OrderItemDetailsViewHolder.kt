@@ -1,11 +1,7 @@
 package com.inventoryorder.holders
 
-import android.graphics.Paint
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
-import com.framework.extensions.invisible
 import com.inventoryorder.databinding.ItemOrderDetailsBinding
-import com.inventoryorder.model.InventoryOrderDetailsModel
+import com.inventoryorder.model.ordersdetails.ItemX
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
@@ -13,8 +9,9 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecy
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         super.bind(position, item)
-        val data = item as InventoryOrderDetailsModel
-//        var string = data.itemDiscountedPrice
+        val data = item as ItemX
+
+/*//        var string = data.itemDiscountedPrice
         var spannableString = SpannableString(data.itemDiscountedPrice)
         val strikeThroughSpan = StrikethroughSpan()
         if (adapterPosition == 0) {
@@ -29,7 +26,8 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecy
         data.itemImage?.let { binding.ivDishItem.setImageResource(it) }
         binding.tvDishName.text = data.itemName
         binding.tvDishAmount.text = "₹${data.itemPrice.toString()}"
-        binding.tvDishQuantity.text = data.itemQuantity
+        binding.tvDishQuantity.text = data.itemQuantity*/
+
 //        override fun bind(position: Int, item: BaseRecyclerViewItem) {
 //            super.bind(position, item)
 //

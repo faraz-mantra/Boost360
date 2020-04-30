@@ -7,9 +7,12 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
+import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentInventoryAllOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
@@ -26,6 +29,10 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
 
   private var previousScrollY: Int = 0
   private var request: OrderSummaryRequest? = null
+  private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
+  private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
+  private var typeList: ArrayList<OrderSummaryModel>? = null
+  private var orderList: ArrayList<OrderItem>? = null
 
   companion object {
     @JvmStatic
@@ -40,23 +47,23 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
     super.onCreateView()
     scrollBehaviourSet()
     apiSellerSummary()
-    apiSellerOrderList(getRequestData())
   }
 
   private fun apiSellerSummary() {
     viewModel?.getSellerSummary(fpId)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        errorOnSummary(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = it as? SellerSummaryResponse
-        response?.Data?.getOrderType()?.let { it1 -> setAdapterSellerSummary(it1) }
-      } else showShortToast(it.message)
+        typeList = response?.Data?.getOrderType()
+        typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
+      } else errorOnSummary(it?.message)
     })
   }
 
-  private fun apiSellerOrderList(request: OrderSummaryRequest) {
+  private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
     viewModel?.getSellerAllOrder(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
@@ -64,34 +71,57 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = it as? SellerOrderListResponse
-        response?.Data?.Items?.let { it1 -> setAdapterOrderList(it1) }
-      } else showShortToast(it.message)
+        orderList = response?.Data?.Items ?: ArrayList()
+        orderList?.let { it1 ->
+          binding?.orderRecycler?.visible()
+          if (isFirst.not() && orderAdapter != null)
+            orderAdapter?.notify(it1)
+          else setAdapterOrderList(it1)
+        }
+      } else {
+        binding?.orderRecycler?.gone()
+        showShortToast(it.message)
+      }
     })
   }
 
   private fun setAdapterOrderList(orderList: ArrayList<OrderItem>) {
     binding?.orderRecycler?.post {
-      val orderAdapter = AppBaseRecyclerViewAdapter(baseActivity, orderList, this)
+      orderAdapter = AppBaseRecyclerViewAdapter(baseActivity, orderList, this)
       binding?.orderRecycler?.layoutManager = LinearLayoutManager(baseActivity)
       binding?.orderRecycler?.adapter = orderAdapter
-      binding?.orderRecycler?.let { orderAdapter.runLayoutAnimation(it) }
+      binding?.orderRecycler?.let { orderAdapter?.runLayoutAnimation(it) }
     }
   }
 
   private fun setAdapterSellerSummary(typeList: ArrayList<OrderSummaryModel>) {
+    binding?.typeRecycler?.visible()
+    binding?.viewShadow?.visible()
+    apiSellerOrderList(getRequestData(), true)
     binding?.typeRecycler?.post {
-      val typeAdapter = AppBaseRecyclerViewAdapter(baseActivity, typeList, this)
+      typeAdapter = AppBaseRecyclerViewAdapter(baseActivity, typeList, this)
       binding?.typeRecycler?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
       binding?.typeRecycler?.adapter = typeAdapter
-      binding?.typeRecycler?.let { typeAdapter.runLayoutAnimation(it) }
+      binding?.typeRecycler?.let { typeAdapter?.runLayoutAnimation(it) }
     }
-
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal -> {
-        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, Bundle())
+        val orderItem = item as? OrderItem
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.ORDER_ITEM.name, orderItem)
+        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle)
+      }
+      RecyclerViewActionType.ORDER_SUMMARY_CLICKED.ordinal -> {
+        val orderItem = item as? OrderSummaryModel
+        typeList?.forEach { it.isSelected = (it.type == orderItem?.type) }
+        typeAdapter?.notifyDataSetChanged()
+        orderItem?.type?.let {
+          request?.orderStatus = OrderSummaryModel.OrderType.fromType(it).value
+          apiSellerOrderList(request!!)
+        }
       }
     }
   }
@@ -103,7 +133,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
   }
 
   private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(fpId, skip = 0, limit = 20)
+    request = OrderSummaryRequest(fpId, skip = 0, limit = 100)
     return request!!
   }
 
@@ -115,5 +145,11 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
         previousScrollY = it
       }
     }
+  }
+
+  private fun errorOnSummary(message: String?) {
+    binding?.typeRecycler?.gone()
+    binding?.viewShadow?.gone()
+    message?.let { showShortToast(it) }
   }
 }

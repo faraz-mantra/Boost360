@@ -1,3 +1,5 @@
 package com.inventoryorder.model.ordersdetails
 
-class ExtraDeliveryInformation
+import java.io.Serializable
+
+class ExtraDeliveryInformation : Serializable

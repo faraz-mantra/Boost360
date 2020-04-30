@@ -3,6 +3,8 @@ package com.inventoryorder.model.ordersummary
 import com.framework.base.BaseResponse
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderSummaryModel(
     val CurrencyCode: String? = null,
@@ -19,7 +21,8 @@ class OrderSummaryModel(
     val TotalRevenue: Double? = null,
 
     val type: String? = null,
-    val count: Int? = null
+    val count: Int? = null,
+    var isSelected: Boolean = false
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -28,7 +31,7 @@ class OrderSummaryModel(
 
   fun getOrderType(): ArrayList<OrderSummaryModel> {
     val list = ArrayList<OrderSummaryModel>()
-    list.add(OrderSummaryModel(type = OrderType.TOTAL.type, count = TotalOrders))
+    list.add(OrderSummaryModel(type = OrderType.TOTAL.type, count = TotalOrders, isSelected = true))
     list.add(OrderSummaryModel(type = OrderType.RECEIVED.type, count = TotalOrdersInProgress))
     list.add(OrderSummaryModel(type = OrderType.SUCCESSFUL.type, count = TotalOrdersCompleted))
     list.add(OrderSummaryModel(type = OrderType.CANCELLED.type, count = TotalOrdersCancelled))
@@ -44,8 +47,8 @@ class OrderSummaryModel(
     ABANDONED("Abandoned", "CANCELLED"), ESCALATED("Escalated", "ESCALATED");
 
     companion object {
-      fun fromType(type: String): OrderType = values().first { it.type == type }
-      fun fromValue(value: String): OrderType = values().first { it.value == value }
+      fun fromType(type: String): OrderType = values().first { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): OrderType = values().first { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 }

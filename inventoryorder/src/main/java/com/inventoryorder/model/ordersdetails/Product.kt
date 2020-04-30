@@ -1,5 +1,7 @@
 package com.inventoryorder.model.ordersdetails
 
+import java.io.Serializable
+
 data class Product(
     val CurrencyCode: String? = null,
     val Description: Any? = null,
@@ -13,4 +15,4 @@ data class Product(
     val SKU: Any? = null,
     val ShippingCost: Double? = null,
     val _id: String? = null
-)
+) : Serializable

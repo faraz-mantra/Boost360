@@ -43,7 +43,7 @@
               android:gravity="center"
               android:paddingStart="@dimen/size_18"
               android:paddingEnd="@dimen/size_20"
-              android:text="New Order"
+              tools:text="New Order"
               android:textAlignment="center"
               android:textColor="@color/white"
               app:textType="BODY_1" />
@@ -53,7 +53,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:paddingStart="@dimen/size_8"
-              android:text="# GK7C4FM"
+              tools:text="# GK7C4FM"
               android:textColor="@color/primary_grey"
               app:textType="BODY_2" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -65,7 +65,7 @@
             android:layout_marginStart="@dimen/size_2"
             android:layout_marginTop="@dimen/size_8"
             android:gravity="center"
-            android:text="₹ 9,761"
+            tools:text="₹ 9,761"
             android:textAlignment="center"
             android:textColor="@color/watermelon_light"
             app:fontFamily="@font/bold"
@@ -148,7 +148,8 @@
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
               android:paddingTop="@dimen/size_2"
-              android:text="02:33:00"
+              android:text="00:00:00"
+              tools:text="02:33:00"
               android:textColor="@color/watermelon_light_10"
               app:textType="BODY_1" />
 
@@ -169,7 +170,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_10"
-          android:text="3 Items:"
+          tools:text="3 Items:"
           android:textColor="@color/primary_grey"
           app:textType="SUBHEADING_2" />
 
@@ -189,7 +190,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
 
-              android:text="1 x  Lorem ipsum dolor sit amet\n2 x  Lorem ipsum dolor sit amet  amet\n1 x  Lorem ipsum dolor sit amet dolor sit amet"
+              tools:text="1 x  Lorem ipsum dolor sit amet\n2 x  Lorem ipsum dolor sit amet  amet\n1 x  Lorem ipsum dolor sit amet dolor sit amet"
               android:textColor="@color/black"
               app:textType="BODY_1" />
 
@@ -201,7 +202,7 @@
               android:clickable="true"
               android:focusable="true"
               android:paddingTop="@dimen/size_2"
-              android:text="+5 more"
+              tools:text="+5 more"
               android:textColor="@color/black"
               android:visibility="gone"
               app:textType="BODY_1"

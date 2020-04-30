@@ -2,6 +2,7 @@ package com.inventoryorder.model.ordersdetails
 
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
+import java.io.Serializable
 
 data class OrderItem(
     val BillingDetails: BillingDetails? = null,
@@ -22,7 +23,7 @@ data class OrderItem(
     val Status: String? = null,
     val UpdatedOn: String? = null,
     val _id: String? = null
-) : AppBaseRecyclerViewItem {
+) : AppBaseRecyclerViewItem, Serializable {
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()
@@ -33,8 +34,11 @@ data class OrderItem(
   }
 
   fun getTitles(): String {
-    //Items
-    return ""
+    var title = ""
+    Items?.forEachIndexed { index, item ->
+      if (index < 3) title += takeIf { index != 0 }?.let { "\n${item.Product?.Name?.trim()}" } ?: (item.Product?.Name?.trim())
+    }
+    return title
   }
 
 }

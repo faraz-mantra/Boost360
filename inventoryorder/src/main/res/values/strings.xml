@@ -1,8 +1,12 @@
 <resources>
 
   <string name="orders">Orders</string>
+  <string name="internet_connection_not_available">Internet connection not available.</string>
+  <string name="date_order">Date:&#160; &#160; &#160; &#160;"</string>
+  <string name="payment">Payment:</string>
+  <string name="delivery">"Delivery: &#160;"</string>
+  <string name="cancel_order"><u>Cancel Order</u></string>
+
   <string name="_91_9013268178"><u>+91 9013268178</u></string>
   <string name="customer_email"><u>rahul@cantech.co</u></string>
-  <string name="cancel_order"><u>Cancel Order</u></string>
-  <string name="internet_connection_not_available">Internet connection not available.</string>
 </resources>

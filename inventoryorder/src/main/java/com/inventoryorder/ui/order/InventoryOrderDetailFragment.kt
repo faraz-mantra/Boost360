@@ -6,11 +6,15 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
+import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentInventoryOrderDetailBinding
-import com.inventoryorder.model.InventoryOrderDetailsModel
+import com.inventoryorder.model.ordersdetails.ItemX
+import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 
 class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDetailBinding>() {
+
+  private var orderItem: OrderItem? = null
 
   companion object {
     @JvmStatic
@@ -23,13 +27,18 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
 
   override fun onCreateView() {
     super.onCreateView()
-    setAdapter()
+    orderItem = arguments?.getSerializable(IntentConstant.ORDER_ITEM.name) as? OrderItem
+    orderItem?.let { setDetails(it) }
   }
 
-  private fun setAdapter() {
+  private fun setDetails(order: OrderItem) {
+    setToolbarTitle("# ${order.ReferenceNumber}")
+    order.Items?.let { setAdapter(it) }
+  }
+
+  private fun setAdapter(orderItems: ArrayList<ItemX>) {
     binding?.recyclerViewOrderDetails?.post {
-      val list = InventoryOrderDetailsModel().getOrderDetails()
-      val adapter = AppBaseRecyclerViewAdapter(baseActivity, list)
+      val adapter = AppBaseRecyclerViewAdapter(baseActivity, orderItems)
       binding?.recyclerViewOrderDetails?.adapter = adapter
     }
   }

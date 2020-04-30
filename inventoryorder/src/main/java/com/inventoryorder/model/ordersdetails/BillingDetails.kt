@@ -1,5 +1,7 @@
 package com.inventoryorder.model.ordersdetails
 
+import java.io.Serializable
+
 data class BillingDetails(
     val AmountPayableByBuyer: Double? = null,
     val AmountPayableToSeller: Double? = null,
@@ -13,4 +15,4 @@ data class BillingDetails(
     val NFDeliveryCharges: Double? = null,
     val SellerDeliveryCharges: Double? = null,
     val TransactionCharges: Double? = null
-)
+) : Serializable

@@ -2,17 +2,18 @@ package com.inventoryorder.model
 
 import com.framework.base.BaseResponse
 import com.inventoryorder.R
+import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
-class InventoryOrderDetailsModel(val itemImage: Int?=null,
-                                 val itemName: String?=null,
-                                 val itemQuantity: String?=null,
-                                 val itemPrice: Int?=null,
-                                 val itemDiscountedPrice: String?=null
+class InventoryOrderDetailsModel(val itemImage: Int? = null,
+                                 val itemName: String? = null,
+                                 val itemQuantity: String? = null,
+                                 val itemPrice: Int? = null,
+                                 val itemDiscountedPrice: String? = null
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
     override fun getViewType(): Int {
-        return R.layout.item_order_details
+        return RecyclerViewItemType.ITEM_ORDER_DETAILS.getLayout()
     }
 
 

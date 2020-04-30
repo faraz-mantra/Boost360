@@ -1,5 +1,7 @@
 package com.inventoryorder.model.ordersdetails
 
+import java.io.Serializable
+
 data class LogisticsDetails(
     val Address: Address? = null,
     val DeliveredOn: Any? = null,
@@ -13,4 +15,4 @@ data class LogisticsDetails(
     val Status: String? = null,
     val TrackingNumber: Any? = null,
     val TrackingURL: Any? = null
-)
+) : Serializable

@@ -1,5 +1,7 @@
 package com.inventoryorder.model.ordersdetails
 
+import java.io.Serializable
+
 data class DeliveryConfirmationDetails(
     val ConfirmationToken: String? = null,
     val ConfirmedOn: String? = null,
@@ -10,4 +12,4 @@ data class DeliveryConfirmationDetails(
     val NotificationSentOn: String? = null,
     val OrderIssue: String? = null,
     val OrderIssueReason: String? = null
-)
+) : Serializable

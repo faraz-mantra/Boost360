@@ -27,7 +27,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     return when (recyclerViewItemType) {
       ORDER_ITEM_TYPE -> OrderSummaryViewHolder(binding as ItemOrderTypeBinding)
       INVENTORY_ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
-      ITEM_ORDER_DETAILs -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding )
+      ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)
     }
   }
 

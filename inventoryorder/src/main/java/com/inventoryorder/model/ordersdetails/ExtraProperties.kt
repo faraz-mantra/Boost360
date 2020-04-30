@@ -1,3 +1,5 @@
 package com.inventoryorder.model.ordersdetails
 
-class ExtraProperties
+import java.io.Serializable
+
+class ExtraProperties : Serializable

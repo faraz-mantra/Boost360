@@ -1,8 +1,11 @@
 package com.inventoryorder.holders
 
+import android.view.View
+import androidx.core.content.ContextCompat
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
 import com.framework.utils.DateUtils.parseDate
+import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
@@ -16,45 +19,11 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
     super.bind(position, item)
     val data = item as? OrderItem
     data?.let {
-      binding.orderDate.title.text = "Date:        "
-      binding.payment.title.text = "Payment:"
-      binding.delivery.title.text = "Delivery:  "
-//      setDataResponse(it)
+      binding.orderDate.title.text = activity?.resources?.getString(R.string.date_order)
+      binding.payment.title.text = activity?.resources?.getString(R.string.payment)
+      binding.delivery.title.text = activity?.resources?.getString(R.string.delivery)
+      setDataResponse(it)
     }
-//    when (data?.orderType) {
-//      InventoryOrderModel.TYPE.NEW_ORDER.name -> {
-//        binding.delivery.value.text = "Pickup"
-//        binding.orderType.text = "New Order"
-//      }
-//      InventoryOrderModel.TYPE.COMPLETED.name -> {
-//        binding.delivery.value.text = "Home Delivery"
-//        binding.orderType.text = "Completed"
-//      }
-//      InventoryOrderModel.TYPE.CANCELLED.name -> {
-//        binding.delivery.value.text = "Pickup"
-//        binding.orderType.text = "Cancelled"
-//        binding.itemMore.visible()
-//        binding.itemCount.text = "8 Items:"
-//        binding.itemMore.text = "+5 more"
-//        binding.itemCount.text = "8 Items:"
-//        activity?.let {
-//          binding.itemDesc.setTextColor(ContextCompat.getColor(it, R.color.warm_grey_10))
-//          binding.itemMore.setTextColor(ContextCompat.getColor(it, R.color.warm_grey_10))
-//          binding.itemMore.background = ContextCompat.getDrawable(it, R.drawable.line_bac)
-////          binding.btnClick.background = ContextCompat.getDrawable(it, R.drawable.btn_rounded_white_4)
-////          binding.btnClick.setTextColor(ContextCompat.getColor(it, R.color.light_blue))
-////
-////          binding.timeElapsed.setTextColor(ContextCompat.getColor(it, R.color.black))
-////          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-////            binding.timeElapsed.compoundDrawableTintList = ContextCompat.getColorStateList(it, R.color.warm_grey_10)
-////          }
-//        }
-//      }
-//      InventoryOrderModel.TYPE.DELAYED.name -> {
-//        binding.delivery.value.text = "Home Delivery"
-//        binding.orderType.text = "Delayed"
-//      }
-//    }
     binding.mainView.setOnClickListener {
       listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal)
     }
@@ -62,31 +31,48 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
 
   private fun setDataResponse(order: OrderItem) {
     binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status()).type
-    binding.orderType.text = "# ${order.ReferenceNumber}"
+    binding.orderId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding.orderDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
-    binding.payment.value.text = order.PaymentDetails?.Method
-    binding.delivery.value.text = order.LogisticsDetails?.DeliveryMode
+    binding.payment.value.text = order.PaymentDetails?.Method?.trim()
+    binding.delivery.value.text = order.LogisticsDetails?.DeliveryMode?.trim()
     val sizeItem = order.Items?.size ?: 0
     binding.itemCount.text = "$sizeItem ${takeIf { sizeItem > 1 }?.let { "Items" } ?: "Item"}"
-//    binding.itemDesc.text = order.getTitles()
+    binding.itemDesc.text = order.getTitles()
+
+    binding.itemMore.visibility = takeIf { (sizeItem > 3) }?.let {
+      binding.itemMore.text = "${sizeItem - 3} more"
+      View.VISIBLE
+    } ?: View.GONE
 
     when (OrderSummaryModel.OrderType.fromValue(order.status())) {
-      OrderSummaryModel.OrderType.RECEIVED -> {
-      }
-      OrderSummaryModel.OrderType.SUCCESSFUL -> {
+      OrderSummaryModel.OrderType.RECEIVED,
+      OrderSummaryModel.OrderType.SUCCESSFUL,
+      OrderSummaryModel.OrderType.RETURNED,
+      OrderSummaryModel.OrderType.ABANDONED,
+      OrderSummaryModel.OrderType.ESCALATED -> {
+        changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light)
       }
       OrderSummaryModel.OrderType.CANCELLED -> {
-      }
-      OrderSummaryModel.OrderType.RETURNED -> {
-      }
-      OrderSummaryModel.OrderType.ABANDONED -> {
-      }
-      OrderSummaryModel.OrderType.ESCALATED -> {
+        changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey)
       }
     }
   }
+
+  private fun changeBackground(confirm: Int, detaile: Int, btn: Int, orderBg: Int, rupeesColor: Int) {
+    binding.btnConfirm.visibility = confirm
+    binding.detailsOrder.visibility = detaile
+    binding.next2.visibility = btn
+    activity?.let {
+      binding.orderType.background = ContextCompat.getDrawable(it, orderBg)
+      binding.txtRupees.setTextColor(ContextCompat.getColor(it, rupeesColor))
+    }
+  }
 }
+
+//          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//           binding.timeElapsed.compoundDrawableTintList = ContextCompat.getColorStateList(it, R.color.warm_grey_10)
+//          }
