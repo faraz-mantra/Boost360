@@ -255,6 +255,8 @@ dependencies {
 
     //presignup library
     implementation project(path: ':presignup')
+    //Inventory order library
+    api project(path: ':inventoryorder')
 
     //upgrade library
     implementation project(path: ':upgrades')

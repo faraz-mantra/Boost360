@@ -7,7 +7,9 @@ import androidx.databinding.ViewDataBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
+import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.PreferenceConstant
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.viewmodel.OrderCreateViewModel
 
 open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
@@ -18,22 +20,22 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
     }
   protected val userProfileId: String?
     get() {
-      return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "5e7dfd3d5a9ed3000146ca56")
+      return preferenceData?.userProfileId
     }
   protected val clientId: String?
     get() {
-      return pref?.getString(PreferenceConstant.CLIENT_ID, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+      return preferenceData?.clientId
     }
   protected val fpId: String?
     get() {
-      return "BRAJ"
-//      return pref?.getString(PreferenceConstant.KEY_FP_ID, "BRAJ")
+      return preferenceData?.fpid
     }
-
   protected val auth: String?
     get() {
-      return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
+      return preferenceData?.authorization
     }
+
+  protected var preferenceData: PreferenceData? = null
 
   override fun getLayout(): Int {
     return when (this) {
@@ -41,6 +43,11 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
       is InventoryOrderDetailFragment -> R.layout.fragment_inventory_order_detail
       else -> throw IllegalFragmentTypeException()
     }
+  }
+
+  override fun onCreateView() {
+    super.onCreateView()
+    preferenceData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
   }
 
   override fun getViewModelClass(): Class<OrderCreateViewModel> {

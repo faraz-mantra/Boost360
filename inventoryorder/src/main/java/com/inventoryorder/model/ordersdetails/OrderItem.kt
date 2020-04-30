@@ -33,6 +33,10 @@ data class OrderItem(
     return Status?.toLowerCase() ?: ""
   }
 
+  fun referenceNumber(): String {
+    return ReferenceNumber?.trim()?.toLowerCase() ?: ""
+  }
+
   fun getTitles(): String {
     var title = ""
     Items?.forEachIndexed { index, item ->

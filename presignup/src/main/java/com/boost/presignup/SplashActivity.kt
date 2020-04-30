@@ -1,6 +1,7 @@
 package com.boost.presignup
 
 import android.animation.Animator
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.library.BuildConfig
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.ui.startFragmentActivity
+import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -48,20 +50,18 @@ class SplashActivity : AppCompatActivity() {
       }
 
       override fun onAnimationEnd(animation: Animator?) {
-        startFragmentActivity(FragmentType.ALL_ORDER_VIEW, Bundle())
-        finish()
-//                if (isUserLoggedIn) {
-//                    val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
-//                    startActivity(intent)
-//                    finish()
-//                } else if (isSignUpComplete) {
-//                    NavigatorManager.startActivities(this@SplashActivity)
-//                    finish()
-//                } else {
-//                    val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
-//                    startActivity(mainIntent)
-//                    finish()
-//                }
+        if (isUserLoggedIn) {
+          val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+          startActivity(intent)
+          finish()
+        } else if (isSignUpComplete) {
+          NavigatorManager.startActivities(this@SplashActivity)
+          finish()
+        } else {
+          val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
+          startActivity(mainIntent)
+          finish()
+        }
       }
 
       override fun onAnimationCancel(animation: Animator?) {

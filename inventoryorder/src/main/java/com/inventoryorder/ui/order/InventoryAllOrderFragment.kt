@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.exceptions.NoNetworkException
@@ -33,6 +34,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var typeList: ArrayList<OrderSummaryModel>? = null
   private var orderList: ArrayList<OrderItem>? = null
+  private var orderListFilter = ArrayList<OrderItem>()
 
   companion object {
     @JvmStatic
@@ -50,6 +52,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
   }
 
   private fun apiSellerSummary() {
+    binding?.progress?.visible()
     viewModel?.getSellerSummary(fpId)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         errorOnSummary(resources.getString(R.string.internet_connection_not_available))
@@ -64,7 +67,9 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
   }
 
   private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
+    if (isFirst.not()) binding?.progress?.visible()
     viewModel?.getSellerAllOrder(request)?.observeOnce(viewLifecycleOwner, Observer {
+      binding?.progress?.gone()
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
@@ -112,6 +117,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
         val orderItem = item as? OrderItem
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.ORDER_ITEM.name, orderItem)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle)
       }
       RecyclerViewActionType.ORDER_SUMMARY_CLICKED.ordinal -> {
@@ -129,7 +135,34 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    val item = menu.findItem(R.id.menu_item_search)
+    val searchItem = menu.findItem(R.id.menu_item_search)
+    if (searchItem != null) {
+      val searchView = searchItem.actionView as SearchView
+      searchView.queryHint = resources.getString(R.string.queryHint)
+      searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+          return false
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+          newText?.let { startFilter(it.trim().toLowerCase()) }
+          return false
+        }
+      })
+    }
+  }
+
+  private fun startFilter(query: String) {
+    if (query.isNullOrEmpty().not()) {
+      orderListFilter.clear()
+      orderList?.let { orderListFilter.addAll(it) }
+      orderListFilter.let { it1 ->
+        val list = it1.filter {
+          it.referenceNumber().startsWith(query) || it.referenceNumber().contains(query) || it.referenceNumber().startsWith(query) || it.referenceNumber().contains(query)
+        } as ArrayList<OrderItem>
+        orderAdapter?.notify(list)
+      }
+    } else orderAdapter?.notify(orderList)
   }
 
   private fun getRequestData(): OrderSummaryRequest {
@@ -150,6 +183,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
   private fun errorOnSummary(message: String?) {
     binding?.typeRecycler?.gone()
     binding?.viewShadow?.gone()
+    binding?.progress?.gone()
     message?.let { showShortToast(it) }
   }
 }
