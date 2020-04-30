@@ -139,6 +139,7 @@
               android:includeFontPadding="false"
               android:text="Time elapsed"
               android:textColor="@color/primary_grey"
+              app:fontFamily="@font/regular"
               app:textType="SUBTITLE_2" />
 
           <com.framework.views.customViews.CustomTextView
@@ -214,7 +215,7 @@
             android:layout_width="@dimen/size_30"
             android:layout_height="@dimen/size_30"
             android:layout_gravity="bottom"
-            android:layout_marginEnd="@dimen/size_10"
+            android:layout_marginEnd="@dimen/size_8"
             android:padding="@dimen/size_6"
             app:srcCompat="@drawable/ic_arrow_right_grey" />
       </androidx.appcompat.widget.LinearLayoutCompat>
