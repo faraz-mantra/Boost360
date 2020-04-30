@@ -6,4 +6,10 @@ data class BuyerDetails(
     val Address: Address? = null,
     val ContactDetails: ContactDetails? = null,
     val ExtraProperties: ExtraProperties? = null
-) : Serializable
+) : Serializable {
+
+  fun getAddressFull(): String? {
+    return ContactDetails?.PrimaryContactNumber?.trim() + ", " + ContactDetails?.EmailId?.trim() + "\n" + Address?.AddressLine1?.trim()
+  }
+
+}

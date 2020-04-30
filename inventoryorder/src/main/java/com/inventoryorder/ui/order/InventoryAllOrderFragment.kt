@@ -53,7 +53,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
 
   private fun apiSellerSummary() {
     binding?.progress?.visible()
-    viewModel?.getSellerSummary(fpId)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSellerSummary(fpTag)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         errorOnSummary(resources.getString(R.string.internet_connection_not_available))
         return@Observer
@@ -68,7 +68,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
 
   private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
     if (isFirst.not()) binding?.progress?.visible()
-    viewModel?.getSellerAllOrder(request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
@@ -166,7 +166,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
   }
 
   private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(fpId, skip = 0, limit = 100)
+    request = OrderSummaryRequest(fpTag, skip = 0, limit = 100)
     return request!!
   }
 

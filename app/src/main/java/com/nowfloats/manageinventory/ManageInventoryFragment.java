@@ -264,7 +264,7 @@ public class ManageInventoryFragment extends Fragment {
 
     private void openSellerAnalyticsActivity() {
         Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId, session.getUserProfileId(), Constants.WA_KEY, session.getFPID());
+        PreferenceData data = new PreferenceData(Constants.clientId, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);

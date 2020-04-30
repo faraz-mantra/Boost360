@@ -24,8 +24,8 @@ object SellerOrderRepository : AppBaseRepository<SellerOrderRemoteDataSource, Ap
     return makeRemoteRequest(remoteDataSource.getSellerSummary(sellerId), Taskcode.GET_SELLER_SUMMARY)
   }
 
-  fun getSellerAllOrder(request: OrderSummaryRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getListOrder(request.sellerId, request.orderStatus, request.skip, request.limit), Taskcode.GET_LIST_ORDER)
+  fun getSellerAllOrder(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getListOrder(auth, request.sellerId, request.orderStatus, request.skip, request.limit), Taskcode.GET_LIST_ORDER)
   }
 
   override fun getApiClient(): Retrofit {

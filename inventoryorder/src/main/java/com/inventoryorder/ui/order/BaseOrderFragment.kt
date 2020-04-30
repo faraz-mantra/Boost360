@@ -1,6 +1,5 @@
 package com.inventoryorder.ui.order
 
-import android.content.SharedPreferences
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.databinding.ViewDataBinding
@@ -8,31 +7,18 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
 import com.inventoryorder.constant.IntentConstant
-import com.inventoryorder.constant.PreferenceConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.viewmodel.OrderCreateViewModel
 
 open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
 
-  protected val pref: SharedPreferences?
+  protected val fpTag: String?
     get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0)
+      return preferenceData?.fpTag
     }
-  protected val userProfileId: String?
+  protected val auth: String
     get() {
-      return preferenceData?.userProfileId
-    }
-  protected val clientId: String?
-    get() {
-      return preferenceData?.clientId
-    }
-  protected val fpId: String?
-    get() {
-      return preferenceData?.fpid
-    }
-  protected val auth: String?
-    get() {
-      return preferenceData?.authorization
+      return preferenceData?.authorization ?: ""
     }
 
   protected var preferenceData: PreferenceData? = null

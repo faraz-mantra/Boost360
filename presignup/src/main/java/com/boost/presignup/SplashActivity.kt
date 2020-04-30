@@ -10,8 +10,6 @@ import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.library.BuildConfig
-import com.inventoryorder.constant.FragmentType
-import com.inventoryorder.ui.startFragmentActivity
 import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.security.MessageDigest

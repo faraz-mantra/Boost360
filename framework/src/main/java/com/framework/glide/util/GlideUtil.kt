@@ -36,8 +36,6 @@ fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: In
     if (url?.isEmpty() == true) return
     val glide = Glide.with(this).load(url).skipMemoryCache(true)
     placeholder?.let { glide.placeholder(it) }
-
-
     glide.diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(mImageView)
 }

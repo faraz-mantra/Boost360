@@ -6,88 +6,91 @@
   <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:gravity="center_vertical"
       android:orientation="horizontal"
-      android:paddingStart="@dimen/size_16"
-      android:paddingTop="@dimen/size_16"
-      android:paddingEnd="@dimen/size_18">
+      android:paddingStart="@dimen/size_12"
+      android:paddingTop="@dimen/size_12"
+      android:paddingEnd="@dimen/size_12">
 
-    <com.framework.views.customViews.CustomCardView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:corner_radius="RADIUS_4">
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-      <com.framework.views.customViews.CustomImageView
-          android:id="@+id/ivDishItem"
-          android:layout_width="@dimen/size_42"
-          android:layout_height="@dimen/size_42"
-          android:src="@drawable/ic_mutton_rogan_josh" />
+      <com.framework.views.customViews.CustomCardView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:cardCornerRadius="@dimen/size_6"
+          app:cardUseCompatPadding="true">
 
-    </com.framework.views.customViews.CustomCardView>
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/ivDishItem"
+            android:layout_width="@dimen/size_42"
+            android:layout_height="@dimen/size_42"
+            tools:src="@drawable/ic_mutton_rogan_josh" />
+
+      </com.framework.views.customViews.CustomCardView>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:paddingStart="@dimen/size_12"
+          tools:ignore="RtlSymmetry">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tvDishName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/semi_bold"
+            app:textType="BODY_1"
+            tools:text="Mutton Rogan Josh" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tvDishQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:includeFontPadding="false"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="CAPTION"
+            tools:text="Qty: 2"
+
+            />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="@dimen/size_16"
-        android:paddingTop="@dimen/size_2"
-        android:paddingBottom="@dimen/size_2"
-        tools:ignore="RtlSymmetry">
-
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvDishName"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:gravity="start"
-          android:text="Mutton Rogan Josh"
-          android:textColor="@color/greyish_brown"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1" />
-
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvDishQuantity"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:gravity="start"
-          android:includeFontPadding="false"
-          android:text="Qty: 2"
-          android:textColor="@color/warm_grey"
-          app:fontFamily="@font/regular"
-          app:textType="CAPTION"
-
-          />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/size_2"
-        android:paddingBottom="@dimen/size_2">
+        android:layout_marginStart="@dimen/size_10"
+        android:gravity="center|end">
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/tvDishAmount"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:includeFontPadding="false"
-          android:text="₹297"
           android:textColor="@color/greyish_brown"
-          app:fontFamily="@font/regular"
-          app:textType="CAPTION"
-          android:gravity="end"
-          />
+          app:textType="BODY_1"
+          tools:text="₹297" />
 
       <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvDishAmountDiscountedPrice"
+          android:id="@+id/tvActualPrice"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:includeFontPadding="false"
-          android:text="₹297"
           android:textColor="@color/primary_grey"
-          app:fontFamily="@font/regular"
           android:textSize="10sp"
-          android:gravity="end"
-          />
+          tools:text="₹297" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
