@@ -1,12 +1,13 @@
 package com.inventoryorder.ui.order
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
-import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
+import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
@@ -15,6 +16,7 @@ import com.inventoryorder.model.ordersdetails.ItemX
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
+
 
 class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDetailBinding>() {
 
@@ -66,12 +68,14 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.tvOrderPlacedDate?.text = DateUtils.parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
+    binding?.tvOrderPlacedDate?.text = DateUtils.parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
     binding?.tvCustomerAddress?.text = order.BuyerDetails?.getAddressFull()
 
+    binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
+    binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
     binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
 
