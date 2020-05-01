@@ -25,8 +25,9 @@ data class OrderItem(
     val _id: String? = null
 ) : AppBaseRecyclerViewItem, Serializable {
 
+  var recyclerViewType = RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()
   override fun getViewType(): Int {
-    return RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()
+    return recyclerViewType
   }
 
   fun status(): String {
@@ -45,4 +46,8 @@ data class OrderItem(
     return title
   }
 
+  fun getLoaderItem(): OrderItem {
+    this.recyclerViewType = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
+    return this
+  }
 }
