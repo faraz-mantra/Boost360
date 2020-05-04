@@ -53,7 +53,7 @@
                 android:text="New Order"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                app:textType="BODY_1" />
+                app:textType="BODY_2" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvOrderAmount"
@@ -104,10 +104,10 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:paddingStart="@dimen/size_4"
-                    android:text="Status:  "
+                    android:text="@string/status_n"
                     android:textColor="@color/greyish_brown"
                     app:fontFamily="@font/semi_bold"
-                    app:textType="CAPTION" />
+                    app:textType="BODY_1" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvOrderStatus"
@@ -115,8 +115,9 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:textColor="@color/orange"
-                    app:fontFamily="@font/semi_bold"
-                    app:textType="CAPTION"
+                    android:layout_marginStart="@dimen/size_4"
+                    app:fontFamily="@font/bold"
+                    app:textType="BODY_1"
                     tools:text="Order Placed" />
 
 
@@ -128,7 +129,7 @@
                   android:layout_height="wrap_content"
                   android:textColor="@color/primary_grey"
                   app:fontFamily="@font/regular"
-                  app:textType="OVERLINE"
+                  app:textType="CAPTION"
                   tools:text="Mon, Feb 12, 2018, 02:53 PM" />
 
               <androidx.appcompat.widget.LinearLayoutCompat
@@ -149,10 +150,10 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:paddingStart="@dimen/size_4"
-                    android:text="Payment:  "
+                    android:text="@string/payment"
                     android:textColor="@color/greyish_brown"
                     app:fontFamily="@font/semi_bold"
-                    app:textType="CAPTION" />
+                    app:textType="BODY_1" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvPaymentMode"
@@ -160,8 +161,9 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:textColor="@color/orange"
-                    app:fontFamily="@font/semi_bold"
-                    app:textType="CAPTION"
+                    android:layout_marginStart="@dimen/size_4"
+                    app:fontFamily="@font/bold"
+                    app:textType="BODY_1"
                     tools:text="COD" />
               </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -171,7 +173,7 @@
                   android:layout_height="wrap_content"
                   android:textColor="@color/primary_grey"
                   app:fontFamily="@font/regular"
-                  app:textType="OVERLINE"
+                  app:textType="CAPTION"
                   tools:text="Status: Payment Pending" />
             </LinearLayout>
 
@@ -188,7 +190,7 @@
                   android:text="Delivery Partner"
                   android:textColor="@color/primary_grey"
                   app:fontFamily="@font/semi_bold"
-                  app:textType="OVERLINE" />
+                  app:textType="CAPTION" />
 
               <com.framework.views.customViews.CustomButton
                   android:id="@+id/btn_click"
@@ -227,7 +229,7 @@
               android:text="Customer details"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/semi_bold"
-              app:textType="CAPTION" />
+              app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvCustomerName"
@@ -238,18 +240,19 @@
               android:paddingStart="@dimen/size_16"
               android:textColor="@color/warm_grey"
               app:fontFamily="@font/bold"
-              app:textType="CAPTION"
+              app:textType="BODY_1"
               tools:text="Mr, Sanghmitra Sharma" />
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvCustomerAddress"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_1"
               android:includeFontPadding="false"
               android:paddingStart="@dimen/size_16"
-              android:textColor="@color/greyish_brown"
+              android:textColor="@color/warm_grey"
               app:fontFamily="@font/regular"
-              app:textType="CAPTION"
+              app:textType="BODY_1"
               tools:text="+91 654323 54546, azgarhn@gmail.com\n2/234 - Hayagriva Vihar, Pillaiyar Koil, Chennai, 600113" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
@@ -312,7 +315,7 @@
               android:text="Order details"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/semi_bold"
-              app:textType="CAPTION"
+              app:textType="BODY_1"
               tools:ignore="RtlSymmetry" />
 
           <com.framework.views.viewgroups.BaseRecyclerView
@@ -351,6 +354,7 @@
               android:layout_height="wrap_content"
               android:layout_gravity="bottom"
               android:text="@string/cancel_order"
+              app:fontFamily="@font/semi_bold"
               android:textColor="@color/greyish_brown"
               app:textType="BODY_1" />
 
@@ -368,15 +372,16 @@
                 android:text="Shipping Cost: ₹0"
                 android:textColor="@color/warm_grey_10"
                 app:fontFamily="@font/regular"
-                app:textType="CAPTION" />
+                app:textType="BODY_1" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvTotalOrderAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Amount: ₹976"
-                android:textColor="@color/greyish_brown"
-                app:fontFamily="@font/semi_bold"
+                android:layout_marginTop="@dimen/size_1"
+                android:textColor="@color/warm_grey_10"
+                app:fontFamily="@font/bold"
                 app:textType="BODY_1" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 

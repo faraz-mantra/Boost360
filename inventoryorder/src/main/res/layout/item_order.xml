@@ -54,7 +54,7 @@
                 android:paddingEnd="@dimen/size_20"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                app:textType="BODY_1"
+                app:textType="BODY_2"
                 tools:text="New Order" />
 
             <com.framework.views.customViews.CustomTextView

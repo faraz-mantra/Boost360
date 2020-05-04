@@ -62,7 +62,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
-      FragmentType.ORDER_DETAIL_VIEW -> "# GK7C4FM"
+      FragmentType.ORDER_DETAIL_VIEW -> "# GK7C4FM "
       else -> super.getToolbarTitle()
     }
   }
