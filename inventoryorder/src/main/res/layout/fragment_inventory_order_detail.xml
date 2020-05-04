@@ -191,7 +191,7 @@
                   app:textType="OVERLINE" />
 
               <com.framework.views.customViews.CustomButton
-                  android:id="@+id/btn_click"
+                  android:id="@+id/btnPickUp"
                   android:layout_width="@dimen/size_110"
                   android:layout_height="@dimen/size_38"
                   android:layout_marginStart="0dp"

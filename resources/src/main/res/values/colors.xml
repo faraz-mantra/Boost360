@@ -48,4 +48,7 @@
     <color name="white_30">#4DFFFFFF</color>
     <color name="colorOverlay">#78ffffff</color>
     <color name="ripple_color">@color/white</color>
+    <color name="grey_text_color">#696969</color>
+    <color name="little_light_black">#DE000000</color>
+    <color name="view_background_color">#EBEBEB</color>
 </resources>
