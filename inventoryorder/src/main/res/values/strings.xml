@@ -12,4 +12,5 @@
   <string name="queryHint">Search by order Id</string>
   <string name="create">CREATE &#160;</string>
   <string name="status_n">Status:</string>
+    <string name="option_comes_here">Option comes here</string>
 </resources>
