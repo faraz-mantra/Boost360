@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import com.inventoryorder.R
 
 enum class RecyclerViewItemType {
+  PAGINATION_LOADER,
   ORDER_ITEM_TYPE,
   INVENTORY_ORDER_ITEM,
   ITEM_ORDER_DETAILS,
@@ -13,6 +14,7 @@ enum class RecyclerViewItemType {
   @LayoutRes
   fun getLayout(): Int {
     return when (this) {
+      PAGINATION_LOADER -> R.layout.pagination_loader
       ORDER_ITEM_TYPE -> R.layout.item_order_type
       INVENTORY_ORDER_ITEM -> R.layout.item_order
       ITEM_ORDER_DETAILS -> R.layout.item_order_details

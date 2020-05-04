@@ -18,6 +18,10 @@ class InventoryOrderModel(
     return RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()
   }
 
+  fun total(): Int {
+    return Total ?: 0
+  }
+
   fun getOrderItem(): ArrayList<InventoryOrderModel> {
     val list = ArrayList<InventoryOrderModel>()
     list.add(InventoryOrderModel("Pickup", TYPE.NEW_ORDER.name))

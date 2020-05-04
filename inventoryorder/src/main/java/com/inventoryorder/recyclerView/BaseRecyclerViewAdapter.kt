@@ -8,8 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.base.BaseActivity
 import com.inventoryorder.constant.RecyclerViewItemType
 
-abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(var activity: BaseActivity<*, *>, var list: ArrayList<T>, var itemClickListener: RecyclerItemClickListener?) :
-    RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
+abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
+    var activity: BaseActivity<*, *>,
+    var list: ArrayList<T>,
+    var itemClickListener: RecyclerItemClickListener?) : RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
+
+  protected var isLoaderVisible = false
 
   override fun onBindViewHolder(viewHolder: BaseRecyclerViewHolder<*>, position: Int) {
     viewHolder.activity = activity
@@ -29,7 +33,7 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(var activity: B
 
   override fun getItemCount(): Int = list.size
 
-  fun updateList(list: List<T>) {
+  fun updateList(list: ArrayList<T>) {
     this.list.clear()
     this.list.addAll(list)
     notifyDataSetChanged()

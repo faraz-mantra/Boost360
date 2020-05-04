@@ -18,6 +18,7 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? OrderItem
+    binding.view.visibility = if (adapterPosition == 0) View.VISIBLE else View.GONE
     data?.let {
       binding.orderDate.title.text = activity?.resources?.getString(R.string.date_order)
       binding.payment.title.text = activity?.resources?.getString(R.string.payment)

@@ -35,20 +35,30 @@ class OrderSummaryModel(
     list.add(OrderSummaryModel(type = OrderType.RECEIVED.type, count = TotalOrdersInProgress))
     list.add(OrderSummaryModel(type = OrderType.SUCCESSFUL.type, count = TotalOrdersCompleted))
     list.add(OrderSummaryModel(type = OrderType.CANCELLED.type, count = TotalOrdersCancelled))
-    list.add(OrderSummaryModel(type = OrderType.RETURNED.type, count = 0))
+    list.add(OrderSummaryModel(type = OrderType.RETURNED.type, count = TotalOrdersEscalated)) //same as ESCALATED
     list.add(OrderSummaryModel(type = OrderType.ABANDONED.type, count = TotalOrdersAbandoned))
     list.add(OrderSummaryModel(type = OrderType.ESCALATED.type, count = TotalOrdersEscalated))
     return list
   }
 
   enum class OrderType(val type: String, val value: String) {
-    TOTAL("All", ""), RECEIVED("Received", "PLACED"), SUCCESSFUL("Successful", "COMPLETED"),
-    CANCELLED("Cancelled", "CANCELLED"), RETURNED("Returned", "ESCALATED"),
-    ABANDONED("Abandoned", "CANCELLED"), ESCALATED("Escalated", "ESCALATED");
+    TOTAL("All", ""), RECEIVED("Received", OrderStatus.ORDER_INITIATED.name),
+    SUCCESSFUL("Successful", OrderStatus.ORDER_COMPLETED.name), CANCELLED("Cancelled", OrderStatus.ORDER_CANCELLED.name),
+    RETURNED("Returned", OrderStatus.ESCALATED.name), ABANDONED("Abandoned", "ABANDONED"),
+    ESCALATED("Escalated", OrderStatus.ESCALATED.name);
 
     companion object {
       fun fromType(type: String): OrderType = values().first { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
       fun fromValue(value: String): OrderType = values().first { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+    }
+  }
+
+  enum class OrderStatus {
+    ORDER_INITIATED, PAYMENT_MODE_VERIFIED, PAYMENT_CONFIRMED, ORDER_CONFIRMED, DELIVERY_IN_PROGRESS, DELIVERY_COMPLETED,
+    FEEDBACK_PENDING, FEEDBACK_RECEIVED, DELIVERY_DELAYED, DELIVERY_FAILED, ORDER_COMPLETED, ORDER_CANCELLED, ESCALATED;
+
+    companion object {
+      fun from(value: String): OrderStatus = values().first { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 }
