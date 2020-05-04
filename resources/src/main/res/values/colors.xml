@@ -51,4 +51,5 @@
     <color name="grey_text_color">#696969</color>
     <color name="little_light_black">#DE000000</color>
     <color name="view_background_color">#EBEBEB</color>
+  <color name="khaki_light">#80FFB900</color>
 </resources>

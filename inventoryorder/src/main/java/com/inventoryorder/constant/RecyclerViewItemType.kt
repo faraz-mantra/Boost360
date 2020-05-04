@@ -8,8 +8,7 @@ enum class RecyclerViewItemType {
   ORDER_ITEM_TYPE,
   INVENTORY_ORDER_ITEM,
   ITEM_ORDER_DETAILS,
-  ITEM_DELIVERY_OPTIONS
-  ;
+  ITEM_DELIVERY_OPTIONS;
 
   @LayoutRes
   fun getLayout(): Int {

@@ -4,25 +4,32 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
-class DeliveryOptionsModel (val deliveryOptionSelectedIcon: Int? = null,
-                            val deliveryOptionSelectedName: String? = null): AppBaseRecyclerViewItem {
+class DeliveryOptionsModel(val deliveryOptionSelectedIcon: Int? = null,
+                           val deliveryOptionSelectedName: String? = null,
+                           var isSelected: Boolean = false
+) : AppBaseRecyclerViewItem {
 
+  override fun getViewType(): Int {
+    return RecyclerViewItemType.ITEM_DELIVERY_OPTIONS.getLayout()
+  }
 
-    override fun getViewType(): Int {
-        return RecyclerViewItemType.ITEM_DELIVERY_OPTIONS.getLayout()
-    }
+  fun getIcon(): Int? {
+    return takeIf { isSelected }?.let { R.drawable.ic_option_selected } ?: deliveryOptionSelectedIcon
+  }
 
-    private fun getData() : ArrayList<DeliveryOptionsModel>{
+  fun getColor(): Int {
+    return takeIf { isSelected }?.let { R.color.khaki_light } ?: R.color.white
+  }
 
-        val list = ArrayList<DeliveryOptionsModel>()
-        list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected,"Option comes here"))
-        list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected,"Option comes here"))
-        list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected,"Subtitle 2"))
-        list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected,"Option comes here"))
-        list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected,"Option comes here"))
-
-        return list
-
-    }
+  fun getData(): ArrayList<DeliveryOptionsModel> {
+    val list = ArrayList<DeliveryOptionsModel>()
+    list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected, "Delivery Option 1"))
+    list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected, "Delivery Option 2"))
+    list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected, "Delivery Option 3", true))
+    list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected, "Delivery Option 4"))
+    list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected, "Delivery Option 5"))
+    list.add(DeliveryOptionsModel(R.drawable.ic_option_unselected, "Delivery Option 6"))
+    return list
+  }
 
 }

@@ -7,14 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.base.BaseActivity
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType.*
-import com.inventoryorder.databinding.ItemOrderBinding
-import com.inventoryorder.databinding.ItemOrderDetailsBinding
-import com.inventoryorder.databinding.ItemOrderTypeBinding
-import com.inventoryorder.databinding.PaginationLoaderBinding
-import com.inventoryorder.holders.OrderItemDetailsViewHolder
-import com.inventoryorder.holders.OrderItemViewHolder
-import com.inventoryorder.holders.OrderSummaryViewHolder
-import com.inventoryorder.holders.PagingViewHolder
+import com.inventoryorder.databinding.*
+import com.inventoryorder.holders.*
 
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
@@ -32,6 +26,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       ORDER_ITEM_TYPE -> OrderSummaryViewHolder(binding as ItemOrderTypeBinding)
       INVENTORY_ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
       ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)
+      ITEM_DELIVERY_OPTIONS -> DeliveryOptionsViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
     }
   }
 
