@@ -114,6 +114,7 @@
                         android:text="@string/facebook_lead_ads_upto_75_leads"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_11sdp"
+                        android:fontFamily="@font/open_sans_semibold"
                         android:paddingStart="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageViewCart121"
