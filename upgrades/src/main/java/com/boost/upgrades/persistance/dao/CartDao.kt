@@ -11,7 +11,7 @@ interface CartDao {
     fun getCartItems(): Single<List<CartModel>>
 
     @Query("SELECT * FROM Cart WHERE boost_widget_key=:item_id")
-    fun getCartItemById(item_id: String): Flowable<List<CartModel?>?>?
+    fun getCartItemById(item_id: String): Single<CartModel>
 
     @Query("SELECT COUNT(*)from Cart")
     fun countCartItems(): Int

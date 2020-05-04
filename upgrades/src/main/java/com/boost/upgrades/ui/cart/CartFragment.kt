@@ -91,7 +91,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         progressDialog = ProgressDialog(requireContext())
 
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList())
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Initialised", "ADDONS_MARKETPLACE Cart", "")
@@ -118,14 +118,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     var extendProps: List<ExtendedProperty>? = null
                     var outputExtendedProps: List<ExtendedProperties>? = null
 
-                    if(item.extended_properties != null && item.extended_properties!!.length > 0){
+                    if (item.extended_properties != null && item.extended_properties!!.length > 0) {
                         try {
                             val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
                             extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
 
-                            if(extendProps != null){
+                            if (extendProps != null) {
                                 outputExtendedProps = ArrayList<ExtendedProperties>()
-                                for(prop in extendProps) {
+                                for (prop in extendProps) {
                                     outputExtendedProps.add(ExtendedProperties(
                                             Key = prop.key!!,
                                             Value = prop.value!!
@@ -133,7 +133,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                 }
 
                             }
-                        } catch (ex: Exception){
+                        } catch (ex: Exception) {
                             Log.e("FAILED", ex.message)
                         }
                     }
@@ -255,11 +255,30 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.cartResult().observe(this, Observer {
             if (it != null && it.size > 0) {
                 cartList = it
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "Cart Size:"+it.size, "")
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "Cart Size:" + it.size, "")
                 empty_cart.visibility = View.GONE
                 cart_main_layout.visibility = View.VISIBLE
-                cartAddonsAdaptor.addupdates(it)
-                cartAddonsAdaptor.notifyDataSetChanged()
+                val features = arrayListOf<CartModel>()
+                val bundles = arrayListOf<CartModel>()
+                for (items in it) {
+                    if (items.item_type.equals("features")) {
+                        features.add(items)
+                    } else if (items.item_type.equals("bundles")) {
+                        bundles.add(items)
+                    }
+                }
+                if (features.size > 0) {
+                    updateAddons(features)
+                    addons_layout.visibility = View.VISIBLE
+                } else {
+                    addons_layout.visibility = View.GONE
+                }
+                if (bundles.size > 0) {
+                    updatePackage(bundles)
+                    package_layout.visibility = View.VISIBLE
+                } else {
+                    package_layout.visibility = View.GONE
+                }
                 totalCalculation(it)
             } else {
                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
@@ -321,22 +340,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         })
     }
 
-    fun totalCalculation(list: List<CartModel>) {
-        total = 0.0
-        if (list != null && list.size > 0) {
-            for (item in list) {
-                total = total + item.price
-            }
-            cart_amount_value.setText("₹" + total.toString())
-            coupon_discount_value.setText("0")
-            val temp = (total * 18) / 100
-            taxValue = Math.round(temp * 100) / 100.0
-            grandTotal = Math.round((total + taxValue) * 100) / 100.0
-            igst_value.setText("₹" + taxValue)
-            order_total_value.setText("₹" + grandTotal.toString())
-            cart_grand_total.setText("₹" + grandTotal.toString())
-            footer_grand_total.setText("₹" + grandTotal.toString())
-        }
+    fun updatePackage(features: List<CartModel>) {
+        cartPackageAdaptor.addupdates(features)
+        cartPackageAdaptor.notifyDataSetChanged()
+    }
+
+    fun updateAddons(features: List<CartModel>) {
+        cartAddonsAdaptor.addupdates(features)
+        cartAddonsAdaptor.notifyDataSetChanged()
     }
 
 
@@ -356,6 +367,25 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_addons_recycler.apply {
             layoutManager = gridLayoutManager
             cart_addons_recycler.adapter = cartAddonsAdaptor
+        }
+    }
+
+
+    fun totalCalculation(list: List<CartModel>) {
+        total = 0.0
+        if (list != null && list.size > 0) {
+            for (item in list) {
+                total = total + item.price
+            }
+            cart_amount_value.setText("₹" + total.toString())
+            coupon_discount_value.setText("0")
+            val temp = (total * 18) / 100
+            taxValue = Math.round(temp * 100) / 100.0
+            grandTotal = Math.round((total + taxValue) * 100) / 100.0
+            igst_value.setText("₹" + taxValue)
+            order_total_value.setText("₹" + grandTotal.toString())
+            cart_grand_total.setText("₹" + grandTotal.toString())
+            footer_grand_total.setText("₹" + grandTotal.toString())
         }
     }
 

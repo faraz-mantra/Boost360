@@ -237,11 +237,11 @@
                         android:fontFamily="@font/open_sans"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="Total Selling Price"
+                        android:text="Discount"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
-                        android:id="@+id/history_details_selling_price"
+                        android:id="@+id/history_details_discount_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/history_details_MRPPrice"
@@ -281,7 +281,7 @@
                         android:fontFamily="@font/open_sans_semibold"/>
 
                     <TextView
-                        android:id="@+id/layout1_total"
+                        android:id="@+id/history_details_selling_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -433,7 +433,7 @@
                     android:paddingTop="@dimen/_30sdp"
                     android:paddingBottom="@dimen/_20sdp"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableStart="@drawable/printer"/>
+                    android:drawableStart="@drawable/ic_printer"/>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

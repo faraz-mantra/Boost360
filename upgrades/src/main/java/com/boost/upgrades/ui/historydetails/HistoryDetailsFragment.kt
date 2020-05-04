@@ -70,9 +70,11 @@ class HistoryDetailsFragment : BaseFragment() {
         if (data.purchasedPackageDetails.WidgetPacks.size > 1) {
             amountLayout1.append("(" + data.purchasedPackageDetails.WidgetPacks.size + "items)")
         }
-        layout1_total.setText(amountLayout1)
-        history_details_MRPPrice.setText("NULL")
-        history_details_selling_price.setText("₹" + data.paidAmount)
+        history_details_selling_price.setText(amountLayout1)
+        val mrpPrice = (data.paidAmount*(100/(100-data.discount)))
+        history_details_MRPPrice.setText("₹"+mrpPrice.toString())
+        val discountAmount = mrpPrice - data.paidAmount
+        history_details_discount_amount.setText("- ₹" + discountAmount)
         if (data.PaymentMethod != null) {
             history_details_payment_type.setText(data.PaymentMethod + " ₹" + data.paidAmount)
         }else{

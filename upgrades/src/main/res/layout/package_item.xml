@@ -12,12 +12,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/package_fade_bg"
+            android:background="@drawable/all_side_curve_bg"
             android:paddingStart="@dimen/_15sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:paddingTop="@dimen/_15sdp"
             android:paddingBottom="@dimen/_15sdp"
-            app:layout_constraintBottom_toTopOf="@+id/textView2">
+            android:elevation="@dimen/_2sdp"
+            android:layout_margin="@dimen/_5sdp">
 
 
             <ImageView
@@ -62,7 +63,7 @@
                 </RelativeLayout>
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/package_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="2.3sp"

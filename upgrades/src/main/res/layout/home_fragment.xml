@@ -270,22 +270,20 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/offer"
+                android:id="@+id/package_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/header"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/header">
+                tools:visibility="visible">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/package_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/offer"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -299,17 +297,56 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_10sdp"
-                    app:dotsColor="@color/white"
+                    app:dotsColor="@color/dot_grey"
                     app:dotsCornerRadius="8dp"
                     app:dotsSize="6dp"
                     app:dotsSpacing="4dp"
                     app:dotsWidthFactor="2.5"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/package_viewpager"
                     app:progressMode="true"
-                    app:selectedDotColor="@color/white" />
+                    app:selectedDotColor="@color/app_yellow_1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/feature_deals_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/package_layout"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/feature_deals_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/snippet_items" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/feature_deals_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:dotsColor="@color/dot_grey"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="6dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/feature_deals_viewpager"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -317,9 +354,9 @@
                 android:id="@+id/recommended_features_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/offer"
+                android:layout_below="@id/feature_deals_layout"
                 android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:background="@drawable/feature_curve_top_bg"
                 android:elevation="@dimen/_2sdp">
