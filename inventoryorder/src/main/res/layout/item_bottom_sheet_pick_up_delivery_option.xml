@@ -12,11 +12,13 @@
         android:paddingBottom="@dimen/size_30">
 
         <com.framework.views.customViews.CustomImageView
+            android:id="@+id/ivOptionSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_option_unselected" />
 
         <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tvOptionSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/size_42"

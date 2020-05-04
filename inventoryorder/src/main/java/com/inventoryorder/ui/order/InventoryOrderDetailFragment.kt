@@ -45,7 +45,6 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
 
         setOnClickListener(binding?.btnPickUp)
 
-
         showBottomSheetDialog()
 
 
