@@ -98,12 +98,12 @@
         android:layout_marginStart="@dimen/size_32"
         android:layout_marginEnd="@dimen/size_32"
         android:layout_marginBottom="@dimen/size_16"
-        android:alpha="0"
+        android:visibility="invisible"
         android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:alpha="1">
+        tools:visibility="visible">
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/text_btn"

@@ -122,8 +122,11 @@
               android:alpha="0"
               app:cardBackgroundColor="@color/white"
               app:cardCornerRadius="@dimen/size_26"
-              app:cardElevation="@dimen/size_0"
-              tools:alpha="1">
+              android:outlineSpotShadowColor="@color/white_four"
+              app:cardElevation="@dimen/size_2"
+              tools:alpha="1"
+              android:clipToPadding="false"
+              tools:ignore="UnusedAttribute">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

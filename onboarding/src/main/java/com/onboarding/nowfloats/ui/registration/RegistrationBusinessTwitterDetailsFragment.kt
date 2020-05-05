@@ -53,7 +53,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     binding?.twitterChannels?.post {
       (binding?.twitterChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
               ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.linkTwitter?.fadeIn(100L))
+          ?.andThen(binding?.linkTwitter?.fadeIn(500L))
           ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
     }
     setOnClickListener(binding?.skip, binding?.linkTwitter)
