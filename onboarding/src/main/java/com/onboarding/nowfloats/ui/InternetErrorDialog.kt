@@ -1,12 +1,8 @@
 package com.onboarding.nowfloats.ui
 
-import android.graphics.drawable.Drawable
-import android.view.View
-import android.view.ViewGroup
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.NetworkUtils
-import com.framework.views.blur.RenderScriptBlur
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogInternetErrorBinding
 
@@ -27,7 +23,7 @@ class InternetErrorDialog : BaseDialogFragment<DialogInternetErrorBinding, BaseV
     }
 
     override fun onViewCreated() {
-        setBlur()
+        binding?.blurView?.setBlur(4F)
         isCancelable = false
         binding?.retryBtn?.setOnClickListener {
             if (NetworkUtils.isNetworkConnected()) {
@@ -35,14 +31,6 @@ class InternetErrorDialog : BaseDialogFragment<DialogInternetErrorBinding, BaseV
                 dismiss()
             }
         }
-    }
-
-    private fun setBlur() {
-        val decorView: View? = activity?.window?.decorView
-        val rootView: ViewGroup = decorView?.findViewById(android.R.id.content) as ViewGroup
-        val windowBackground: Drawable = decorView.background
-        binding?.blurView?.setupWith(rootView)?.setFrameClearDrawable(windowBackground)
-                ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(4f)?.setHasFixedTransformationMatrix(true)
     }
 
 }

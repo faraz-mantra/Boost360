@@ -47,8 +47,9 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
       (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
           ?.doOnComplete { setSetSelectedGoogleChannels(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.subdomain?.fadeIn(100)?.mergeWith(binding?.inputType?.fadeIn(50L)))
-          ?.andThen(binding?.next?.fadeIn())?.doOnComplete {
+          ?.andThen(binding?.subdomain?.fadeIn(100L)?.mergeWith(binding?.inputType?.fadeIn(50L)))
+          ?.doOnComplete {
+            binding?.next?.visibility = View.VISIBLE
             setDataView()
           }?.subscribe()
     }
