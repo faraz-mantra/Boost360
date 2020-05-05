@@ -27,6 +27,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       INVENTORY_ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
       ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)
       ITEM_DELIVERY_OPTIONS -> DeliveryOptionsViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
+      BOOKING_DETAILS -> BookingDetailsViewHolder(binding as ItemBookingDetailsBinding)
+      ITEM_SERVICE_LOCATIONS -> ServiceLocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
     }
   }
 

@@ -27,6 +27,7 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
     return when (this) {
       is InventoryAllOrderFragment -> R.layout.fragment_inventory_all_order
       is InventoryOrderDetailFragment -> R.layout.fragment_inventory_order_detail
+      is InventoryBookingDetailsFragment -> R.layout.fragment_inventory_booking_details
       else -> throw IllegalFragmentTypeException()
     }
   }

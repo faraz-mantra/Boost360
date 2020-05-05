@@ -18,6 +18,7 @@ import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseActivity
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.ui.order.InventoryAllOrderFragment
+import com.inventoryorder.ui.order.InventoryBookingDetailsFragment
 import com.inventoryorder.ui.order.InventoryOrderDetailFragment
 
 open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
@@ -25,6 +26,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var type: FragmentType? = null
   private var inventoryAllOrderFragment: InventoryAllOrderFragment? = null
   private var inventoryOrderDetailFragment: InventoryOrderDetailFragment? = null
+  private var inventoryBookingDetails : InventoryBookingDetailsFragment? = null
+
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -47,14 +50,14 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.ALL_ORDER_VIEW, FragmentType.ORDER_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.ALL_ORDER_VIEW, FragmentType.ORDER_DETAIL_VIEW,FragmentType.BOOKING_DETAIL -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.ALL_ORDER_VIEW, FragmentType.ORDER_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.ALL_ORDER_VIEW, FragmentType.ORDER_DETAIL_VIEW,FragmentType.BOOKING_DETAIL -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -63,6 +66,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
       FragmentType.ORDER_DETAIL_VIEW -> "# GK7C4FM "
+      FragmentType.BOOKING_DETAIL -> "# GK7C4FM "
       else -> super.getToolbarTitle()
     }
   }
@@ -70,7 +74,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.ALL_ORDER_VIEW, FragmentType.ORDER_DETAIL_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.ALL_ORDER_VIEW, FragmentType.ORDER_DETAIL_VIEW , FragmentType.BOOKING_DETAIL -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
       else -> super.getNavigationIcon()
     }
   }
@@ -105,11 +109,17 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_ORDER_VIEW -> {
         inventoryAllOrderFragment = InventoryAllOrderFragment.newInstance()
         inventoryAllOrderFragment
+
       }
       FragmentType.ORDER_DETAIL_VIEW -> {
         inventoryOrderDetailFragment = InventoryOrderDetailFragment.newInstance()
         inventoryOrderDetailFragment
       }
+      FragmentType.BOOKING_DETAIL -> {
+        inventoryBookingDetails = InventoryBookingDetailsFragment.newInstance()
+        inventoryBookingDetails
+      }
+
       else -> throw IllegalFragmentTypeException()
     }
   }
