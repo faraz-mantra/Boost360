@@ -14,6 +14,7 @@ import java.net.URL
 
 class SignUpConfirmation : AppCompatActivity() {
 
+  private var personName = ""
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_sign_up_confirmation)
@@ -22,9 +23,9 @@ class SignUpConfirmation : AppCompatActivity() {
     val currentFirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val profile_id = intent.getStringExtra("profile_id")
 
-    var personName = intent.getStringExtra("person_name")
+    personName = intent.getStringExtra("person_name")
     if (personName.isEmpty() && currentFirebaseUser != null) {
-      personName = currentFirebaseUser.displayName
+      personName = currentFirebaseUser.displayName.toString()
     }
     welcome_user.text = getString(R.string.welcome) + " " + personName
 
@@ -47,6 +48,7 @@ class SignUpConfirmation : AppCompatActivity() {
 
       val editor = this.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0).edit()
       editor?.putString("user_profile_id", profile_id)
+      editor?.putString("person_name", personName)
       editor?.putBoolean("IsSignUpComplete", true)
       editor?.apply()
       NavigatorManager.startActivities(this@SignUpConfirmation)

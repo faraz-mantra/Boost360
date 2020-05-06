@@ -61,7 +61,7 @@
             android:textColor="@color/greyish_brown"
             android:visibility="gone"
             app:fontFamily="@font/regular"
-            app:textType="SUBTITLE_1"
+            app:textType="SUBTITLE_2"
             tools:text="Suggestions on digital growth strategies Regular Tips on Content for better discovery Weekly Performance Reporting"
             tools:visibility="visible" />
 

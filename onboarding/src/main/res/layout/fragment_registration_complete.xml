@@ -27,7 +27,7 @@
             android:layout_width="@dimen/size_86"
             android:layout_height="@dimen/size_86"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/size_40"
+            android:layout_marginTop="@dimen/size_30"
             app:shadowColor="@color/shadow"
             app:shadowDx=".5dp"
             app:shadowDy=".5dp"
@@ -175,7 +175,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/line_bac_blue"
                     android:textAlignment="gravity"
                     android:textColor="@color/cerulean_blue"
                     app:fontFamily="@font/semi_bold"
@@ -305,7 +304,7 @@
             tools:spanCount="6" />
 
         <com.framework.views.customViews.CustomButton
-            android:id="@+id/done"
+            android:id="@+id/website_btn_click"
             style="@style/Onboarding.Registration.FormButtonStyle"
             android:layout_marginStart="@dimen/size_32"
             android:layout_marginEnd="@dimen/size_32"
@@ -318,7 +317,7 @@
             tools:alpha="1" />
 
         <com.framework.views.customViews.CustomButton
-            android:id="@+id/skip"
+            android:id="@+id/skip_dashboard"
             style="@style/Onboarding.Registration.FormButtonStyle"
             android:layout_marginStart="@dimen/size_32"
             android:layout_marginEnd="@dimen/size_32"

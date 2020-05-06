@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.ui.registration
 
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -21,8 +22,11 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.bottomsheet.builder.BottomDialog
 import com.onboarding.nowfloats.bottomsheet.builder.imagePicker
 import com.onboarding.nowfloats.bottomsheet.builder.title
+import com.onboarding.nowfloats.constant.IntentConstant
+import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationCompleteBinding
+import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.getBitmap
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
@@ -31,6 +35,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
@@ -55,8 +60,9 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
   override fun onCreateView() {
     super.onCreateView()
     setSetSelectedChannels(channels)
-    setOnClickListener(binding?.menuView, binding?.done, binding?.skip, binding?.businessClick)
-    binding?.congratsText?.text = resources.getString(R.string.congratulations)
+    setOnClickListener(binding?.menuView, binding?.websiteBtnClick, binding?.skipDashboard, binding?.businessClick)
+    val personName = (pref?.getString(PreferenceConstant.PERSON_NAME, "") ?: "").capitalizeWords()
+    binding?.congratsText?.text = resources.getString(R.string.congratulations_new).plus("\n$personName").trim()
     requestFloatsModel?.contactInfo?.businessName?.let {
       binding?.businessName?.text = it
       binding?.businessNameInitial?.text = it.firstOrNull()?.toUpperCase()?.toString()
@@ -69,8 +75,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
           ?.andThen(binding?.businessText?.fadeIn(50L))?.andThen(binding?.tagImage?.fadeIn(100L))
           ?.andThen(binding?.cardView?.fadeIn(100L))?.andThen(binding?.businessName?.fadeIn(50L))
           ?.andThen(binding?.domain?.fadeIn(50L))?.andThen(binding?.settingUpChannels?.fadeIn(30L))
-          ?.andThen(binding?.selectedChannels?.fadeIn(50L))?.andThen(binding?.done?.fadeIn(30L))
-          ?.andThen(binding?.skip?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
+          ?.andThen(binding?.selectedChannels?.fadeIn(50L))?.andThen(binding?.websiteBtnClick?.fadeIn(30L))
+          ?.andThen(binding?.skipDashboard?.fadeIn(0L))?.andThen { initLottieAnimation() }?.subscribe()
     }
   }
 
@@ -113,7 +119,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
   }
 
   private fun setSetSelectedChannels(list: ArrayList<ChannelModel>) {
-    binding?.domainTxt?.text = "wwww.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase()}.nowfloats.com"
+    binding?.domainTxt?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.domainTxt?.setPaintFlags(it) }
+    binding?.domainTxt?.text = "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase()}.nowfloats.com"
     val itemSize = ConversionUtils.dp2px(48f)
     var spanCount = (ScreenUtils.instance.getWidth(baseActivity) - ConversionUtils.dp2px(96f)) / itemSize
     if (spanCount == 0) {
@@ -132,13 +139,15 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     super.onClick(v)
     when (v) {
       binding?.menuView -> showMenuLogout(v)
-//            binding?.profileImage -> openImagePicker(true)
       binding?.businessClick -> openImagePicker(false)
-      binding?.skip,
-      binding?.done -> {
+      binding?.websiteBtnClick -> {
+        val bundle = Bundle()
+        bundle.putString(IntentConstant.DOMAIN_URL.name, binding?.domainTxt?.text.toString())
+        navigator?.startActivity(WebViewActivity::class.java, bundle)
+      }
+      binding?.skipDashboard -> {
         try {
           setDataLogin()
-//                    val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
           val intent = Intent(baseActivity, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
           val loginBundle = Bundle()
@@ -164,7 +173,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         dialog.dismiss()
         if (type == 1 || type == 2) {
           ImagePicker.Builder(baseActivity)
-              .mode(takeIf { type == 2 }?.let { ImagePicker.Mode.CAMERA } ?: ImagePicker.Mode.GALLERY)
+              .mode(takeIf { type == 2 }?.let { ImagePicker.Mode.CAMERA }
+                  ?: ImagePicker.Mode.GALLERY)
               .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
               .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
               .enableDebuggingMode(true).build()

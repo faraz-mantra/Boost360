@@ -28,10 +28,10 @@ class BuildingPlanDialog : BaseDialogFragment<DialogBuildingPlanBinding, BaseVie
     binding?.progressBar?.progress = 0F
     binding?.progressBar?.progressMax = 100F
 
-    object : CountDownTimer(4000, 1000) {
+    object : CountDownTimer(4000, 62) {
       override fun onTick(millisUntilFinished: Long) {
         binding?.progressBar?.post {
-          progress = (progress + 25F)
+          progress = (progress + 2.3125F)
           binding?.progressBar?.progress = progress
         }
       }

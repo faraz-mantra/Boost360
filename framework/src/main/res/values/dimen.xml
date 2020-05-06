@@ -15,4 +15,5 @@
   <dimen name="fab_text_horizontal_margin_mini">6dp</dimen>
   <dimen name="fab_step_size">2dp</dimen>
   <dimen name="fab_menu_item_margin">8dp</dimen>
+  <dimen name="toolbar_sub_title">14dp</dimen>
 </resources>

@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.framework.extensions.getChildOrNull
 import com.google.android.material.appbar.MaterialToolbar
+import java.lang.reflect.Field
 
 
 class CustomToolbar : MaterialToolbar {
@@ -28,6 +29,10 @@ class CustomToolbar : MaterialToolbar {
 
   fun getTitleTextView(): TextView? {
     return this.getChildOrNull(1) as? TextView
+  }
+
+  fun getSubTitleTextView(): TextView? {
+    return this.getChildOrNull(2) as? TextView
   }
 
   fun getNavImageButton(): ImageButton? {
