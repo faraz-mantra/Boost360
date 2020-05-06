@@ -50,8 +50,8 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
       (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
           ?.doOnComplete { setSetSelectedWhatsAppChannel(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.edtView?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(50L, confirmButtonAlpha)))
-          ?.andThen(binding?.skip?.fadeIn())?.doOnComplete {
+          ?.andThen(binding?.edtView?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(500L, confirmButtonAlpha)))
+          ?.andThen(binding?.skip?.fadeIn(100L))?.doOnComplete {
             baseActivity.showKeyBoard(binding?.number)
           }?.subscribe()
     }

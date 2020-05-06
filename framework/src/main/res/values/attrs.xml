@@ -1,179 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <declare-styleable name="CustomMaterialButton" />
+  <declare-styleable name="CustomMaterialButton" />
 
-    <declare-styleable name="CustomCardView">
-        <attr name="shadow_radius" format="enum">
-            <enum name="SHADOW_0" value="0" />
-            <enum name="SHADOW_2" value="2" />
-            <enum name="SHADOW_4" value="4" />
-            <enum name="SHADOW_8" value="8" />
-            <enum name="SHADOW_12" value="12" />
-            <enum name="SHADOW_16" value="16" />
-            <enum name="SHADOW_24" value="24" />
-            <enum name="SHADOW_32" value="32" />
-            <enum name="SHADOW_48" value="48" />
-        </attr>
+  <declare-styleable name="CustomCardView">
+    <attr name="shadow_radius" format="enum">
+      <enum name="SHADOW_0" value="0" />
+      <enum name="SHADOW_2" value="2" />
+      <enum name="SHADOW_4" value="4" />
+      <enum name="SHADOW_8" value="8" />
+      <enum name="SHADOW_12" value="12" />
+      <enum name="SHADOW_16" value="16" />
+      <enum name="SHADOW_24" value="24" />
+      <enum name="SHADOW_32" value="32" />
+      <enum name="SHADOW_48" value="48" />
+    </attr>
 
-        <attr name="corner_radius" format="enum">
-            <enum name="RADIUS_0" value="0" />
-            <enum name="RADIUS_2" value="2" />
-            <enum name="RADIUS_4" value="4" />
-            <enum name="RADIUS_8" value="8" />
-            <enum name="RADIUS_12" value="12" />
-            <enum name="RADIUS_16" value="16" />
-        </attr>
+    <attr name="corner_radius" format="enum">
+      <enum name="RADIUS_0" value="0" />
+      <enum name="RADIUS_2" value="2" />
+      <enum name="RADIUS_4" value="4" />
+      <enum name="RADIUS_8" value="8" />
+      <enum name="RADIUS_12" value="12" />
+      <enum name="RADIUS_16" value="16" />
+    </attr>
 
-        <attr name="cardCornerRadius" format="dimension" />
-        <attr name="cardElevation" format="dimension" tools:overide="true" />
-    </declare-styleable>
+    <attr name="cardCornerRadius" format="dimension" />
+    <attr name="cardElevation" format="dimension" tools:overide="true" />
+  </declare-styleable>
 
-    <declare-styleable name="CustomTextView">
-        <attr name="textType" format="enum">
-            <enum name="TITLE" value="0" />
-            <enum name="SUBTITLE" value="1" />
-            <enum name="HEADING_1" value="2" />
-            <enum name="HEADING_2" value="3" />
-            <enum name="HEADING_3" value="4" />
-            <enum name="HEADING_4" value="5" />
-            <enum name="HEADING_5" value="6" />
-            <enum name="HEADING_6" value="7" />
-            <enum name="SUBHEADING_1" value="8" />
-            <enum name="SUBHEADING_2" value="9" />
-            <enum name="SUBTITLE_1" value="10" />
-            <enum name="SUBTITLE_2" value="11" />
-            <enum name="BODY_1" value="12" />
-            <enum name="BODY_2" value="13" />
-            <enum name="BODY_3" value="14" />
-            <enum name="CAPTION" value="15" />
-            <enum name="OVERLINE" value="16" />
-            <enum name="HEADING_TEXT_1" value="17" />
-            <enum name="HEADING_TEXT_2" value="18" />
-            <enum name="HEADING_TEXT_3" value="19" />
-            <enum name="HEADING_7" value="20" />
-        </attr>
-    </declare-styleable>
+  <declare-styleable name="CustomTextView">
+    <attr name="textType" format="enum">
+      <enum name="TITLE" value="0" />
+      <enum name="SUBTITLE" value="1" />
+      <enum name="HEADING_1" value="2" />
+      <enum name="HEADING_2" value="3" />
+      <enum name="HEADING_3" value="4" />
+      <enum name="HEADING_4" value="5" />
+      <enum name="HEADING_5" value="6" />
+      <enum name="HEADING_6" value="7" />
+      <enum name="SUBHEADING_1" value="8" />
+      <enum name="SUBHEADING_2" value="9" />
+      <enum name="SUBTITLE_1" value="10" />
+      <enum name="SUBTITLE_2" value="11" />
+      <enum name="BODY_1" value="12" />
+      <enum name="BODY_2" value="13" />
+      <enum name="BODY_3" value="14" />
+      <enum name="CAPTION" value="15" />
+      <enum name="OVERLINE" value="16" />
+      <enum name="HEADING_TEXT_1" value="17" />
+      <enum name="HEADING_TEXT_2" value="18" />
+      <enum name="HEADING_TEXT_3" value="19" />
+      <enum name="HEADING_7" value="20" />
+    </attr>
+  </declare-styleable>
 
-    <declare-styleable name="CustomImageView">
-        <attr name="srcCompat" format="reference" tools:overide="true" />
-    </declare-styleable>
+  <declare-styleable name="CustomImageView">
+    <attr name="srcCompat" format="reference" tools:overide="true" />
+  </declare-styleable>
 
-    <!--
-       Blur Layout start
-    -->
-    <declare-styleable name="BlurView">
-        <attr name="blurOverlayColor" format="color" />
-    </declare-styleable>
-    <declare-styleable name="PxBlurringView">
-        <attr name="blurRadius" format="integer" />
-        <attr name="downsampleFactor" format="integer" />
-        <attr name="overlayColor" format="color" />
-    </declare-styleable>
-    <integer name="default_blur_radius">15</integer>
-    <integer name="default_downsample_factor">8</integer>
-    <color name="default_overlay_color">#AAFFFFFF</color>
+  <!--
+     Blur Layout start
+  -->
+  <declare-styleable name="BlurView">
+    <attr name="blurOverlayColor" format="color" />
+  </declare-styleable>
+  <declare-styleable name="PxBlurringView">
+    <attr name="blurRadius" format="integer" />
+    <attr name="downsampleFactor" format="integer" />
+    <attr name="overlayColor" format="color" />
+  </declare-styleable>
+  <integer name="default_blur_radius">15</integer>
+  <integer name="default_downsample_factor">8</integer>
+  <color name="default_overlay_color">#AAFFFFFF</color>
 
-    <!-- FlipView attributes -->
-    <declare-styleable name="FlipView">
-        <!-- Whether or not this component is flipped at startup (default: false) -->
-        <attr name="checked" format="boolean" />
-        <!-- Set the main animation duration (default: 100ms) -->
-        <attr name="animationDuration" format="integer" />
-        <!-- Anticipate the beginning of the InAnimation (default: 0ms) -->
-        <attr name="anticipateInAnimationTime" format="integer" />
-        <!-- If main animation should be applied only to the child views from design layout
-             or using inner layout (default: false, use inner layout) -->
-        <attr name="animateDesignLayoutOnly" format="boolean" />
-        <!-- Whether or not the initial animation should start at the beginning (default: false) -->
-        <attr name="enableInitialAnimation" format="boolean" />
-        <!-- Set the starting animation (default: scale_up) -->
-        <attr name="initialLayoutAnimation" format="reference" />
-        <!-- Set the starting animation duration (default: 250ms) -->
-        <attr name="initialLayoutAnimationDuration" format="integer" />
-        <!-- Use default rear image animation (default: true) -->
-        <attr name="animateRearImage" format="boolean" />
+  <!-- FlipView attributes -->
+  <declare-styleable name="FlipView">
+    <!-- Whether or not this component is flipped at startup (default: false) -->
+    <attr name="checked" format="boolean" />
+    <!-- Set the main animation duration (default: 100ms) -->
+    <attr name="animationDuration" format="integer" />
+    <!-- Anticipate the beginning of the InAnimation (default: 0ms) -->
+    <attr name="anticipateInAnimationTime" format="integer" />
+    <!-- If main animation should be applied only to the child views from design layout
+         or using inner layout (default: false, use inner layout) -->
+    <attr name="animateDesignLayoutOnly" format="boolean" />
+    <!-- Whether or not the initial animation should start at the beginning (default: false) -->
+    <attr name="enableInitialAnimation" format="boolean" />
+    <!-- Set the starting animation (default: scale_up) -->
+    <attr name="initialLayoutAnimation" format="reference" />
+    <!-- Set the starting animation duration (default: 250ms) -->
+    <attr name="initialLayoutAnimationDuration" format="integer" />
+    <!-- Use default rear image animation (default: true) -->
+    <attr name="animateRearImage" format="boolean" />
 
-        <!-- Front view layout resource (for checked state -> false) -->
-        <attr name="frontLayout" format="reference" />
-        <!-- Front drawable resource (for checked state -> false) -->
-        <attr name="frontBackground" format="reference" />
-        <!-- Front view color resource (for checked state -> false) -->
-        <attr name="frontBackgroundColor" format="color" />
-        <!-- Front image resource -->
-        <attr name="frontImage" format="reference" />
-        <!-- Front image padding -->
-        <attr name="frontImagePadding" format="dimension" />
+    <!-- Front view layout resource (for checked state -> false) -->
+    <attr name="frontLayout" format="reference" />
+    <!-- Front drawable resource (for checked state -> false) -->
+    <attr name="frontBackground" format="reference" />
+    <!-- Front view color resource (for checked state -> false) -->
+    <attr name="frontBackgroundColor" format="color" />
+    <!-- Front image resource -->
+    <attr name="frontImage" format="reference" />
+    <!-- Front image padding -->
+    <attr name="frontImagePadding" format="dimension" />
 
-        <!-- Rear view layout resource (for checked state -> true) -->
-        <attr name="rearLayout" format="reference" />
-        <!-- Rear drawable resource (for checked state -> true) -->
-        <attr name="rearBackground" format="reference" />
-        <!-- Rear view color resource (for checked state -> true) -->
-        <attr name="rearBackgroundColor" format="color" />
-        <!-- Rear accept image resource -->
-        <attr name="rearImage" format="reference" />
-        <!-- Rear image padding -->
-        <attr name="rearImagePadding" format="dimension" />
-        <!-- Override the default rear image animation (default: scale_up) -->
-        <attr name="rearImageAnimation" format="reference" />
-        <!-- Rear image animation delay (default: duration) -->
-        <attr name="rearImageAnimationDelay" format="integer" />
-        <!-- Rear image animation duration (default: 150ms) -->
-        <attr name="rearImageAnimationDuration" format="integer" />
-    </declare-styleable>
+    <!-- Rear view layout resource (for checked state -> true) -->
+    <attr name="rearLayout" format="reference" />
+    <!-- Rear drawable resource (for checked state -> true) -->
+    <attr name="rearBackground" format="reference" />
+    <!-- Rear view color resource (for checked state -> true) -->
+    <attr name="rearBackgroundColor" format="color" />
+    <!-- Rear accept image resource -->
+    <attr name="rearImage" format="reference" />
+    <!-- Rear image padding -->
+    <attr name="rearImagePadding" format="dimension" />
+    <!-- Override the default rear image animation (default: scale_up) -->
+    <attr name="rearImageAnimation" format="reference" />
+    <!-- Rear image animation delay (default: duration) -->
+    <attr name="rearImageAnimationDelay" format="integer" />
+    <!-- Rear image animation duration (default: 150ms) -->
+    <attr name="rearImageAnimationDuration" format="integer" />
+  </declare-styleable>
 
-    <declare-styleable name="ShadowLayout">
-        <attr name="shadowColor" format="color" />
-        <attr name="shadowRadius" format="dimension" />
-        <attr name="shadowDx" format="dimension" />
-        <attr name="shadowDy" format="dimension" />
-        <attr name="shadowShape">
-            <flag name="rectangle" value="0x0001" />
-            <flag name="oval" value="0x0010" />
-        </attr>
-        <attr name="shadowSide">
-            <flag name="all" value="0x1111" />
-            <flag name="left" value="0x0001" />
-            <flag name="top" value="0x0010" />
-            <flag name="right" value="0x0100" />
-            <flag name="bottom" value="0x1000" />
-        </attr>
-    </declare-styleable>
+  <declare-styleable name="ShadowLayout">
+    <attr name="shadowColor" format="color" />
+    <attr name="shadowRadius" format="dimension" />
+    <attr name="shadowDx" format="dimension" />
+    <attr name="shadowDy" format="dimension" />
+    <attr name="shadowShape">
+      <flag name="rectangle" value="0x0001" />
+      <flag name="oval" value="0x0010" />
+    </attr>
+    <attr name="shadowSide">
+      <flag name="all" value="0x1111" />
+      <flag name="left" value="0x0001" />
+      <flag name="top" value="0x0010" />
+      <flag name="right" value="0x0100" />
+      <flag name="bottom" value="0x1000" />
+    </attr>
+  </declare-styleable>
 
-    <declare-styleable name="CircularImageView">
-        <!-- BORDER -->
-        <attr name="civ_border" format="boolean" />
-        <attr name="civ_border_width" format="dimension" />
-        <attr name="civ_border_color" format="color" />
-        <attr name="civ_border_color_start" format="color" />
-        <attr name="civ_border_color_end" format="color" />
-        <attr name="civ_border_color_direction">
-            <flag name="left_to_right" value="1" />
-            <flag name="right_to_left" value="2" />
-            <flag name="top_to_bottom" value="3" />
-            <flag name="bottom_to_top" value="4" />
-        </attr>
-        <!-- CIRCLE COLOR -->
-        <attr name="civ_circle_color" format="color" />
-        <attr name="civ_circle_color_start" format="color" />
-        <attr name="civ_circle_color_end" format="color" />
-        <attr name="civ_circle_color_direction">
-            <flag name="left_to_right" value="1" />
-            <flag name="right_to_left" value="2" />
-            <flag name="top_to_bottom" value="3" />
-            <flag name="bottom_to_top" value="4" />
-        </attr>
-        <!-- SHADOW -->
-        <attr name="civ_shadow" format="boolean" />
-        <attr name="civ_shadow_color" format="color" />
-        <attr name="civ_shadow_radius" format="dimension" />
-        <attr name="civ_shadow_gravity">
-            <flag name="center" value="1" />
-            <flag name="top" value="2" />
-            <flag name="bottom" value="3" />
-            <flag name="start" value="4" />
-            <flag name="end" value="5" />
-        </attr>
-    </declare-styleable>
+  <declare-styleable name="CircularImageView">
+    <!-- BORDER -->
+    <attr name="civ_border" format="boolean" />
+    <attr name="civ_border_width" format="dimension" />
+    <attr name="civ_border_color" format="color" />
+    <attr name="civ_border_color_start" format="color" />
+    <attr name="civ_border_color_end" format="color" />
+    <attr name="civ_border_color_direction">
+      <flag name="left_to_right" value="1" />
+      <flag name="right_to_left" value="2" />
+      <flag name="top_to_bottom" value="3" />
+      <flag name="bottom_to_top" value="4" />
+    </attr>
+    <!-- CIRCLE COLOR -->
+    <attr name="civ_circle_color" format="color" />
+    <attr name="civ_circle_color_start" format="color" />
+    <attr name="civ_circle_color_end" format="color" />
+    <attr name="civ_circle_color_direction">
+      <flag name="left_to_right" value="1" />
+      <flag name="right_to_left" value="2" />
+      <flag name="top_to_bottom" value="3" />
+      <flag name="bottom_to_top" value="4" />
+    </attr>
+    <!-- SHADOW -->
+    <attr name="civ_shadow" format="boolean" />
+    <attr name="civ_shadow_color" format="color" />
+    <attr name="civ_shadow_radius" format="dimension" />
+    <attr name="civ_shadow_gravity">
+      <flag name="center" value="1" />
+      <flag name="top" value="2" />
+      <flag name="bottom" value="3" />
+      <flag name="start" value="4" />
+      <flag name="end" value="5" />
+    </attr>
+  </declare-styleable>
+
+  <!-- CircularProgressBar-->
+  <dimen name="default_stroke_width">7dp</dimen>
+  <dimen name="default_background_stroke_width">3dp</dimen>
+  <declare-styleable name="CircularProgressBar">
+    <attr name="cpb_progress" format="integer" />
+    <attr name="cpb_progress_max" format="integer" />
+    <attr name="cpb_indeterminate_mode" format="boolean" />
+    <attr name="cpb_progressbar_color" format="color" />
+    <attr name="cpb_progressbar_color_start" format="color" />
+    <attr name="cpb_progressbar_color_end" format="color" />
+    <attr name="cpb_progressbar_color_direction">
+      <flag name="left_to_right" value="1" />
+      <flag name="right_to_left" value="2" />
+      <flag name="top_to_bottom" value="3" />
+      <flag name="bottom_to_top" value="4" />
+    </attr>
+    <attr name="cpb_background_progressbar_color" format="color" />
+    <attr name="cpb_background_progressbar_color_start" format="color" />
+    <attr name="cpb_background_progressbar_color_end" format="color" />
+    <attr name="cpb_background_progressbar_color_direction">
+      <flag name="left_to_right" value="1" />
+      <flag name="right_to_left" value="2" />
+      <flag name="top_to_bottom" value="3" />
+      <flag name="bottom_to_top" value="4" />
+    </attr>
+    <attr name="cpb_progressbar_width" format="dimension" />
+    <attr name="cpb_background_progressbar_width" format="dimension" />
+    <attr name="cpb_round_border" format="boolean" />
+    <attr name="cpb_start_angle" format="float" />
+    <attr name="cpb_progress_direction">
+      <flag name="to_right" value="1" />
+      <flag name="to_left" value="2" />
+    </attr>
+  </declare-styleable>
 </resources>

@@ -103,8 +103,14 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.next -> gotoChannelPicker()
+      binding?.next -> gotoBuildingPlan()
     }
+  }
+
+  private fun gotoBuildingPlan() {
+    val dialog = BuildingPlanDialog()
+    dialog.onClicked = { gotoChannelPicker() }
+    dialog.show(parentFragmentManager, dialog.javaClass.name)
   }
 
   private fun gotoChannelPicker() {
