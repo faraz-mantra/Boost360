@@ -28,6 +28,7 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
       is InventoryAllOrderFragment -> R.layout.fragment_inventory_all_order
       is InventoryOrderDetailFragment -> R.layout.fragment_inventory_order_detail
       is InventoryBookingDetailsFragment -> R.layout.fragment_inventory_booking_details
+      is InventoryAllBookingsFragment -> R.layout.fragment_inventory_all_bookings
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -46,6 +47,8 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
     when (this) {
       is InventoryAllOrderFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
       is InventoryOrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
+      is InventoryBookingDetailsFragment -> inflater.inflate(R.menu.menu_share_button,menu)
+      is InventoryAllBookingsFragment -> inflater.inflate(R.menu.menu_search_icon,menu)
     }
   }
 }

@@ -10,7 +10,8 @@ enum class RecyclerViewItemType {
   ITEM_ORDER_DETAILS,
   ITEM_DELIVERY_OPTIONS,
   BOOKING_DETAILS,
-  ITEM_SERVICE_LOCATIONS
+  ITEM_SERVICE_LOCATIONS,
+  ALL_BOOKINGS
   ;
 
   @LayoutRes
@@ -23,6 +24,7 @@ enum class RecyclerViewItemType {
       ITEM_DELIVERY_OPTIONS -> R.layout.item_bottom_sheet_pick_up_delivery_option
       BOOKING_DETAILS -> R.layout.item_booking_details
       ITEM_SERVICE_LOCATIONS -> R.layout.item_bottom_sheet_service_locations
+      ALL_BOOKINGS -> R.layout.item_bookings_all_order
     }
   }
 }

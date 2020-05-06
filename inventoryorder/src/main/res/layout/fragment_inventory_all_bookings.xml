@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightest_grey"
+        android:orientation="vertical"
+        tools:context=".ui.FragmentContainerOrderActivity">
+
+
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/recyclerViewBookingDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_bookings_all_order" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:theme="@style/progressBar" />
+
+            <com.framework.views.fabButton.FloatingActionButton
+                android:id="@+id/btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:text="@string/create"
+                android:textColor="@color/white"
+                app:fabBackground="@drawable/bg_button_rounded_orange"
+                app:fabIcon="@drawable/ic_add_white"
+                app:fabIconPosition="start"
+                app:fabSize="normal" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>

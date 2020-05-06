@@ -43,8 +43,10 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
     super.onCreateView()
     orderItem = arguments?.getSerializable(IntentConstant.ORDER_ITEM.name) as? OrderItem
     orderItem?.let { setDetails(it) }
+
     coordinatorLayout = coordinatorLayout?.findViewById(R.id.coordinatorLayoutBottomSheet)
     coordinatorLayout?.removeAllViews()
+
     setOnClickListener(binding?.btnPickUp, binding?.buttonConfirmOrder)
   }
 
@@ -110,7 +112,7 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
     when (v) {
       binding?.btnPickUp -> showBottomSheetDialog()
       binding?.buttonConfirmOrder ->{
-        startFragmentActivity(FragmentType.BOOKING_DETAIL,Bundle())
+        startFragmentActivity(FragmentType.ALL_BOOKING_DETAILS,Bundle())
       }
     }
   }
