@@ -21,8 +21,12 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CartAddonsAdaptor
 import com.boost.upgrades.adapter.CartPackageAdaptor
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExtendedProperty
-import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
+//import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
+import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
+import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.payment.PaymentFragment
@@ -54,6 +58,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     var customerId: String = ""
 
     lateinit var cartList: List<CartModel>
+
+    lateinit var featuresList: List<FeaturesModel>
+
+    lateinit var bundlesList: List<BundlesModel>
 
     var total = 0.0
 
@@ -112,11 +120,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_continue_submit.setOnClickListener {
             //customerId = viewModel.getCustomerId()
 //            customerId != null &&
-            if (total > 0 && ::cartList.isInitialized) {
-                val widgetsToBeBought = ArrayList<Widget>()
+            if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized) {
+                val purchaseOrders = ArrayList<PurchaseOrder>()
                 for (item in cartList) {
+                    val widgetList = ArrayList<Widget>()
                     var extendProps: List<ExtendedProperty>? = null
-                    var outputExtendedProps: List<ExtendedProperties>? = null
+                    var outputExtendedProps: List<Property>? = null
+                    var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
+                    var bundleNetPrice = 0.0
+                    var bundleDiscount = 0
+                    var couponCode: String? = null
 
                     if (item.extended_properties != null && item.extended_properties!!.length > 0) {
                         try {
@@ -124,9 +137,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                             extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
 
                             if (extendProps != null) {
-                                outputExtendedProps = ArrayList<ExtendedProperties>()
+                                outputExtendedProps = ArrayList<Property>()
                                 for (prop in extendProps) {
-                                    outputExtendedProps.add(ExtendedProperties(
+                                    outputExtendedProps.add(Property(
                                             Key = prop.key!!,
                                             Value = prop.value!!
                                     ))
@@ -137,34 +150,125 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                             Log.e("FAILED", ex.message)
                         }
                     }
-                    widgetsToBeBought.add(Widget(
-                            ConsumptionConstraint(
-                                    "DAYS",
-                                    30
-                            ),
-                            item.description_title,
-                            item.discount,
-                            Expiry(
-                                    "DAYS",
-                                    30
-                            ),
-                            listOf(),
-                            true,
-                            true,
-                            item.item_name!!,
-                            item.MRPPrice.toDouble(),
-                            "MONTHLY",
-                            item.boost_widget_key,
-                            1,
-                            outputExtendedProps
-                    ))
+
+                    if(item.item_type.equals("features")) {
+                        val discount = 100 - item.discount
+                        val netPrice = (discount * item.MRPPrice) / 100
+
+                        widgetList.add(Widget(
+                                "CLINICS",
+                                ConsumptionConstraint(
+                                        "DAYS",
+                                        30
+                                ),
+                                "",
+                                item.description_title,
+                                item.discount,
+                                Expiry(
+                                        "DAYS",
+                                        30
+                                ),
+                                listOf(),
+                                true,
+                                true,
+                                item.item_name!!,
+                                netPrice,
+                                item.MRPPrice,
+                                outputExtendedProps!!,
+                                1,
+                                "MONTHLY",
+                                item.boost_widget_key
+                        ))
+                    }else if (item.item_type.equals("bundles")){
+                        if(::bundlesList.isInitialized && bundlesList.size > 0) {
+                            for (singleBundle in bundlesList) {
+                                if (singleBundle.bundle_key.equals(item.boost_widget_key)) {
+                                    val outputBundleProps: ArrayList<Property> = arrayListOf()
+                                    outputBundleProps.add(Property(
+                                            Key = singleBundle.bundle_key,
+                                            Value = singleBundle.name!!
+                                    ))
+                                    extraPurchaseOrderDetails = ExtraPurchaseOrderDetails(
+                                            null,
+                                            singleBundle.primary_image,
+                                            singleBundle.name,
+                                            outputBundleProps)
+                                    bundleDiscount = singleBundle.overall_discount_percent
+                                    val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                                    for(singleIndludedFeature in includedFeatures){
+                                        for (singleFeature in featuresList){
+                                            if(singleIndludedFeature.feature_code.equals(singleFeature.boost_widget_key)){
+                                                val discount = 100 - item.discount
+                                                val netPrice = (discount * item.MRPPrice) / 100
+                                                //adding bundle netPrice
+                                                bundleNetPrice += netPrice * singleBundle.min_purchase_months
+                                                widgetList.add(Widget(
+                                                        "CLINICS",
+                                                        ConsumptionConstraint(
+                                                                "DAYS",
+                                                                30 * singleBundle.min_purchase_months
+                                                        ),
+                                                        "",
+                                                        item.description_title,
+                                                        item.discount,
+                                                        Expiry(
+                                                                "DAYS",
+                                                                30 * singleBundle.min_purchase_months
+                                                        ),
+                                                        listOf(),
+                                                        true,
+                                                        true,
+                                                        item.item_name!!,
+                                                        netPrice* singleBundle.min_purchase_months,
+                                                        item.MRPPrice* singleBundle.min_purchase_months,
+                                                        outputExtendedProps,
+                                                        1,
+                                                        "MONTHLY",
+                                                        item.boost_widget_key
+                                                ))
+                                                break
+                                            }
+                                        }
+                                    }
+                                    break
+                                }
+                            }
+                        }
+                    }
+
+
+                    purchaseOrders.add(
+                            PurchaseOrder(
+                                    couponCode,
+                                    bundleDiscount,
+                                    extraPurchaseOrderDetails,
+                                    bundleNetPrice,
+                                    widgetList
+                            )
+                    )
                 }
 
                 var prefs = SharedPrefs(activity as UpgradeActivity)
-                prefs.storeFeaturesCountInLastOrder(widgetsToBeBought.count())
+                prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
                 viewModel.InitiatePurchaseOrder(
-                        CreatePurchaseOrderRequest(
+//                        CreatePurchaseOrderRequest(
+//                                (activity as UpgradeActivity).clientid,
+//                                (activity as UpgradeActivity).fpid!!,
+//                                PaymentDetails(
+//                                        "INR",
+//                                        0,
+//                                        "RAZORPAY",
+//                                        TaxDetails(
+//                                                GSTINNumber,
+//                                                0,
+//                                                null,
+//                                                18),
+//                                        grandTotal),
+//                                widgetsToBeBought,
+//                                null
+//                        )
+                        CreatePurchaseOrderV2(
                                 (activity as UpgradeActivity).clientid,
                                 (activity as UpgradeActivity).fpid!!,
                                 PaymentDetails(
@@ -177,8 +281,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 null,
                                                 18),
                                         grandTotal),
-                                widgetsToBeBought,
-                                null
+                                "NEW",
+                                purchaseOrders
                         )
                 )
             } else {
@@ -248,6 +352,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                )
 //        )
         viewModel.getCartItems()
+        viewModel.getAllFeatures()
+        viewModel.getAllBundles()
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -338,6 +444,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 entered_tan_number.setText(it)
             }
         })
+
+        //getting all features
+        viewModel.updateAllFeaturesResult().observe(this, Observer {
+            featuresList = it
+        })
+
+        //getting all bunles
+        viewModel.updateAllBundlesResult().observe(this, Observer {
+            bundlesList = it
+        })
     }
 
     fun updatePackage(features: List<CartModel>) {
@@ -375,13 +491,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         total = 0.0
         if (list != null && list.size > 0) {
             for (item in list) {
-                total = total + item.price
+                total += item.price * item.min_purchase_months
             }
             cart_amount_value.setText("₹" + total.toString())
             coupon_discount_value.setText("0")
             val temp = (total * 18) / 100
             taxValue = Math.round(temp * 100) / 100.0
-            grandTotal = Math.round((total + taxValue) * 100) / 100.0
+            grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
             igst_value.setText("₹" + taxValue)
             order_total_value.setText("₹" + grandTotal.toString())
             cart_grand_total.setText("₹" + grandTotal.toString())

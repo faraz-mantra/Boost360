@@ -19,6 +19,7 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
 
     private var upgradeList = ArrayList<FeaturesModel>()
     var bundleData: Bundles
+    var minMonth = 1
     private lateinit var context: Context
 
     init {
@@ -51,7 +52,8 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
         }
     }
 
-    fun addupdates(upgradeModel: List<FeaturesModel>) {
+    fun addupdates(upgradeModel: List<FeaturesModel>, noOfMonth: Int) {
+        minMonth = noOfMonth
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
@@ -70,20 +72,24 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
     }
 
     fun updateView(holder: upgradeViewHolder, position: Int){
-        var mrpPrice = 0.0
-        var grandTotal = 0.0
         for (item in bundleData.included_features){
             if (item.feature_code.equals(upgradeList.get(position).boost_widget_key)){
+                var mrpPrice = 0.0
+                var grandTotal = 0.0
                 val total = (upgradeList.get(position).price - ((upgradeList.get(position).price * item.feature_price_discount_percent) / 100.0))
-                grandTotal += total
-                mrpPrice += upgradeList.get(position).price
+                grandTotal += total * minMonth
+                mrpPrice += upgradeList.get(position).price * minMonth
                 if(item.feature_price_discount_percent > 0){
                     holder.discount.setText(item.feature_price_discount_percent.toString()+"%")
                     holder.discount.visibility = View.VISIBLE
                 }else{
                     holder.discount.visibility = View.GONE
                 }
-                holder.price.setText("₹"+grandTotal)
+                if(minMonth > 1){
+                    holder.price.setText("₹"+grandTotal+"/"+minMonth+"month")
+                }else{
+                    holder.price.setText("₹"+grandTotal+"/month")
+                }
                 if (grandTotal != mrpPrice) {
                     spannableString(holder, mrpPrice)
                     holder.origCost.visibility = View.VISIBLE
@@ -96,7 +102,13 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
     }
 
     fun spannableString(holder: upgradeViewHolder, value: Double) {
-        val origCost = SpannableString("₹" + value)
+        val origCost: SpannableString
+        if(minMonth > 1){
+            origCost = SpannableString("₹" + value+"/"+minMonth+"month")
+        }else{
+            origCost = SpannableString("₹" + value+"/month")
+        }
+
 
         origCost.setSpan(
                 StrikethroughSpan(),

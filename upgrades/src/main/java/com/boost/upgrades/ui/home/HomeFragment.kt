@@ -477,9 +477,9 @@ class HomeFragment : BaseFragment(), HomeListener {
         (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
     }
 
-    override fun onAddFeatureDealItemToCart(item: FeaturesModel?) {
+    override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
         if (item != null)
-            viewModel.addItemToCart(item)
+            viewModel.addItemToCart(item, minMonth)
     }
 
 }

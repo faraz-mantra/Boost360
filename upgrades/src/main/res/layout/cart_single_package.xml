@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -55,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Contains 6 Add-ons"
+            tools:text="Contains 6 Add-ons"
             android:textSize="@dimen/_10sdp"
             android:textColor="@color/common_text_color" />
 
@@ -66,12 +67,22 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/package_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/all_side_curve_percentage_bg"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginEnd="@dimen/_5sdp"
+                tools:text="- 60%"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_6sdp" />
+
+            <TextView
                 android:id="@+id/package_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:text="₹499/month"
+                android:layout_marginEnd="@dimen/_5sdp"
+                tools:text="₹499/month"
                 android:textSize="@dimen/_8sdp"
                 android:textColor="#0068e0" />
 
@@ -79,21 +90,9 @@
                 android:id="@+id/package_orig_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:text="₹899/month "
+                tools:text="₹899/month"
                 android:textSize="@dimen/_8sdp"
                 android:textColor="#9b9b9b" />
-
-            <TextView
-                android:id="@+id/package_discount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/all_side_curve_percentage_bg"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="- 60%"
-                android:textColor="@color/common_text_color"
-                android:textSize="@dimen/_6sdp" />
 
         </LinearLayout>
 

@@ -1,6 +1,8 @@
 package com.boost.upgrades.adapter
 
 import android.content.Context
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +17,15 @@ import com.boost.upgrades.interfaces.CartFragmentListener
 class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListener) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
     private var bundlesList = ArrayList<CartModel>()
-    private lateinit var context : Context
-    init { this.bundlesList = list as ArrayList<CartModel> }
+    private lateinit var context: Context
+
+    init {
+        this.bundlesList = list as ArrayList<CartModel>
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.cart_single_package, parent, false)
+                R.layout.cart_single_package, parent, false)
         context = itemView.context
 
         return upgradeViewHolder(itemView)
@@ -32,12 +37,23 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         holder.name.setText(bundlesList.get(position).item_name)
-        holder.price.setText(bundlesList.get(position).price.toString())
-        holder.orig_cost.setText(bundlesList.get(position).MRPPrice.toString())
-        if(bundlesList.get(position).discount > 0){
-            holder.discount.setText(bundlesList.get(position).discount.toString()+"%")
-            holder.discount.visibility = View.VISIBLE
+        val price = bundlesList.get(position).price * bundlesList.get(position).min_purchase_months
+        val MRPPrice = bundlesList.get(position).MRPPrice * bundlesList.get(position).min_purchase_months
+        if (bundlesList.get(position).min_purchase_months > 1) {
+            holder.price.setText("₹" + price.toString() + "/" + bundlesList.get(position).min_purchase_months + "month")
+        } else {
+            holder.price.setText("₹" + price.toString() + "/month")
+        }
+        if(price != MRPPrice) {
+            spannableString(holder, MRPPrice, bundlesList.get(position).min_purchase_months)
+            holder.orig_cost.visibility = View.VISIBLE
         }else{
+            holder.orig_cost.visibility = View.GONE
+        }
+        if (bundlesList.get(position).discount > 0) {
+            holder.discount.setText(bundlesList.get(position).discount.toString() + "%")
+            holder.discount.visibility = View.VISIBLE
+        } else {
             holder.discount.visibility = View.GONE
         }
         holder.removePackage.setOnClickListener {
@@ -59,5 +75,23 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
         val discount = itemView.findViewById<TextView>(R.id.package_discount)
         val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
         val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
+    }
+
+    fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
+        val origCost: SpannableString
+        if (minMonth > 1) {
+            val originalCost = value
+            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+        } else {
+            origCost = SpannableString("₹" + value + "/month")
+        }
+
+        origCost.setSpan(
+                StrikethroughSpan(),
+                0,
+                origCost.length,
+                0
+        )
+        holder.orig_cost.setText(origCost)
     }
 }

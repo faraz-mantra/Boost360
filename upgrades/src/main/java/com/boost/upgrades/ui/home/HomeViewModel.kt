@@ -198,7 +198,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             bundles.add(BundlesModel(
                                                     item._kid,
                                                     item.name,
-                                                    item.min_purchase_months,
+                                                    if (item.min_purchase_months != null && item.min_purchase_months > 1) item.min_purchase_months else 1,
                                                     item.overall_discount_percent,
                                                     if (item.primary_image != null) item.primary_image.url else null,
                                                     Gson().toJson(item.included_features)
@@ -271,7 +271,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
-    fun addItemToCart(updatesModel: FeaturesModel) {
+    fun addItemToCart(updatesModel: FeaturesModel, minMonth: Int) {
         updatesLoader.postValue(true)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
@@ -284,6 +284,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 updatesModel.price.toDouble(),
                 updatesModel.discount_percent,
                 1,
+                minMonth,
                 "features",
                 updatesModel.extended_properties
         )

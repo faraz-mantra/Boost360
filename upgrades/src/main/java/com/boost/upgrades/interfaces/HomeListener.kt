@@ -6,5 +6,5 @@ import com.boost.upgrades.data.model.FeaturesModel
 
 interface HomeListener {
     fun onPackageClicked(item: Bundles?)
-    fun onAddFeatureDealItemToCart(item: FeaturesModel?)
+    fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int)
 }

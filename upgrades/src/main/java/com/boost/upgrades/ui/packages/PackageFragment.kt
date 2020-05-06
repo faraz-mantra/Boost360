@@ -94,7 +94,7 @@ class PackageFragment : BaseFragment() {
         }
 
         package_submit.setOnClickListener {
-            if(!packageInCartStatus) {
+            if (!packageInCartStatus) {
                 if (bundleData != null) {
                     viewModel.addItemToCart(CartModel(
                             bundleData!!._kid,
@@ -105,6 +105,7 @@ class PackageFragment : BaseFragment() {
                             mrpPrice,
                             bundleData!!.overall_discount_percent,
                             1,
+                            if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
                             "bundles",
                             null
                     ))
@@ -138,6 +139,7 @@ class PackageFragment : BaseFragment() {
         viewModel.getUpgradeResult().observe(this, Observer {
             if (it.size > 0) {
                 featuresList = it
+                val minMonth:Int = if (bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.boost_widget_key == item.feature_code) {
@@ -147,15 +149,27 @@ class PackageFragment : BaseFragment() {
                         }
                     }
                 }
-                offer_price.setText("₹" + grandTotal)
-                if (grandTotal != mrpPrice) {
-                    spannableString(mrpPrice)
-                    orig_cost.visibility = View.VISIBLE
+                if (minMonth > 1) {
+                    val offeredPrice = grandTotal * minMonth
+                    offer_price.setText("₹" + offeredPrice + "/" + bundleData!!.min_purchase_months + "month")
+                    if (grandTotal != mrpPrice) {
+                        spannableString(mrpPrice, minMonth)
+                        orig_cost.visibility = View.VISIBLE
+                    } else {
+                        orig_cost.visibility = View.GONE
+                    }
+                    updateRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
-                    orig_cost.visibility = View.GONE
+                    offer_price.setText("₹" + grandTotal + "/month")
+                    if (grandTotal != mrpPrice) {
+                        spannableString(mrpPrice, 1)
+                        orig_cost.visibility = View.VISIBLE
+                    } else {
+                        orig_cost.visibility = View.GONE
+                    }
+                    updateRecycler(it,1)
                 }
                 package_count.setText(featuresList!!.size.toString())
-                updateRecycler(it)
             }
         })
         viewModel.cartResult().observe(this, Observer {
@@ -178,17 +192,17 @@ class PackageFragment : BaseFragment() {
                     badgeNumber = cartList!!.size
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
-                    if(!packageInCartStatus){
+                    if (!packageInCartStatus) {
                         package_submit.visibility = View.VISIBLE
                         package_submit.background = ContextCompat.getDrawable(
                                 requireContext(),
                                 R.drawable.orange_button_click_effect
                         )
                         package_submit.setTextColor(Color.WHITE)
-                        package_submit.setText("Add '"+bundleData!!.name+"' to cart")
+                        package_submit.setText("Add '" + bundleData!!.name + "' to cart")
                     }
                 }
-            }else{
+            } else {
                 badgeNumber = 0
                 badge121.visibility = View.GONE
                 packageInCartStatus = false
@@ -202,9 +216,14 @@ class PackageFragment : BaseFragment() {
         }
     }
 
-    fun spannableString(value: Double) {
-        val origCost = SpannableString("₹" + value)
-
+    fun spannableString(value: Double, minMonth: Int) {
+        val origCost: SpannableString
+        if (minMonth > 1) {
+            val originalCost = value * minMonth
+            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+        } else {
+            origCost = SpannableString("₹" + value + "/month")
+        }
         origCost.setSpan(
                 StrikethroughSpan(),
                 0,
@@ -214,8 +233,8 @@ class PackageFragment : BaseFragment() {
         orig_cost.setText(origCost)
     }
 
-    fun updateRecycler(list: List<FeaturesModel>) {
-        packageAdaptor.addupdates(list)
+    fun updateRecycler(list: List<FeaturesModel>, minMonth: Int) {
+        packageAdaptor.addupdates(list, minMonth)
         packageAdaptor.notifyDataSetChanged()
     }
 

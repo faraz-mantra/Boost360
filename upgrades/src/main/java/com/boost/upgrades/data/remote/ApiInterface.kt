@@ -4,6 +4,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.GetAllFeaturesR
 import com.boost.upgrades.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.upgrades.data.api_model.PurchaseOrder.request.CreatePurchaseOrderRequest
+import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.RazorpayToken.RazorpayTokenResponse
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
@@ -31,9 +32,13 @@ interface ApiInterface {
 //    @POST("Payment/v9/floatingpoint/CreateCustomerPaymentProfile")
 //    fun updateCustomerId(@Body customerData: CustomerIDRequest): Observable<CustomerIdResponse>
 
+//    @Headers("Content-Type: application/json")
+//    @POST("Payment/v9/floatingpoint/CreatePurchaseOrder")
+//    fun CreatePurchaseOrder(@Body createPurchaseOrderRequest: CreatePurchaseOrderRequest): Observable<CreatePurchaseOrderResponse>
+
     @Headers("Content-Type: application/json")
-    @POST("Payment/v9/floatingpoint/CreatePurchaseOrder")
-    fun CreatePurchaseOrder(@Body createPurchaseOrderRequest: CreatePurchaseOrderRequest): Observable<CreatePurchaseOrderResponse>
+    @POST("http://api2.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
+    fun CreatePurchaseOrder(@Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
     @Headers("Content-Type: application/json")
     @GET("discover/v9/floatingPoint/FloatingPointWebWidgets/{floatingPointId}")

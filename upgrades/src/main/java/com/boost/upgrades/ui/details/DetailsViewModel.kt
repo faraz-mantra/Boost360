@@ -71,6 +71,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
                 updatesModel.price.toDouble(),
                 updatesModel.discount_percent,
                 1,
+                1,
                 "features",
                 updatesModel.extended_properties
         )

@@ -32,6 +32,9 @@ data class CartModel (
     @ColumnInfo(name = "quantity")
     var quantity: Int = 1,
 
+    @ColumnInfo(name = "min_purchase_months")
+    var min_purchase_months: Int = 1,
+
     @ColumnInfo(name = "item_type")
     var item_type: String,
 

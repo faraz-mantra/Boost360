@@ -76,7 +76,7 @@ class HistoryDetailsFragment : BaseFragment() {
         val discountAmount = mrpPrice - data.paidAmount
         history_details_discount_amount.setText("- ₹" + discountAmount)
         if (data.PaymentMethod != null) {
-            history_details_payment_type.setText(data.PaymentMethod + " ₹" + data.paidAmount)
+            history_details_payment_type.setText("Payment via "+data.PaymentMethod)
         }else{
             history_details_payment_type.visibility = View.GONE
         }
@@ -114,6 +114,7 @@ class HistoryDetailsFragment : BaseFragment() {
                         price = item.Price))
                 }
             }
+            history_title_count.setText("Items Included ("+list.size+")")
             updateRecyclerView(list)
         })
     }

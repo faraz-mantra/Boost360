@@ -8,6 +8,10 @@ import io.reactivex.Single
 
 @Dao
 interface FeaturesDao {
+
+    @Query("SELECT * FROM Features")
+    fun getAllFeatures(): Single<List<FeaturesModel>>
+
     @Query("SELECT * FROM Features WHERE is_premium = :premiumType ORDER BY feature_importance DESC")
     fun getFeaturesItems(premiumType: Boolean): Single<List<FeaturesModel>>
 

@@ -144,7 +144,7 @@ class FeatureDealsAdapter(
                                     }
                                     holder.submit.setOnClickListener(object : View.OnClickListener {
                                         override fun onClick(v: View?) {
-                                            homeListener.onAddFeatureDealItemToCart(featureModel)
+                                            homeListener.onAddFeatureDealItemToCart(featureModel, 1)
                                             holder.submit.background = ContextCompat.getDrawable(
                                                     activity.applicationContext,
                                                     R.drawable.added_to_cart_grey

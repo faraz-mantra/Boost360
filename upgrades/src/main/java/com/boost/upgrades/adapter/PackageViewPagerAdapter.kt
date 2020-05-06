@@ -70,6 +70,7 @@ class PackageViewPagerAdapter(
         }
         var mrpPrice = 0.0
         var grandTotal = 0.0
+        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                         .featuresDao()
@@ -82,17 +83,27 @@ class PackageViewPagerAdapter(
                                         for (item in bundles.included_features) {
                                             if (singleItem.boost_widget_key == item.feature_code) {
                                                 val total = (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0))
-                                                grandTotal += total
-                                                mrpPrice += singleItem.price
+                                                grandTotal += total * minMonth
+                                                mrpPrice += singleItem.price * minMonth
                                             }
                                         }
                                     }
-                                    holder.offerPrice.setText("₹"+grandTotal)
-                                    if(grandTotal != mrpPrice){
-                                        spannableString(holder,mrpPrice)
-                                        holder.origCost.visibility = View.VISIBLE
+                                    if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
+                                        holder.offerPrice.setText("₹" + grandTotal+"/"+bundles.min_purchase_months+"month")
+                                        if (grandTotal != mrpPrice) {
+                                            spannableString(holder, mrpPrice, bundles.min_purchase_months)
+                                            holder.origCost.visibility = View.VISIBLE
+                                        } else {
+                                            holder.origCost.visibility = View.GONE
+                                        }
                                     }else{
-                                        holder.origCost.visibility = View.GONE
+                                        holder.offerPrice.setText("₹" + grandTotal+"/month")
+                                        if (grandTotal != mrpPrice) {
+                                            spannableString(holder, mrpPrice, 1)
+                                            holder.origCost.visibility = View.VISIBLE
+                                        } else {
+                                            holder.origCost.visibility = View.GONE
+                                        }
                                     }
                                 },
                                 {
@@ -102,8 +113,13 @@ class PackageViewPagerAdapter(
         )
     }
 
-    fun spannableString(holder: PagerViewHolder, value: Double) {
-        val origCost = SpannableString("₹"+value)
+    fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int) {
+        val origCost: SpannableString
+        if(minMonth > 1){
+            origCost = SpannableString("₹" + value+"/"+minMonth+"month")
+        }else{
+            origCost = SpannableString("₹" + value+"/month")
+        }
 
         origCost.setSpan(
                 StrikethroughSpan(),
