@@ -31,8 +31,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
   }
 
   private fun setDataResponse(order: OrderItem) {
-//    binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status()).type
-    binding.orderType.text = OrderSummaryModel.OrderType.fromType(order.status()).type
+    binding.orderType.text = OrderSummaryModel.OrderType.fromType(order.status())?.type
     binding.orderId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
@@ -49,19 +48,21 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
       binding.itemMore.text = "${sizeItem - 3} more"
       View.VISIBLE
     } ?: View.GONE
-
-    when (OrderSummaryModel.OrderType.fromType(order.status())) {
-      OrderSummaryModel.OrderType.RECEIVED,
-      OrderSummaryModel.OrderType.SUCCESSFUL,
-      OrderSummaryModel.OrderType.RETURNED,
-      OrderSummaryModel.OrderType.ABANDONED,
-      OrderSummaryModel.OrderType.ESCALATED -> {
-        changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light)
-      }
-      OrderSummaryModel.OrderType.CANCELLED -> {
-        changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey)
+    OrderSummaryModel.OrderType.fromType(order.status())?.let {
+      when (it) {
+        OrderSummaryModel.OrderType.RECEIVED,
+        OrderSummaryModel.OrderType.SUCCESSFUL,
+        OrderSummaryModel.OrderType.RETURNED,
+        OrderSummaryModel.OrderType.ABANDONED,
+        OrderSummaryModel.OrderType.ESCALATED -> {
+          changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light)
+        }
+        OrderSummaryModel.OrderType.CANCELLED -> {
+          changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey)
+        }
       }
     }
+
   }
 
   private fun changeBackground(confirm: Int, detaile: Int, btn: Int, orderBg: Int, rupeesColor: Int) {

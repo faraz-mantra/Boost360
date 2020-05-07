@@ -1,7 +1,6 @@
 package com.inventoryorder.holders
 
 import android.graphics.Paint
-import android.view.View
 import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -17,8 +16,7 @@ class BookingsViewHolder(binding: ItemBookingsAllOrderBinding) : AppBaseRecycler
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as BookingsModel
-    binding.view.visibility = if (adapterPosition == 0) View.VISIBLE else View.GONE
-    if (adapterPosition == 2) {
+    if (adapterPosition == 4) {
       binding.orderType.text = "New Booking"
       activity?.let {
         binding.orderType.background = ContextCompat.getDrawable(it, R.drawable.cancel_order_bg)
@@ -35,7 +33,7 @@ class BookingsViewHolder(binding: ItemBookingsAllOrderBinding) : AppBaseRecycler
       binding.buttonConfirm.paintFlags = binding.buttonConfirm.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
       activity?.let { binding.buttonConfirm.background = ContextCompat.getDrawable(it, R.drawable.btn_rounded_grey_border) }
       binding.viewTime.gone()
-    } else if (adapterPosition == 3 || adapterPosition == 4) {
+    } else if (adapterPosition == 5 || adapterPosition == 6) {
       activity?.let {
         val colorPrimary = ContextCompat.getColor(it, R.color.primary_grey)
         binding.tvOrderAmount.setTextColor(colorPrimary)

@@ -48,8 +48,8 @@ class OrderSummaryModel(
     ESCALATED("Escalated", OrderStatus.ESCALATED.name);
 
     companion object {
-      fun fromType(type: String): OrderType = values().first { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
-      fun fromValue(value: String): OrderType = values().first { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromType(type: String): OrderType? = values().first { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): OrderType? = values().first { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 
