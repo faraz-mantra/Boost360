@@ -436,7 +436,6 @@
                     android:id="@+id/recycler_paidaddons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toTopOf="@id/myaddons_view2"

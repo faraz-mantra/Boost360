@@ -206,6 +206,14 @@ class PackageFragment : BaseFragment() {
                 badgeNumber = 0
                 badge121.visibility = View.GONE
                 packageInCartStatus = false
+
+                package_submit.visibility = View.VISIBLE
+                package_submit.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.orange_button_click_effect
+                )
+                package_submit.setTextColor(Color.WHITE)
+                package_submit.setText("Add '" + bundleData!!.name + "' to cart")
             }
         })
     }

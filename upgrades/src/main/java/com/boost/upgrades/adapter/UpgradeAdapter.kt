@@ -2,6 +2,8 @@ package com.boost.upgrades.adapter
 
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,7 +93,7 @@ class UpgradeAdapter(
             if(updateModel.discount_percent>0){
                 upgradeDiscount.visibility = View.VISIBLE
                 upgradeDiscount.text = ""+updateModel.discount_percent+"%"
-                upgradeMRP.text = "₹" + updateModel.price + "/month"
+                spannableString(updateModel.price)
             }else{
                 upgradeDiscount.visibility = View.GONE
                 upgradeMRP.visibility = View.GONE
@@ -100,6 +102,18 @@ class UpgradeAdapter(
                 Glide.with(context).load(updateModel.primary_image).into(image)
             }
 
+        }
+
+        fun spannableString(value: Int) {
+            val origCost = SpannableString("₹" + value + "/month")
+
+            origCost.setSpan(
+                    StrikethroughSpan(),
+                    0,
+                    origCost.length,
+                    0
+            )
+            upgradeMRP.setText(origCost)
         }
     }
 }

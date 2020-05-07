@@ -45,7 +45,7 @@ class PaidAddonsAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         val cryptocurrencyItem = list[position]
         holder.upgradeListItem(cryptocurrencyItem)
-//
+
 //        holder.itemView.setOnClickListener{
 //            val details = DetailsFragment.newInstance()
 //            val args = Bundle()
@@ -79,7 +79,7 @@ class PaidAddonsAdapter(
         private var upgradeTitle = itemView.findViewById<TextView>(R.id.paid_addons_name)!!
         private var activateLayout = itemView.findViewById<LinearLayout>(R.id.paid_addons_activate)!!
         private var image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)!!
-//
+
         private var context:Context  = itemView.context
 
 
