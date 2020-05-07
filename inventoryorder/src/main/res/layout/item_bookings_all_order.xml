@@ -160,6 +160,7 @@
                             android:paddingBottom="@dimen/size_4">
 
                             <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/payment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Payment:  "
@@ -185,6 +186,7 @@
                             android:paddingBottom="@dimen/size_4">
 
                             <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/location"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Location:  "
