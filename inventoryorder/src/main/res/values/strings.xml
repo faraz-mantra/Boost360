@@ -13,7 +13,7 @@
   <string name="customer_email"><u>rahul@cantech.co</u></string>
   <string name="queryHintOrder">Search by order Id</string>
   <string name="queryHintBooking">Search by booking Id</string>
-  <string name="create">CREATE &#160;</string>
+  <string name="create">CREATE&#160;&#160;</string>
   <string name="status_n">Status:</string>
   <string name="option_comes_here">Option comes here</string>
   <string name="booking_requested">Booking requested</string>
