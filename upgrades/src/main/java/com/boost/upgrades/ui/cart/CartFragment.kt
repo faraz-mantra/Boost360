@@ -125,7 +125,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 for (item in cartList) {
                     val widgetList = ArrayList<Widget>()
                     var extendProps: List<ExtendedProperty>? = null
-                    var outputExtendedProps: List<Property>? = null
+                    var outputExtendedProps = ArrayList<Property>()
                     var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
                     var bundleNetPrice = 0.0
                     var bundleDiscount = 0
@@ -137,7 +137,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                             extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
 
                             if (extendProps != null) {
-                                outputExtendedProps = ArrayList<Property>()
                                 for (prop in extendProps) {
                                     outputExtendedProps.add(Property(
                                             Key = prop.key!!,
@@ -151,7 +150,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         }
                     }
 
-                    if(item.item_type.equals("features")) {
+                    if (item.item_type.equals("features")) {
                         val discount = 100 - item.discount
                         val netPrice = (discount * item.MRPPrice) / 100
 
@@ -174,13 +173,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                 item.item_name!!,
                                 netPrice,
                                 item.MRPPrice,
-                                outputExtendedProps!!,
+                                if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                 1,
                                 "MONTHLY",
                                 item.boost_widget_key
                         ))
-                    }else if (item.item_type.equals("bundles")){
-                        if(::bundlesList.isInitialized && bundlesList.size > 0) {
+                    } else if (item.item_type.equals("bundles")) {
+                        if (::bundlesList.isInitialized && bundlesList.size > 0) {
                             for (singleBundle in bundlesList) {
                                 if (singleBundle.bundle_key.equals(item.boost_widget_key)) {
                                     val outputBundleProps: ArrayList<Property> = arrayListOf()
@@ -195,9 +194,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                             outputBundleProps)
                                     bundleDiscount = singleBundle.overall_discount_percent
                                     val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                                    for(singleIndludedFeature in includedFeatures){
-                                        for (singleFeature in featuresList){
-                                            if(singleIndludedFeature.feature_code.equals(singleFeature.boost_widget_key)){
+                                    for (singleIndludedFeature in includedFeatures) {
+                                        for (singleFeature in featuresList) {
+                                            if (singleIndludedFeature.feature_code.equals(singleFeature.boost_widget_key)) {
                                                 val discount = 100 - item.discount
                                                 val netPrice = (discount * item.MRPPrice) / 100
                                                 //adding bundle netPrice
@@ -219,9 +218,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                         true,
                                                         true,
                                                         item.item_name!!,
-                                                        netPrice* singleBundle.min_purchase_months,
-                                                        item.MRPPrice* singleBundle.min_purchase_months,
-                                                        outputExtendedProps,
+                                                        netPrice * singleBundle.min_purchase_months,
+                                                        item.MRPPrice * singleBundle.min_purchase_months,
+                                                        if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                                         1,
                                                         "MONTHLY",
                                                         item.boost_widget_key

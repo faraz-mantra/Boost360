@@ -116,7 +116,6 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        spannableString()
         loadData()
         initializeSecondaryImage()
         initializeViewPager()
@@ -239,7 +238,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
             money.text = "₹" + paymentPrice + "/month"
             if (discount > 0) {
                 orig_cost.visibility = View.VISIBLE
-                orig_cost.text = "Original cost ₹" + addonDetails!!.price + "/month"
+                spannableString(addonDetails!!.price)
             } else {
                 orig_cost.visibility = View.INVISIBLE
             }
@@ -252,12 +251,12 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         }
     }
 
-    fun spannableString() {
-        val origCost = SpannableString("Original cost ₹799/month")
+    fun spannableString(value: Int) {
+        val origCost = SpannableString("Original cost ₹" + value + "/month")
 
         origCost.setSpan(
                 StrikethroughSpan(),
-                15,
+                14,
                 origCost.length,
                 0
         )
