@@ -72,7 +72,8 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
   }
 
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = OrderSummaryModel.OrderType.fromValue(order.status()).type
+//    binding?.orderType?.text = OrderSummaryModel.OrderType.fromValue(order.status()).type
+    binding?.orderType?.text = OrderSummaryModel.OrderType.fromType(order.status()).type
     binding?.tvOrderStatus?.text = order.PaymentDetails?.Status?.trim()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.Method?.trim()
     binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.Status?.trim()}"

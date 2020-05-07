@@ -42,6 +42,7 @@ class InventoryAllBookingsFragment : BaseOrderFragment<FragmentInventoryAllBooki
         list.add(AllBookingsModel())
         list.add(AllBookingsModel())
         list.add(AllBookingsModel())
+        list.add(AllBookingsModel())
 
         binding?.recyclerViewBookingDetails?.post {
             val adapter = AppBaseRecyclerViewAdapter(baseActivity, list,this)

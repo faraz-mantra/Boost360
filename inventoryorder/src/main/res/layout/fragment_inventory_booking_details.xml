@@ -90,8 +90,8 @@
                             android:paddingStart="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Mon, Feb 12, 2018, 02:53PM"
-                            app:textType="CAPTION"
-                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_1"
+                            app:fontFamily="@font/bold"
                             android:textColor="@color/little_dark_green_text_color"
                             />
 
@@ -213,7 +213,7 @@
 
                             <com.framework.views.customViews.CustomButton
                                 android:id="@+id/btnBusiness"
-                                android:layout_width="@dimen/size_110"
+                                android:layout_width="@dimen/size_124"
                                 android:layout_height="@dimen/size_38"
                                 android:layout_marginStart="0dp"
                                 android:layout_marginTop="@dimen/size_4"

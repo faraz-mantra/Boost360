@@ -31,7 +31,8 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
   }
 
   private fun setDataResponse(order: OrderItem) {
-    binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status()).type
+//    binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status()).type
+    binding.orderType.text = OrderSummaryModel.OrderType.fromType(order.status()).type
     binding.orderId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
@@ -49,7 +50,7 @@ class OrderItemViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder
       View.VISIBLE
     } ?: View.GONE
 
-    when (OrderSummaryModel.OrderType.fromValue(order.status())) {
+    when (OrderSummaryModel.OrderType.fromType(order.status())) {
       OrderSummaryModel.OrderType.RECEIVED,
       OrderSummaryModel.OrderType.SUCCESSFUL,
       OrderSummaryModel.OrderType.RETURNED,
