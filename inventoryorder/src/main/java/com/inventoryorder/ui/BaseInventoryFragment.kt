@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.order
+package com.inventoryorder.ui
 
 import android.view.Menu
 import android.view.MenuInflater
@@ -8,9 +8,13 @@ import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
+import com.inventoryorder.ui.booking.BookingDetailsFragment
+import com.inventoryorder.ui.booking.BookingsFragment
+import com.inventoryorder.ui.order.OrderDetailFragment
+import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.viewmodel.OrderCreateViewModel
 
-open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
+open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
 
   protected val fpTag: String?
     get() {
@@ -25,10 +29,10 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
 
   override fun getLayout(): Int {
     return when (this) {
-      is InventoryAllOrderFragment -> R.layout.fragment_inventory_all_order
-      is InventoryOrderDetailFragment -> R.layout.fragment_inventory_order_detail
-      is InventoryBookingDetailsFragment -> R.layout.fragment_inventory_booking_details
-      is InventoryAllBookingsFragment -> R.layout.fragment_inventory_all_bookings
+      is OrdersFragment -> R.layout.fragment_inventory_all_order
+      is OrderDetailFragment -> R.layout.fragment_inventory_order_detail
+      is BookingsFragment -> R.layout.fragment_inventory_all_bookings
+      is BookingDetailsFragment -> R.layout.fragment_inventory_booking_details
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -45,10 +49,10 @@ open class BaseOrderFragment<binding : ViewDataBinding> : AppBaseFragment<bindin
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     when (this) {
-      is InventoryAllOrderFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
-      is InventoryOrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
-      is InventoryBookingDetailsFragment -> inflater.inflate(R.menu.menu_share_button,menu)
-      is InventoryAllBookingsFragment -> inflater.inflate(R.menu.menu_search_icon,menu)
+      is OrdersFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
+      is OrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
+      is BookingDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
+      is BookingsFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
     }
   }
 }

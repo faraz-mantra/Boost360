@@ -5,16 +5,16 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetPickUpDeliveryOptionBinding
-import com.inventoryorder.model.bottomsheet.DeliveryOptionsModel
+import com.inventoryorder.model.bottomsheet.DeliveryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
 class DeliveryBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPickUpDeliveryOptionBinding, BaseViewModel>(), RecyclerItemClickListener {
 
-  private var list = ArrayList<DeliveryOptionsModel>()
-  private var adapter: AppBaseRecyclerViewAdapter<DeliveryOptionsModel>? = null
-  var onDoneClicked: (deliveryItem: DeliveryOptionsModel?) -> Unit = { }
+  private var list = ArrayList<DeliveryModel>()
+  private var adapter: AppBaseRecyclerViewAdapter<DeliveryModel>? = null
+  var onDoneClicked: (deliveryItem: DeliveryModel?) -> Unit = { }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_pick_up_delivery_option
@@ -24,7 +24,7 @@ class DeliveryBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPickUpDeliver
     return BaseViewModel::class.java
   }
 
-  fun setList(list: ArrayList<DeliveryOptionsModel>) {
+  fun setList(list: ArrayList<DeliveryModel>) {
     this.list.clear()
     this.list.addAll(list)
   }
@@ -40,10 +40,10 @@ class DeliveryBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPickUpDeliver
 
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    val deliveryItem = item as? DeliveryOptionsModel
+    val deliveryItem = item as? DeliveryModel
     list.forEach { it.isSelected = (it.deliveryOptionSelectedName == deliveryItem?.deliveryOptionSelectedName) }
     adapter?.notifyDataSetChanged()
-    onDoneClicked((item as? DeliveryOptionsModel))
+    onDoneClicked((item as? DeliveryModel))
     dismiss()
   }
 }

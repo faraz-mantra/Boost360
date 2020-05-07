@@ -28,9 +28,10 @@ import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_S
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.SellerSummaryResponse
 import com.inventoryorder.rest.response.order.SellerOrderListResponse
+import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 
-class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBinding>(), RecyclerItemClickListener {
+class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>(), RecyclerItemClickListener {
 
   private var request: OrderSummaryRequest? = null
   private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
@@ -48,8 +49,8 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
 
   companion object {
     @JvmStatic
-    fun newInstance(bundle: Bundle? = null): InventoryAllOrderFragment {
-      val fragment = InventoryAllOrderFragment()
+    fun newInstance(bundle: Bundle? = null): OrdersFragment {
+      val fragment = OrdersFragment()
       fragment.arguments = bundle
       return fragment
     }
@@ -59,7 +60,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
     super.onCreateView()
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)
-    scrollPagingListener(layoutManager!!)
+    layoutManager?.let { scrollPagingListener(it) }
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
@@ -188,7 +189,7 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       val searchView = searchItem.actionView as SearchView
-      searchView.queryHint = resources.getString(R.string.queryHint)
+      searchView.queryHint = resources.getString(R.string.queryHintOrder)
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false

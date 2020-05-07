@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.order
+package com.inventoryorder.ui.booking
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,18 +9,20 @@ import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
 import com.inventoryorder.databinding.FragmentInventoryBookingDetailsBinding
 import com.inventoryorder.model.bookingdetails.BookingDetailsModel
-import com.inventoryorder.model.bottomsheet.ServiceLocationsModel
+import com.inventoryorder.model.bottomsheet.LocationsModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
+import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.order.DeliveryBottomSheetDialog
 
-class InventoryBookingDetailsFragment : BaseOrderFragment<FragmentInventoryBookingDetailsBinding>() {
+class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDetailsBinding>() {
 
-    private var serviceLocationsBottomSheetDialog : ServiceLocationBottomSheetDialog? = null
-    private var serviceLocationsList = ServiceLocationsModel().getData()
+    private var locationsBottomSheetDialog: LocationBottomSheetDialog? = null
+    private var serviceLocationsList = LocationsModel().getData()
 
     companion object {
         @JvmStatic
-        fun newInstance(bundle: Bundle? = null): InventoryBookingDetailsFragment {
-            val fragment = InventoryBookingDetailsFragment()
+        fun newInstance(bundle: Bundle? = null): BookingDetailsFragment {
+            val fragment = BookingDetailsFragment()
             fragment.arguments = bundle
             return fragment
         }
@@ -44,12 +46,15 @@ class InventoryBookingDetailsFragment : BaseOrderFragment<FragmentInventoryBooki
         super.onClick(v)
         when(v){
             binding?.btnBusiness ->{ showBottomSheetDialog()}
-            binding?.buttonConfirmOrder ->{ showShortToast("Coming Soon")}
-            binding?.tvCancelOrder ->{ showShortToast("Coming Soon")}
+            binding?.buttonConfirmOrder -> {
+                showShortToast("Coming Soon...")
+            }
+            binding?.tvCancelOrder -> {
+                showShortToast("Coming Soon...")
+            }
         }
     }
     private fun setBookingDetailsAdapter(bookingDetailsModel: ArrayList<BookingDetailsModel>){
-
         binding?.recyclerViewBookingDetails?.post {
             val adapter = AppBaseRecyclerViewAdapter(baseActivity, bookingDetailsModel)
             binding?.recyclerViewBookingDetails?.adapter = adapter
@@ -57,15 +62,13 @@ class InventoryBookingDetailsFragment : BaseOrderFragment<FragmentInventoryBooki
     }
 
     private fun showBottomSheetDialog() {
-        serviceLocationsBottomSheetDialog = ServiceLocationBottomSheetDialog()
-        serviceLocationsBottomSheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
-        serviceLocationsBottomSheetDialog?.setList(serviceLocationsList)
-        serviceLocationsBottomSheetDialog?.show(this.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
+        locationsBottomSheetDialog = LocationBottomSheetDialog()
+        locationsBottomSheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
+        locationsBottomSheetDialog?.setList(serviceLocationsList)
+        locationsBottomSheetDialog?.show(this.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
     }
 
-    private fun clickDeliveryItem(serviceList: ServiceLocationsModel?) {
-        serviceLocationsList.forEach { it.isSelected = (it.serviceOptionSelectedName == serviceList?.serviceOptionSelectedName) }
+    private fun clickDeliveryItem(list: LocationsModel?) {
+        serviceLocationsList.forEach { it.isSelected = (it.serviceOptionSelectedName == list?.serviceOptionSelectedName) }
     }
-
-
 }

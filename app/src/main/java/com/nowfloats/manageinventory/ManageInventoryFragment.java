@@ -197,6 +197,8 @@ public class ManageInventoryFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
+            mainView.findViewById(R.id.tvBooking).setOnClickListener(v -> openBookingActivity());
+
             tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -261,6 +263,12 @@ public class ManageInventoryFragment extends Fragment {
             headerText.setText(getResources().getString(R.string.manage_inventory));
     }
 
+    private void openBookingActivity() {
+        Bundle bundle = new Bundle();
+        PreferenceData data = new PreferenceData(Constants.clientId, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
+        startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
+    }
 
     private void openSellerAnalyticsActivity() {
         Bundle bundle = new Bundle();

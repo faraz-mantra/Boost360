@@ -1,23 +1,19 @@
-package com.inventoryorder.ui.order
+package com.inventoryorder.ui.booking
 
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.framework.adapters.RecyclerViewItemClickListener
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.models.BaseRecyclerViewItem
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetServiceLocationBinding
-import com.inventoryorder.model.bookingdetails.BookingDetailsModel
-import com.inventoryorder.model.bottomsheet.ServiceLocationsModel
+import com.inventoryorder.model.bottomsheet.LocationsModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class ServiceLocationBottomSheetDialog : BaseBottomSheetDialog<BottomSheetServiceLocationBinding,BaseViewModel>(), RecyclerItemClickListener {
+class LocationBottomSheetDialog : BaseBottomSheetDialog<BottomSheetServiceLocationBinding, BaseViewModel>(), RecyclerItemClickListener {
 
-    private var list = ArrayList<ServiceLocationsModel>()
-    private var adapter: AppBaseRecyclerViewAdapter<ServiceLocationsModel>? = null
-    var onDoneClicked: (serviceLocation: ServiceLocationsModel?) -> Unit = { }
+  private var list = ArrayList<LocationsModel>()
+  private var adapter: AppBaseRecyclerViewAdapter<LocationsModel>? = null
+  var onDoneClicked: (location: LocationsModel?) -> Unit = { }
 
 
     override fun getLayout(): Int {
@@ -29,7 +25,7 @@ class ServiceLocationBottomSheetDialog : BaseBottomSheetDialog<BottomSheetServic
     }
 
 
-    fun setList(list: ArrayList<ServiceLocationsModel>) {
+  fun setList(list: ArrayList<LocationsModel>) {
         this.list.clear()
         this.list.addAll(list)
     }
@@ -44,10 +40,10 @@ class ServiceLocationBottomSheetDialog : BaseBottomSheetDialog<BottomSheetServic
     }
 
     override fun onItemClick(position: Int, item: com.inventoryorder.recyclerView.BaseRecyclerViewItem?, actionType: Int) {
-        val deliveryItem = item as? ServiceLocationsModel
+      val deliveryItem = item as? LocationsModel
         list.forEach { it.isSelected = (it.serviceOptionSelectedName == deliveryItem?.serviceOptionSelectedName) }
         adapter?.notifyDataSetChanged()
-        onDoneClicked((item as? @kotlin.ParameterName(name = "serviceLocation") ServiceLocationsModel))
+      onDoneClicked((item as? @kotlin.ParameterName(name = "serviceLocation") LocationsModel))
         dismiss()
     }
 

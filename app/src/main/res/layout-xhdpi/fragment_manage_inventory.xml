@@ -94,11 +94,52 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white" >
 
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
                     <include
                         android:id="@+id/businessProfile_List_ProfileV2"
                         layout="@layout/manage_inventory_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                      <ImageView
+                          android:id="@+id/booking_ic"
+                          android:layout_width="@dimen/icon_size_55"
+                          android:layout_height="@dimen/icon_size_55"
+                          android:layout_marginEnd="@dimen/margin_10"
+                          android:padding="15dp"
+                          android:scaleType="fitCenter"
+                          android:src="@drawable/ic_all_orders" />
+
+                      <TextView
+                          android:id="@+id/tvBooking"
+                          android:layout_width="match_parent"
+                          android:layout_height="@dimen/cell_height"
+                          android:layout_toEndOf="@+id/booking_ic"
+                          android:background="?android:selectableItemBackground"
+                          android:gravity="center_vertical"
+                          android:text="Booking"
+                          android:textColor="@color/cell_text_color"
+                          android:textSize="14sp" />
+
+                      <View
+                          android:layout_width="match_parent"
+                          android:layout_height="1dp"
+                          android:layout_below="@+id/tvBooking"
+                          android:layout_toEndOf="@+id/booking_ic"
+                          android:background="#d3d3d3"
+                          android:visibility="visible" />
+                    </RelativeLayout>
+
+                  </LinearLayout>
+
 
                 </androidx.cardview.widget.CardView>
 

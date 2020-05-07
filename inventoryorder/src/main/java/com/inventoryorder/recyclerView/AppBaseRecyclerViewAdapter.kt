@@ -23,13 +23,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
-      ORDER_ITEM_TYPE -> OrderSummaryViewHolder(binding as ItemOrderTypeBinding)
-      INVENTORY_ORDER_ITEM -> OrderItemViewHolder(binding as ItemOrderBinding)
+      ORDERS_ITEM_TYPE -> OrderSummaryViewHolder(binding as ItemOrderTypeBinding)
+      INVENTORY_ORDER_ITEM -> OrdersViewHolder(binding as ItemOrderBinding)
       ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)
-      ITEM_DELIVERY_OPTIONS -> DeliveryOptionsViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
+      ITEM_DELIVERY_OPTIONS -> DeliveryViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
       BOOKING_DETAILS -> BookingDetailsViewHolder(binding as ItemBookingDetailsBinding)
-      ITEM_SERVICE_LOCATIONS -> ServiceLocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
-      ALL_BOOKINGS -> AllBookingsViewHolder (binding as ItemBookingsAllOrderBinding)
+      ITEM_SERVICE_LOCATIONS -> LocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
+      BOOKINGS_ITEM_TYPE -> BookingsViewHolder(binding as ItemBookingsAllOrderBinding)
     }
   }
 

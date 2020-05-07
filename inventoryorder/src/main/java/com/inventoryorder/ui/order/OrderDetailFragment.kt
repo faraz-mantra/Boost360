@@ -12,28 +12,27 @@ import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
-import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentInventoryOrderDetailBinding
-import com.inventoryorder.model.bottomsheet.DeliveryOptionsModel
+import com.inventoryorder.model.bottomsheet.DeliveryModel
 import com.inventoryorder.model.ordersdetails.ItemX
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
-import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.ui.BaseInventoryFragment
 
 
-class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDetailBinding>() {
+class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBinding>() {
 
   private var deliverySheetDialog: DeliveryBottomSheetDialog? = null
   private var orderItem: OrderItem? = null
   private var coordinatorLayout: CoordinatorLayout? = null
-  private var deliveryList = DeliveryOptionsModel().getData()
+  private var deliveryList = DeliveryModel().getData()
 
   companion object {
     @JvmStatic
-    fun newInstance(bundle: Bundle? = null): InventoryOrderDetailFragment {
-      val fragment = InventoryOrderDetailFragment()
+    fun newInstance(bundle: Bundle? = null): OrderDetailFragment {
+      val fragment = OrderDetailFragment()
       fragment.arguments = bundle
       return fragment
     }
@@ -112,9 +111,7 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
     super.onClick(v)
     when (v) {
       binding?.btnPickUp -> showBottomSheetDialog()
-      binding?.buttonConfirmOrder ->{
-        startFragmentActivity(FragmentType.ALL_BOOKING_DETAILS,Bundle())
-      }
+      binding?.buttonConfirmOrder -> showLongToast("Coming soon..")
     }
   }
 
@@ -122,10 +119,10 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
     deliverySheetDialog = DeliveryBottomSheetDialog()
     deliverySheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
     deliverySheetDialog?.setList(deliveryList)
-    deliverySheetDialog?.show(this@InventoryOrderDetailFragment.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
+    deliverySheetDialog?.show(this@OrderDetailFragment.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
   }
 
-  private fun clickDeliveryItem(deliveryItem: DeliveryOptionsModel?) {
+  private fun clickDeliveryItem(deliveryItem: DeliveryModel?) {
     deliveryList.forEach { it.isSelected = (it.deliveryOptionSelectedName == deliveryItem?.deliveryOptionSelectedName) }
   }
 }

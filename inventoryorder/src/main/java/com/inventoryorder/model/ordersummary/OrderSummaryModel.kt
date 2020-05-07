@@ -26,7 +26,7 @@ class OrderSummaryModel(
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
-    return RecyclerViewItemType.ORDER_ITEM_TYPE.getLayout()
+    return RecyclerViewItemType.ORDERS_ITEM_TYPE.getLayout()
   }
 
   fun getOrderType(): ArrayList<OrderSummaryModel> {
