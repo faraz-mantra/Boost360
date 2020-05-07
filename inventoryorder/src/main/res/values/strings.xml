@@ -13,4 +13,9 @@
   <string name="create">CREATE &#160;</string>
   <string name="status_n">Status:</string>
     <string name="option_comes_here">Option comes here</string>
+    <string name="booking_requested">Booking requested</string>
+  <string name="service_location">Service Location</string>
+  <string name="business">BUSINESS</string>
+  <string name="booking_details">Booking details</string>
+  <string name="bridal_ceretin_touch_up_n_2_more">Bridal ceretin Touch-up\n<u>+2 more</u></string>
 </resources>

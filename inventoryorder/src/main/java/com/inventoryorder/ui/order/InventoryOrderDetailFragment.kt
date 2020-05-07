@@ -12,6 +12,7 @@ import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentInventoryOrderDetailBinding
 import com.inventoryorder.model.bottomsheet.DeliveryOptionsModel
@@ -19,6 +20,7 @@ import com.inventoryorder.model.ordersdetails.ItemX
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
+import com.inventoryorder.ui.startFragmentActivity
 
 
 class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDetailBinding>() {
@@ -41,8 +43,10 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
     super.onCreateView()
     orderItem = arguments?.getSerializable(IntentConstant.ORDER_ITEM.name) as? OrderItem
     orderItem?.let { setDetails(it) }
+
     coordinatorLayout = coordinatorLayout?.findViewById(R.id.coordinatorLayoutBottomSheet)
     coordinatorLayout?.removeAllViews()
+
     setOnClickListener(binding?.btnPickUp, binding?.buttonConfirmOrder)
   }
 
@@ -101,14 +105,15 @@ class InventoryOrderDetailFragment : BaseOrderFragment<FragmentInventoryOrderDet
     binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
     binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
 
-
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.btnPickUp -> showBottomSheetDialog()
-      binding?.buttonConfirmOrder -> showLongToast("Coming soon..")
+      binding?.buttonConfirmOrder ->{
+        startFragmentActivity(FragmentType.ALL_BOOKING_DETAILS,Bundle())
+      }
     }
   }
 

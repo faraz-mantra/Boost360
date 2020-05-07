@@ -183,7 +183,6 @@ class InventoryAllOrderFragment : BaseOrderFragment<FragmentInventoryAllOrderBin
     apiSellerOrderList(request!!)
   }
 
-
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     val searchItem = menu.findItem(R.id.menu_item_search)
