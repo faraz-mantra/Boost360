@@ -87,7 +87,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <com.framework.views.customViews.CustomButton
+                <com.framework.views.customViews.CustomTextView
                     android:id="@+id/buttonConfirm1"
                     android:layout_width="@dimen/size_110"
                     android:layout_height="@dimen/size_38"
