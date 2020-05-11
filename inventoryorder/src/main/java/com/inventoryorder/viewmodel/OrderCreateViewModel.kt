@@ -9,8 +9,8 @@ import com.inventoryorder.rest.repositories.SellerOrderRepository
 
 class OrderCreateViewModel : BaseViewModel() {
 
-  fun getSellerSummary(sellerId: String?): LiveData<BaseResponse> {
-    return SellerOrderRepository.getSellerSummary(sellerId).toLiveData()
+  fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
+    return SellerOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
 
   fun getSellerAllOrder(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {

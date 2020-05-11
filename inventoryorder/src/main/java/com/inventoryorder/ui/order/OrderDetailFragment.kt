@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
@@ -26,7 +25,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
 
   private var deliverySheetDialog: DeliveryBottomSheetDialog? = null
   private var orderItem: OrderItem? = null
-  private var coordinatorLayout: CoordinatorLayout? = null
   private var deliveryList = DeliveryModel().getData()
 
   companion object {
@@ -42,10 +40,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
     super.onCreateView()
     orderItem = arguments?.getSerializable(IntentConstant.ORDER_ITEM.name) as? OrderItem
     orderItem?.let { setDetails(it) }
-
-    coordinatorLayout = coordinatorLayout?.findViewById(R.id.coordinatorLayoutBottomSheet)
-    coordinatorLayout?.removeAllViews()
-
     setOnClickListener(binding?.btnPickUp, binding?.buttonConfirmOrder)
   }
 
@@ -71,7 +65,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
   }
 
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = OrderSummaryModel.OrderType.fromType(order.status())?.type
+    binding?.orderType?.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
     binding?.tvOrderStatus?.text = order.PaymentDetails?.Status?.trim()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.Method?.trim()
     binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.Status?.trim()}"

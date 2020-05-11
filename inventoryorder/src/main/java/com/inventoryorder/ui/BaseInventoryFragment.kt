@@ -20,6 +20,10 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
     get() {
       return preferenceData?.fpTag
     }
+  protected val clientId: String?
+    get() {
+      return preferenceData?.clientId
+    }
   protected val auth: String
     get() {
       return preferenceData?.authorization ?: ""
@@ -51,8 +55,8 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
     when (this) {
       is OrdersFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
       is OrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
-      is BookingDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is BookingsFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
+      is BookingDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
     }
   }
 }

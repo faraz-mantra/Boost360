@@ -92,7 +92,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
 
   private fun apiSellerSummary() {
     binding?.progress?.visible()
-    viewModel?.getSellerSummary(fpTag)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         errorOnSummary(resources.getString(R.string.internet_connection_not_available))
         return@Observer
@@ -177,7 +177,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     isLastPageD = false
     currentPage = PAGE_START
     orderAdapter?.clear()
-    request?.orderStatus = OrderSummaryModel.OrderType.fromType(type)?.value
+    request?.orderStatus = OrderSummaryModel.OrderType.fromValue(type)?.value
     request?.skip = currentPage
     orderList.clear()
     binding?.progress?.visible()
@@ -217,7 +217,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
   }
 
   private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(fpTag, skip = currentPage, limit = PAGE_SIZE)
+    request = OrderSummaryRequest(clientId, fpTag, skip = currentPage, limit = PAGE_SIZE)
     return request!!
   }
 

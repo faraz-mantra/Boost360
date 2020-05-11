@@ -13,7 +13,8 @@ data class ItemX(
     val Type: String? = null
 ) : AppBaseRecyclerViewItem, Serializable {
 
+  var recyclerViewType = RecyclerViewItemType.ITEM_ORDER_DETAILS.getLayout()
   override fun getViewType(): Int {
-    return RecyclerViewItemType.ITEM_ORDER_DETAILS.getLayout()
+    return recyclerViewType
   }
 }

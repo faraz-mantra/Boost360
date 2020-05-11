@@ -12,10 +12,12 @@ import retrofit2.http.Query
 interface SellerOrderRemoteDataSource {
 
   @GET(EndPoints.GET_SELLER_SUMMARY_URL)
-  fun getSellerSummary(@Query("sellerId") sellerId: String?): Observable<Response<SellerSummaryResponse>>
+  fun getSellerSummary(@Query("clientId") clientId: String?,
+                       @Query("sellerId") sellerId: String?): Observable<Response<SellerSummaryResponse>>
 
   @GET(EndPoints.GET_LIST_ORDER_URL)
   fun getListOrder(@Header("Authorization") auth: String,
+                   @Query("clientId") clientId: String?,
                    @Query("sellerId") sellerId: String?,
                    @Query("orderStatus") orderStatus: String?,
                    @Query("skip") skip: Int?,

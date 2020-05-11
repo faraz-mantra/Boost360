@@ -48,8 +48,8 @@ class OrderSummaryModel(
     ESCALATED("Escalated", OrderStatus.ESCALATED.name);
 
     companion object {
-      fun fromType(type: String): OrderType? = values().first { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
-      fun fromValue(value: String): OrderType? = values().first { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromType(type: String): OrderType? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): OrderType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 
@@ -58,7 +58,7 @@ class OrderSummaryModel(
     FEEDBACK_PENDING, FEEDBACK_RECEIVED, DELIVERY_DELAYED, DELIVERY_FAILED, ORDER_COMPLETED, ORDER_CANCELLED, ESCALATED;
 
     companion object {
-      fun from(value: String): OrderStatus = values().first { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun from(value: String): OrderStatus? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 }

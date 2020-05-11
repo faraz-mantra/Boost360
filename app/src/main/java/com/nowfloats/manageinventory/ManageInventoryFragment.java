@@ -69,8 +69,7 @@ public class ManageInventoryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.fragment_manage_inventory, container, false);
         ivLockWidget = mainView.findViewById(R.id.lock_widget);
@@ -197,7 +196,6 @@ public class ManageInventoryFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
-            mainView.findViewById(R.id.tvBooking).setOnClickListener(v -> openBookingActivity());
 
             tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -263,22 +261,34 @@ public class ManageInventoryFragment extends Fragment {
             headerText.setText(getResources().getString(R.string.manage_inventory));
     }
 
-    private void openBookingActivity() {
-        Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-        startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
-    }
-
     private void openSellerAnalyticsActivity() {
         Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-        startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
+        bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
+
+        if (getAppointmentType(session.getFP_AppExperienceCode())) {
+            startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
+        } else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
+
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
 //        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
 //        startActivity(i);
 //        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private boolean getAppointmentType(String fp_appExperienceCode) {
+        switch (fp_appExperienceCode) {
+            case "SVC":
+            case "DOC":
+            case "HOS":
+            case "SPA":
+            case "SAL":
+            case "EDU":
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void startOrdersActivity() {

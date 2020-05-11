@@ -1,27 +1,33 @@
 package com.inventoryorder.holders
 
 import android.graphics.Paint
+import com.framework.extensions.gone
+import com.framework.glide.util.glideLoad
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemBookingDetailsBinding
-import com.inventoryorder.model.bookingdetails.BookingDetailsModel
+import com.inventoryorder.model.ordersdetails.ItemX
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class BookingDetailsViewHolder(binding : ItemBookingDetailsBinding): AppBaseRecyclerViewHolder<ItemBookingDetailsBinding>(binding) {
+class BookingDetailsViewHolder(binding: ItemBookingDetailsBinding) : AppBaseRecyclerViewHolder<ItemBookingDetailsBinding>(binding) {
 
-    override fun bind(position: Int, item: BaseRecyclerViewItem) {
-        super.bind(position, item)
-        val data = item as BookingDetailsModel
-        setDataResponseForOrderDetails(data)
-    }
+  override fun bind(position: Int, item: BaseRecyclerViewItem) {
+    super.bind(position, item)
+    val data = item as? ItemX
+    data?.let { setDataResponseForOrderDetails(it) }
+  }
 
-    private fun setDataResponseForOrderDetails(bookingDetailsModel: BookingDetailsModel?) {
-        binding.tvDishName.text = bookingDetailsModel?.itemName?.trim()
-        binding.tvDishQuantity.text = null
-        binding.tvDishAmount.text = bookingDetailsModel?.itemPrice.toString()
-      binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-        binding.tvActualPrice.text = bookingDetailsModel?.itemActualPrice
-        binding.ivDishItem.setImageResource(R.drawable.ic_mutton_rogan_josh)
+  private fun setDataResponseForOrderDetails(item: ItemX) {
+    binding.tvDishName.text = item.Product?.Name?.trim()
+    binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
+    binding.tvDishQuantity.gone()
+    val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+    binding.tvDishAmount.text = "$currency ${item.SalePrice ?: 0}"
+    binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    binding.tvActualPrice.text = "$currency ${item.ActualPrice ?: 0}"
+    val url: String? = item.Product?.ImageUri?.trim()
+    url?.let { activity?.glideLoad(binding.ivDishItem, it, R.drawable.placeholder_image) }
+        ?: (binding.ivDishItem.setImageResource(R.drawable.placeholder_image))
 
-    }
+  }
 }
