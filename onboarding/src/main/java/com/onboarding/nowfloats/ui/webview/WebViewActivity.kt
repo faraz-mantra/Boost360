@@ -98,5 +98,5 @@ fun String.getUrl(): String {
 }
 
 fun String.checkHttp(): String {
-  return if (this.startsWith("http://").not()) "http://$this" else this
+  return if ((this.startsWith("http://") || this.startsWith("https://")).not()) "http://$this" else this
 }

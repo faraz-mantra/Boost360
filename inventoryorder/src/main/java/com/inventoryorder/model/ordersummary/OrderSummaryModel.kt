@@ -42,10 +42,20 @@ class OrderSummaryModel(
   }
 
   enum class OrderType(val type: String, val value: String) {
-    TOTAL("All", ""), RECEIVED("Received", OrderStatus.ORDER_INITIATED.name),
-    SUCCESSFUL("Successful", OrderStatus.ORDER_COMPLETED.name), CANCELLED("Cancelled", OrderStatus.ORDER_CANCELLED.name),
-    RETURNED("Returned", OrderStatus.ESCALATED.name), ABANDONED("Abandoned", "ABANDONED"),
-    ESCALATED("Escalated", OrderStatus.ESCALATED.name);
+    TOTAL("All", ""),
+    ORDER_CONFIRM("Received", OrderStatus.ORDER_CONFIRMED.name),
+    RECEIVED("Received", OrderStatus.ORDER_INITIATED.name),
+    PAYMENT_CONFIRM("Received", OrderStatus.PAYMENT_CONFIRMED.name),
+
+    SUCCESSFUL("Successful", OrderStatus.ORDER_COMPLETED.name),
+
+    RETURNED("Returned", OrderStatus.ESCALATED.name),
+    ESCALATED("Escalated", OrderStatus.ESCALATED.name),
+
+
+    CANCELLED("Cancelled", OrderStatus.ORDER_CANCELLED.name),
+    ABANDONED("Abandoned", OrderStatus.ORDER_CANCELLED.name);
+
 
     companion object {
       fun fromType(type: String): OrderType? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }

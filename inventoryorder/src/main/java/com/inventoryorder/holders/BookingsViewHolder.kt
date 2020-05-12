@@ -58,16 +58,16 @@ class BookingsViewHolder(binding: ItemBookingsAllOrderBinding) : AppBaseRecycler
 
     OrderSummaryModel.OrderType.fromValue(order.status())?.let {
       when (it) {
-        OrderSummaryModel.OrderType.RECEIVED,
+        OrderSummaryModel.OrderType.RECEIVED, OrderSummaryModel.OrderType.ORDER_CONFIRM, OrderSummaryModel.OrderType.PAYMENT_CONFIRM,
         OrderSummaryModel.OrderType.SUCCESSFUL,
         OrderSummaryModel.OrderType.RETURNED,
-        OrderSummaryModel.OrderType.ABANDONED,
         OrderSummaryModel.OrderType.ESCALATED -> {
           if (todayDate == itemDate) {
             changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
           } else backgroundGrey(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
         }
-        OrderSummaryModel.OrderType.CANCELLED -> {
+        OrderSummaryModel.OrderType.CANCELLED,
+        OrderSummaryModel.OrderType.ABANDONED -> {
           changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
         }
       }

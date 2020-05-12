@@ -51,6 +51,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
     OrderSummaryModel.OrderType.fromValue(order.status())?.let {
       when (it) {
         OrderSummaryModel.OrderType.RECEIVED,
+        OrderSummaryModel.OrderType.ORDER_CONFIRM, OrderSummaryModel.OrderType.PAYMENT_CONFIRM,
         OrderSummaryModel.OrderType.SUCCESSFUL,
         OrderSummaryModel.OrderType.RETURNED,
         OrderSummaryModel.OrderType.ABANDONED,

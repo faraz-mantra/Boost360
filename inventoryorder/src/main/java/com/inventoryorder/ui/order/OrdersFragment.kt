@@ -177,7 +177,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     isLastPageD = false
     currentPage = PAGE_START
     orderAdapter?.clear()
-    request?.orderStatus = OrderSummaryModel.OrderType.fromValue(type)?.value
+    request?.orderStatus = OrderSummaryModel.OrderType.fromType(type)?.value
     request?.skip = currentPage
     orderList.clear()
     binding?.progress?.visible()
