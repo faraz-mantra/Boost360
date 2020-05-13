@@ -217,11 +217,6 @@ class AddCardPopUpFragement : DialogFragment() {
         setMonthYearAdaptor()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        clearData()
-    }
-
     override fun onStop() {
         super.onStop()
         clearData()

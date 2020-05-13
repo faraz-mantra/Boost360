@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -127,14 +128,16 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 title_appbar.visibility = View.VISIBLE
                 title_image.visibility = View.VISIBLE
                 // Collapsed
+                toolbar_details.background = ColorDrawable(resources.getColor(R.color.fullscreen_color))
             } else if (verticalOffset == 0) {
                 title_appbar.visibility = View.INVISIBLE
                 title_image.visibility = View.INVISIBLE
-
+                toolbar_details.background = ColorDrawable(resources.getColor(R.color.transparent))
                 // Expanded
             } else {
                 title_appbar.visibility = View.INVISIBLE
                 title_image.visibility = View.INVISIBLE
+                toolbar_details.background = ColorDrawable(resources.getColor(R.color.transparent))
             }
         }
         )
