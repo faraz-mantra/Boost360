@@ -48,6 +48,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -310,14 +311,12 @@ public class SidePanelFragment extends Fragment {
         else
             keyboardLayout.setVisibility(View.GONE);
 
-
         marketplaceLayout = (LinearLayout) card.findViewById(R.id.marketplace_layout);
         accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
         subscriptionsLayout = card.findViewById(R.id.subscriptions_Layout);
         helpAndSupportLayout = card.findViewById(R.id.seventhRow_Layout);
         aboutLayout = card.findViewById(R.id.layout_about);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
-
 
         if (session.getISEnterprise().equals("true")) {
             siteMeter.setVisibility(View.GONE);
@@ -333,29 +332,7 @@ public class SidePanelFragment extends Fragment {
         tvCalls = manageCalls.findViewById(R.id.tvCustomerCalls);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
 
-        switch (category_code){
-            case "SVC":
-            case "DOC":
-            case "HOS":
-            case "SPA":
-            case "SAL":
-            case "EDU":
-                tvManageInventory.setText("Appointments");
-                break;
-            case "HOT":
-                tvManageInventory.setText("Room Bookings");
-                break;
-            case "RTL":
-            case "MFG":
-                tvManageInventory.setText("Orders");
-                break;
-            case "CAF":
-                tvManageInventory.setText("Food Orders");
-                break;
-            default:
-                tvManageInventory.setText("Orders");
-                break;
-        }
+        tvManageInventory.setText(Utils.getDefaultOrderROIType(category_code));
         tvInbox = inboxLayout.findViewById(R.id.tvInbox);
         switch (category_code){
             case "MFG":

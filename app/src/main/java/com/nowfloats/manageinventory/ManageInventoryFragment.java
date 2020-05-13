@@ -33,6 +33,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 
@@ -60,12 +61,15 @@ public class ManageInventoryFragment extends Fragment {
     private Activity activity;
     private boolean mIsAPEnabled = false;
     private String mTransactionCharge = "9%";
+    private String category_code = "";
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+        UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
+        category_code = session.getFP_AppExperienceCode();
     }
 
     @Override
@@ -258,7 +262,7 @@ public class ManageInventoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (headerText != null)
-            headerText.setText(getResources().getString(R.string.manage_inventory));
+            headerText.setText(Utils.getDefaultOrderROIType(category_code));
     }
 
     private void openSellerAnalyticsActivity() {

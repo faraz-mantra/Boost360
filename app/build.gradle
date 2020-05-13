@@ -66,7 +66,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020033
+        versionCode 2020020034
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -139,7 +139,7 @@ android {
         }
         partone {
 
-            versionName "5.3.11"
+            versionName "5.3.12"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
