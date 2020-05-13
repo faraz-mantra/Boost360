@@ -88,6 +88,8 @@
             android:layout_height="@dimen/size_38"
             android:background="@drawable/btn_rounded_orange_border"
             android:text="CONFIRM"
+            android:clickable="true"
+            android:focusable="true"
             android:textAllCaps="true"
             android:textColor="@color/orange"
             app:textType="HEADING_6" />

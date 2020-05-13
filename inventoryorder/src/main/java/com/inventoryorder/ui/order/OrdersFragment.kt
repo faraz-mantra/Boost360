@@ -17,6 +17,7 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentInventoryAllOrderBinding
+import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
@@ -26,10 +27,12 @@ import com.inventoryorder.recyclerView.PaginationScrollListener
 import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
-import com.inventoryorder.rest.response.SellerSummaryResponse
-import com.inventoryorder.rest.response.order.SellerOrderListResponse
+import com.inventoryorder.rest.response.OrderSummaryResponse
+import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
+import org.json.JSONException
+import org.json.JSONObject
 
 class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>(), RecyclerItemClickListener {
 
@@ -98,7 +101,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = it as? SellerSummaryResponse
+        val response = it as? OrderSummaryResponse
         typeList = response?.Data?.getOrderType()
         typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
       } else errorOnSummary(it?.message)
@@ -113,7 +116,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = (it as? SellerOrderListResponse)?.Data ?: return@Observer
+        val response = (it as? InventoryOrderListResponse)?.Data ?: return@Observer
         binding?.orderRecycler?.visible()
         val list = response.Items ?: ArrayList()
         TOTAL_ELEMENTS = response.total()
@@ -169,15 +172,37 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
         orderItem?.type?.let { loadNewData(it) }
 
       }
+      RecyclerViewActionType.ORDER_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
     }
   }
 
-  private fun loadNewData(type: String) {
+  private fun apiConfirmOrder(position: Int, order: OrderItem?) {
+    showProgress()
+    viewModel?.confirmOrder(clientId, order?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        val data = it as? OrderConfirmStatus
+        data?.let { d -> showLongToast(d.Message as String?) }
+        val itemList = orderAdapter?.list() as ArrayList<OrderItem>
+        if (itemList.size > position) {
+          itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
+          orderAdapter?.notifyItemChanged(position)
+        } else showLongToast(it.message())
+      }
+    })
+  }
+
+
+  private fun loadNewData(type: String?) {
     isLoadingD = false
     isLastPageD = false
     currentPage = PAGE_START
     orderAdapter?.clear()
-    request?.orderStatus = OrderSummaryModel.OrderType.fromType(type)?.value
+    type?.let { request?.orderStatus = OrderSummaryModel.OrderType.fromType(it)?.value }
     request?.skip = currentPage
     orderList.clear()
     binding?.progress?.visible()

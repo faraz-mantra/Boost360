@@ -63,7 +63,9 @@ class BookingsViewHolder(binding: ItemBookingsAllOrderBinding) : AppBaseRecycler
         OrderSummaryModel.OrderType.RETURNED,
         OrderSummaryModel.OrderType.ESCALATED -> {
           if (todayDate == itemDate) {
+            checkPaymentConfirm(order)
             changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
+            binding.btnConfirm.paintFlags = 0
           } else backgroundGrey(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
         }
         OrderSummaryModel.OrderType.CANCELLED,
@@ -73,6 +75,24 @@ class BookingsViewHolder(binding: ItemBookingsAllOrderBinding) : AppBaseRecycler
       }
     }
     binding.itemMore.paintFlags.or(Paint.UNDERLINE_TEXT_FLAG).let { binding.itemMore.paintFlags = it }
+  }
+
+  private fun checkPaymentConfirm(order: OrderItem) {
+    if (order.isConfirmBooking()) {
+      buttonDisable(R.color.colorAccent, R.drawable.btn_rounded_orange_border)
+      binding.btnConfirm.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal) }
+      binding.btnConfirm.paintFlags = 0
+    } else {
+      buttonDisable(R.color.primary_grey, R.drawable.btn_rounded_grey_border)
+      binding.btnConfirm.paintFlags = binding.btnConfirm.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    }
+  }
+
+  private fun buttonDisable(color: Int, border: Int) {
+    activity?.let {
+      binding.btnConfirm.setTextColor(ContextCompat.getColor(it, color))
+      binding.btnConfirm.background = ContextCompat.getDrawable(it, border)
+    }
   }
 
   private fun backgroundGrey(confirm: Int, detail: Int, btn: Int, orderBg: Int, primaryGrey: Int) {

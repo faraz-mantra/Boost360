@@ -47,6 +47,7 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
     this.list.removeAt(index)
   }
 
+
   protected fun getViewDataBinding(inflater: LayoutInflater, recyclerViewItemType: RecyclerViewItemType, parent: ViewGroup): ViewDataBinding {
     return DataBindingUtil.inflate(inflater, recyclerViewItemType.getLayout(), parent, false)
   }

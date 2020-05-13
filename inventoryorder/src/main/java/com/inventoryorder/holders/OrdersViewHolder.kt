@@ -1,5 +1,6 @@
 package com.inventoryorder.holders
 
+import android.graphics.Paint
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
@@ -31,6 +32,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
   }
 
   private fun setDataResponse(order: OrderItem) {
+    checkPaymentConfirm(order)
     binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
     binding.orderId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
@@ -64,6 +66,24 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
       }
     }
 
+  }
+
+  private fun checkPaymentConfirm(order: OrderItem) {
+    if (order.isConfirmBooking()) {
+      buttonDisable(R.color.colorAccent, R.drawable.btn_rounded_orange_border)
+      binding.btnConfirm.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.ORDER_CONFIRM_CLICKED.ordinal) }
+      binding.btnConfirm.paintFlags = 0
+    } else {
+      buttonDisable(R.color.primary_grey, R.drawable.btn_rounded_grey_border)
+      binding.btnConfirm.paintFlags = binding.btnConfirm.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    }
+  }
+
+  private fun buttonDisable(color: Int, border: Int) {
+    activity?.let {
+      binding.btnConfirm.setTextColor(ContextCompat.getColor(it, color))
+      binding.btnConfirm.background = ContextCompat.getDrawable(it, border)
+    }
   }
 
   private fun changeBackground(confirm: Int, detaile: Int, btn: Int, orderBg: Int, rupeesColor: Int) {

@@ -18,7 +18,9 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentInventoryAllBookingsBinding
+import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
@@ -26,7 +28,7 @@ import com.inventoryorder.recyclerView.PaginationScrollListener
 import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
-import com.inventoryorder.rest.response.order.SellerOrderListResponse
+import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 import java.util.*
@@ -69,7 +71,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = (it as? SellerOrderListResponse)?.Data ?: return@Observer
+        val response = (it as? InventoryOrderListResponse)?.Data ?: return@Observer
         binding?.bookingRecycler?.visible()
         val list = (response.Items ?: ArrayList()).map { item ->
           item.recyclerViewType = RecyclerViewItemType.BOOKINGS_ITEM_TYPE.getLayout();item
@@ -155,6 +157,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false
         }
+
         override fun onQueryTextChange(newText: String?): Boolean {
           newText?.let { startFilter(it.trim().toLowerCase()) }
           return false
@@ -191,6 +194,27 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentActivity(FragmentType.BOOKING_DETAIL_VIEW, bundle)
       }
+      RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
     }
+  }
+
+  private fun apiConfirmOrder(position: Int, order: OrderItem?) {
+    showProgress()
+    viewModel?.confirmOrder(clientId, order?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        val data = it as? OrderConfirmStatus
+        data?.let { d -> showLongToast(d.Message as String?) }
+        val itemList = orderAdapter?.list() as ArrayList<OrderItem>
+        if (itemList.size > position) {
+          itemList[position].Status = OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name
+          orderAdapter?.notifyItemChanged(position)
+        } else showLongToast(it.message())
+      }
+    })
   }
 }

@@ -1,8 +1,9 @@
 package com.inventoryorder.model.ordersdetails
 
 import java.io.Serializable
+import java.util.*
 
-data class LogisticsDetails(
+data class LogisticsDetailsN(
     val Address: Address? = null,
     val DeliveredOn: Any? = null,
     val DeliveryConfirmationDetails: DeliveryConfirmationDetails? = null,
@@ -15,4 +16,17 @@ data class LogisticsDetails(
     val Status: String? = null,
     val TrackingNumber: Any? = null,
     val TrackingURL: Any? = null
-) : Serializable
+) : Serializable {
+
+  fun status(): String {
+    return Status ?: ""
+  }
+
+  enum class STSTUS {
+    NOT_INITIATED;
+
+    companion object {
+      fun from(value: String): STSTUS? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+    }
+  }
+}

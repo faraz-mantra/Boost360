@@ -35,7 +35,7 @@ class ProgressDialog : BaseDialogFragment<DialogProgressBinding, BaseViewModel>(
         return R.style.MaterialDialogTheme
     }
 
-    override fun onViewCreated() {
+  override fun onCreateView() {
         title?.let { binding?.title?.setText(it) }
     }
 

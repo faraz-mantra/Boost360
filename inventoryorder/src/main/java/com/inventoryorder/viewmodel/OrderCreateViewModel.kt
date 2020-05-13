@@ -5,16 +5,24 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
-import com.inventoryorder.rest.repositories.SellerOrderRepository
+import com.inventoryorder.rest.repositories.InventoryOrderRepository
 
 class OrderCreateViewModel : BaseViewModel() {
 
   fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
-    return SellerOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
+    return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
 
   fun getSellerAllOrder(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {
-    return SellerOrderRepository.getSellerAllOrder(auth, request).toLiveData()
+    return InventoryOrderRepository.getSellerAllOrder(auth, request).toLiveData()
+  }
+
+  fun confirmOrder(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.confirmOrder(clientId, orderId).toLiveData()
+  }
+
+  fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.cancelOrder(clientId, orderId, cancellingEntity).toLiveData()
   }
 
 }

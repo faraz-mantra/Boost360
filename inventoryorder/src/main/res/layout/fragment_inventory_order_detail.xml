@@ -195,7 +195,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginStart="@dimen/size_1"
-                  android:text="Delivery Partner"
+                  android:text="@string/delivery_partner"
                   android:textColor="@color/primary_grey"
                   app:fontFamily="@font/semi_bold"
                   app:textType="CAPTION" />
@@ -209,7 +209,7 @@
                   android:background="@drawable/btn_rounded_black_border"
                   android:drawableEnd="@drawable/ic_arrow_drop_down_blue"
                   android:paddingEnd="@dimen/size_14"
-                  android:text="PICKUP"
+                  android:text="@string/pickup"
                   android:textColor="@color/warm_grey_10"
                   app:textType="HEADING_6" />
             </LinearLayout>
@@ -234,7 +234,7 @@
               android:layout_height="wrap_content"
               android:drawableStart="@drawable/ic_customer_details"
               android:drawablePadding="@dimen/size_6"
-              android:text="Customer details"
+              android:text="@string/customer_details"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />
@@ -284,7 +284,7 @@
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/semi_bold"
                 app:textType="CAPTION"
-                tools:text="@string/_91_9013268178" />
+                tools:text="+91 9013268178" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCustomerEmail"
@@ -297,7 +297,7 @@
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/semi_bold"
                 app:textType="CAPTION"
-                tools:text="@string/customer_email" />
+                tools:text="cantech@gmail.com" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -320,7 +320,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:paddingStart="@dimen/size_16"
-              android:text="Order details"
+              android:text="@string/order_details"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1"
@@ -357,7 +357,7 @@
             android:paddingEnd="@dimen/size_16">
 
           <com.framework.views.customViews.CustomTextView
-              android:id="@+id/buttonShare"
+              android:id="@+id/tvCancelOrder"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="bottom"
@@ -437,7 +437,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
-              android:text="Time elapsed"
+              android:text="@string/time_elapsed"
               android:textColor="@color/primary_grey"
               app:textType="SUBTITLE_2" />
 
@@ -459,7 +459,7 @@
             android:background="@drawable/button_confirm_order"
             android:shadowRadius="0"
             android:stateListAnimator="@null"
-            android:text="CONFIRM ORDER"
+            android:text="@string/confirm_order_n"
             android:textColor="@color/white"
             app:textType="HEADING_6"
             tools:ignore="UnusedAttribute" />
