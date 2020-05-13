@@ -78,9 +78,9 @@ class PackageFragment : BaseFragment() {
 
         package_title.setText(bundleData!!.name)
 
-        Glide.with(this).load(R.drawable.back_beau)
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-                .into(back_image)
+//        Glide.with(this).load(R.drawable.back_beau)
+//                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
+//                .into(back_image)
 
         package_back.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
@@ -192,14 +192,15 @@ class PackageFragment : BaseFragment() {
                     badgeNumber = cartList!!.size
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
-                    if (!packageInCartStatus) {
+
+                    if(!packageInCartStatus){
                         package_submit.visibility = View.VISIBLE
                         package_submit.background = ContextCompat.getDrawable(
                                 requireContext(),
                                 R.drawable.orange_button_click_effect
                         )
                         package_submit.setTextColor(Color.WHITE)
-                        package_submit.setText("Add '" + bundleData!!.name + "' to cart")
+                        package_submit.setText("Add Package to cart")
                     }
                 }
             } else {
@@ -213,7 +214,7 @@ class PackageFragment : BaseFragment() {
                         R.drawable.orange_button_click_effect
                 )
                 package_submit.setTextColor(Color.WHITE)
-                package_submit.setText("Add '" + bundleData!!.name + "' to cart")
+                package_submit.setText("Add Package to cart")
             }
         })
     }

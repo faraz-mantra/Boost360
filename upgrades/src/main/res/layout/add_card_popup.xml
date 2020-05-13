@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_alignParentBottom="true"
     android:fillViewport="true">
 
@@ -59,13 +60,27 @@
                 app:layout_constraintTop_toBottomOf="@id/card_number_title" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/card_type_image"
+                android:layout_width="32dp"
+                android:layout_height="21dp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:src="@drawable/card_number"
                 app:layout_constraintBottom_toBottomOf="@id/card_number_value"
                 app:layout_constraintEnd_toEndOf="@id/card_number_value"
                 app:layout_constraintTop_toTopOf="@id/card_number_value" />
+
+            <TextView
+                android:id="@+id/invalid_cardnumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Invalid Card Number"
+                android:textSize="@dimen/_8sdp"
+                android:textColor="@color/red"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_number_value" />
 
             <TextView
                 android:id="@+id/name_on_card_title"
@@ -76,7 +91,7 @@
                 android:text="Name on Card*"
                 android:textColor="#747474"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_number_value" />
+                app:layout_constraintTop_toBottomOf="@id/invalid_cardnumber" />
 
             <EditText
                 android:id="@+id/name_on_card_value"
@@ -239,7 +254,7 @@
                 android:id="@+id/add_cart_payment_submit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:background="@drawable/orange_button_click_effect"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"

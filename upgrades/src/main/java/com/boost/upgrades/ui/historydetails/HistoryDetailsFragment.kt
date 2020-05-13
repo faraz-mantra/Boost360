@@ -54,6 +54,9 @@ class HistoryDetailsFragment : BaseFragment() {
         initMvvm()
         initRecyclerView()
 
+        view_dummy1.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        view_dummy2.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+
         if (data.orderId != null) {
             layout1_order_id.setText("#" + data.orderId!!.replace("order_", ""))
         }else{

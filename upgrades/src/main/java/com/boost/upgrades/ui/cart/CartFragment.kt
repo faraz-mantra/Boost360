@@ -113,7 +113,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         loadData()
         initMvvM()
-        spannableString()
         initializePackageRecycler()
         initializeAddonsRecycler()
 
@@ -504,14 +503,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
     }
 
-    fun spannableString() {
-        val billingDay = Utils.getDayOfMonthSuffix(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))
-
-        val origCost = SpannableString("billed on " + billingDay + " day of every month")
-
-        origCost.setSpan(StyleSpan(Typeface.BOLD), 10, 17, 0)
-        billing_date.setText(origCost)
-    }
 
     override fun deleteCartAddonsItem(itemID: String) {
         viewModel.deleteCartItems(itemID)

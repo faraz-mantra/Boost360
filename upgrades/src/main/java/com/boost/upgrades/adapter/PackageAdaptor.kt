@@ -46,7 +46,7 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
 
         updateView(holder,position)
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
-
+        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if (position == upgradeList.size - 1) {
             holder.view.visibility = View.INVISIBLE
         }

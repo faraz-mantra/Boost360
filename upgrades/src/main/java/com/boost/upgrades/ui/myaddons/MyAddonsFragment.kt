@@ -95,6 +95,8 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                     .into(merchant_logo)
         }
 
+        top_line_view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+
 
 //        Glide.with(this).load(R.drawable.back_beau)
 //                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))

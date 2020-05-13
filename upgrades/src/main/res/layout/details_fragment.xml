@@ -52,9 +52,9 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:background="@color/transparent"
                 android:contentInsetStart="0dp"
-                app:contentInsetStart="0dp"
                 android:contentInsetEnd="0dp"
                 app:contentInsetEnd="0dp"
+                app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,40 +62,48 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/transparent">
+
                     <LinearLayout
                         android:id="@+id/details_title_image_layout"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_margin="@dimen/_4sdp"
                         android:background="@color/transparent"
-                        app:layout_constraintDimensionRatio="1:1"
+                        android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintLeft_toRightOf="@+id/imageView121"
                         app:layout_constraintTop_toTopOf="parent">
-                    <ImageView
-                        android:id="@+id/title_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:id="@+id/title_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <RelativeLayout
                         android:id="@+id/imageViewCart121"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/_13sdp"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
-                        android:background="@drawable/upgrade_nav_icon_background"
-                        android:layout_marginEnd="@dimen/_13sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/cart48" />
+                            android:background="@drawable/upgrade_nav_icon_background"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/cart48"
+                                android:layout_margin="4dp" />
+                        </LinearLayout>
 
 
                         <com.nex3z.notificationbadge.NotificationBadge
@@ -111,11 +119,11 @@
                         android:id="@+id/title_appbar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:paddingStart="@dimen/_10sdp"
                         android:text="@string/facebook_lead_ads_upto_75_leads"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_11sdp"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:paddingStart="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageViewCart121"
                         app:layout_constraintStart_toEndOf="@+id/details_title_image_layout"
@@ -124,20 +132,26 @@
                     <LinearLayout
                         android:id="@+id/imageView121"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_3sdp"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:gravity="center"
-                        android:background="@drawable/upgrade_nav_icon_background"
-                        android:layout_marginLeft="@dimen/_3sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerInParent="true"-->
+<!--                        android:background="@drawable/upgrade_nav_icon_background"-->
+<!--                        android:gravity="center"></LinearLayout>-->
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/arrow_white" />
+                            android:background="@drawable/upgrade_nav_icon_background"
+                            android:src="@drawable/arrow_white" />
                     </LinearLayout>
 
 
@@ -222,8 +236,8 @@
                         android:layout_below="@+id/imagexx"
                         android:layout_marginStart="22dp"
                         android:layout_marginTop="-39dp"
-                        app:cardElevation="@dimen/_3sdp"
-                        app:cardCornerRadius="15dp">
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="@dimen/_3sdp">
 
                         <ImageView
                             android:id="@+id/image1222"
@@ -245,18 +259,18 @@
                         android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="@dimen/_5sdp"
-                        android:elevation="@dimen/_2sdp"
                         android:layout_marginBottom="8dp"
+                        android:background="@drawable/all_side_curve_bg"
+                        android:elevation="@dimen/_2sdp"
                         android:paddingTop="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
-                        android:background="@drawable/all_side_curve_bg">
+                        android:paddingBottom="@dimen/_8sdp">
 
                         <TextView
                             android:id="@+id/title_top_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_35sdp"
                             android:layout_marginStart="20dp"
+                            android:layout_marginTop="@dimen/_35sdp"
                             android:drawableLeft="@drawable/tag"
                             android:drawablePadding="@dimen/_5sdp"
                             android:text="@string/marketing"
@@ -296,7 +310,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.315"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/title_top"/>
+                            app:layout_constraintTop_toBottomOf="@+id/title_top" />
 
                         <TextView
                             android:id="@+id/money"
@@ -344,8 +358,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            app:layout_constraintTop_toBottomOf="@+id/orig_cost"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/orig_cost">
 
                             <TextView
                                 android:id="@+id/add_item_to_cart"
@@ -354,16 +368,16 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="16dp"
                                 android:layout_marginBottom="8dp"
+                                android:background="@drawable/orange_button_click_effect"
+                                android:fontFamily="@font/open_sans_semibold"
+                                android:gravity="center"
                                 android:paddingStart="@dimen/_30sdp"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_30sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-                                android:gravity="center"
-                                android:textAllCaps="true"
-                                android:background="@drawable/orange_button_click_effect"
                                 android:text="Add To Cart"
-                                android:textColor="@color/white"
-                                android:fontFamily="@font/open_sans_semibold" />
+                                android:textAllCaps="true"
+                                android:textColor="@color/white" />
 
                         </RelativeLayout>
 
@@ -382,8 +396,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/header"
                 android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="30dp"
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
@@ -396,10 +410,10 @@
                 <TextView
                     android:id="@+id/widgetLearnMore"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@id/fb_img"
+                    android:layout_weight="1"
                     android:lineSpacingExtra="1sp"
                     android:text="@string/learn_why_running_a_facebook_ad_campaign_is_always_a_good_idea"
                     android:textColor="#4a4a4a"
@@ -414,99 +428,100 @@
             </LinearLayout>
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/offer"
-                    android:layout_gravity="center"
-                    android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fb_layout"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/curve_top_no_padding_bg"
+                android:elevation="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/xheader"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/fb_layout"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:elevation="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="start"
+                    android:lineSpacingExtra="1.3sp"
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/the_luxury_of_traveling_with_yacht_charter_companies"
+                    android:textColor="#4a4a4a"
+                    android:textSize="@dimen/_13ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@drawable/curve_top_no_padding_bg">
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/secondary_images_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/xheader">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/secondary_image_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp" />
+
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/description_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/description_fade_bg"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/secondary_images_panel">
 
                     <TextView
-                        android:id="@+id/xheader"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/abcText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:gravity="start"
                         android:lineSpacingExtra="1.3sp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:text="@string/the_luxury_of_traveling_with_yacht_charter_companies"
-                        android:textColor="#4a4a4a"
-                        android:textSize="@dimen/_13ssp"
+                        android:maxLines="10"
+                        android:paddingStart="22dp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="22dp"
+                        android:paddingBottom="22dp"
+                        android:text="@string/information"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/_11ssp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:id="@+id/secondary_images_panel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/xheader">
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/secondary_image_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="20dp"/>
-
-
-                    </LinearLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/description_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/description_fade_bg"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/secondary_images_panel">
-
-                        <TextView
-                            android:id="@+id/abcText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:lineSpacingExtra="1.3sp"
-                            android:maxLines="10"
-                            android:paddingStart="22dp"
-                            android:paddingEnd="22dp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingBottom="22dp"
-                            android:text="@string/information"
-                            android:textColor="@color/common_text_color"
-                            android:textSize="@dimen/_11ssp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View
-                        android:id="@+id/description_gradient1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_alignBottom="@+id/offer"
-                        android:elevation="@dimen/_2sdp"
-                        android:outlineProvider="none"
-                        android:background="@drawable/description_fade_bg"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/description_layout"
-                        app:layout_constraintBottom_toBottomOf="@id/description_layout"/>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/description_gradient1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_alignBottom="@+id/offer"
+                    android:background="@drawable/description_fade_bg"
+                    android:elevation="@dimen/_2sdp"
+                    android:outlineProvider="none"
+                    app:layout_constraintBottom_toBottomOf="@id/description_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/description_layout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <View
@@ -514,67 +529,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_10sdp"
                 android:layout_above="@+id/readmore"
+                android:background="#efefef"
                 android:elevation="@dimen/_2sdp"
-                android:outlineProvider="none"
-                android:background="#efefef"/>
+                android:outlineProvider="none" />
 
             <TextView
                 android:id="@+id/readmore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/offer"
+                android:background="#efefef"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:padding="@dimen/_10sdp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:background="#efefef"
                 android:text="@string/read_more"
                 android:textAllCaps="true"
                 android:textColor="@color/common_text_color"
-                android:textSize="@dimen/_11sdp"
-                android:layout_below="@id/offer"/>
+                android:textSize="@dimen/_11sdp" />
 
             <LinearLayout
                 android:id="@+id/review_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/readmore"
-                android:orientation="vertical"
                 android:gravity="center"
-                android:visibility="visible"
-                android:paddingTop="40dp">
+                android:orientation="vertical"
+                android:paddingTop="40dp"
+                android:visibility="visible">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/reviewViewpager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                tools:listitem="@layout/snippet_items" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/reviewViewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    tools:listitem="@layout/snippet_items" />
 
-            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                android:id="@+id/dots_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:dotsColor="@color/material_grey_500"
-                app:dotsCornerRadius="8dp"
-                app:dotsSize="6dp"
-                app:dotsSpacing="4dp"
-                app:dotsWidthFactor="2.5"
-                app:progressMode="true"
-                app:selectedDotColor="@color/material_grey_500" />
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:dotsColor="@color/material_grey_500"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="6dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/material_grey_500" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/havent_bought_the_feature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:textColor="#9b9b9b"
-                android:gravity="center_horizontal"
-                android:text="You Haven't bought this addon"
                 android:layout_below="@id/review_layout"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:paddingBottom="@dimen/_20sdp"/>
+                android:paddingBottom="@dimen/_20sdp"
+                android:text="You haven't bought this addon"
+                android:textColor="#9b9b9b" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

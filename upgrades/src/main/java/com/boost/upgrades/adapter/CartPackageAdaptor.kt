@@ -59,6 +59,10 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
         holder.removePackage.setOnClickListener {
             listener.deleteCartAddonsItem(bundlesList.get(position).boost_widget_key)
         }
+        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        if(bundlesList.size - 1 == position) {
+            holder.view.visibility = View.GONE
+        }
     }
 
     fun addupdates(upgradeModel: List<CartModel>) {
@@ -75,6 +79,7 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
         val discount = itemView.findViewById<TextView>(R.id.package_discount)
         val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
         val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
+        var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
     }
 
     fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {

@@ -426,6 +426,12 @@ class HomeFragment : BaseFragment(), HomeListener {
         package_viewpager.offscreenPageLimit = list.size
         packageViewPagerAdapter.addupdates(list)
         packageViewPagerAdapter.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if(list.size>1) {
+            dots_indicator.visibility = View.VISIBLE
+        }else {
+            dots_indicator.visibility = View.INVISIBLE
+        }
     }
 
     fun updateFeatureDealsViewPager(list: List<FeatureDeals>,cartList: List<CartModel>) {
@@ -433,6 +439,11 @@ class HomeFragment : BaseFragment(), HomeListener {
         feature_deals_viewpager.offscreenPageLimit = if (list.size > 0) list.size else 1
         featureDealsAdapter.addupdates(list, cartList)
         featureDealsAdapter.notifyDataSetChanged()
+        if(list.size > 1){
+            feature_deals_indicator.visibility = View.VISIBLE
+        }else{
+            feature_deals_indicator.visibility = View.INVISIBLE
+        }
     }
 
     private fun initializePackageViewPager() {

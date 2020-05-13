@@ -56,6 +56,7 @@ class PaidAddonsAdapter(
 ////            intent.putExtra("position",position)
 ////            startActivity(this.context, intent, null)
 //        }
+        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if (list.size - 1 == position) {
             holder.view.visibility = View.GONE
         }

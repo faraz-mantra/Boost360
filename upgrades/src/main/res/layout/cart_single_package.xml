@@ -129,8 +129,8 @@
     <View
         android:id="@+id/cart_single_package_bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/material_grey_200"
+        android:layout_height="@dimen/_3sdp"
+        android:background="@drawable/view_dot_lines_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

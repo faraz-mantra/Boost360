@@ -52,13 +52,14 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
             holder.MRPPrice.visibility = View.GONE
         }
         if(list.get(position).discount > 0) {
-            holder.discount.setText("- " + list.get(position).discount + "%")
+            holder.discount.setText(list.get(position).discount.toString() + "%")
         }else{
             holder.discount.visibility = View.GONE
         }
         holder.remove_addons.setOnClickListener {
             listener.deleteCartAddonsItem(list.get(position).boost_widget_key)
         }
+        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if(list.size - 1 == position) {
             holder.view.visibility = View.GONE
         }

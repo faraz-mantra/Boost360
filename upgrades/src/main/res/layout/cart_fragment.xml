@@ -202,9 +202,14 @@
                 android:id="@+id/package_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/all_side_curve_bg"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:elevation="@dimen/_2sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:background="@drawable/all_side_curve_bg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_status_image">
 
@@ -257,7 +262,7 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:elevation="@dimen/_2sdp"
-                android:paddingTop="@dimen/_8sdp"
+                android:paddingTop="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:background="@drawable/all_side_curve_bg"
                 app:layout_constraintStart_toStartOf="parent"
@@ -312,7 +317,7 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:paddingTop="@dimen/_8sdp"
+                android:paddingTop="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:elevation="@dimen/_2sdp"
                 android:background="@drawable/all_side_curve_bg"
@@ -390,7 +395,7 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:paddingTop="@dimen/_8sdp"
+                android:paddingTop="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:elevation="@dimen/_2sdp"
                 android:background="@drawable/all_side_curve_bg"
@@ -437,7 +442,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_5sdp"
                         android:text="Fill in GSTIN"
                         android:textColor="@color/common_text_color"
                         android:fontFamily="@font/open_sans_semibold"/>
@@ -498,7 +503,7 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:paddingTop="@dimen/_8sdp"
+                android:paddingTop="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:elevation="@dimen/_2sdp"
                 android:background="@drawable/all_side_curve_bg"
@@ -688,22 +693,9 @@
                         android:textSize="@dimen/_12sdp"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cart_total_title">
-
-                        <TextView
-                            android:id="@+id/billing_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/_5sdp"
-                            android:text="billed on 5th day of every month"
-                            android:textSize="@dimen/_8sdp" />
-                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/cart_grand_total"
@@ -782,8 +774,6 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_30sdp"
             android:paddingBottom="@dimen/_10sdp"
-            android:elevation="@dimen/_2sdp"
-            android:layout_margin="@dimen/_5sdp"
             android:text="CONTINUE"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

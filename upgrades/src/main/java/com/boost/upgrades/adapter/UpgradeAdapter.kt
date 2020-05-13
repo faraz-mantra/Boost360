@@ -55,6 +55,7 @@ class UpgradeAdapter(
             args.putString("itemId", upgradeList.get(position).boost_widget_key)
             details.arguments = args
             activity.addFragment(details, Constants.DETAILS_FRAGMENT)
+
 //            val intent = Intent(this.context, Details::class.java)
 //            intent.putExtra("position",position)
 //            startActivity(this.context, intent, null)
@@ -76,11 +77,13 @@ class UpgradeAdapter(
         private var upgradeMRP = itemView.findViewById<TextView>(R.id.upgrade_list_orig_cost)!!
         private var upgradeDiscount = itemView.findViewById<TextView>(R.id.upgrade_list_discount)!!
         private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
+        private var view = itemView.findViewById<View>(R.id.view)!!
 
         private var context: Context = itemView.context
 
 
         fun upgradeListItem(updateModel: FeaturesModel) {
+            view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
             val discount = 100 - updateModel.discount_percent
             val price = (discount * updateModel.price) / 100
             if(updateModel.target_business_usecase !=null) {

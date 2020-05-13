@@ -46,6 +46,7 @@ class HistoryDetailsAdapter(itemList: List<FeaturesModel>?) :
         }else{
             holder.businessType.visibility = View.GONE
         }
+        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if(position == list.size-1){
             holder.view.visibility = View.GONE
         }
