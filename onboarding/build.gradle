@@ -17,7 +17,6 @@ android {
         consumerProguardFiles 'consumer-rules.pro'
         resValue "string", "places_api_key", (project.findProperty("PLACES_API_KEY") ?: "")
         renderscriptTargetApi rootProject.targetSdkVersion
-//        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -39,4 +38,6 @@ dependencies {
     api project(path: ':resources')
     api project(path: ':facebook')
     api project(path: ':twitter')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

@@ -19,8 +19,7 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(context: Contex
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, type: Int): BaseViewHolder {
-    val view = inflater.inflate(getRecyclerViewLayout(type),
-            parent, false)
+    val view = inflater.inflate(getRecyclerViewLayout(type), parent, false)
     val viewHolder = getRecyclerViewHolder(view, type)
     viewHolder?.listener = itemClickListener
     return viewHolder ?: throw IllegalArgumentException("Invalid View Type")

@@ -1,5 +1,6 @@
 package com.framework.base
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.framework.models.BaseViewModel
+import com.framework.views.blur.BlurView
+import com.framework.views.blur.RenderScriptBlur
 
 abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel?> : DialogFragment(), View.OnClickListener {
 
@@ -78,5 +81,11 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
     params.height = getHeight() ?: params.height
     window.attributes = params
   }
-
+  fun BlurView.setBlur(value: Float) {
+    val decorView: View? = activity?.window?.decorView
+    val rootView: ViewGroup = decorView?.findViewById(android.R.id.content) as ViewGroup
+    val windowBackground: Drawable = decorView.background
+    this.setupWith(rootView)?.setFrameClearDrawable(windowBackground)
+        ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)?.setHasFixedTransformationMatrix(true)
+  }
 }

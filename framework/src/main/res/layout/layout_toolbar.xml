@@ -20,7 +20,7 @@
       app:titleMarginEnd="@dimen/toolbar_title_margin_end"
       android:elevation="0dp"
       app:elevation="0dp"
-      tools:title="@tools:sample/lorem/random">
+        tools:title="Home">
 
     </com.framework.views.customViews.CustomToolbar>
 

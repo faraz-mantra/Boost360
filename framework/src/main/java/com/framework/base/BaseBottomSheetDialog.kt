@@ -18,14 +18,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-@Deprecated("Not in use")
 abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : BottomSheetDialogFragment(), View.OnClickListener {
 
   companion object {
     val RESULT_OK = -1
     val RESULT_CANCELED = 0
   }
-
 
   interface BottomSheetDialogResult {
     fun onBottomSheetDismiss(result: Int, data: Any?)
@@ -59,27 +57,20 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
     dialog.setOnShowListener {
       val dialog = it as? BottomSheetDialog ?: return@setOnShowListener
-      val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-              ?: return@setOnShowListener
-      BottomSheetBehavior.from(bottomSheet).apply {
-        state = getBottomSheetInitialState()
-      }
+      val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
+      BottomSheetBehavior.from(bottomSheet).apply { state = getBottomSheetInitialState() }
     }
     return dialog
   }
 
   fun dismiss(result: Int, data: Any?) {
     resultCancelled = result == RESULT_CANCELED
-    if (!resultCancelled) {
-      callback?.onBottomSheetDismiss(result, data)
-    }
+    if (!resultCancelled) callback?.onBottomSheetDismiss(result, data)
     dismiss()
   }
 
   override fun dismiss() {
-    if (resultCancelled) {
-      callback?.onBottomSheetDismiss(RESULT_CANCELED, null)
-    }
+    if (resultCancelled) callback?.onBottomSheetDismiss(RESULT_CANCELED, null)
     callback = null
     super.dismiss()
   }
@@ -104,20 +95,21 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     onCreateView()
-    getBehaviour().addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-      override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
-      }
-
-      override fun onStateChanged(bottomSheet: View, newState: Int) {
-        if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED ||
-                newState == BottomSheetBehavior.STATE_COLLAPSED) {
-          getBehaviour().state = BottomSheetBehavior.STATE_EXPANDED
-        } else {
-          println()
-        }
-      }
-    })
+//    getBehaviour().addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+//      override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//
+//      }
+//
+//      override fun onStateChanged(bottomSheet: View, newState: Int) {
+//        if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED ||
+//            newState == BottomSheetBehavior.STATE_COLLAPSED) {
+//          getBehaviour().state = BottomSheetBehavior.STATE_EXPANDED
+//        } else {
+//          println()
+//        }
+//      }
+//    })
     val parent = view.parent as? View
     val layoutParams = parent?.layoutParams as? CoordinatorLayout.LayoutParams
     layoutParams?.setMargins(getMarginStart(), getMarginTop(), getMarginEnd(), getMarginBottom())

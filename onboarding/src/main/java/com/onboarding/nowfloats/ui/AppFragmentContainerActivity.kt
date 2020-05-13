@@ -251,10 +251,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
 }
 
-fun Fragment.startFragmentActivity(
-    type: FragmentType, bundle: Bundle = Bundle(),
-    clearTop: Boolean = false
-) {
+fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
 
   val intent = Intent(activity, AppFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
@@ -263,10 +260,7 @@ fun Fragment.startFragmentActivity(
   startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentActivity(
-    type: FragmentType, bundle: Bundle = Bundle(),
-    clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, AppFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

@@ -2,13 +2,14 @@ package com.nowfloats.NavigationDrawer;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import androidx.databinding.DataBindingUtil;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.MenuItem;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
@@ -56,9 +57,8 @@ public class ImageMenuActivity extends AppCompatActivity
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.image_list_icons);
         int[] adapterImages = new int[adapterTexts.length];
 
-        for (int i = 0; i<adapterTexts.length;i++)
-        {
-            adapterImages[i] = imagesArray.getResourceId(i,-1);
+        for (int i = 0; i < adapterTexts.length; i++) {
+            adapterImages[i] = imagesArray.getResourceId(i, -1);
         }
 
         imagesArray.recycle();
