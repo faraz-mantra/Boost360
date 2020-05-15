@@ -14,6 +14,7 @@ import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDRespo
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
@@ -41,6 +42,9 @@ class CartViewModel(application: Application) : BaseViewModel(application){
     var _updateGSTIN: MutableLiveData<String> = MutableLiveData()
     var _updateTAN: MutableLiveData<String> = MutableLiveData()
 
+    var allCoupons: MutableLiveData<List<CouponsModel>> = MutableLiveData()
+    var validCouponCode: MutableLiveData<CouponsModel> = MutableLiveData()
+
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
     val compositeDisposable = CompositeDisposable()
@@ -56,6 +60,14 @@ class CartViewModel(application: Application) : BaseViewModel(application){
 
     fun updateAllBundlesResult(): LiveData<List<BundlesModel>> {
         return allBundles
+    }
+
+    fun updateAllCouponsResult(): LiveData<List<CouponsModel>> {
+        return allCoupons
+    }
+
+    fun updateValidCouponResult(): LiveData<CouponsModel> {
+        return validCouponCode
     }
 
     fun getCustomerId(): String? {
@@ -246,5 +258,26 @@ class CartViewModel(application: Application) : BaseViewModel(application){
                 updatesLoader.postValue(false)
             }
             .subscribe()
+    }
+
+    fun getAllCoupon(){
+        CompositeDisposable().add(
+                AppDatabase.getInstance(getApplication())!!
+                        .couponsDao()
+                        .getCouponItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            allCoupons.postValue(it)
+                            updatesLoader.postValue(false)
+                        },{
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        })
+        )
+    }
+
+    fun addCouponCodeToCart(coupon: CouponsModel){
+        validCouponCode.postValue(coupon)
     }
 }

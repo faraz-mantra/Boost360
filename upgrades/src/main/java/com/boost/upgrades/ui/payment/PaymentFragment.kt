@@ -26,6 +26,7 @@ import com.boost.upgrades.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
+import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -112,13 +113,9 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         initializeNetBankingSelector()
         initializeUPIRecycler()
         initializeWalletRecycler()
+        updateSubscriptionDetails()
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE PaymentScreen Initialised", "ADDONS_MARKETPLACE PaymentScreen", "")
-
-        payment_amount_value.setText("₹" + totalAmount)
-        order_total_value.setText("₹" + totalAmount)
-        payment_total_value.setText("₹" + totalAmount)
-        items_cost.setText("₹" + totalAmount)
 
         back_button.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
@@ -324,6 +321,31 @@ class PaymentFragment : BaseFragment(), PaymentListener {
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().viewModelStore.clear()
+    }
+
+    fun updateSubscriptionDetails(){
+        var prefs = SharedPrefs(activity as UpgradeActivity)
+
+        //cartOriginalPrice
+        val cartOriginalPrice = prefs.getCartOriginalAmount()
+        payment_amount_value.setText("₹" +cartOriginalPrice)
+
+        //coupon discount percentage
+        val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
+        coupon_discount_title.setText("Coupon discount(" + couponDiscountPercentage.toString() + "%)")
+
+        //coupon discount amount
+        val couponDiscountAmount = cartOriginalPrice * couponDiscountPercentage / 100
+        coupon_discount_value.setText("-₹"+couponDiscountAmount.toString())
+
+        //igsttin value
+        val temp = (cartOriginalPrice * 18) / 100
+        val taxValue = Math.round(temp * 100) / 100.0
+        igst_value.setText("+₹" + taxValue)
+
+        order_total_value.setText("₹" + totalAmount)
+        payment_total_value.setText("₹" + totalAmount)
+        items_cost.setText("₹" + totalAmount)
     }
 
 }

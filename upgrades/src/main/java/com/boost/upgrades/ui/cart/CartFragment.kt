@@ -26,6 +26,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
@@ -71,6 +72,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     var TANNumber: String? = null
 
     var taxValue = 0.0
+
+    var validCouponCode: CouponsModel? = null
+
+    var couponDiscountAmount = 0.0
 
     lateinit var progressDialog: ProgressDialog
 
@@ -147,6 +152,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         } catch (ex: Exception) {
                             Log.e("FAILED", ex.message)
                         }
+                    }
+
+                    if (validCouponCode != null) {
+                        couponCode = validCouponCode!!.coupon_key
                     }
 
                     if (item.item_type.equals("features")) {
@@ -383,7 +392,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 } else {
                     package_layout.visibility = View.GONE
                 }
-                totalCalculation(it)
+                totalCalculation()
             } else {
                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
                 empty_cart.visibility = View.VISIBLE
@@ -396,6 +405,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 var prefs = SharedPrefs(activity as UpgradeActivity)
                 prefs.storeLatestPurchaseOrderId(it.Result.OrderId)
                 prefs.storeLatestPurchaseOrderTotalPrice(it.Result.TotalPrice.toFloat())
+
+                //original cart amount and coupon discount added to shareprefs
+                prefs.storeCartOriginalAmount((total + couponDiscountAmount).toFloat())
+                prefs.storeCouponDiscountPercentage(if (validCouponCode == null) 0 else validCouponCode!!.discount_percent)
+
                 val paymentFragment = PaymentFragment.newInstance()
                 val args = Bundle()
                 args.putString("customerId", customerId)
@@ -452,6 +466,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.updateAllBundlesResult().observe(this, Observer {
             bundlesList = it
         })
+
+        //getting valid Coupon Code
+        viewModel.updateValidCouponResult().observe(this, Observer {
+            validCouponCode = it
+            discount_coupon_title.setText(validCouponCode!!.coupon_key)
+            cart_apply_coupon.visibility = View.GONE
+            totalCalculation()
+        })
     }
 
     fun updatePackage(features: List<CartModel>) {
@@ -485,18 +507,25 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
 
-    fun totalCalculation(list: List<CartModel>) {
+    fun totalCalculation() {
         total = 0.0
-        if (list != null && list.size > 0) {
-            for (item in list) {
+        var couponDisount = 0
+        if (validCouponCode != null) {
+            couponDisount = validCouponCode!!.discount_percent!!
+            coupon_discount_title.setText("Coupon discount(" + couponDisount.toString() + "%)")
+        }
+        if (cartList != null && cartList.size > 0) {
+            for (item in cartList) {
                 total += item.price * item.min_purchase_months
             }
             cart_amount_value.setText("₹" + total.toString())
-            coupon_discount_value.setText("0")
+            couponDiscountAmount = total * couponDisount / 100
+            coupon_discount_value.setText("-₹" + couponDiscountAmount.toString())
+            total -= couponDiscountAmount
             val temp = (total * 18) / 100
             taxValue = Math.round(temp * 100) / 100.0
             grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-            igst_value.setText("₹" + taxValue)
+            igst_value.setText("+₹" + taxValue)
             order_total_value.setText("₹" + grandTotal.toString())
             cart_grand_total.setText("₹" + grandTotal.toString())
             footer_grand_total.setText("₹" + grandTotal.toString())

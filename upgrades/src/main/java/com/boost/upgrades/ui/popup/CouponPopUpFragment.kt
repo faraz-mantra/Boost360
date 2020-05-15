@@ -1,18 +1,31 @@
 package com.boost.upgrades.ui.popup
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
+import com.boost.upgrades.data.model.CouponsModel
+import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.coupon_popup.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class CouponPopUpFragment : DialogFragment(){
+class CouponPopUpFragment : DialogFragment() {
 
     lateinit var root: View
+
+    private lateinit var viewModel: CartViewModel
+
+    var couponsList: List<CouponsModel> = arrayListOf()
 
     override fun onStart() {
         super.onStart()
@@ -23,9 +36,9 @@ class CouponPopUpFragment : DialogFragment(){
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.coupon_popup, container, false)
 
@@ -34,16 +47,62 @@ class CouponPopUpFragment : DialogFragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
+
+        loadAllCoupons()
+        initMvvm()
 
         coupon_popup_outer_layout.setOnClickListener {
             Utils.hideSoftKeyboard(requireActivity())
             dialog!!.dismiss()
         }
 
-        enter_coupon_layout.setOnClickListener {  }
+        enter_coupon_layout.setOnClickListener { }
+
+        coupon_submit.setOnClickListener {
+            if(validateCouponCode()){
+                if(couponsList.size>0){
+                    coupon_invalid.visibility = View.GONE
+                    var validCouponCode:CouponsModel? = null
+                    for(singleCoupon in couponsList){
+                        if(entered_coupon_value.text.toString().toLowerCase(Locale.getDefault()) == singleCoupon.coupon_key.toLowerCase(Locale.getDefault())){
+                            validCouponCode = singleCoupon
+                            break
+                        }
+                    }
+                    if(validCouponCode==null){
+                        coupon_invalid.visibility = View.VISIBLE
+                    }else{
+                        dismiss()
+                        viewModel.addCouponCodeToCart(validCouponCode)
+                    }
+                }else{
+                    coupon_invalid.visibility = View.VISIBLE
+                }
+            }
+        }
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Discount_Coupon Loaded", "Discount_Coupon", "")
 
+    }
+
+    fun loadAllCoupons(){
+        viewModel.getAllCoupon()
+    }
+
+    @SuppressLint("FragmentLiveDataObserve")
+    fun initMvvm(){
+        viewModel.updateAllCouponsResult().observe(this, Observer {
+            couponsList = it
+        })
+    }
+
+    fun validateCouponCode(): Boolean{
+        if(entered_coupon_value.text.isEmpty()){
+            Toasty.error(requireContext(), "Field is Empty!!", Toast.LENGTH_LONG).show();
+            return false
+        }
+        return true
     }
 
 
