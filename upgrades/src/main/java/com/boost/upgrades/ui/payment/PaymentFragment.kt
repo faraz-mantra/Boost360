@@ -339,7 +339,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         coupon_discount_value.setText("-₹"+couponDiscountAmount.toString())
 
         //igsttin value
-        val temp = (cartOriginalPrice * 18) / 100
+        val temp = ((cartOriginalPrice-couponDiscountAmount) * 18) / 100
         val taxValue = Math.round(temp * 100) / 100.0
         igst_value.setText("+₹" + taxValue)
 
