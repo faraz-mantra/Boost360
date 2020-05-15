@@ -24,7 +24,7 @@ class ChannelConfirmDialog() : BaseDialogFragment<DialogCategorySelectorConfirmB
         return R.layout.dialog_category_selector_confirm
     }
 
-    override fun onViewCreated() {
+  override fun onCreateView() {
         if (count > 0) {
             val title = StringBuilder(resources.getString(R.string.you_selected) + "\n$count " + resources.getString(R.string.channel))
             if (count > 1) title.append(resources.getString(R.string.more_than_one_add_s))

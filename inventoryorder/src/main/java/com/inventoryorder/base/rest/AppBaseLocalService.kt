@@ -2,12 +2,12 @@ package com.inventoryorder.base.rest
 
 import com.framework.base.BaseLocalService
 import com.framework.base.BaseResponse
-import com.inventoryorder.rest.Taskcode
+import com.inventoryorder.rest.TaskCode
 
 open class AppBaseLocalService : BaseLocalService() {
 
-  fun saveToLocal(response: BaseResponse, taskcode: Taskcode) {
-    super.saveToLocal(response, taskcode.ordinal)
+  fun saveToLocal(response: BaseResponse, taskCode: TaskCode) {
+    super.saveToLocal(response, taskCode.ordinal)
   }
 
 }

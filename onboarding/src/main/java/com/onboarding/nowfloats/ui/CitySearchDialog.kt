@@ -39,7 +39,7 @@ class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewMod
     return R.style.MaterialDialogThemeFull
   }
 
-  override fun onViewCreated() {
+  override fun onCreateView() {
     viewModel?.getCities(baseActivity)?.observeOnce(viewLifecycleOwner, Observer { onGetCities(it) })
     binding?.edtSearchText?.afterTextChanged { filterCity(it) }
     binding?.ivClearText?.setOnClickListener { binding?.edtSearchText?.setText("") }

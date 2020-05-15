@@ -22,7 +22,7 @@ class InternetErrorDialog : BaseDialogFragment<DialogInternetErrorBinding, BaseV
         return R.style.MaterialDialogThemeFull
     }
 
-    override fun onViewCreated() {
+  override fun onCreateView() {
         binding?.blurView?.setBlur(4F)
         isCancelable = false
         binding?.retryBtn?.setOnClickListener {

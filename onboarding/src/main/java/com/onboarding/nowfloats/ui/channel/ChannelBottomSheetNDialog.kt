@@ -40,7 +40,7 @@ class ChannelBottomSheetNDialog : BaseDialogFragment<DialogChannelBottomSheetNew
         this.list.addAll(list)
     }
 
-    override fun onViewCreated() {
+  override fun onCreateView() {
         setOnClickListener(binding?.done)
         list.filter { it.isSelected!! }.takeIf { it.size > 1 }?.let { binding?.done?.visible() }
         val text = StringBuilder(resources.getString(R.string.recommended_on) + " " + list.size + " " + resources.getString(R.string.channel))

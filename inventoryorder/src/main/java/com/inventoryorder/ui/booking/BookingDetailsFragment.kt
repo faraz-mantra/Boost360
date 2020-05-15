@@ -1,24 +1,37 @@
 package com.inventoryorder.ui.booking
 
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.lifecycle.Observer
+import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentInventoryBookingDetailsBinding
+import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.bottomsheet.LocationsModel
-import com.inventoryorder.model.ordersdetails.ItemX
+import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
+import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.order.DeliveryBottomSheetDialog
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDetailsBinding>() {
 
@@ -37,28 +50,79 @@ class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDet
 
   override fun onCreateView() {
     super.onCreateView()
-    orderItem = arguments?.getSerializable(IntentConstant.BOOKING_ITEM.name) as? OrderItem
-    orderItem?.let { setDetails(it) }
-    setOnClickListener(binding?.btnBusiness, binding?.buttonConfirmOrder, binding?.tvCancelOrder)
+    arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
+    setOnClickListener(binding?.btnBusiness)
+  }
+
+  private fun apiGetOrderDetails(orderId: String) {
+    showProgress()
+    viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        errorUi(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        binding?.mainView?.visible()
+        binding?.error?.gone()
+        orderItem = (it as? OrderDetailResponse)?.Data
+        if (orderItem != null) {
+          setDetails(orderItem!!)
+        } else errorUi("Order item null.")
+      } else errorUi(it.message())
+    })
+  }
+
+  private fun errorUi(message: String) {
+    binding?.mainView?.gone()
+    binding?.error?.visible()
+    binding?.error?.text = message
   }
 
   private fun setDetails(order: OrderItem) {
     setToolbarTitle("# ${order.ReferenceNumber}")
+    checkPaymentConfirm(order)
+    checkCancelConfirm(order)
     setOrderDetails(order)
     (order.Items?.map {
       it.recyclerViewType = RecyclerViewItemType.BOOKING_DETAILS.getLayout();it
-    } as? ArrayList<ItemX>)?.let { setAdapter(it) }
+    } as? ArrayList<ItemN>)?.let { setAdapter(it) }
   }
 
-  private fun setAdapter(orderItems: ArrayList<ItemX>) {
+  private fun setAdapter(orderItems: ArrayList<ItemN>) {
     binding?.recyclerViewBookingDetails?.post {
       val adapter = AppBaseRecyclerViewAdapter(baseActivity, orderItems)
       binding?.recyclerViewBookingDetails?.adapter = adapter
     }
   }
 
+  private fun checkPaymentConfirm(order: OrderItem) {
+    if (order.isConfirmBooking()) {
+      buttonDisable(R.color.colorAccent)
+      binding?.buttonConfirmOrder?.setOnClickListener(this)
+    } else {
+      buttonDisable(R.color.primary_grey)
+      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
+    }
+  }
+
+  private fun buttonDisable(color: Int) {
+    activity?.let {
+      val newDrawable: Drawable? = binding?.buttonConfirmOrder?.background
+      newDrawable?.let { it1 -> DrawableCompat.setTint(it1, ContextCompat.getColor(it, color)) }
+      binding?.buttonConfirmOrder?.background = newDrawable
+    }
+  }
+
+  private fun checkCancelConfirm(order: OrderItem) {
+    if (order.isCancelBooking()) {
+      binding?.tvCancelOrder?.visible()
+      binding?.tvCancelOrder?.setOnClickListener(this)
+    } else binding?.tvCancelOrder?.gone()
+  }
+
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
+    binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
     binding?.tvOrderStatus?.text = order.PaymentDetails?.Status?.trim()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.Method?.trim()
     binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.Status?.trim()}"
@@ -93,14 +157,54 @@ class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDet
 
   }
 
+  private fun getStatusText(orderType: OrderSummaryModel.OrderType?, paymentDetails: PaymentDetailsN?): String? {
+    return if (orderType == OrderSummaryModel.OrderType.CANCELLED
+        && paymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+      OrderSummaryModel.OrderType.ABANDONED.type
+    } else orderType?.type
+  }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.btnBusiness -> showBottomSheetDialog()
-      binding?.buttonConfirmOrder -> showShortToast("Coming Soon...")
-      binding?.tvCancelOrder -> showShortToast("Coming Soon...")
-
+      binding?.buttonConfirmOrder -> apiConfirmOrder()
+      binding?.tvCancelOrder -> apiCancelOrder()
     }
+  }
+
+  private fun apiCancelOrder() {
+    showProgress()
+    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        val data = it as? OrderConfirmStatus
+        data?.let { d -> showLongToast(d.Message as String?) }
+        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
+        orderItem?.let { it1 -> checkCancelConfirm(it1) }
+      } else showLongToast(it.message())
+    })
+  }
+
+  private fun apiConfirmOrder() {
+    showProgress()
+    viewModel?.confirmOrder(clientId, orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        val data = it as? OrderConfirmStatus
+        data?.let { d -> showLongToast(d.Message as String?) }
+        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
+        orderItem?.let { it1 -> checkPaymentConfirm(it1) }
+      } else showLongToast(it.message())
+    })
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

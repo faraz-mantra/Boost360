@@ -29,7 +29,7 @@ class FeaturesBottomSheetDialog : BaseDialogFragment<DialogFeatureDetailsBottomS
         return R.style.MaterialDialogThemeFull
     }
 
-    override fun onViewCreated() {
+  override fun onCreateView() {
         feature?.let { it1 ->
             binding?.title?.text = it1.title
             val drawable = it1.getDrawable(baseActivity)
