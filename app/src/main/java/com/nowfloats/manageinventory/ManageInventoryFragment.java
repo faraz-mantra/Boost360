@@ -277,7 +277,7 @@ public class ManageInventoryFragment extends Fragment {
 //        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private boolean getAppointmentType(String fp_appExperienceCode) {
+    public static boolean getAppointmentType(String fp_appExperienceCode) {
         switch (fp_appExperienceCode) {
             case "SVC":
             case "DOC":

@@ -7,23 +7,24 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
 data class OrderItem(
-    val BillingDetails: BillingDetails? = null,
-    val BuyerDetails: BuyerDetails? = null,
-    val CancellationDetails: CancellationDetails? = null,
+    val BillingDetails: BillingDetailsN? = null,
+    val BuyerDetails: BuyerDetailsN? = null,
+    val CancellationDetails: CancellationDetailsN? = null,
     var CreatedOn: String? = null,
-    val InventoryDetails: Any? = null,
+    val InventoryDetails: ArrayList<InventoryDetailN>? = null,
     val IsArchived: Boolean? = null,
-    val Items: ArrayList<ItemX>? = null,
+    val Items: ArrayList<ItemN>? = null,
     val LogisticsDetails: LogisticsDetailsN? = null,
     val Mode: String? = null,
     val OrderAmountMatch: Boolean? = null,
     val PaymentDetails: PaymentDetailsN? = null,
     val ReferenceNumber: String? = null,
-    val RefundDetails: Any? = null,
-    val SellerDetails: SellerDetails? = null,
-    val SettlementDetails: Any? = null,
+    val RefundDetails: RefundDetailsN? = null,
+    val SellerDetails: SellerDetailsN? = null,
+    val SettlementDetails: SettlementDetailsN? = null,
     var Status: String? = null,
     val UpdatedOn: String? = null,
     val _id: String? = null

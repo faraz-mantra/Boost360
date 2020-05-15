@@ -25,6 +25,10 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.getCancelledOrders(request).toLiveData()
   }
 
+  fun getOrderDetails(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getOrderDetails(clientId, orderId).toLiveData()
+  }
+
   fun getInCompleteOrders(request: OrderSummaryRequest): LiveData<BaseResponse> {
     return InventoryOrderRepository.getInCompleteOrders(request).toLiveData()
   }

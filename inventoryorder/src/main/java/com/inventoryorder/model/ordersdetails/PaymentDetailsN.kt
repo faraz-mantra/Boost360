@@ -4,6 +4,7 @@ import java.io.Serializable
 import java.util.*
 
 data class PaymentDetailsN(
+    val ExtraProperties: ExtraPropertiesN,
     val Method: String? = null,
     val OnlinePaymentProvider: String? = null,
     val Status: String? = null,

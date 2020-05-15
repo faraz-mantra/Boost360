@@ -190,7 +190,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
       RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal -> {
         val orderItem = item as? OrderItem
         val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.BOOKING_ITEM.name, orderItem)
+        bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentActivity(FragmentType.BOOKING_DETAIL_VIEW, bundle)
       }

@@ -22,11 +22,12 @@ import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentInventoryBookingDetailsBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.bottomsheet.LocationsModel
-import com.inventoryorder.model.ordersdetails.ItemX
+import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
+import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.order.DeliveryBottomSheetDialog
 import java.util.*
@@ -49,9 +50,33 @@ class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDet
 
   override fun onCreateView() {
     super.onCreateView()
-    orderItem = arguments?.getSerializable(IntentConstant.BOOKING_ITEM.name) as? OrderItem
-    orderItem?.let { setDetails(it) }
+    arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
     setOnClickListener(binding?.btnBusiness)
+  }
+
+  private fun apiGetOrderDetails(orderId: String) {
+    showProgress()
+    viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        errorUi(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        binding?.mainView?.visible()
+        binding?.error?.gone()
+        orderItem = (it as? OrderDetailResponse)?.Data
+        if (orderItem != null) {
+          setDetails(orderItem!!)
+        } else errorUi("Order item null.")
+      } else errorUi(it.message())
+    })
+  }
+
+  private fun errorUi(message: String) {
+    binding?.mainView?.gone()
+    binding?.error?.visible()
+    binding?.error?.text = message
   }
 
   private fun setDetails(order: OrderItem) {
@@ -61,10 +86,10 @@ class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDet
     setOrderDetails(order)
     (order.Items?.map {
       it.recyclerViewType = RecyclerViewItemType.BOOKING_DETAILS.getLayout();it
-    } as? ArrayList<ItemX>)?.let { setAdapter(it) }
+    } as? ArrayList<ItemN>)?.let { setAdapter(it) }
   }
 
-  private fun setAdapter(orderItems: ArrayList<ItemX>) {
+  private fun setAdapter(orderItems: ArrayList<ItemN>) {
     binding?.recyclerViewBookingDetails?.post {
       val adapter = AppBaseRecyclerViewAdapter(baseActivity, orderItems)
       binding?.recyclerViewBookingDetails?.adapter = adapter

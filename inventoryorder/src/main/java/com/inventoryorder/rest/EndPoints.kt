@@ -12,6 +12,7 @@ object EndPoints {
 
   const val GET_LIST_ASSURE_PURCHASE_ORDER = "api/assuredPurchase/v2/ListInProgressOrders"
   const val GET_LIST_CANCELLED_ORDER = "api/assuredPurchase/v2/ListCancelledOrders"
+  const val GET_ORDER_DETAIL = "api/assuredPurchase/v2/GetOrderDetails"
   const val GET_LIST_IN_COMPLETE_ORDER = "api/assuredPurchase/v2/ListIncompleteOrders"
 
   const val GET_CONFIRM_ORDER = "api/assuredPurchase/v2/ConfirmOrder"

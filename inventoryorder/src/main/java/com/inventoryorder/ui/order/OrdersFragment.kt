@@ -136,7 +136,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
       RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal -> {
         val orderItem = item as? OrderItem
         val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.ORDER_ITEM.name, orderItem)
+        bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle)
       }
