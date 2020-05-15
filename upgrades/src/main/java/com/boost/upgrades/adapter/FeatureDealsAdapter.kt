@@ -49,34 +49,54 @@ class FeatureDealsAdapter(
     }
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        getFeatureInfoFromDB(holder, list.get(position).feature_code)
 
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val date = inputFormat.parse(list.get(position).deal_end_date);
         val currentDate = Calendar.getInstance()
         val diffInMilliconds = date.time - currentDate.timeInMillis
-        val diffInSeconds = TimeUnit.SECONDS.convert(diffInMilliconds,TimeUnit.MILLISECONDS)
-        val diffInMinutes = TimeUnit.MINUTES.convert(diffInMilliconds,TimeUnit.MILLISECONDS)
-        val diffInHours = TimeUnit.HOURS.convert(diffInMilliconds,TimeUnit.MILLISECONDS)
-        val diffInDays = TimeUnit.DAYS.convert(diffInMilliconds,TimeUnit.MILLISECONDS)
-        object: CountDownTimer(diffInMilliconds,1000){
-            override fun onFinish() {
-            }
+        val diffInSeconds = TimeUnit.SECONDS.convert(diffInMilliconds, TimeUnit.MILLISECONDS)
+        val diffInMinutes = TimeUnit.MINUTES.convert(diffInMilliconds, TimeUnit.MILLISECONDS)
+        val diffInHours = TimeUnit.HOURS.convert(diffInMilliconds, TimeUnit.MILLISECONDS)
+        val diffInDays = TimeUnit.DAYS.convert(diffInMilliconds, TimeUnit.MILLISECONDS)
 
-            override fun onTick(millisUntilFinished: Long) {
-                val timerFormat = SimpleDateFormat()
-                if(diffInDays>0) {
-                    timerFormat.applyPattern("dd'd':HH'h':mm'm':ss's'")
-                }else if(diffInHours>0){
-                    timerFormat.applyPattern("HH'h':mm'm':ss's'")
-                }else if(diffInMinutes>0){
-                    timerFormat.applyPattern("mm'm':ss's'")
-                }else if(diffInSeconds>0){
-                    timerFormat.applyPattern("ss's'")
+        getFeatureInfoFromDB(holder, list.get(position).feature_code, diffInMilliconds)
+
+        if (diffInMilliconds > 0) {
+            object : CountDownTimer(diffInMilliconds, 1000) {
+                override fun onFinish() {
+                    holder.submit.background = ContextCompat.getDrawable(
+                            activity.applicationContext,
+                            R.drawable.added_to_cart_grey
+                    )
+                    holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+                    holder.submit.setText("DEAL HAS EXPIRED!!")
+                    holder.submit.isClickable = false
                 }
-                holder.timer.setText(timerFormat.format(Date(millisUntilFinished)).toString())
-            }
-        }.start()
+
+                override fun onTick(millisUntilFinished: Long) {
+                    val timerFormat = SimpleDateFormat()
+                    if (diffInDays > 0) {
+                        timerFormat.applyPattern("dd'd':HH'h':mm'm':ss's'")
+                    } else if (diffInHours > 0) {
+                        timerFormat.applyPattern("HH'h':mm'm':ss's'")
+                    } else if (diffInMinutes > 0) {
+                        timerFormat.applyPattern("mm'm':ss's'")
+                    } else if (diffInSeconds > 0) {
+                        timerFormat.applyPattern("ss's'")
+                    }
+                    holder.timer.setText(timerFormat.format(Date(millisUntilFinished)).toString())
+                }
+            }.start()
+        } else {
+            //deal of the day expired
+            holder.submit.background = ContextCompat.getDrawable(
+                    activity.applicationContext,
+                    R.drawable.added_to_cart_grey
+            )
+            holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+            holder.submit.setText("DEAL HAS EXPIRED!!")
+            holder.submit.isClickable = false
+        }
     }
 
 
@@ -105,7 +125,7 @@ class FeatureDealsAdapter(
         val imageLayout = itemView.findViewById<CardView>(R.id.imageLayout)
     }
 
-    fun getFeatureInfoFromDB(holder: PagerViewHolder, itemId: String) {
+    fun getFeatureInfoFromDB(holder: PagerViewHolder, itemId: String, remainingTime: Long) {
         var mrpPrice = 0.0
         var grandTotal = 0.0
         CompositeDisposable().add(
@@ -142,9 +162,35 @@ class FeatureDealsAdapter(
                                     } else {
                                         holder.origCost.visibility = View.GONE
                                     }
-                                    holder.submit.setOnClickListener(object : View.OnClickListener {
-                                        override fun onClick(v: View?) {
-                                            homeListener.onAddFeatureDealItemToCart(featureModel, 1)
+                                    if (remainingTime > 0) {
+                                        holder.submit.setOnClickListener(object : View.OnClickListener {
+                                            override fun onClick(v: View?) {
+                                                homeListener.onAddFeatureDealItemToCart(featureModel, 1)
+                                                holder.submit.background = ContextCompat.getDrawable(
+                                                        activity.applicationContext,
+                                                        R.drawable.added_to_cart_grey
+                                                )
+                                                holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+                                                holder.submit.setText(activity.getString(R.string.added_to_cart))
+                                                holder.submit.isClickable = false
+                                            }
+
+                                        })
+                                        var itemInCart = false
+                                        for (cart in cartList) {
+                                            if (itemId.equals(cart.boost_widget_key)) {
+                                                itemInCart = true
+                                                break
+                                            }
+                                        }
+                                        if (!itemInCart) {
+                                            holder.submit.background = ContextCompat.getDrawable(
+                                                    activity.applicationContext,
+                                                    R.drawable.feature_deals_click_effect
+                                            )
+                                            holder.submit.setTextColor(activity.resources.getColor(R.color.app_text_yellow))
+                                            holder.submit.setText("Add to cart")
+                                        } else {
                                             holder.submit.background = ContextCompat.getDrawable(
                                                     activity.applicationContext,
                                                     R.drawable.added_to_cart_grey
@@ -153,30 +199,6 @@ class FeatureDealsAdapter(
                                             holder.submit.setText(activity.getString(R.string.added_to_cart))
                                             holder.submit.isClickable = false
                                         }
-
-                                    })
-                                    var itemInCart = false
-                                    for (cart in cartList) {
-                                        if (itemId.equals(cart.boost_widget_key)) {
-                                            itemInCart = true
-                                            break
-                                        }
-                                    }
-                                    if (!itemInCart) {
-                                        holder.submit.background = ContextCompat.getDrawable(
-                                                activity.applicationContext,
-                                                R.drawable.feature_deals_click_effect
-                                        )
-                                        holder.submit.setTextColor(activity.resources.getColor(R.color.app_text_yellow))
-                                        holder.submit.setText("Add to cart")
-                                    } else {
-                                        holder.submit.background = ContextCompat.getDrawable(
-                                                activity.applicationContext,
-                                                R.drawable.added_to_cart_grey
-                                        )
-                                        holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
-                                        holder.submit.setText(activity.getString(R.string.added_to_cart))
-                                        holder.submit.isClickable = false
                                     }
                                 },
                                 {
