@@ -359,6 +359,21 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(Key_Preferences.GET_FP_EXPERIENCE_CODE, null);
     }
 
+    public boolean isNonPhysicalProductExperienceCode(){
+        String code = pref.getString(Key_Preferences.GET_FP_EXPERIENCE_CODE, null);
+        if(code != null){
+            switch (code){
+                case "RTL":
+                case "CAF":
+                case "MFG":
+                    return false;
+                default:
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public String getFPPrimaryContactNumber(){
         return pref.getString(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, null);
     }

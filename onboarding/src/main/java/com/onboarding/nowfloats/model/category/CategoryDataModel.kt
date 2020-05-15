@@ -15,6 +15,7 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 class CategoryDataModel(
         val experience_code: String? = null,
+        val webTemplateId: String? = null,
         val category_key: String? = null,
         val category_Name: String? = null,
         val category_descriptor: String? = null,
@@ -26,6 +27,7 @@ class CategoryDataModel(
     var isSelected = false
 
     constructor(parcel: Parcel) : this(
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -108,6 +110,7 @@ class CategoryDataModel(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(experience_code)
+        parcel.writeString(webTemplateId)
         parcel.writeString(category_key)
         parcel.writeString(category_Name)
         parcel.writeString(icon)
