@@ -5,7 +5,7 @@ import com.framework.extensions.gone
 import com.framework.glide.util.glideLoad
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemBookingDetailsBinding
-import com.inventoryorder.model.ordersdetails.ItemX
+import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
@@ -13,11 +13,11 @@ class BookingDetailsViewHolder(binding: ItemBookingDetailsBinding) : AppBaseRecy
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? ItemX
+    val data = item as? ItemN
     data?.let { setDataResponseForOrderDetails(it) }
   }
 
-  private fun setDataResponseForOrderDetails(item: ItemX) {
+  private fun setDataResponseForOrderDetails(item: ItemN) {
     binding.tvDishName.text = item.Product?.Name?.trim()
     binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
     binding.tvDishQuantity.gone()

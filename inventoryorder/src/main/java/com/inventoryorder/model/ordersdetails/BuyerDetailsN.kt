@@ -2,10 +2,10 @@ package com.inventoryorder.model.ordersdetails
 
 import java.io.Serializable
 
-data class BuyerDetails(
-    val Address: Address? = null,
-    val ContactDetails: ContactDetails? = null,
-    val ExtraProperties: ExtraProperties? = null
+data class BuyerDetailsN(
+    val Address: AddressN? = null,
+    val ContactDetails: ContactDetailsN? = null,
+    val ExtraProperties: ExtraPropertiesN? = null
 ) : Serializable {
 
   fun getAddressFull(): String? {

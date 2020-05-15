@@ -23,6 +23,6 @@ abstract class PaginationScrollListener(var layoutManager: LinearLayoutManager) 
 
   companion object {
     const val PAGE_START = 0
-    const val PAGE_SIZE = 20
+    const val PAGE_SIZE = 10
   }
 }

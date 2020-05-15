@@ -2,7 +2,7 @@ package com.inventoryorder.model.ordersdetails
 
 import java.io.Serializable
 
-data class Address(
+data class AddressN(
     val AddressLine1: String? = null,
     val AddressLine2: String? = null,
     val City: String? = null,

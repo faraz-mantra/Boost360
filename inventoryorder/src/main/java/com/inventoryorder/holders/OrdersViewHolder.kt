@@ -1,5 +1,6 @@
 package com.inventoryorder.holders
 
+import android.graphics.Paint
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
@@ -9,9 +10,11 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
+import java.util.*
 
 class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<ItemOrderBinding>(binding) {
 
@@ -31,6 +34,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
   }
 
   private fun setDataResponse(order: OrderItem) {
+    checkPaymentConfirm(order)
     binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
     binding.orderId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
@@ -50,20 +54,48 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
     } ?: View.GONE
     OrderSummaryModel.OrderType.fromValue(order.status())?.let {
       when (it) {
-        OrderSummaryModel.OrderType.RECEIVED,
-        OrderSummaryModel.OrderType.ORDER_CONFIRM, OrderSummaryModel.OrderType.PAYMENT_CONFIRM,
+        OrderSummaryModel.OrderType.RECEIVED, OrderSummaryModel.OrderType.PAYMENT_CONFIRM,
         OrderSummaryModel.OrderType.SUCCESSFUL,
-        OrderSummaryModel.OrderType.RETURNED,
-        OrderSummaryModel.OrderType.ABANDONED,
-        OrderSummaryModel.OrderType.ESCALATED -> {
+        OrderSummaryModel.OrderType.ESCALATED,
+
+        OrderSummaryModel.OrderType.ORDER_INITIATED,
+        OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED,
+        OrderSummaryModel.OrderType.DELIVERY_IN_PROGRESS,
+        OrderSummaryModel.OrderType.FEEDBACK_PENDING,
+        OrderSummaryModel.OrderType.FEEDBACK_RECEIVED,
+        OrderSummaryModel.OrderType.DELIVERY_DELAYED,
+        OrderSummaryModel.OrderType.DELIVERY_FAILED,
+        OrderSummaryModel.OrderType.DELIVERY_COMPLETED -> {
           changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light)
         }
+        OrderSummaryModel.OrderType.ABANDONED,
         OrderSummaryModel.OrderType.CANCELLED -> {
+          if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+            binding.orderType.text = OrderSummaryModel.OrderType.ABANDONED.type
+          }
           changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey)
         }
       }
     }
 
+  }
+
+  private fun checkPaymentConfirm(order: OrderItem) {
+    if (order.isConfirmBooking()) {
+      buttonDisable(R.color.colorAccent, R.drawable.btn_rounded_orange_border)
+      binding.btnConfirm.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.ORDER_CONFIRM_CLICKED.ordinal) }
+      binding.btnConfirm.paintFlags = 0
+    } else {
+      buttonDisable(R.color.primary_grey, R.drawable.btn_rounded_grey_border)
+      binding.btnConfirm.paintFlags = binding.btnConfirm.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    }
+  }
+
+  private fun buttonDisable(color: Int, border: Int) {
+    activity?.let {
+      binding.btnConfirm.setTextColor(ContextCompat.getColor(it, color))
+      binding.btnConfirm.background = ContextCompat.getDrawable(it, border)
+    }
   }
 
   private fun changeBackground(confirm: Int, detaile: Int, btn: Int, orderBg: Int, rupeesColor: Int) {

@@ -101,4 +101,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     return list[position]
   }
 
+  open fun list(): ArrayList<T> {
+    return list
+  }
+
 }
