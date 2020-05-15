@@ -66,6 +66,7 @@ class AllFeatureAdaptor(
         if(position > 0 && (upgradeList.size - 1) != position) {
             holder.upgradeLayout.setBackgroundColor(ContextCompat.getColor(context!!, R.color.white))
         }
+        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if ((upgradeList.size - 1) == position) {
             holder.view.visibility = View.INVISIBLE
             holder.upgradeLayout.setBackgroundResource(R.drawable.feature_curve_bottom_bg)
