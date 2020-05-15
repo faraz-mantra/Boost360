@@ -25,9 +25,12 @@ import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.bottomsheet.DeliveryModel
 import com.inventoryorder.model.ordersdetails.ItemX
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBinding>() {
 
@@ -103,7 +106,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
   }
 
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
+    binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
     binding?.tvOrderStatus?.text = order.PaymentDetails?.Status?.trim()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.Method?.trim()
     binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.Status?.trim()}"
@@ -136,6 +139,13 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
     binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
     binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
 
+  }
+
+  private fun getStatusText(orderType: OrderSummaryModel.OrderType?, paymentDetails: PaymentDetailsN?): String? {
+    return if (orderType == OrderSummaryModel.OrderType.CANCELLED
+        && paymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+      OrderSummaryModel.OrderType.ABANDONED.type
+    } else orderType?.type
   }
 
   override fun onClick(v: View) {

@@ -17,6 +17,18 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerAllOrder(auth, request).toLiveData()
   }
 
+  fun getAssurePurchaseOrder(request: OrderSummaryRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getAssurePurchaseOrders(request).toLiveData()
+  }
+
+  fun getCancelledOrders(request: OrderSummaryRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getCancelledOrders(request).toLiveData()
+  }
+
+  fun getInCompleteOrders(request: OrderSummaryRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getInCompleteOrders(request).toLiveData()
+  }
+
   fun confirmOrder(clientId: String?, orderId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.confirmOrder(clientId, orderId).toLiveData()
   }

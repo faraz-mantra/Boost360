@@ -26,11 +26,11 @@ data class PaymentDetailsN(
     }
   }
 
-  enum class STSTUS {
-    SUCCESS;
+  enum class STATUS {
+    PENDING, INITIATED, SUCCESS, INPROCESS, SUBMITTEDFORREFUND, REFUNDED, REFUNDDENIED, FAILED, CANCELLED;
 
     companion object {
-      fun from(value: String): STSTUS? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun from(value: String): STATUS? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 }

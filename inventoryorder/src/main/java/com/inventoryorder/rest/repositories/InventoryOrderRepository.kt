@@ -25,7 +25,19 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   }
 
   fun getSellerAllOrder(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getListOrder(auth, request.clientId, request.sellerId, request.orderStatus, request.skip, request.limit), Taskcode.GET_LIST_ORDER)
+    return makeRemoteRequest(remoteDataSource.getListOrder(auth, request.clientId, request.sellerId, request.orderStatus, request.paymentStatus, request.skip, request.limit), Taskcode.GET_LIST_ORDER)
+  }
+
+  fun getAssurePurchaseOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getAssurePurchaseOrders(request.clientId, request.sellerId, request.skip, request.limit), Taskcode.GET_ASSURE_PURCHASE_ORDER)
+  }
+
+  fun getCancelledOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getCancelledOrders(request.clientId, request.sellerId, request.skip, request.limit), Taskcode.GET_LIST_CANCELLED_ORDER)
+  }
+
+  fun getInCompleteOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getInCompleteOrders(request.clientId, request.sellerId, request.skip, request.limit), Taskcode.GET_LIST_IN_COMPLETE_ORDER)
   }
 
   fun confirmOrder(clientId: String?, orderId: String?): Observable<BaseResponse> {

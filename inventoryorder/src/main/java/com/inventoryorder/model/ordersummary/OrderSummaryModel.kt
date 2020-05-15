@@ -35,7 +35,6 @@ class OrderSummaryModel(
     list.add(OrderSummaryModel(type = OrderType.RECEIVED.type, count = TotalOrdersInProgress))
     list.add(OrderSummaryModel(type = OrderType.SUCCESSFUL.type, count = TotalOrdersCompleted))
     list.add(OrderSummaryModel(type = OrderType.CANCELLED.type, count = TotalOrdersCancelled))
-    list.add(OrderSummaryModel(type = OrderType.RETURNED.type, count = TotalOrdersEscalated)) //same as ESCALATED
     list.add(OrderSummaryModel(type = OrderType.ABANDONED.type, count = TotalOrdersAbandoned))
     list.add(OrderSummaryModel(type = OrderType.ESCALATED.type, count = TotalOrdersEscalated))
     return list
@@ -43,18 +42,24 @@ class OrderSummaryModel(
 
   enum class OrderType(val type: String, val value: String) {
     TOTAL("All", ""),
-    ORDER_CONFIRM("Received", OrderStatus.ORDER_CONFIRMED.name),
-    RECEIVED("Received", OrderStatus.ORDER_INITIATED.name),
+    RECEIVED("Received", OrderStatus.ORDER_CONFIRMED.name),
     PAYMENT_CONFIRM("Received", OrderStatus.PAYMENT_CONFIRMED.name),
 
     SUCCESSFUL("Successful", OrderStatus.ORDER_COMPLETED.name),
 
-    RETURNED("Returned", OrderStatus.ESCALATED.name),
     ESCALATED("Escalated", OrderStatus.ESCALATED.name),
 
+    CANCELLED("Cancelled", OrderStatus.ORDER_CANCELLED.name),/* with Payment Status != CANCELLED */
+    ABANDONED("Abandoned", OrderStatus.ORDER_CANCELLED.name), /* with Payment Status == CANCELLED */
 
-    CANCELLED("Cancelled", OrderStatus.ORDER_CANCELLED.name),
-    ABANDONED("Abandoned", OrderStatus.ORDER_CANCELLED.name);
+    ORDER_INITIATED("Initiated", OrderStatus.ORDER_INITIATED.name),
+    PAYMENT_MODE_VERIFIED("Payment verify", OrderStatus.PAYMENT_MODE_VERIFIED.name),
+    DELIVERY_IN_PROGRESS("Delivery progress", OrderStatus.DELIVERY_IN_PROGRESS.name),
+    FEEDBACK_PENDING("Feedback pending", OrderStatus.FEEDBACK_PENDING.name),
+    FEEDBACK_RECEIVED("Feedback received", OrderStatus.FEEDBACK_RECEIVED.name),
+    DELIVERY_DELAYED("Delivery delayed", OrderStatus.DELIVERY_DELAYED.name),
+    DELIVERY_FAILED("Delivery failed", OrderStatus.DELIVERY_FAILED.name),
+    DELIVERY_COMPLETED("Delivery completed", OrderStatus.DELIVERY_COMPLETED.name);
 
 
     companion object {

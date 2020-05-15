@@ -86,8 +86,8 @@ data class OrderItem(
 
   fun isConfirmBooking(): Boolean {
     return (OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_CONFIRM &&
-        PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT)
-    //PaymentDetailsN.STSTUS.from(PaymentDetails.status()) == PaymentDetailsN.STSTUS.SUCCESS
+        PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
+        PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
   }
 
   fun isCancelBooking(): Boolean {

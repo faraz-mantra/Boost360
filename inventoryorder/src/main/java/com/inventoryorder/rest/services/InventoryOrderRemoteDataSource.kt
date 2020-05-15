@@ -1,6 +1,5 @@
 package com.inventoryorder.rest.services
 
-import com.framework.base.BaseResponse
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.response.OrderSummaryResponse
@@ -22,8 +21,27 @@ interface InventoryOrderRemoteDataSource {
                    @Query("clientId") clientId: String?,
                    @Query("sellerId") sellerId: String?,
                    @Query("orderStatus") orderStatus: String?,
+                   @Query("paymentStatus") paymentStatus: String?,
                    @Query("skip") skip: Int?,
                    @Query("limit") limit: Int?): Observable<Response<InventoryOrderListResponse>>
+
+  @GET(EndPoints.GET_LIST_ASSURE_PURCHASE_ORDER)
+  fun getAssurePurchaseOrders(@Query("clientId") clientId: String?,
+                              @Query("sellerId") sellerId: String?,
+                              @Query("skip") skip: Int?,
+                              @Query("limit") limit: Int?): Observable<Response<InventoryOrderListResponse>>
+
+  @GET(EndPoints.GET_LIST_CANCELLED_ORDER)
+  fun getCancelledOrders(@Query("clientId") clientId: String?,
+                         @Query("sellerId") sellerId: String?,
+                         @Query("skip") skip: Int?,
+                         @Query("limit") limit: Int?): Observable<Response<InventoryOrderListResponse>>
+
+  @GET(EndPoints.GET_LIST_IN_COMPLETE_ORDER)
+  fun getInCompleteOrders(@Query("clientId") clientId: String?,
+                          @Query("sellerId") sellerId: String?,
+                          @Query("skip") skip: Int?,
+                          @Query("limit") limit: Int?): Observable<Response<InventoryOrderListResponse>>
 
 
   @GET(EndPoints.GET_CONFIRM_ORDER)
