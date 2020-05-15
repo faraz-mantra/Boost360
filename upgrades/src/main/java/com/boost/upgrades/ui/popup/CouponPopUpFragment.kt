@@ -2,6 +2,7 @@ package com.boost.upgrades.ui.popup
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,8 @@ class CouponPopUpFragment : DialogFragment() {
         loadAllCoupons()
         initMvvm()
 
+        entered_coupon_value.setFilters(entered_coupon_value.filters + InputFilter.AllCaps())
+
         coupon_popup_outer_layout.setOnClickListener {
             Utils.hideSoftKeyboard(requireActivity())
             dialog!!.dismiss()
@@ -65,7 +68,7 @@ class CouponPopUpFragment : DialogFragment() {
                     coupon_invalid.visibility = View.GONE
                     var validCouponCode:CouponsModel? = null
                     for(singleCoupon in couponsList){
-                        if(entered_coupon_value.text.toString().toLowerCase(Locale.getDefault()) == singleCoupon.coupon_key.toLowerCase(Locale.getDefault())){
+                        if(entered_coupon_value.text.toString().toUpperCase(Locale.getDefault()) == singleCoupon.coupon_key.toUpperCase(Locale.getDefault())){
                             validCouponCode = singleCoupon
                             break
                         }
