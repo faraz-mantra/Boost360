@@ -11,6 +11,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.thinksity.R;
 
 
 public class Utils {
@@ -65,4 +66,24 @@ public class Utils {
 		return (int)(dp * context.getResources().getDisplayMetrics().density);
 	}
 
+	public static String getDefaultOrderROIType(String category_code){
+		switch (category_code){
+			case "SVC":
+			case "DOC":
+			case "HOS":
+			case "SPA":
+			case "SAL":
+			case "EDU":
+				return "Appointments";
+			case "HOT":
+				return "Room Bookings";
+			case "RTL":
+			case "MFG":
+				return "Orders";
+			case "CAF":
+				return "Food Orders";
+			default:
+				return "Orders";
+		}
+	}
 }

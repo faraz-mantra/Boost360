@@ -6,7 +6,6 @@ import com.framework.utils.NetworkUtils
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
-import java.util.*
 
 abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalService> {
 
@@ -32,7 +31,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         val response = when (it.body()) {
           is Array<*> -> BaseResponse(message = "Success", arrayResponse = it.body() as Array<*>)
           is String -> BaseResponse(message = "Success", stringResponse = it.body() as String)
-          is Objects -> it.body() as BaseResponse
+          is BaseResponse -> (it.body() as T) as BaseResponse
           else -> BaseResponse(message = "Success")
         }
         response.status = it.code()

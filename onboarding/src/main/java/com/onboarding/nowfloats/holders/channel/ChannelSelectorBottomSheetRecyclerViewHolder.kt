@@ -63,7 +63,7 @@ class ChannelSelectorBottomSheetRecyclerViewHolder constructor(binding: ItemChan
 
     private fun setCardSelection(isSelected: Boolean) {
         if (isSelected) {
-            getColor(R.color.aliceblue)?.let { binding.card.setCardBackgroundColor(it) }
+            getColor(R.color.aliceblue_10)?.let { binding.card.setCardBackgroundColor(it) }
             binding.card.cardElevation = 0F
             binding.check.setImageResource(takeIf { adapterPosition == 0 }?.let { R.drawable.ic_check_permanent }
                 ?: R.drawable.ic_check_blue)

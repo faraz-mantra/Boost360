@@ -111,7 +111,10 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
       binding?.confirmBtn -> {
         if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
       }
-      binding?.skip -> gotoBusinessApiCallDetails()
+      binding?.skip -> {
+        binding?.number?.setText("")
+        gotoBusinessApiCallDetails()
+      }
     }
   }
 

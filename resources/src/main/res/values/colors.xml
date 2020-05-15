@@ -12,6 +12,8 @@
   <color name="dodger_blue_light">#2f9cd9</color>
   <color name="white">#ffffff</color>
   <color name="aliceblue">#e6f4fc</color>
+  <color name="aliceblue_10">#ecf3fe</color>
+  <color name="warm_light">#979797</color>
   <color name="warm_grey">#747474</color>
   <color name="warm_grey_70">#B3747474</color>
   <color name="warm_grey_31">#508e8e8e</color>
@@ -42,6 +44,18 @@
   <color name="scarlet">#D0021B</color>
   <color name="white_30">#4DFFFFFF</color>
   <color name="colorOverlay">#78ffffff</color>
-
   <color name="ripple_color">@color/white</color>
+  <color name="light_grey">#DCDDDE</color>
+  <color name="lightest_grey">#F6F6F6</color>
+  <color name="lightest_grey_10">#E7E7E7</color>
+  <color name="primary_grey">#B3B4B4</color>
+  <color name="warm_grey_10">#4D4D4D</color>
+  <color name="watermelon_light">#F06428</color>
+  <color name="watermelon_light_10">#EB5757</color>
+  <color name="light_blue">#387ECD</color>
+  <color name="grey_text_color">#696969</color>
+  <color name="little_light_black">#DE000000</color>
+  <color name="view_background_color">#EBEBEB</color>
+  <color name="khaki_light">#80FFB900</color>
+  <color name="light_green">#189943</color>
 </resources>

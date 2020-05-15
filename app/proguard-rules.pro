@@ -346,11 +346,14 @@
 -keeppackagenames com.onboarding
 -keeppackagenames com.framework
 -keeppackagenames com.resources
+-keeppackagenames com.inventoryorder
 
 -keep class com.onboarding.** { *; }
 -keep class com.framework.** { *; }
 -keep class com.resources.** { *; }
+-keep class com.inventoryorder.** { *; }
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
+-keep class com.inventoryorder.model.** { <fields>; }
 
 ##onboarding progard rule
 

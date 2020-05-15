@@ -65,15 +65,16 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     viewModel?.postCheckBusinessDomainSuggest(requestData)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
+        errorSet()
         return@Observer
       }
       if (it.stringResponse.isNullOrEmpty().not()) {
         isDomain = true
         binding?.next?.alpha = 1f
-        domainValue = it.stringResponse
+        domainValue = it.stringResponse?.toLowerCase(Locale.ROOT)
         binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
-        binding?.subdomain?.setText(it.stringResponse)
-      }
+        binding?.subdomain?.setText(domainValue)
+      } else errorSet()
     })
   }
 
@@ -98,35 +99,34 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
 
   private fun apiCheckDomain(subDomain: String, onSuccess: () -> Unit = {}) {
     if (!TextUtils.isEmpty(subDomain)) {
-      val data = BusinessDomainRequest(clientId, subDomain, requestFloatsModel?.contactInfo?.businessName)
+//      val data = BusinessDomainRequest(clientId, subDomain, requestFloatsModel?.contactInfo?.businessName)
+      val data = BusinessDomainRequest(clientId, subDomain, subDomain)
       viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner, Observer {
         onPostBusinessDomainCheckResponse(it, onSuccess)
       })
-    } else {
-      isDomain = false
-      domainValue = ""
-      binding?.next?.alpha = 0.3f
-      binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
-    }
+    } else errorSet()
+  }
+
+  private fun errorSet() {
+    isDomain = false
+    domainValue = ""
+    binding?.next?.alpha = 0.3f
+    binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
   }
 
   private fun onPostBusinessDomainCheckResponse(response: BaseResponse, onSuccess: () -> Unit) {
     if (response.error is NoNetworkException) {
       InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
+      errorSet()
       return
     }
     if (response.stringResponse.isNullOrEmpty().not()) {
       isDomain = true
       binding?.next?.alpha = 1f
-      domainValue = response.stringResponse
+      domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)
       binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
       onSuccess()
-    } else {
-      isDomain = false
-      domainValue = ""
-      binding?.next?.alpha = 0.3f
-      binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_error)
-    }
+    } else errorSet()
   }
 
   private fun setSetSelectedGoogleChannels(list: ArrayList<ChannelModel>) {

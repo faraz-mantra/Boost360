@@ -394,7 +394,6 @@
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
             android:gravity="center_vertical"
-            android:visibility="gone"
             android:orientation="horizontal">
 
             <ImageView

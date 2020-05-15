@@ -5,7 +5,7 @@
   <dimen name="toolbar_padding_start">32dp</dimen>
   <dimen name="toolbar_title_margin_end">72dp</dimen>
   <dimen name="toolbar_title_margin_start">56dp</dimen>
-  <dimen name="rounded_bg_corners">48dp</dimen>
+  <dimen name="rounded_bg_corners">36dp</dimen>
   <dimen name="rounded_bg_corners_four">20dp</dimen>
   <dimen name="footer_button_height">48dp</dimen>
 
@@ -60,6 +60,7 @@
   <dimen name="size_110">110dp</dimen>
   <dimen name="size_112">112dp</dimen>
   <dimen name="size_120">120dp</dimen>
+  <dimen name="size_124">124dp</dimen>
   <dimen name="size_140">140dp</dimen>
   <dimen name="size_160">160dp</dimen>
   <dimen name="size_180">180dp</dimen>

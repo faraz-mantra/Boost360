@@ -7,4 +7,5 @@ enum class IntentConstant {
   CURRENT_PAGES,
   PREVIOUS_SCREEN,
   TOOLBAR_TITLE,
+  DOMAIN_URL
 }

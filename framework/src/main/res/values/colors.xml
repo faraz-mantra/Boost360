@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#ffb900</color>
-    <color name="colorPrimary">#ffb900</color>
-    <color name="colorPrimaryDark">#d99d00</color>
+  <color name="colorAccent">#ffb900</color>
+  <color name="colorPrimary">#ffb900</color>
+  <color name="colorPrimaryDark">#d99d00</color>
   <color name="colorPrimaryVariant">#5092F5</color>
   <color name="statusBarColor">@color/colorPrimaryVariant</color>
   <color name="colorOnPrimary">#FFFFFF</color>
@@ -23,6 +23,12 @@
   <color name="black">#000000</color>
   <color name="transparent">#00000000</color>
   <color name="shadow">#33000000</color>
-    <color name="color_dialog_bg">#FDFDFE</color>
+  <color name="color_dialog_bg">#FDFDFE</color>
+
+  <!-- fab-->
+  <color name="colorFabText">#F5F5F5</color>
+  <color name="colorFabIcon">#F5F5F5</color>
+  <color name="colorShadowStart">#5e5e5e</color>
+  <color name="colorShadowEnd">#c7c7c7</color>
 
 </resources>

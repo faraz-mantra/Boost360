@@ -50,7 +50,7 @@
     <item name="android:paddingLeft">@dimen/size_32</item>
     <item name="android:textAllCaps">false</item>
     <item name="android:drawableEnd">@null</item>
-    <item name="android:layout_height">@dimen/size_48</item>
+    <item name="android:layout_height">@dimen/size_46</item>
     <item name="android:foreground">@null</item>
   </style>
 
@@ -86,5 +86,7 @@
     <!--    <item name="collapseIcon">@drawable/ic_arrow_back</item>-->
     <!--    <item name="android:elevation">0dp</item>-->
   </style>
+
+  <attr name="bd_bg_color" format="color" />
 
 </resources>

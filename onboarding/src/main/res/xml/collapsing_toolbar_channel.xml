@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:motion="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <Transition
       app:constraintSetEnd="@id/collapsed"
@@ -65,7 +64,7 @@
         android:id="@+id/view_shadow"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@drawable/down_shadoow"
+        android:background="@drawable/down_shadow"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,7 +133,7 @@
         android:id="@+id/view_shadow"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@drawable/down_shadoow"
+        android:background="@drawable/down_shadow"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

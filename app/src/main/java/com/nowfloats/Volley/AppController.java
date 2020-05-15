@@ -7,9 +7,10 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.util.Log;
+
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +20,7 @@ import com.apxor.androidsdk.core.ApxorSDK;
 import com.boost.presignup.locale.LocaleManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.inventoryorder.BaseOrderApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
 import com.thinksity.BuildConfig;
@@ -40,6 +42,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     @Override
     public void onCreate() {
         super.onCreate();
+        BaseOrderApplication.instance = this;
+        BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);
         initWebEngage();
