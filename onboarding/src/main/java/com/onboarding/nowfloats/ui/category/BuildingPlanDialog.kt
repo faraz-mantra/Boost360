@@ -22,7 +22,7 @@ class BuildingPlanDialog : BaseDialogFragment<DialogBuildingPlanBinding, BaseVie
     return R.style.MaterialDialogThemeFull
   }
 
-  override fun onViewCreated() {
+  override fun onCreateView() {
     binding?.blurView?.setBlur(4F)
     isCancelable = false
     binding?.progressBar?.progress = 0F

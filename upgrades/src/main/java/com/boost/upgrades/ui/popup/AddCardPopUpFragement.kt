@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
+import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.KeyboardUtils
 import com.boost.upgrades.utils.Utils
@@ -32,6 +33,7 @@ class AddCardPopUpFragement : DialogFragment() {
     var yearList = arrayListOf<String>()
 
     var cardNumber = ""
+    var cardType = ""
 
     var customerId: String? = null
 
@@ -139,6 +141,41 @@ class AddCardPopUpFragement : DialogFragment() {
                         s.insert(s.length - 1, java.lang.String.valueOf(space))
                     }
                 }
+
+                if(s.length > 7 && s.length < 9){
+                    cardType = (requireActivity() as UpgradeActivity).razorpay.getCardNetwork(s.toString().replace("-",""))
+                    Log.e("getCardNetwork",">>>>>>>>>"+cardType)
+                    when(cardType){
+                        "visa" -> {
+                            card_type_image.setImageResource(R.drawable.visacard)
+                        }
+                        "mastercard" -> {
+                            card_type_image.setImageResource(R.drawable.mastercard)
+                        }
+                        "maestro16" -> {
+                            card_type_image.setImageResource(R.drawable.maestrocard)
+                        }
+                        "amex" -> {
+                            card_type_image.setImageResource(R.drawable.amexcard)
+                        }
+                        "rupay" -> {
+                            card_type_image.setImageResource(R.drawable.rupaycard)
+                        }
+                        "maestro" -> {
+                            card_type_image.setImageResource(R.drawable.maestrocard)
+                        }
+                        "diners" -> {
+                            card_type_image.setImageResource(R.drawable.dinerscard)
+                        }
+                        "unknown" -> {
+                            card_type_image.setImageResource(R.drawable.card_number)
+                        }
+                    }
+                }
+
+                if(s.length <=7){
+                    card_type_image.setImageResource(R.drawable.card_number)
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -158,13 +195,19 @@ class AddCardPopUpFragement : DialogFragment() {
             Toast.makeText(requireContext(),"Fields are empty",Toast.LENGTH_SHORT).show()
             return false
         }
-        cardNumber = card_number_value.text.toString()
-        cardNumber = cardNumber.replace("-","",false)
-        if(cardNumber.length != 16 ){
-            Toast.makeText(requireContext(),"Invalid Card number",Toast.LENGTH_SHORT).show()
+        cardNumber = card_number_value.text.toString().replace("-","",false)
+        if(cardNumber.length != 16){
+            invalid_cardnumber.visibility = View.VISIBLE
             return false
         }
-        return true
+        invalid_cardnumber.visibility = View.GONE
+        if((requireActivity() as UpgradeActivity).razorpay.isValidCardNumber(cardNumber)) {
+            invalid_cardnumber.visibility = View.GONE
+            return true
+        }else{
+            invalid_cardnumber.visibility = View.VISIBLE
+            return false
+        }
     }
 
     fun clearData(){
@@ -172,6 +215,11 @@ class AddCardPopUpFragement : DialogFragment() {
         card_number_value.text.clear()
         add_card_cvv.text.clear()
         setMonthYearAdaptor()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        clearData()
     }
 
     fun setMonthYearAdaptor(){

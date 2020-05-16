@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -17,7 +18,9 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentInventoryAllOrderBinding
+import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
@@ -26,8 +29,8 @@ import com.inventoryorder.recyclerView.PaginationScrollListener
 import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
-import com.inventoryorder.rest.response.SellerSummaryResponse
-import com.inventoryorder.rest.response.order.SellerOrderListResponse
+import com.inventoryorder.rest.response.OrderSummaryResponse
+import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 
@@ -46,6 +49,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
   private var TOTAL_ELEMENTS = 0
   private var currentPage = PAGE_START
   private var isLastPageD = false
+  private var orderItemType = OrderSummaryModel.OrderType.TOTAL.type
 
   companion object {
     @JvmStatic
@@ -77,7 +81,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
           currentPage += request?.limit ?: 0
           orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
           request?.skip = currentPage
-          request?.let { apiSellerOrderList(it) }
+          apiOrderListCall()
         }
       }
 
@@ -92,42 +96,16 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
 
   private fun apiSellerSummary() {
     binding?.progress?.visible()
-    viewModel?.getSellerSummary(fpTag)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         errorOnSummary(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = it as? SellerSummaryResponse
+        val response = it as? OrderSummaryResponse
         typeList = response?.Data?.getOrderType()
         typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
       } else errorOnSummary(it?.message)
-    })
-  }
-
-  private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
-    viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-      binding?.progress?.gone()
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = (it as? SellerOrderListResponse)?.Data ?: return@Observer
-        binding?.orderRecycler?.visible()
-        val list = response.Items ?: ArrayList()
-        TOTAL_ELEMENTS = response.total()
-        orderList.addAll(list)
-        isLastPageD = (orderList.size == TOTAL_ELEMENTS)
-        if (isFirst.not() && orderAdapter != null) {
-          orderAdapter?.removeLoadingFooter()
-          isLoadingD = false
-          orderAdapter?.addItems(list)
-        } else setAdapterOrderList(list)
-      } else {
-        binding?.orderRecycler?.gone()
-        showShortToast(it.message)
-      }
     })
   }
 
@@ -144,7 +122,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     binding?.typeRecycler?.visible()
     binding?.viewShadow?.visible()
     orderList.clear()
-    apiSellerOrderList(getRequestData(), true)
+    apiOrderList(getRequestData(), true)
     binding?.typeRecycler?.post {
       typeAdapter = AppBaseRecyclerViewAdapter(baseActivity, typeList, this)
       binding?.typeRecycler?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -158,7 +136,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
       RecyclerViewActionType.ORDER_ITEM_CLICKED.ordinal -> {
         val orderItem = item as? OrderItem
         val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.ORDER_ITEM.name, orderItem)
+        bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle)
       }
@@ -166,22 +144,101 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
         val orderItem = item as? OrderSummaryModel
         typeList?.forEach { it.isSelected = (it.type == orderItem?.type) }
         typeAdapter?.notifyDataSetChanged()
-        orderItem?.type?.let { loadNewData(it) }
-
+        orderItemType = orderItem?.type ?: OrderSummaryModel.OrderType.TOTAL.type
+        loadNewData()
       }
+      RecyclerViewActionType.ORDER_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
     }
   }
 
-  private fun loadNewData(type: String) {
+  private fun apiConfirmOrder(position: Int, order: OrderItem?) {
+    showProgress()
+    viewModel?.confirmOrder(clientId, order?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        val data = it as? OrderConfirmStatus
+        data?.let { d -> showLongToast(d.Message as String?) }
+        val itemList = orderAdapter?.list() as ArrayList<OrderItem>
+        if (itemList.size > position) {
+          itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
+          orderAdapter?.notifyItemChanged(position)
+        } else showLongToast(it.message())
+      }
+    })
+  }
+
+
+  private fun loadNewData() {
     isLoadingD = false
     isLastPageD = false
     currentPage = PAGE_START
     orderAdapter?.clear()
-    request?.orderStatus = OrderSummaryModel.OrderType.fromType(type).value
+    request?.orderStatus = OrderSummaryModel.OrderType.fromType(orderItemType)?.value
+    request?.paymentStatus = null
     request?.skip = currentPage
     orderList.clear()
     binding?.progress?.visible()
-    apiSellerOrderList(request!!)
+    apiOrderListCall()
+  }
+
+  private fun apiOrderListCall() {
+    request?.let {
+      when (OrderSummaryModel.OrderType.fromType(orderItemType)) {
+        OrderSummaryModel.OrderType.RECEIVED -> apiAssureOrder(it)
+//        OrderSummaryModel.OrderType.SUCCESSFUL -> apiInCompleteOrder(it)
+        OrderSummaryModel.OrderType.CANCELLED -> apiCancelOrder(it)
+        OrderSummaryModel.OrderType.ABANDONED -> {
+          request?.paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name
+          apiOrderList(it)
+        }
+        else -> apiOrderList(it)
+      }
+    }
+
+  }
+
+  private fun apiOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
+    viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
+  }
+
+  private fun apiAssureOrder(request: OrderSummaryRequest, isFirst: Boolean = false) {
+    viewModel?.getAssurePurchaseOrder(request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
+  }
+
+  private fun apiInCompleteOrder(request: OrderSummaryRequest, isFirst: Boolean = false) {
+    viewModel?.getInCompleteOrders(request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
+  }
+
+  private fun apiCancelOrder(request: OrderSummaryRequest, isFirst: Boolean = false) {
+    viewModel?.getCancelledOrders(request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
+  }
+
+  private fun responseOrderList(isFirst: Boolean, it: BaseResponse) {
+    binding?.progress?.gone()
+    if (it.error is NoNetworkException) {
+      showShortToast(resources.getString(R.string.internet_connection_not_available))
+    } else {
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        val response = (it as? InventoryOrderListResponse)?.Data ?: return
+        binding?.orderRecycler?.visible()
+        val list = response.Items ?: ArrayList()
+        TOTAL_ELEMENTS = response.total()
+        orderList.addAll(list)
+        isLastPageD = (orderList.size == TOTAL_ELEMENTS)
+        if (isFirst.not() && orderAdapter != null) {
+          orderAdapter?.removeLoadingFooter()
+          isLoadingD = false
+          orderAdapter?.addItems(list)
+        } else setAdapterOrderList(list)
+      } else {
+        binding?.orderRecycler?.gone()
+        showShortToast(it.message)
+      }
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -217,7 +274,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
   }
 
   private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(fpTag, skip = currentPage, limit = PAGE_SIZE)
+    request = OrderSummaryRequest(clientId, fpTag, skip = currentPage, limit = PAGE_SIZE)
     return request!!
   }
 

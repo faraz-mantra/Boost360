@@ -22,8 +22,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/back_button"
@@ -45,8 +44,7 @@
             <TextView
                 android:id="@+id/paymentBanner"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Order #234543234"
                 android:textAllCaps="true"
@@ -54,7 +52,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/payment_toolbar_dummy_view"
                 app:layout_constraintStart_toEndOf="@id/back_button"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <View
                 android:id="@+id/payment_toolbar_dummy_view"
@@ -163,6 +162,7 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_30sdp"
             android:paddingBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_2sdp"
             android:text="Check Activation status"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -172,18 +172,16 @@
 
         <TextView
             android:id="@+id/order_needs_help"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
             android:background="@drawable/order_grey_button_click_effect"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="center"
-            android:paddingStart="@dimen/_30sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_30sdp"
-            android:paddingBottom="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
             android:text="Need help?"
             android:textAllCaps="true"
+            android:elevation="@dimen/_2sdp"
             android:textColor="#9b9b9b"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

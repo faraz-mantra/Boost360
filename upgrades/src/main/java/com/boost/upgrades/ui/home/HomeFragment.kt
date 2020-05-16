@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
@@ -16,14 +17,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.adapter.FeatureDealsAdapter
+import com.boost.upgrades.adapter.PackageViewPagerAdapter
+import com.boost.upgrades.adapter.SimplePageTransformer
 import com.boost.upgrades.adapter.UpgradeAdapter
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.FeatureDeals
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
@@ -38,13 +49,18 @@ import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
+import com.boost.upgrades.utils.HorizontalMarginItemDecoration
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
+import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : BaseFragment(), HomeListener {
 
@@ -60,7 +76,8 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     lateinit var progressDialog: ProgressDialog
 
-//    lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
+    lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
+    lateinit var featureDealsAdapter: FeatureDealsAdapter
 
     var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
@@ -83,7 +100,8 @@ class HomeFragment : BaseFragment(), HomeListener {
                 .get(HomeViewModel::class.java)
 
         upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
-//        packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this)
+        packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
+        featureDealsAdapter = FeatureDealsAdapter(ArrayList(),ArrayList(), (activity as UpgradeActivity), this)
 
         //request retrofit instance
         ApiService = getRetrofit()
@@ -124,7 +142,8 @@ class HomeFragment : BaseFragment(), HomeListener {
             (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
         }
 
-//        initializeViewPager()
+        initializePackageViewPager()
+        initializeFeatureDeals()
         initializeRecycler()
 
         share_refferal_code_btn.setOnClickListener {
@@ -134,7 +153,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             sendIntent
                     .putExtra(
                             Intent.EXTRA_TEXT,
-                            getString(R.string.referral_text_1)+fpRefferalCode
+                            getString(R.string.referral_text_1) + fpRefferalCode
                     )
             sendIntent.type = "text/plain"
             try {
@@ -157,7 +176,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             sendIntent
                     .putExtra(
                             Intent.EXTRA_TEXT,
-                            getString(R.string.referral_text_2)+fpRefferalCode
+                            getString(R.string.referral_text_2) + fpRefferalCode
                     )
             sendIntent.type = "text/plain"
             sendIntent.setPackage("com.facebook.orca")
@@ -181,7 +200,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             whatsappIntent.setPackage("com.whatsapp")
             whatsappIntent.putExtra(
                     Intent.EXTRA_TEXT,
-                    getString(R.string.referral_text_1)+fpRefferalCode
+                    getString(R.string.referral_text_1) + fpRefferalCode
             )
             try {
                 Objects.requireNonNull(this).startActivity(whatsappIntent)
@@ -242,20 +261,20 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     fun setSpannableStrings() {
         var fpId = (activity as UpgradeActivity)!!.fpid
-        if(fpId != null){
+        if (fpId != null) {
             val minLength = 5
 
             fpRefferalCode = ""
-            for(c in fpId){
+            for (c in fpId) {
                 fpRefferalCode += (c + 1).toString().trim().toUpperCase()
 
-                if(fpRefferalCode.length >= minLength)
+                if (fpRefferalCode.length >= minLength)
                     break;
             }
 
-            var lengthDiff = minLength - (fpRefferalCode.length%5)
+            var lengthDiff = minLength - (fpRefferalCode.length % 5)
 
-            while(lengthDiff-- > 0){
+            while (lengthDiff-- > 0) {
                 fpRefferalCode += lengthDiff.toString()
             }
         }
@@ -279,7 +298,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         }
 
         val refText = SpannableString(getString(R.string.referral_card_explainer_text))
-        refText.setSpan(StyleSpan(Typeface.BOLD), 19, 26, 0)
+        refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
@@ -292,7 +311,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     fun loadData() {
         var code: String = (activity as UpgradeActivity).experienceCode!!;
-        if(!code.equals("null", true)) {
+        if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code)
         }
 
@@ -300,7 +319,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    fun initMvvm(){
+    fun initMvvm() {
 
         viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
             //            Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
@@ -317,7 +336,34 @@ class HomeFragment : BaseFragment(), HomeListener {
 
         viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
             updateRecycler(it)
-            recommended_features_section_subtitle.setText("Add these "+ it.count() +" add-ons, recommended for your business.")
+            recommended_features_section_subtitle.setText("Add these " + it.count() + " add-ons, recommended for your business.")
+        })
+
+        viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+            val list = arrayListOf<Bundles>()
+            for (item in it) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                list.add(Bundles(
+                        item.bundle_key,
+                        temp,
+                        item.min_purchase_months,
+                        item.name,
+                        item.overall_discount_percent,
+                        PrimaryImage(item.primary_image)
+                ))
+            }
+            if (list.size > 0)
+                updatePackageViewPager(list)
+        })
+
+        viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
+            if (it.size > 0) {
+                var cartItems:List<CartModel> = arrayListOf()
+                if (viewModel.allFeatureDealsResult.value != null) {
+                    cartItems = viewModel.cartResult.value!!
+                }
+                updateFeatureDealsViewPager(it, cartItems)
+            }
         })
 
         viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
@@ -345,6 +391,13 @@ class HomeFragment : BaseFragment(), HomeListener {
                 badgeNumber = 0
                 badge.visibility = View.GONE
             }
+            //refresh FeatureDeals adaptor when cart is updated
+                if (viewModel.allFeatureDealsResult.value != null) {
+                    val list = viewModel.allFeatureDealsResult.value!!
+                    if (list.size > 0) {
+                        updateFeatureDealsViewPager(list, it)
+                    }
+                }
         })
     }
 
@@ -368,20 +421,58 @@ class HomeFragment : BaseFragment(), HomeListener {
         }
     }
 
-//    private fun initializeViewPager() {
-//        package_viewpager.adapter = packageViewPagerAdapter
-//        dots_indicator.setViewPager2(package_viewpager)
-//        package_viewpager.offscreenPageLimit = 1
-//
-//        package_viewpager.setPageTransformer(SimplePageTransformer())
-//
-//        val itemDecoration = HorizontalMarginItemDecoration(
-//            requireContext(),
-//            R.dimen.viewpager_current_item_horizontal_margin
-//        )
-//        package_viewpager.addItemDecoration(itemDecoration)
-//
-//    }
+    fun updatePackageViewPager(list: List<Bundles>) {
+        package_layout.visibility = View.VISIBLE
+        package_viewpager.offscreenPageLimit = list.size
+        packageViewPagerAdapter.addupdates(list)
+        packageViewPagerAdapter.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if(list.size>1) {
+            dots_indicator.visibility = View.VISIBLE
+        }else {
+            dots_indicator.visibility = View.INVISIBLE
+        }
+    }
+
+    fun updateFeatureDealsViewPager(list: List<FeatureDeals>,cartList: List<CartModel>) {
+        feature_deals_layout.visibility = View.VISIBLE
+        feature_deals_viewpager.offscreenPageLimit = if (list.size > 0) list.size else 1
+        featureDealsAdapter.addupdates(list, cartList)
+        featureDealsAdapter.notifyDataSetChanged()
+        if(list.size > 1){
+            feature_deals_indicator.visibility = View.VISIBLE
+        }else{
+            feature_deals_indicator.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun initializePackageViewPager() {
+        package_viewpager.adapter = packageViewPagerAdapter
+        dots_indicator.setViewPager2(package_viewpager)
+
+        package_viewpager.setPageTransformer(SimplePageTransformer())
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+                requireContext(),
+                R.dimen.viewpager_current_item_horizontal_margin
+        )
+        package_viewpager.addItemDecoration(itemDecoration)
+
+    }
+
+    private fun initializeFeatureDeals() {
+        feature_deals_viewpager.adapter = featureDealsAdapter
+        feature_deals_indicator.setViewPager2(feature_deals_viewpager)
+
+        feature_deals_viewpager.setPageTransformer(SimplePageTransformer())
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+                requireContext(),
+                R.dimen.viewpager_current_item_horizontal_margin
+        )
+        feature_deals_viewpager.addItemDecoration(itemDecoration)
+
+    }
 
     override fun onBackPressed() {
         if (::viewModel.isInitialized) {
@@ -389,12 +480,17 @@ class HomeFragment : BaseFragment(), HomeListener {
         }
     }
 
-    override fun onPackageClicked(v: View?) {
-        (activity as UpgradeActivity).addFragment(PackageFragment.newInstance(), PACKAGE_FRAGMENT)
+    override fun onPackageClicked(item: Bundles?) {
+        val packageFragment = PackageFragment.newInstance()
+        val args = Bundle()
+        args.putString("bundleData", Gson().toJson(item))
+        packageFragment.arguments = args
+        (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
     }
 
-    override fun onAddonsClicked(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
+        if (item != null)
+            viewModel.addItemToCart(item, minMonth)
     }
 
 }

@@ -79,6 +79,7 @@ class FreeAddonsAdapter(
         fun upgradeListItem(updateModel: FeaturesModel) {
             singleTitle.text = updateModel.name
             Glide.with(context).load(updateModel.primary_image).into(image)
+
         }
     }
 }

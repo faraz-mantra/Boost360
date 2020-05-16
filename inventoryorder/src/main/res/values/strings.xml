@@ -8,16 +8,22 @@
   <string name="cancel_order"><u>Cancel Order</u></string>
 
   <string name="bookings">Bookings</string>
-
-  <string name="_91_9013268178"><u>+91 9013268178</u></string>
-  <string name="customer_email"><u>rahul@cantech.co</u></string>
+  <string name="location">"Location:"</string>
   <string name="queryHintOrder">Search by order Id</string>
   <string name="queryHintBooking">Search by booking Id</string>
-  <string name="create">CREATE &#160;</string>
+  <string name="create">CREATE&#160;&#160;</string>
   <string name="status_n">Status:</string>
-  <string name="option_comes_here">Option comes here</string>
-  <string name="booking_requested">Booking requested</string>
   <string name="service_location">Service Location</string>
   <string name="business">BUSINESS</string>
   <string name="booking_details">Booking details</string>
+  <string name="booking_requested">Booking requested</string>
+
+  <string name="option_comes_here">Option comes here</string>
+  <string name="confirm_order_n">CONFIRM ORDER</string>
+  <string name="time_elapsed">Time elapsed</string>
+  <string name="pickup">PICKUP</string>
+  <string name="delivery_partner">Delivery Partner</string>
+  <string name="customer_details">Customer details</string>
+  <string name="order_details">Order details</string>
+
 </resources>

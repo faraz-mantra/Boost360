@@ -2,6 +2,8 @@ package com.boost.upgrades.adapter
 
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +55,7 @@ class UpgradeAdapter(
             args.putString("itemId", upgradeList.get(position).boost_widget_key)
             details.arguments = args
             activity.addFragment(details, Constants.DETAILS_FRAGMENT)
+
 //            val intent = Intent(this.context, Details::class.java)
 //            intent.putExtra("position",position)
 //            startActivity(this.context, intent, null)
@@ -74,11 +77,13 @@ class UpgradeAdapter(
         private var upgradeMRP = itemView.findViewById<TextView>(R.id.upgrade_list_orig_cost)!!
         private var upgradeDiscount = itemView.findViewById<TextView>(R.id.upgrade_list_discount)!!
         private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
+        private var view = itemView.findViewById<View>(R.id.view)!!
 
         private var context: Context = itemView.context
 
 
         fun upgradeListItem(updateModel: FeaturesModel) {
+            view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
             val discount = 100 - updateModel.discount_percent
             val price = (discount * updateModel.price) / 100
             if(updateModel.target_business_usecase !=null) {
@@ -91,7 +96,7 @@ class UpgradeAdapter(
             if(updateModel.discount_percent>0){
                 upgradeDiscount.visibility = View.VISIBLE
                 upgradeDiscount.text = ""+updateModel.discount_percent+"%"
-                upgradeMRP.text = "₹" + updateModel.price + "/month"
+                spannableString(updateModel.price)
             }else{
                 upgradeDiscount.visibility = View.GONE
                 upgradeMRP.visibility = View.GONE
@@ -100,6 +105,18 @@ class UpgradeAdapter(
                 Glide.with(context).load(updateModel.primary_image).into(image)
             }
 
+        }
+
+        fun spannableString(value: Int) {
+            val origCost = SpannableString("₹" + value + "/month")
+
+            origCost.setSpan(
+                    StrikethroughSpan(),
+                    0,
+                    origCost.length,
+                    0
+            )
+            upgradeMRP.setText(origCost)
         }
     }
 }

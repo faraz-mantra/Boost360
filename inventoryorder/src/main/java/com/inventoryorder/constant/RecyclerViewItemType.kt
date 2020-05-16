@@ -14,6 +14,8 @@ enum class RecyclerViewItemType {
   BOOKINGS_ITEM_TYPE,
   ITEM_CHOOSE_PURPOSE
   ;
+  BOOKINGS_ITEM_TYPE,
+  BOOKINGS_DATE_TYPE;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -27,6 +29,7 @@ enum class RecyclerViewItemType {
       ITEM_SERVICE_LOCATIONS -> R.layout.item_bottom_sheet_service_locations
       BOOKINGS_ITEM_TYPE -> R.layout.item_bookings_all_order
       ITEM_CHOOSE_PURPOSE -> R.layout.item_bottom_sheet_choose_purpose
+      BOOKINGS_DATE_TYPE -> R.layout.item_bookings_date
     }
   }
 }

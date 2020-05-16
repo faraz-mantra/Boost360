@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:clickable="true"
     android:focusable="true">
 
@@ -35,8 +36,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/web_addons_back"
@@ -62,6 +62,7 @@
                 android:text="Browser"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp"
+                android:fontFamily="@font/open_sans_semibold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/web_imageViewCart1"
                 app:layout_constraintStart_toEndOf="@+id/web_addons_back"

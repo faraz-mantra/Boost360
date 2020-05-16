@@ -32,7 +32,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
   @LayoutRes
   abstract fun getLayout(): Int
 
-  abstract fun onViewCreated()
+  abstract fun onCreateView()
 
   protected open fun getWidth(): Int? {
     return null
@@ -54,7 +54,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    onViewCreated()
+    onCreateView()
   }
 
   fun setOnClickListener(vararg views: View?) {

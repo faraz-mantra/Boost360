@@ -48,7 +48,7 @@ class OrderConfirmationFragment : BaseFragment() {
             val prefs = SharedPrefs(activity as UpgradeActivity)
 
             order_details_feature_count.setText("Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month.")
-
+            paymentBanner.setText("Order #"+prefs.getLatestPurchaseOrderId())
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
             order_id_details.setText("Order placed on " + formatter.format(date) +

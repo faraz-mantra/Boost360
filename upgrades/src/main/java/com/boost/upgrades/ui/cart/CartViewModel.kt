@@ -8,10 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.PurchaseOrder.request.CreatePurchaseOrderRequest
+import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
+import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
@@ -27,6 +30,8 @@ import retrofit2.HttpException
 class CartViewModel(application: Application) : BaseViewModel(application){
 
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
+    var allFeatures: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
@@ -43,6 +48,14 @@ class CartViewModel(application: Application) : BaseViewModel(application){
 
     fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
+    }
+
+    fun updateAllFeaturesResult(): LiveData<List<FeaturesModel>> {
+        return allFeatures
+    }
+
+    fun updateAllBundlesResult(): LiveData<List<BundlesModel>> {
+        return allBundles
     }
 
     fun getCustomerId(): String? {
@@ -77,12 +90,12 @@ class CartViewModel(application: Application) : BaseViewModel(application){
         return _initiatePurchaseOrder
     }
 
-    fun InitiatePurchaseOrder(createPurchaseOrderRequest: CreatePurchaseOrderRequest) {
+    fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
         if (Utils.isConnectedToInternet(getApplication())) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
-                    ApiService.CreatePurchaseOrder(createPurchaseOrderRequest)
+                    ApiService.CreatePurchaseOrder(createPurchaseOrderV2)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
@@ -164,6 +177,42 @@ class CartViewModel(application: Application) : BaseViewModel(application){
                      updatesLoader.postValue(false)
                 }
                 .subscribe()
+        )
+    }
+
+    fun getAllFeatures(){
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+                AppDatabase.getInstance(getApplication())!!
+                        .featuresDao()
+                        .getAllFeatures()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            allFeatures.postValue(it)
+                            updatesLoader.postValue(false)
+                        },{
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        })
+        )
+    }
+
+    fun getAllBundles(){
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+                AppDatabase.getInstance(getApplication())!!
+                        .bundlesDao()
+                        .getBundleItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            allBundles.postValue(it)
+                            updatesLoader.postValue(false)
+                        },{
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        })
         )
     }
 

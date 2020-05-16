@@ -20,7 +20,7 @@ class ChannelWhyDialog : BaseDialogFragment<DialogChannelWhyConfirmBinding, Base
         return R.layout.dialog_channel_why_confirm
     }
 
-    override fun onViewCreated() {
+  override fun onCreateView() {
         binding?.container?.post {
             (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
                     ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))

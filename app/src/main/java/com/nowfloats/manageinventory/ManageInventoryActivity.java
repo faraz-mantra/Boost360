@@ -6,12 +6,16 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.se.omapi.Session;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 /**
@@ -21,6 +25,7 @@ public class ManageInventoryActivity extends AppCompatActivity {
 
     TextView tvPaymentSetting, tvProductGallery, tvTotalNoOfOrders, tvTotalRevenue;
     Toolbar toolbar;
+    String category_code = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +34,10 @@ public class ManageInventoryActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         MixPanelController.track(MixPanelController.MANAGE_INVENTORY, null);
         setSupportActionBar(toolbar);
+        UserSessionManager session = new UserSessionManager(getApplicationContext(), this);
+        category_code = session.getFP_AppExperienceCode();
         if (getSupportActionBar() != null) {
-            setTitle(getString(R.string.manage_inventory));
+            setTitle(Utils.getDefaultOrderROIType(category_code));
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -60,6 +67,10 @@ public class ManageInventoryActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String getFragmentTitle(){
+        return "";
     }
 
     @Override

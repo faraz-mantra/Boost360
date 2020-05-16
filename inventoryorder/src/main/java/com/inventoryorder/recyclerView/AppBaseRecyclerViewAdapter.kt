@@ -31,6 +31,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       ITEM_SERVICE_LOCATIONS -> LocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
       BOOKINGS_ITEM_TYPE -> BookingsViewHolder(binding as ItemBookingsAllOrderBinding)
       ITEM_CHOOSE_PURPOSE -> ChoosePurposeViewHolder(binding as ItemBottomSheetChoosePurposeBinding)
+      BOOKINGS_DATE_TYPE -> BookingDateViewHolder(binding as ItemBookingsDateBinding)
     }
   }
 
@@ -99,6 +100,10 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
 
   open fun getItem(position: Int): T? {
     return list[position]
+  }
+
+  open fun list(): ArrayList<T> {
+    return list
   }
 
 }

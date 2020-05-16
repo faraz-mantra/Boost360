@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <ImageView
@@ -42,12 +43,22 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/cart_item_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/all_side_curve_percentage_bg"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginEnd="@dimen/_5sdp"
+                tools:text="60%"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_6sdp" />
+
+            <TextView
                 android:id="@+id/cart_item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:text="₹101/month"
+                android:layout_marginEnd="@dimen/_5sdp"
+                tools:text="₹101/month"
                 android:textSize="@dimen/_8sdp"
                 android:textColor="#0068e0" />
 
@@ -55,21 +66,10 @@
                 android:id="@+id/cart_item_orig_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:text="₹299/month"
+                android:layout_marginEnd="@dimen/_5sdp"
+                tools:text="₹299/month"
                 android:textSize="@dimen/_8sdp"
                 android:textColor="#9b9b9b" />
-
-            <TextView
-                android:id="@+id/cart_item_discount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/all_side_curve_percentage_bg"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="- 60%"
-                android:textColor="@color/common_text_color"
-                android:textSize="@dimen/_6sdp" />
 
         </LinearLayout>
 
@@ -88,7 +88,7 @@
     <View
         android:id="@+id/cart_single_addons_bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/_3sdp"
         android:background="@drawable/view_dot_lines_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

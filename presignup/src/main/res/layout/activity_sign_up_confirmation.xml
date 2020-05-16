@@ -11,28 +11,28 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      app:layout_constraintGuide_begin="@dimen/_20sdp" />
+      app:layout_constraintGuide_begin="@dimen/_16sdp" />
 
   <androidx.constraintlayout.widget.Guideline
       android:id="@+id/endGuideline"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      app:layout_constraintGuide_end="@dimen/_20sdp" />
+      app:layout_constraintGuide_end="@dimen/_16sdp" />
 
   <androidx.constraintlayout.widget.Guideline
       android:id="@+id/topGuideline"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      app:layout_constraintGuide_begin="29dp" />
+      app:layout_constraintGuide_begin="@dimen/_16sdp" />
 
   <ImageView
+      android:id="@+id/success"
       android:layout_width="@dimen/_55sdp"
       android:layout_height="@dimen/_55sdp"
-      android:src="@drawable/ic_tick_done"
-      android:id="@+id/success"
       android:layout_marginEnd="@dimen/_4sdp"
+      android:src="@drawable/ic_tick_done"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
       app:layout_constraintStart_toStartOf="@+id/startGuideline"
       app:layout_constraintTop_toTopOf="@+id/topGuideline" />
@@ -68,7 +68,7 @@
       android:id="@+id/welcome_user"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_10sdp"
+      android:layout_marginTop="@dimen/_8sdp"
       android:fontFamily="@font/open_sans_semibold"
       android:gravity="center"
       android:text="@string/welcome"
@@ -94,7 +94,7 @@
       android:id="@+id/view3"
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_marginTop="@dimen/_28sdp"
+      android:layout_marginTop="@dimen/_26sdp"
       android:background="@drawable/signup_confirm_bg"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
@@ -105,9 +105,9 @@
       android:id="@+id/imageView"
       android:layout_width="@dimen/_80sdp"
       android:layout_height="@dimen/_80sdp"
-      android:layout_marginTop="@dimen/_30sdp"
-      android:src="@drawable/ria"
+      android:layout_marginTop="@dimen/_28sdp"
       android:layout_marginEnd="@dimen/_2sdp"
+      android:src="@drawable/ria"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
       app:layout_constraintStart_toStartOf="@+id/startGuideline"
       app:layout_constraintTop_toTopOf="@+id/view3" />

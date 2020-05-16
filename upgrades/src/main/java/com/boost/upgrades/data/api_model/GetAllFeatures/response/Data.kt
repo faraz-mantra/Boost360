@@ -8,9 +8,11 @@ data class Data(
     @SerializedName("createdon")
     val createdon: String,
     @SerializedName("feature_deals")
-    val feature_deals: List<Any>,
+    val feature_deals: List<FeatureDeals>,
     @SerializedName("features")
     val features: List<Feature>,
+    @SerializedName("bundles")
+    val bundles: List<Bundles>,
     @SerializedName("isarchived")
     val isarchived: Boolean,
     @SerializedName("rootaliasurl")

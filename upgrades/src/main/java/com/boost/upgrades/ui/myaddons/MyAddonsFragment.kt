@@ -22,7 +22,9 @@ import com.boost.upgrades.adapter.PaidAddonsAdapter
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.history.HistoryFragment
 import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.Constants.Companion.HISTORY_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
@@ -83,16 +85,17 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
         val profileURL = (activity as UpgradeActivity).profileUrl
 
-        if(profileURL.isNullOrEmpty() || profileURL.length < 2){
+        if (profileURL.isNullOrEmpty() || profileURL.length < 2) {
             Glide.with(this)
                     .load(R.drawable.group)
                     .into(merchant_logo)
-        } else{
+        } else {
             Glide.with(this)
                     .load(profileURL)
                     .into(merchant_logo)
         }
 
+        top_line_view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
 
 //        Glide.with(this).load(R.drawable.back_beau)
@@ -112,7 +115,8 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         }
 
         view_orders_history.setOnClickListener {
-            Toasty.info(requireContext(), R.string.feature_coming_soon).show()
+            //            Toasty.info(requireContext(), R.string.feature_coming_soon).show()
+            (activity as UpgradeActivity).addFragment(HistoryFragment.newInstance(), HISTORY_FRAGMENT)
         }
 
         addons_back.setOnClickListener {
@@ -141,7 +145,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         remove_paid_addons.setOnClickListener {
             add_remove_layout.visibility = View.GONE
 //            (activity as UpgradeActivity).addFragment(RemoveAddonsFragment.newInstance(), REMOVE_ADDONS_FRAGMENT)
-            Toasty.warning(requireContext(),R.string.feature_coming_soon).show()
+            Toasty.warning(requireContext(), R.string.feature_coming_soon).show()
         }
 
         read_more_less_free_addons.setOnClickListener {
@@ -150,8 +154,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 return@setOnClickListener
             }
             if (totalFreeItemList != null) {
-                if (freeaddonsSeeMoreStatus) {
-                    if (totalFreeItemList!!.size > 6) {
+                if (freeaddonsSeeMoreStatus && totalFreeItemList!!.size > 6) {
                         val lessList = totalFreeItemList!!.subList(0, 6)
                         updateFreeAddonsRecycler(lessList)
                         freeaddonsSeeMoreStatus = false
@@ -162,7 +165,6 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                                 ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
                                 null
                         )
-                    }
                 } else {
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                     freeaddonsSeeMoreStatus = true
@@ -182,19 +184,17 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 return@setOnClickListener
             }
             if (totalPaidItemList != null) {
-                if (paidaddonsSeeMoreStatus) {
-                    if (totalPaidItemList!!.size > 6) {
-                        val lessList = totalPaidItemList!!.subList(0, 6)
-                        updatePaidAddonsRecycler(lessList)
-                        paidaddonsSeeMoreStatus = false
-                        read_more_less_text_paid_addons.setText("See more")
-                        read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(
-                                null,
-                                null,
-                                ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
-                                null
-                        )
-                    }
+                if (paidaddonsSeeMoreStatus && totalPaidItemList!!.size > 4) {
+                    val lessList = totalPaidItemList!!.subList(0, 4)
+                    updatePaidAddonsRecycler(lessList)
+                    paidaddonsSeeMoreStatus = false
+                    read_more_less_text_paid_addons.setText("See more")
+                    read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            null,
+                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
+                            null
+                    )
                 } else {
                     updatePaidAddonsRecycler(totalPaidItemList!!)
                     paidaddonsSeeMoreStatus = true
@@ -228,7 +228,11 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 if (totalFreeItemList!!.size > 6) {
                     val lessList = totalFreeItemList!!.subList(0, 6)
                     updateFreeAddonsRecycler(lessList)
+                    myaddons_view1.visibility = View.VISIBLE
+                    read_more_less_free_addons.visibility = View.VISIBLE
                 } else {
+                    myaddons_view1.visibility = View.INVISIBLE
+                    read_more_less_free_addons.visibility = View.GONE
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                 }
             }
@@ -244,22 +248,26 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
             val paidItemsCount = totalPaidItemList!!.size
 
-            if(paidItemsCount != null && paidItemsCount > 0) {
+            if (paidItemsCount != null && paidItemsCount > 0) {
                 paid_title.setText(totalPaidItemList!!.size.toString() + " Premium add-ons")
                 paid_subtitle.setText(totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention")
                 read_more_less_paid_addons.visibility = View.VISIBLE
                 premium_account_flag.visibility = View.VISIBLE
-            } else{
+            } else {
                 paid_title.setText("No Premium add-ons active.")
                 paid_subtitle.setText("check out the recommended add-ons for your business")
                 read_more_less_paid_addons.visibility = View.GONE
             }
 
             if (totalPaidItemList != null) {
-                if (totalPaidItemList!!.size > 6) {
-                    val lessList = totalPaidItemList!!.subList(0, 6)
+                if (totalPaidItemList!!.size > 4) {
+                    val lessList = totalPaidItemList!!.subList(0, 4)
                     updatePaidAddonsRecycler(lessList)
+                    myaddons_view2.visibility = View.VISIBLE
+                    read_more_less_paid_addons.visibility = View.VISIBLE
                 } else {
+                    myaddons_view2.visibility = View.INVISIBLE
+                    read_more_less_paid_addons.visibility = View.GONE
                     updatePaidAddonsRecycler(totalPaidItemList!!)
                 }
             }
@@ -276,7 +284,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         })
     }
 
-    private fun setHeadlineTexts(){
+    private fun setHeadlineTexts() {
         free_addons_name.setText("Currently using\n" + totalActiveWidgetCount + " add-ons")
         bottom_free_addons.setText(totalActiveFreeWidgetCount.toString() + " free, " + totalActivePremiumWidgetCount.toString() + " premium")
         free_addons_title.setText(totalActiveFreeWidgetCount.toString() + " Free Add-ons")
@@ -296,7 +304,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     }
 
     fun initializeFreeAddonsRecyclerView() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2,LinearLayoutManager.VERTICAL,true)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recycler_freeaddons.apply {
             layoutManager = gridLayoutManager

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -55,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Contains 6 Add-ons"
+            tools:text="Contains 6 Add-ons"
             android:textSize="@dimen/_10sdp"
             android:textColor="@color/common_text_color" />
 
@@ -66,31 +67,32 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:text="₹499/month"
-                android:textSize="@dimen/_8sdp"
-                android:textColor="#0068e0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:text="₹899/month "
-                android:textSize="@dimen/_8sdp"
-                android:textColor="#9b9b9b" />
-
-            <TextView
+                android:id="@+id/package_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/all_side_curve_percentage_bg"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="- 60%"
+                android:layout_marginEnd="@dimen/_5sdp"
+                tools:text="- 60%"
                 android:textColor="@color/common_text_color"
                 android:textSize="@dimen/_6sdp" />
+
+            <TextView
+                android:id="@+id/package_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                tools:text="₹499/month"
+                android:textSize="@dimen/_8sdp"
+                android:textColor="#0068e0" />
+
+            <TextView
+                android:id="@+id/package_orig_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="₹899/month"
+                android:textSize="@dimen/_8sdp"
+                android:textColor="#9b9b9b" />
 
         </LinearLayout>
 
@@ -127,8 +129,8 @@
     <View
         android:id="@+id/cart_single_package_bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/material_grey_200"
+        android:layout_height="@dimen/_3sdp"
+        android:background="@drawable/view_dot_lines_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

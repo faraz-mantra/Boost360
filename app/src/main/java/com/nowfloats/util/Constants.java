@@ -14,7 +14,6 @@ import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
 import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
-//import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.Specific;
 
 import org.json.JSONArray;
@@ -30,8 +29,9 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
-import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
+
+//import com.squareup.okhttp.OkHttpClient;
 
 
 public class Constants {
@@ -61,6 +61,7 @@ public class Constants {
     public static String clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D";
 
     public static String clientId = Specific.clientId2;
+    public static String clientId_ORDER = "AC16E0892F2F45388F439FDE9F6F3FB5C31F0FAA628D40CD9814A79D8841397D";
 
     public static String GMBClientId = "534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com";
 
@@ -347,7 +348,7 @@ public class Constants {
     public static String storePrimaryImageTemp = null;
     public static JSONArray storeTimming = null;
     public static ArrayList<String> storeSecondaryImages = null;
-    public static String StoreAddresArray[] = {"Address Line1", "Address Line2", "Landmark", "City", "Pincode", "Andhra Pradesh"};
+    public static String[] StoreAddresArray = {"Address Line1", "Address Line2", "Landmark", "City", "Pincode", "Andhra Pradesh"};
     public static ArrayList<Business_Enquiry_Model> StorebizQueries = new ArrayList<Business_Enquiry_Model>();
     public static ArrayList<Entity_model> StorebizEnterpriseQueries = new ArrayList<Entity_model>();
     public static ArrayList<JSONObject> StoreUserMessages = new ArrayList<JSONObject>();
@@ -515,14 +516,14 @@ public class Constants {
         Constants.isDirectlyCameToMainScreen = false;
     }
 
-    public static interface BROADCAST_RECEIVERS_INFO {
+    public Constants(Activity app) {
+        Constants.app = app;
+    }
+
+    public interface BROADCAST_RECEIVERS_INFO {
         String BACKGROUND_SERVICE_BROADCAST_RECEIVER_KEY = "BIZ_APP_REC_KEY";
         String FLOAT_CREATION_BACKGROUND_SERVICE_BROADCAST_RECEIVER_ACTION = "com.biz2.nowfloats.FLOAT_CREATION_ACTION";
         String BACKGROUND_SERVICE_RESPONSE = "response";
-    }
-
-    public Constants(Activity app) {
-        this.app = app;
     }
 
     public Constants(Context app) {

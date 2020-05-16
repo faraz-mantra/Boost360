@@ -21,16 +21,22 @@ data class CartModel (
     var link: String? = null,
 
     @ColumnInfo(name = "price")
-    var price: Int = 0,
+    var price: Double = 0.0,
 
     @ColumnInfo(name = "MRPPrice")
-    var MRPPrice: Int = 0,
+    var MRPPrice: Double = 0.0,
 
     @ColumnInfo(name = "discount")
     var discount: Int = 0,
 
     @ColumnInfo(name = "quantity")
     var quantity: Int = 1,
+
+    @ColumnInfo(name = "min_purchase_months")
+    var min_purchase_months: Int = 1,
+
+    @ColumnInfo(name = "item_type")
+    var item_type: String,
 
     @ColumnInfo(name = "extended_properties")
     var extended_properties: String? = null

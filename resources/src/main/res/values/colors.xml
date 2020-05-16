@@ -13,6 +13,7 @@
   <color name="white">#ffffff</color>
   <color name="aliceblue">#e6f4fc</color>
   <color name="aliceblue_10">#ecf3fe</color>
+  <color name="warm_light">#979797</color>
   <color name="warm_grey">#747474</color>
   <color name="warm_grey_70">#B3747474</color>
   <color name="warm_grey_31">#508e8e8e</color>
@@ -46,6 +47,7 @@
   <color name="ripple_color">@color/white</color>
   <color name="light_grey">#DCDDDE</color>
   <color name="lightest_grey">#F6F6F6</color>
+  <color name="lightest_grey_10">#E7E7E7</color>
   <color name="primary_grey">#B3B4B4</color>
   <color name="warm_grey_10">#4D4D4D</color>
   <color name="watermelon_light">#F06428</color>
@@ -55,5 +57,5 @@
   <color name="little_light_black">#DE000000</color>
   <color name="view_background_color">#EBEBEB</color>
   <color name="khaki_light">#80FFB900</color>
-  <color name="little_dark_green_text_color">#189943</color>
+  <color name="light_green">#189943</color>
 </resources>

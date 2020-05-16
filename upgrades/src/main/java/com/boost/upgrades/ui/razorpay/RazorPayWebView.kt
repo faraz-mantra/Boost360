@@ -90,10 +90,9 @@ class RazorPayWebView : DialogFragment() {
                     override fun onPaymentError(p0: Int, p1: String?) {
                         // Error code and description is passed here
                         Log.e("onPaymentError", "p1 >>>" + p1)
-//                    val gson = Gson()
-//                    val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
-//                    val errorBody: PaymentErrorModule = gson.fromJson(p1, listPersonType)
-                        Toasty.error(requireContext(), p1!!, Toast.LENGTH_LONG).show()
+                    val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
+                    val errorBody: PaymentErrorModule = Gson().fromJson(p1, listPersonType)
+                        Toasty.error(requireContext(), errorBody.error.description, Toast.LENGTH_LONG).show()
                         redirectTransactionFailure(data.toString())
                         dialog!!.dismiss()
                     }
@@ -113,7 +112,7 @@ class RazorPayWebView : DialogFragment() {
         var prefs = SharedPrefs(activity as UpgradeActivity)
         prefs.storeLatestOrderStatus(1)
         prefs.storeLatestPaymentIdFromPG(paymentTransactionId)
-        
+
         (activity as UpgradeActivity).replaceFragment(
             OrderConfirmationFragment.newInstance(),
             Constants.ORDER_CONFIRMATION_FRAGMENT

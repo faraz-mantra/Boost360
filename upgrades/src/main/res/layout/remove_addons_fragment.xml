@@ -24,8 +24,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/remove_back_button2"
@@ -48,15 +47,12 @@
                 android:id="@+id/remove_toolbar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
                 android:gravity="center"
                 android:text="Remove add ons"
                 android:textAllCaps="true"
-                android:textColor="#747474"
-                android:textSize="@dimen/txt_18sp"
-                android:textStyle="bold"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_11sdp"
+                android:fontFamily="@font/open_sans_semibold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/remove_recommended_dummyview"
                 app:layout_constraintStart_toEndOf="@id/remove_back_button2"
@@ -109,6 +105,8 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_15sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
             android:gravity="center"
             android:background="@drawable/all_side_curve_bg">
 

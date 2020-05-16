@@ -21,8 +21,12 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CartAddonsAdaptor
 import com.boost.upgrades.adapter.CartPackageAdaptor
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExtendedProperty
-import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
+//import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
+import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
+import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.payment.PaymentFragment
@@ -54,6 +58,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     var customerId: String = ""
 
     lateinit var cartList: List<CartModel>
+
+    lateinit var featuresList: List<FeaturesModel>
+
+    lateinit var bundlesList: List<BundlesModel>
 
     var total = 0.0
 
@@ -91,7 +99,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         progressDialog = ProgressDialog(requireContext())
 
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList())
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Initialised", "ADDONS_MARKETPLACE Cart", "")
@@ -105,66 +113,160 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         loadData()
         initMvvM()
-        spannableString()
         initializePackageRecycler()
         initializeAddonsRecycler()
 
         cart_continue_submit.setOnClickListener {
             //customerId = viewModel.getCustomerId()
 //            customerId != null &&
-            if (total > 1 && ::cartList.isInitialized) {
-                val widgetsToBeBought = ArrayList<Widget>()
+            if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized) {
+                val purchaseOrders = ArrayList<PurchaseOrder>()
                 for (item in cartList) {
+                    val widgetList = ArrayList<Widget>()
                     var extendProps: List<ExtendedProperty>? = null
-                    var outputExtendedProps: List<ExtendedProperties>? = null
+                    var outputExtendedProps = ArrayList<Property>()
+                    var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
+                    var bundleNetPrice = 0.0
+                    var bundleDiscount = 0
+                    var couponCode: String? = null
 
-                    if(item.extended_properties != null && item.extended_properties!!.length > 0){
+                    if (item.extended_properties != null && item.extended_properties!!.length > 0) {
                         try {
                             val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
                             extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
 
-                            if(extendProps != null){
-                                outputExtendedProps = ArrayList<ExtendedProperties>()
-                                for(prop in extendProps) {
-                                    outputExtendedProps.add(ExtendedProperties(
+                            if (extendProps != null) {
+                                for (prop in extendProps) {
+                                    outputExtendedProps.add(Property(
                                             Key = prop.key!!,
                                             Value = prop.value!!
                                     ))
                                 }
 
                             }
-                        } catch (ex: Exception){
+                        } catch (ex: Exception) {
                             Log.e("FAILED", ex.message)
                         }
                     }
-                    widgetsToBeBought.add(Widget(
-                            ConsumptionConstraint(
-                                    "DAYS",
-                                    30
-                            ),
-                            item.description_title,
-                            item.discount,
-                            Expiry(
-                                    "DAYS",
-                                    30
-                            ),
-                            listOf(),
-                            true,
-                            true,
-                            item.item_name!!,
-                            item.MRPPrice.toDouble(),
-                            "MONTHLY",
-                            item.boost_widget_key,
-                            1,
-                            outputExtendedProps
-                    ))
+
+                    if (item.item_type.equals("features")) {
+                        val discount = 100 - item.discount
+                        val netPrice = (discount * item.MRPPrice) / 100
+
+                        widgetList.add(Widget(
+                                "CLINICS",
+                                ConsumptionConstraint(
+                                        "DAYS",
+                                        30
+                                ),
+                                "",
+                                item.description_title,
+                                item.discount,
+                                Expiry(
+                                        "DAYS",
+                                        30
+                                ),
+                                listOf(),
+                                true,
+                                true,
+                                item.item_name!!,
+                                netPrice,
+                                item.MRPPrice,
+                                if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                                1,
+                                "MONTHLY",
+                                item.boost_widget_key
+                        ))
+                    } else if (item.item_type.equals("bundles")) {
+                        if (::bundlesList.isInitialized && bundlesList.size > 0) {
+                            for (singleBundle in bundlesList) {
+                                if (singleBundle.bundle_key.equals(item.boost_widget_key)) {
+                                    val outputBundleProps: ArrayList<Property> = arrayListOf()
+                                    outputBundleProps.add(Property(
+                                            Key = singleBundle.bundle_key,
+                                            Value = singleBundle.name!!
+                                    ))
+                                    extraPurchaseOrderDetails = ExtraPurchaseOrderDetails(
+                                            null,
+                                            singleBundle.primary_image,
+                                            singleBundle.name,
+                                            outputBundleProps)
+                                    bundleDiscount = singleBundle.overall_discount_percent
+                                    val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                                    for (singleIndludedFeature in includedFeatures) {
+                                        for (singleFeature in featuresList) {
+                                            if (singleIndludedFeature.feature_code.equals(singleFeature.boost_widget_key)) {
+                                                val discount = 100 - item.discount
+                                                val netPrice = (discount * item.MRPPrice) / 100
+                                                //adding bundle netPrice
+                                                bundleNetPrice += netPrice * singleBundle.min_purchase_months
+                                                widgetList.add(Widget(
+                                                        "CLINICS",
+                                                        ConsumptionConstraint(
+                                                                "DAYS",
+                                                                30 * singleBundle.min_purchase_months
+                                                        ),
+                                                        "",
+                                                        item.description_title,
+                                                        item.discount,
+                                                        Expiry(
+                                                                "DAYS",
+                                                                30 * singleBundle.min_purchase_months
+                                                        ),
+                                                        listOf(),
+                                                        true,
+                                                        true,
+                                                        item.item_name!!,
+                                                        netPrice * singleBundle.min_purchase_months,
+                                                        item.MRPPrice * singleBundle.min_purchase_months,
+                                                        if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                                                        1,
+                                                        "MONTHLY",
+                                                        item.boost_widget_key
+                                                ))
+                                                break
+                                            }
+                                        }
+                                    }
+                                    break
+                                }
+                            }
+                        }
+                    }
+
+
+                    purchaseOrders.add(
+                            PurchaseOrder(
+                                    couponCode,
+                                    bundleDiscount,
+                                    extraPurchaseOrderDetails,
+                                    bundleNetPrice,
+                                    widgetList
+                            )
+                    )
                 }
 
                 var prefs = SharedPrefs(activity as UpgradeActivity)
-                prefs.storeFeaturesCountInLastOrder(widgetsToBeBought.count())
+                prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
                 viewModel.InitiatePurchaseOrder(
-                        CreatePurchaseOrderRequest(
+//                        CreatePurchaseOrderRequest(
+//                                (activity as UpgradeActivity).clientid,
+//                                (activity as UpgradeActivity).fpid!!,
+//                                PaymentDetails(
+//                                        "INR",
+//                                        0,
+//                                        "RAZORPAY",
+//                                        TaxDetails(
+//                                                GSTINNumber,
+//                                                0,
+//                                                null,
+//                                                18),
+//                                        grandTotal),
+//                                widgetsToBeBought,
+//                                null
+//                        )
+                        CreatePurchaseOrderV2(
                                 (activity as UpgradeActivity).clientid,
                                 (activity as UpgradeActivity).fpid!!,
                                 PaymentDetails(
@@ -177,8 +279,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 null,
                                                 18),
                                         grandTotal),
-                                widgetsToBeBought,
-                                null
+                                "NEW",
+                                purchaseOrders
                         )
                 )
             } else {
@@ -222,6 +324,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     TAN_POPUP_FRAGEMENT
             )
         }
+
+        all_recommended_addons.setOnClickListener {
+            (activity as UpgradeActivity).goBackToRecommentedScreen()
+        }
+
     }
 
     fun loadData() {
@@ -243,6 +350,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                )
 //        )
         viewModel.getCartItems()
+        viewModel.getAllFeatures()
+        viewModel.getAllBundles()
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -250,11 +359,30 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.cartResult().observe(this, Observer {
             if (it != null && it.size > 0) {
                 cartList = it
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "Cart Size:"+it.size, "")
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "Cart Size:" + it.size, "")
                 empty_cart.visibility = View.GONE
                 cart_main_layout.visibility = View.VISIBLE
-                cartAddonsAdaptor.addupdates(it)
-                cartAddonsAdaptor.notifyDataSetChanged()
+                val features = arrayListOf<CartModel>()
+                val bundles = arrayListOf<CartModel>()
+                for (items in it) {
+                    if (items.item_type.equals("features")) {
+                        features.add(items)
+                    } else if (items.item_type.equals("bundles")) {
+                        bundles.add(items)
+                    }
+                }
+                if (features.size > 0) {
+                    updateAddons(features)
+                    addons_layout.visibility = View.VISIBLE
+                } else {
+                    addons_layout.visibility = View.GONE
+                }
+                if (bundles.size > 0) {
+                    updatePackage(bundles)
+                    package_layout.visibility = View.VISIBLE
+                } else {
+                    package_layout.visibility = View.GONE
+                }
                 totalCalculation(it)
             } else {
                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
@@ -314,24 +442,26 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 entered_tan_number.setText(it)
             }
         })
+
+        //getting all features
+        viewModel.updateAllFeaturesResult().observe(this, Observer {
+            featuresList = it
+        })
+
+        //getting all bunles
+        viewModel.updateAllBundlesResult().observe(this, Observer {
+            bundlesList = it
+        })
     }
 
-    fun totalCalculation(list: List<CartModel>) {
-        total = 0.0
-        if (list != null && list.size > 0) {
-            for (item in list) {
-                total = total + item.price
-            }
-            cart_amount_value.setText("₹" + total.toString())
-            coupon_discount_value.setText("0")
-            val temp = (total * 18) / 100
-            taxValue = Math.round(temp * 100) / 100.0
-            grandTotal = Math.round((total + taxValue) * 100) / 100.0
-            igst_value.setText("₹" + taxValue)
-            order_total_value.setText("₹" + grandTotal.toString())
-            cart_grand_total.setText("₹" + grandTotal.toString())
-            footer_grand_total.setText("₹" + grandTotal.toString())
-        }
+    fun updatePackage(features: List<CartModel>) {
+        cartPackageAdaptor.addupdates(features)
+        cartPackageAdaptor.notifyDataSetChanged()
+    }
+
+    fun updateAddons(features: List<CartModel>) {
+        cartAddonsAdaptor.addupdates(features)
+        cartAddonsAdaptor.notifyDataSetChanged()
     }
 
 
@@ -351,18 +481,28 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_addons_recycler.apply {
             layoutManager = gridLayoutManager
             cart_addons_recycler.adapter = cartAddonsAdaptor
-
         }
     }
 
-    fun spannableString() {
-        val billingDay = Utils.getDayOfMonthSuffix(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))
 
-        val origCost = SpannableString("billed on " + billingDay + " day of every month")
-
-        origCost.setSpan(StyleSpan(Typeface.BOLD), 10, 17, 0)
-        billing_date.setText(origCost)
+    fun totalCalculation(list: List<CartModel>) {
+        total = 0.0
+        if (list != null && list.size > 0) {
+            for (item in list) {
+                total += item.price * item.min_purchase_months
+            }
+            cart_amount_value.setText("₹" + total.toString())
+            coupon_discount_value.setText("0")
+            val temp = (total * 18) / 100
+            taxValue = Math.round(temp * 100) / 100.0
+            grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
+            igst_value.setText("₹" + taxValue)
+            order_total_value.setText("₹" + grandTotal.toString())
+            cart_grand_total.setText("₹" + grandTotal.toString())
+            footer_grand_total.setText("₹" + grandTotal.toString())
+        }
     }
+
 
     override fun deleteCartAddonsItem(itemID: String) {
         viewModel.deleteCartItems(itemID)

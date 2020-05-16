@@ -4,7 +4,7 @@ import android.graphics.Paint
 import com.framework.glide.util.glideLoad
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemOrderDetailsBinding
-import com.inventoryorder.model.ordersdetails.ItemX
+import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
@@ -13,11 +13,11 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecy
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as ItemX
+    val data = item as ItemN
     setDataResponseForOrderDetails(data)
   }
 
-  private fun setDataResponseForOrderDetails(item: ItemX) {
+  private fun setDataResponseForOrderDetails(item: ItemN) {
     binding.tvDishName.text = item.Product?.Name?.trim()
     binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
     val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"

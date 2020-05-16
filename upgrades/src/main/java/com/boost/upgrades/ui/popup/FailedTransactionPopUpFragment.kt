@@ -61,6 +61,9 @@ class FailedTransactionPopUpFragment : DialogFragment() {
 
             //RazorPay web
             razorPayWebView.show((activity as UpgradeActivity).supportFragmentManager, RAZORPAY_WEBVIEW_POPUP_FRAGMENT)
+
+            //close the popup
+            dialog!!.dismiss()
         }
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Failed_Payment_Transaction Loaded", "Failed_Payment_Transaction", "")

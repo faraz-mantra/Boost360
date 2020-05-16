@@ -37,8 +37,10 @@ import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
 
   private var list = ArrayList<ProcessApiSyncModel>()
-  val connectedChannels = ArrayList<ChannelModel>()
+  private val connectedChannels = ArrayList<ChannelModel>()
   private var apiProcessAdapter: AppBaseRecyclerViewAdapter<ProcessApiSyncModel>? = null
+  private var floatingPointId = ""
+
 
   companion object {
     @JvmStatic
@@ -52,13 +54,19 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   @ExperimentalStdlibApi
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListener(binding?.next, binding?.supportCustomer)
+    setOnClickListener(binding?.next, binding?.retry, binding?.supportCustomer)
     setProcessApiSyncModel()
     setApiProcessAdapter(list)
     binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
     binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
+    apiHitBusiness()
+  }
+
+  private fun apiHitBusiness() {
     getDotProgress()?.let {
-      binding?.textBtn?.visibility = View.GONE
+      binding?.textBtn?.gone()
+      binding?.errorView?.gone()
+      binding?.next?.visible()
       binding?.next?.addView(it)
       if (NetworkUtils.isNetworkConnected()) {
         it.startAnimation()
@@ -90,15 +98,14 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         ChannelType.G_BUSINESS -> true
         null -> false
       }
-      if (isSelected == true) {
-        connectedChannels.add(channel)
-      }
+      if (isSelected == true) connectedChannels.add(channel)
     }
     list.clear()
     list.addAll(ProcessApiSyncModel().getDataStart(connectedChannels))
   }
 
   private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
+    if (checkFpCreate(dotProgressBar)) return
     val request = getBusinessRequest()
     viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -106,10 +113,22 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           connectedChannels.forEach { it1 ->
             it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
           }
-          apiProcessChannelWhatsApp(dotProgressBar, it.stringResponse ?: "")
+          floatingPointId = it.stringResponse ?: ""
+          apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
         } else updateError("Floating point return null", it.status, "CREATE")
       } else updateError(it.error?.localizedMessage, it.status, "CREATE")
     })
+  }
+
+  private fun checkFpCreate(dotProgressBar: DotProgressBar): Boolean {
+    if (floatingPointId.isNotEmpty()) {
+      connectedChannels.forEach { it1 ->
+        it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
+      }
+      apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
+      return true
+    }
+    return false
   }
 
   private fun apiProcessChannelWhatsApp(dotProgressBar: DotProgressBar, floatingPointId: String) {
@@ -217,6 +236,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           showLongToast("Error in your phone call!")
         }
       }
+      binding?.retry -> apiHitBusiness()
     }
   }
 

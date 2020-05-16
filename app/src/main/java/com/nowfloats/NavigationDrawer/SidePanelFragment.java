@@ -48,6 +48,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -112,7 +113,7 @@ public class SidePanelFragment extends Fragment {
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
 
     private ImageView shareImageView, keyboardImageView, marketplaceImageView, subscriptionsImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
-            accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView,cotnentSharingImageView, callsImageView,
+            accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView, cotnentSharingImageView, callsImageView,
             manageInventoryImageView, inboxImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
@@ -305,11 +306,10 @@ public class SidePanelFragment extends Fragment {
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
-        if(Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
+        if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
             keyboardLayout.setVisibility(View.VISIBLE);
         else
             keyboardLayout.setVisibility(View.GONE);
-
 
         marketplaceLayout = (LinearLayout) card.findViewById(R.id.marketplace_layout);
         accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
@@ -317,7 +317,6 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportLayout = card.findViewById(R.id.seventhRow_Layout);
         aboutLayout = card.findViewById(R.id.layout_about);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
-
 
         if (session.getISEnterprise().equals("true")) {
             siteMeter.setVisibility(View.GONE);
@@ -333,37 +332,41 @@ public class SidePanelFragment extends Fragment {
         tvCalls = manageCalls.findViewById(R.id.tvCustomerCalls);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
 
-        switch (category_code){
-            case "SVC":
-            case "DOC":
-            case "HOS":
-            case "SPA":
-            case "SAL":
-            case "EDU":
-                tvManageInventory.setText("Appointments");
-                break;
-            case "HOT":
-                tvManageInventory.setText("Room Bookings");
-                break;
-            case "RTL":
-            case "MFG":
-                tvManageInventory.setText("Orders");
-                break;
-            case "CAF":
-                tvManageInventory.setText("Food Orders");
-                break;
-            default:
-                tvManageInventory.setText("Orders");
-                break;
-        }
-        tvInbox = inboxLayout.findViewById(R.id.tvInbox);
-        switch (category_code){
-            case "MFG":
-                tvInbox.setText("Quotation Requests");
-                break;
-            default:
-                tvInbox.setText("Enquiries");
-                break;
+
+        if (category_code != null) {
+            switch (category_code) {
+                case "SVC":
+                case "DOC":
+                case "HOS":
+                case "SPA":
+                case "SAL":
+                case "EDU":
+                    tvManageInventory.setText("Appointments");
+                    break;
+                case "HOT":
+                    tvManageInventory.setText("Room Bookings");
+                    break;
+                case "RTL":
+                case "MFG":
+                    tvManageInventory.setText("Orders");
+                    break;
+                case "CAF":
+                    tvManageInventory.setText("Food Orders");
+                    break;
+                default:
+                    tvManageInventory.setText("Orders");
+                    break;
+            }
+            tvManageInventory.setText(Utils.getDefaultOrderROIType(category_code));
+            tvInbox = inboxLayout.findViewById(R.id.tvInbox);
+            switch (category_code) {
+                case "MFG":
+                    tvInbox.setText("Quotation Requests");
+                    break;
+                default:
+                    tvInbox.setText("Enquiries");
+                    break;
+            }
         }
         accountSettingsText = (TextView) accountSettingsLayout.findViewById(R.id.fifthRow_TextView);
         tvSubscriptions = (TextView) subscriptionsLayout.findViewById(R.id.tvSubscriptions);

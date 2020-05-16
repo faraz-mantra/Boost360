@@ -33,6 +33,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 
@@ -60,17 +61,19 @@ public class ManageInventoryFragment extends Fragment {
     private Activity activity;
     private boolean mIsAPEnabled = false;
     private String mTransactionCharge = "9%";
+    private String category_code = "";
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+        UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
+        category_code = session.getFP_AppExperienceCode();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.fragment_manage_inventory, container, false);
         ivLockWidget = mainView.findViewById(R.id.lock_widget);
@@ -197,7 +200,6 @@ public class ManageInventoryFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
-            mainView.findViewById(R.id.tvBooking).setOnClickListener(v -> openBookingActivity());
 
             tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -260,25 +262,37 @@ public class ManageInventoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (headerText != null)
-            headerText.setText(getResources().getString(R.string.manage_inventory));
-    }
-
-    private void openBookingActivity() {
-        Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-        startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
+            headerText.setText(Utils.getDefaultOrderROIType(category_code));
     }
 
     private void openSellerAnalyticsActivity() {
         Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-        startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
+        bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
+
+        if (getAppointmentType(session.getFP_AppExperienceCode())) {
+            startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
+        } else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
+
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
 //        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
 //        startActivity(i);
 //        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    public static boolean getAppointmentType(String fp_appExperienceCode) {
+        switch (fp_appExperienceCode) {
+            case "SVC":
+            case "DOC":
+            case "HOS":
+            case "SPA":
+            case "SAL":
+            case "EDU":
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void startOrdersActivity() {

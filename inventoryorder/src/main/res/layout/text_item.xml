@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -15,7 +16,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order ID:"
+        tools:text="Payment:"
         android:textColor="@color/primary_grey"
         app:textType="SUBTITLE_2" />
 
@@ -24,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_6"
-        android:text="GK7C4FM"
+        tools:text="Offline, Pending"
         android:textColor="@color/black"
         app:textType="BODY_1" />
   </androidx.appcompat.widget.LinearLayoutCompat>

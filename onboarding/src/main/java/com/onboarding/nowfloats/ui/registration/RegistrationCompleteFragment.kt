@@ -142,7 +142,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       binding?.businessClick -> openImagePicker(false)
       binding?.websiteBtnClick -> {
         val bundle = Bundle()
-        bundle.putString(IntentConstant.DOMAIN_URL.name, binding?.domainTxt?.text.toString())
+        bundle.putString(IntentConstant.DOMAIN_URL.name, "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase()}.nowfloats.com")
         navigator?.startActivity(WebViewActivity::class.java, bundle)
       }
       binding?.skipDashboard -> {

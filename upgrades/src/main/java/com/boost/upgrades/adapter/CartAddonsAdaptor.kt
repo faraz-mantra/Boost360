@@ -1,6 +1,8 @@
 package com.boost.upgrades.adapter
 
 import android.content.Context
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,16 +42,24 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         Glide.with(context).load(list.get(position).link).into(holder.image)
         holder.title.setText(list.get(position).item_name)
-        holder.price.setText("₹"+list.get(position).price+"/month")
-        holder.MRPPrice.setText("₹"+list.get(position).MRPPrice+"/month")
+        val price = list.get(position).price * list.get(position).min_purchase_months
+        val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
+        holder.price.setText("₹"+price+"/month")
+        if(price!=MRPPrice) {
+            spannableString(holder, MRPPrice, list.get(position).min_purchase_months)
+            holder.MRPPrice.visibility = View.VISIBLE
+        }else{
+            holder.MRPPrice.visibility = View.GONE
+        }
         if(list.get(position).discount > 0) {
-            holder.discount.setText("- " + list.get(position).discount + "%")
+            holder.discount.setText(list.get(position).discount.toString() + "%")
         }else{
             holder.discount.visibility = View.GONE
         }
         holder.remove_addons.setOnClickListener {
             listener.deleteCartAddonsItem(list.get(position).boost_widget_key)
         }
+        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if(list.size - 1 == position) {
             holder.view.visibility = View.GONE
         }
@@ -76,5 +86,23 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         fun upgradeListItem(updateModel: WidgetModel) {
 
         }
+    }
+
+    fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
+        val origCost: SpannableString
+        if (minMonth > 1) {
+            val originalCost = value
+            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+        } else {
+            origCost = SpannableString("₹" + value + "/month")
+        }
+
+        origCost.setSpan(
+                StrikethroughSpan(),
+                0,
+                origCost.length,
+                0
+        )
+        holder.MRPPrice.setText(origCost)
     }
 }
