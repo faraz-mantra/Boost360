@@ -30,6 +30,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       BOOKING_DETAILS -> BookingDetailsViewHolder(binding as ItemBookingDetailsBinding)
       ITEM_SERVICE_LOCATIONS -> LocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
       BOOKINGS_ITEM_TYPE -> BookingsViewHolder(binding as ItemBookingsAllOrderBinding)
+      ITEM_CHOOSE_PURPOSE -> ChoosePurposeViewHolder(binding as ItemBottomSheetChoosePurposeBinding)
     }
   }
 

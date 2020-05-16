@@ -34,9 +34,21 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
 
   override fun onCreateView() {
     super.onCreateView()
+
+    setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     setRecyclerViewAdapter()
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+
+    when(v){
+      binding?.btnAdd ->{
+        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING,Bundle())
+      }
+    }
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {

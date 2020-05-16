@@ -10,6 +10,9 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.booking.BookingDetailsFragment
 import com.inventoryorder.ui.booking.BookingsFragment
+import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
+import com.inventoryorder.ui.createappointment.NewBookingFragmentOne
+import com.inventoryorder.ui.createappointment.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
 import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.viewmodel.OrderCreateViewModel
@@ -33,6 +36,9 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is OrderDetailFragment -> R.layout.fragment_inventory_order_detail
       is BookingsFragment -> R.layout.fragment_inventory_all_bookings
       is BookingDetailsFragment -> R.layout.fragment_inventory_booking_details
+      is NewBookingFragmentOne -> R.layout.fragment_new_booking_one
+      is NewBookingFragmentTwo -> R.layout.fragment_new_booking_two
+      is BookingSuccessfulFragment -> R.layout.fragment_booking_successful
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -53,6 +59,8 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is OrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is BookingDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is BookingsFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
+      is NewBookingFragmentOne -> inflater.inflate(R.menu.menu_toolbar,menu)
+      is NewBookingFragmentTwo -> inflater.inflate(R.menu.menu_toolbar,menu)
     }
   }
 }
