@@ -2,9 +2,12 @@ package com.inventoryorder.ui.createappointment
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.databinding.FragmentNewBookingOneBinding
+import com.inventoryorder.model.AppointmentScheduleModel
 import com.inventoryorder.model.bottomsheet.ChoosePurposeModel
+import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 
@@ -12,6 +15,8 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
 
     private var choosePurposeBottomSheetDialog : ChoosePurposeBottomSheetDialog? = null
     private var choosePurposeList = ChoosePurposeModel().getData()
+    private var adapter : AppBaseRecyclerViewAdapter<AppointmentScheduleModel>? = null
+//    private var list : ArrayList<AppointmentScheduleModel>? = null
 
     companion object{
         fun newInstance(bundle: Bundle?= null) : NewBookingFragmentOne {
@@ -25,6 +30,8 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
         super.onCreateView()
 
         setOnClickListener( binding?.choosePurpose, binding?.appointmentType, binding?.selectDuration, binding?.selectTimeSlot, binding?.buttonProceed)
+
+        setAdapterForAppointmentSchedule(AppointmentScheduleModel().getData())
     }
 
     override fun onClick(v: View) {
@@ -46,8 +53,12 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
 
     }
 
-    private fun setAdapterForAppointmentSchedule(choosePurposeModel: ChoosePurposeModel){
-
+    private fun setAdapterForAppointmentSchedule(appointmentScheduleModel : ArrayList<AppointmentScheduleModel>){
+        binding?.recyclerViewAppointmentSchedule?.post {
+        adapter = AppBaseRecyclerViewAdapter(baseActivity,appointmentScheduleModel)
+        binding?.recyclerViewAppointmentSchedule?.layoutManager =  LinearLayoutManager(baseActivity,LinearLayoutManager.HORIZONTAL,false)
+        binding?.recyclerViewAppointmentSchedule?.adapter = adapter
+        }
 
     }
 

@@ -81,6 +81,13 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     }
   }
 
+    override fun isHideToolbar(): Boolean {
+        return when (type) {
+            FragmentType.BOOKING_SUCCESSFUL -> true
+            else -> super.isHideToolbar()
+        }
+    }
+
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)

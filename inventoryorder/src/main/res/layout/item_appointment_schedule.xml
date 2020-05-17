@@ -11,6 +11,7 @@
         >
 
         <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tvAppointmentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/size_20"

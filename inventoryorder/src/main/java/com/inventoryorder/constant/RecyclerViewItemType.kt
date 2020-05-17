@@ -11,11 +11,11 @@ enum class RecyclerViewItemType {
   ITEM_DELIVERY_OPTIONS,
   BOOKING_DETAILS,
   ITEM_SERVICE_LOCATIONS,
+  ITEM_CHOOSE_PURPOSE,
   BOOKINGS_ITEM_TYPE,
-  ITEM_CHOOSE_PURPOSE
-  ;
-  BOOKINGS_ITEM_TYPE,
-  BOOKINGS_DATE_TYPE;
+  BOOKINGS_DATE_TYPE,
+  APPOINTMENT_SCHEDULE,
+  GENDER_SELECTION;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -30,6 +30,8 @@ enum class RecyclerViewItemType {
       BOOKINGS_ITEM_TYPE -> R.layout.item_bookings_all_order
       ITEM_CHOOSE_PURPOSE -> R.layout.item_bottom_sheet_choose_purpose
       BOOKINGS_DATE_TYPE -> R.layout.item_bookings_date
+      APPOINTMENT_SCHEDULE -> R.layout.item_appointment_schedule
+      GENDER_SELECTION -> R.layout.item_bottom_sheet_select_gender
     }
   }
 }
