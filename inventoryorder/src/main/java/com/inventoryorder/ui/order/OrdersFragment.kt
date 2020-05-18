@@ -65,6 +65,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
+    binding?.btnAdd?.setOnClickListener { showLongToast("Coming soon..") }
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
