@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/curve_top_bg"
             android:orientation="vertical"
-            android:padding="@dimen/_15sdp"
+            android:padding="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -293,39 +293,52 @@
                     android:text="I hereby confirm that above info is correct."/>
             </LinearLayout>
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middle_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
             <TextView
                 android:id="@+id/confirm_btn"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/orange_button_click_effect"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
-                android:paddingStart="@dimen/_30sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_30sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:text="Confirm Details"
+                android:padding="@dimen/_10sdp"
+                android:text="Confirm Info"
                 android:textAllCaps="true"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:layout_margin="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/middle_guideline1"/>
 
 
             <TextView
                 android:id="@+id/cancle_button"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:padding="@dimen/_10sdp"
-                android:text="Cancel"
-                android:textAllCaps="true"
+                android:text="I'll do it later"
                 android:textColor="#9b9b9b"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/middle_guideline1"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
