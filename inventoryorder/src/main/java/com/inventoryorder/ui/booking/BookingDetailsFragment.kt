@@ -217,10 +217,11 @@ class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDet
 
 
   private fun showBottomSheetDialog() {
-    locationsBottomSheetDialog = LocationBottomSheetDialog()
-    locationsBottomSheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
-    locationsBottomSheetDialog?.setList(serviceLocationsList)
-    locationsBottomSheetDialog?.show(this.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
+    showLongToast("Coming soon..")
+//    locationsBottomSheetDialog = LocationBottomSheetDialog()
+//    locationsBottomSheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
+//    locationsBottomSheetDialog?.setList(serviceLocationsList)
+//    locationsBottomSheetDialog?.show(this.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
   }
 
   private fun clickDeliveryItem(list: LocationsModel?) {
