@@ -62,6 +62,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
 
   override fun onCreateView() {
     super.onCreateView()
+    setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
@@ -276,6 +277,13 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
   private fun getRequestData(): OrderSummaryRequest {
     request = OrderSummaryRequest(clientId, fpTag, skip = currentPage, limit = PAGE_SIZE)
     return request!!
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+    }
   }
 
   private fun errorOnSummary(message: String?) {

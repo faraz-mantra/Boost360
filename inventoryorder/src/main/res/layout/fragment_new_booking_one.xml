@@ -143,6 +143,7 @@
                         android:elevation="@dimen/size_4"
                         app:corner_radius="RADIUS_4">
 
+
                         <com.framework.views.viewgroups.BaseRecyclerView
                             android:id="@+id/recyclerViewAppointmentSchedule"
                             android:layout_width="match_parent"
@@ -150,8 +151,7 @@
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:itemCount="10"
-                            tools:listitem="@layout/item_appointment_schedule"
-                            />
+                            tools:listitem="@layout/item_appointment_schedule" />
 
                     </com.framework.views.customViews.CustomCardView>
 
