@@ -13,6 +13,8 @@ data class Data(
     val features: List<Feature>,
     @SerializedName("bundles")
     val bundles: List<Bundles>,
+    @SerializedName("discount_coupons")
+    val discount_coupons: List<DiscountCoupons>,
     @SerializedName("isarchived")
     val isarchived: Boolean,
     @SerializedName("rootaliasurl")

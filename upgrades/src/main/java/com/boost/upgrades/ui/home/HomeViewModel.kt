@@ -8,10 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.FeatureDeals
-import com.boost.upgrades.data.model.BundlesModel
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
+import com.boost.upgrades.data.model.*
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -226,6 +223,33 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         if (it.Data[0].feature_deals.size > 0)
                                             allFeatureDealsResult.postValue(it.Data[0].feature_deals)
 
+                                        //saving coupons in DB
+                                        if (it.Data[0].discount_coupons != null && it.Data[0].discount_coupons.size > 0) {
+                                            val coupons = arrayListOf<CouponsModel>()
+                                            for (singleCoupon in it.Data[0].discount_coupons) {
+                                                coupons.add(CouponsModel(
+                                                        singleCoupon.code,
+                                                        singleCoupon.discount_percent
+                                                ))
+                                            }
+                                            Completable.fromAction {
+                                                AppDatabase.getInstance(getApplication())!!
+                                                        .couponsDao()
+                                                        .insertAllCoupons(coupons)
+                                            }
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .doOnComplete {
+                                                        Log.i("insertAllCoupons", "Successfully")
+                                                        updatesLoader.postValue(false)
+                                                    }
+                                                    .doOnError {
+                                                        Log.i("insertAllCoupons", "Successfully")
+                                                        updatesError.postValue(it.message)
+                                                        updatesLoader.postValue(false)
+                                                    }
+                                                    .subscribe()
+                                        }
                                     },
                                     {
                                         Log.e("GetAllFeatures", "error" + it.message)
