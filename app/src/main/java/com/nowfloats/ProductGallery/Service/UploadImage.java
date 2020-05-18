@@ -1,6 +1,7 @@
 package com.nowfloats.ProductGallery.Service;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nowfloats.util.Constants;
 
@@ -47,7 +48,7 @@ public class UploadImage extends AsyncTask<String,String,String>
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-Type","application/octet-stream");
 
             if (imageData != null)
             {
@@ -105,6 +106,8 @@ public class UploadImage extends AsyncTask<String,String,String>
 
                 }*/
         } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.e("UploadImage >>","error --->>>"+ ex.toString());
             //flag = false;
         } /*finally {
                 try {
