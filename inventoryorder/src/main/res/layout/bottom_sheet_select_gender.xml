@@ -65,7 +65,7 @@
           android:background="@color/view_background_color" />
 
       <com.framework.views.viewgroups.BaseRecyclerView
-          android:id="@+id/recyclerViewBottomSheetChoosePurpose"
+          android:id="@+id/recyclerViewBottomSheetSelectGender"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

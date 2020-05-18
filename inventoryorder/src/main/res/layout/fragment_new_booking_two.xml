@@ -107,7 +107,7 @@
                     app:textType="BODY_3" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/choosePurpose"
+                    android:id="@+id/llSelectGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_8"

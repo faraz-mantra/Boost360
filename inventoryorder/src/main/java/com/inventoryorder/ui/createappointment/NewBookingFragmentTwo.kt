@@ -8,16 +8,19 @@ import androidx.core.content.ContextCompat
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.databinding.FragmentNewBookingTwoBinding
+import com.inventoryorder.model.bottomsheet.GenderSelectionModel
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 import kotlinx.android.synthetic.main.fragment_new_booking_two.*
 
 class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding>()  {
 
+
+    private var selectGenderBottomSheetDialog : SelectGenderBottomSheetDialog?= null
+    private var selectGenderList = GenderSelectionModel().getData()
+
     companion object{
-
         fun newInstance(bundle: Bundle?= null) : NewBookingFragmentTwo {
-
             val fragment  = NewBookingFragmentTwo()
             fragment.arguments = bundle
             return fragment
@@ -27,7 +30,7 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
     override fun onCreateView() {
         super.onCreateView()
 
-        setOnClickListener(binding?.buttonCreateBooking,binding?.tvBack,binding?.buttonPayAtClinic,binding?.buttonPayOnline)
+        setOnClickListener(binding?.buttonCreateBooking,binding?.tvBack,binding?.buttonPayAtClinic,binding?.buttonPayOnline,binding?.llSelectGender)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -62,13 +65,24 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
                 buttonPayAtClinic.setTextColor(resources.getColor(R.color.primary_grey))
 
             }
-
-
+            binding?.llSelectGender ->{
+                showBottomSheetDialogSelectGender()
+            }
 
         }
 
     }
 
+    private fun showBottomSheetDialogSelectGender(){
+        selectGenderBottomSheetDialog = SelectGenderBottomSheetDialog()
+        selectGenderBottomSheetDialog?.onDoneClicked = {selectGenderFromList(it)}
+        selectGenderBottomSheetDialog?.setList(selectGenderList)
+        selectGenderBottomSheetDialog?.show(this.parentFragmentManager,SelectGenderBottomSheetDialog::class.java.name)
+    }
+
+    private fun selectGenderFromList(list: GenderSelectionModel?) {
+        selectGenderList.forEach { it.isSelected = (it.selectedGender == list?.selectedGender) }
+    }
 
 
 
