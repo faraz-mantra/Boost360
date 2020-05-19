@@ -25,12 +25,11 @@ class AppointmentTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetAppoin
     }
 
     fun setList(list : ArrayList<AppointMentTypeModel>){
-        this.list?.clear()
-        this.list?.addAll(list)
+      this.list.clear()
+      this.list.addAll(list)
     }
 
     override fun onCreateView() {
-
         binding?.recyclerViewBottomSheetAppointmentType?.post {
             adapter = AppBaseRecyclerViewAdapter(baseActivity,list,this)
             binding?.recyclerViewBottomSheetAppointmentType?.layoutManager = LinearLayoutManager(baseActivity)
@@ -40,10 +39,10 @@ class AppointmentTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetAppoin
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        var selectAppointMentTypeModel = item as AppointMentTypeModel
-        list.forEach { it.isSelected = (it.appointmentTypeSelectedName == selectAppointMentTypeModel?.appointmentTypeSelectedName) }
+      val selectAppointmentTypeModel = item as AppointMentTypeModel
+      list.forEach { it.isSelected = (it.appointmentTypeSelectedName == selectAppointmentTypeModel.appointmentTypeSelectedName) }
         adapter?.notifyDataSetChanged()
-        onDoneClicked(item as @kotlin.ParameterName(name = "appointmentTypeModel") AppointMentTypeModel)
+      onDoneClicked(item)
         dismiss()
     }
 

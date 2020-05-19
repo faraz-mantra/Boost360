@@ -22,7 +22,6 @@ import com.framework.utils.hideKeyBoard
 import com.framework.views.customViews.CustomToolbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import java.lang.IllegalStateException
 
 abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : AppCompatActivity(), View.OnClickListener {
 
@@ -37,8 +36,8 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   protected abstract fun onCreateView()
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    customTheme()?.let { this.setTheme(it) }
     super.onCreate(savedInstanceState)
-    setTheme()
     binding = DataBindingUtil.setContentView(this, getLayout())
     binding?.lifecycleOwner = this
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
@@ -55,10 +54,9 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     return listOf()
   }
 
-  protected open fun setTheme() {
-
+  open fun customTheme(): Int? {
+    return null
   }
-
   override fun onDestroy() {
     super.onDestroy()
     compositeDisposable.clear()
@@ -154,7 +152,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     val toolbar = getToolbar() ?: return
     toolbar.title = title
     getToolbarTitleColor()?.let { toolbar.setTitleTextColor(it) }
-    toolbar.getTitleTextView()?.let { titleView->
+    toolbar.getTitleTextView()?.let { titleView ->
       titleView.setToolbarTitleGravity()
       getToolbarTitleTypeface()?.let { titleView.typeface = it }
       getToolbarTitleSize()?.let { titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, it) }

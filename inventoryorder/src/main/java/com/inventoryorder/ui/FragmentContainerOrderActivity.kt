@@ -32,9 +32,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var orderDetailFragment: OrderDetailFragment? = null
   private var bookingDetails: BookingDetailsFragment? = null
   private var bookingsFragment: BookingsFragment? = null
-  private var newBookingFragmentOne : NewBookingFragmentOne? = null
-  private var newBookingFragmentTwo : NewBookingFragmentTwo? = null
-  private var bookingSuccessfulFragment : BookingSuccessfulFragment? = null
+  private var newBookingFragmentOne: NewBookingFragmentOne? = null
+  private var newBookingFragmentTwo: NewBookingFragmentTwo? = null
+  private var bookingSuccessfulFragment: BookingSuccessfulFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -44,10 +44,22 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return BaseViewModel::class.java
   }
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+    super.onCreate(savedInstanceState)
+  }
+
   override fun onCreateView() {
     super.onCreateView()
-    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
     setFragment()
+  }
+
+  override fun customTheme(): Int? {
+    return when (type) {
+      FragmentType.CREATE_NEW_BOOKING,
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> R.style.AppTheme_Order_create
+      else -> super.customTheme()
+    }
   }
 
   override fun getToolbar(): CustomToolbar? {
@@ -63,7 +75,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_BOOKING_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> ContextCompat.getColor(this, R.color.colorPrimary)
-//      FragmentType.BOOKING_SUCCESSFUL -> null
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -76,17 +87,16 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_BOOKING_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> ContextCompat.getColor(this, R.color.white)
-//      FragmentType.BOOKING_SUCCESSFUL -> null
       else -> super.getToolbarTitleColor()
     }
   }
 
-    override fun isHideToolbar(): Boolean {
-        return when (type) {
-            FragmentType.BOOKING_SUCCESSFUL -> true
-            else -> super.isHideToolbar()
-        }
+  override fun isHideToolbar(): Boolean {
+    return when (type) {
+      FragmentType.BOOKING_SUCCESSFUL -> true
+      else -> super.isHideToolbar()
     }
+  }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
@@ -96,7 +106,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BOOKING_DETAIL_VIEW -> "# GK7C4FM"
       FragmentType.CREATE_NEW_BOOKING -> "New Booking"
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> "New Booking"
-//      FragmentType.BOOKING_SUCCESSFUL -> null
       else -> super.getToolbarTitle()
     }
   }
@@ -110,7 +119,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_BOOKING_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
-//      FragmentType.BOOKING_SUCCESSFUL -> null
       else -> super.getNavigationIcon()
     }
   }
@@ -163,11 +171,11 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
         newBookingFragmentOne = NewBookingFragmentOne.newInstance()
         newBookingFragmentOne
       }
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2 ->{
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> {
         newBookingFragmentTwo = NewBookingFragmentTwo.newInstance()
         newBookingFragmentTwo
       }
-      FragmentType.BOOKING_SUCCESSFUL ->{
+      FragmentType.BOOKING_SUCCESSFUL -> {
         bookingSuccessfulFragment = BookingSuccessfulFragment.newInstance()
         bookingSuccessfulFragment
       }

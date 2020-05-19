@@ -11,7 +11,6 @@ class ChoosePurposeViewHolder(binding : ItemBottomSheetChoosePurposeBinding) : A
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         super.bind(position, item)
-
         val data = item as ChoosePurposeModel
         setDataForChoosePurpose(data)
     }
