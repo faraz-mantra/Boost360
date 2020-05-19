@@ -65,7 +65,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
   }
 
   private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
-    binding?.progress?.visible()
+    if (isFirst) binding?.progress?.visible()
     viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
       if (it.error is NoNetworkException) {
