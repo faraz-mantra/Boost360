@@ -198,7 +198,6 @@
 
             <!--            android:background="@drawable/payment_mode_button_bg"-->
 
-
           </androidx.appcompat.widget.LinearLayoutCompat>
 
         </com.framework.views.customViews.CustomCardView>
