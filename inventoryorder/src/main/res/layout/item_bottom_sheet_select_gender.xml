@@ -14,6 +14,7 @@
             android:id="@+id/ivGenderSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_2"
             app:srcCompat="@drawable/ic_option_unselected" />
 
         <com.framework.views.customViews.CustomTextView

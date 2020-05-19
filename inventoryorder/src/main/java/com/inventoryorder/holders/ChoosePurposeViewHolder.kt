@@ -21,7 +21,7 @@ class ChoosePurposeViewHolder(binding : ItemBottomSheetChoosePurposeBinding) : A
         binding.tvOptionSelected.text = model.choosePurposeSelectedName
         binding.mainView.background = activity?.let { ContextCompat.getDrawable(it, model.getColor()) }
         binding.mainView.setOnClickListener {
-           listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.DELIVERY_ITEM_CLICKED.ordinal)
+           listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.GENDER_SELECT_ITEM.ordinal)
         }
 
     }

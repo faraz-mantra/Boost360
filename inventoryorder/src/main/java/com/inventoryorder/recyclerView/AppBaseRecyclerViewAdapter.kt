@@ -34,6 +34,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       BOOKINGS_DATE_TYPE -> BookingDateViewHolder(binding as ItemBookingsDateBinding)
       APPOINTMENT_SCHEDULE -> AppointmentScheduleViewHolder (binding as ItemAppointmentScheduleBinding)
       GENDER_SELECTION -> GenderSelectionViewHolder (binding as ItemBottomSheetSelectGenderBinding)
+      APPOINTMENT_TYPE -> AppointmentTypeViewHolder (binding as ItemBottomSheetAppointmentTypeBinding)
     }
   }
 

@@ -12,12 +12,10 @@ class GenderSelectionModel(val gender : String? = null,
     }
 
     fun getData() : ArrayList<GenderSelectionModel>{
-
         val list = ArrayList<GenderSelectionModel>()
         list.add(GenderSelectionModel("Male"))
-        list.add(GenderSelectionModel("FeMale"))
-        list.add(GenderSelectionModel("Others"))
-
+        list.add(GenderSelectionModel("Female"))
+        list.add(GenderSelectionModel("Other"))
         return list
     }
 }

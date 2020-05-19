@@ -36,7 +36,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="Choose purpose"
+              android:text="Appointment Type"
               android:textColor="@color/grey_text_color"
               app:fontFamily="@font/bold"
               app:textType="HEADING_4" />
@@ -47,7 +47,7 @@
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_2"
               android:includeFontPadding="false"
-              android:text="Pick a service from the options below"
+              android:text="Pick a type of appointment from the options below"
               android:textColor="@color/primary_grey"
               app:textType="BODY_1" />
 
@@ -63,7 +63,7 @@
           android:background="@color/view_background_color" />
 
       <com.framework.views.viewgroups.BaseRecyclerView
-          android:id="@+id/recyclerViewBottomSheetChoosePurpose"
+          android:id="@+id/recyclerViewBottomSheetAppointmentType"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

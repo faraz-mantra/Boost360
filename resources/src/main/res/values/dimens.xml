@@ -56,6 +56,8 @@
   <dimen name="size_86">86dp</dimen>
   <dimen name="size_90">90dp</dimen>
   <dimen name="size_92">92dp</dimen>
+  <dimen name="size_94">94dp</dimen>
+  <dimen name="size_96">96dp</dimen>
   <dimen name="size_100">100dp</dimen>
   <dimen name="size_110">110dp</dimen>
   <dimen name="size_112">112dp</dimen>

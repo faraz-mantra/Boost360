@@ -2,6 +2,7 @@ package com.inventoryorder.holders
 
 import androidx.core.content.ContextCompat
 import com.inventoryorder.R
+import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemAppointmentScheduleBinding
 import com.inventoryorder.model.AppointmentScheduleModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
@@ -17,10 +18,14 @@ class AppointmentScheduleViewHolder(binding: ItemAppointmentScheduleBinding) : A
     }
 
     fun setData(model: AppointmentScheduleModel) {
-
         binding.tvAppointmentTime.text = model.appointMentSchedule
 
+        if(adapterPosition ==  0){
+          binding.llAppointmentSchedule.setBackgroundColor(getResources()!!.getColor(R.color.colorPrimary))
+        }
+
     }
+
 
 
 }

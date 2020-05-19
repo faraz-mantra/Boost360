@@ -7,7 +7,6 @@
       android:id="@+id/coordinatorLayoutBottomSheet"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@color/white"
       >
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -24,8 +23,8 @@
           android:paddingTop="@dimen/size_20">
 
         <com.framework.views.customViews.CustomImageView
-            android:layout_width="@dimen/size_46"
-            android:layout_height="@dimen/size_46"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
             app:srcCompat="@drawable/ic_choose_purpose" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -49,12 +48,11 @@
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_2"
               android:includeFontPadding="false"
-              android:text="Please select agender from below"
+              android:text="Please select a gender from below"
               android:textColor="@color/primary_grey"
               app:textType="BODY_1" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 

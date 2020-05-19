@@ -45,7 +45,7 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
 
       binding?.buttonCreateBooking -> {
         startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, Bundle())
-        baseActivity.finish()
+//        baseActivity.finish()
       }
       binding?.buttonPayAtClinic -> setBacUI(binding?.buttonPayAtClinic, binding?.buttonPayOnline)
       binding?.buttonPayOnline -> setBacUI(binding?.buttonPayOnline, binding?.buttonPayAtClinic)

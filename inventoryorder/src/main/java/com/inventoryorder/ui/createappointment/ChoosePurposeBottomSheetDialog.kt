@@ -43,7 +43,7 @@ class ChoosePurposeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetChoosePu
         var choosePurposeModel = item as? ChoosePurposeModel
         list.forEach { it.isSelected = (it.choosePurposeSelectedName == choosePurposeModel?.choosePurposeSelectedName) }
         adapter?.notifyDataSetChanged()
-        onDoneClicked((item as? @kotlin.ParameterName(name = "serviceLocation") @kotlin.ParameterName(name = "choosePurposeModel") ChoosePurposeModel))
+        onDoneClicked((item as? @kotlin.ParameterName(name = "choosePurposeModel") ChoosePurposeModel))
         dismiss()
     }
 

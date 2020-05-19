@@ -21,4 +21,21 @@
   <style name="progressBar" parent="@style/Theme.AppCompat">
     <item name="colorAccent">@color/colorAccent</item>
   </style>
+
+  <style name="TimePickerDialogTheme" parent="@style/ThemeOverlay.AppCompat.Dialog">
+    <!--      <item name="showTitle">false</item>-->
+    <!--      <item name="colorControlActivated">#ffb900</item>-->
+    <!--      <item name="colorAccent">#ffb900</item>-->
+    <!--      <item name="android:textColorPrimary">#ffb900</item>-->
+    <!--      <item name="android:textColorSecondary">#ffb900</item>-->
+    <!--      <item name="android:headerBackground">#ffb900</item>-->
+
+    <item name="colorAccent">#ffb900</item>
+    <item name="android:textColorPrimary">#ffb900</item>
+    <item name="android:textColorSecondary">#ffb900</item>
+    <item name="android:headerBackground">#ffb900</item>
+
+  </style>
+
+
 </resources>

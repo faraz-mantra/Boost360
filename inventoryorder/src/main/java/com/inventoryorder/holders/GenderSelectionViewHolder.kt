@@ -1,6 +1,7 @@
 package com.inventoryorder.holders
 
 import com.inventoryorder.R
+import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemBottomSheetSelectGenderBinding
 import com.inventoryorder.model.bottomsheet.GenderSelectionModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
@@ -18,6 +19,9 @@ class GenderSelectionViewHolder (binding : ItemBottomSheetSelectGenderBinding): 
     private fun setData(data: GenderSelectionModel) {
         binding.ivGenderSelected.setImageResource(R.drawable.ic_option_unselected)
         binding.tvSelectGender.text = data.gender
+        binding.mainView.setOnClickListener {
+            listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.CHOOSE_PURPOSE_ITEM.ordinal)
+        }
     }
 
 }

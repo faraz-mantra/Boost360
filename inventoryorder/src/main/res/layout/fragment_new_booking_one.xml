@@ -8,7 +8,6 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         >
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -28,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="What’s this booking for?"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/colorAccent"
                     app:fontFamily="@font/bold"
                     app:textType="BODY_3" />
 
@@ -127,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_24"
                     android:text="Select the appointment schedule"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/colorAccent"
                     app:fontFamily="@font/bold"
                     app:textType="BODY_3" />
 
@@ -135,6 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_16"
+                    android:background="@drawable/payment_mode_button_bg"
                     android:orientation="horizontal">
 
                     <com.framework.views.customViews.CustomCardView
@@ -149,6 +149,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:overScrollMode="never"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:itemCount="10"
                             tools:listitem="@layout/item_appointment_schedule" />
@@ -158,6 +159,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/selectTimeSlotName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_16"
@@ -175,6 +177,7 @@
                     android:paddingEnd="@dimen/size_16">
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/selectTimeSlotText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="1:15 PM"
@@ -184,6 +187,7 @@
                         app:textType="BODY_3" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/selectTimeSlotSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end">
@@ -220,6 +224,7 @@
                     android:paddingEnd="@dimen/size_16">
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/selectDurationText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="1:15 PM"
@@ -229,6 +234,7 @@
                         app:textType="BODY_3" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/selectDurationSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end">
@@ -277,7 +283,7 @@
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/buttonProceed"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/size_32"
+                    android:layout_height="@dimen/size_36"
                     android:layout_gravity="center"
                     android:background="@drawable/button_proceed"
                     android:gravity="center"
