@@ -7,6 +7,8 @@ import android.content.SharedPreferences
 @SuppressLint("CommitPrefEdits")
 class SharedPrefs(activity: Activity) {
 
+    private val INITIAL_LOAD = "Initial_Load_App"
+
     private val po_id = "Last_Purchase_Order_Created"
     private val po_status = "Last_Purchase_Order_Status"
     private val pmt_id = "Last_Purchase_Order_Payment_Id"
@@ -23,6 +25,15 @@ class SharedPrefs(activity: Activity) {
      init {
         pref  = activity.getSharedPreferences( "nowfloatsPrefs", 0)
         editor = pref!!.edit()
+    }
+
+    //initial load market place verification
+    fun storeInitialLoadMarketPlace(state: Boolean){
+        editor!!.putBoolean(INITIAL_LOAD, state).apply()
+    }
+
+    fun getInitialLoadMarketPlace(): Boolean{
+        return pref!!.getBoolean(INITIAL_LOAD, true)
     }
 
     fun storeLatestPurchaseOrderTotalPrice(price: Float){

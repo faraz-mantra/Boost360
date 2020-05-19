@@ -18,6 +18,8 @@ android {
         consumerProguardFiles 'consumer-rules.pro'
 
         multiDexEnabled true
+        //to use vector drawables
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
