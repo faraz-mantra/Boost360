@@ -19,7 +19,8 @@
         android:paddingBottom="@dimen/size_10"
         android:text="Today"
         android:textAllCaps="true"
-        android:textColor="@color/warm_grey_10"
+        android:textColor="@color/primary_grey"
+        app:fontFamily="@font/semi_bold"
         app:textType="CAPTION" />
 
   </androidx.appcompat.widget.LinearLayoutCompat>
