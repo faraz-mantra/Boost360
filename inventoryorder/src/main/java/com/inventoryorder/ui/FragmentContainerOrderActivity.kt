@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.framework.views.customViews.CustomToolbar
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseActivity
 import com.inventoryorder.constant.FragmentType
+import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.ui.booking.BookingDetailsFragment
 import com.inventoryorder.ui.booking.BookingsFragment
 import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
@@ -101,9 +103,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
-      FragmentType.ORDER_DETAIL_VIEW -> "# GK7C4FM"
+      FragmentType.ORDER_DETAIL_VIEW -> "# XXXXXXX"
       FragmentType.ALL_BOOKING_VIEW -> resources.getString(R.string.bookings)
-      FragmentType.BOOKING_DETAIL_VIEW -> "# GK7C4FM"
+      FragmentType.BOOKING_DETAIL_VIEW -> "# XXXXXXX"
       FragmentType.CREATE_NEW_BOOKING -> "New Booking"
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> "New Booking"
       else -> super.getToolbarTitle()
@@ -182,14 +184,40 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       else -> throw IllegalFragmentTypeException()
     }
   }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    ordersFragment?.onActivityResult(requestCode, resultCode, data)
+    bookingsFragment?.onActivityResult(requestCode, resultCode, data)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      android.R.id.home -> {
+        onBackPressed()
+        return true
+      }
+    }
+    return super.onOptionsItemSelected(item)
+  }
+
+  override fun onBackPressed() {
+    val bundle = bookingDetails?.getBundleData() ?: orderDetailFragment?.getBundleData()
+    bundle?.let {
+      val intent = Intent()
+      intent.putExtra(IntentConstant.RESULT_DATA.name, it)
+      setResult(RESULT_OK, intent)
+    }
+    super.onBackPressed()
+  }
 }
 
-fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  startActivity(intent)
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
 fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {

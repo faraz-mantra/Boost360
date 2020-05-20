@@ -5,5 +5,7 @@ enum class IntentConstant {
   ORDER_ITEM,
   ORDER_ID,
   INVENTORY_TYPE,
-  BOOKING_ITEM
+  BOOKING_ITEM,
+  IS_REFRESH,
+  RESULT_DATA
 }

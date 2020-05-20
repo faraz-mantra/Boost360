@@ -1,5 +1,7 @@
 package com.inventoryorder.ui.booking
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -201,7 +203,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
         val bundle = Bundle()
         bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        startFragmentActivity(FragmentType.BOOKING_DETAIL_VIEW, bundle)
+        startFragmentActivity(FragmentType.BOOKING_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
     }
@@ -225,5 +227,14 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
         } else showLongToast(it.message())
       }
     })
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == RESULT_OK) {
+      val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      val isRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)
+      if (isRefresh != null && isRefresh) apiSellerOrderList(getRequestData(), true)
+    }
   }
 }

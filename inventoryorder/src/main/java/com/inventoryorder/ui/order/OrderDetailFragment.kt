@@ -31,13 +31,13 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
-import kotlin.collections.ArrayList
 
 class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBinding>() {
 
   private var deliverySheetDialog: DeliveryBottomSheetDialog? = null
   private var orderItem: OrderItem? = null
   private var deliveryList = DeliveryModel().getData()
+  private var isRefresh: Boolean? = null
 
   companion object {
     @JvmStatic
@@ -112,6 +112,15 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
       binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
       binding?.buttonConfirmOrder?.setOnClickListener(null)
     }
+  }
+
+  fun getBundleData(): Bundle? {
+    isRefresh?.let {
+      val bundle = Bundle()
+      bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
+      return bundle
+    }
+    return null
   }
 
   private fun buttonDisable(color: Int) {
@@ -193,6 +202,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
 
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
+        isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
         orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
         orderItem?.let { it1 -> checkCancelConfirm(it1) }
@@ -210,6 +220,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
+        isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
         orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
         orderItem?.let { it1 -> checkPaymentConfirm(it1) }

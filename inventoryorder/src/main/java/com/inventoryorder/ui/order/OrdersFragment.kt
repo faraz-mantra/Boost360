@@ -1,5 +1,7 @@
 package com.inventoryorder.ui.order
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -139,7 +141,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
         val bundle = Bundle()
         bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle)
+        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.ORDER_SUMMARY_CLICKED.ordinal -> {
         val orderItem = item as? OrderSummaryModel
@@ -291,5 +293,14 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     binding?.viewShadow?.gone()
     binding?.progress?.gone()
     message?.let { showShortToast(it) }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == RESULT_OK) {
+      val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      val isRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)
+      if (isRefresh != null && isRefresh) loadNewData()
+    }
   }
 }
