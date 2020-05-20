@@ -13,13 +13,16 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
+import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
+import com.boost.upgrades.utils.Constants.Companion.SPLASH_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
+import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
@@ -27,10 +30,14 @@ import es.dmoral.toasty.Toasty
 
 class UpgradeActivity : AppCompatActivity() {
 
+    private val splashFragment = SplashFragment()
+
     lateinit var razorpay: Razorpay
 
+    lateinit var prefs: SharedPrefs
+
     var experienceCode: String? = null
-    var fpName: String? =null
+    var fpName: String? = null
     var fpid: String? = null
     var loginid: String? = null
     var email: String? = null
@@ -50,14 +57,23 @@ class UpgradeActivity : AppCompatActivity() {
         mobileNo = intent.getStringExtra("mobileNo")
         profileUrl = intent.getStringExtra("profileUrl")
 
+        prefs = SharedPrefs(this)
         initView()
         initRazorPay()
     }
 
     fun initView() {
-        if(fpid !=null) {
+        if (fpid != null) {
             addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
 
+            //turn this on when you want to show Welcome Market Screen all the time
+//            prefs.storeInitialLoadMarketPlace(true)
+            if (prefs.getInitialLoadMarketPlace()) {
+                splashFragment.show(
+                        supportFragmentManager,
+                        SPLASH_FRAGMENT
+                )
+            }
             supportFragmentManager.addOnBackStackChangedListener {
                 val currentFragment =
                         supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
@@ -70,7 +86,7 @@ class UpgradeActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Toasty.error(this,"Invalid Business Profile ID. Please restart the marketplace.", Toast.LENGTH_LONG).show()
+            Toasty.error(this, "Invalid Business Profile ID. Please restart the marketplace.", Toast.LENGTH_LONG).show()
             finish()
         }
     }
@@ -88,13 +104,13 @@ class UpgradeActivity : AppCompatActivity() {
             Utils.hideSoftKeyboard(this)
             if (supportFragmentManager.backStackEntryCount > 0) {
                 val currentFragment =
-                    supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+                        supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
                 val tag = currentFragment!!.tag
                 Log.e("back pressed tag", ">>>$tag")
                 if (tag != null) {
-                    if(tag == ORDER_CONFIRMATION_FRAGMENT){
+                    if (tag == ORDER_CONFIRMATION_FRAGMENT) {
                         goToHomeFragment()
-                    }else {
+                    } else {
                         fragmentManager!!.popBackStack()
                     }
                 }
@@ -139,30 +155,29 @@ class UpgradeActivity : AppCompatActivity() {
     fun goToHomeFragment() {
         val viewAllFragment = fragmentManager!!.findFragmentByTag(VIEW_ALL_FEATURE)
         val detailsFragment = fragmentManager!!.findFragmentByTag(DETAILS_FRAGMENT)
-        if(viewAllFragment != null){
+        if (viewAllFragment != null) {
             fragmentManager!!.popBackStack(VIEW_ALL_FEATURE, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        }else if(detailsFragment != null){
+        } else if (detailsFragment != null) {
             fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        }else{
+        } else {
             fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
-    fun goBackToMyAddonsScreen(){
+    fun goBackToMyAddonsScreen() {
         goToHomeFragment()
         addFragment(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT)
     }
 
-    fun goBackToRecommentedScreen(){
+    fun goBackToRecommentedScreen() {
         goToHomeFragment()
         addFragment(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE)
     }
 
 
-
     private fun tellFragments() {
         val fragments =
-            supportFragmentManager.fragments
+                supportFragmentManager.fragments
         for (f in fragments) {
             if (f != null && f is BaseFragment)
                 f.onBackPressed()
@@ -173,7 +188,7 @@ class UpgradeActivity : AppCompatActivity() {
         return razorpay
     }
 
-    fun adjustScreenForKeyboard(){
+    fun adjustScreenForKeyboard() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 

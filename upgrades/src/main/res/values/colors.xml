@@ -339,6 +339,11 @@
     <color name="background2">#dddddd</color>
     <color name="dot_grey">#747474</color>
 
+    <color name="yellow">#ffb900</color>
+
+    <color name="text_color_roboto_lt_30_edittext">#383838</color>
+    <color name="hint_color_roboto_lt_30_edittext">#b6b6b6</color>
+
     <color name="fullscreen_color">#a5000000</color>
     <color name="light_blue">#0068e0</color>
 
