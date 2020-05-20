@@ -1,6 +1,8 @@
 package com.inventoryorder.ui.createappointment
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -14,7 +16,9 @@ import com.inventoryorder.model.bottomsheet.GenderSelectionModel
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 import kotlinx.android.synthetic.main.bottom_sheet_select_gender.*
+import kotlinx.android.synthetic.main.fragment_new_booking_two.*
 import kotlinx.android.synthetic.main.item_bottom_sheet_select_gender.*
+import java.util.regex.Pattern
 
 class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding>() {
 
@@ -33,21 +37,13 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.buttonCreateBooking, binding?.tvBack, binding?.buttonPayAtClinic, binding?.buttonPayOnline, binding?.llSelectGender)
-
-//    recyclerViewSetGender = recyclerViewBottomSheetSelectGender.findViewById(R.id.recyclerViewBottomSheetSelectGender)
-//    for(genderPosition in 0 until  selectGenderList.size){
-//      binding?.tvSetGender =
-//    }
-
-//    binding?.tvSetGender =
-
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.tvBack -> baseActivity.onBackPressed()
-      binding?.buttonCreateBooking -> startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, Bundle())
+      binding?.buttonCreateBooking -> validateDetails(eTName.text.toString(),eTPhoneNumber.text.toString(),etEmail.text.toString(),tvSetGender.text.toString())
       binding?.buttonPayAtClinic -> setBacUI(binding?.buttonPayAtClinic, binding?.buttonPayOnline, R.drawable.payment_bg_right)
       binding?.buttonPayOnline -> setBacUI(binding?.buttonPayOnline, binding?.buttonPayAtClinic, R.drawable.payment_bg_left)
       binding?.llSelectGender -> showBottomSheetDialogSelectGender()
@@ -70,16 +66,37 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
   }
 
   private fun selectGenderFromList(list: GenderSelectionModel?) {
-//    selectGenderList.forEach { it.isSelected = (it.genderType == list?.genderType) }
     selectGenderList.forEach { it.isSelected = (it.genderType == list?.genderType) }
-//    for(genderPosition in 0 until  selectGenderList.size){
-////      binding?.tvSetGender?.text =
-////              genderPosition.toString()
-////      showShortToast(genderPosition)
-////              Toast.makeText(baseActivity,"pos",Toast.LENGTH_SHORT).show()
-//      Toast.makeText(activity, ""+genderPosition, Toast.LENGTH_SHORT).show()
+    binding?.tvSetGender?.text = list?.genderType
+  }
 
-//    }
+  private fun validateDetails( customerName: String, customerPhoneNumber : String, customerEmail : String, selectGender : String  ){
+
+    var regExpName = "[a-z, A-Z]*"
+
+    if(TextUtils.isEmpty(customerName)){
+      showShortToast("Name field must not be empty.")
+      return
+    }
+    else if (!eTName.text.toString().matches(regExpName.toRegex())) {
+      showShortToast("Please enter valid name.")
+      return
+    }
+    if(customerPhoneNumber.length < 10){
+      showShortToast("Please enter valid mobile number")
+      return
+    }
+    if( TextUtils.isEmpty(customerEmail) || !Patterns.EMAIL_ADDRESS.matcher(customerEmail).matches()){
+      showShortToast("Please Enter valid email")
+      return
+    }
+    if(TextUtils.isEmpty(selectGender)){
+      showShortToast("Please select gender")
+      return
+    }
+    if (!TextUtils.isEmpty(customerName) && !TextUtils.isEmpty(customerPhoneNumber) && !TextUtils.isEmpty(customerEmail) && !TextUtils.isEmpty(selectGender)){
+      startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, Bundle())
+    }
 
   }
 }

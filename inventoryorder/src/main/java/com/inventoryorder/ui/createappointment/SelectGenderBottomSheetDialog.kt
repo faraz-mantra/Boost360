@@ -42,7 +42,8 @@ class SelectGenderBottomSheetDialog : BaseBottomSheetDialog<BottomSheetSelectGen
     val selectGenderModel = item as GenderSelectionModel
     list.forEach { it.isSelected = (it.genderType == selectGenderModel.genderType) }
     adapter?.notifyDataSetChanged()
-    onDoneClicked((item as? @kotlin.ParameterName(name = "genderSelectionModel") GenderSelectionModel))
+//    onDoneClicked((item as? @kotlin.ParameterName(name = "genderSelectionModel") GenderSelectionModel))
+    onDoneClicked(selectGenderModel)
     dismiss()
   }
 
