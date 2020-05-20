@@ -218,10 +218,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBi
   }
 
   private fun showBottomSheetDialog() {
-    deliverySheetDialog = DeliveryBottomSheetDialog()
-    deliverySheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
-    deliverySheetDialog?.setList(deliveryList)
-    deliverySheetDialog?.show(this@OrderDetailFragment.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
+    showLongToast("Coming soon..")
+//    deliverySheetDialog = DeliveryBottomSheetDialog()
+//    deliverySheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
+//    deliverySheetDialog?.setList(deliveryList)
+//    deliverySheetDialog?.show(this@OrderDetailFragment.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
   }
 
   private fun clickDeliveryItem(deliveryItem: DeliveryModel?) {
