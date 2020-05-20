@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
+import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.thinksity.R;
@@ -57,22 +58,21 @@ public class ManageContentFragment extends Fragment{
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch(adapterTexts[pos]){
+                    case "Catalogue":
+                        intent = new Intent(mContext, ProductCatalogActivity.class);
+                        break;
                     case "Business Profile":
                         intent = new Intent(mContext,FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName","Business_Profile_Fragment_V2");
                         break;
-                    case "All Updates":
+                    case "Latest Updates":
                         ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.update));
                         return;
                     case "All Images":
-                        //intent = new Intent(mContext, ImageGalleryActivity.class);
                         intent = new Intent(mContext, ImageMenuActivity.class);
                         break;
                     case "Custom Pages":
                        intent = new Intent(mContext, CustomPageActivity.class);
-                        break;
-                    case "Content Sharing":
-                        intent = new Intent(mContext, SocialSharingActivity.class);
                         break;
                     default:
                         return;
