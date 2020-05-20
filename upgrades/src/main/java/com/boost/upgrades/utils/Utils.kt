@@ -114,6 +114,24 @@ object Utils {
 
     }
 
+    fun isValidMail(email: String): Boolean {
+        return Pattern.compile(
+                "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                        "\\@" +
+                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                        "(" +
+                        "\\." +
+                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                        ")+"
+        ).matcher(email).matches()
+    }
+
+    fun isValidMobile(phone: String): Boolean {
+        return Pattern.compile(
+                "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
+                .matcher(phone).matches()
+    }
+
     fun monthRange(): ArrayList<String> {
         var start = 1
         val stop = 12

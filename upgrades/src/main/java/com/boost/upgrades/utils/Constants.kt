@@ -14,6 +14,7 @@ import com.boost.upgrades.ui.popup.*
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
 import com.boost.upgrades.ui.removeaddons.RemoveAddonConfirmationFragment
 import com.boost.upgrades.ui.removeaddons.RemoveAddonsFragment
+import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.ui.webview.WebViewFragment
 
 class Constants {
@@ -36,6 +37,7 @@ class Constants {
 
 
         // fragments
+        var SPLASH_FRAGMENT: String = SplashFragment::class.java.getName()
         var HOME_FRAGMENT: String = HomeFragment::class.java.getName()
         var PACKAGE_FRAGMENT: String = PackageFragment::class.java.getName()
         var CART_FRAGMENT: String = CartFragment::class.java.getName()
