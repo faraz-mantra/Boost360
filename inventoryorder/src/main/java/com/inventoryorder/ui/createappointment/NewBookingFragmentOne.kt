@@ -36,7 +36,7 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.choosePurpose, binding?.appointmentType, binding?.buttonProceed, binding?.selectTimeSlot,
-        binding?.selectDuration, binding?.selectTimeSlot)
+        binding?.selectDuration)
     setAdapterForAppointmentSchedule()
   }
 
