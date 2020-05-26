@@ -165,7 +165,6 @@
                 app:textType="BODY_1"
                 tools:text="02:33:00" />
 
-
           </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
