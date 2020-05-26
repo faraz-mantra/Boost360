@@ -132,6 +132,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/view_background_color"
                     android:hint="rahul@cantech.co"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
                     android:paddingTop="@dimen/size_8"
                     android:paddingBottom="@dimen/size_16"
                     android:textColor="@color/warm_grey_10"
