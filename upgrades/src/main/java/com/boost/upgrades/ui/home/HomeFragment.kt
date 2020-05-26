@@ -359,7 +359,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 var cartItems:List<CartModel> = arrayListOf()
-                if (viewModel.allFeatureDealsResult.value != null) {
+                if (viewModel.cartResult.value != null) {
                     cartItems = viewModel.cartResult.value!!
                 }
                 updateFeatureDealsViewPager(it, cartItems)

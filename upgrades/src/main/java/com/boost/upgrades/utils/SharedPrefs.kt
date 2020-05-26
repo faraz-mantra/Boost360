@@ -13,6 +13,9 @@ class SharedPrefs(activity: Activity) {
     private val po_feature_count = "Last_Purchase_Order_Feature_Count"
     private val po_price = "Last_Purchase_Order_Price"
 
+    private val temp_cartAmount = "Cart_Orig_Price"
+    private val temp_couponDiscount = "Coupon_Discount"
+
     private var editor: SharedPreferences.Editor? = null
 
     var pref: SharedPreferences? = null
@@ -62,4 +65,23 @@ class SharedPrefs(activity: Activity) {
     fun getLatestPurchaseOrderTotalPrice(): Float{
         return pref!!.getFloat(po_price, 0f)
     }
+
+    //tempStorage
+    fun storeCartOriginalAmount(value: Float){
+        editor!!.putFloat(temp_cartAmount, value).apply()
+    }
+
+    fun getCartOriginalAmount(): Float{
+        return pref!!.getFloat(temp_cartAmount, 0f)
+    }
+
+    fun storeCouponDiscountPercentage(value: Int){
+        editor!!.putInt(temp_couponDiscount, value).apply()
+    }
+
+    fun getCouponDiscountPercentage(): Int{
+        return pref!!.getInt(temp_couponDiscount, 0)
+    }
+
+
 }

@@ -157,6 +157,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private WebAction mWebAction;
     private List<Tag> tags = new ArrayList<>();
 
+    private  boolean isService = false;
+
     public static ManageProductFragment newInstance(String productType, String category, com.nowfloats.ProductGallery.Model.Product product)
     {
         ManageProductFragment fragment = new ManageProductFragment();
@@ -291,22 +293,24 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 binding.layoutBottomSheet.btnChange.setText(R.string.button_add);
             }
 
-            title.append(productType.equalsIgnoreCase("products") ? "Product Details" : "Service Details");
+//            isService = productType.equalsIgnoreCase("products") ? false : true;
+            isService = session.isNonPhysicalProductExperienceCode();
+
+            title.append(isService ? "Service Details" : "Product Details");
             ((ManageProductActivity) getActivity()).setTitle(title.toString());
 
             if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()))
             {
-                if(productType.equalsIgnoreCase("products"))
+                if(isService)
+                {
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
+                }
+                else
                 {
                     binding.layoutBottomSheet.layoutAddress.setVisibility(View.VISIBLE);
                     binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
 
                     binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
-                }
-
-                else
-                {
-                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                 }
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
@@ -458,14 +462,14 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                 binding.layoutPaymentMethod.layoutPaymentExternalPurchaseUrl.setVisibility(View.GONE);
 
-                if(productType.equalsIgnoreCase("products"))
+                if(isService)
                 {
-                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
                 }
 
                 else
                 {
-                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.GONE);
+                    binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
                 }
 
                 binding.layoutAssuredPurchaseTax.setVisibility(View.VISIBLE);
@@ -704,7 +708,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     {
         String category;
 
-        if(productType.equalsIgnoreCase("services"))
+        if(isService)
         {
             category = "Service";
         }
@@ -792,16 +796,15 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 {
                     case 0:
 
-                        if(productType.equalsIgnoreCase("products"))
-                        {
-                            binding.layoutBottomSheet.layoutAddress.setVisibility(View.VISIBLE);
-                            binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
-                        }
-
-                        else
+                        if(isService)
                         {
                             binding.layoutBottomSheet.layoutAddress.setVisibility(View.GONE);
                             binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            binding.layoutBottomSheet.layoutAddress.setVisibility(View.VISIBLE);
+                            binding.layoutBottomSheet.layoutPickupAddressInfo.setVisibility(View.VISIBLE);
                         }
 
                         binding.layoutBottomSheet.layoutAssuredPurchase.setVisibility(View.VISIBLE);
@@ -833,7 +836,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     displayPaymentAcceptanceMessage();
 
                     if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                            && productType.equalsIgnoreCase("products"))
+                            && !isService)
                     {
                         binding.layoutShippingMatrixDetails.layoutShippingMatrix.setVisibility(View.VISIBLE);
                     }
@@ -2204,7 +2207,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         }
 
         if(paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
-                && productType.equalsIgnoreCase("products"))
+                && !isService)
         {
             if(product.pickupAddressReferenceId == null || product.pickupAddressReferenceId.isEmpty())
             {
@@ -2947,7 +2950,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                 product.ClientId = Constants.clientId;
                 product.FPTag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
-                product.productType = productType;
+                product.productType = isService ? "Service" : productType;
 
                 Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
 

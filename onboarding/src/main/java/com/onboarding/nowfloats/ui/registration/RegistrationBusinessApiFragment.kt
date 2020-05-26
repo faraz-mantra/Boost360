@@ -247,6 +247,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   private fun getBusinessRequest(): BusinessCreateRequest {
     val createRequest = BusinessCreateRequest()
     createRequest.autoFillSampleWebsiteData = true
+    createRequest.webTemplateId = requestFloatsModel?.categoryDataModel?.webTemplateId
     createRequest.clientId = clientId
     createRequest.tag = requestFloatsModel?.contactInfo?.domainName
     createRequest.name = requestFloatsModel?.contactInfo?.businessName
