@@ -46,7 +46,7 @@
             android:focusable="true"
             android:textCursorDrawable="@drawable/color_cursor"
             android:background="@drawable/edittext_bottom_line_bg"
-            android:inputType="text"
+            android:inputType="textCapCharacters"
             android:textSize="@dimen/_12sdp"
             android:textColorHint="#bbbbbb"
             android:imeOptions="actionDone"
@@ -84,6 +84,7 @@
             android:drawableRight="@drawable/ic_error_status_icon"/>
 
         <TextView
+            android:id="@+id/coupon_submit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"

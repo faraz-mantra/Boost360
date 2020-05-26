@@ -5,6 +5,7 @@ import com.framework.base.BaseRequest
 data class BusinessCreateRequest(
         var autoFillSampleWebsiteData: Boolean? = null,
         var clientId: String? = null,
+        var webTemplateId: String? = null,
         var tag: String? = null,
         var contactName: String? = null,
         var name: String? = null,

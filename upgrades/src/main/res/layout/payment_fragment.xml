@@ -606,8 +606,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
                         android:text="Cart amount"
+                        android:padding="@dimen/_5sdp"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
@@ -639,13 +639,34 @@
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
                         android:text="0"
+                        android:textColor="@color/common_text_color"/>
+
+                    <TextView
+                        android:id="@+id/igst_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/coupon_discount_title"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="@dimen/_5sdp"
+                        android:text="IGST (18%)"
+                        android:textColor="@color/common_text_color" />
+
+                    <TextView
+                        android:id="@+id/igst_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/coupon_discount_value"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="@dimen/_5sdp"
+                        android:text="₹36"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
                         android:id="@+id/order_total_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/coupon_discount_title"
+                        android:layout_below="@id/igst_title"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
                         android:text="Order Total"
@@ -655,11 +676,11 @@
                         android:id="@+id/order_total_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/coupon_discount_value"
+                        android:layout_below="@id/igst_value"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="₹900"
+                        android:text="₹936"
                         android:textColor="@color/common_text_color" />
 
                 </RelativeLayout>
