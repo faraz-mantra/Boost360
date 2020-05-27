@@ -23,25 +23,31 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
   }
 
   fun updateChannelAccessTokens(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
-    return when(request.accessToken.getType()){
-      AccessTokenType.Facebookpage -> postUpdateFacebookPageAccessToken(request)
-      AccessTokenType.Facebookshop -> postUpdateFacebookShopAccessToken(request)
-      AccessTokenType.Twitter -> postUpdateTwitterAccessToken(request)
-      AccessTokenType.GoogleMyBusiness -> postUpdateGoogleMyBusinessToken(request)
+    return when (request.accessToken.getType()) {
+      AccessTokenType.facebookpage -> postUpdateFacebookPageAccessToken(request)
+      AccessTokenType.facebookshop -> postUpdateFacebookShopAccessToken(request)
+      AccessTokenType.twitter -> postUpdateTwitterAccessToken(request)
+      AccessTokenType.googlemybusiness -> postUpdateGoogleMyBusinessToken(request)
     }
   }
 
-  fun postUpdateFacebookPageAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse>{
+  fun getChannelsAccessToken(nowfloatsId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getChannelsAccessToken(nowfloatsId), Taskcode.GET_CHANNELS_ACCESS_TOKEN)
+  }
+
+  fun postUpdateFacebookPageAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_FACEBOOK_PAGE_TOKEN)
   }
-  fun postUpdateFacebookShopAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse>{
+
+  fun postUpdateFacebookShopAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_FACEBOOK_SHOP_TOKEN)
   }
-  fun postUpdateTwitterAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse>{
+
+  fun postUpdateTwitterAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_TWITTER_TOKEN)
   }
 
-  fun postUpdateGoogleMyBusinessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse>{
+  fun postUpdateGoogleMyBusinessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_GOOGLE_MY_BUSINESS_TOKEN)
   }
 

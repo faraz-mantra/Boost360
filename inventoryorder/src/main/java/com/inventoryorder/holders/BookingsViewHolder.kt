@@ -11,7 +11,7 @@ import com.framework.utils.DateUtils.parseDate
 import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.ItemBookingsAllOrderBinding
+import com.inventoryorder.databinding.ItemBookingsOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -19,8 +19,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import java.util.*
 
-
-class BookingsViewHolder(binding: ItemBookingsAllOrderBinding) : AppBaseRecyclerViewHolder<ItemBookingsAllOrderBinding>(binding) {
+class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerViewHolder<ItemBookingsOrderBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

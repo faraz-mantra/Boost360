@@ -14,7 +14,6 @@ import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.PreSignUp.SplashScreen_Activity;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
@@ -739,6 +738,14 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void setBubbleStatus(boolean flag) {
         pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, flag).apply();
+    }
+
+    public void setHeader(String auth) {
+        pref.edit().putString(Key_Preferences.AUTHORIZATION, auth).apply();
+    }
+
+    public void clearHeader() {
+        pref.edit().putString(Key_Preferences.AUTHORIZATION, "").apply();
     }
 
     public void setCustomerAssistantStatus(boolean flag) {
