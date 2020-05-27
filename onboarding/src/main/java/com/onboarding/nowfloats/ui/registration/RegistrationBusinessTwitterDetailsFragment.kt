@@ -31,13 +31,13 @@ import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 
 class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(),
-        TwitterLoginHelper, TwitterUserHelper {
+    TwitterLoginHelper, TwitterUserHelper {
 
   private val twitterAuthClient = TwitterAuthClient()
   private var selectedChannel: List<ChannelModel>? = null
-  private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.Twitter.name.toLowerCase())
+  private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.twitter.name.toLowerCase())
   private var twitterChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
-
+  private var isShowProfile = false
 
   companion object {
     @JvmStatic
@@ -50,21 +50,34 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
 
   override fun onCreateView() {
     super.onCreateView()
+    checkIsUpdate()
     binding?.twitterChannels?.post {
       (binding?.twitterChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
-              ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.linkTwitter?.fadeIn(500L))
+          ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+          ?.doOnComplete {
+            if (isShowProfile) setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+          }?.andThen(binding?.linkTwitter?.fadeIn(500L))
           ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
     }
     setOnClickListener(binding?.skip, binding?.linkTwitter)
     setSelectedTwitterChannels(channels)
-
     setSavedData()
+  }
+
+  private fun checkIsUpdate() {
+    if (requestFloatsModel?.isUpdate == true) {
+      requestFloatsModel?.channelAccessTokens?.forEach {
+        if (it.type == ChannelAccessToken.AccessTokenType.twitter.name) {
+          channelAccessToken = it
+          isShowProfile = true
+        }
+      }
+    }
   }
 
   override fun setSavedData() {
     val channelAccessToken = requestFloatsModel?.channelAccessTokens
-            ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+        ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
     setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
     requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
     this.channelAccessToken = channelAccessToken
@@ -125,6 +138,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     val binding = binding?.twitterSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
+    binding.maimView.alpha = 1F
     binding.disconnect.setOnClickListener { disconnectTwitter(binding) }
     this.binding?.title?.text = resources.getString(R.string.twitter_connected)
     this.binding?.subTitle?.text = resources.getString(R.string.twitter_allows_digital_business_boost)
@@ -157,8 +171,8 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     twitterAuthClient.onActivityResult(requestCode, resultCode, data)
   }
 
-    override fun updateInfo() {
-    requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Twitter }
-        super.updateInfo()
+  override fun updateInfo() {
+    requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.twitter }
+    super.updateInfo()
   }
 }

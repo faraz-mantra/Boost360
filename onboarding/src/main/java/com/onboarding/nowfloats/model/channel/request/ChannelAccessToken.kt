@@ -5,29 +5,28 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class ChannelAccessToken(
-        @SerializedName("Type")
-        var type: String? = null,
-        @SerializedName("UserAccessTokenKey")
-        var userAccessTokenKey: String? = null,
-        @SerializedName("UserAccessTokenSecret")
-        var userAccessTokenSecret: String? = null, // TODO Not sure what to send here
-        @SerializedName("UserAccountId")
-        var userAccountId: String? = null,
-        @SerializedName("UserAccountName")
-        var userAccountName: String? = null,
-        var profilePicture: String? = null
+    @SerializedName("Type")
+    var type: String? = null,
+    @SerializedName("UserAccessTokenKey")
+    var userAccessTokenKey: String? = null,
+    @SerializedName("UserAccessTokenSecret")
+    var userAccessTokenSecret: String? = null, // TODO Not sure what to send here
+    @SerializedName("UserAccountId")
+    var userAccountId: String? = null,
+    @SerializedName("UserAccountName")
+    var userAccountName: String? = null,
+    var profilePicture: String? = null
 ) : Parcelable {
   constructor(parcel: Parcel) : this(
-          parcel.readString(),
-          parcel.readString(),
-          parcel.readString(),
-          parcel.readString(),
-          parcel.readString(),
-          parcel.readString()) {
-  }
+      parcel.readString(),
+      parcel.readString(),
+      parcel.readString(),
+      parcel.readString(),
+      parcel.readString(),
+      parcel.readString())
 
   enum class AccessTokenType {
-    Facebookpage, Facebookshop, GoogleMyBusiness, Twitter
+    facebookpage, facebookshop, googlemybusiness, twitter
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -59,7 +58,7 @@ fun ChannelAccessToken.isLinked(): Boolean {
   return this.userAccessTokenKey != null && this.userAccountId != null
 }
 
-fun ChannelAccessToken.clear(){
+fun ChannelAccessToken.clear() {
   this.userAccessTokenKey = null
   this.userAccessTokenSecret = null
   this.userAccountId = null
@@ -68,5 +67,5 @@ fun ChannelAccessToken.clear(){
 }
 
 fun ChannelAccessToken.getType(): ChannelAccessToken.AccessTokenType {
-  return ChannelAccessToken.AccessTokenType.values().first { it.name.toLowerCase() ==  type}
+  return ChannelAccessToken.AccessTokenType.values().first { it.name.toLowerCase() == type }
 }
