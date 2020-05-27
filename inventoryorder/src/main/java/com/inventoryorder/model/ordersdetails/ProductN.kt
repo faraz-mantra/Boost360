@@ -7,7 +7,7 @@ data class ProductN(
     val Description: String? = null,
     val Dimensions: DimensionsN? = null,
     val DiscountAmount: Double? = null,
-    val ExtraProperties: ExtraPropertiesN,
+    val ExtraProperties: ExtraPropertiesN? = null,
     val ImageUri: String? = null,
     val IsAvailable: Boolean? = null,
     val Name: String? = null,
@@ -15,4 +15,9 @@ data class ProductN(
     val SKU: String? = null,
     val ShippingCost: Double? = null,
     val _id: String? = null
-) : Serializable
+) : Serializable {
+
+  fun extraItemProductConsultation(): ExtraPropertiesN? {
+    return ExtraProperties
+  }
+}

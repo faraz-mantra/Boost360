@@ -123,5 +123,8 @@
   <string name="go_to_business_dashbaord">Go to business dashbaord</string>
   <string name="check_business_website">Check your business website</string>
   <string name="building_plan_for_your_business">Building a digital growth plan for your business…</string>
+  <string name="error_getting_category_data">Error getting category data.</string>
+  <string name="home">Home</string>
+  <string name="invalid_experience_code">Invalid experience code.</string>
 
 </resources>

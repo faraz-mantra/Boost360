@@ -5,12 +5,12 @@ import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.getAmountDate
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
-import com.inventoryorder.databinding.ItemBookingsDateBinding
+import com.inventoryorder.databinding.ItemDateViewBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class BookingDateViewHolder(binding: ItemBookingsDateBinding) : AppBaseRecyclerViewHolder<ItemBookingsDateBinding>(binding) {
+class DateViewHolder(binding: ItemDateViewBinding) : AppBaseRecyclerViewHolder<ItemDateViewBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

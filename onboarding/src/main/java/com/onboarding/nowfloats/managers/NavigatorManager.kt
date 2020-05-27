@@ -44,6 +44,10 @@ object NavigatorManager {
     PreferencesUtils.instance.saveData(REQUEST_FLOAT, Gson().toJson(request))
   }
 
+  fun clearRequest() {
+    PreferencesUtils.instance.saveData(REQUEST_FLOAT, "")
+  }
+
   fun getRequest(): RequestFloatsModel? {
     return try {
       Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT) ?: "", RequestFloatsModel::class.java)
@@ -74,9 +78,9 @@ object NavigatorManager {
       ScreenModel.Screen.CHANNEL_SELECT -> request.channels = null
       ScreenModel.Screen.BUSINESS_INFO -> request.contactInfo?.clearAllDomain()
       ScreenModel.Screen.BUSINESS_SUBDOMAIN -> request.contactInfo?.domainName = null
-      ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookpage }
-      ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Facebookshop }
-      ScreenModel.Screen.BUSINESS_TWITTER -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.Twitter }
+      ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }
+      ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.facebookshop }
+      ScreenModel.Screen.BUSINESS_TWITTER -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.twitter }
       ScreenModel.Screen.BUSINESS_WHATSAPP -> request.channelActionDatas?.clear()
       ScreenModel.Screen.REGISTRATION_COMPLETE -> {
       }

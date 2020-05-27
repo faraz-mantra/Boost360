@@ -7,7 +7,6 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class OrderItem(
     val BillingDetails: BillingDetailsN? = null,
@@ -73,7 +72,7 @@ data class OrderItem(
   fun getDateObject(date: Date): OrderItem {
     val item = OrderItem()
     item.dateKey = date
-    item.recyclerViewType = RecyclerViewItemType.BOOKINGS_DATE_TYPE.getLayout()
+    item.recyclerViewType = RecyclerViewItemType.DATE_VIEW_TYPE.getLayout()
     return item
   }
 
@@ -83,6 +82,11 @@ data class OrderItem(
     companion object {
       fun from(value: String): CancellingEntity? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
+  }
+
+  fun isConfirmConsulting(): Boolean {
+    return (PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
+        PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
   }
 
   fun isConfirmBooking(): Boolean {
@@ -98,4 +102,9 @@ data class OrderItem(
         LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails.status()) == LogisticsDetailsN.STSTUS.NOT_INITIATED)
     //PaymentDetails != null && PaymentDetailsN.STSTUS.from(PaymentDetails.status()) == PaymentDetailsN.STSTUS.SUCCESS
   }
+
+  fun firstItemForConsultation(): ItemN? {
+    return Items?.firstOrNull()
+  }
+
 }

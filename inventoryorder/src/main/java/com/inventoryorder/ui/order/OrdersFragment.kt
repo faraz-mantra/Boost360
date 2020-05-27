@@ -68,10 +68,9 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
-    binding?.btnAdd?.setOnClickListener { showLongToast("Coming soon..") }
-//    setOnClickListener(binding?.btnAdd)
-
+    setOnClickListener(binding?.btnAdd)
   }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -291,7 +290,6 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
   }
 
 
-
   private fun errorOnSummary(message: String?) {
     binding?.typeRecycler?.gone()
     binding?.viewShadow?.gone()
@@ -308,3 +306,14 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     }
   }
 }
+
+//private var pickInventoryNatureBottomSheetDialog : PickInventoryNatureBottomSheetDialog ? = null
+//private var selectPickInventoryNatureList = PickInventoryNatureModel().getData()
+
+//private fun showBottomSheetDialogPickInventoryNature(){
+//  pickInventoryNatureBottomSheetDialog = PickInventoryNatureBottomSheetDialog()
+//  pickInventoryNatureBottomSheetDialog?.onDoneClicked = { selectPickInventoryNatureList (it)}
+//  pickInventoryNatureBottomSheetDialog?.setList( selectPickInventoryNatureList )
+//  pickInventoryNatureBottomSheetDialog?.show(this.parentFragmentManager, PickInventoryNatureBottomSheetDialog::class.java.name)
+//
+//}
