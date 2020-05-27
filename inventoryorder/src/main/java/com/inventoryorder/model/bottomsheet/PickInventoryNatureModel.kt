@@ -14,6 +14,10 @@ class PickInventoryNatureModel(var inventoryTypeIcon: Int? = null,
         return RecyclerViewItemType.PICK_INVENTORY_NATURE.getLayout()
     }
 
+    fun setIcon(): Int? {
+        return takeIf { isInventorySelected }?.let { R.drawable.ic_selected } ?: R.drawable.ic_option_unselected
+    }
+
     fun getData(): ArrayList<PickInventoryNatureModel> {
         val list = ArrayList<PickInventoryNatureModel>()
         list.add(PickInventoryNatureModel(R.drawable.ic_physical_product, "Physical product",

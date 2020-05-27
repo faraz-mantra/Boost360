@@ -17,7 +17,6 @@ class GenderSelectionViewHolder(binding: ItemBottomSheetSelectGenderBinding) : A
 
     private fun setData(model: GenderSelectionModel) {
         model.getIcon()?.let { binding.ivGenderSelected.setImageResource(it) }
-
         binding.tvSelectGender.text = model.genderType
         binding.mainView.background = activity?.let { ContextCompat.getDrawable(it, model.getColor()) }
         binding.mainView.setOnClickListener {
