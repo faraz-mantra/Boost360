@@ -156,7 +156,7 @@ import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragme
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
-import static com.nowfloats.manageinventory.ManageInventoryFragment.getAppointmentType;
+import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
 
 //import com.nfx.leadmessages.ReadMessages;
 
@@ -435,9 +435,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
                 bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
                 bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
-                if (getAppointmentType(session.getFP_AppExperienceCode())) {
-                    startFragmentActivityNew(this, FragmentType.BOOKING_DETAIL_VIEW, bundle, false);
-                } else startFragmentActivityNew(this, FragmentType.ORDER_DETAIL_VIEW, bundle, false);
+                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.BOOKING_DETAIL_VIEW, bundle, false);
+                else if (experienceType == 2) startFragmentActivityNew(this, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
+                else startFragmentActivityNew(this, FragmentType.ORDER_DETAIL_VIEW, bundle, false);
 //                Intent orderDetail = new Intent(HomeActivity.this, OrderDetailsActivity.class);
 //                orderDetail.putExtra("orderId", mPayload);
 //                startActivity(orderDetail);

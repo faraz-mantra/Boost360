@@ -265,35 +265,35 @@ public class ManageInventoryFragment extends Fragment {
             headerText.setText(Utils.getDefaultOrderROIType(category_code));
     }
 
+    public static int getExperienceType(String fp_appExperienceCode) {
+        switch (fp_appExperienceCode) {
+            case "SVC":
+            case "HOS":
+            case "SPA":
+            case "SAL":
+            case "EDU":
+                return 1;
+            case "DOC":
+                return 2;
+            default:
+                return 3;
+        }
+    }
+
     private void openSellerAnalyticsActivity() {
         Bundle bundle = new Bundle();
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
-
-        if (getAppointmentType(session.getFP_AppExperienceCode())) {
-            startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
-//            startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
-        } else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
+        int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
+        else if (experienceType == 2) startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
+        else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
 
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
 //        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
 //        startActivity(i);
 //        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    public static boolean getAppointmentType(String fp_appExperienceCode) {
-        switch (fp_appExperienceCode) {
-            case "SVC":
-            case "DOC":
-            case "HOS":
-            case "SPA":
-            case "SAL":
-            case "EDU":
-                return true;
-            default:
-                return false;
-        }
     }
 
     private void startOrdersActivity() {

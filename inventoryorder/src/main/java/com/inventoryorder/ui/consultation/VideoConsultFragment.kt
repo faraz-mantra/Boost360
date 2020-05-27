@@ -62,7 +62,6 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     apiSellerOrderList(getRequestData(), true)
-    binding?.btnAdd?.setOnClickListener { showLongToast("Coming soon..") }
   }
 
   private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
