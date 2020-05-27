@@ -58,7 +58,7 @@ class PickInventoryNatureBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPi
 
     private fun setRecyclerViewPickInventoryNature() {
         binding?.recyclerViewPickInventoryNature?.post {
-            adapter = AppBaseRecyclerViewAdapter(baseActivity, list) //  ,this)
+            adapter = AppBaseRecyclerViewAdapter(baseActivity, list ,this)
             val linearLayoutManager = LinearLayoutManager(baseActivity,LinearLayoutManager.VERTICAL,false)
 //            binding?.recyclerViewPickInventoryNature?.addItemDecoration(
 //                 DividerItemDecorationPIN(AppCompatResources.getDrawable(baseActivity,R.drawable.horizontal_dashed_line),  true,  true))
@@ -69,7 +69,11 @@ class PickInventoryNatureBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPi
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val selectItem = item as PickInventoryNatureModel
+        list.forEach { it.isInventorySelected =  ( it.inventoryTypeSelectedIcon == selectItem.inventoryTypeSelectedIcon ) }
+        adapter?.notifyDataSetChanged()
+        onDoneClicked(selectItem)
+//        dismiss()
     }
 
 

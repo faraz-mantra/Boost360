@@ -48,8 +48,6 @@ class TestBottomSheetFragment : BaseFragment<FragmentTestBottomSheetBinding,Base
                 showBottomSheetDialogPickInventoryNature()
             }
 
-
-
         }
     }
 
