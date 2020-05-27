@@ -131,6 +131,9 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
     binding.next2.visibility = btn
     activity?.let {
       binding.bookingDate.value.setTextColor(ContextCompat.getColor(it, dateColor))
+      binding.payment.value.setTextColor(ContextCompat.getColor(it, R.color.greyish_brown))
+      binding.duration.value.setTextColor(ContextCompat.getColor(it, R.color.greyish_brown))
+      binding.itemDesc.setTextColor(ContextCompat.getColor(it, R.color.greyish_brown))
       binding.orderType.background = ContextCompat.getDrawable(it, orderBg)
       binding.txtRupees.setTextColor(ContextCompat.getColor(it, rupeesColor))
     }

@@ -1,6 +1,5 @@
 package com.inventoryorder.model.consultation
 
-import com.inventoryorder.utils.convertMinutesToDays
 import java.io.Serializable
 
 data class ExtraItemProductConsultation(
@@ -23,15 +22,4 @@ data class ExtraItemProductConsultation(
     val referenceId: String? = null,
     val scheduledDateTime: String? = null,
     val startTime: String? = null
-) : Serializable {
-
-  fun durationTxt(): String? {
-    return duration?.toDoubleOrNull()?.let { convertMinutesToDays(it) }
-  }
-
-  fun detailsConsultation(): String {
-    val d = takeIf { doctorName.isNullOrEmpty().not() }?.let { "$doctorName," } ?: ""
-    val c = takeIf { consultationFor.isNullOrEmpty().not() }?.let { " $consultationFor" } ?: ""
-    return "$d$c"
-  }
-}
+) : Serializable
