@@ -48,16 +48,22 @@ class TestBottomSheetFragment : BaseFragment<FragmentTestBottomSheetBinding,Base
                 showBottomSheetDialogPickInventoryNature()
             }
 
+
+
+
         }
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        binding?.frameLayoutVisibility?.visibility = View.GONE
+    }
 
     private fun showBottomSheetDialogPickInventoryNature(){
         pickInventoryNatureBottomSheetDialog = PickInventoryNatureBottomSheetDialog()
         pickInventoryNatureBottomSheetDialog?.onDoneClicked = { selectPickInventoryNatureList (it)}
         pickInventoryNatureBottomSheetDialog?.setList( selectPickInventoryNatureList )
         pickInventoryNatureBottomSheetDialog?.show(this.parentFragmentManager, PickInventoryNatureBottomSheetDialog::class.java.name)
-
     }
 
     private fun selectPickInventoryNatureList(list: PickInventoryNatureModel?) {

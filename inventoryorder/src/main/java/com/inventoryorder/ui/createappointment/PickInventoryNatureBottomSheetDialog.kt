@@ -56,6 +56,10 @@ class PickInventoryNatureBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPi
 
     }
 
+    override fun onDetach() {
+        super.onDetach()
+    }
+
     private fun setRecyclerViewPickInventoryNature() {
         binding?.recyclerViewPickInventoryNature?.post {
             adapter = AppBaseRecyclerViewAdapter(baseActivity, list ,this)
