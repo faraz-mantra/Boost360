@@ -65,6 +65,14 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
     layoutManager?.let { scrollPagingListener(it) }
     apiSellerOrderList(getRequestData(), true)
     binding?.btnAdd?.setOnClickListener { showLongToast("Coming soon..") }
+    setOnClickListener(binding?.btnAdd)
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnAdd -> startFragmentActivity(FragmentType.TEST_BOTTOM_SHEET_FRAGMENT, Bundle())
+    }
   }
 
   private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
@@ -125,12 +133,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
     }
   }
 
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
-    }
-  }
+
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
     binding?.bookingRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {

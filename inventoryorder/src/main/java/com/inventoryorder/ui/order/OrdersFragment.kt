@@ -69,6 +69,14 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     binding?.btnAdd?.setOnClickListener { showLongToast("Coming soon..") }
+//    setOnClickListener(binding?.btnAdd)
+
+  }
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+    }
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
@@ -282,12 +290,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     return request!!
   }
 
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
-    }
-  }
+
 
   private fun errorOnSummary(message: String?) {
     binding?.typeRecycler?.gone()

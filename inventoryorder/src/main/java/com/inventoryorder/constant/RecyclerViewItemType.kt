@@ -16,7 +16,9 @@ enum class RecyclerViewItemType {
   BOOKINGS_DATE_TYPE,
   APPOINTMENT_SCHEDULE,
   GENDER_SELECTION,
-  APPOINTMENT_TYPE;
+  APPOINTMENT_TYPE,
+  PICK_INVENTORY_NATURE
+  ;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -34,6 +36,7 @@ enum class RecyclerViewItemType {
       APPOINTMENT_SCHEDULE -> R.layout.item_appointment_schedule
       GENDER_SELECTION -> R.layout.item_bottom_sheet_select_gender
       APPOINTMENT_TYPE -> R.layout.item_bottom_sheet_appointment_type
+      PICK_INVENTORY_NATURE -> R.layout.item_bottom_sheet_pick_inventory_nature
     }
   }
 }

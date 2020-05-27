@@ -5,28 +5,93 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main_view"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/size_16">
+        android:paddingStart="@dimen/size_16"
+        android:paddingTop="@dimen/size_12"
+        android:paddingEnd="@dimen/size_16"
+        android:paddingBottom="@dimen/size_12"
+        >
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/ivOptionSelected"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_2"
-            app:srcCompat="@drawable/ic_option_unselected" />
+            android:layout_marginEnd="@dimen/size_12"
+            android:layout_gravity="center"
+            >
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvOptionSelected"
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/ivInventoryType"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                app:srcCompat="@drawable/ic_physical_product" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/size_30"
-            android:text="Choose purpose 1"
-            android:textColor="@color/grey_text_color"
-            app:fontFamily="@font/semi_bold"
-            app:textType="BODY_3" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="@dimen/size_16"
+            >
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tvInventoryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Physical product"
+                android:textColor="@color/primary_grey"
+                app:fontFamily="@font/semi_bold"
+                android:textSize="18sp"
+                />
+<!--            app:textType="HEADING_6"-->
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tvInventoryDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Can be packaged and delivered to buyer, eg. book,watch,toy,garment,etc."
+                    android:textColor="@color/primary_grey"
+                    app:fontFamily="@font/regular"
+                    android:textSize="12sp"
+                    />
+<!--   app:textType  not working not applying exact value or size                 app:textType="BODY_3" />-->
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/inventorySelectedOrUnselectedIcon"
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                app:srcCompat="@drawable/ic_option_unselected" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/size_8"
+            android:background="@drawable/horizontal_dashed_line"
+            >
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </layout>
