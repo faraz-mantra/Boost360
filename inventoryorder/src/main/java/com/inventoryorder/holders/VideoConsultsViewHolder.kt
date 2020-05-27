@@ -3,6 +3,7 @@ package com.inventoryorder.holders
 import android.graphics.Paint
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.framework.extensions.gone
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -11,7 +12,7 @@ import com.framework.utils.DateUtils.parseDate
 import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.ItemBookingsOrderBinding
+import com.inventoryorder.databinding.ItemVideoConsultOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -19,7 +20,8 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import java.util.*
 
-class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerViewHolder<ItemBookingsOrderBinding>(binding) {
+
+class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRecyclerViewHolder<ItemVideoConsultOrderBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -27,11 +29,11 @@ class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerVie
     data?.let {
       binding.bookingDate.title.text = activity?.resources?.getString(R.string.date_order)
       binding.payment.title.text = activity?.resources?.getString(R.string.payment)
-      binding.location.title.text = activity?.resources?.getString(R.string.location)
+      binding.duration.title.text = activity?.resources?.getString(R.string.duration)
       setDataResponse(it)
     }
     binding.mainView.setOnClickListener {
-      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal)
+      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.VIDEO_CONSULT_ITEM_CLICKED.ordinal)
     }
   }
 
@@ -43,11 +45,11 @@ class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerVie
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding.bookingDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
-    binding.payment.value.text = order.PaymentDetails?.Method?.trim()
-    binding.location.value.text = order.SellerDetails?.Address?.City?.capitalize()
-    val sizeItem = order.Items?.size ?: 0
-    binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Services" } ?: "Service"
-    binding.itemDesc.text = order.getTitlesBooking()
+    binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
+    binding.duration.value.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
+    val sizeItem = if (order.firstItemForConsultation() != null) 1 else 0
+    binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Details" } ?: "Detail"
+    binding.itemDesc.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation() ?: ""
 
     binding.itemMore.visibility = takeIf { (sizeItem > 1) }?.let {
       binding.itemMore.text = "+${sizeItem - 1} more"
@@ -73,16 +75,20 @@ class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerVie
         OrderSummaryModel.OrderType.DELIVERY_COMPLETED -> {
           if (todayDate == itemDate) {
             checkPaymentConfirm(order)
-            changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
-            binding.btnConfirm.paintFlags = 0
-          } else backgroundGrey(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
+            changeBackground(View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
+          } else {
+            buttonVisibility(false)
+            backgroundGrey(View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
+          }
         }
         OrderSummaryModel.OrderType.ABANDONED,
         OrderSummaryModel.OrderType.CANCELLED -> {
           if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
             binding.orderType.text = OrderSummaryModel.OrderType.ABANDONED.type
           }
-          changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
+          binding.textErrorCall.gone()
+          binding.btnCall.gone()
+          changeBackground(View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
         }
       }
     }
@@ -90,45 +96,37 @@ class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerVie
   }
 
   private fun checkPaymentConfirm(order: OrderItem) {
-    if (order.isConfirmBooking()) {
-      buttonDisable(R.color.colorAccent, R.drawable.btn_rounded_orange_border)
-      binding.btnConfirm.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal) }
-      binding.btnConfirm.paintFlags = 0
+    if (order.isConfirmConsulting()) {
+      buttonVisibility(true)
+      binding.btnCall.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal) }
+      binding.btnCopyLink.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal) }
+      binding.btnCopyLink.visibility = View.VISIBLE
     } else {
-      buttonDisable(R.color.primary_grey, R.drawable.btn_rounded_grey_border)
-      binding.btnConfirm.paintFlags = binding.btnConfirm.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+      buttonVisibility(false)
+      binding.btnCopyLink.visibility = View.GONE
     }
   }
 
-  private fun buttonDisable(color: Int, border: Int) {
-    activity?.let {
-      binding.btnConfirm.setTextColor(ContextCompat.getColor(it, color))
-      binding.btnConfirm.background = ContextCompat.getDrawable(it, border)
-    }
+  private fun buttonVisibility(isVisibleCall: Boolean) {
+    binding.btnCall.visibility = if (isVisibleCall) View.VISIBLE else View.GONE
+    binding.textErrorCall.visibility = if (!isVisibleCall) View.VISIBLE else View.GONE
   }
 
-  private fun backgroundGrey(confirm: Int, detail: Int, btn: Int, orderBg: Int, primaryGrey: Int) {
-    binding.btnConfirm.visibility = confirm
+  private fun backgroundGrey(detail: Int, btn: Int, orderBg: Int, primaryGrey: Int) {
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
-    binding.elapsedView.visibility = View.GONE
-    setColorView(primaryGrey, binding.bookingDate.title, binding.payment.title, binding.location.title, binding.bookingId,
-        binding.txtRupees, binding.bookingDate.value, binding.payment.value, binding.location.value, binding.itemCount,
+    binding.btnCopyLink.visibility = View.GONE
+    setColorView(primaryGrey, binding.bookingDate.title, binding.payment.title, binding.duration.title, binding.bookingId,
+        binding.txtRupees, binding.bookingDate.value, binding.payment.value, binding.duration.value, binding.itemCount,
         binding.itemDesc, binding.itemMore)
-    activity?.let {
-      binding.btnConfirm.setTextColor(ContextCompat.getColor(it, primaryGrey))
-      binding.orderType.background = ContextCompat.getDrawable(it, orderBg)
-      binding.btnConfirm.background = ContextCompat.getDrawable(it, R.drawable.btn_rounded_grey_border)
-    }
-    binding.btnConfirm.paintFlags = binding.btnConfirm.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    activity?.let { binding.orderType.background = ContextCompat.getDrawable(it, orderBg) }
   }
 
   private fun setColorView(color: Int, vararg view: CustomTextView) {
     activity?.let { ac -> view.forEach { it.setTextColor(ContextCompat.getColor(ac, color)) } }
   }
 
-  private fun changeBackground(confirm: Int, detail: Int, btn: Int, orderBg: Int, rupeesColor: Int, dateColor: Int) {
-    binding.btnConfirm.visibility = confirm
+  private fun changeBackground(detail: Int, btn: Int, orderBg: Int, rupeesColor: Int, dateColor: Int) {
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
     activity?.let {

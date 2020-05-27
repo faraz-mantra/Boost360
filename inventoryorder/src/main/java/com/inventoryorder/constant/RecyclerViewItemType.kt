@@ -9,11 +9,13 @@ enum class RecyclerViewItemType {
   INVENTORY_ORDER_ITEM,
   ITEM_ORDER_DETAILS,
   ITEM_DELIVERY_OPTIONS,
+  BOOKINGS_ITEM_TYPE,
   BOOKING_DETAILS,
   ITEM_SERVICE_LOCATIONS,
   ITEM_CHOOSE_PURPOSE,
-  BOOKINGS_ITEM_TYPE,
-  BOOKINGS_DATE_TYPE,
+  VIDEO_CONSULT_ITEM_TYPE,
+  VIDEO_CONSULT_DETAILS,
+  DATE_VIEW_TYPE,
   APPOINTMENT_SCHEDULE,
   GENDER_SELECTION,
   APPOINTMENT_TYPE;
@@ -26,11 +28,13 @@ enum class RecyclerViewItemType {
       INVENTORY_ORDER_ITEM -> R.layout.item_order
       ITEM_ORDER_DETAILS -> R.layout.item_order_details
       ITEM_DELIVERY_OPTIONS -> R.layout.item_bottom_sheet_pick_up_delivery_option
+      BOOKINGS_ITEM_TYPE -> R.layout.item_bookings_order
       BOOKING_DETAILS -> R.layout.item_booking_details
       ITEM_SERVICE_LOCATIONS -> R.layout.item_bottom_sheet_service_locations
-      BOOKINGS_ITEM_TYPE -> R.layout.item_bookings_all_order
       ITEM_CHOOSE_PURPOSE -> R.layout.item_bottom_sheet_choose_purpose
-      BOOKINGS_DATE_TYPE -> R.layout.item_bookings_date
+      DATE_VIEW_TYPE -> R.layout.item_date_view
+      VIDEO_CONSULT_ITEM_TYPE -> R.layout.item_video_consult_order
+      VIDEO_CONSULT_DETAILS -> R.layout.item_video_consult_details
       APPOINTMENT_SCHEDULE -> R.layout.item_appointment_schedule
       GENDER_SELECTION -> R.layout.item_bottom_sheet_select_gender
       APPOINTMENT_TYPE -> R.layout.item_bottom_sheet_appointment_type

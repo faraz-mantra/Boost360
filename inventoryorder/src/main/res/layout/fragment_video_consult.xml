@@ -18,8 +18,8 @@
         android:id="@+id/view_shadow"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_3"
-        android:visibility="gone"
-        android:background="@drawable/down_shadow" />
+        android:background="@drawable/down_shadow"
+        android:visibility="gone" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

@@ -21,6 +21,8 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.ui.booking.BookingDetailsFragment
 import com.inventoryorder.ui.booking.BookingsFragment
+import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
+import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
 import com.inventoryorder.ui.createappointment.NewBookingFragmentOne
 import com.inventoryorder.ui.createappointment.NewBookingFragmentTwo
@@ -37,6 +39,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var newBookingFragmentOne: NewBookingFragmentOne? = null
   private var newBookingFragmentTwo: NewBookingFragmentTwo? = null
   private var bookingSuccessfulFragment: BookingSuccessfulFragment? = null
+  private var videoConsultFragment: VideoConsultFragment? = null
+  private var videoConsultDetailsFragment: VideoConsultDetailsFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -76,7 +80,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BOOKING_DETAIL_VIEW,
       FragmentType.ALL_BOOKING_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      FragmentType.ALL_VIDEO_CONSULT_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -88,7 +94,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BOOKING_DETAIL_VIEW,
       FragmentType.ALL_BOOKING_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      FragmentType.ALL_VIDEO_CONSULT_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -106,8 +114,10 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ORDER_DETAIL_VIEW -> "# XXXXXXX"
       FragmentType.ALL_BOOKING_VIEW -> resources.getString(R.string.bookings)
       FragmentType.BOOKING_DETAIL_VIEW -> "# XXXXXXX"
-      FragmentType.CREATE_NEW_BOOKING -> "New Booking"
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> "New Booking"
+      FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
+      FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> "# XXXXXXX"
       else -> super.getToolbarTitle()
     }
   }
@@ -120,7 +130,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BOOKING_DETAIL_VIEW,
       FragmentType.ALL_BOOKING_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      FragmentType.ALL_VIDEO_CONSULT_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
       else -> super.getNavigationIcon()
     }
   }
@@ -180,6 +192,14 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BOOKING_SUCCESSFUL -> {
         bookingSuccessfulFragment = BookingSuccessfulFragment.newInstance()
         bookingSuccessfulFragment
+      }
+      FragmentType.ALL_VIDEO_CONSULT_VIEW -> {
+        videoConsultFragment = VideoConsultFragment.newInstance()
+        videoConsultFragment
+      }
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> {
+        videoConsultDetailsFragment = VideoConsultDetailsFragment.newInstance()
+        videoConsultDetailsFragment
       }
       else -> throw IllegalFragmentTypeException()
     }

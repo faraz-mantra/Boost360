@@ -272,7 +272,8 @@ public class ManageInventoryFragment extends Fragment {
         bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
 
         if (getAppointmentType(session.getFP_AppExperienceCode())) {
-            startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
+            startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
+//            startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
         } else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
 
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
