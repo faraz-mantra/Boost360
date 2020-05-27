@@ -64,14 +64,13 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     apiSellerOrderList(getRequestData(), true)
-    binding?.btnAdd?.setOnClickListener { showLongToast("Coming soon..") }
     setOnClickListener(binding?.btnAdd)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd -> startFragmentActivity(FragmentType.TEST_BOTTOM_SHEET_FRAGMENT, Bundle())
+      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
     }
   }
 

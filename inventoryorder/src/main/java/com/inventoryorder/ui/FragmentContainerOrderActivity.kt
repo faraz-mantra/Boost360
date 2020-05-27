@@ -21,12 +21,13 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.ui.booking.BookingDetailsFragment
 import com.inventoryorder.ui.booking.BookingsFragment
+import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
+import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
 import com.inventoryorder.ui.createappointment.NewBookingFragmentOne
 import com.inventoryorder.ui.createappointment.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
 import com.inventoryorder.ui.order.OrdersFragment
-import com.inventoryorder.ui.order.TestBottomSheetFragment
 
 open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
@@ -40,7 +41,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var bookingSuccessfulFragment: BookingSuccessfulFragment? = null
   private var videoConsultFragment: VideoConsultFragment? = null
   private var videoConsultDetailsFragment: VideoConsultDetailsFragment? = null
-  private var testBottomSheetFragment : TestBottomSheetFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -64,7 +64,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> R.style.AppTheme_Order_create
-      FragmentType.TEST_BOTTOM_SHEET_FRAGMENT -> null
       else -> super.customTheme()
     }
   }
@@ -105,7 +104,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   override fun isHideToolbar(): Boolean {
     return when (type) {
       FragmentType.BOOKING_SUCCESSFUL -> true
-      FragmentType.TEST_BOTTOM_SHEET_FRAGMENT -> true
       else -> super.isHideToolbar()
     }
   }
@@ -202,10 +200,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> {
         videoConsultDetailsFragment = VideoConsultDetailsFragment.newInstance()
         videoConsultDetailsFragment
-      }
-      FragmentType.TEST_BOTTOM_SHEET_FRAGMENT ->{
-        testBottomSheetFragment = TestBottomSheetFragment()
-        testBottomSheetFragment
       }
       else -> throw IllegalFragmentTypeException()
     }
