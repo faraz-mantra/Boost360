@@ -28,13 +28,15 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)
       ITEM_DELIVERY_OPTIONS -> DeliveryViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
       BOOKING_DETAILS -> BookingDetailsViewHolder(binding as ItemBookingDetailsBinding)
+      BOOKINGS_ITEM_TYPE -> BookingsViewHolder(binding as ItemBookingsOrderBinding)
       ITEM_SERVICE_LOCATIONS -> LocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
-      BOOKINGS_ITEM_TYPE -> BookingsViewHolder(binding as ItemBookingsAllOrderBinding)
       ITEM_CHOOSE_PURPOSE -> ChoosePurposeViewHolder(binding as ItemBottomSheetChoosePurposeBinding)
-      BOOKINGS_DATE_TYPE -> BookingDateViewHolder(binding as ItemBookingsDateBinding)
-      APPOINTMENT_SCHEDULE -> AppointmentScheduleViewHolder (binding as ItemAppointmentScheduleBinding)
-      GENDER_SELECTION -> GenderSelectionViewHolder (binding as ItemBottomSheetSelectGenderBinding)
-      APPOINTMENT_TYPE -> AppointmentTypeViewHolder (binding as ItemBottomSheetAppointmentTypeBinding)
+      VIDEO_CONSULT_ITEM_TYPE -> VideoConsultsViewHolder(binding as ItemVideoConsultOrderBinding)
+      VIDEO_CONSULT_DETAILS -> VideoConsultDetailsViewHolder(binding as ItemVideoConsultDetailsBinding)
+      DATE_VIEW_TYPE -> DateViewHolder(binding as ItemDateViewBinding)
+      APPOINTMENT_SCHEDULE -> AppointmentScheduleViewHolder(binding as ItemAppointmentScheduleBinding)
+      GENDER_SELECTION -> GenderSelectionViewHolder(binding as ItemBottomSheetSelectGenderBinding)
+      APPOINTMENT_TYPE -> AppointmentTypeViewHolder(binding as ItemBottomSheetAppointmentTypeBinding)
     }
   }
 

@@ -19,6 +19,10 @@ data class PaymentDetailsN(
     return Method ?: ""
   }
 
+  fun payment(): String {
+    return if (method().isNotEmpty() && status().isNotEmpty()) "${method()}, ${status()}" else method()
+  }
+
   enum class METHOD {
     COD, ONLINEPAYMENT;
 
