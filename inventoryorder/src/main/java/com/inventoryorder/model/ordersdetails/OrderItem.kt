@@ -85,7 +85,8 @@ data class OrderItem(
   }
 
   fun isConfirmConsulting(): Boolean {
-    return (PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
+    return (OrderSummaryModel.OrderType.fromValue(status()) != OrderSummaryModel.OrderType.CANCELLED &&
+        PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
         PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
   }
 

@@ -1,14 +1,11 @@
 package com.inventoryorder.ui.consultation
 
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -49,7 +46,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnBusiness)
+    setOnClickListener(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.btnOpenConsult)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -79,36 +76,24 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun setDetails(order: OrderItem) {
     setToolbarTitle("# ${order.ReferenceNumber}")
-    checkPaymentConfirm(order)
-    checkCancelConfirm(order)
+    checkStatusConsultation(order)
     setOrderDetails(order)
     (order.Items?.map {
-      it.recyclerViewType = RecyclerViewItemType.BOOKING_DETAILS.getLayout();it
+      it.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_DETAILS.getLayout();it
     } as? ArrayList<ItemN>)?.let { setAdapter(it) }
+  }
+
+  private fun isOpenForConsultation(order: OrderItem) {
+    val isOpen = order.isConfirmConsulting()
+    binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) } ?: getColor(R.color.primary_grey))
+    if (isOpen) isVisible(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
+    else isGone(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
   }
 
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
     binding?.recyclerViewBookingDetails?.post {
       val adapter = AppBaseRecyclerViewAdapter(baseActivity, orderItems)
       binding?.recyclerViewBookingDetails?.adapter = adapter
-    }
-  }
-
-  private fun checkPaymentConfirm(order: OrderItem) {
-    if (order.isConfirmBooking()) {
-      buttonDisable(R.color.colorAccent)
-      binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else {
-      buttonDisable(R.color.primary_grey)
-      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
-    }
-  }
-
-  private fun buttonDisable(color: Int) {
-    activity?.let {
-      val newDrawable: Drawable? = binding?.buttonConfirmOrder?.background
-      newDrawable?.let { it1 -> DrawableCompat.setTint(it1, ContextCompat.getColor(it, color)) }
-      binding?.buttonConfirmOrder?.background = newDrawable
     }
   }
 
@@ -121,7 +106,8 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     return null
   }
 
-  private fun checkCancelConfirm(order: OrderItem) {
+  private fun checkStatusConsultation(order: OrderItem) {
+    isOpenForConsultation(order)
     if (order.isCancelBooking()) {
       binding?.tvCancelOrder?.visible()
       binding?.tvCancelOrder?.setOnClickListener(this)
@@ -174,10 +160,15 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnBusiness -> showBottomSheetDialog()
-      binding?.buttonConfirmOrder -> apiConfirmOrder()
+      binding?.btnPaymentReminder -> paymentReminder()
+      binding?.btnOpenConsult -> apiOpenConsultationWindow()
       binding?.tvCancelOrder -> apiCancelOrder()
+      binding?.btnCopyLink -> showLongToast("Coming soon..")
     }
+  }
+
+  private fun apiOpenConsultationWindow() {
+    showLongToast("Coming soon..")
   }
 
   private fun apiCancelOrder() {
@@ -193,28 +184,11 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
         isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
         orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
-        orderItem?.let { it1 -> checkCancelConfirm(it1) }
+        orderItem?.let { it1 -> checkStatusConsultation(it1) }
       } else showLongToast(it.message())
     })
   }
 
-  private fun apiConfirmOrder() {
-    showProgress()
-    viewModel?.confirmOrder(clientId, orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val data = it as? OrderConfirmStatus
-        isRefresh = true
-        data?.let { d -> showLongToast(d.Message as String?) }
-        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
-        orderItem?.let { it1 -> checkPaymentConfirm(it1) }
-      } else showLongToast(it.message())
-    })
-  }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
@@ -224,8 +198,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     }
   }
 
-
-  private fun showBottomSheetDialog() {
+  private fun paymentReminder() {
     showLongToast("Coming soon..")
   }
 

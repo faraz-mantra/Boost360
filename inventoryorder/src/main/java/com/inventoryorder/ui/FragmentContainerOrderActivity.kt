@@ -222,7 +222,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = bookingDetails?.getBundleData() ?: orderDetailFragment?.getBundleData()
+    val bundle = bookingDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)

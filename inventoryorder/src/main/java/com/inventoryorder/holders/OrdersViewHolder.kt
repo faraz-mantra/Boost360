@@ -42,7 +42,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding.orderDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
-    binding.payment.value.text = order.PaymentDetails?.Method?.trim()
+    binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
     binding.delivery.value.text = order.LogisticsDetails?.DeliveryMode?.trim()
     val sizeItem = order.Items?.size ?: 0
     binding.itemCount.text = "$sizeItem ${takeIf { sizeItem > 1 }?.let { "Items" } ?: "Item"}"
