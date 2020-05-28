@@ -157,7 +157,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 requestUserProfileAPI(personIdToken,
                         personEmail, "", "", personName, "GOOGLE", personEmail)
             } else{
-                verifyUserProfileAPI(personIdToken, "", "GOOGLE")
+                verifyUserProfileAPI(personEmail, "", "GOOGLE")
             }
         }
     }
@@ -200,6 +200,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
             for (data in facebookData) {
                 if (data.providerId?.contains("facebook")) {
                     uid = data.uid
+
                     personName = data.displayName
                     break
                 }
@@ -209,7 +210,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 requestUserProfileAPI(personIdToken,
                         personEmail, "", "", personName as String, "FACEBOOK", uid)
             } else{
-                verifyUserProfileAPI(personIdToken, "", "FACEBOOK")
+                verifyUserProfileAPI(uid, "", "FACEBOOK")
             }
         }
     }
