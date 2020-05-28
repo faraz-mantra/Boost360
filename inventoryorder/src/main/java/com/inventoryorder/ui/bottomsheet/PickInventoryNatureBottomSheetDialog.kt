@@ -55,8 +55,6 @@ class PickInventoryNatureBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPi
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     val selectItem = item as PickInventoryNatureModel
-    list.forEach { it.isInventorySelected = (it.inventoryTypeSelectedIcon == selectItem.inventoryTypeSelectedIcon) }
-    adapter?.notifyDataSetChanged()
     onDoneClicked(selectItem)
   }
 }

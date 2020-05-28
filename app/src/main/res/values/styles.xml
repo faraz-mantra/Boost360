@@ -138,15 +138,15 @@
     </style>
 
     <style name="MyTheme" parent="Base.MyTheme">
-        <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+      <item name="bottomSheetDialogTheme">@style/BottomSheetThemeInventory</item>
     </style>
 
-    <style name="BottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+  <style name="BottomSheetInventory" parent="Theme.MaterialComponents.BottomSheetDialog">
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
+  <style name="BottomSheetThemeInventory" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/BottomSheetInventory</item>
     </style>
 
     <style name="Base.MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
