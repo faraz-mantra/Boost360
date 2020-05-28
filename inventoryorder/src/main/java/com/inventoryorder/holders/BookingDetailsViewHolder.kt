@@ -1,7 +1,6 @@
 package com.inventoryorder.holders
 
 import android.graphics.Paint
-import com.framework.extensions.gone
 import com.framework.glide.util.glideLoad
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemBookingDetailsBinding
@@ -20,7 +19,6 @@ class BookingDetailsViewHolder(binding: ItemBookingDetailsBinding) : AppBaseRecy
   private fun setDataResponseForOrderDetails(item: ItemN) {
     binding.tvDishName.text = item.Product?.Name?.trim()
     binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
-    binding.tvDishQuantity.gone()
     val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     binding.tvDishAmount.text = "$currency ${item.SalePrice ?: 0}"
     binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
