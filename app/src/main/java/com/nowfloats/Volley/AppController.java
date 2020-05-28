@@ -59,7 +59,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             e.printStackTrace();
         }
 
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
