@@ -45,7 +45,7 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
     }
 
     private fun setBacUI(btn1: CustomTextView?, btn2: CustomTextView?, paymentBgType: Int) {
-        btn1?.background = ContextCompat.getDrawable(baseActivity, R.color.colorAccent)
+        btn1?.background = ContextCompat.getDrawable(baseActivity, R.color.light_grey)
         btn2?.background = ContextCompat.getDrawable(baseActivity, paymentBgType)
         btn1?.setTextColor(ContextCompat.getColor(baseActivity, R.color.warm_grey_10))
         btn2?.setTextColor(ContextCompat.getColor(baseActivity, R.color.primary_grey))

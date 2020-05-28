@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFragment {
+public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFragment  {
 
     private ArrayList<PickInventoryNatureModel> list;
     private Listener listener;
@@ -85,12 +85,17 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
     }
 
     private void onClickItemGet(int position, PickInventoryNatureModel item, int actionType) {
+
+
+
         this.item = item;
         for (PickInventoryNatureModel it : list) {
             it.setSelected(Objects.requireNonNull(it.getInventoryName()).equalsIgnoreCase(item.getInventoryName()));
         }
         adapter.notifyDataSetChanged();
     }
+
+
 
     public interface Listener {
         void onClickInventory(PickInventoryNatureModel item, ArrayList<PickInventoryNatureModel> list);

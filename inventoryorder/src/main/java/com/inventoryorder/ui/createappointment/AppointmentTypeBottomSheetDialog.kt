@@ -41,7 +41,7 @@ class AppointmentTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetAppoin
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
       val selectAppointmentTypeModel = item as AppointMentTypeModel
       list.forEach { it.isSelected = (it.appointmentTypeSelectedName == selectAppointmentTypeModel.appointmentTypeSelectedName) }
-        adapter?.notifyDataSetChanged()
+      adapter?.notifyDataSetChanged()
       onDoneClicked(item)
         dismiss()
     }
