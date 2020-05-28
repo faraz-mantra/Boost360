@@ -12,11 +12,11 @@ class ChoosePurposeModel(val choosePurposeSelectedName: String? = null,
   }
 
   fun getIcon(): Int? {
-    return takeIf { isSelected }?.let { R.drawable.ic_option_selected } ?: R.drawable.ic_option_unselected
+    return takeIf { isSelected }?.let { R.drawable.ic_option_selected_orange } ?: R.drawable.ic_option_unselected
   }
 
   fun getColor(): Int {
-    return takeIf { isSelected }?.let { R.color.khaki_light } ?: R.color.white
+    return takeIf { isSelected }?.let { R.color.lightest_grey } ?: R.color.white
   }
 
   fun getData(): ArrayList<ChoosePurposeModel> {
