@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFragment {
+public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFragment  {
 
     private ArrayList<PickInventoryNatureModel> list;
     private Listener listener;
@@ -77,8 +77,13 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
     }
 
     private void onClickItemGet(int position, PickInventoryNatureModel item, int actionType) {
+
+
+
         this.item = item;
     }
+
+
 
     public interface Listener {
         void onClickInventory(PickInventoryNatureModel item);
