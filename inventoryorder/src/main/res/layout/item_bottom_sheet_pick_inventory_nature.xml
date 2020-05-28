@@ -23,7 +23,7 @@
           android:layout_width="@dimen/size_40"
           android:layout_height="@dimen/size_40"
           android:layout_marginEnd="@dimen/size_12"
-          app:srcCompat="@drawable/ic_physical_product" />
+          app:srcCompat="@drawable/ic_physical_product_check" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="wrap_content"

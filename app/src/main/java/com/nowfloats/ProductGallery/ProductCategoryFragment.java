@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -113,7 +112,6 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             binding.layoutCustomProduct.setVisibility(View.GONE);
             binding.labelProductType.setText(String.format(getString(R.string.label_product_type), "Service"));
         }
-
         //If custom then display spinner for product/service selection
         else {
             binding.layoutPhysicalProduct.setVisibility(View.VISIBLE);
@@ -121,15 +119,14 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             binding.layoutServiceOffering.setVisibility(View.GONE);
             binding.layoutCustomProduct.setVisibility(View.GONE);// hide spinner
             if (binding.arrowBtn.getVisibility() == View.VISIBLE) {
+                list = new PickInventoryNatureModel().getData();
                 binding.layoutPhysicalProduct.setOnClickListener(v -> {
-                    list = new PickInventoryNatureModel().getData();
                     PickInventoryNatureBottomSheetDialog1 dialog = new PickInventoryNatureBottomSheetDialog1(list, this::pickInventory);
                     dialog.show(getParentFragmentManager(), PickInventoryNatureBottomSheetDialog1.class.getName());
                 });
             }
 
 //            SpinnerItemCategoryAdapter spinnerAdapter = new SpinnerItemCategoryAdapter(getContext());
-//
 //            binding.spinnerItemOption.setAdapter(spinnerAdapter);
 //            binding.spinnerItemOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //
@@ -165,8 +162,13 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
         return productType;
     }
 
-    private void pickInventory(PickInventoryNatureModel item) {
-        Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT).show();
+    private void pickInventory(PickInventoryNatureModel item, ArrayList<PickInventoryNatureModel> listNew) {
+        this.list.clear();
+        this.list.addAll(listNew);
+        if (item.getIconType() != null) binding.ivIcon.setImageResource(item.getIconType());
+        binding.labelItemType.setText(item.getInventoryName());
+        binding.labelItemDescription.setText(item.getInventoryDescription());
+        setType(item.getType());
     }
 
     final void setType(String productType) {

@@ -22,6 +22,7 @@ import com.thinksity.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFragment {
 
@@ -30,6 +31,7 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
     private BottomSheetPickInventoryNatureBinding binding;
     private BottomSheetDialog dialog;
     private PickInventoryNatureModel item;
+    private InventoryPickAdapter adapter;
 
     PickInventoryNatureBottomSheetDialog1(ArrayList<PickInventoryNatureModel> list, Listener listener) {
         this.list = list;
@@ -60,27 +62,37 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        dismissAllowingStateLoss();
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setRecyclerViewPickInventoryNature();
         binding.buttonDone.setOnClickListener(v -> {
-            listener.onClickInventory(item);
+            listener.onClickInventory(item, list);
             dismiss();
         });
         binding.tvCancel.setOnClickListener(v -> dismiss());
     }
 
     private void setRecyclerViewPickInventoryNature() {
-        InventoryPickAdapter adapter = new InventoryPickAdapter(getActivity(), list, this::onClickItemGet);
+        adapter = new InventoryPickAdapter(getActivity(), list, this::onClickItemGet);
         binding.recyclerViewPickInventoryNature.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         binding.recyclerViewPickInventoryNature.setAdapter(adapter);
     }
 
     private void onClickItemGet(int position, PickInventoryNatureModel item, int actionType) {
         this.item = item;
+        for (PickInventoryNatureModel it : list) {
+            it.setSelected(Objects.requireNonNull(it.getInventoryName()).equalsIgnoreCase(item.getInventoryName()));
+        }
+        adapter.notifyDataSetChanged();
     }
 
     public interface Listener {
-        void onClickInventory(PickInventoryNatureModel item);
+        void onClickInventory(PickInventoryNatureModel item, ArrayList<PickInventoryNatureModel> list);
     }
 }

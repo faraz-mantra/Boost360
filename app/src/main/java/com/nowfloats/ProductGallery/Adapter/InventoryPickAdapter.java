@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,11 +40,13 @@ public class InventoryPickAdapter extends RecyclerView.Adapter<InventoryPickAdap
     @Override
     public void onBindViewHolder(@NotNull MyViewHolder holder, int position) {
         PickInventoryNatureModel data = list.get(position);
-        Integer icon = data.setIcon();
-        if (icon != null) holder.binding.inventorySelectedOrUnselectedIcon.setImageResource(icon);
+        Integer icon = data.getSelectIcon();
+        holder.binding.tvInventoryName.setTextColor(ContextCompat.getColor(mContext, data.getColorTitle()));
+        holder.binding.tvInventoryDescription.setTextColor(ContextCompat.getColor(mContext, data.getColorDesc()));
+        holder.binding.inventorySelectedOrUnselectedIcon.setImageResource(icon);
         holder.binding.tvInventoryName.setText(data.getInventoryName());
         holder.binding.tvInventoryDescription.setText(data.getInventoryDescription());
-        Integer inventoryIcon = data.getInventoryTypeIcon();
+        Integer inventoryIcon = data.getIconType();
         if (inventoryIcon != null) holder.binding.ivInventoryType.setImageResource(inventoryIcon);
         holder.binding.mainView.setOnClickListener(v -> mClickListener.onItemClick(position, data, 1));
     }
